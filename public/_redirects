@@ -1,0 +1,262 @@
+# WordPress → Next.js 301 Redirect Map
+# Old WordPress URLs redirect to new site structure
+
+# ===== PAGE REDIRECTS =====
+/about/                     /about                      301
+/contact/                   /contact                    301
+/expertise/                 /expertise                  301
+/impactsoul/                /impactsoul                 301
+/proof/                     /proof                      301
+
+# ===== BLOG POST REDIRECTS =====
+# WordPress used /slug/ format, new site uses /blog/slug
+/patience-in-the-ai-infrastructure-gold-rush-the-second-mouse-gets-the-cheese/  /blog/patience-in-the-ai-infrastructure-gold-rush-the-second-mouse-gets-the-cheese  301
+/republics-mirror-tokens-spacex-and-beyond/  /blog/republics-mirror-tokens-spacex-and-beyond  301
+/techphil/  /blog/techphil  301
+/uni-token-price-surge-a-reflection-of-the-markets-hunger-for-effective-governance/  /blog/uni-token-price-surge-a-reflection-of-the-markets-hunger-for-effective-governance  301
+/convert-burning-man-dao-menagerie/  /blog/convert-burning-man-dao-menagerie  301
+/energy-as-impact/  /blog/energy-as-impact  301
+/edge-data-center-provider-redivider-expands-advisory/  /blog/edge-data-center-provider-redivider-expands-advisory  301
+/ramprate-works-with-devxdao-and-xprize/  /blog/ramprate-works-with-devxdao-and-xprize  301
+/ramprate-is-b-certified-corp-the-accolade/  /blog/ramprate-is-b-certified-corp-the-accolade  301
+/davos-2022-world-economic-forum-here-we-come/  /blog/davos-2022-world-economic-forum-here-we-come  301
+/its-time-to-uber-and-airbnb-the-telecommunications/  /blog/its-time-to-uber-and-airbnb-the-telecommunications  301
+/hiding-fees-in-the-transparent-age/  /blog/hiding-fees-in-the-transparent-age  301
+/peri-finance-announces-ieo-on-gate-io/  /blog/peri-finance-announces-ieo-on-gate-io  301
+/your-words-are-hammers/  /blog/your-words-are-hammers  301
+/executives-from-tech-giants-join-syntropy/  /blog/executives-from-tech-giants-join-syntropy  301
+/the-real-world-pied-piper-of-the-new-internet/  /blog/the-real-world-pied-piper-of-the-new-internet  301
+/kid-in-minnesota-mastering-human-business-development/  /blog/kid-in-minnesota-mastering-human-business-development  301
+/marc-andreessen-rebuttal-2020/  /blog/marc-andreessen-rebuttal-2020  301
+/spy-v1/  /blog/spy-v1  301
+/the-right-numbers-supplier-fit-gross-national-happiness-and-blockchain/  /blog/the-right-numbers-supplier-fit-gross-national-happiness-and-blockchain  301
+/enterprise-blockchain-can-big-business-co-opt/  /blog/enterprise-blockchain-can-big-business-co-opt  301
+/from-supply-chain-to-the-blockchain-heal/  /blog/from-supply-chain-to-the-blockchain-heal  301
+/the-ball-and-blockchain-obstacles-to-a-world-changing/  /blog/the-ball-and-blockchain-obstacles-to-a-world-changing  301
+/what-solutions-are-best-built-with-blockchain-or-not/  /blog/what-solutions-are-best-built-with-blockchain-or-not  301
+/a-historical-perspective-on-blockchain/  /blog/a-historical-perspective-on-blockchain  301
+/hot-sauce-is-what-i-got/  /blog/hot-sauce-is-what-i-got  301
+/thing-price-gouging-price-fixing/  /blog/thing-price-gouging-price-fixing  301
+/the-myth-of-the-rfp-for-everything-at-half-price/  /blog/the-myth-of-the-rfp-for-everything-at-half-price  301
+/smoking-gun-questions-ask-sourcing-broker/  /blog/smoking-gun-questions-ask-sourcing-broker  301
+/if-cloud-is-mainstream/  /blog/if-cloud-is-mainstream  301
+/if-cloud-is-mainstream-2-existing-cloud/  /blog/if-cloud-is-mainstream-2-existing-cloud  301
+/buyers-say-ok-sure-part-1/  /blog/buyers-say-ok-sure-part-1  301
+/admit-we-have-a-problem-part-2-it-solutions/  /blog/admit-we-have-a-problem-part-2-it-solutions  301
+/fast-growth-companies-likely-fall-part3/  /blog/fast-growth-companies-likely-fall-part3  301
+/cios-guide-smarter-vendor-negotiation/  /blog/cios-guide-smarter-vendor-negotiation  301
+/hire-someone-led-rebellion/  /blog/hire-someone-led-rebellion  301
+/build-shared-services/  /blog/build-shared-services  301
+/optimize-re-negotiate-contracts/  /blog/optimize-re-negotiate-contracts  301
+/scale-buy/  /blog/scale-buy  301
+/mini-episode-tony-greenberg-ceo-of-ramprate/  /blog/mini-episode-tony-greenberg-ceo-of-ramprate  301
+/microsoft-underwater-data-centers/  /blog/microsoft-underwater-data-centers  301
+/boiling-the-human-h-summit-transcript-harvard-kurzweil/  /blog/boiling-the-human-h-summit-transcript-harvard-kurzweil  301
+/human-operating-system/  /blog/human-operating-system  301
+/the-buyers-sellers-honesty-dance-2/  /blog/the-buyers-sellers-honesty-dance-2  301
+/buyers-sellers-honesty-dance-1/  /blog/buyers-sellers-honesty-dance-1  301
+/the-cheesy-million-it-infrastructure-services-promotion/  /blog/the-cheesy-million-it-infrastructure-services-promotion  301
+/dcd-as-a-service-6-questions/  /blog/dcd-as-a-service-6-questions  301
+/dcd-as-a-service-conference-opening-plenary-keynote-panel/  /blog/dcd-as-a-service-conference-opening-plenary-keynote-panel  301
+/russias-data-localization-law/  /blog/russias-data-localization-law  301
+/infrastructure-optimization-itbm/  /blog/infrastructure-optimization-itbm  301
+/cloud-migration-strategy/  /blog/cloud-migration-strategy  301
+/cios-eliminate-waste-let-2015-year-smart-cloud/  /blog/cios-eliminate-waste-let-2015-year-smart-cloud  301
+/bulletproof-core-app-migration-cloud-essential-readiness-checklist/  /blog/bulletproof-core-app-migration-cloud-essential-readiness-checklist  301
+/happening-security-driven-cios-cfos-must-align/  /blog/happening-security-driven-cios-cfos-must-align  301
+/technology-business-management-cios-new-survival-imperative/  /blog/technology-business-management-cios-new-survival-imperative  301
+/making-it-fit-like-a-good-shoe/  /blog/making-it-fit-like-a-good-shoe  301
+/attention-cios-2016-budget-upside-surprise-awaits/  /blog/attention-cios-2016-budget-upside-surprise-awaits  301
+/purchase-decisions-know-internal-buying-center/  /blog/purchase-decisions-know-internal-buying-center  301
+/whats-wrong-infrastructure-sourcing-infographic/  /blog/whats-wrong-infrastructure-sourcing-infographic  301
+/keys-making-smart-decisions-migrating-applications-cloud/  /blog/keys-making-smart-decisions-migrating-applications-cloud  301
+/ebay-measures-energy-consumption-with-digital-service-efficiency/  /blog/ebay-measures-energy-consumption-with-digital-service-efficiency  301
+/7-points-of-friction-in-managing-it-infrastructure-change/  /blog/7-points-of-friction-in-managing-it-infrastructure-change  301
+/infrastructure-optimization-what-you-need-to-know-about-wasteful-it/  /blog/infrastructure-optimization-what-you-need-to-know-about-wasteful-it  301
+/avoiding-the-rigged-managed-services-rfp/  /blog/avoiding-the-rigged-managed-services-rfp  301
+/landlords-double-as-energy-brokers/  /blog/landlords-double-as-energy-brokers  301
+/future-of-it-sourcing-negotiations/  /blog/future-of-it-sourcing-negotiations  301
+/csrhub-scores-join-ramprates-spy-index/  /blog/csrhub-scores-join-ramprates-spy-index  301
+/business-at-the-speed-of-light-what-is-a-millisecond-worth/  /blog/business-at-the-speed-of-light-what-is-a-millisecond-worth  301
+/when-valuations-dont-mean-valuable/  /blog/when-valuations-dont-mean-valuable  301
+/jumping-through-hoops-with-hulu/  /blog/jumping-through-hoops-with-hulu  301
+/amazon-trumps-all-other-suitors-in-quest-for-hulu/  /blog/amazon-trumps-all-other-suitors-in-quest-for-hulu  301
+/key-cloud-migration-decisions/  /blog/key-cloud-migration-decisions  301
+/google-wrecks-the-cdn-market/  /blog/google-wrecks-the-cdn-market  301
+/a-cynic-predicts-it-and-media-in-2011-markets-will-stay-irrational-longer-than-companies-stay-solvent/  /blog/a-cynic-predicts-it-and-media-in-2011-markets-will-stay-irrational-longer-than-companies-stay-solvent  301
+/2011-through-the-eyes-of-a-sourcing-advisor/  /blog/2011-through-the-eyes-of-a-sourcing-advisor  301
+/break-out-the-buggy-whips-is-now-the-tipping-point-for-streaming-video/  /blog/break-out-the-buggy-whips-is-now-the-tipping-point-for-streaming-video  301
+/new-date-from-ramprate-it-services-transparency/  /blog/new-date-from-ramprate-it-services-transparency  301
+/are-you-going-green-or-going-for-the-green/  /blog/are-you-going-green-or-going-for-the-green  301
+/strategic-it-contract-default-smart-decision-or-dirty-business/  /blog/strategic-it-contract-default-smart-decision-or-dirty-business  301
+/google-verizon-walled-garden-net-neutrality-plan/  /blog/google-verizon-walled-garden-net-neutrality-plan  301
+/hosting-uptime/  /blog/hosting-uptime  301
+/microsoft-starts-to-share/  /blog/microsoft-starts-to-share  301
+/format-war/  /blog/format-war  301
+/google-as-cdn/  /blog/google-as-cdn  301
+/data-center-checklist/  /blog/data-center-checklist  301
+/sla-measurement/  /blog/sla-measurement  301
+/it-services-suppliers-reviews-can-you-believe-it/  /blog/it-services-suppliers-reviews-can-you-believe-it  301
+/it-outsourcing-risk-consequential-damages/  /blog/it-outsourcing-risk-consequential-damages  301
+/managed-services-supplier-playbook-currency-risk/  /blog/managed-services-supplier-playbook-currency-risk  301
+/perspectives-on-green-grid-virtualization-whitepaper/  /blog/perspectives-on-green-grid-virtualization-whitepaper  301
+/cloud-computing-coming-clouds-and-storm/  /blog/cloud-computing-coming-clouds-and-storm  301
+/lions-cant-survive-on-plastics-should-eat-bits-instead/  /blog/lions-cant-survive-on-plastics-should-eat-bits-instead  301
+/cdn-pricing-at-penny-a-gig/  /blog/cdn-pricing-at-penny-a-gig  301
+/data-center-supplier-playbook-capacity-based-power/  /blog/data-center-supplier-playbook-capacity-based-power  301
+/it-outsourcing-contract-negotiation-playbook/  /blog/it-outsourcing-contract-negotiation-playbook  301
+/youtube-googles-phantom-loss-leader/  /blog/youtube-googles-phantom-loss-leader  301
+/and-they-all-wore-blazers-and-blue-jeans-the-digital-music-forum/  /blog/and-they-all-wore-blazers-and-blue-jeans-the-digital-music-forum  301
+
+# ===== CATEGORY REDIRECTS =====
+/category/blockchain/       /blog/category/blockchain    301
+/category/cloud-optimization-and-migration/  /blog/category/cloud-optimization-and-migration  301
+/category/data-center-power-efficiency/  /blog/category/data-center-power-efficiency  301
+/category/it-infrastructure/  /blog/category/it-infrastructure  301
+/category/it-optimization/  /blog/category/it-optimization  301
+/category/sourcing/         /blog/category/sourcing      301
+/category/strategic-sourcing/  /blog/category/strategic-sourcing  301
+/category/news/             /blog/category/news          301
+/category/featured/         /blog/category/featured      301
+/category/itbm/             /blog/category/itbm          301
+/category/security/         /blog/category/security      301
+/category/risk-management/  /blog/category/risk-management  301
+/category/telecom/          /blog/category/telecom       301
+/category/daos/             /blog/category/daos          301
+/category/edge-compute/     /blog/category/edge-compute  301
+/category/spy-index/        /blog/category/spy-index     301
+
+# ===== OLD WORDPRESS PAGE REDIRECTS (from Yoast link data) =====
+
+# Solutions pages → /expertise
+/solutions/it/              /expertise                   301
+/solutions/ceo/             /expertise                   301
+/solutions/finance/         /expertise                   301
+/solutions/procurement/     /expertise                   301
+/solutions/cdn-optimization/  /expertise                 301
+/solutions/cloud-hypersourcing/  /expertise              301
+/solutions/cloud-optimization-and-migration/  /expertise 301
+/solutions/data-center-and-colocation/  /expertise       301
+/solutions/data-center-optimization/  /expertise         301
+/solutions/global-network-optimization/  /expertise      301
+/solutions/telecom-expense-management/  /expertise       301
+/solutions/*                /expertise                   301
+
+# Services / IT Sourcing pages → /sourcing
+/services/it-sourcing/      /sourcing                    301
+/it-sourcing/               /sourcing                    301
+/it-sourcing/clients/       /proof                       301
+/it-sourcing/clients/advisory-success-stories/  /proof   301
+/it-sourcing/testimonials/  /proof                       301
+/it-sourcing/leadership-team/  /about                    301
+/it-sourcing/corporate-social-responsibility/  /impactsoul  301
+/managedservices/it-sourcing/  /sourcing                 301
+/managedservices/research/  /sourcing                    301
+/managedservices/*          /sourcing                    301
+
+# Advantage / Why pages → /about
+/advantage/                 /about                       301
+/advantage/why/             /about                       301
+/why/                       /about                       301
+
+# About Us subpages → /about
+/about-us/                  /about                       301
+/about-us/careers/          /about                       301
+/about-us/clients/          /proof                       301
+/about-us/testimonials/     /proof                       301
+/about-us/leadership-team/* /about                       301
+/about-us/corporate-social-responsibility/  /impactsoul  301
+/about-us/*                 /about                       301
+
+# Resources / Case studies → /proof
+/resources/ebay-success-story/  /proof                   301
+/resources/cdn/             /expertise                   301
+/resources/content-delivery-network/  /expertise         301
+/resources/cloud-audit-service/  /expertise              301
+/resources/cloud-hypersourcing-solution/  /expertise     301
+/resources/*                /proof                       301
+/clients/ebay/              /proof                       301
+/clients/*                  /proof                       301
+
+# Impact / CSR pages → /impactsoul
+/corporate-social-responsibility/  /impactsoul           301
+/values/                    /impactsoul                  301
+/impact-advisory-scope-of-services/  /impactsoul         301
+/syzygy-impact-sourcing-2020/  /impactsoul              301
+
+# SPY Index / Platform pages → /expertise
+/service-provider-intelligence-index/  /expertise        301
+/spy-index-platform/        /expertise                   301
+/hypersource-it-platform/   /expertise                   301
+/cdn/                       /expertise                   301
+/duediligence/              /expertise                   301
+/siteselect/                /expertise                   301
+
+# Startup / Optimize / Scale pages → /sourcing
+/startup-services/          /sourcing                    301
+/startup/                   /sourcing                    301
+/optimize/                  /sourcing                    301
+/scale/                     /sourcing                    301
+/restructure/               /sourcing                    301
+
+# Bio / Author pages → /about
+/about-tony-greenberg/      /about                       301
+/media-bio-tony-greenberg/  /about                       301
+/tonyg/                     /about                       301
+/author/*                   /blog                        301
+
+# Blog subsections → /blog
+/blog/services/*            /blog                        301
+/blog/it-myths/             /blog                        301
+
+# Old category variants
+/category/cloud/            /blog/category/cloud-optimization-and-migration  301
+/blockchain/                /blog/category/blockchain    301
+
+# Get quote → /contact
+/get-quote/                 /contact                     301
+
+# Date-based archive URLs → /blog
+/2010/*                     /blog                        301
+/2011/*                     /blog                        301
+/2012/*                     /blog                        301
+/2013/*                     /blog                        301
+/2014/*                     /blog                        301
+/2015/*                     /blog                        301
+/2016/*                     /blog                        301
+/2017/*                     /blog                        301
+/2018/*                     /blog                        301
+/2019/*                     /blog                        301
+/2020/*                     /blog                        301
+/2021/*                     /blog                        301
+/2022/*                     /blog                        301
+/2023/*                     /blog                        301
+/2024/*                     /blog                        301
+/2025/*                     /blog                        301
+/2026/*                     /blog                        301
+
+# Staging URLs → strip prefix and redirect
+/mystaging01/blog/          /blog                        301
+/mystaging01/contact/       /contact                     301
+/mystaging01/about-us/      /about                       301
+/mystaging01/advantage/     /about                       301
+/mystaging01/blockchain/    /blog/category/blockchain    301
+/mystaging01/cdn/           /expertise                   301
+/mystaging01/it-sourcing/*  /sourcing                    301
+/mystaging01/managedservices/*  /sourcing                301
+/mystaging01/solutions/*    /expertise                   301
+/mystaging01/resources/*    /proof                       301
+/mystaging01/services/*     /sourcing                    301
+/mystaging01/*              /                            301
+
+# Logo image paths → homepage (these are old embedded logo assets)
+/logo/*                     /                            301
+
+# ===== WORDPRESS SYSTEM REDIRECTS =====
+/wp-admin/                  /                            301
+/wp-login.php               /                            301
+/feed/                      /blog                        301
+/feed/atom/                 /blog                        301
+/comments/feed/             /blog                        301
+/wp-content/*               /                            301
+/wp-includes/*              /                            301
