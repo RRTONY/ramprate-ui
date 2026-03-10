@@ -57,6 +57,7 @@ export default function Header({companyName, logo, navigation}: HeaderProps) {
               width={160}
               height={40}
               priority
+              style={{filter: 'brightness(0) invert(1)'}}
             />
           ) : (
             <Image
