@@ -7,6 +7,7 @@ import TeamGrid from '@/components/sections/TeamGrid'
 import BlogLatest from '@/components/sections/BlogLatest'
 import ImpactSection from '@/components/sections/ImpactSection'
 import ContactFormSection from '@/components/sections/ContactFormSection'
+import TestimonialGrid from '@/components/sections/TestimonialGrid'
 
 const componentMap: Record<string, React.ComponentType<Record<string, unknown>>> = {
   hero: Hero as React.ComponentType<Record<string, unknown>>,
@@ -18,6 +19,7 @@ const componentMap: Record<string, React.ComponentType<Record<string, unknown>>>
   blogLatest: BlogLatest as React.ComponentType<Record<string, unknown>>,
   impactSection: ImpactSection as React.ComponentType<Record<string, unknown>>,
   contactForm: ContactFormSection as React.ComponentType<Record<string, unknown>>,
+  testimonialGrid: TestimonialGrid as React.ComponentType<Record<string, unknown>>,
 }
 
 interface Section {

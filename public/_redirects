@@ -10,51 +10,60 @@
 
 # ===== BLOG POST REDIRECTS =====
 # WordPress used /slug/ format, new site uses /blog/slug
-/patience-in-the-ai-infrastructure-gold-rush-the-second-mouse-gets-the-cheese/  /blog/patience-in-the-ai-infrastructure-gold-rush-the-second-mouse-gets-the-cheese  301
-/republics-mirror-tokens-spacex-and-beyond/  /blog/republics-mirror-tokens-spacex-and-beyond  301
+# CRITICAL blog posts → shortened slugs
+/patience-in-the-ai-infrastructure-gold-rush-the-second-mouse-gets-the-cheese/  /blog/ai-infrastructure-gold-rush  301
+/republics-mirror-tokens-spacex-and-beyond/  /blog/republic-mirror-tokens-spacex  301
+/ramprate-is-b-certified-corp-the-accolade/  /blog/b-corp-certified  301
+/kid-in-minnesota-mastering-human-business-development/  /blog/kid-in-minnesota  301
+
+# HIGH blog posts → shortened slugs
+/from-supply-chain-to-the-blockchain-heal/  /blog/supply-chain-blockchain-heal  301
+/ramprate-works-with-devxdao-and-xprize/  /blog/devxdao-xprize-grant  301
+/boiling-the-human-h-summit-transcript-harvard-kurzweil/  /blog/boiling-the-human-harvard  301
+/human-operating-system/  /blog/human-operating-system  301
+/uni-token-price-surge-a-reflection-of-the-markets-hunger-for-effective-governance/  /blog/uni-token-governance  301
+/the-right-numbers-supplier-fit-gross-national-happiness-and-blockchain/  /blog/right-numbers-gnh-blockchain  301
 /techphil/  /blog/techphil  301
-/uni-token-price-surge-a-reflection-of-the-markets-hunger-for-effective-governance/  /blog/uni-token-price-surge-a-reflection-of-the-markets-hunger-for-effective-governance  301
-/convert-burning-man-dao-menagerie/  /blog/convert-burning-man-dao-menagerie  301
-/energy-as-impact/  /blog/energy-as-impact  301
-/edge-data-center-provider-redivider-expands-advisory/  /blog/edge-data-center-provider-redivider-expands-advisory  301
-/ramprate-works-with-devxdao-and-xprize/  /blog/ramprate-works-with-devxdao-and-xprize  301
-/ramprate-is-b-certified-corp-the-accolade/  /blog/ramprate-is-b-certified-corp-the-accolade  301
-/davos-2022-world-economic-forum-here-we-come/  /blog/davos-2022-world-economic-forum-here-we-come  301
-/its-time-to-uber-and-airbnb-the-telecommunications/  /blog/its-time-to-uber-and-airbnb-the-telecommunications  301
-/hiding-fees-in-the-transparent-age/  /blog/hiding-fees-in-the-transparent-age  301
-/peri-finance-announces-ieo-on-gate-io/  /blog/peri-finance-announces-ieo-on-gate-io  301
-/your-words-are-hammers/  /blog/your-words-are-hammers  301
-/executives-from-tech-giants-join-syntropy/  /blog/executives-from-tech-giants-join-syntropy  301
-/the-real-world-pied-piper-of-the-new-internet/  /blog/the-real-world-pied-piper-of-the-new-internet  301
-/kid-in-minnesota-mastering-human-business-development/  /blog/kid-in-minnesota-mastering-human-business-development  301
-/marc-andreessen-rebuttal-2020/  /blog/marc-andreessen-rebuttal-2020  301
-/spy-v1/  /blog/spy-v1  301
-/the-right-numbers-supplier-fit-gross-national-happiness-and-blockchain/  /blog/the-right-numbers-supplier-fit-gross-national-happiness-and-blockchain  301
-/enterprise-blockchain-can-big-business-co-opt/  /blog/enterprise-blockchain-can-big-business-co-opt  301
-/from-supply-chain-to-the-blockchain-heal/  /blog/from-supply-chain-to-the-blockchain-heal  301
-/the-ball-and-blockchain-obstacles-to-a-world-changing/  /blog/the-ball-and-blockchain-obstacles-to-a-world-changing  301
-/what-solutions-are-best-built-with-blockchain-or-not/  /blog/what-solutions-are-best-built-with-blockchain-or-not  301
-/a-historical-perspective-on-blockchain/  /blog/a-historical-perspective-on-blockchain  301
-/hot-sauce-is-what-i-got/  /blog/hot-sauce-is-what-i-got  301
-/thing-price-gouging-price-fixing/  /blog/thing-price-gouging-price-fixing  301
-/the-myth-of-the-rfp-for-everything-at-half-price/  /blog/the-myth-of-the-rfp-for-everything-at-half-price  301
-/smoking-gun-questions-ask-sourcing-broker/  /blog/smoking-gun-questions-ask-sourcing-broker  301
-/if-cloud-is-mainstream/  /blog/if-cloud-is-mainstream  301
-/if-cloud-is-mainstream-2-existing-cloud/  /blog/if-cloud-is-mainstream-2-existing-cloud  301
+/its-time-to-uber-and-airbnb-the-telecommunications/  /blog/uber-airbnb-telecom  301
+
+# MEDIUM posts → /thinking with shortened slugs
+/hiding-fees-in-the-transparent-age/  /thinking/hiding-fees-transparent-age  301
+/your-words-are-hammers/  /thinking/words-are-hammers  301
+/marc-andreessen-rebuttal-2020/  /thinking/andreessen-rebuttal  301
+/enterprise-blockchain-can-big-business-co-opt/  /thinking/enterprise-blockchain  301
+/the-ball-and-blockchain-obstacles-to-a-world-changing/  /thinking/ball-and-blockchain  301
+/what-solutions-are-best-built-with-blockchain-or-not/  /thinking/blockchain-use-cases  301
+/a-historical-perspective-on-blockchain/  /thinking/blockchain-history  301
+/thing-price-gouging-price-fixing/  /thinking/price-gouging-it  301
+/the-myth-of-the-rfp-for-everything-at-half-price/  /thinking/myth-of-rfp  301
+/smoking-gun-questions-ask-sourcing-broker/  /thinking/smoking-gun-sourcing  301
+/cios-guide-smarter-vendor-negotiation/  /thinking/cio-vendor-negotiation  301
+/fast-growth-companies-likely-fall-part3/  /thinking/fast-growth-fall-3  301
+/hire-someone-led-rebellion/  /thinking/hire-rebellion-leader  301
+/the-buyers-sellers-honesty-dance-2/  /thinking/honesty-dance-2  301
+/buyers-sellers-honesty-dance-1/  /thinking/honesty-dance-1  301
+
+# SKIP posts (deleted from Sanity) → redirect to /blog
+/convert-burning-man-dao-menagerie/  /blog  301
+/energy-as-impact/  /blog  301
+/edge-data-center-provider-redivider-expands-advisory/  /blog  301
+/davos-2022-world-economic-forum-here-we-come/  /blog  301
+/peri-finance-announces-ieo-on-gate-io/  /blog  301
+/executives-from-tech-giants-join-syntropy/  /blog  301
+/the-real-world-pied-piper-of-the-new-internet/  /blog  301
+/spy-v1/  /blog  301
+/hot-sauce-is-what-i-got/  /blog  301
+/if-cloud-is-mainstream/  /blog  301
+/if-cloud-is-mainstream-2-existing-cloud/  /blog  301
+/build-shared-services/  /blog  301
+/optimize-re-negotiate-contracts/  /blog  301
+/scale-buy/  /blog  301
+/mini-episode-tony-greenberg-ceo-of-ramprate/  /blog  301
+/microsoft-underwater-data-centers/  /blog  301
+
+# Remaining blog posts (unchanged slugs)
 /buyers-say-ok-sure-part-1/  /blog/buyers-say-ok-sure-part-1  301
 /admit-we-have-a-problem-part-2-it-solutions/  /blog/admit-we-have-a-problem-part-2-it-solutions  301
-/fast-growth-companies-likely-fall-part3/  /blog/fast-growth-companies-likely-fall-part3  301
-/cios-guide-smarter-vendor-negotiation/  /blog/cios-guide-smarter-vendor-negotiation  301
-/hire-someone-led-rebellion/  /blog/hire-someone-led-rebellion  301
-/build-shared-services/  /blog/build-shared-services  301
-/optimize-re-negotiate-contracts/  /blog/optimize-re-negotiate-contracts  301
-/scale-buy/  /blog/scale-buy  301
-/mini-episode-tony-greenberg-ceo-of-ramprate/  /blog/mini-episode-tony-greenberg-ceo-of-ramprate  301
-/microsoft-underwater-data-centers/  /blog/microsoft-underwater-data-centers  301
-/boiling-the-human-h-summit-transcript-harvard-kurzweil/  /blog/boiling-the-human-h-summit-transcript-harvard-kurzweil  301
-/human-operating-system/  /blog/human-operating-system  301
-/the-buyers-sellers-honesty-dance-2/  /blog/the-buyers-sellers-honesty-dance-2  301
-/buyers-sellers-honesty-dance-1/  /blog/buyers-sellers-honesty-dance-1  301
 /the-cheesy-million-it-infrastructure-services-promotion/  /blog/the-cheesy-million-it-infrastructure-services-promotion  301
 /dcd-as-a-service-6-questions/  /blog/dcd-as-a-service-6-questions  301
 /dcd-as-a-service-conference-opening-plenary-keynote-panel/  /blog/dcd-as-a-service-conference-opening-plenary-keynote-panel  301
@@ -180,12 +189,12 @@
 
 # Impact / CSR pages → /impactsoul
 /corporate-social-responsibility/  /impactsoul           301
-/values/                    /impactsoul                  301
+/values/                    /about                       301
 /impact-advisory-scope-of-services/  /impactsoul         301
 /syzygy-impact-sourcing-2020/  /impactsoul              301
 
 # SPY Index / Platform pages → /expertise
-/service-provider-intelligence-index/  /expertise        301
+/service-provider-intelligence-index/  /sourcing         301
 /spy-index-platform/        /expertise                   301
 /hypersource-it-platform/   /expertise                   301
 /cdn/                       /expertise                   301
@@ -251,6 +260,8 @@
 
 # Logo image paths → homepage (these are old embedded logo assets)
 /logo/*                     /                            301
+
+/privacy-policy/            /privacy                     301
 
 # ===== WORDPRESS SYSTEM REDIRECTS =====
 /wp-admin/                  /                            301

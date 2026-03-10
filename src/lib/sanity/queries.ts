@@ -33,6 +33,10 @@ export const pageBySlugQuery = groq`
       _type == "teamGrid" => {
         heading,
         members[]->{name, slug, role, photo, linkedin}
+      },
+      _type == "testimonialGrid" => {
+        heading,
+        testimonials[]->{_id, quote, personName, role, company, companyLogo, photo}
       }
     },
     seo
