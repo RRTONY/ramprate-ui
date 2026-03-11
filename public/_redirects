@@ -4,9 +4,7 @@
 # ===== PAGE REDIRECTS =====
 /about/                     /about                      301
 /contact/                   /contact                    301
-/expertise/                 /expertise                  301
 /impactsoul/                /impactsoul                 301
-/proof/                     /proof                      301
 
 # ===== BLOG POST REDIRECTS =====
 # WordPress used /slug/ format, new site uses /blog/slug
