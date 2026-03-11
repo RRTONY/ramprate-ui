@@ -611,6 +611,25 @@ export default function HomeContent() {
             <br className="hidden sm:block" />
             The people on the testimonials are the people who serve you.
           </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/process"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110"
+              style={{background: 'var(--gold)', color: 'var(--dark)', fontFamily: 'var(--font-body)'}}
+            >
+              Take the Flow Circuit Assessment
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </Link>
+            <Link
+              href="/process"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border"
+              style={{borderColor: 'rgba(10,15,26,0.3)', color: 'var(--dark)', fontFamily: 'var(--font-body)'}}
+            >
+              Find Your Me / Way / Our
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </Link>
+          </div>
         </div>
       </section>
 

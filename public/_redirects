@@ -256,6 +256,12 @@
 
 /privacy-policy/            /privacy                     301
 
+# Route aliases — reference site used /connect and /impact
+/connect/                   /contact                     301
+/connect                    /contact                     301
+/impact/                    /impactsoul                  301
+/impact                     /impactsoul                  301
+
 # ===== WORDPRESS SYSTEM REDIRECTS =====
 /wp-admin/                  /                            301
 /wp-login.php               /                            301

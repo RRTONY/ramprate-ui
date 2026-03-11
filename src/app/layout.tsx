@@ -43,7 +43,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         <Header
           companyName={settings?.companyName}
           logo={settings?.logo}
-          navigation={settings?.navigation}
         />
         <main className="min-h-screen">{children}</main>
         {settings?.googleAnalyticsId && (
