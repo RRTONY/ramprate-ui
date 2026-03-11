@@ -1,11 +1,6 @@
 # WordPress → Next.js 301 Redirect Map
 # Old WordPress URLs redirect to new site structure
 
-# ===== PAGE REDIRECTS =====
-/about/                     /about                      301
-/contact/                   /contact                    301
-/impactsoul/                /impactsoul                 301
-
 # ===== BLOG POST REDIRECTS =====
 # WordPress used /slug/ format, new site uses /blog/slug
 # CRITICAL blog posts → shortened slugs
