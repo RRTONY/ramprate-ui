@@ -10,6 +10,19 @@ interface ContactFormSectionProps {
 export default function ContactFormSection({heading, description}: ContactFormSectionProps) {
   const [submitted, setSubmitted] = useState(false)
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const data = new FormData(form)
+    fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(data as any).toString(),
+    })
+      .then(() => setSubmitted(true))
+      .catch(() => setSubmitted(true))
+  }
+
   if (submitted) {
     return (
       <section className="py-16 md:py-24 bg-gray-50">
@@ -31,14 +44,12 @@ export default function ContactFormSection({heading, description}: ContactFormSe
           <p className="text-center text-gray-600 mb-8">{description}</p>
         )}
         <form
-          name="contact"
+          name="contact-section"
           method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          onSubmit={() => setSubmitted(true)}
+          onSubmit={handleSubmit}
           className="space-y-6"
         >
-          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="form-name" value="contact-section" />
           <p className="hidden">
             <label>
               Don&apos;t fill this out: <input name="bot-field" />

@@ -94,7 +94,6 @@ export default function ContactPage() {
                 <form
                   name="contact"
                   method="POST"
-                  data-netlify="true"
                   onSubmit={handleSubmit}
                   className="bg-white rounded-xl p-8 border border-black/5 shadow-sm"
                 >

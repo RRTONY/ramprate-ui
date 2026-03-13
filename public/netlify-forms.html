@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head><title>Netlify Form Detection</title></head>
+<body>
+  <!--
+    This file exists solely for Netlify's form detection crawler.
+    @netlify/plugin-nextjs v5 cannot detect forms in SSR/CSR pages,
+    so forms must be declared here as static HTML.
+    Actual form submissions are handled via JS fetch in the React components.
+  -->
+
+  <!-- Contact page form (contact/page.tsx) -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input name="bot-field" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="company" />
+    <input type="text" name="title" />
+    <input type="tel" name="phone" />
+    <select name="practice">
+      <option value="sourcing">IT Sourcing / Cost Optimization</option>
+      <option value="growth">Growth Advisory / Syzygy</option>
+      <option value="web3">Web3 / Stratum</option>
+      <option value="impact">Impact / ImpactSoul</option>
+      <option value="general">General Inquiry</option>
+    </select>
+    <textarea name="message"></textarea>
+    <button type="submit">Send</button>
+  </form>
+
+  <!-- Section contact form (ContactFormSection.tsx) -->
+  <form name="contact-section" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact-section" />
+    <input name="bot-field" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="company" />
+    <select name="jobFunction">
+      <option value="executive">Executive</option>
+      <option value="it">IT</option>
+      <option value="procurement">Procurement</option>
+      <option value="finance">Finance</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea name="message"></textarea>
+    <button type="submit">Send</button>
+  </form>
+</body>
+</html>
