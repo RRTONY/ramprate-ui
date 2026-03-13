@@ -62,6 +62,8 @@ const summaryRows = [
 
 export default function ProcessPage() {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+  void openAccordion
+  void setOpenAccordion
 
   return (
     <main>
@@ -71,19 +73,19 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>How We Work</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-body)' }}>How We Work</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               From First Call to{' '}
               <span style={{ color: 'oklch(0.55 0.2 190)' }}>Closed Deals</span>{' '}
               in 90 Days.
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-8" style={{ fontFamily: 'var(--font-body)' }}>
-              First you find your Me. Then your Way. Then your Our. 25 years. 250+ enterprises. It's never not worked.
+              First you find your Me. Then your Way. Then your Our. 25 years. 250+ enterprises. It&apos;s never not worked.
             </p>
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[{ value: "7", label: "Steps" }, { value: "90", label: "Days to proof" }, { value: "25", label: "Years refined" }].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div className="text-2xl font-bold text-[oklch(0.82_0.15_75)] mb-1" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
+                  <div className="text-2xl font-bold mb-1" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-display)' }}>{stat.value}</div>
                   <div className="text-xs text-white/50" style={{ fontFamily: 'var(--font-body)' }}>{stat.label}</div>
                 </div>
               ))}
@@ -146,7 +148,7 @@ export default function ProcessPage() {
               </div>
             ))}
           </div>
-          <div className="mt-10 p-5 rounded-lg border-l-4 border-[oklch(0.82_0.15_75)]" style={{ background: 'rgba(255,255,255,0.03)' }}>
+          <div className="mt-10 p-5 rounded-lg border-l-4" style={{ borderColor: 'oklch(0.82 0.15 75)', background: 'rgba(255,255,255,0.03)' }}>
             <p className="text-sm sm:text-base text-white/70 italic" style={{ fontFamily: 'var(--font-body)' }}>
               Our role: find the friction, connect the dots, fix the team, build the process. Not the big idea — the right idea.
             </p>
@@ -163,10 +165,10 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Phase 1 — Diagnose</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>Phase 1 — Diagnose</span>
             <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Find the real problem —{' '}
-              <span className="text-[oklch(0.55_0.15_30)]">not the symptom.</span>
+              <span style={{ color: 'oklch(0.55 0.15 30)' }}>not the symptom.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -180,11 +182,11 @@ export default function ProcessPage() {
                   <h3 className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>The Call</h3>
                 </div>
               </div>
-              <p className="text-sm text-[oklch(0.35_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-                You tell us what's broken. We listen. We diagnose in 48 hours.
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
+                You tell us what&apos;s broken. We listen. We diagnose in 48 hours.
               </p>
-              <p className="text-sm text-[oklch(0.45_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
-                Could be a missing role. A wrong market. A broken handoff. A stalled fundraise. Whatever the problem, there's always a solution.
+              <p className="text-sm leading-relaxed" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>
+                Could be a missing role. A wrong market. A broken handoff. A stalled fundraise. Whatever the problem, there&apos;s always a solution.
               </p>
             </div>
             <div className="glass-card-warm p-7">
@@ -197,30 +199,30 @@ export default function ProcessPage() {
                   <h3 className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Flow Circuit Assessment</h3>
                 </div>
               </div>
-              <p className="text-sm text-[oklch(0.35_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-                Map your team's invisible architecture. Who's the Spark? Amplifier? Filter? Ground?
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
+                Map your team&apos;s invisible architecture. Who&apos;s the Spark? Amplifier? Filter? Ground?
               </p>
-              <p className="text-sm text-[oklch(0.45_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>
                 Identify where energy is blocked. Calculate friction cost. See the team you have vs. the team you need.
               </p>
             </div>
           </div>
           <div className="mt-10">
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[oklch(0.45_0.02_50)] mb-5" style={{ fontFamily: 'var(--font-body)' }}>The Circuit Roles</h4>
+            <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-5" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>The Circuit Roles</h4>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {circuitRoles.map((role) => (
                 <div key={role.name} className="rounded-lg p-4 text-center" style={{ backgroundColor: `color-mix(in oklch, ${role.color} 12%, oklch(0.97 0.01 80))` }}>
                   <div className="text-sm font-bold" style={{ color: role.color, fontFamily: 'var(--font-display)' }}>{role.name}</div>
-                  <div className="text-xs text-[oklch(0.45_0.02_50)] mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>{role.sub}</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>{role.sub}</div>
                 </div>
               ))}
             </div>
           </div>
           <div className="mt-10">
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[oklch(0.45_0.02_50)] mb-4" style={{ fontFamily: 'var(--font-body)' }}>Common Friction Points We Find</h4>
+            <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>Common Friction Points We Find</h4>
             <div className="grid sm:grid-cols-2 gap-3">
               {frictionPoints.map((fp) => (
-                <div key={fp} className="flex items-center gap-2.5 text-sm text-[oklch(0.35_0.02_50)]" style={{ fontFamily: 'var(--font-body)' }}>
+                <div key={fp} className="flex items-center gap-2.5 text-sm" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(0.55 0.15 30)" strokeWidth="2" className="shrink-0"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                   <span>{fp}</span>
                 </div>
@@ -267,10 +269,10 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-rust w-[180px] h-[180px] bottom-20 right-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Phase 3 — Execute & Deliver</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>Phase 3 — Execute & Deliver</span>
             <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Process over inspiration.{' '}
-              <span className="text-[oklch(0.55_0.15_30)]">Execution over strategy.</span>
+              <span style={{ color: 'oklch(0.55 0.15 30)' }}>Execution over strategy.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -284,10 +286,10 @@ export default function ProcessPage() {
                   <h3 className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Sign & Execute</h3>
                 </div>
               </div>
-              <p className="text-sm text-[oklch(0.35_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
                 We go live. Introductions. Negotiations. Deals closed. Principals on every call. Weekly progress reports.
               </p>
-              <p className="text-sm text-[oklch(0.45_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>
                 Innovation management — not big bets. We test, iterate, close. Process over inspiration. Execution over strategy.
               </p>
             </div>
@@ -301,32 +303,32 @@ export default function ProcessPage() {
                   <h3 className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>90-Day Checkpoint</h3>
                 </div>
               </div>
-              <p className="text-sm text-[oklch(0.35_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
-                If we haven't delivered measurable results in 90 days, you can walk. No penalty. No hard feelings. No lock-in.
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
+                If we haven&apos;t delivered measurable results in 90 days, you can walk. No penalty. No hard feelings. No lock-in.
               </p>
-              <p className="text-sm text-[oklch(0.45_0.02_50)] leading-relaxed font-medium" style={{ fontFamily: 'var(--font-body)' }}>
+              <p className="text-sm leading-relaxed font-medium" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>
                 In 25 years, no one has ever exercised this option.
               </p>
             </div>
           </div>
           <div className="mt-10 flex items-center gap-4 p-5 rounded-xl border" style={{ background: 'oklch(0.82 0.15 75 / 0.1)', borderColor: 'oklch(0.82 0.15 75 / 0.2)' }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="oklch(0.82 0.15 75)" strokeWidth="2" className="shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <p className="text-sm sm:text-base font-semibold text-[oklch(0.25_0.03_50)]" style={{ fontFamily: 'var(--font-body)' }}>
+            <p className="text-sm sm:text-base font-semibold" style={{ color: 'oklch(0.25 0.03 50)', fontFamily: 'var(--font-body)' }}>
               <span className="uppercase tracking-wider text-xs mr-2" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-mono)' }}>The Guarantee:</span>
-              90 days. If we don't deliver, you walk. It's never happened in 25 years.
+              90 days. If we don&apos;t deliver, you walk. It&apos;s never happened in 25 years.
             </p>
           </div>
           <div className="mt-6">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)] mb-3" style={{ fontFamily: 'var(--font-body)' }}>The Economics</p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[oklch(0.35_0.02_50)]" style={{ fontFamily: 'var(--font-body)' }}>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>The Economics</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>
               <span>$15K–$50K/month</span>
-              <span className="text-[oklch(0.7_0.02_50)]">·</span>
+              <span style={{ color: 'oklch(0.7 0.02 50)' }}>·</span>
               <span>Equity-forward available</span>
-              <span className="text-[oklch(0.7_0.02_50)]">·</span>
+              <span style={{ color: 'oklch(0.7 0.02 50)' }}>·</span>
               <span>Vertical mastermind ~20% of fee</span>
-              <span className="text-[oklch(0.7_0.02_50)]">·</span>
+              <span style={{ color: 'oklch(0.7 0.02 50)' }}>·</span>
               <span>Clawbacks</span>
-              <span className="text-[oklch(0.7_0.02_50)]">·</span>
+              <span style={{ color: 'oklch(0.7 0.02 50)' }}>·</span>
               <span>Historical: 20X multiplier</span>
             </div>
           </div>
@@ -372,7 +374,7 @@ export default function ProcessPage() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom right, oklch(0.45 0.22 260), oklch(0.35 0.18 280))' }} />
         <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            Tell Us What's Broken.
+            Tell Us What&apos;s Broken.
           </h2>
           <p className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto" style={{ fontFamily: 'var(--font-body)' }}>
             Principal responds within 24 hours. No associates. No filters. No intake maze.
@@ -383,7 +385,7 @@ export default function ProcessPage() {
               className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm sm:text-base font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
               style={{ color: 'oklch(0.25 0.15 260)', fontFamily: 'var(--font-body)' }}
             >
-              Tell Us What's Broken
+              Tell Us What&apos;s Broken
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>

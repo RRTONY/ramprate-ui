@@ -6,6 +6,8 @@ import Footer from '@/components/layout/Footer'
 import {client} from '@/lib/sanity/client'
 import {siteSettingsQuery} from '@/lib/sanity/queries'
 import JsonLd, {organizationJsonLd} from '@/components/shared/JsonLd'
+import ExitSurvey from '@/components/shared/ExitSurvey'
+import ScrollToTop from '@/components/shared/ScrollToTop'
 
 export const metadata: Metadata = {
   title: {
@@ -14,6 +16,9 @@ export const metadata: Metadata = {
   },
   description:
     'RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.',
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     images: ['/og.png'],
   },
@@ -40,10 +45,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             socialLinks: settings?.socialLinks,
           })}
         />
-        <Header
-          companyName={settings?.companyName}
-          logo={settings?.logo}
-        />
+        <Header />
         <main className="min-h-screen">{children}</main>
         {settings?.googleAnalyticsId && (
           <>
@@ -63,14 +65,12 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         )}
         <Footer
           companyName={settings?.companyName}
-          logo={settings?.logo}
-          bCorpBadge={settings?.bCorpBadge}
-          footerText={settings?.footerText}
-          address={settings?.address}
           phone={settings?.phone}
           email={settings?.email}
           socialLinks={settings?.socialLinks}
         />
+        <ExitSurvey />
+        <ScrollToTop />
       </body>
     </html>
   )

@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import {urlFor} from '@/lib/sanity/image'
+import Logo from '@/components/shared/Logo'
 
 interface SocialLink {
   platform: string
@@ -9,10 +8,6 @@ interface SocialLink {
 
 interface FooterProps {
   companyName?: string
-  logo?: any
-  bCorpBadge?: any
-  footerText?: any
-  address?: {street?: string; city?: string; state?: string; zip?: string}
   phone?: string
   email?: string
   socialLinks?: SocialLink[]
@@ -36,8 +31,6 @@ const companyLinks = [
 
 export default function Footer({
   companyName,
-  logo,
-  bCorpBadge,
   phone,
   email,
   socialLinks,
@@ -53,42 +46,17 @@ export default function Footer({
           {/* Column 1 — Brand */}
           <div>
             <Link href="/" className="block mb-4">
-              {logo ? (
-                <Image
-                  src={urlFor(logo).width(140).height(36).url()}
-                  alt={companyName || 'RampRate'}
-                  width={140}
-                  height={36}
-                  style={{filter: 'brightness(0) invert(1)'}}
-                />
-              ) : (
-                <Image
-                  src="/ramprate-logo.png"
-                  alt="RampRate"
-                  width={140}
-                  height={36}
-                  style={{filter: 'brightness(0) invert(1)'}}
-                />
-              )}
+              <Logo variant="light" size="md" />
             </Link>
             <p className="text-xs text-white/30 mb-5 leading-relaxed" style={{fontFamily: 'var(--font-body)'}}>
               Since 2000. A fractional team of superstars creating trajectory-changing connections.
             </p>
-            {bCorpBadge ? (
-              <Image
-                src={urlFor(bCorpBadge).width(60).height(60).url()}
-                alt="Certified B Corporation"
-                width={60}
-                height={60}
-              />
-            ) : (
-              <span
-                className="text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/40"
-                style={{fontFamily: 'var(--font-mono)'}}
-              >
-                B Corp Certified
-              </span>
-            )}
+            <span
+              className="text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/40"
+              style={{fontFamily: 'var(--font-mono)'}}
+            >
+              B Corp Certified
+            </span>
           </div>
 
           {/* Column 2 — Brands */}

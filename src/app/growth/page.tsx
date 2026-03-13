@@ -46,10 +46,10 @@ export default function GrowthPage() {
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>Syzygy — Since 2018</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-body)' }}>Syzygy — Since 2018</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               Anchor Clients. Advisors. Capital.{' '}
-              <span className="text-[oklch(0.55_0.15_30)]">All Aligned to Your Vision.</span>
+              <span style={{ color: 'oklch(0.55 0.15 30)' }}>All Aligned to Your Vision.</span>
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-10" style={{ fontFamily: 'var(--font-body)' }}>
               Anchor clients, advisors, capital, impact, strategy, and dispute resolution — all aligned to your vision. For Founders & Impactpreneurs.
@@ -61,7 +61,7 @@ export default function GrowthPage() {
                 { value: "Comp", label: "Equity/tokens + commission + retainers" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div className="text-xl font-bold text-[oklch(0.82_0.15_75)] mb-1" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
+                  <div className="text-xl font-bold mb-1" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-display)' }}>{stat.value}</div>
                   <div className="text-xs text-white/50" style={{ fontFamily: 'var(--font-body)' }}>{stat.label}</div>
                 </div>
               ))}
@@ -75,16 +75,16 @@ export default function GrowthPage() {
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>The Model</span>
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>The Model</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             Kick Down Barriers. Find Allies. Focus on Build.
           </h2>
-          <div className="mt-8 space-y-5 text-base text-[oklch(0.4_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
+          <div className="mt-8 space-y-5 text-base leading-relaxed" style={{ color: 'oklch(0.4 0.02 50)', fontFamily: 'var(--font-body)' }}>
             <p>
               Syzygy: when celestial bodies align to create extraordinary gravitational force. We align founders with the customers, capital, and connections that create escape velocity.
             </p>
             <p>
-              Most growth advisors sell you a methodology. We sell you access. Access to the 350+ vendor relationships, 50+ country network, and 24 years of enterprise trust that our principals have built. When a CIO at a Fortune 500 company takes our call, they're not taking a cold call from an advisor — they're taking a call from someone who saved them millions on their last infrastructure deal. That trust transfers to you.
+              Most growth advisors sell you a methodology. We sell you access. Access to the 350+ vendor relationships, 50+ country network, and 24 years of enterprise trust that our principals have built. When a CIO at a Fortune 500 company takes our call, they&apos;re not taking a cold call from an advisor — they&apos;re taking a call from someone who saved them millions on their last infrastructure deal. That trust transfers to you.
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function GrowthPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              How We Help Founders <span className="text-[oklch(0.55_0.15_30)]">Win</span>
+              How We Help Founders <span style={{ color: 'oklch(0.55 0.15 30)' }}>Win</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -107,7 +107,7 @@ export default function GrowthPage() {
                   {highlightIcons[i]}
                 </div>
                 <h3 className="text-lg font-bold mb-3" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
-                <p className="text-sm text-[oklch(0.45_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>{s.desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -119,9 +119,9 @@ export default function GrowthPage() {
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Startup Advisory Services</span>
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>Startup Advisory Services</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight mb-10" style={{ fontFamily: 'var(--font-display)' }}>
-            The Full <span className="text-[oklch(0.55_0.15_30)]">Playbook</span>
+            The Full <span style={{ color: 'oklch(0.55 0.15 30)' }}>Playbook</span>
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {advisoryServices.map((s) => (
@@ -131,7 +131,7 @@ export default function GrowthPage() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold mb-1" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
-                  <p className="text-xs text-[oklch(0.45_0.02_50)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>{s.desc}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}>{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -146,7 +146,7 @@ export default function GrowthPage() {
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Fee Structure</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>Fee Structure</span>
               <h2 className="mt-4 text-3xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>Aligned Incentives</h2>
               <div className="space-y-4">
                 {[
@@ -162,7 +162,7 @@ export default function GrowthPage() {
               </div>
             </div>
             <div>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Our Process</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>Our Process</span>
               <h2 className="mt-4 text-3xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>How We Engage</h2>
               <div className="space-y-4">
                 {[
@@ -197,7 +197,7 @@ export default function GrowthPage() {
             And focus on the change you want to create in the world.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white text-[oklch(0.35_0.1_30)] hover:bg-white/90 transition-all shadow-lg" style={{ fontFamily: 'var(--font-body)' }}>
+            <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg" style={{ color: 'oklch(0.35 0.1 30)', fontFamily: 'var(--font-body)' }}>
               Start a Conversation
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>

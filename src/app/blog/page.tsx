@@ -29,29 +29,20 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
 
   return (
     <div style={{background: 'var(--dark)', minHeight: '100vh'}}>
-      {/* Page hero */}
-      <div
-        className="pt-32 pb-16 px-5 sm:px-8"
-        style={{background: 'var(--dark-mid)'}}
-      >
-        <div className="max-w-7xl mx-auto">
-          <p
-            className="text-xs font-semibold uppercase tracking-[0.2em] mb-4"
-            style={{color: 'var(--gold)', fontFamily: 'var(--font-body)'}}
-          >
-            Insights
-          </p>
-          <h1
-            className="font-bold text-white mb-4"
-            style={{fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 3.5rem)'}}
-          >
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 overflow-hidden" style={{background: 'var(--dark)'}}>
+        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
+        <div className="glass-orb glass-orb-blue w-[250px] h-[250px] bottom-0 -left-24" />
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block" style={{fontFamily: 'var(--font-body)'}}>Insights</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{fontFamily: 'var(--font-display)'}}>
             Blog
           </h1>
-          <p style={{color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)', fontSize: '1.05rem'}}>
-            Practical insights on IT infrastructure, sourcing, and emerging technology.
+          <p className="text-white/60 text-lg leading-relaxed max-w-2xl" style={{fontFamily: 'var(--font-body)'}}>
+            Practical insights on IT infrastructure, sourcing, cloud, and emerging technology.
           </p>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-12">
         {/* Category filter */}
@@ -61,8 +52,8 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
               href="/blog"
               className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all"
               style={{
-                background: 'var(--gold)',
-                color: 'var(--dark)',
+                background: 'oklch(0.82 0.15 75)',
+                color: 'oklch(0.15 0.02 75)',
                 fontFamily: 'var(--font-body)',
               }}
             >
@@ -72,13 +63,8 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
               <Link
                 key={cat._id}
                 href={`/blog/category/${cat.slug.current}`}
-                className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all hover:opacity-80"
-                style={{
-                  background: 'rgba(255,255,255,0.06)',
-                  color: 'rgba(255,255,255,0.6)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  fontFamily: 'var(--font-body)',
-                }}
+                className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all border border-white/15 text-white/50 hover:text-white hover:border-white/40"
+                style={{fontFamily: 'var(--font-body)'}}
               >
                 {cat.title}
               </Link>

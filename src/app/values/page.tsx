@@ -36,9 +36,9 @@ export default function ValuesPage() {
         <div className="glass-orb glass-orb-blue w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>Our Values</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block" style={{ color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-body)' }}>Our Values</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              Consciousness-Aligned<br /><span className="text-[oklch(0.82_0.15_75)]">Capital</span>
+              Consciousness-Aligned<br /><span style={{ color: 'oklch(0.82 0.15 75)' }}>Capital</span>
             </h1>
             <p className="text-white/70 text-lg leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
               We believe business can be a force for regeneration, not extraction. Everything we do — from sourcing decisions to tokenization design — flows from a commitment to conscious, impact-driven investment.

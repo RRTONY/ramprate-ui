@@ -13,7 +13,10 @@ export const siteSettingsQuery = groq`
     phone,
     email,
     socialLinks,
-    googleAnalyticsId
+    googleAnalyticsId,
+    companyValues,
+    timeline,
+    corporateFacts
   }
 `
 
@@ -120,10 +123,84 @@ export const teamMembersQuery = groq`
     name,
     slug,
     role,
-    bio,
+    "bio": pt::text(bio),
     photo,
     email,
-    linkedin
+    linkedin,
+    twitter
+  }
+`
+
+// Testimonials
+export const testimonialsQuery = groq`
+  *[_type == "testimonial"] | order(order asc){
+    _id,
+    personName,
+    role,
+    company,
+    quote,
+    tag,
+    tier,
+    linkedin,
+    twitter,
+    "companyLogoUrl": companyLogo.asset->url,
+    "photoUrl": photo.asset->url
+  }
+`
+
+// Board Advisors
+export const boardAdvisorsQuery = groq`
+  *[_type == "boardAdvisor"] | order(order asc){
+    _id,
+    name,
+    role,
+    bio,
+    whyAdvise,
+    linkedin,
+    twitter,
+    "photoUrl": photo.asset->url
+  }
+`
+
+// Case Studies
+export const caseStudiesQuery = groq`
+  *[_type == "caseStudy"] | order(order asc){
+    _id,
+    title,
+    result,
+    desc,
+    metrics
+  }
+`
+
+// Confidential Testimonials
+export const confidentialTestimonialsQuery = groq`
+  *[_type == "confidentialTestimonial"] | order(order asc){
+    _id,
+    quote,
+    attribution,
+    division
+  }
+`
+
+// Client Logos
+export const clientLogosQuery = groq`
+  *[_type == "clientLogo"] | order(order asc){
+    _id,
+    name,
+    url,
+    "logoUrl": logo.asset->url
+  }
+`
+
+// All thinking posts (no pagination — archive view)
+export const allThinkingPostsQuery = groq`
+  *[_type == "post" && section == "thinking"] | order(publishedAt desc){
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt
   }
 `
 

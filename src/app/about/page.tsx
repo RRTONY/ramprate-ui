@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import type {Metadata} from 'next'
+import {client} from '@/lib/sanity/client'
+import {teamMembersQuery, boardAdvisorsQuery, siteSettingsQuery} from '@/lib/sanity/queries'
+import {urlFor} from '@/lib/sanity/image'
 
 export const metadata: Metadata = {
   title: 'About | RampRate',
@@ -7,178 +10,6 @@ export const metadata: Metadata = {
     'RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.',
 }
 
-const coreTeam = [
-  {
-    name: 'Tony Greenberg',
-    role: 'Founder & CEO',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/EtSyoZsiJamreUAA.png',
-    bio: '25+ years. Helped take Exodus Communications public (revenue $5M to $600M). Founded RampRate in 2000. 250+ enterprise clients including Microsoft, eBay, Nike, Sony, CBS, Intel, Hearst. 75+ strategy/sourcing projects for Microsoft alone. Investor/advisor to 25+ impact startups across blockchain, psychedelic medicine, healthcare. Emissary to Bhutan\'s Gross National Happiness Centre. Speaker at Harvard, USC. Published in Forbes, Business Insider, HuffPost.',
-    linkedin: 'https://www.linkedin.com/in/tonygreenberg',
-    twitter: 'https://x.com/thinktony',
-  },
-  {
-    name: 'Alex Veytsel',
-    role: 'Co-Founder & CSO',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/YWxJJXOzOBUuHshp.png',
-    bio: 'Expert in digital media business models, revenue streams, and technical infrastructure. Business planning and strategy advisor to Microsoft, Sony, Intel on value chain mapping, partner strategies, and pioneering business models. Joined RampRate 2004. Helped both major TV networks (NBC, Fox) and industry pioneers (iFilm, Audible) reduce costs, improve performance, and reinvest negotiated savings.',
-    linkedin: 'https://www.linkedin.com/in/aveytsel',
-    twitter: null,
-  },
-  {
-    name: 'Josh Bykowski',
-    role: 'Corporate Development & Legal',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/aZCBGfwJAwMiioqX.png',
-    bio: 'Licensed US attorney. M&A advisory, data privacy, IP, emerging technologies. Expertise in blockchain technology and role as a Voting Associate for a decentralized organization with over $250 million AUM. Recognized by Columbia Law School\'s Blog on Corporations and Capital Markets.',
-    linkedin: 'https://www.linkedin.com/in/josh-bykowski-b445211b5',
-    twitter: null,
-  },
-  {
-    name: 'Rob Holmes',
-    role: 'Web3 & Grants Manager, ImpactSoul',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/olBFuRMEniuQAaTo.png',
-    bio: 'Web3 strategist and business development advisor. Over seven years in the space helping founders, protocols, and ecosystems bridge crypto and the physical world — focusing on tokenized infrastructure, DePIN, clean energy, and real-world asset (RWA) integration.',
-    linkedin: 'https://www.linkedin.com/in/rob-holmes-7a479016',
-    twitter: null,
-  },
-  {
-    name: 'Jeff Alinsangan',
-    role: 'Operations',
-    img: null,
-    bio: 'Leads operations at RampRate, ensuring the firm\'s advisory engagements run with precision and efficiency across all four practice areas.',
-    linkedin: 'https://www.linkedin.com/in/jeff-alinsangan-b3bb78',
-    twitter: null,
-  },
-]
-
-const boardAdvisors = [
-  {
-    name: 'Stuart Newton',
-    role: 'Strategic Advisor',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/iyZuFkUvbFZRaLIv.png',
-    bio: 'Recently retired from Deloitte where he led business development nationally for the Blockchain and Digital Asset Practice. Portfolio Success Leader for select private equity firms. Co-founder of Abundant Village.',
-    whyAdvise: 'RampRate operates at the intersection of blockchain and enterprise trust — exactly where the next decade of value creation lives. I advise because they don\'t just talk about transformation, they broker it.',
-    linkedin: 'https://pr.linkedin.com/in/stuartnewton',
-    twitter: null,
-  },
-  {
-    name: 'Gulliver Smithers',
-    role: 'ex-CTO Sony D2C',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/kKJJUsyZjjyWxRiZ.png',
-    bio: 'Product-oriented CTO with over 20 years across media. Previously CTO at Sony D2C, VP of Product at the BBC, CTO at Base79 (successful exit), and Director of On-Demand at ITV.',
-    whyAdvise: 'Having built streaming platforms at Sony and the BBC, I know how rare it is to find advisors who understand both the technology and the business model. RampRate does both.',
-    linkedin: 'https://uk.linkedin.com/in/gulliversmithers',
-    twitter: 'https://x.com/GulliverSmither',
-  },
-  {
-    name: 'Purvee Kondal',
-    role: 'VP Sephora, Global Procurement',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/YSxTQFUJHlUuFtlE.png',
-    bio: 'Vice President at SEPHORA, Global Procurement Officer. Over 15 years at J&J, GE, Capgemini, Ross Stores, Globality, and Albertsons. MBA from Kellogg at Northwestern University.',
-    whyAdvise: 'Procurement at the enterprise level is a battlefield of information asymmetry. RampRate levels that field with data nobody else has. That\'s why I\'m here — they make procurement honest.',
-    linkedin: 'https://www.linkedin.com/in/purveek',
-    twitter: null,
-  },
-  {
-    name: 'Curt Hessler',
-    role: 'ex-Asst. Secretary of Treasury',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/CLTxUwdWDeYNuRdP.png',
-    bio: 'Served as Assistant Secretary of the Treasury for Economic Policy. Senior positions at Unisys and Times-Mirror Group. Rhodes Scholar. Harvard BA, Yale Law JD, UC Berkeley MA in Economics.',
-    whyAdvise: 'RampRate brings the same rigor I demanded at Treasury — data-driven, conflict-free, and accountable to outcomes, not hours billed.',
-    linkedin: 'https://www.linkedin.com/in/curt-hessler-a3682b3a',
-    twitter: null,
-  },
-  {
-    name: 'Barry Patmore',
-    role: '34yr Accenture Partner',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/gyKtcYcxpmXoEpQB.png',
-    bio: 'Distinguished 34-year career at Accenture. Clients included Microsoft, Disney, Visa, JPL. Managing partner of Pacific Northwest and Southern California offices.',
-    whyAdvise: 'After 34 years at Accenture, I know what consulting should be. RampRate is what it should be — principals who execute, not associates who present.',
-    linkedin: 'https://www.linkedin.com/in/barry-patmore-8188b526',
-    twitter: null,
-  },
-  {
-    name: 'Peter Gross',
-    role: 'VP Bloom Energy',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/KnqUilgCDpoTOQMX.png',
-    bio: 'Former CEO EYP Mission Critical Facilities. Data center strategic planning, design, operations. VP at Bloom Energy with deep expertise in sustainable energy infrastructure.',
-    whyAdvise: 'Infrastructure decisions are permanent and expensive. RampRate\'s SPY Index gives enterprises the data to make those decisions right the first time.',
-    linkedin: 'https://www.linkedin.com/in/petrgross',
-    twitter: null,
-  },
-  {
-    name: 'Peter Hirshberg',
-    role: 'ex-Apple, $1B Enterprise Revenue',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/wCigzGydvwbnZpVw.png',
-    bio: '9 years at Apple, grew enterprise revenue to $1B annually. Chairman of Technorati. Co-founder and chairman of The Conversation Group. Clients included AOL, Microsoft, NBC, Estee Lauder.',
-    whyAdvise: 'RampRate has 25 years of compounded trust with the world\'s most important buyers. That\'s irreplaceable.',
-    linkedin: 'https://www.linkedin.com/in/hirshberg',
-    twitter: 'https://x.com/hirshberg',
-  },
-  {
-    name: 'Joe Weinman',
-    role: 'Author, Cloudonomics',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/uuVlUAhjtxyNCxXB.png',
-    bio: 'Author of "Cloudonomics: The Business Value of Cloud Computing" (Wiley). Awarded 20 U.S. and international patents. Senior executive at Telx, AT&T, Bell Labs, and Hewlett Packard.',
-    whyAdvise: 'I wrote the book on cloud economics. RampRate lives it — they have the only dataset that can tell you what cloud infrastructure actually costs versus what vendors claim.',
-    linkedin: 'https://www.linkedin.com/in/joeweinman',
-    twitter: 'https://x.com/joeweinman',
-  },
-  {
-    name: 'Sandy Climan',
-    role: 'ex-CAA / Universal Studios',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/XzkRpmGIMlRHdLfQ.png',
-    bio: 'CEO of Entertainment Media Ventures. Senior management at Creative Artists Agency. EVP and President of Worldwide Business Development for Universal Studios. Producer of "The Aviator."',
-    whyAdvise: 'RampRate understands deal architecture the way CAA understands talent — they structure outcomes where everyone wins, and that\'s why the relationships last decades.',
-    linkedin: 'https://www.linkedin.com/in/sandycliman',
-    twitter: 'https://x.com/ClimanSandy',
-  },
-  {
-    name: 'Tyler Kolodney',
-    role: 'ex-Baltimore Orioles',
-    img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/neoMXOKFotRSwfyT.png',
-    bio: 'Former executive with the Baltimore Orioles organization, bringing sports industry expertise and business development acumen to RampRate\'s advisory board.',
-    whyAdvise: 'Sports teaches you that winning is about preparation, not luck. RampRate prepares their clients with intelligence that turns negotiations from coin flips into calculated advantages.',
-    linkedin: 'https://www.linkedin.com/in/tyler-kolodny-451522192',
-    twitter: 'https://x.com/kolodnytyler',
-  },
-]
-
-const values = [
-  'We serve others — we provide the tools they need, and together we build their future and dreams.',
-  'We choose who we work with — we forge a bond through shared values with those who are innovative, inspiring, impact-focused change agents.',
-  'We deal in rationality and pragmatism — hope is not a strategy; anecdotes are not data; inputs are not impacts.',
-  'We dream big — rationality and audacity are not mutually exclusive. We partner with inspirational leaders and unravel the world\'s greatest challenges together.',
-  'We support execution — we not only recommend the course of action, but back our recommendations with the work required to implement them successfully.',
-  'We earn trust — we follow through on our commitments, and require our partners and anyone we vouch for to do likewise.',
-  'We overdeliver on our promises — we are resourceful and our effort is only bound by what benefits our client.',
-  'We support diversity, equity, and inclusion — for powerful change to happen, people with a variety of lived experiences come together to form creative and productive teams.',
-  'We are engines of transparency — we raise the bar on each ecosystem we touch by shining the light on greenwashing, corruption, and self-dealing.',
-  'We believe in the transformational power of technology and innovation — that new impact-focused approaches in tech, health, and crypto should be embraced even through creative destruction.',
-  'Not all that is new is better — rigorous evaluation and audit of every technology, tokenomics, therapy.',
-  'We build an ecosystem of impact-preneurs and trailblazers powered by opportunities, resources, innovation, and human spirit.',
-]
-
-const timeline = [
-  {year: '2000', event: 'RampRate founded. IT sourcing advisory begins.'},
-  {year: '2004', event: 'Alex Veytsel joins as CSO. Enterprise client roster grows to include Sony, Microsoft, Intel.'},
-  {year: '2010', event: '$10B+ in IT decisions brokered. Offices in Santa Monica and East Coast.'},
-  {year: '2015', event: 'Stratum launched — bridging Web3 and enterprise.'},
-  {year: '2018', event: 'Syzygy launched — growth advisory for founders and impactpreneurs.'},
-  {year: '2022', event: 'RampRate at Davos / World Economic Forum. DevXDAO + XPRIZE €4M grant.'},
-  {year: '2023', event: 'B Corp certified. $24B+ in cumulative decisions brokered.'},
-  {year: '2024', event: 'ImpactSoul launched — tokenizing cultural treasures for impact movements.'},
-  {year: '2026', event: 'Four brands. One coalition. 50+ countries. The purpose-driven economy is here.'},
-]
-
-const corporateFacts = [
-  {label: 'Founded', value: '2000'},
-  {label: 'Structure', value: 'Private & self-funded, profitable since birth'},
-  {label: 'HQ', value: 'Santa Monica, CA'},
-  {label: 'EU HQ', value: 'Ibiza, Spain'},
-  {label: 'Additional Offices', value: 'Massachusetts, North Carolina, Florida'},
-  {label: 'IT Deals', value: '200+ locations, 50+ countries'},
-  {label: 'Certification', value: 'B Corp Certified'},
-]
 
 const LinkedInIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -192,7 +23,37 @@ const TwitterIcon = () => (
   </svg>
 )
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [sanityTeam, sanityAdvisors, siteSettings] = await Promise.all([
+    client.fetch(teamMembersQuery),
+    client.fetch(boardAdvisorsQuery),
+    client.fetch(siteSettingsQuery),
+  ])
+
+  const displayTeam = (sanityTeam ?? []).map((m: {name: string; role: string; bio: string; photo: {asset: {_ref: string}} | null; linkedin: string | null; twitter: string | null}) => ({
+    name: m.name,
+    role: m.role,
+    bio: m.bio,
+    img: m.photo ? urlFor(m.photo).width(800).height(600).url() : null,
+    linkedin: m.linkedin,
+    twitter: m.twitter ?? null,
+  }))
+
+  const displayAdvisors: {name: string; role: string; img: string | null; bio: string; whyAdvise: string | null; linkedin: string | null; twitter: string | null}[] =
+    (sanityAdvisors ?? []).map((m: {name: string; role: string; bio: string; whyAdvise: string | null; photoUrl: string | null; linkedin: string | null; twitter: string | null}) => ({
+      name: m.name,
+      role: m.role,
+      bio: m.bio,
+      img: m.photoUrl ?? null,
+      whyAdvise: m.whyAdvise ?? null,
+      linkedin: m.linkedin ?? null,
+      twitter: m.twitter ?? null,
+    }))
+
+  const values: string[] = siteSettings?.companyValues ?? []
+  const timeline: {year: string; event: string}[] = siteSettings?.timeline ?? []
+  const corporateFacts: {label: string; value: string}[] = siteSettings?.corporateFacts ?? []
+
   return (
     <>
       {/* ═══ HERO ═══ */}
@@ -375,7 +236,7 @@ export default function AboutPage() {
             We deploy time-dependent configurations. Principals stay. Advisors guide. Specialists rotate.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coreTeam.map((m) => (
+            {(displayTeam as {name: string; role: string; bio: string; img: string | null; linkedin: string | null; twitter: string | null}[]).map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm">
                 {m.img ? (
                   <div className="h-56 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
@@ -426,15 +287,15 @@ export default function AboutPage() {
             Board of <span style={{color: 'oklch(0.55 0.15 30)'}}>Advisors</span>
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {boardAdvisors.map((m) => (
+            {displayAdvisors.map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5">
                 {m.img ? (
-                  <div className="h-44 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-56 overflow-hidden flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" style={{objectPosition: 'center 20%'}} loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="h-44 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-4xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
@@ -469,6 +330,16 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              href="/impactsoul"
+              className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+              style={{color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}
+            >
+              See our ImpactSoul advisor network
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </Link>
           </div>
         </div>
       </section>
