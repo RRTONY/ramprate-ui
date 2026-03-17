@@ -40,15 +40,19 @@ export default function Header() {
     setPracticesOpen(false)
   }, [pathname])
 
-  // Earth-tone colors matching reference site
-  const navTextColor = scrolled ? 'oklch(0.35 0.03 50)' : 'rgba(255,255,255,0.8)'
-  const navHoverColor = scrolled ? 'oklch(0.18 0.03 50)' : '#ffffff'
-  const mobileIconColor = scrolled ? 'oklch(0.18 0.03 50)' : '#ffffff'
+  // Pages with light/white backgrounds — force dark nav from the start (no dark hero)
+  const lightBgPaths = ['/attorney', '/henry-jannol', '/josh-bykowski', '/legal-master']
+  const isLightPage = lightBgPaths.some(p => pathname.startsWith(p))
+  const dark = scrolled || isLightPage
+
+  const navTextColor = dark ? 'oklch(0.35 0.03 50)' : 'rgba(255,255,255,0.8)'
+  const navHoverColor = dark ? 'oklch(0.18 0.03 50)' : '#ffffff'
+  const mobileIconColor = dark ? 'oklch(0.18 0.03 50)' : '#ffffff'
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+        dark
           ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-black/5'
           : 'bg-transparent'
       }`}
@@ -56,7 +60,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 sm:h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <Logo variant={scrolled ? 'dark' : 'light'} size="md" />
+          <Logo variant={dark ? 'dark' : 'light'} size="md" />
         </Link>
 
         {/* Desktop nav */}
@@ -118,7 +122,7 @@ export default function Header() {
             </Link>
           ))}
 
-          <SiteSearch scrolled={scrolled} />
+          <SiteSearch scrolled={dark} />
 
           <Link
             href="/contact"
@@ -137,7 +141,7 @@ export default function Header() {
 
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-2">
-          <SiteSearch scrolled={scrolled} />
+          <SiteSearch scrolled={dark} />
           <button
             className="p-2 transition-colors"
             style={{color: mobileIconColor}}

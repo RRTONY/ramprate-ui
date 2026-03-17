@@ -33,7 +33,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         <JsonLd
           data={organizationJsonLd({
             name: settings?.companyName,
