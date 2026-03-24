@@ -1,5 +1,5 @@
+import React from 'react'
 import {PortableText, type PortableTextComponents} from '@portabletext/react'
-import Image from 'next/image'
 import Link from 'next/link'
 import {urlFor} from './image'
 
@@ -7,17 +7,34 @@ export const portableTextComponents: PortableTextComponents = {
   types: {
     image: ({value}) => {
       if (!value?.asset?._ref) return null
+      const align = value.alignment || value.className || ''
+      const isLeft = align.includes('alignleft')
+      const isRight = align.includes('alignright')
+      const isCenter = align.includes('aligncenter')
+
+      const imgStyle: React.CSSProperties = {
+        border: 'none',
+        borderRadius: 0,
+        boxShadow: 'none',
+        height: 'auto',
+        maxWidth: '100%',
+        ...(value.width && {width: value.width}),
+        ...(isLeft && {float: 'left', margin: '20px 20px 20px 0'}),
+        ...(isRight && {float: 'right', margin: '20px 0 20px 20px'}),
+        ...(isCenter && {display: 'block', margin: '20px auto'}),
+        ...(!isLeft && !isRight && !isCenter && {display: 'block', margin: '20px 0'}),
+      }
+
       return (
-        <figure className="my-8">
-          <Image
+        <figure style={{margin: 0}}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={urlFor(value).width(800).url()}
             alt={value.alt || ''}
-            width={800}
-            height={450}
-            className="rounded-lg w-full"
+            style={imgStyle}
           />
           {value.caption && (
-            <figcaption className="mt-2 text-center text-sm" style={{color: 'rgba(255,255,255,0.45)'}}>
+            <figcaption className="mt-2 text-sm" style={{color: 'rgba(255,255,255,0.45)', clear: isLeft || isRight ? 'both' : undefined}}>
               {value.caption}
             </figcaption>
           )}

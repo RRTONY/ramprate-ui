@@ -1,7 +1,7 @@
 import {client} from '@/lib/sanity/client'
 import {postBySlugQuery, allPostSlugsQuery} from '@/lib/sanity/queries'
 import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
-import SanityImage from '@/components/shared/SanityImage'
+
 import JsonLd, {blogPostJsonLd} from '@/components/shared/JsonLd'
 import {urlFor} from '@/lib/sanity/image'
 import Link from 'next/link'
@@ -111,14 +111,12 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
       <article className="max-w-4xl mx-auto px-5 sm:px-8 py-12">
         {/* Featured image */}
         {post.mainImage && (
-          <div className="mb-10 rounded-xl overflow-hidden">
-            <SanityImage
-              image={post.mainImage}
+          <div className="mb-10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={urlFor(post.mainImage).width(896).url()}
               alt={post.mainImage.alt || post.title}
-              width={896}
-              height={504}
-              className="w-full"
-              priority
+              style={{border: 'none', borderRadius: 0, boxShadow: 'none', height: 'auto', maxWidth: '100%', display: 'block'}}
             />
           </div>
         )}
