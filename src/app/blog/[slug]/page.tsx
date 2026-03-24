@@ -125,7 +125,7 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
 
         {/* Body */}
         {post.body && (
-          <div className="prose prose-lg max-w-none">
+          <div className="max-w-none">
             <PortableText value={post.body} components={portableTextComponents} />
           </div>
         )}
