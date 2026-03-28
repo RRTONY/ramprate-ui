@@ -369,7 +369,7 @@ export default function LegalMasterPage() {
               {[
                 {name: 'Adam Zaffos', url: '/attorney', code: 'adam2026'},
                 {name: 'Henry Jannol', url: '/henry-jannol', code: 'henry2026'},
-                {name: 'Josh Bykowski', url: '/josh-bykowski', code: 'josh2026'},
+                {name: 'Josh Bykowski', url: '/josh-bykowski', code: 'bykowski2026'},
                 {name: 'Tony (Master)', url: '/legal-master', code: 'tonymaster'},
               ].map((row, i) => (
                 <tr key={i} className={i < 3 ? 'border-b border-gray-200' : ''}>

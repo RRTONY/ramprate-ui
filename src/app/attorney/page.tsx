@@ -9,6 +9,8 @@ const matters = [
     track: 'Track 1 · Urgent',
     variant: 'urgent',
     title: 'Greenberg v. Hayek Appeal',
+    clickupTaskId: '868hxxtx3',
+    clickupUrl: 'https://app.clickup.com/t/868hxxtx3',
     items: [
       'Attorney of record transfer filing — Brian Castorina replacement must be initiated immediately',
       'Missing transcript identification and cure',
@@ -22,6 +24,8 @@ const matters = [
     track: 'Track 2 · Active',
     variant: 'active',
     title: 'Kodah Matters',
+    clickupTaskId: '868hxxtyh',
+    clickupUrl: 'https://app.clickup.com/t/868hxxtyh',
     items: [
       'Full matter log to be established',
       'Next steps and deadlines documented',
@@ -34,6 +38,8 @@ const matters = [
     track: 'Track 3 · Personal',
     variant: 'personal',
     title: 'Clarisse Abelarde Matters',
+    clickupTaskId: '868j1ejg8',
+    clickupUrl: 'https://app.clickup.com/t/868j1ejg8',
     items: [
       'Matter scope to be defined in follow-up',
       'Separate communication log required',
@@ -45,6 +51,8 @@ const matters = [
     track: 'Track 4 · Incoming',
     variant: 'incoming',
     title: 'New Leads & Referrals',
+    clickupTaskId: '868j1ejth',
+    clickupUrl: 'https://app.clickup.com/t/868j1ejth',
     items: [
       'Keenan — $1M lawsuit matter (assess fit)',
       'Additional leads to be logged upon intake',
