@@ -34,7 +34,7 @@ export default async function AboutPage() {
     name: m.name,
     role: m.role,
     bio: m.bio,
-    img: m.photo ? urlFor(m.photo).width(800).height(600).url() : null,
+    img: m.photo ? urlFor(m.photo).width(600).height(700).url() : null,
     linkedin: m.linkedin,
     twitter: m.twitter ?? null,
   }))
@@ -241,7 +241,7 @@ export default async function AboutPage() {
                 {m.img ? (
                   <div className="h-56 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" style={{objectPosition: 'center 20%'}} loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" style={{objectPosition: 'center top'}} loading="lazy" />
                   </div>
                 ) : (
                   <div className="h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
