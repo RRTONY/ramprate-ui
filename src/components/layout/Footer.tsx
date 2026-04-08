@@ -27,6 +27,7 @@ const companyLinks = [
   {label: 'Blog', href: '/blog'},
   {label: 'Thinking', href: '/thinking'},
   {label: 'Engage', href: '/contact'},
+  {label: 'Legacy Site ↗', href: 'https://legacy.ramprate.com', external: true},
 ]
 
 export default function Footer({
@@ -96,13 +97,25 @@ export default function Footer({
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/50 hover:text-white transition-colors"
-                    style={{fontFamily: 'var(--font-body)'}}
-                  >
-                    {link.label}
-                  </Link>
+                  {'external' in link && link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-white/50 hover:text-white transition-colors"
+                      style={{fontFamily: 'var(--font-body)'}}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-white/50 hover:text-white transition-colors"
+                      style={{fontFamily: 'var(--font-body)'}}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
