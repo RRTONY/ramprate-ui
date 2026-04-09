@@ -32,7 +32,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   const settings = await client.fetch(siteSettingsQuery)
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased" suppressHydrationWarning>
         <JsonLd
           data={organizationJsonLd({

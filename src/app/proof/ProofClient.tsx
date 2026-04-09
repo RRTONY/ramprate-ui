@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { urlFor } from '@/lib/sanity/image'
 
 interface SanityLogo {
   _id: string
@@ -32,7 +33,7 @@ interface SanityBoardAdvisor {
   whyAdvise: string | null
   linkedin: string | null
   twitter: string | null
-  photoUrl: string | null
+  photo: {asset: {_ref: string}} | null
 }
 
 interface SanityCaseStudy {
@@ -300,9 +301,9 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
               {boardAdvisors.map((m) => (
                 <div key={m._id} className="text-center">
                   <div className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.1)' }}>
-                    {m.photoUrl ? (
+                    {m.photo ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={m.photoUrl} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={urlFor(m.photo).width(160).height(160).fit('crop').url()} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/30 text-lg font-bold">
                         {m.name.split(' ').map((n) => n[0]).join('')}

@@ -23,9 +23,9 @@ export default function Logo({ variant = 'light', className = '', size = 'md' }:
         width={width}
         height={height}
         style={{
-          height,
-          width: 'auto',
-          maxWidth: width,
+          height: 'auto',
+          width: width,
+          maxHeight: height,
           objectFit: 'contain',
           filter: variant === 'light' ? 'brightness(0) invert(1)' : 'none',
         }}

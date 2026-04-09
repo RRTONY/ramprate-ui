@@ -32,6 +32,7 @@ export default function SanityImage({
         fill
         className={className}
         priority={priority}
+        unoptimized
       />
     )
   }
@@ -44,6 +45,7 @@ export default function SanityImage({
       height={height}
       className={className}
       priority={priority}
+      unoptimized
     />
   )
 }
