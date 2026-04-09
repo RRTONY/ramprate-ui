@@ -141,7 +141,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                   <p className="text-sm text-[oklch(0.4_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>{cs.desc}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {(cs.metrics || []).map((m) => (
-                      <span key={m} className="text-[10px] px-2 py-0.5 rounded-full bg-[oklch(0.94_0.03_80)] text-[oklch(0.45_0.02_50)] font-medium" style={{ fontFamily: 'var(--font-body)' }}>{m}</span>
+                      <span key={m} className="text-xs px-2 py-1 rounded-full bg-[oklch(0.94_0.03_80)] text-[oklch(0.45_0.02_50)] font-medium" style={{ fontFamily: 'var(--font-body)' }}>{m}</span>
                     ))}
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
-                  className="text-[11px] px-3 py-1.5 rounded-full font-semibold tracking-wide transition-all shadow-sm"
+                  className="text-xs px-3 py-2 rounded-full font-semibold tracking-wide transition-all shadow-sm"
                   style={{
                     fontFamily: 'var(--font-mono)',
                     background: activeFilter === cat ? 'oklch(0.55 0.15 30)' : 'oklch(0.94 0.03 80)',
@@ -305,9 +305,9 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                 <div className="flex items-center justify-between mb-4">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="oklch(0.55 0.15 30 / 0.3)" stroke="none"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.94 0.03 80)', color: 'oklch(0.45 0.02 50)' }}>{t.tag}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.94 0.03 80)', color: 'oklch(0.45 0.02 50)' }}>{t.tag}</span>
                     {t.tier === 'principal' && (
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.55 0.15 30 / 0.1)', color: 'oklch(0.45 0.12 30)' }}>Principal</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.55 0.15 30 / 0.1)', color: 'oklch(0.45 0.12 30)' }}>Principal</span>
                     )}
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                   <div className="flex items-center justify-between mb-4">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="oklch(0.82 0.15 75 / 0.3)" stroke="none"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                     <span
-                      className="text-[9px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
+                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
                       style={{
                         fontFamily: 'var(--font-mono)',
                         background: `color-mix(in oklch, ${divisionColors[t.division] ?? 'oklch(0.82 0.15 75)'}, transparent 85%)`,

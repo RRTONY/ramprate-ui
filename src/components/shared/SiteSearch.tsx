@@ -155,7 +155,7 @@ export default function SiteSearch({scrolled = false}: {scrolled?: boolean}) {
           <div className="absolute inset-0 bg-black/75 backdrop-blur-md" />
 
           <div
-            className="relative w-full max-w-2xl mx-3 rounded-2xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-2xl mx-2 sm:mx-4 rounded-2xl overflow-hidden flex flex-col"
             style={{
               maxHeight: '75vh',
               background: 'rgba(10,15,26,0.95)',

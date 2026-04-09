@@ -217,8 +217,8 @@ export default async function AboutPage() {
           </h2>
           <div className="space-y-0">
             {timeline.map((t) => (
-              <div key={t.year} className="flex gap-6 py-5 border-b border-white/10 last:border-0">
-                <div className="text-2xl font-bold shrink-0 w-16" style={{color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-mono)'}}>{t.year}</div>
+              <div key={t.year} className="flex gap-3 sm:gap-6 py-5 border-b border-white/10 last:border-0">
+                <div className="text-xl sm:text-2xl font-bold shrink-0 w-14 sm:w-16" style={{color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-mono)'}}>{t.year}</div>
                 <p className="text-sm leading-relaxed pt-1" style={{color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-body)'}}>{t.event}</p>
               </div>
             ))}
@@ -237,14 +237,14 @@ export default async function AboutPage() {
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {(displayTeam as {name: string; role: string; bio: string; img: string | null; linkedin: string | null; twitter: string | null}[]).map((m) => (
-              <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm">
+              <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col">
                 {m.img ? (
-                  <div className="h-56 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-48 sm:h-56 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={m.img} alt={m.name} className="w-full h-full object-cover" style={{objectPosition: 'center top'}} loading="lazy" />
                   </div>
                 ) : (
-                  <div className="h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-48 sm:h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-5xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
@@ -269,7 +269,7 @@ export default async function AboutPage() {
                       )}
                     </div>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed line-clamp-5" style={{color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)'}}>{m.bio}</p>
+                  <p className="mt-3 text-sm leading-relaxed flex-1" style={{color: 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)'}}>{m.bio}</p>
                 </div>
               </div>
             ))}
@@ -290,12 +290,12 @@ export default async function AboutPage() {
             {displayAdvisors.map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5">
                 {m.img ? (
-                  <div className="h-56 overflow-hidden flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-48 sm:h-56 overflow-hidden flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={m.img} alt={m.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="h-48 sm:h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-4xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>

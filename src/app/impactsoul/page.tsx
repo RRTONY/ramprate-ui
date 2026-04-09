@@ -222,7 +222,7 @@ export default function ImpactSoulPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {relatedPosts.map((post) => (
               <a key={post.title} href={post.url} target="_blank" rel="noopener noreferrer" className="bg-white rounded-xl p-7 border border-black/5 hover:shadow-md transition-shadow group">
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium" style={{ background: 'oklch(0.55 0.15 30 / 0.1)', color: 'oklch(0.55 0.15 30)' }}>{post.tag}</span>
+                <span className="px-2 py-1 rounded-full text-xs font-medium" style={{ background: 'oklch(0.55 0.15 30 / 0.1)', color: 'oklch(0.55 0.15 30)' }}>{post.tag}</span>
                 <h3 className="mt-3 text-lg font-bold tracking-tight transition-colors" style={{ fontFamily: 'var(--font-display)' }}>{post.title}</h3>
                 <div className="mt-2 text-xs" style={{ color: 'oklch(0.5 0.02 50)', fontFamily: 'var(--font-body)' }}>{post.date}</div>
                 <span className="inline-flex items-center gap-1 mt-4 text-xs font-semibold" style={{ color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)' }}>

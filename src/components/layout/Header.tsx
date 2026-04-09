@@ -143,7 +143,7 @@ export default function Header() {
         <div className="lg:hidden flex items-center gap-2">
           <SiteSearch scrolled={dark} />
           <button
-            className="p-2 transition-colors"
+            className="p-3 transition-colors"
             style={{color: mobileIconColor}}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"

@@ -8,8 +8,8 @@ export default function NotFound() {
     >
       <div className="text-center">
         <p
-          className="text-[6rem] font-bold leading-none mb-4"
-          style={{fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.06)'}}
+          className="font-bold leading-none mb-4"
+          style={{fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.06)', fontSize: 'clamp(3rem, 12vw, 6rem)'}}
         >
           404
         </p>

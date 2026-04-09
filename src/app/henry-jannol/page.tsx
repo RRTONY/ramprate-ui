@@ -159,7 +159,7 @@ export default function HenryJannolPage() {
         <div className="space-y-4 mb-2">
           {matters.map((m) => (
             <div key={m.track} className="rounded p-5 bg-gray-50 border border-gray-300 border-l-4 border-l-black">
-              <span className="inline-block text-[11px] font-bold uppercase tracking-wide px-2 py-1 rounded mb-3 bg-black text-white">
+              <span className="inline-block text-xs font-bold uppercase tracking-wide px-2 py-1 rounded mb-3 bg-black text-white">
                 {m.track}
               </span>
               <div className="text-base font-bold mb-3" style={{fontFamily: 'var(--font-display)'}}>

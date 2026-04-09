@@ -263,7 +263,7 @@ export default function SourcingPage() {
                     )}
                   </div>
                   <div
-                    className="shrink-0 w-6 h-6 rounded-full border border-white/20 flex items-center justify-center transition-transform duration-300"
+                    className="shrink-0 w-8 h-8 sm:w-6 sm:h-6 rounded-full border border-white/20 flex items-center justify-center transition-transform duration-300"
                     style={{transform: expandedQ === q.num ? 'rotate(45deg)' : 'none'}}
                   >
                     <span className="text-white/40 text-sm leading-none">+</span>

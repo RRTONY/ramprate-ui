@@ -94,7 +94,7 @@ export default function TermsPage() {
             className="text-sm text-white/40 uppercase tracking-widest"
             style={{fontFamily: 'var(--font-mono)'}}
           >
-            Last Updated: February 2026
+            Last Updated: April 2026
           </p>
 
           {sections.map((s) => (

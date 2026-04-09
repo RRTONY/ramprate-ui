@@ -81,7 +81,7 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
                 <Link
                   key={cat.slug.current}
                   href={`/blog/category/${cat.slug.current}`}
-                  className="text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full"
+                  className="text-xs font-semibold uppercase tracking-[0.12em] px-3 py-1.5 rounded-full"
                   style={{
                     background: 'rgba(212,168,67,0.12)',
                     color: 'var(--gold)',

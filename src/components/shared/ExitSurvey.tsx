@@ -78,7 +78,7 @@ export default function ExitSurvey() {
             <iframe
               src={FORM_URL}
               className="w-full border-0"
-              style={{ height: '480px' }}
+              style={{ height: 'min(480px, 65vh)' }}
               title="RampRate Exit Survey"
               loading="lazy"
             />

@@ -50,7 +50,7 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
           <div className="flex flex-wrap gap-2 mb-10">
             <Link
               href="/blog"
-              className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all"
+              className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all"
               style={{
                 background: 'oklch(0.82 0.15 75)',
                 color: 'oklch(0.15 0.02 75)',
@@ -63,7 +63,7 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
               <Link
                 key={cat._id}
                 href={`/blog/category/${cat.slug.current}`}
-                className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all border border-white/15 text-white/50 hover:text-white hover:border-white/40"
+                className="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all border border-white/15 text-white/50 hover:text-white hover:border-white/40"
                 style={{fontFamily: 'var(--font-body)'}}
               >
                 {cat.title}

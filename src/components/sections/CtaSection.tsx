@@ -19,6 +19,7 @@ export default function CtaSection({heading, body, buttonText, buttonLink, backg
           <SanityImage
             image={backgroundImage}
             alt=""
+            aria-hidden="true"
             width={1920}
             height={600}
             className="w-full h-full object-cover opacity-15"

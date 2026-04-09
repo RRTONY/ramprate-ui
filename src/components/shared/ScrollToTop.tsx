@@ -23,7 +23,7 @@ export default function ScrollToTop() {
       `}</style>
       <button
         onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
-        className="fixed bottom-20 right-6 z-50 flex items-center justify-center w-11 h-11 rounded-full"
+        className="fixed bottom-24 sm:bottom-20 right-6 z-50 flex items-center justify-center w-11 h-11 rounded-full"
         style={{
           background: 'oklch(0.82 0.15 75)',
           color: 'oklch(0.15 0.02 75)',

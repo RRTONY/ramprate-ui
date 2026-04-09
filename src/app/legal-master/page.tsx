@@ -315,7 +315,7 @@ export default function LegalMasterPage() {
                   <div key={track.track} className="rounded border border-gray-300 border-l-4 border-l-black bg-gray-50 overflow-hidden">
                     <div className="px-5 pt-4 pb-3 border-b border-gray-200 flex items-center justify-between flex-wrap gap-2">
                       <div>
-                        <span className="inline-block text-[11px] font-bold uppercase tracking-wide px-2 py-1 rounded bg-black text-white mr-3">
+                        <span className="inline-block text-xs font-bold uppercase tracking-wide px-2 py-1 rounded bg-black text-white mr-3">
                           {track.track}
                         </span>
                         <span className="font-bold text-sm" style={{fontFamily: 'var(--font-display)'}}>{track.title}</span>

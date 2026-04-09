@@ -79,7 +79,7 @@ export default async function ThinkingPage() {
       <section className="py-16" style={{background: '#0d1117'}}>
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           {posts.length === 0 && (
-            <p className="text-white/40 text-sm" style={{fontFamily: 'var(--font-body)'}}>No posts yet — check back soon.</p>
+            <p className="text-white/60 text-sm bg-white/5 px-4 py-3 rounded-lg inline-block" style={{fontFamily: 'var(--font-body)'}}>No posts yet — check back soon.</p>
           )}
           {years.map((year) => (
             <div key={year} className="mb-14">

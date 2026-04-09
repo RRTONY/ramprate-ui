@@ -169,7 +169,7 @@ export default function ContactPage() {
                   href="https://calendly.com/ramprate"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-sm font-semibold border-2 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold border-2 transition-all"
                   style={{borderColor: 'oklch(0.55 0.15 30)', color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}
                 >
                   Schedule a Meeting
@@ -189,7 +189,7 @@ export default function ContactPage() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.55 0.15 30)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
                   <div>
                     <div className="text-xs font-medium uppercase tracking-wider mb-1" style={{color: 'oklch(0.4 0.02 50)', fontFamily: 'var(--font-body)'}}>Phone</div>
-                    <span className="text-sm" style={{color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)'}}>+1 (310) 622-8989</span>
+                    <a href="tel:+13106228989" className="text-sm hover:underline" style={{color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}>+1 (310) 622-8989</a>
                   </div>
                 </div>
               </div>

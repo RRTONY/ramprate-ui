@@ -39,13 +39,13 @@ export default function TeamGrid({heading, members}: TeamGridProps) {
           {members.map((member, i) => (
             <div key={i} className="text-center">
               {member.photo && (
-                <div className="mb-5 mx-auto w-36 h-36 rounded-full overflow-hidden ring-2 ring-white/10">
+                <div className="mb-5 mx-auto w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-2 ring-white/10">
                   <SanityImage
                     image={member.photo}
                     alt={member.name || ''}
                     width={144}
                     height={144}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
               )}

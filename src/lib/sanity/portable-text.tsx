@@ -67,7 +67,7 @@ export const portableTextComponents: PortableTextComponents = {
           <pre style={{
             background: 'rgba(0,0,0,0.35)',
             borderRadius: value.filename ? '0 0 6px 6px' : '6px',
-            padding: '20px',
+            padding: 'clamp(12px, 4vw, 20px)',
             overflowX: 'auto',
             margin: 0,
             border: '1px solid rgba(255,255,255,0.06)',
@@ -84,7 +84,7 @@ export const portableTextComponents: PortableTextComponents = {
             </code>
           </pre>
           {value.language && value.language !== 'text' && (
-            <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '6px', fontFamily: 'var(--font-mono)'}}>
+            <div style={{fontSize: '12px', color: 'rgba(255,255,255,0.3)', marginTop: '6px', fontFamily: 'var(--font-mono)'}}>
               {value.language}
             </div>
           )}
@@ -128,7 +128,7 @@ export const portableTextComponents: PortableTextComponents = {
         display: 'inline-flex',
         alignItems: 'center',
         gap: '6px',
-        padding: '10px 22px',
+        padding: '12px 24px',
         borderRadius: '6px',
         fontSize: '14px',
         fontWeight: 600,
@@ -139,7 +139,7 @@ export const portableTextComponents: PortableTextComponents = {
       const styleMap: Record<string, React.CSSProperties> = {
         primary:   {background: 'oklch(0.55 0.15 30)', color: '#fff'},
         secondary: {background: 'transparent', border: '2px solid oklch(0.55 0.15 30)', color: 'oklch(0.82 0.15 75)'},
-        ghost:     {background: 'transparent', color: 'oklch(0.82 0.15 75)', padding: '10px 0'},
+        ghost:     {background: 'transparent', color: 'oklch(0.82 0.15 75)', padding: '12px 0'},
       }
 
       return (

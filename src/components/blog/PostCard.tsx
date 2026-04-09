@@ -42,11 +42,11 @@ export default function PostCard({post}: PostCardProps) {
             alt={post.title || ''}
             width={600}
             height={340}
-            className="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity duration-300"
+            className="w-full h-40 sm:h-48 object-cover opacity-80 hover:opacity-100 transition-opacity duration-300"
           />
         </Link>
       ) : (
-        <Link href={`/blog/${post.slug?.current}`} className="block h-48 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, oklch(0.14 0.03 260) 0%, oklch(0.18 0.04 280) 50%, oklch(0.14 0.02 240) 100%)' }}>
+        <Link href={`/blog/${post.slug?.current}`} className="block h-40 sm:h-48 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, oklch(0.14 0.03 260) 0%, oklch(0.18 0.04 280) 50%, oklch(0.14 0.02 240) 100%)' }}>
           {/* Decorative rings */}
           <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full opacity-10" style={{ border: '1px solid oklch(0.82 0.15 75)', background: 'transparent' }} />
           <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full opacity-15" style={{ border: '1px solid oklch(0.82 0.15 75)', background: 'transparent' }} />
@@ -101,7 +101,7 @@ export default function PostCard({post}: PostCardProps) {
         )}
         {date && (
           <p
-            className="text-[11px] font-medium"
+            className="text-xs font-medium"
             style={{
               color: 'rgba(255,255,255,0.25)',
               fontFamily: 'var(--font-mono)',
