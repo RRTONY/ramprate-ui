@@ -34,7 +34,7 @@ export default async function AboutPage() {
     name: m.name,
     role: m.role,
     bio: m.bio,
-    img: m.photo ? urlFor(m.photo).width(600).height(700).url() : null,
+    img: m.photo ? urlFor(m.photo).width(600).url() : null,
     linkedin: m.linkedin,
     twitter: m.twitter ?? null,
   }))
@@ -239,12 +239,12 @@ export default async function AboutPage() {
             {(displayTeam as {name: string; role: string; bio: string; img: string | null; linkedin: string | null; twitter: string | null}[]).map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col">
                 {m.img ? (
-                  <div className="h-48 sm:h-56 overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="aspect-[4/5] overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" style={{objectPosition: 'center top'}} loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-cover object-top" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="h-48 sm:h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="aspect-[4/5] flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-5xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
@@ -290,12 +290,12 @@ export default async function AboutPage() {
             {displayAdvisors.map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5">
                 {m.img ? (
-                  <div className="h-48 sm:h-56 overflow-hidden flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="aspect-[4/5] overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-contain" loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-cover object-top" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="h-48 sm:h-56 flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="aspect-[4/5] flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-4xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
