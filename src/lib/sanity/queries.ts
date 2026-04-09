@@ -158,7 +158,7 @@ export const boardAdvisorsQuery = groq`
     whyAdvise,
     linkedin,
     twitter,
-    "photoUrl": photo.asset->url
+    photo
   }
 `
 

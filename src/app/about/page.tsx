@@ -34,17 +34,17 @@ export default async function AboutPage() {
     name: m.name,
     role: m.role,
     bio: m.bio,
-    img: m.photo ? urlFor(m.photo).width(600).url() : null,
+    img: m.photo ? urlFor(m.photo).width(600).height(450).fit('crop').crop('top').url() : null,
     linkedin: m.linkedin,
     twitter: m.twitter ?? null,
   }))
 
   const displayAdvisors: {name: string; role: string; img: string | null; bio: string; whyAdvise: string | null; linkedin: string | null; twitter: string | null}[] =
-    (sanityAdvisors ?? []).map((m: {name: string; role: string; bio: string; whyAdvise: string | null; photoUrl: string | null; linkedin: string | null; twitter: string | null}) => ({
+    (sanityAdvisors ?? []).map((m: {name: string; role: string; bio: string; whyAdvise: string | null; photo: {asset: {_ref: string}} | null; linkedin: string | null; twitter: string | null}) => ({
       name: m.name,
       role: m.role,
       bio: m.bio,
-      img: m.photoUrl ?? null,
+      img: m.photo ? urlFor(m.photo).width(500).height(500).fit('crop').url() : null,
       whyAdvise: m.whyAdvise ?? null,
       linkedin: m.linkedin ?? null,
       twitter: m.twitter ?? null,
@@ -239,12 +239,12 @@ export default async function AboutPage() {
             {(displayTeam as {name: string; role: string; bio: string; img: string | null; linkedin: string | null; twitter: string | null}[]).map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col">
                 {m.img ? (
-                  <div className="aspect-[4/5] overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="overflow-hidden w-full" style={{aspectRatio: '4/3', background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="aspect-[4/5] flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="overflow-hidden w-full flex items-center justify-center" style={{aspectRatio: '4/3', background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-5xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
@@ -290,12 +290,12 @@ export default async function AboutPage() {
             {displayAdvisors.map((m) => (
               <div key={m.name} className="bg-white rounded-xl overflow-hidden border border-black/5">
                 {m.img ? (
-                  <div className="aspect-[4/5] overflow-hidden" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="overflow-hidden w-full" style={{aspectRatio: '1/1', background: 'oklch(0.92 0.01 80)'}}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                    <img src={m.img} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
                   </div>
                 ) : (
-                  <div className="aspect-[4/5] flex items-center justify-center" style={{background: 'oklch(0.92 0.01 80)'}}>
+                  <div className="overflow-hidden w-full flex items-center justify-center" style={{aspectRatio: '1/1', background: 'oklch(0.92 0.01 80)'}}>
                     <span className="text-4xl font-bold" style={{color: 'rgba(100,60,30,0.2)', fontFamily: 'var(--font-display)'}}>
                       {m.name.split(' ').map((n) => n[0]).join('')}
                     </span>
