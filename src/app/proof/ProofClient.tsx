@@ -67,7 +67,89 @@ const divisionColors: Record<string, string> = {
   ImpactSoul: "oklch(0.7 0.15 30)",
 }
 
+const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
+  {
+    _id: "cs-1",
+    title: "The Digital Asset Protocol That Needed a Backbone",
+    result: "Enterprise-grade infrastructure across 6 jurisdictions in 90 days",
+    desc: "A next-generation digital asset protocol had the tokenomics figured out. What they didn't have was the institutional plumbing — banking rails, compliance architecture, custodial relationships, multi-jurisdiction licensing. We built the operational backbone that turned a whitepaper into a regulated, functioning financial instrument.",
+    metrics: ["6 jurisdictions", "90-day deployment", "Banking rails established", "Regulatory compliance achieved"]
+  },
+  {
+    _id: "cs-2",
+    title: "The Fund That Couldn't See Its Own Portfolio",
+    result: "34% reduction in operational drag; full portfolio visibility in weeks",
+    desc: "A multi-strategy fund with $2B+ AUM was hemorrhaging value through fragmented vendor relationships, redundant infrastructure, and zero cross-portfolio visibility. We mapped the entire operational topology, consolidated 14 vendor contracts into 5 strategic partnerships, and gave them a dashboard they'd been trying to build for three years.",
+    metrics: ["$2B+ AUM", "34% cost reduction", "14 vendors → 5", "Real-time visibility"]
+  },
+  {
+    _id: "cs-3",
+    title: "The DeFi Protocol That Outgrew Its Founders",
+    result: "Enterprise partnerships secured; institutional adoption accelerated by 2 years",
+    desc: "Brilliant protocol. Passionate community. Zero enterprise credibility. We didn't rebrand them — we repositioned them. Opened doors to institutional partners who don't take meetings with Discord-native teams. Converted developer traction into boardroom traction.",
+    metrics: ["8 enterprise partnerships", "Institutional pipeline built", "2-year acceleration", "Series B positioning"]
+  },
+  {
+    _id: "cs-4",
+    title: "The Compliance Maze Nobody Wanted to Enter",
+    result: "Licensed across 4 regulatory frameworks in 8 months",
+    desc: "They wanted to operate in the US, EU, Singapore, and UAE. Four regulatory frameworks. Four sets of lawyers. Four timelines that didn't align. We orchestrated the entire compliance architecture — not as lawyers, but as the people who know which doors to knock on and in what order.",
+    metrics: ["4 jurisdictions", "8-month timeline", "Zero regulatory setbacks", "Operational from day one"]
+  },
+  {
+    _id: "cs-5",
+    title: "The $800M Decision That Took 72 Hours",
+    result: "$800M vendor decision compressed from 6 months to 72 hours",
+    desc: "The board wanted a decision by Friday. The procurement team had been circling for six months. We walked in with 150,000+ data points, benchmarked the three finalists against real-world contracts, and delivered a recommendation with 5-10% forecast accuracy. The board signed Monday.",
+    metrics: ["$800M decision", "72-hour turnaround", "150K+ benchmarks", "5-10% forecast accuracy"]
+  },
+  {
+    _id: "cs-6",
+    title: "The Tokenized Fund That Needed Trust",
+    result: "First institutional LP commitments secured within 60 days",
+    desc: "A tokenized fund with strong returns but zero institutional credibility. The problem wasn't performance — it was provenance. We brokered introductions to allocators who'd never touched digital assets, structured the narrative around risk-adjusted returns they understood, and secured first institutional LP commitments in 60 days.",
+    metrics: ["First institutional LPs", "60-day timeline", "Risk narrative restructured", "Allocator pipeline built"]
+  },
+  {
+    _id: "cs-7",
+    title: "The Infrastructure Nobody Could Audit",
+    result: "75% infrastructure cost reduction over 16-year relationship",
+    desc: "Across four CTO tenures, we became the institutional memory no org chart could replace. Every new executive inherited a vendor landscape nobody fully understood. We were the map. Exposed hundreds of millions in hidden redundancies and created methodology now adopted at the executive level.",
+    metrics: ["16-year relationship", "75% cost reduction", "4 CTO tenures", "Methodology adopted org-wide"]
+  },
+  {
+    _id: "cs-8",
+    title: "The Web3 Bridge to Enterprise",
+    result: "US market penetration and enterprise pipeline in months",
+    desc: "4+ years of daily advisory. We didn't just introduce them to enterprises — we taught them how to speak enterprise. Converted a developer-first protocol into a platform that Fortune 500 procurement teams could evaluate, approve, and deploy. Accelerated growth by years.",
+    metrics: ["4+ years daily advisory", "US market entry", "Fortune 500 pipeline", "Acquisition-ready positioning"]
+  },
+  {
+    _id: "cs-9",
+    title: "The Custodial Architecture That Passed Every Audit",
+    result: "SOC 2 Type II compliant from zero to audit-ready in 5 months",
+    desc: "They needed institutional-grade custody. Not the marketing version — the version that survives a Big Four audit. We designed the architecture, selected the technology stack, negotiated the insurance, and built the operational playbook. Passed SOC 2 Type II on the first attempt.",
+    metrics: ["SOC 2 Type II first-pass", "5-month build", "Insurance secured", "Institutional-grade ops"]
+  },
+  {
+    _id: "cs-10",
+    title: "The Deal That Became the Benchmark",
+    result: "\"Best IT deal during executive tenure\" — their words, not ours",
+    desc: "We structured a win-win that became the benchmark for every IT deal that followed. When the executive moved to another company, they called us again. When that company was acquired, the acquirer called us too. That's not consulting. That's gravity.",
+    metrics: ["Benchmark-setting terms", "Multi-company relationship", "Win-win structure", "20+ year trust"]
+  },
+]
+
 export default function ProofClient({ clientLogos, testimonials, boardAdvisors, caseStudies, confidentialTestimonials }: ProofClientProps) {
+  const allCaseStudies = useMemo(() => {
+    const sanityIds = new Set(caseStudies.map(cs => cs._id))
+    const merged = [...caseStudies]
+    for (const hc of HARDCODED_CASE_STUDIES) {
+      if (!sanityIds.has(hc._id)) merged.push(hc)
+    }
+    return merged
+  }, [caseStudies])
+
   const [activeFilter, setActiveFilter] = useState<string>("All")
 
   const filteredTestimonials = useMemo(() => {
@@ -115,7 +197,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
       </section>
 
       {/* Case Studies */}
-      {caseStudies.length > 0 && (
+      {allCaseStudies.length > 0 && (
         <section className="relative section-warm py-20 sm:py-28 overflow-hidden">
           <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -top-32 -right-32" />
           <div className="glass-orb glass-orb-amber w-[200px] h-[200px] bottom-10 -left-20" />
@@ -127,7 +209,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
               </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {caseStudies.map((cs) => (
+              {allCaseStudies.map((cs) => (
                 <div key={cs._id} className="glass-card-warm p-7 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'oklch(0.55 0.15 30 / 0.1)' }}>
