@@ -186,7 +186,7 @@ export default function SourcingPage() {
           {/* Stats */}
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
             {[
-              {value: '$24B+', label: 'Decisions Brokered'},
+              {value: '$10B+', label: 'Decisions Brokered'},
               {value: '23.8%', label: 'Avg Savings'},
               {value: '90', label: 'Day Validation Window'},
               {value: '300%+', label: 'ROI Guarantee'},
@@ -317,7 +317,7 @@ export default function SourcingPage() {
             {[
               {step: '01', title: 'AI Studies the Process', desc: 'Our intelligence engine analyzes your current contracts, benchmarks them against live market data, and identifies every gap, overpayment, and missed clause. The machine does the homework.'},
               {step: '02', title: 'Humans Validate the Strategy', desc: 'We connect you with enterprise buyers who closed the same deal in the last 90 days. Real people. Real outcomes. No theoretical frameworks — just battle-tested intelligence.'},
-              {step: '03', title: 'Transaction Architects Close the Deal', desc: 'Our team finds the leverage, structures the negotiation, and gets you the deal you deserve. We\'ve brokered $24B+ in IT decisions. We know where every provider\'s margin lives.'},
+              {step: '03', title: 'Transaction Architects Close the Deal', desc: 'Our team finds the leverage, structures the negotiation, and gets you the deal you deserve. We\'ve brokered $10B+ in IT decisions. We know where every provider\'s margin lives.'},
             ].map((step, i) => (
               <div key={step.step} className="relative">
                 <div className="bg-white rounded-xl p-8 border border-black/5 h-full">

@@ -182,7 +182,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {[
-                { value: "$24B+", label: "Decisions Brokered" },
+                { value: "$10B+", label: "Decisions Brokered" },
                 { value: "24%", label: "Avg IT Budget Savings" },
                 { value: "50+", label: "Countries" },
                 { value: "24yrs", label: "Track Record" },

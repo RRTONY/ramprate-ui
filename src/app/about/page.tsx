@@ -92,7 +92,7 @@ export default async function AboutPage() {
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
             {[
               {value: '2000', label: 'Founded'},
-              {value: '$24B+', label: 'Decisions Brokered'},
+              {value: '$10B+', label: 'Decisions Brokered'},
               {value: '50+', label: 'Countries'},
               {value: 'B Corp', label: 'Certified'},
             ].map((s) => (

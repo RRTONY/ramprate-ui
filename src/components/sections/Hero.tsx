@@ -109,7 +109,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
               className="mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg"
               style={{fontFamily: 'var(--font-body)'}}
             >
-              Since 2000, we&apos;ve brokered $24B+ in trajectory-changing connections across 50+ countries. We clean up intractable messes, speed up &amp; de-risk innovation, and align profit with purpose.
+              Since 2000, we&apos;ve brokered $10B+ in trajectory-changing connections across 50+ countries. We clean up intractable messes, speed up &amp; de-risk innovation, and align profit with purpose.
             </p>
           )}
 
@@ -158,7 +158,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
           {/* Micro-stats */}
           <div className="mt-16 flex gap-8 sm:gap-12">
             {[
-              {value: '$24B+', label: 'Decisions Brokered'},
+              {value: '$10B+', label: 'Decisions Brokered'},
               {value: '50+', label: 'Countries'},
               {value: '24', label: 'Years Deep'},
             ].map((stat) => (

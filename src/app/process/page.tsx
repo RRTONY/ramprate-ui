@@ -54,7 +54,7 @@ const steps = [
 const summaryRows = [
   { label: "What You Bring", text: "The problem. The urgency. Your 10 genie wishes — everything you need besides capital." },
   { label: "What We Find", text: "Flow Circuit friction. Missing roles. Wrong market. Broken handoffs. The imperfect team. The real problem under the symptom." },
-  { label: "What We Bring", text: "25 years of relationships. $24B in transaction intelligence. A vertical mastermind. The Top 25 target list. Innovation process — not big ideas." },
+  { label: "What We Bring", text: "25 years of relationships. $10B in transaction intelligence. A vertical mastermind. The Top 25 target list. Innovation process — not big ideas." },
   { label: "Me → Way → Our", text: "Find your core frequency. Find the right path. Build the team around it. 'Our' lives inside 'Your.' Self-knowledge first." },
   { label: "The Economics", text: "$15K–$50K/month. Equity-forward. Mastermind at ~20%. Performance accountability. Clawbacks. Historical: 20X value." },
   { label: "The Guarantee", text: "90 days. Measurable results or you walk. No penalty. No lock-in. Never exercised in 25 years." },

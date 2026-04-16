@@ -84,7 +84,7 @@ const timeline = [
   {year: '2018', event: 'Syzygy Impact division.'},
   {year: '2020', event: 'B Corp Certified.'},
   {year: '2022', event: '$3M+ grant funding managed for XPRIZE.'},
-  {year: '2024', event: '$24B+ decisions brokered. ImpactSoul launched.'},
+  {year: '2024', event: '$10B+ decisions brokered. ImpactSoul launched.'},
 ]
 
 /* ── TESTIMONIALS ── */
@@ -136,7 +136,7 @@ const operateSteps = [
   {
     num: '01',
     title: 'Deep Research',
-    desc: '$24B+ transaction intelligence. Million+ data points. 350+ vendors. 80 countries. Forecasts within 5-10% of outcome.',
+    desc: '$10B+ transaction intelligence. Million+ data points. 350+ vendors. 80 countries. Forecasts within 5-10% of outcome.',
     Icon: Database,
     link: {label: 'Our Process →', href: '/our-process'},
   },
@@ -163,7 +163,7 @@ const brands = [
     since: 'Since 2000',
     audience: 'For Enterprise CTOs',
     description: 'Edge, compute & AI data center intelligence. AI studies the process — our Transaction Architects get the deal done.',
-    keyValue: '$24B+ brokered · 23.8% avg savings · 90-day validated',
+    keyValue: '$10B+ brokered · 23.8% avg savings · 90-day validated',
     compensation: '% of impact achieved',
     commitment: '300%+ ROI or don\'t pay',
     href: '/expertise',
@@ -380,7 +380,7 @@ export default function HomeContent() {
                 className="mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase"
                 style={{fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.4)'}}
               >
-                25 Years · $24B+ in Enterprise Decisions · 250+ Global Brands · Skin in the Game
+                25 Years · $10B+ in Enterprise Decisions · 250+ Global Brands · Skin in the Game
               </p>
 
               <p
@@ -441,7 +441,7 @@ export default function HomeContent() {
               className="mt-3 text-sm"
               style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.4)'}}
             >
-              100+ engagements. $24B+ in decisions brokered. Names you know.
+              100+ engagements. $10B+ in decisions brokered. Names you know.
             </p>
           </div>
 
