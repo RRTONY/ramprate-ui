@@ -192,21 +192,26 @@ function AiDocContent() {
           </p>
 
           {/* stats */}
-          <div className="flex flex-wrap justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 mt-2">
             {[
               { num: '$3M', lbl: 'Total Budget' },
               { num: '4', lbl: 'Token Tiers' },
               { num: '36mo', lbl: 'Revenue Window' },
               { num: '100%', lbl: 'On-Chain Distribution' },
-            ].map((s, i) => (
-              <div key={i} className="flex items-center">
-                <div className="text-center px-5 sm:px-10 py-3">
-                  <div className="text-3xl sm:text-4xl font-extrabold" style={{ color: Y, letterSpacing: -1 }}>{s.num}</div>
-                  <div className="text-xs font-semibold uppercase tracking-widest mt-1" style={{ color: '#64748b' }}>{s.lbl}</div>
-                </div>
-                {i < 3 && <div className="w-px h-10 shrink-0" style={{ background: '#2a2a2a' }} />}
+            ].map((s, i) => {
+              const borders = [
+                'border-r border-b sm:border-b-0',
+                'border-b sm:border-b-0 sm:border-r',
+                'border-r',
+                '',
+              ]
+              return (
+              <div key={i} className={`text-center px-4 py-6 ${borders[i]}`} style={{ borderColor: '#2a2a2a' }}>
+                <div className="text-3xl sm:text-4xl font-extrabold" style={{ color: Y, letterSpacing: -1 }}>{s.num}</div>
+                <div className="text-xs font-semibold uppercase tracking-widest mt-1" style={{ color: '#64748b' }}>{s.lbl}</div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
