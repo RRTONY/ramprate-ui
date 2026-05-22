@@ -3,7 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import {client} from '@/lib/sanity/client'
+import {sanityFetch} from '@/lib/sanity/client'
 import {siteSettingsQuery} from '@/lib/sanity/queries'
 import JsonLd, {organizationJsonLd} from '@/components/shared/JsonLd'
 import ExitSurvey from '@/components/shared/ExitSurvey'
@@ -29,7 +29,14 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
-  const settings = await client.fetch(siteSettingsQuery)
+  const settings = await sanityFetch<{
+    companyName?: string
+    address?: {street?: string; city?: string; state?: string; zip?: string}
+    phone?: string
+    email?: string
+    socialLinks?: {platform: string; url: string}[]
+    googleAnalyticsId?: string
+  }>({query: siteSettingsQuery, tags: ['siteSettings'], revalidate: 3600})
 
   return (
     <html lang="en" data-scroll-behavior="smooth">

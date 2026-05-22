@@ -1,7 +1,13 @@
-import type { Metadata } from 'next'
-import { client } from '@/lib/sanity/client'
-import { clientLogosQuery, testimonialsQuery, boardAdvisorsQuery, caseStudiesQuery, confidentialTestimonialsQuery } from '@/lib/sanity/queries'
-import ProofClient from './ProofClient'
+import type {Metadata} from 'next'
+import {sanityFetch} from '@/lib/sanity/client'
+import {clientLogosQuery, testimonialsQuery, boardAdvisorsQuery, caseStudiesQuery, confidentialTestimonialsQuery} from '@/lib/sanity/queries'
+import ProofClient, {
+  type SanityLogo,
+  type SanityTestimonial,
+  type SanityBoardAdvisor,
+  type SanityCaseStudy,
+  type SanityConfidentialTestimonial,
+} from './ProofClient'
 
 export const metadata: Metadata = {
   title: 'Proof — Real Clients, Real Results | RampRate',
@@ -10,11 +16,11 @@ export const metadata: Metadata = {
 
 export default async function ProofPage() {
   const [clientLogos, testimonials, boardAdvisors, caseStudies, confidentialTestimonials] = await Promise.all([
-    client.fetch(clientLogosQuery),
-    client.fetch(testimonialsQuery),
-    client.fetch(boardAdvisorsQuery),
-    client.fetch(caseStudiesQuery),
-    client.fetch(confidentialTestimonialsQuery),
+    sanityFetch<SanityLogo[]>({query: clientLogosQuery, tags: ['clientLogo']}),
+    sanityFetch<SanityTestimonial[]>({query: testimonialsQuery, tags: ['testimonial']}),
+    sanityFetch<SanityBoardAdvisor[]>({query: boardAdvisorsQuery, tags: ['boardAdvisor']}),
+    sanityFetch<SanityCaseStudy[]>({query: caseStudiesQuery, tags: ['caseStudy']}),
+    sanityFetch<SanityConfidentialTestimonial[]>({query: confidentialTestimonialsQuery, tags: ['confidentialTestimonial']}),
   ])
   return (
     <ProofClient

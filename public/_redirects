@@ -187,7 +187,7 @@
 /syzygy-impact-sourcing-2020/  /impactsoul              301
 
 # SPY Index / Platform pages → /expertise
-/service-provider-intelligence-index/  /sourcing         301
+# /service-provider-intelligence-index/ now has its own dedicated page — no redirect needed
 /spy-index-platform/        /expertise                   301
 /hypersource-it-platform/   /expertise                   301
 /cdn/                       /expertise                   301

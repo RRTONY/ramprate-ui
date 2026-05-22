@@ -91,13 +91,14 @@ export const thinkingPostsQuery = groq`
 
 export const thinkingPostCountQuery = groq`count(*[_type == "post" && section == "thinking"])`
 
-// Categories
+// Categories — ordered by number of posts desc so populated categories appear first
 export const categoriesQuery = groq`
-  *[_type == "category"] | order(title asc){
+  *[_type == "category"]{
     _id,
     title,
-    slug
-  }
+    slug,
+    "postCount": count(*[_type == "post" && section != "thinking" && ^._id in categories[]._ref])
+  } | order(postCount desc, title asc)
 `
 
 export const postsByCategoryQuery = groq`
@@ -206,5 +207,14 @@ export const allThinkingPostsQuery = groq`
 
 // All slugs (for static generation)
 export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug}`
+
+// SPY Index page SEO
+export const spyIndexPageQuery = groq`
+  *[_type == "page" && slug.current == "spy-index"][0]{
+    title,
+    seo
+  }
+`
 export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug}`
 export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug}`
+

@@ -70,7 +70,7 @@ export default function PostCard({post}: PostCardProps) {
             {post.categories.map((cat) => (
               <Link
                 key={cat.slug?.current}
-                href={`/blog/category/${cat.slug?.current}`}
+                href={`/blog?category=${cat.slug?.current}`}
                 className="text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full transition-opacity hover:opacity-70"
                 style={{
                   background: 'rgba(212,168,67,0.12)',

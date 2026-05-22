@@ -4,14 +4,14 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity/image'
 
-interface SanityLogo {
+export interface SanityLogo {
   _id: string
   name: string
   url: string | null
   logoUrl: string | null
 }
 
-interface SanityTestimonial {
+export interface SanityTestimonial {
   _id: string
   personName: string
   role: string
@@ -25,7 +25,7 @@ interface SanityTestimonial {
   photoUrl: string | null
 }
 
-interface SanityBoardAdvisor {
+export interface SanityBoardAdvisor {
   _id: string
   name: string
   role: string
@@ -36,7 +36,7 @@ interface SanityBoardAdvisor {
   photo: {asset: {_ref: string}} | null
 }
 
-interface SanityCaseStudy {
+export interface SanityCaseStudy {
   _id: string
   title: string
   result: string
@@ -44,7 +44,7 @@ interface SanityCaseStudy {
   metrics: string[]
 }
 
-interface SanityConfidentialTestimonial {
+export interface SanityConfidentialTestimonial {
   _id: string
   quote: string
   attribution: string
