@@ -26,6 +26,7 @@ const companyLinks = [
   {label: 'Process', href: '/process'},
   {label: 'Blog', href: '/blog'},
   {label: 'Thinking', href: '/thinking'},
+  {label: 'Careers', href: '/careers'},
   {label: 'Engage', href: '/contact'},
   {label: 'Legacy Site ↗', href: 'https://legacy.ramprate.com', external: true},
 ]

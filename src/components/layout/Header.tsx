@@ -27,18 +27,19 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [practicesOpen, setPracticesOpen] = useState(false)
   const pathname = usePathname()
+  const [lastPathname, setLastPathname] = useState(pathname)
+
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname)
+    setMobileOpen(false)
+    setPracticesOpen(false)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, {passive: true})
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Close mobile menu on navigation
-  useEffect(() => {
-    setMobileOpen(false)
-    setPracticesOpen(false)
-  }, [pathname])
 
   // Pages with light/white backgrounds — force dark nav from the start (no dark hero)
   const lightBgPaths = ['/attorney', '/henry-jannol', '/josh-bykowski', '/legal-master']
