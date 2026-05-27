@@ -6,7 +6,6 @@ import Footer from '@/components/layout/Footer'
 import {sanityFetch} from '@/lib/sanity/client'
 import {siteSettingsQuery} from '@/lib/sanity/queries'
 import JsonLd, {organizationJsonLd} from '@/components/shared/JsonLd'
-import ExitSurvey from '@/components/shared/ExitSurvey'
 import ScrollToTop from '@/components/shared/ScrollToTop'
 
 export const metadata: Metadata = {
@@ -76,7 +75,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           email={settings?.email}
           socialLinks={settings?.socialLinks}
         />
-        <ExitSurvey />
         <ScrollToTop />
       </body>
     </html>
