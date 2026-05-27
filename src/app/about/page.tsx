@@ -151,9 +151,6 @@ export default async function AboutPage() {
               {value: "$10B+", label: "Decisions Transacted"},
               {value: "50+", label: "Countries"},
               {value: "B Corp", label: "Certified"},
-              {value: '50+', label: 'Countries'},
-              {value: 'B Corp', label: 'Certified'},
->>>>>>> b61dbae (fix: replace brokered with transacted, expand timeline 2016-2025, fix B Corp to 2018)
             ].map((s) => (
               <div key={s.label}>
                 <div
