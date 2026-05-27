@@ -1,42 +1,46 @@
-import type {Metadata} from 'next'
-import Script from 'next/script'
-import './globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import {sanityFetch} from '@/lib/sanity/client'
-import {siteSettingsQuery} from '@/lib/sanity/queries'
-import JsonLd, {organizationJsonLd} from '@/components/shared/JsonLd'
-import ScrollToTop from '@/components/shared/ScrollToTop'
+import type { Metadata } from "next";
+import Script from "next/script";
+import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { sanityFetch } from "@/lib/sanity/client";
+import { siteSettingsQuery } from "@/lib/sanity/queries";
+import JsonLd, { organizationJsonLd } from "@/components/shared/JsonLd";
+import ExitSurvey from "@/components/shared/ExitSurvey";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 
 export const metadata: Metadata = {
   title: {
-    default: 'RampRate - IT Infrastructure Advisory',
-    template: '%s | RampRate',
+    default: "RampRate - IT Infrastructure Advisory",
+    template: "%s | RampRate",
   },
   description:
-    'RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.',
+    "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
   openGraph: {
-    images: ['/og.png'],
+    images: ["/og.png"],
   },
   twitter: {
-    card: 'summary_large_image',
-    images: ['/og.png'],
+    card: "summary_large_image",
+    images: ["/og.png"],
   },
-}
+};
 
-export default async function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const settings = await sanityFetch<{
-    companyName?: string
-    address?: {street?: string; city?: string; state?: string; zip?: string}
-    phone?: string
-    email?: string
-    socialLinks?: {platform: string; url: string}[]
-    googleAnalyticsId?: string
-  }>({query: siteSettingsQuery, tags: ['siteSettings'], revalidate: 3600})
-
+    companyName?: string;
+    address?: { street?: string; city?: string; state?: string; zip?: string };
+    phone?: string;
+    email?: string;
+    socialLinks?: { platform: string; url: string }[];
+    googleAnalyticsId?: string;
+  }>({ query: siteSettingsQuery, tags: ["siteSettings"], revalidate: 60 });
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased" suppressHydrationWarning>
@@ -44,7 +48,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           data={organizationJsonLd({
             name: settings?.companyName,
             description:
-              'RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.',
+              "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
             address: settings?.address,
             phone: settings?.phone,
             email: settings?.email,
@@ -75,8 +79,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           email={settings?.email}
           socialLinks={settings?.socialLinks}
         />
+        <ExitSurvey />
         <ScrollToTop />
       </body>
     </html>
-  )
+  );
 }

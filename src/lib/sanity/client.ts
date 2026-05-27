@@ -4,7 +4,7 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'xdo1fb5d',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2026-03-05',
-  useCdn: true,
+  useCdn: false,
   stega: false,
 })
 
