@@ -139,11 +139,11 @@ export default function Footer({
                 {email || 'hello@ramprate.com'}
               </a>
               <a
-                href={`tel:${phone || '+13106228989'}`}
+                href={`tel:${phone || '+13108023702'}`}
                 className="text-sm text-white/50 hover:text-white transition-colors block"
                 style={{fontFamily: 'var(--font-body)'}}
               >
-                {phone || '+1 (310) 622-8989'}
+                {phone || '+1 (310) 802-3702'}
               </a>
             </div>
             <div className="flex gap-4">
