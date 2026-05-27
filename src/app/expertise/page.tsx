@@ -11,10 +11,10 @@ const practices = [
   {
     name: 'RampRate',
     tagline: 'Enterprise IT Sourcing',
-    desc: '150K+ data points. 350+ vendors. 80 countries. We benchmark every contract against real transaction intelligence — not theory. $10B+ in enterprise decisions brokered.',
+    desc: '150K+ data points. 350+ vendors. 80 countries. We benchmark every contract against real transaction intelligence — not theory. $10B+ in enterprise decisions transacted.',
     color: 'oklch(0.82 0.15 75)',
     href: '/sourcing',
-    stats: ['$10B+ Brokered', '150K+ Data Points', '350+ Vendors'],
+    stats: ['$10B+ Transacted', '150K+ Data Points', '350+ Vendors'],
   },
   {
     name: 'Syzygy',

@@ -108,7 +108,7 @@ const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
     _id: "cs-6",
     title: "The Tokenized Fund That Needed Trust",
     result: "First institutional LP commitments secured within 60 days",
-    desc: "A tokenized fund with strong returns but zero institutional credibility. The problem wasn't performance — it was provenance. We brokered introductions to allocators who'd never touched digital assets, structured the narrative around risk-adjusted returns they understood, and secured first institutional LP commitments in 60 days.",
+    desc: "A tokenized fund with strong returns but zero institutional credibility. The problem wasn't performance — it was provenance. We transacted introductions to allocators who'd never touched digital assets, structured the narrative around risk-adjusted returns they understood, and secured first institutional LP commitments in 60 days.",
     metrics: ["First institutional LPs", "60-day timeline", "Risk narrative restructured", "Allocator pipeline built"]
   },
   {
@@ -182,7 +182,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {[
-                { value: "$10B+", label: "Decisions Brokered" },
+                { value: "$10B+", label: "Decisions Transacted" },
                 { value: "24%", label: "Avg IT Budget Savings" },
                 { value: "50+", label: "Countries" },
                 { value: "24yrs", label: "Track Record" },

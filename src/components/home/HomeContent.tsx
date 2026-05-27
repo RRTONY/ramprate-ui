@@ -81,10 +81,16 @@ const timeline = [
   {year: '2008', event: '$2B+ IT expenditure under management.'},
   {year: '2010', event: 'Global expansion, 50+ countries.'},
   {year: '2015', event: 'Blockchain/Web3 advisory launched.'},
-  {year: '2018', event: 'Syzygy Impact division.'},
-  {year: '2020', event: 'B Corp Certified.'},
+  {year: '2016', event: 'First tokenized asset advisory. Digital securities before the market had a name.'},
+  {year: '2017', event: 'Peak crypto advisory demand. Guided 12+ token launches through regulatory minefields.'},
+  {year: '2018', event: 'B Corp Certified. Syzygy Impact division launched.'},
+  {year: '2019', event: 'Enterprise DeFi advisory. Bridging TradFi infrastructure to on-chain rails.'},
+  {year: '2020', event: 'Managed $500M+ in digital asset infrastructure decisions.'},
+  {year: '2021', event: 'Deep advisory across stablecoin, custody, and tokenized fund infrastructure.'},
   {year: '2022', event: '$3M+ grant funding managed for XPRIZE.'},
-  {year: '2024', event: '$10B+ decisions brokered. ImpactSoul launched.'},
+  {year: '2023', event: 'ImpactSoul incubated. Consciousness-aligned capital framework.'},
+  {year: '2024', event: '$10B+ decisions transacted. 25-year track record.'},
+  {year: '2025', event: 'AI-augmented advisory. Same relationships, faster pattern recognition.'},
 ]
 
 /* ── TESTIMONIALS ── */
@@ -163,7 +169,7 @@ const brands = [
     since: 'Since 2000',
     audience: 'For Enterprise CTOs',
     description: 'Edge, compute & AI data center intelligence. AI studies the process — our Transaction Architects get the deal done.',
-    keyValue: '$10B+ brokered · 23.8% avg savings · 90-day validated',
+    keyValue: '$10B+ transacted · 23.8% avg savings · 90-day validated',
     compensation: '% of impact achieved',
     commitment: '300%+ ROI or don\'t pay',
     href: '/expertise',
@@ -441,7 +447,7 @@ export default function HomeContent() {
               className="mt-3 text-sm"
               style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.4)'}}
             >
-              100+ engagements. $10B+ in decisions brokered. Names you know.
+              100+ engagements. $10B+ in decisions transacted. Names you know.
             </p>
           </div>
 
@@ -643,7 +649,7 @@ export default function HomeContent() {
               className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
               style={{fontFamily: 'var(--font-display)', color: 'var(--text-dark)'}}
             >
-              Not Consultants. Not Brokers.
+              Not Consultants. Not Middlemen.
             </h2>
           </div>
 
@@ -661,7 +667,7 @@ export default function HomeContent() {
                     className="pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10"
                     style={{fontFamily: 'var(--font-body)', color: 'var(--text-mid)'}}
                   >
-                    Broker / Agent
+                    Middleman / Agent
                   </th>
                   <th
                     className="pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2"

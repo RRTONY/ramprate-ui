@@ -186,7 +186,7 @@ export default function SourcingPage() {
           {/* Stats */}
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
             {[
-              {value: '$10B+', label: 'Decisions Brokered'},
+              {value: '$10B+', label: 'Decisions Transacted'},
               {value: '23.8%', label: 'Avg Savings'},
               {value: '90', label: 'Day Validation Window'},
               {value: '300%+', label: 'ROI Guarantee'},

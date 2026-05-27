@@ -147,10 +147,13 @@ export default async function AboutPage() {
 
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
             {[
-              { value: "2000", label: "Founded" },
-              { value: "$10B+", label: "Decisions Brokered" },
-              { value: "50+", label: "Countries" },
-              { value: "B Corp", label: "Certified" },
+              {value: "2000", label: "Founded"},
+              {value: "$10B+", label: "Decisions Transacted"},
+              {value: "50+", label: "Countries"},
+              {value: "B Corp", label: "Certified"},
+              {value: '50+', label: 'Countries'},
+              {value: 'B Corp', label: 'Certified'},
+>>>>>>> b61dbae (fix: replace brokered with transacted, expand timeline 2016-2025, fix B Corp to 2018)
             ].map((s) => (
               <div key={s.label}>
                 <div
