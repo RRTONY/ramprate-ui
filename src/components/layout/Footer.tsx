@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/shared/Logo";
+import {toTelHref} from "@/lib/utils";
 
 interface SocialLink {
   platform: string;
@@ -153,7 +154,7 @@ export default function Footer({
                 {email || "hello@ramprate.com"}
               </a>
               <a
-                href={`tel:${(phone || "+19092359945").replace(/[\s()\-]/g, '')}`}
+                href={`tel:${toTelHref(phone || "+19092359945")}`}
                 className="text-sm text-white/50 hover:text-white transition-colors block"
                 style={{ fontFamily: "var(--font-body)" }}
               >
