@@ -18,7 +18,7 @@ ABOUT RAMPRATE:
 - Founded 2000. Private, self-funded, profitable from birth. B Corp Certified.
 - $10B+ in enterprise decisions transacted. 250+ global brands. 50+ countries.
 - The SPY Index: 150,000+ data points across 350+ vendors in 80 countries.
-- Not consultants. Not middlemen. Principals who execute with skin in the game.
+- An Objective Transaction Agency. Principals who execute with skin in the game.
 - Same senior team for 25 years. No staffing pyramid. No junior layers.
 - Forecasts within 5-10% of outcome (vs industry standard ±30-40%).
 - 99% of introductions convert to contracts.

@@ -649,7 +649,7 @@ export default function HomeContent() {
               className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
               style={{fontFamily: 'var(--font-display)', color: 'var(--text-dark)'}}
             >
-              Not Consultants. Not Middlemen.
+              An Objective Transaction Agency.
             </h2>
           </div>
 
@@ -667,7 +667,7 @@ export default function HomeContent() {
                     className="pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10"
                     style={{fontFamily: 'var(--font-body)', color: 'var(--text-mid)'}}
                   >
-                    Middleman / Agent
+                    Traditional Middleman
                   </th>
                   <th
                     className="pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2"
