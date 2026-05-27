@@ -153,7 +153,7 @@ export default function Footer({
                 {email || "hello@ramprate.com"}
               </a>
               <a
-                href={`tel:${phone || "+19092359945"}`}
+                href={`tel:${(phone || "+19092359945").replace(/[\s()\-]/g, '')}`}
                 className="text-sm text-white/50 hover:text-white transition-colors block"
                 style={{ fontFamily: "var(--font-body)" }}
               >
