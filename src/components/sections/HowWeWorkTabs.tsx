@@ -231,15 +231,20 @@ export default function HowWeWorkTabs() {
                 return (
                   <div
                     key={i}
-                    className="border-b"
-                    style={{ borderColor: "rgba(255,255,255,0.07)" }}
+                    className="border-b rounded-lg mb-1 transition-colors"
+                    style={{
+                      borderColor: "rgba(255,255,255,0.07)",
+                      background: isOpen
+                        ? "rgba(212,168,67,0.06)"
+                        : "rgba(255,255,255,0.02)",
+                    }}
                   >
                     <button
                       onClick={() => setOpenStep(isOpen ? null : i)}
-                      className="w-full text-left py-5 sm:py-6 flex items-start gap-5 group"
+                      className="w-full text-left py-5 sm:py-6 px-4 flex items-center gap-5 group"
                     >
                       <span
-                        className={`${monoLabel} shrink-0 pt-0.5`}
+                        className={`${monoLabel} shrink-0`}
                         style={{
                           color: "oklch(0.82 0.15 75)",
                           fontFamily: "var(--font-mono)",
@@ -247,30 +252,39 @@ export default function HowWeWorkTabs() {
                       >
                         {step.num}
                       </span>
-                      <div className="flex-1 flex items-start justify-between gap-4">
+                      <div className="flex-1 flex items-center justify-between gap-4">
                         <h3
                           className="text-base sm:text-lg font-semibold text-white group-hover:text-[oklch(0.82_0.15_75)] transition-colors"
                           style={{ fontFamily: "var(--font-display)" }}
                         >
                           {step.title}
                         </h3>
+                        {/* Prominent expand indicator */}
                         <span
-                          className="text-xl shrink-0 transition-transform duration-200"
+                          className="shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200"
                           style={{
-                            color: "rgba(255,255,255,0.25)",
-                            transform: isOpen
-                              ? "rotate(45deg)"
-                              : "rotate(0deg)",
+                            borderColor: isOpen
+                              ? "oklch(0.82 0.15 75)"
+                              : "rgba(255,255,255,0.25)",
+                            background: isOpen
+                              ? "rgba(212,168,67,0.15)"
+                              : "rgba(255,255,255,0.05)",
+                            color: isOpen
+                              ? "oklch(0.82 0.15 75)"
+                              : "rgba(255,255,255,0.6)",
+                            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                           }}
                         >
-                          +
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                          </svg>
                         </span>
                       </div>
                     </button>
 
                     {isOpen && (
                       <p
-                        className={`${bodyText} pb-6 pl-10`}
+                        className={`${bodyText} pb-6 px-4 pl-14`}
                         style={{
                           color: "rgba(255,255,255,0.5)",
                           fontFamily: "var(--font-body)",
