@@ -182,7 +182,7 @@
 
 # Impact / CSR pages → /impactsoul
 /corporate-social-responsibility/  /impactsoul           301
-/values/                    /about                       301
+# /values/ now has its own dedicated page — no redirect needed
 /impact-advisory-scope-of-services/  /impactsoul         301
 /syzygy-impact-sourcing-2020/  /impactsoul              301
 
