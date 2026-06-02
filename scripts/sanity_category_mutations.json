@@ -1,0 +1,1362 @@
+{
+  "mutations": [
+    {
+      "patch": {
+        "id": "wp-post-12145",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-12145"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-12169",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-271",
+              "_key": "cat-wp-post-12169"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1396",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-1396"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1462",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-1462"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1561",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-1561"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1563",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-1563"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1567",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-1567"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1569",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-47",
+              "_key": "cat-wp-post-1569"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1596",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-128",
+              "_key": "cat-wp-post-1596"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1692",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-57",
+              "_key": "cat-wp-post-1692"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1702",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-1702"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-1812",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-128",
+              "_key": "cat-wp-post-1812"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2024",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-2024"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2026",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2026"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2027",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-2027"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2028",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2028"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2033",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-2033"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2043",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2043"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2045",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-2045"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2051",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-2051"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2055",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-38",
+              "_key": "cat-wp-post-2055"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2057",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-2057"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2062",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-2062"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2267",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2267"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2271",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2271"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2273",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2273"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2276",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2276"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2279",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2279"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2293",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2293"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2294",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-2294"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2297",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2297"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2298",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2298"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2301",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-2301"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2302",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2302"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2305",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-2305"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2307",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-2307"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2311",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2311"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2312",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-2312"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2324",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2324"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2332",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-2332"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2336",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2336"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2350",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-2350"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2359",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-2359"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2364",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2364"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2366",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-2366"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2390",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-38",
+              "_key": "cat-wp-post-2390"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2392",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-2392"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2674",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-2674"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2767",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-2767"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2788",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-2788"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-2963",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-47",
+              "_key": "cat-wp-post-2963"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3028",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-3028"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3138",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-46",
+              "_key": "cat-wp-post-3138"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3146",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-46",
+              "_key": "cat-wp-post-3146"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3223",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-3223"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3266",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-3266"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3267",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-3267"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3268",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-3268"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3686",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-39",
+              "_key": "cat-wp-post-3686"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3887",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-69",
+              "_key": "cat-wp-post-3887"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3922",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-24",
+              "_key": "cat-wp-post-3922"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-3933",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-3933"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4017",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-128",
+              "_key": "cat-wp-post-4017"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4045",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-4045"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4067",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-128",
+              "_key": "cat-wp-post-4067"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4109",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-4109"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4115",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-4115"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4122",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-33",
+              "_key": "cat-wp-post-4122"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4362",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-4362"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4372",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-44",
+              "_key": "cat-wp-post-4372"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4491",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-52",
+              "_key": "cat-wp-post-4491"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-4984",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-4984"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-50",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-31",
+              "_key": "cat-wp-post-50"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5027",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5027"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5038",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5038"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5059",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5059"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5129",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5129"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5539",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5539"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5630",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-5630"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-5648",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-5648"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6214",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-38",
+              "_key": "cat-wp-post-6214"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6432",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-6432"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6822",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-6822"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6872",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-65",
+              "_key": "cat-wp-post-6872"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6875",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-69",
+              "_key": "cat-wp-post-6875"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6902",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-274",
+              "_key": "cat-wp-post-6902"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6911",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-131",
+              "_key": "cat-wp-post-6911"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-6990",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-68",
+              "_key": "cat-wp-post-6990"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-7294",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-237",
+              "_key": "cat-wp-post-7294"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-7305",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-69",
+              "_key": "cat-wp-post-7305"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-7984",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-69",
+              "_key": "cat-wp-post-7984"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-8246",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-233",
+              "_key": "cat-wp-post-8246"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-8308",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-271",
+              "_key": "cat-wp-post-8308"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-8379",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-271",
+              "_key": "cat-wp-post-8379"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-8430",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-233",
+              "_key": "cat-wp-post-8430"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-9482",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-233",
+              "_key": "cat-wp-post-9482"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "wp-post-9898",
+        "set": {
+          "categories": [
+            {
+              "_type": "reference",
+              "_ref": "wp-category-69",
+              "_key": "cat-wp-post-9898"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
