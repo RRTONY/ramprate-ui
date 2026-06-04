@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -44,11 +44,18 @@ export default async function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        <GoogleAnalytics
-          gaId={
-            settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID ?? ""
-          }
+        <Script
+          strategy="beforeInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}`}
         />
+        <Script id="ga4-init" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}');
+          `}
+        </Script>
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <JsonLd
