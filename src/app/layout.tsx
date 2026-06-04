@@ -43,6 +43,13 @@ export default async function RootLayout({
   }>({ query: siteSettingsQuery, tags: ["siteSettings"], revalidate: 60 });
   return (
     <html lang="en" data-scroll-behavior="smooth">
+      <head>
+        <GoogleAnalytics
+          gaId={
+            settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID ?? ""
+          }
+        />
+      </head>
       <body className="antialiased" suppressHydrationWarning>
         <JsonLd
           data={organizationJsonLd({
@@ -66,11 +73,6 @@ export default async function RootLayout({
         <ExitSurvey />
         <ScrollToTop />
       </body>
-      <GoogleAnalytics
-        gaId={
-          settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID ?? ""
-        }
-      />
     </html>
   );
 }
