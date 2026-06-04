@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -57,22 +57,6 @@ export default async function RootLayout({
         />
         <Header />
         <main className="min-h-screen">{children}</main>
-        {settings?.googleAnalyticsId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${settings.googleAnalyticsId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${settings.googleAnalyticsId}');
-              `}
-            </Script>
-          </>
-        )}
         <Footer
           companyName={settings?.companyName}
           phone={settings?.phone}
@@ -82,6 +66,11 @@ export default async function RootLayout({
         <ExitSurvey />
         <ScrollToTop />
       </body>
+      <GoogleAnalytics
+        gaId={
+          settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID ?? ""
+        }
+      />
     </html>
   );
 }
