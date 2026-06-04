@@ -44,6 +44,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
+        {/* Google Analytics */}
         <Script
           strategy="beforeInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}`}
@@ -54,6 +55,24 @@ export default async function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}');
+          `}
+        </Script>
+
+        {/* Plausible Analytics */}
+        <Script
+          id="plausible-init"
+          strategy="afterInteractive"
+          src="https://plausible.io/js/pa-M6v6diZ7bHkyH4N7zI23W.js"
+        />
+        <Script id="plausible-setup" strategy="afterInteractive">
+          {`
+            window.plausible = window.plausible || function() {
+              (plausible.q = plausible.q || []).push(arguments)
+            };
+            plausible.init = plausible.init || function(i) {
+              plausible.o = i || {}
+            };
+            plausible.init();
           `}
         </Script>
       </head>
