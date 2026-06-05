@@ -41,22 +41,31 @@ export default async function RootLayout({
     socialLinks?: { platform: string; url: string }[];
     googleAnalyticsId?: string;
   }>({ query: siteSettingsQuery, tags: ["siteSettings"], revalidate: 60 });
+
+  // Resolve GA ID: Sanity value wins, but treat an empty/whitespace value as
+  // unset so it falls back to the env var (?? would keep an empty string).
+  const gaId =
+    settings?.googleAnalyticsId?.trim() || process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        {/* Google Analytics */}
-        <Script
-          strategy="beforeInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}`}
-        />
-        <Script id="ga4-init" strategy="beforeInteractive">
-          {`
+        {/* Google Analytics — only render when an ID exists (avoids id=undefined) */}
+        {gaId && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${settings?.googleAnalyticsId ?? process.env.NEXT_PUBLIC_GA_ID}');
+            gtag('config', '${gaId}');
           `}
-        </Script>
+            </Script>
+          </>
+        )}
 
         {/* Plausible Analytics */}
         <Script
