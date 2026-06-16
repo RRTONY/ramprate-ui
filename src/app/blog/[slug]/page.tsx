@@ -1,8 +1,8 @@
 import {client} from '@/lib/sanity/client'
 import {postBySlugQuery, allPostSlugsQuery} from '@/lib/sanity/queries'
 import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
-
-import JsonLd, {blogPostJsonLd} from '@/components/shared/JsonLd'
+import SanityImage from '@/components/shared/SanityImage'
+import JsonLd, {blogPostJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
 import {urlFor} from '@/lib/sanity/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
@@ -22,11 +22,15 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   return {
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
+    alternates: {canonical: `/blog/${slug}`},
     openGraph: {
       title: post.seo?.metaTitle || post.title,
       description: post.seo?.metaDescription || post.excerpt,
       type: 'article',
+      url: `https://ramprate.com/blog/${slug}`,
       publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      ...(post.mainImage && {images: [urlFor(post.mainImage).width(1200).height(630).url()]}),
     },
   }
 }
@@ -53,9 +57,17 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
           description: post.seo?.metaDescription || post.excerpt,
           url: `https://ramprate.com/blog/${slug}`,
           datePublished: post.publishedAt,
+          dateModified: post._updatedAt,
           authorName: post.author?.name,
           image: post.mainImage ? urlFor(post.mainImage).width(1200).url() : undefined,
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'Blog', url: 'https://ramprate.com/blog'},
+          {name: post.title, url: `https://ramprate.com/blog/${slug}`},
+        ])}
       />
 
       {/* Post header */}
@@ -111,12 +123,14 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
       <article className="max-w-4xl mx-auto px-5 sm:px-8 py-12">
         {/* Featured image */}
         {post.mainImage && (
-          <div className="mb-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={urlFor(post.mainImage).width(896).url()}
+          <div className="mb-10 rounded-xl overflow-hidden">
+            <SanityImage
+              image={post.mainImage}
               alt={post.mainImage.alt || post.title}
-              style={{border: 'none', borderRadius: 0, boxShadow: 'none', height: 'auto', maxWidth: '100%', display: 'block'}}
+              width={896}
+              height={504}
+              className="w-full"
+              priority
             />
           </div>
         )}

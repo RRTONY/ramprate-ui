@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { client } from "@/lib/sanity/client";
 import {
@@ -487,18 +488,18 @@ export default async function AboutPage() {
               >
                 {m.img ? (
                   <div
-                    className="overflow-hidden w-full"
+                    className="relative overflow-hidden w-full"
                     style={{
                       aspectRatio: "4/3",
                       background: "oklch(0.92 0.01 80)",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={m.img}
                       alt={m.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                      className="object-cover"
                     />
                   </div>
                 ) : (
@@ -616,18 +617,18 @@ export default async function AboutPage() {
               >
                 {m.img ? (
                   <div
-                    className="overflow-hidden w-full"
+                    className="relative overflow-hidden w-full"
                     style={{
                       aspectRatio: "1/1",
                       background: "oklch(0.92 0.01 80)",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={m.img}
                       alt={m.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 20vw"
+                      className="object-cover"
                     />
                   </div>
                 ) : (

@@ -62,6 +62,7 @@ export const postsQuery = groq`
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0]{
     _id,
+    _updatedAt,
     title,
     slug,
     publishedAt,
@@ -215,6 +216,6 @@ export const spyIndexPageQuery = groq`
     seo
   }
 `
-export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug}`
+export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section}`
 export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug}`
 

@@ -1,9 +1,19 @@
 import React from 'react'
 import {PortableText, type PortableTextComponents} from '@portabletext/react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {urlFor} from './image'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+// Sanity asset refs encode intrinsic dimensions: `image-<id>-<w>x<h>-<ext>`.
+// Reading them lets us give next/image real width/height (no layout shift)
+// without expanding the asset in the GROQ query.
+function dimsFromRef(ref: string): {width: number; height: number} {
+  const match = ref?.match(/-(\d+)x(\d+)-/)
+  if (match) return {width: Number(match[1]), height: Number(match[2])}
+  return {width: 800, height: 600}
+}
 
 function getYouTubeId(url: string): string | null {
   const match = url?.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/)
@@ -226,13 +236,18 @@ export const portableTextComponents: PortableTextComponents = {
         ...(!isLeft && !isRight && !isCenter && {display: 'block', margin: '20px 0'}),
       }
 
+      const {width: refW, height: refH} = dimsFromRef(value.asset._ref)
+
       return (
         <figure style={{margin: 0}}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={urlFor(value).width(800).url()}
             alt={value.alt || ''}
+            width={refW}
+            height={refH}
+            sizes="(max-width: 768px) 100vw, 800px"
             style={imgStyle}
+            unoptimized
           />
           {value.caption && (
             <figcaption className="mt-2 text-sm" style={{color: 'rgba(255,255,255,0.45)', clear: isLeft || isRight ? 'both' : undefined}}>

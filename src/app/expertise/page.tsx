@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import type {Metadata} from 'next'
+import JsonLd, {serviceJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
 
 export const metadata: Metadata = {
   title: 'Expertise | RampRate',
   description:
     'Four practices. One mission: transparency, skin in the game, and principals who execute.',
+  alternates: {canonical: '/expertise'},
 }
 
 const practices = [
@@ -45,6 +47,21 @@ const practices = [
 export default function ExpertisePage() {
   return (
     <>
+      <JsonLd
+        data={serviceJsonLd({
+          name: 'RampRate Advisory Practices',
+          description:
+            'Enterprise IT sourcing, growth strategy, Web3 advisory, and impact consulting — independent advisory with transparency, skin in the game, and principals who execute.',
+          url: 'https://ramprate.com/expertise',
+          serviceType: 'IT and business advisory',
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'Expertise', url: 'https://ramprate.com/expertise'},
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"

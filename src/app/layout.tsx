@@ -5,26 +5,44 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { sanityFetch } from "@/lib/sanity/client";
 import { siteSettingsQuery } from "@/lib/sanity/queries";
-import JsonLd, { organizationJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, { organizationJsonLd, webSiteJsonLd } from "@/components/shared/JsonLd";
 import ExitSurvey from "@/components/shared/ExitSurvey";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ramprate.com"),
   title: {
     default: "RampRate - IT Infrastructure Advisory",
     template: "%s | RampRate",
   },
   description:
     "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
+    type: "website",
+    siteName: "RampRate",
+    url: "https://ramprate.com",
     images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
     images: ["/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -86,6 +104,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className="antialiased" suppressHydrationWarning>
+        <JsonLd data={webSiteJsonLd({name: settings?.companyName})} />
         <JsonLd
           data={organizationJsonLd({
             name: settings?.companyName,

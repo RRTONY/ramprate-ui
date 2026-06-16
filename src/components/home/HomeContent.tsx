@@ -1,46 +1,12 @@
-'use client'
-
-import {useState, useEffect} from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowRight, ArrowDown, Target, Zap, Users,
   Shield, Database, DollarSign, TrendingUp, Grid3X3, Heart,
-  ChevronRight, ChevronLeft,
 } from 'lucide-react'
-
-/* ── CLIENT LOGO WALL — Two-Tier ── */
-const tier1Clients = [
-  {name: 'Microsoft', context: '50+ strategy & product studies'},
-  {name: 'eBay', context: '27% infrastructure savings'},
-  {name: 'Sony', context: 'Deep 8-figure outsourcing deals'},
-  {name: 'ViacomCBS', context: 'Budget optimization across all IT categories'},
-  {name: 'Intel', context: 'Digital strategy & alliances research'},
-  {name: 'Nike', context: 'Multi-year procurement, 7-figure reductions'},
-  {name: 'Hearst', context: '16+ years, saved millions globally'},
-  {name: 'Blizzard', context: 'Complex negotiations, rapid scaling'},
-]
-const tier2Clients = [
-  {name: 'Disney', context: 'Best IT services deal during executive tenure'},
-  {name: 'AOL', context: '17-36% price reductions; breakthrough SLAs'},
-  {name: 'NHL', context: 'Breakthrough PPV streaming solution'},
-  {name: 'Miramax', context: '40%+ savings; diligence compressed'},
-  {name: 'Warner Bros.', context: 'Win-win structures across two engagements'},
-  {name: 'Verizon', context: 'Enterprise telecom partnerships'},
-  {name: 'AT&T', context: 'Telecom infrastructure navigation'},
-  {name: 'Merrill Lynch', context: 'Fortune 500 IT cost optimization'},
-  {name: 'Accenture', context: '20-40% savings; cut processes in half'},
-  {name: 'Thomson Reuters', context: 'Saved millions; marketplace mapping'},
-  {name: 'Beats Music', context: 'Fully installed in 30 hours'},
-  {name: 'XPRIZE', context: '$3M+ grant funding managed'},
-  {name: 'Syntropy', context: '4+ year daily engagement; growth accelerated'},
-  {name: 'Riot Games', context: 'Rapid scaling for multiplayer platforms'},
-  {name: 'NBC', context: 'Content delivery optimization'},
-  {name: 'Fox', context: 'Broadcast infrastructure advisory'},
-  {name: 'Ticketmaster', context: 'eCommerce infrastructure'},
-  {name: 'McGraw Hill', context: 'Publishing infrastructure optimization'},
-  {name: 'Vodafone', context: 'Global telecom advisory'},
-  {name: 'Primedia', context: 'Needs assessment in record time'},
-]
+import ClientWall from './ClientWall'
+import TestimonialsCarousel from './TestimonialsCarousel'
+import NewsletterSection from './NewsletterSection'
 
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
@@ -91,50 +57,6 @@ const timeline = [
   {year: '2023', event: 'ImpactSoul incubated. Consciousness-aligned capital framework.'},
   {year: '2024', event: '$10B+ decisions transacted. 25-year track record.'},
   {year: '2025', event: 'AI-augmented advisory. Same relationships, faster pattern recognition.'},
-]
-
-/* ── TESTIMONIALS ── */
-const testimonials = [
-  {
-    quote: "I engaged RampRate to work as sourcing advisors to Sony Music. Since engaging them they have helped me significantly reduce my cost structure through several major outsourcing deals worth deep 8 figures. They made me look like a hero to my executive management. They are a secret weapon.",
-    name: 'Peter Borner',
-    title: 'Former Head of IT, Sony',
-  },
-  {
-    quote: "For over 16 years, RampRate helped my companies understand the differences between suppliers. They saved us millions, created agility and new budget out of thin air with each engagement.",
-    name: 'Phil Wiser',
-    title: 'EVP & CTO, ViacomCBS',
-  },
-  {
-    quote: "RampRate was a risk-free proposition money-wise. They hit 27% savings and the relationships are stronger than ever.",
-    name: 'Paul Santana',
-    title: 'Manager of Data Center Operations, eBay',
-  },
-  {
-    quote: "RampRate has been my most reliable global resource and is ready to perform for us at a moment's notice. Their inside knowledge and ability to handle high-level complex negotiations helped us move fast! They made scaling easier.",
-    name: 'Paul Sams',
-    title: 'COO, Blizzard Entertainment',
-  },
-  {
-    quote: "Intel engaged RampRate as we launched our Digital Home content strategy & alliances group. RampRate defines professionalism and they run a world-class team devoted to the same ideals.",
-    name: 'Ron Vaisbort',
-    title: 'Executive at Intel, Blackberry, Ivalua',
-  },
-  {
-    quote: "The deal that RampRate got for the Walt Disney Internet Group was one of the best deals in IT services I saw during my tenure at Disney. I would use RampRate again.",
-    name: 'Robert Gonsalves',
-    title: 'Former Director, Warner Bros. Online / Disney',
-  },
-  {
-    quote: "Each time they have saved significant time in negotiating and closing contracts, which provided at least 20 if not 40% savings and certainly cut processes in half.",
-    name: 'Michael Montalto',
-    title: 'Accenture',
-  },
-  {
-    quote: "Under-promised and over-delivered for more than 4 years. They paid for themselves by accelerating our growth by years.",
-    name: 'Kipras Kazlauskas',
-    title: 'Co-Founder, Syntropy',
-  },
 ]
 
 /* ── HOW WE OPERATE ── */
@@ -214,123 +136,7 @@ const brands = [
   },
 ]
 
-function ClientCard({name, context}: {name: string; context: string}) {
-  return (
-    <div className="text-center px-2 py-4">
-      <h3
-        className="text-xs sm:text-sm font-bold tracking-[0.15em] uppercase"
-        style={{fontFamily: 'var(--font-display)', color: 'rgba(255,255,255,0.6)'}}
-      >
-        {name}
-      </h3>
-      <p
-        className="text-[11px] sm:text-xs mt-1 leading-snug"
-        style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.3)'}}
-      >
-        {context}
-      </p>
-    </div>
-  )
-}
-
-function NewsletterSection() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle')
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!email) return
-    setStatus('submitting')
-    const data = new FormData()
-    data.append('form-name', 'newsletter')
-    data.append('email', email)
-    fetch('/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-    })
-      .then(() => { setStatus('done'); setEmail('') })
-      .catch(() => setStatus('error'))
-  }
-
-  return (
-    <section className="section-light py-20 sm:py-24">
-      <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
-        <div
-          className="inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5"
-          style={{background: 'rgba(100,60,30,0.08)', color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}
-        >
-          Intelligence Brief
-        </div>
-        <h2
-          className="text-3xl sm:text-4xl font-bold mb-4"
-          style={{fontFamily: 'var(--font-display)', color: 'oklch(0.18 0.03 50)'}}
-        >
-          Join 13,000+ IT Leaders
-        </h2>
-        <p
-          className="text-base leading-relaxed mb-8 max-w-lg mx-auto"
-          style={{fontFamily: 'var(--font-body)', color: 'oklch(0.45 0.02 50)'}}
-        >
-          Get RampRate&apos;s take on enterprise tech, sourcing, and market shifts — straight from principals. No fluff.
-        </p>
-
-        {status === 'done' ? (
-          <p className="text-base font-semibold" style={{color: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}>
-            You&apos;re in. Welcome to the list.
-          </p>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              required
-              className="flex-1 px-4 py-3 rounded-md border text-sm focus:outline-none focus:ring-2"
-              style={{
-                borderColor: 'oklch(0.82 0.05 80)',
-                fontFamily: 'var(--font-body)',
-              }}
-            />
-            <button
-              type="submit"
-              disabled={status === 'submitting'}
-              className="px-6 py-3 rounded-md text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap"
-              style={{background: 'oklch(0.55 0.15 30)', fontFamily: 'var(--font-body)'}}
-            >
-              {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
-            </button>
-          </form>
-        )}
-
-        {status === 'error' && (
-          <p className="mt-3 text-xs" style={{color: 'oklch(0.5 0.2 20)', fontFamily: 'var(--font-body)'}}>
-            Something went wrong. Try again or email us directly.
-          </p>
-        )}
-
-        <p className="mt-4 text-xs" style={{color: 'oklch(0.6 0.01 50)', fontFamily: 'var(--font-body)'}}>
-          No spam. Unsubscribe anytime.
-        </p>
-      </div>
-    </section>
-  )
-}
-
 export default function HomeContent() {
-  const [active, setActive] = useState(0)
-  const [showAllClients, setShowAllClients] = useState(false)
-
-  useEffect(() => {
-    const timer = setInterval(() => setActive((p) => (p + 1) % testimonials.length), 6000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const next = () => setActive((p) => (p + 1) % testimonials.length)
-  const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length)
-
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
@@ -340,11 +146,13 @@ export default function HomeContent() {
       >
         {/* Hero background image */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/hero.webp"
             alt=""
-            className="w-full h-full object-cover object-right"
-            loading="eager"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-right"
           />
           <div className="absolute inset-0" style={{background: 'linear-gradient(to right, #0a0f1a 40%, rgba(10,15,26,0.85) 65%, transparent 100%)'}} />
           <div className="absolute inset-0" style={{background: 'linear-gradient(to top, rgba(10,15,26,0.9) 0%, transparent 40%, rgba(10,15,26,0.4) 100%)'}} />
@@ -432,62 +240,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ CLIENT WALL ═══ */}
-      <section className="section-dark py-16 sm:py-20">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-10">
-            <h2
-              className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight"
-              style={{fontFamily: 'var(--font-display)'}}
-            >
-              25 Years Inside the World&apos;s Most
-              <br className="hidden sm:block" />
-              <span style={{color: 'var(--gold)'}}> Complex Enterprises</span>
-            </h2>
-            <p
-              className="mt-3 text-sm"
-              style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.4)'}}
-            >
-              100+ engagements. $10B+ in decisions transacted. Names you know.
-            </p>
-          </div>
-
-          {/* Tier 1 */}
-          <div
-            className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden"
-            style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)'}}
-          >
-            {tier1Clients.map((c) => (
-              <div key={c.name} style={{background: 'oklch(0.18 0.01 250)'}}>
-                <ClientCard name={c.name} context={c.context} />
-              </div>
-            ))}
-          </div>
-
-          {/* Tier 2 */}
-          {showAllClients && (
-            <div
-              className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3"
-              style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)'}}
-            >
-              {tier2Clients.map((c) => (
-                <div key={c.name} style={{background: 'oklch(0.18 0.01 250)'}}>
-                  <ClientCard name={c.name} context={c.context} />
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={() => setShowAllClients(!showAllClients)}
-              className="text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/40"
-              style={{fontFamily: 'var(--font-body)'}}
-            >
-              {showAllClients ? '— Show Less' : '+ View All Clients'}
-            </button>
-          </div>
-        </div>
-      </section>
+      <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
       <section className="section-dark py-28 sm:py-36">
@@ -787,144 +540,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <section className="section-dark py-28 sm:py-36 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{fontFamily: 'var(--font-body)', color: 'var(--gold)'}}
-            >
-              What Executives Say
-            </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl font-bold text-white"
-              style={{fontFamily: 'var(--font-display)'}}
-            >
-              In Their Words.
-            </h2>
-          </div>
-
-          {/* Desktop: 3 at a time */}
-          <div className="hidden lg:block">
-            <div className="grid grid-cols-3 gap-6">
-              {[0, 1, 2].map((offset) => {
-                const idx = (active + offset) % testimonials.length
-                const t = testimonials[idx]
-                return (
-                  <div
-                    key={`${idx}-${active}`}
-                    className="rounded-xl p-8 flex flex-col"
-                    style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)'}}
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="mb-4 shrink-0" style={{color: 'rgba(212,168,67,0.4)'}}>
-                      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" fill="currentColor"/>
-                      <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" fill="currentColor"/>
-                    </svg>
-                    <p
-                      className="text-sm leading-relaxed italic flex-1"
-                      style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.7)'}}
-                    >
-                      &ldquo;{t.quote}&rdquo;
-                    </p>
-                    <div className="mt-6 pt-4" style={{borderTop: '1px solid rgba(255,255,255,0.06)'}}>
-                      <p className="text-sm font-bold text-white" style={{fontFamily: 'var(--font-display)'}}>
-                        {t.name}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.4)'}}>
-                        {t.title}
-                      </p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-
-            <div className="flex justify-center gap-4 mt-8">
-              <button
-                onClick={prev}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40"
-                style={{border: '1px solid rgba(255,255,255,0.1)'}}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <div className="flex items-center gap-2">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActive(i)}
-                    className="h-2 rounded-full transition-all"
-                    style={{
-                      width: i === active ? '24px' : '8px',
-                      background: i === active ? 'var(--gold)' : 'rgba(255,255,255,0.2)',
-                    }}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={next}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40"
-                style={{border: '1px solid rgba(255,255,255,0.1)'}}
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile: single card */}
-          <div className="lg:hidden">
-            <div
-              key={active}
-              className="rounded-xl p-7"
-              style={{background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)'}}
-            >
-              <p
-                className="text-sm leading-relaxed italic"
-                style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.7)'}}
-              >
-                &ldquo;{testimonials[active].quote}&rdquo;
-              </p>
-              <div className="mt-5 pt-4" style={{borderTop: '1px solid rgba(255,255,255,0.06)'}}>
-                <p className="text-sm font-bold text-white" style={{fontFamily: 'var(--font-display)'}}>
-                  {testimonials[active].name}
-                </p>
-                <p className="text-xs mt-0.5" style={{fontFamily: 'var(--font-body)', color: 'rgba(255,255,255,0.4)'}}>
-                  {testimonials[active].title}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-3 mt-6">
-              <button
-                onClick={prev}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all"
-                style={{border: '1px solid rgba(255,255,255,0.1)'}}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <div className="flex items-center gap-1.5">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActive(i)}
-                    className="h-2 rounded-full transition-all"
-                    style={{
-                      width: i === active ? '20px' : '8px',
-                      background: i === active ? 'var(--gold)' : 'rgba(255,255,255,0.2)',
-                    }}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={next}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all"
-                style={{border: '1px solid rgba(255,255,255,0.1)'}}
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
       <section className="section-warm py-24 sm:py-32">

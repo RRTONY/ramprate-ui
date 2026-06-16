@@ -2,7 +2,7 @@ import {client} from '@/lib/sanity/client'
 import {postBySlugQuery} from '@/lib/sanity/queries'
 import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
 import SanityImage from '@/components/shared/SanityImage'
-import JsonLd, {blogPostJsonLd} from '@/components/shared/JsonLd'
+import JsonLd, {blogPostJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
 import {urlFor} from '@/lib/sanity/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
@@ -24,11 +24,15 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   return {
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
+    alternates: {canonical: `/thinking/${slug}`},
     openGraph: {
       title: post.seo?.metaTitle || post.title,
       description: post.seo?.metaDescription || post.excerpt,
       type: 'article',
+      url: `https://ramprate.com/thinking/${slug}`,
       publishedTime: post.publishedAt,
+      modifiedTime: post._updatedAt,
+      ...(post.mainImage && {images: [urlFor(post.mainImage).width(1200).height(630).url()]}),
     },
   }
 }
@@ -55,9 +59,17 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
           description: post.seo?.metaDescription || post.excerpt,
           url: `https://ramprate.com/thinking/${slug}`,
           datePublished: post.publishedAt,
+          dateModified: post._updatedAt,
           authorName: post.author?.name,
           image: post.mainImage ? urlFor(post.mainImage).width(1200).url() : undefined,
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'Thinking', url: 'https://ramprate.com/thinking'},
+          {name: post.title, url: `https://ramprate.com/thinking/${slug}`},
+        ])}
       />
 
       {/* Post header */}

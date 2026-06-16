@@ -53,11 +53,79 @@ export function organizationJsonLd({
   }
 }
 
+export function webSiteJsonLd({
+  name = 'RampRate',
+  url = 'https://ramprate.com',
+}: {name?: string; url?: string} = {}) {
+  // No SearchAction/sitelinks-searchbox: the site has no general search endpoint,
+  // and claiming one produces invalid markup. Add it back if a /search route ships.
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name,
+    url,
+    publisher: {'@type': 'Organization', name: 'RampRate', url: 'https://ramprate.com'},
+  }
+}
+
+export function serviceJsonLd({
+  name,
+  description,
+  url,
+  serviceType,
+}: {
+  name: string
+  description: string
+  url: string
+  serviceType?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description,
+    url,
+    ...(serviceType && {serviceType}),
+    provider: {
+      '@type': 'Organization',
+      name: 'RampRate',
+      url: 'https://ramprate.com',
+    },
+    areaServed: 'Worldwide',
+  }
+}
+
+export function breadcrumbJsonLd(items: {name: string; url: string}[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+}
+
+export function faqJsonLd(items: {question: string; answer: string}[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {'@type': 'Answer', text: item.answer},
+    })),
+  }
+}
+
 export function blogPostJsonLd({
   title,
   description,
   url,
   datePublished,
+  dateModified,
   authorName,
   image,
 }: {
@@ -65,6 +133,7 @@ export function blogPostJsonLd({
   description?: string
   url: string
   datePublished?: string
+  dateModified?: string
   authorName?: string
   image?: string
 }) {
@@ -74,15 +143,22 @@ export function blogPostJsonLd({
     headline: title,
     ...(description && {description}),
     url,
+    mainEntityOfPage: {'@type': 'WebPage', '@id': url},
     ...(datePublished && {datePublished}),
+    // Fall back to publish date so dateModified is always present (Google prefers both)
+    ...((dateModified || datePublished) && {dateModified: dateModified || datePublished}),
     ...(authorName && {
       author: {'@type': 'Person', name: authorName},
     }),
-    ...(image && {image}),
+    ...(image && {image: [image]}),
     publisher: {
       '@type': 'Organization',
       name: 'RampRate',
       url: 'https://ramprate.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ramprate.com/og.png',
+      },
     },
   }
 }

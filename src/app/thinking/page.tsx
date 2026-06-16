@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import {client} from '@/lib/sanity/client'
 import {allThinkingPostsQuery} from '@/lib/sanity/queries'
 import type {Metadata} from 'next'
@@ -56,12 +57,14 @@ export default async function ThinkingPage() {
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <div className="flex items-center gap-5 p-6 rounded-xl border border-white/10" style={{background: 'rgba(255,255,255,0.03)'}}>
             <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{background: 'rgba(255,255,255,0.1)'}}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/EtSyoZsiJamreUAA.png"
                 alt="Tony Greenberg"
+                width={64}
+                height={64}
                 className="w-full h-full object-cover"
                 style={{objectPosition: 'center 15%'}}
+                unoptimized
               />
             </div>
             <div>

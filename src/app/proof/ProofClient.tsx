@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
 
 export interface SanityLogo {
@@ -264,12 +265,10 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                     >
                       {logo.url ? (
                         <a href={logo.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={logo.logoUrl!} alt={logo.name} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} loading="lazy" />
+                          <Image src={logo.logoUrl!} alt={logo.name} width={100} height={28} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} unoptimized />
                         </a>
                       ) : (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={logo.logoUrl!} alt={logo.name} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} loading="lazy" />
+                        <Image src={logo.logoUrl!} alt={logo.name} width={100} height={28} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} unoptimized />
                       )}
                     </div>
                   ))}
@@ -302,8 +301,7 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                 <div key={m._id} className="text-center">
                   <div className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.1)' }}>
                     {m.photo ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={urlFor(m.photo).width(160).height(160).fit('crop').url()} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
+                      <Image src={urlFor(m.photo).width(160).height(160).fit('crop').url()} alt={m.name} width={160} height={160} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/30 text-lg font-bold">
                         {m.name.split(' ').map((n) => n[0]).join('')}

@@ -1,0 +1,26 @@
+# RampRate
+
+> RampRate is a B-Corp certified IT infrastructure and sourcing advisory firm (founded 2000) that helps enterprises optimize technology sourcing, cut costs, negotiate vendor contracts and SLAs, and drive measurable impact. 24+ years of independent advisory, $10B+ in enterprise decisions transacted across 350+ vendors and 80 countries.
+
+## What RampRate does
+- Independent IT and data center sourcing advisory — benchmarking pricing against 150K+ real transaction data points
+- Cloud, GPU compute, colocation, network, and edge infrastructure sourcing
+- Vendor contract and SLA negotiation, MSA review, mid-contract renegotiation
+- Growth strategy, Web3/blockchain advisory, and impact/ESG consulting
+
+## Key pages
+- [Home](https://ramprate.com): Overview of RampRate's advisory practices and track record
+- [Sourcing](https://ramprate.com/sourcing): IT & data center sourcing advisory — GPU compute, SLAs, vendor consolidation
+- [Expertise](https://ramprate.com/expertise): The four advisory practices (RampRate, Syzygy, Stratum, ImpactSoul)
+- [Proof](https://ramprate.com/proof): Client results and case outcomes
+- [About](https://ramprate.com/about): Firm history, team, and board of advisors
+- [Process](https://ramprate.com/process): How RampRate delivers engagements
+- [Contact](https://ramprate.com/contact): How to start an engagement
+
+## Content & insights
+- [Blog](https://ramprate.com/blog): Articles on IT infrastructure, sourcing, AI compute, and enterprise strategy
+- [Thinking](https://ramprate.com/thinking): Evergreen analysis and frameworks from 25 years of advisory
+
+## Notes
+- Sitemap: https://ramprate.com/sitemap.xml
+- Contact: admin@ramprate.com
