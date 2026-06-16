@@ -80,13 +80,13 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
         <div className="max-w-4xl mx-auto">
           <Link
             href="/thinking"
-            className="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-opacity hover:opacity-70"
-            style={{color: 'var(--gold)', fontFamily: 'var(--font-body)'}}
+            aria-label="Back to Thinking"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full border mb-8 transition-all hover:opacity-70 hover:border-(--gold)"
+            style={{color: 'var(--gold)', borderColor: 'rgba(212,168,67,0.3)', fontFamily: 'var(--font-body)'}}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            Back to Thinking
           </Link>
 
           {post.categories?.length > 0 && (
@@ -141,19 +141,6 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
             <PortableText value={post.body} components={portableTextComponents} />
           </div>
         )}
-
-        <div className="mt-16 pt-8" style={{borderTop: '1px solid rgba(255,255,255,0.08)'}}>
-          <Link
-            href="/thinking"
-            className="inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-70"
-            style={{color: 'var(--gold)', fontFamily: 'var(--font-body)'}}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Back to Thinking
-          </Link>
-        </div>
       </article>
     </div>
   )
