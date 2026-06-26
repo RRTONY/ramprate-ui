@@ -92,3 +92,25 @@ h1, h2, h3, h4, h5, h6 {
 .glass-orb-amber { background: oklch(0.82 0.15 75); }
 .glass-orb-blue { background: oklch(0.55 0.22 260); }
 .glass-orb-rust { background: oklch(0.55 0.15 30); }
+
+/* Hide floating elements while the AI modal is open */
+body.ai-modal-open [data-hide-on-ai] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* ── AI BUTTON ANIMATIONS ── */
+@keyframes sparkle-spin {
+  0%   { transform: rotate(0deg) scale(1);    opacity: 1; }
+  25%  { transform: rotate(20deg) scale(1.2); opacity: 0.8; }
+  50%  { transform: rotate(0deg) scale(1);    opacity: 1; }
+  75%  { transform: rotate(-15deg) scale(1.1); opacity: 0.85; }
+  100% { transform: rotate(0deg) scale(1);    opacity: 1; }
+}
+@keyframes ai-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,67,0), 0 0 0 0 rgba(212,168,67,0); }
+  50%       { box-shadow: 0 0 10px 2px rgba(212,168,67,0.22), 0 0 0 1px rgba(212,168,67,0.1); }
+}
+.ai-btn-sparkle { animation: sparkle-spin 3.5s ease-in-out infinite; display: inline-flex; }
+.ai-btn-glow    { animation: ai-glow-pulse 3s ease-in-out infinite; }

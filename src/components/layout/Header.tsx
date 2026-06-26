@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Logo from "@/components/shared/Logo";
 import SiteSearch from "@/components/shared/SiteSearch";
+import HeaderSearch from "@/components/shared/HeaderSearch";
 
 const practices = [
   { label: "Sourcing", href: "/sourcing", desc: "Enterprise IT" },
@@ -140,29 +141,13 @@ export default function Header() {
             </Link>
           ))}
 
+          <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
-
-          <Link
-            href="/contact"
-            className="ml-2 px-5 py-2.5 rounded-md text-sm font-semibold transition-all duration-300 shadow-sm"
-            style={{
-              background: "oklch(0.82 0.15 75)",
-              color: "oklch(0.18 0.03 50)",
-              fontFamily: "var(--font-body)",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "oklch(0.78 0.16 75)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "oklch(0.82 0.15 75)")
-            }
-          >
-            Tell Us What&apos;s Broken
-          </Link>
         </div>
 
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-2">
+          <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
           <button
             className="p-3 transition-colors"
@@ -266,20 +251,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <div className="pt-3">
-              <Link
-                href="/contact"
-                className="block text-center px-5 py-3 rounded-md text-sm font-semibold"
-                style={{
-                  background: "oklch(0.82 0.15 75)",
-                  color: "oklch(0.18 0.03 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-                onClick={() => setMobileOpen(false)}
-              >
-                Tell Us What&apos;s Broken
-              </Link>
-            </div>
           </div>
         </div>
       )}

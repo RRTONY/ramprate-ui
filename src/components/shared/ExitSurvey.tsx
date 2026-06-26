@@ -41,6 +41,7 @@ export default function ExitSurvey() {
       {/* persistent tab — bottom-right */}
       {!open && (
         <button
+          data-hide-on-ai
           onClick={() => setOpen(true)}
           className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold shadow-lg hover:scale-105 transition-transform"
           style={{

@@ -259,6 +259,27 @@ export default function SiteSearch({scrolled = false}: {scrolled?: boolean}) {
     if (open) setTimeout(() => inputRef.current?.focus(), 100)
   }, [open])
 
+  // Lock body scroll while the modal is open so only the chat area scrolls.
+  // Uses the position:fixed trick which also works on iOS Safari.
+  // Also adds `ai-modal-open` class so external elements (e.g. survey button) can hide.
+  useEffect(() => {
+    if (!open) return
+    const scrollY = window.scrollY
+    document.body.classList.add('ai-modal-open')
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.width = '100%'
+    document.body.style.overflowY = 'scroll'
+    return () => {
+      document.body.classList.remove('ai-modal-open')
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflowY = ''
+      window.scrollTo(0, scrollY)
+    }
+  }, [open])
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({behavior: 'smooth'})
   }, [chat, loading])
@@ -275,17 +296,23 @@ export default function SiteSearch({scrolled = false}: {scrolled?: boolean}) {
       {/* Trigger button */}
       <button
         onClick={openSearch}
-        className="flex items-center gap-2.5 px-4 py-2 rounded-full border transition-all text-sm"
+        className="ai-btn-glow flex items-center gap-2 px-3.5 py-2 rounded-full border transition-all duration-300 text-sm group"
         style={{
-          borderColor: scrolled ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.15)',
-          background: scrolled ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.06)',
-          color: scrolled ? 'oklch(0.4 0.03 50)' : 'rgba(255,255,255,0.6)',
+          borderColor: scrolled ? 'rgba(212,168,67,0.25)' : 'rgba(212,168,67,0.2)',
+          background: scrolled
+            ? 'linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))'
+            : 'linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))',
+          color: scrolled ? 'oklch(0.35 0.03 50)' : 'rgba(255,255,255,0.75)',
           fontFamily: 'var(--font-body)',
         }}
         aria-label="Ask RampRate AI"
       >
-        <Sparkles size={15} style={{color: scrolled ? 'oklch(0.65 0.15 75)' : 'oklch(0.82 0.15 75)'}} />
-        <span className="hidden md:inline text-xs font-medium">Ask RampRate</span>
+        <span className="ai-btn-sparkle">
+          <Sparkles size={14} style={{color: 'oklch(0.82 0.15 75)'}} />
+        </span>
+        <span className="hidden sm:inline text-xs font-semibold tracking-wide" style={{letterSpacing:'0.02em'}}>
+          Ask RampRate
+        </span>
         <kbd
           className="hidden lg:inline text-[10px] px-1.5 py-0.5 rounded font-mono"
           style={{
@@ -303,10 +330,10 @@ export default function SiteSearch({scrolled = false}: {scrolled?: boolean}) {
             onClick={closeSearch}
           />
 
-          {/* Panel — bottom sheet on mobile, centered modal on sm+ */}
+          {/* Panel — full screen on mobile, centered modal on sm+ */}
           <div
             className="fixed z-101 flex flex-col
-              inset-x-0 bottom-0 max-h-[92dvh] rounded-t-2xl
+              inset-0
               sm:inset-auto sm:top-[8vh] sm:left-1/2 sm:-translate-x-1/2
               sm:w-[90%] sm:max-w-2xl sm:max-h-[80vh] sm:rounded-2xl"
             style={{
@@ -319,11 +346,6 @@ export default function SiteSearch({scrolled = false}: {scrolled?: boolean}) {
             aria-label="RampRate AI Assistant"
             onClick={e => e.stopPropagation()}
           >
-            {/* Drag handle — mobile only */}
-            <div className="sm:hidden flex justify-center pt-3 pb-1 shrink-0">
-              <div className="w-10 h-1 rounded-full" style={{background: 'rgba(255,255,255,0.12)'}} />
-            </div>
-
             {/* Header */}
             <div
               className="px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between shrink-0"

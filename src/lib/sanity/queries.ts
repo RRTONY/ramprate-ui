@@ -219,3 +219,20 @@ export const spyIndexPageQuery = groq`
 export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section}`
 export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug}`
 
+// Full-text search across all posts (blog + thinking)
+export const searchPostsQuery = groq`
+  *[_type == "post" && defined(slug.current) && (
+    title match $q ||
+    excerpt match $q
+  )] | order(publishedAt desc)[0...30]{
+    _id,
+    title,
+    slug,
+    publishedAt,
+    excerpt,
+    mainImage,
+    section,
+    categories[]->{title, slug}
+  }
+`
+
