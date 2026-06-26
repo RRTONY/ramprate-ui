@@ -29,10 +29,17 @@ export async function POST(req: NextRequest) {
       {role: 'user', content: question.trim()},
     ]
 
-    const response = await client.messages.create({
+    const response = await client.beta.messages.create({
+      betas: ['prompt-caching-2024-07-31'],
       model: 'claude-sonnet-4-6',
-      max_tokens: 1024,
-      system: RAMPRATE_SYSTEM_PROMPT,
+      max_tokens: 700,
+      system: [
+        {
+          type: 'text',
+          text: RAMPRATE_SYSTEM_PROMPT,
+          cache_control: { type: 'ephemeral' },
+        },
+      ],
       messages,
     })
 
