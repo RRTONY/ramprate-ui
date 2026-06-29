@@ -12,6 +12,7 @@ const practices = [
   { label: "Syzygy", href: "/growth", desc: "Founders" },
   { label: "Stratum", href: "/web3", desc: "Web3" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "NGOs" },
+  { label: "Private Advisory", href: "/private-advisory", desc: "Executive" },
 ];
 
 const navItems = [
@@ -90,12 +91,12 @@ export default function Header() {
             </button>
             {practicesOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                <div className="bg-white rounded-lg shadow-xl border border-black/5 p-4 min-w-[220px]">
+                <div className="bg-white rounded-lg shadow-xl border border-black/5 p-4 min-w-[270px]">
                   {practices.map((p) => (
                     <Link
                       key={p.href}
                       href={p.href}
-                      className="flex items-center justify-between px-3 py-2.5 rounded-md transition-colors group"
+                      className="flex items-center justify-between gap-4 px-3 py-2.5 rounded-md transition-colors group"
                       style={{ fontFamily: "var(--font-body)" }}
                       onClick={() => setPracticesOpen(false)}
                       onMouseEnter={(e) =>
@@ -113,7 +114,7 @@ export default function Header() {
                         {p.label}
                       </span>
                       <span
-                        className="text-xs"
+                        className="text-xs shrink-0"
                         style={{ color: "oklch(0.5 0.02 50)" }}
                       >
                         {p.desc}
