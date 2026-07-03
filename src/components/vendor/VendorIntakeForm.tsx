@@ -678,7 +678,7 @@ function StepBar({ active, onStepClick }: { active: number; onStepClick: (target
               </div>
               <span
                 className="hidden sm:block text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap"
-                style={{ color: isActive ? 'var(--gold)' : done ? 'oklch(0.52 0.12 70)' : 'oklch(0.65 0.01 80)', fontFamily: 'var(--font-body)' }}
+                style={{ color: isActive ? 'var(--gold)' : done ? 'oklch(0.52 0.12 70)' : 'oklch(0.45 0.02 50)', fontFamily: 'var(--font-body)' }}
               >
                 {tab.label}
               </span>
