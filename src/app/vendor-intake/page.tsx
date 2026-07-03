@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import VendorIntakeForm from "@/components/vendor/VendorIntakeForm";
-import {
-  TOTAL_FIELD_COUNT,
-  REQUIRED_FIELD_COUNT,
-} from "@/lib/vendor-intake-fields";
+import { TOTAL_FIELD_COUNT } from "@/lib/vendor-intake-fields";
 
 export const metadata: Metadata = {
   title: "Vendor Intake — Peptide Supply Partner Application | RampRate",
