@@ -134,6 +134,18 @@ const brands = [
     Icon: Grid3X3,
     accentColor: 'oklch(0.6 0.2 280)',
   },
+  {
+    name: 'Private Advisory',
+    since: 'Since 2000',
+    audience: 'Executives & Boards',
+    description: 'Crisis management, reputation strategy, and transaction communications for leaders navigating moments that matter most.',
+    keyValue: '25 years · $10B+ advised · B Corp Certified',
+    compensation: 'Retainer + scope-based engagement',
+    commitment: 'Principals only — no junior hand-off',
+    href: '/private-advisory',
+    Icon: Shield,
+    accentColor: 'oklch(0.52 0.12 70)',
+  },
 ]
 
 export default function HomeContent() {
@@ -312,7 +324,7 @@ export default function HomeContent() {
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
               style={{fontFamily: 'var(--font-display)'}}
             >
-              Four practices. One coalition.
+              Five practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
@@ -324,7 +336,7 @@ export default function HomeContent() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {brands.map((brand) => (
               <div
                 key={brand.name}

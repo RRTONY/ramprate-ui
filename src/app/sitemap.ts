@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {url: `${BASE_URL}/careers`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/values`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/web3`, changeFrequency: 'monthly', priority: 0.6},
+    {url: `${BASE_URL}/private-advisory`, changeFrequency: 'monthly', priority: 0.7},
     {url: `${BASE_URL}/service-provider-intelligence-index`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/aidoc-ownership-brief`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/thinking`, changeFrequency: 'weekly', priority: 0.7},

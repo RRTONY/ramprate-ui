@@ -5,7 +5,7 @@ import JsonLd, {serviceJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonL
 export const metadata: Metadata = {
   title: 'Expertise | RampRate',
   description:
-    'Four practices. One mission: transparency, skin in the game, and principals who execute.',
+    'Five practices. One mission: transparency, skin in the game, and principals who execute.',
   alternates: {canonical: '/expertise'},
 }
 
@@ -42,6 +42,14 @@ const practices = [
     href: '/impactsoul',
     stats: ['B Corp Certified', '$3M+ Grants', 'Regenerative Focus'],
   },
+  {
+    name: 'Private Advisory',
+    tagline: 'Because Some Challenges Require More Than an Advisor',
+    desc: 'Crisis management, strategy and reputation, transaction communications, and board advisory for leaders navigating moments that matter most. 25 years and $10B+ in enterprise decisions.',
+    color: 'oklch(0.52 0.12 70)',
+    href: '/private-advisory',
+    stats: ['25 Years', '$10B+ Advised', 'B Corp Certified'],
+  },
 ]
 
 export default function ExpertisePage() {
@@ -51,7 +59,7 @@ export default function ExpertisePage() {
         data={serviceJsonLd({
           name: 'RampRate Advisory Practices',
           description:
-            'Enterprise IT sourcing, growth strategy, Web3 advisory, and impact consulting — independent advisory with transparency, skin in the game, and principals who execute.',
+            'Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and private advisory — independent advisory with transparency, skin in the game, and principals who execute.',
           url: 'https://ramprate.com/expertise',
           serviceType: 'IT and business advisory',
         })}
@@ -98,7 +106,7 @@ export default function ExpertisePage() {
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
             style={{fontFamily: 'var(--font-display)'}}
           >
-            Four Brands.{' '}
+            Five Brands.{' '}
             <span style={{color: 'oklch(0.82 0.15 75)'}}>One Mission.</span>
           </h1>
 

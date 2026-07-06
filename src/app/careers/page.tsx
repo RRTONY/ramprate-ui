@@ -55,9 +55,9 @@ const whyCards = [
   },
   {
     emoji: "🔧",
-    title: "Four Practices, One Coalition",
-    body: "Work across enterprise IT, impact advisory, founder growth, and procurement intelligence — or go deep in your domain. The team shares everything.",
-    tag: "RAMPRATE · IMPACTSOUL · SYZYGY · IT SOURCING",
+    title: "Five Practices, One Coalition",
+    body: "Work across enterprise IT sourcing, founder growth, Web3 advisory, impact consulting, and executive advisory — or go deep in your domain. The team shares everything.",
+    tag: "SOURCING · SYZYGY · STRATUM · IMPACTSOUL · PRIVATE ADVISORY",
   },
   {
     emoji: "💡",

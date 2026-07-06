@@ -19,6 +19,7 @@ const brandLinks = [
   { label: "Syzygy", href: "/growth", desc: "Growth Strategy" },
   { label: "Stratum", href: "/web3", desc: "Web3 & Blockchain" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "Impact & Regenerative" },
+  { label: "Private Advisory", href: "/private-advisory", desc: "Executive Advisory" },
 ];
 
 const companyLinks = [

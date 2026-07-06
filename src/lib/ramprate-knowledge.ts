@@ -23,11 +23,12 @@ ABOUT RAMPRATE:
 - Forecasts within 5-10% of outcome (vs industry standard ±30-40%).
 - 99% of introductions convert to contracts.
 
-FOUR PRACTICES:
+FIVE PRACTICES:
 1. SOURCING (RampRate core) — Enterprise IT advisory. Data center, cloud, telecom, colocation, network infrastructure. Vendor negotiation. SPY Index benchmarking. CIO-level advisory. Saved clients 20-75% on infrastructure.
 2. SYZYGY — Growth strategy for founders. GTM, revenue acceleration, fundraising advisory. "We don't advise from the sidelines — we execute."
 3. STRATUM — Web3 & blockchain advisory. Token design, DAO governance, decentralized infrastructure. Worked with Syntropy, DevxDAO, XPRIZE.
 4. IMPACTSOUL — Impact consulting. ESG, B Corp, regenerative projects, grant management. $3M+ in grant funding managed for XPRIZE.
+5. PRIVATE ADVISORY — Executive advisory for leaders navigating high-stakes moments. Crisis & issues management, strategy & reputation, transaction & financial communications, board advisory, presentation & media coaching. 25 years, $10B+ in enterprise decisions advised.
 
 KEY CLIENTS (partial — many under NDA):
 Microsoft (50+ studies), eBay (27% savings), Sony (deep 8-figure outsourcing), ViacomCBS, Intel, Nike, Hearst (16+ years), Blizzard, Disney ("best IT deal during tenure"), AOL (17-36% reductions), NHL, Miramax (40%+ savings), Warner Bros, Verizon, AT&T, Merrill Lynch, Thomson Reuters, Accenture (20-40% savings), Beats Music (acquired by Apple), XPRIZE, Syntropy.

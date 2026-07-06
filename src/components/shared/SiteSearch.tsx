@@ -16,6 +16,7 @@ const NAV_INDEX: NavItem[] = [
   {title: 'Syzygy — Growth Strategy', path: '/growth', type: 'practice', keywords: 'startup founder growth GTM go to market revenue strategy scaling fundraising'},
   {title: 'Stratum — Web3 & Blockchain', path: '/web3', type: 'practice', keywords: 'blockchain crypto token DAO web3 decentralized DeFi'},
   {title: 'ImpactSoul — Impact Consulting', path: '/impactsoul', type: 'practice', keywords: 'impact ESG sustainability B Corp grants NGO regenerative social'},
+  {title: 'Private Advisory — Executive Advisory', path: '/private-advisory', type: 'practice', keywords: 'crisis management reputation strategy board advisory transaction communications executive media coaching'},
   {title: 'Process — How We Operate', path: '/process', type: 'page', keywords: 'methodology steps flow circuit'},
   {title: 'Proof — Case Results', path: '/proof', type: 'page', keywords: 'testimonials clients results case studies'},
   {title: 'About — Team & Advisors', path: '/about', type: 'page', keywords: 'team people leadership tony greenberg'},
