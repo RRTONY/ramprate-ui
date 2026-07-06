@@ -1,5 +1,6 @@
 import {client} from '@/lib/sanity/client'
 import {allPageSlugsQuery, allPostSlugsQuery, allCategorySlugsQuery} from '@/lib/sanity/queries'
+import {urlFor} from '@/lib/sanity/image'
 import type {MetadataRoute} from 'next'
 
 const BASE_URL = 'https://ramprate.com'
@@ -37,8 +38,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pageRoutes: MetadataRoute.Sitemap = pages
     .filter((p: {slug: {current: string}}) => !['home'].includes(p.slug.current))
-    .map((p: {slug: {current: string}}) => ({
+    .map((p: {slug: {current: string}; _updatedAt?: string}) => ({
       url: `${BASE_URL}/${p.slug.current}`,
+      ...(p._updatedAt && {lastModified: new Date(p._updatedAt)}),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     }))
@@ -46,17 +48,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Route each post under its real section path so the sitemap matches where the
   // page is actually served (and its canonical URL): thinking posts → /thinking,
   // everything else → /blog.
-  const postRoutes: MetadataRoute.Sitemap = posts.map((p: {slug: {current: string}; section?: string}) => ({
-    url:
-      p.section === 'thinking'
-        ? `${BASE_URL}/thinking/${p.slug.current}`
-        : `${BASE_URL}/blog/${p.slug.current}`,
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }))
+  const postRoutes: MetadataRoute.Sitemap = posts.map(
+    (p: {
+      slug: {current: string}
+      section?: string
+      publishedAt?: string
+      _updatedAt?: string
+      mainImage?: Parameters<typeof urlFor>[0]
+    }) => ({
+      url:
+        p.section === 'thinking'
+          ? `${BASE_URL}/thinking/${p.slug.current}`
+          : `${BASE_URL}/blog/${p.slug.current}`,
+      ...((p._updatedAt || p.publishedAt) && {lastModified: new Date(p._updatedAt || p.publishedAt!)}),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+      ...(p.mainImage && {images: [urlFor(p.mainImage).width(1200).url()]}),
+    }),
+  )
 
-  const categoryRoutes: MetadataRoute.Sitemap = categories.map((c: {slug: {current: string}}) => ({
+  const categoryRoutes: MetadataRoute.Sitemap = categories.map((c: {slug: {current: string}; _updatedAt?: string}) => ({
     url: `${BASE_URL}/blog/category/${c.slug.current}`,
+    ...(c._updatedAt && {lastModified: new Date(c._updatedAt)}),
     changeFrequency: 'weekly' as const,
     priority: 0.5,
   }))

@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   title: 'Expertise | RampRate',
   description:
     'Five practices. One mission: transparency, skin in the game, and principals who execute.',
+  keywords: [
+    'RampRate practices',
+    'enterprise IT sourcing',
+    'growth strategy advisory',
+    'Web3 blockchain advisory',
+    'impact consulting',
+    'private advisory',
+    'executive crisis management',
+  ],
   alternates: {canonical: '/expertise'},
 }
 

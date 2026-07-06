@@ -57,14 +57,20 @@ export function webSiteJsonLd({
   name = 'RampRate',
   url = 'https://ramprate.com',
 }: {name?: string; url?: string} = {}) {
-  // No SearchAction/sitelinks-searchbox: the site has no general search endpoint,
-  // and claiming one produces invalid markup. Add it back if a /search route ships.
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name,
     url,
     publisher: {'@type': 'Organization', name: 'RampRate', url: 'https://ramprate.com'},
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 }
 

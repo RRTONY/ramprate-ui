@@ -4,6 +4,13 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Syzygy Growth Advisory — Anchor Clients, Advisors, Capital | RampRate',
   description: 'Anchor clients, advisors, capital, impact, strategy, and dispute resolution — all aligned to your vision. For Founders & Impactpreneurs.',
+  keywords: [
+    'startup growth strategy',
+    'founder advisory',
+    'go-to-market strategy',
+    'fundraising advisory',
+    'anchor client introductions',
+  ],
 }
 
 const highlightServices = [

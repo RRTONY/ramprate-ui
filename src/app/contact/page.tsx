@@ -8,6 +8,11 @@ import ContactForm from '@/components/sections/ContactForm'
 export const metadata: Metadata = {
   title: 'Contact | RampRate',
   description: 'Start a conversation with RampRate. The first conversation is always free.',
+  keywords: [
+    'contact RampRate',
+    'IT sourcing advisory contact',
+    'enterprise advisory engagement',
+  ],
 }
 
 const offices = [

@@ -4,6 +4,13 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Stratum — Web3 & Enterprise Blockchain Advisory | RampRate',
   description: 'Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.',
+  keywords: [
+    'Web3 advisory',
+    'blockchain advisory',
+    'DAO governance design',
+    'token economics',
+    'enterprise blockchain consulting',
+  ],
 }
 
 const services = [

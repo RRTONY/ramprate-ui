@@ -12,6 +12,12 @@ import ProofClient, {
 export const metadata: Metadata = {
   title: 'Proof — Real Clients, Real Results | RampRate',
   description: '24 years of trajectory-changing results. Fortune 500 case studies, client testimonials, and the data behind our 300%+ ROI guarantee.',
+  keywords: [
+    'RampRate case studies',
+    'client results',
+    'enterprise IT savings',
+    'Fortune 500 case studies',
+  ],
 }
 
 export default async function ProofPage() {

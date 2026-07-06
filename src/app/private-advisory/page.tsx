@@ -4,6 +4,13 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Private Advisory — Because Some Challenges Require More Than an Advisor | RampRate',
   description: 'RampRate Private Advisory: 25 years and $10B+ in enterprise decisions. Crisis management, strategy, transaction communications, and board advisory for leaders navigating moments that matter most.',
+  keywords: [
+    'crisis management advisory',
+    'executive reputation strategy',
+    'board advisory',
+    'transaction communications',
+    'executive media coaching',
+  ],
 }
 
 const services = [

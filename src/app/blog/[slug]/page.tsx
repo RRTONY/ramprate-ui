@@ -1,5 +1,5 @@
 import {client} from '@/lib/sanity/client'
-import {postBySlugQuery, allPostSlugsQuery} from '@/lib/sanity/queries'
+import {postBySlugQuery, allPostSlugsQuery, relatedPostsQuery, recentPostsQuery} from '@/lib/sanity/queries'
 import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
 import SanityImage from '@/components/shared/SanityImage'
 import JsonLd, {blogPostJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
@@ -7,6 +7,15 @@ import {urlFor} from '@/lib/sanity/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import type {Metadata} from 'next'
+import CtaSection from '@/components/sections/CtaSection'
+
+type RelatedPost = {
+  _id: string
+  title: string
+  slug: {current: string}
+  excerpt?: string
+  mainImage?: {alt?: string}
+}
 
 export const revalidate = 60
 
@@ -22,6 +31,11 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   return {
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
+    keywords: [
+      ...(post.categories?.map((c: {title: string}) => c.title) ?? []),
+      'RampRate blog',
+      'enterprise IT sourcing',
+    ],
     alternates: {canonical: `/blog/${slug}`},
     openGraph: {
       title: post.seo?.metaTitle || post.title,
@@ -40,6 +54,14 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
   const post = await client.fetch(postBySlugQuery, {slug})
 
   if (!post) notFound()
+
+  const categorySlugs = (post.categories ?? []).map((c: {slug: {current: string}}) => c.slug.current)
+  let relatedPosts: RelatedPost[] = categorySlugs.length
+    ? await client.fetch(relatedPostsQuery, {slug, categorySlugs})
+    : []
+  if (relatedPosts.length === 0) {
+    relatedPosts = await client.fetch(recentPostsQuery, {slug})
+  }
 
   const date = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -141,7 +163,48 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
             <PortableText value={post.body} components={portableTextComponents} />
           </div>
         )}
+
+        {relatedPosts.length > 0 && (
+          <section className="mt-16 pt-12 border-t" style={{borderColor: 'rgba(255,255,255,0.1)'}}>
+            <h2
+              className="text-xs font-semibold uppercase tracking-[0.2em] mb-6"
+              style={{color: 'var(--gold)', fontFamily: 'var(--font-body)'}}
+            >
+              Continue Reading
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {relatedPosts.map((rp) => (
+                <Link key={rp.slug.current} href={`/blog/${rp.slug.current}`} className="group block">
+                  {rp.mainImage && (
+                    <div className="mb-3 rounded-lg overflow-hidden aspect-video">
+                      <SanityImage
+                        image={rp.mainImage}
+                        alt={rp.mainImage.alt || rp.title}
+                        width={400}
+                        height={225}
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <h3
+                    className="font-semibold text-white leading-snug transition-colors group-hover:text-(--gold)"
+                    style={{fontFamily: 'var(--font-display)'}}
+                  >
+                    {rp.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </article>
+
+      <CtaSection
+        heading="Ready to Talk?"
+        body="The first conversation is always free. Let's see if RampRate is the right fit for what you're building."
+        buttonText="Start a Conversation"
+        buttonLink="/contact"
+      />
     </div>
   )
 }

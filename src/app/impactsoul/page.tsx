@@ -4,6 +4,14 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'ImpactSoul — Tokenize Assets to Rally Impact Movements | RampRate',
   description: 'Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.',
+  keywords: [
+    'impact consulting',
+    'ESG advisory',
+    'B Corp certification',
+    'asset tokenization',
+    'NGO advisory',
+    'regenerative consulting',
+  ],
 }
 
 const services = [

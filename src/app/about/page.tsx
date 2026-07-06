@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   title: "About | RampRate",
   description:
     "RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.",
+  keywords: [
+    "RampRate team",
+    "board of advisors",
+    "B Corp certified advisory",
+    "enterprise advisory firm history",
+  ],
 };
 
 const LinkedInIcon = () => (

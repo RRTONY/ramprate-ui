@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   },
   description:
     "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+  keywords: [
+    "IT infrastructure advisory",
+    "enterprise IT sourcing",
+    "data center procurement",
+    "vendor negotiation",
+    "B Corp advisory",
+    "RampRate",
+  ],
   alternates: {
     canonical: "/",
   },

@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: 'IT & Data Center Sourcing Advisory',
   description:
     'Independent sourcing advisory for data center, cloud, GPU compute, and network. RampRate benchmarks pricing, negotiates SLAs, and helps enterprises stop overpaying vendors.',
+  keywords: [
+    'IT sourcing advisory',
+    'data center procurement',
+    'cloud cost optimization',
+    'GPU compute sourcing',
+    'vendor SLA negotiation',
+    'network infrastructure sourcing',
+  ],
   alternates: {canonical: '/sourcing'},
   openGraph: {
     title: 'IT & Data Center Sourcing Advisory | RampRate',

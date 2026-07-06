@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "Careers | RampRate — Work With Principals, Not Layers",
   description:
     "25 years. 250+ global brands. One senior team. No staffing pyramid. No middlemen. Just principals executing end-to-end. Join the coalition.",
+  keywords: [
+    "RampRate careers",
+    "advisory firm jobs",
+    "IT sourcing careers",
+  ],
   alternates: { canonical: "https://ramprate.com/careers" },
   openGraph: {
     title: "Careers | RampRate — Work With Principals, Not Layers",

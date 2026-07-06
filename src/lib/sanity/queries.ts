@@ -77,6 +77,32 @@ export const postBySlugQuery = groq`
 
 export const postCountQuery = groq`count(*[_type == "post" && section != "thinking"])`
 
+// Related posts: same section, sharing a category, excluding the current post
+export const relatedPostsQuery = groq`
+  *[_type == "post" && section != "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
+    _id, title, slug, excerpt, mainImage
+  }
+`
+
+// Fallback when a post has no categories (or no other post shares one)
+export const recentPostsQuery = groq`
+  *[_type == "post" && section != "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
+    _id, title, slug, excerpt, mainImage
+  }
+`
+
+export const relatedThinkingPostsQuery = groq`
+  *[_type == "post" && section == "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
+    _id, title, slug, excerpt, mainImage
+  }
+`
+
+export const recentThinkingPostsQuery = groq`
+  *[_type == "post" && section == "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
+    _id, title, slug, excerpt, mainImage
+  }
+`
+
 // Thinking Posts
 export const thinkingPostsQuery = groq`
   *[_type == "post" && section == "thinking"] | order(publishedAt desc) [$start...$end]{
@@ -207,7 +233,7 @@ export const allThinkingPostsQuery = groq`
 `
 
 // All slugs (for static generation)
-export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug}`
+export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug, _updatedAt}`
 
 // SPY Index page SEO
 export const spyIndexPageQuery = groq`
@@ -216,8 +242,8 @@ export const spyIndexPageQuery = groq`
     seo
   }
 `
-export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section}`
-export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug}`
+export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`
+export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug, _updatedAt}`
 
 // Full-text search across all posts (blog + thinking)
 export const searchPostsQuery = groq`
