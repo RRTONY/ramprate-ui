@@ -14,32 +14,32 @@ const steps = [
   {
     num: "01",
     title: "Exclusive Mandate",
-    body: "We usually only engage when the buyer or seller grants us an exclusive. That means we arrive at every conversation already under contract — vetted, authorized, and fully accountable. We don't shop deals. We don't float rumors. We represent one side, one opportunity, all the way through close.",
+    body: "We usually only engage when the buyer or seller grants us an exclusive. That means we arrive at every conversation already under contract - vetted, authorized, and fully accountable. We don't shop deals. We don't float rumors. We represent one side, one opportunity, all the way through close.",
   },
   {
     num: "02",
     title: "One-Party Fee. Full Transparency.",
-    body: "In 90% of engagements we are paid by one party only — buyer or seller, never both. On larger transactions requiring mediation or deeper professional services, both parties occasionally share a disclosed consulting or transaction fee. Either way, every party in the deal — including any brokers or channel partners — knows exactly who is paying us, how much, and how it flows into the margin. No hidden layers. No surprises. Ever. This has been the model for 25 years.",
+    body: "In 90% of engagements we are paid by one party only - buyer or seller, never both. On larger transactions requiring mediation or deeper professional services, both parties occasionally share a disclosed consulting or transaction fee. Either way, every party in the deal - including any brokers or channel partners - knows exactly who is paying us, how much, and how it flows into the margin. No hidden layers. No surprises. Ever. This has been the model for 25 years.",
   },
   {
     num: "03",
     title: "Deep Discovery",
-    body: "Before any supplier sees a brief, we build a complete picture of what the buyer actually needs — not just what they asked for. Requirements, priorities, budget reality, success metrics, and deal-breakers. This is where most advisory fails. We don't.",
+    body: "Before any supplier sees a brief, we build a complete picture of what the buyer actually needs - not just what they asked for. Requirements, priorities, budget reality, success metrics, and deal-breakers. This is where most advisory fails. We don't.",
   },
   {
     num: "04",
     title: "Apples-to-Apples RFP",
-    body: "We structure the RFP so every supplier responds to the same question. No ambiguity. No room for incumbents to game the framing. Every proposal is evaluated against the same criteria, at the same moment, with the same scorecard. Fairness is structural — not aspirational.",
+    body: "We structure the RFP so every supplier responds to the same question. No ambiguity. No room for incumbents to game the framing. Every proposal is evaluated against the same criteria, at the same moment, with the same scorecard. Fairness is structural - not aspirational.",
   },
   {
     num: "05",
     title: "Value Creation Framework",
-    body: "Price is never the only variable. We evaluate total value — delivery quality, partnership potential, upside, risk, and long-term fit. A supplier who delivers at a great price with real alignment beats a cheaper one who creates friction. We make sure the buyer knows the difference.",
+    body: "Price is never the only variable. We evaluate total value - delivery quality, partnership potential, upside, risk, and long-term fit. A supplier who delivers at a great price with real alignment beats a cheaper one who creates friction. We make sure the buyer knows the difference.",
   },
   {
     num: "06",
     title: "Protected Introduction",
-    body: "Non-circumvention runs both ways. Once we make an introduction, the deal stays in structure. The buyer can't go around the supplier. The supplier can't go around us. Everyone's contribution is protected — including yours. This bilateral protection is exactly why the non-circ exists.",
+    body: "Non-circumvention runs both ways. Once we make an introduction, the deal stays in structure. The buyer can't go around the supplier. The supplier can't go around us. Everyone's contribution is protected - including yours. This bilateral protection is exactly why the non-circ exists.",
   },
   {
     num: "07",
@@ -52,13 +52,13 @@ const feeItems = [
   {
     pct: "90%",
     title: "Single-Party Engagement",
-    body: "We are retained and paid exclusively by one party — either the buyer or the seller. The other party pays nothing. This is the standard RampRate model for the vast majority of engagements. Our exclusive mandate with the paying party is disclosed to all parties in the deal.",
+    body: "We are retained and paid exclusively by one party - either the buyer or the seller. The other party pays nothing. This is the standard RampRate model for the vast majority of engagements. Our exclusive mandate with the paying party is disclosed to all parties in the deal.",
     primary: true,
   },
   {
     pct: "10%",
     title: "Mediated Transaction Fee",
-    body: "On larger or more complex transactions requiring deeper professional services — such as multi-party mediation or extended advisory — both parties may each contribute a disclosed consulting or transaction fee. Agreed upfront, documented, and fully transparent before any work begins.",
+    body: "On larger or more complex transactions requiring deeper professional services - such as multi-party mediation or extended advisory - both parties may each contribute a disclosed consulting or transaction fee. Agreed upfront, documented, and fully transparent before any work begins.",
     primary: false,
   },
 ];
@@ -106,7 +106,7 @@ const links = [
   {
     label: "B Corp Certification",
     href: "/ramprate-is-b-certified-corp-the-accolade-is-a-clear-sign-our-business-is-on-the-right-track",
-    desc: "Verified transparency — top 4,000 globally",
+    desc: "Verified transparency - top 4,000 globally",
     external: false,
   },
   {
@@ -272,11 +272,23 @@ export default function HowWeWorkTabs() {
                             color: isOpen
                               ? "oklch(0.82 0.15 75)"
                               : "rgba(255,255,255,0.6)",
-                            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                            transform: isOpen
+                              ? "rotate(45deg)"
+                              : "rotate(0deg)",
                           }}
                         >
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
                           </svg>
                         </span>
                       </div>
@@ -437,8 +449,8 @@ export default function HowWeWorkTabs() {
                     fontFamily: "var(--font-body)",
                   }}
                 >
-                  Regardless of structure, every party in every deal — including
-                  brokers and channel partners — knows exactly who is paying
+                  Regardless of structure, every party in every deal - including
+                  brokers and channel partners - knows exactly who is paying
                   RampRate, how much, and how it flows into the margin. Verified
                   by our B Corp certification for 25 years.
                 </p>
@@ -562,7 +574,7 @@ export default function HowWeWorkTabs() {
               >
                 Health and wellness is not new territory for RampRate. Our
                 dedicated Health and Wellness practice covers health tech,
-                psychedelics, natural wellness, and healthcare infrastructure —
+                psychedelics, natural wellness, and healthcare infrastructure -
                 with an LP position in{" "}
                 <a
                   href="https://wavemakerhealthandwellness.com"

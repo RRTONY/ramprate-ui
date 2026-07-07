@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/shared/Logo";
-import {toTelHref} from "@/lib/utils";
+import { toTelHref } from "@/lib/utils";
 
 interface SocialLink {
   platform: string;
@@ -19,7 +19,11 @@ const brandLinks = [
   { label: "Syzygy", href: "/growth", desc: "Growth Strategy" },
   { label: "Stratum", href: "/web3", desc: "Web3 & Blockchain" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "Impact & Regenerative" },
-  { label: "Private Advisory", href: "/private-advisory", desc: "Executive Advisory" },
+  {
+    label: "Private Advisory",
+    href: "/private-advisory",
+    desc: "Executive Advisory",
+  },
 ];
 
 const companyLinks = [
@@ -57,7 +61,7 @@ export default function Footer({
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          {/* Column 1 — Brand */}
+          {/* Column 1 - Brand */}
           <div>
             <Link href="/" className="block mb-4">
               <Logo variant="light" size="md" />
@@ -77,7 +81,7 @@ export default function Footer({
             </span>
           </div>
 
-          {/* Column 2 — Brands */}
+          {/* Column 2 - Brands */}
           <div>
             <h4
               className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"
@@ -103,7 +107,7 @@ export default function Footer({
             </ul>
           </div>
 
-          {/* Column 3 — Company */}
+          {/* Column 3 - Company */}
           <div>
             <h4
               className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"
@@ -138,7 +142,7 @@ export default function Footer({
             </ul>
           </div>
 
-          {/* Column 4 — Engage */}
+          {/* Column 4 - Engage */}
           <div>
             <h4
               className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"

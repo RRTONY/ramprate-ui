@@ -3,7 +3,7 @@ import VendorIntakeForm from "@/components/vendor/VendorIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/vendor-intake-fields";
 
 export const metadata: Metadata = {
-  title: "Vendor Intake — Peptide Supply Partner Application | RampRate",
+  title: "Vendor Intake - Peptide Supply Partner Application | RampRate",
   description: `RampRate's 6-section, ${TOTAL_FIELD_COUNT}-field due diligence form for peptide supply partners. Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.`,
 };
 

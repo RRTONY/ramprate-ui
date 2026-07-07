@@ -1,82 +1,85 @@
-import Link from 'next/link'
-import type {Metadata} from 'next'
-import JsonLd, {serviceJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
+import Link from "next/link";
+import type { Metadata } from "next";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: 'Expertise | RampRate',
+  title: "Expertise | RampRate",
   description:
-    'Five practices. One mission: transparency, skin in the game, and principals who execute.',
+    "Five practices. One mission: transparency, skin in the game, and principals who execute.",
   keywords: [
-    'RampRate practices',
-    'enterprise IT sourcing',
-    'growth strategy advisory',
-    'Web3 blockchain advisory',
-    'impact consulting',
-    'private advisory',
-    'executive crisis management',
+    "RampRate practices",
+    "enterprise IT sourcing",
+    "growth strategy advisory",
+    "Web3 blockchain advisory",
+    "impact consulting",
+    "private advisory",
+    "executive crisis management",
   ],
-  alternates: {canonical: '/expertise'},
-}
+  alternates: { canonical: "/expertise" },
+};
 
 const practices = [
   {
-    name: 'RampRate',
-    tagline: 'Enterprise IT Sourcing',
-    desc: '150K+ data points. 350+ vendors. 80 countries. We benchmark every contract against real transaction intelligence — not theory. $10B+ in enterprise decisions transacted.',
-    color: 'oklch(0.82 0.15 75)',
-    href: '/sourcing',
-    stats: ['$10B+ Transacted', '150K+ Data Points', '350+ Vendors'],
+    name: "RampRate",
+    tagline: "Enterprise IT Sourcing",
+    desc: "150K+ data points. 350+ vendors. 80 countries. We benchmark every contract against real transaction intelligence - not theory. $10B+ in enterprise decisions transacted.",
+    color: "oklch(0.82 0.15 75)",
+    href: "/sourcing",
+    stats: ["$10B+ Transacted", "150K+ Data Points", "350+ Vendors"],
   },
   {
-    name: 'Syzygy',
-    tagline: 'Growth Strategy for Founders',
-    desc: "GTM acceleration, revenue architecture, and strategic introductions for growth-stage companies. We don't advise from the sidelines — we execute with you daily.",
-    color: 'oklch(0.65 0.2 150)',
-    href: '/growth',
-    stats: ['99% Intro-to-Contract', '4+ Year Engagements', 'US Market Entry'],
+    name: "Syzygy",
+    tagline: "Growth Strategy for Founders",
+    desc: "GTM acceleration, revenue architecture, and strategic introductions for growth-stage companies. We don't advise from the sidelines - we execute with you daily.",
+    color: "oklch(0.65 0.2 150)",
+    href: "/growth",
+    stats: ["99% Intro-to-Contract", "4+ Year Engagements", "US Market Entry"],
   },
   {
-    name: 'Stratum',
-    tagline: 'Web3 & Blockchain Advisory',
-    desc: 'Token design, DAO governance, decentralized infrastructure. From protocol architecture to enterprise adoption — we bridge Web3 and the Fortune 500.',
-    color: 'oklch(0.6 0.2 280)',
-    href: '/web3',
-    stats: ['Token Design', 'DAO Governance', 'Enterprise Web3'],
+    name: "Stratum",
+    tagline: "Web3 & Blockchain Advisory",
+    desc: "Token design, DAO governance, decentralized infrastructure. From protocol architecture to enterprise adoption - we bridge Web3 and the Fortune 500.",
+    color: "oklch(0.6 0.2 280)",
+    href: "/web3",
+    stats: ["Token Design", "DAO Governance", "Enterprise Web3"],
   },
   {
-    name: 'ImpactSoul',
-    tagline: 'Impact & Regenerative Consulting',
-    desc: 'ESG strategy, B Corp certification, grant management, and asset tokenization for regenerative projects. Technology as a delivery mechanism for social and environmental impact.',
-    color: 'oklch(0.7 0.15 30)',
-    href: '/impactsoul',
-    stats: ['B Corp Certified', '$3M+ Grants', 'Regenerative Focus'],
+    name: "ImpactSoul",
+    tagline: "Impact & Regenerative Consulting",
+    desc: "ESG strategy, B Corp certification, grant management, and asset tokenization for regenerative projects. Technology as a delivery mechanism for social and environmental impact.",
+    color: "oklch(0.7 0.15 30)",
+    href: "/impactsoul",
+    stats: ["B Corp Certified", "$3M+ Grants", "Regenerative Focus"],
   },
   {
-    name: 'Private Advisory',
-    tagline: 'Because Some Challenges Require More Than an Advisor',
-    desc: 'Crisis management, strategy and reputation, transaction communications, and board advisory for leaders navigating moments that matter most. 25 years and $10B+ in enterprise decisions.',
-    color: 'oklch(0.52 0.12 70)',
-    href: '/private-advisory',
-    stats: ['25 Years', '$10B+ Advised', 'B Corp Certified'],
+    name: "Private Advisory",
+    tagline: "Because Some Challenges Require More Than an Advisor",
+    desc: "Crisis management, strategy and reputation, transaction communications, and board advisory for leaders navigating moments that matter most. 25 years and $10B+ in enterprise decisions.",
+    color: "oklch(0.52 0.12 70)",
+    href: "/private-advisory",
+    stats: ["25 Years", "$10B+ Advised", "B Corp Certified"],
   },
-]
+];
 
 export default function ExpertisePage() {
   return (
     <>
       <JsonLd
         data={serviceJsonLd({
-          name: 'RampRate Advisory Practices',
+          name: "RampRate Advisory Practices",
           description:
-            'Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and private advisory — independent advisory with transparency, skin in the game, and principals who execute.',
-          url: 'https://ramprate.com/expertise',
-          serviceType: 'IT and business advisory',
+            "Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and private advisory - independent advisory with transparency, skin in the game, and principals who execute.",
+          url: "https://ramprate.com/expertise",
+          serviceType: "IT and business advisory",
         })}
       />
       <JsonLd
         data={breadcrumbJsonLd([
-          {name: 'Home', url: 'https://ramprate.com'},
-          {name: 'Expertise', url: 'https://ramprate.com/expertise'},
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Expertise", url: "https://ramprate.com/expertise" },
         ])}
       />
       {/* Hero */}
@@ -84,7 +87,7 @@ export default function ExpertisePage() {
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"
         style={{
           background:
-            'linear-gradient(135deg, oklch(0.14 0.01 250) 0%, oklch(0.18 0.02 260) 50%, oklch(0.14 0.01 250) 100%)',
+            "linear-gradient(135deg, oklch(0.14 0.01 250) 0%, oklch(0.18 0.02 260) 50%, oklch(0.14 0.01 250) 100%)",
         }}
       >
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
@@ -93,18 +96,21 @@ export default function ExpertisePage() {
             <span
               className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full"
               style={{
-                border: '1px solid rgba(255,255,255,0.1)',
-                background: 'rgba(255,255,255,0.05)',
-                fontFamily: 'var(--font-body)',
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.05)",
+                fontFamily: "var(--font-body)",
               }}
             >
               <span
                 className="w-1.5 h-1.5 rounded-full"
-                style={{background: 'oklch(0.6 0.2 280)'}}
+                style={{ background: "oklch(0.6 0.2 280)" }}
               />
               <span
                 className="text-[11px] font-medium uppercase"
-                style={{letterSpacing: '0.2em', color: 'rgba(255,255,255,0.5)'}}
+                style={{
+                  letterSpacing: "0.2em",
+                  color: "rgba(255,255,255,0.5)",
+                }}
               >
                 Our Practices
               </span>
@@ -113,38 +119,41 @@ export default function ExpertisePage() {
 
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
-            style={{fontFamily: 'var(--font-display)'}}
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            Five Brands.{' '}
-            <span style={{color: 'oklch(0.82 0.15 75)'}}>One Mission.</span>
+            Five Brands.{" "}
+            <span style={{ color: "oklch(0.82 0.15 75)" }}>One Mission.</span>
           </h1>
 
           <p
             className="mt-6 text-base sm:text-lg leading-relaxed max-w-2xl"
-            style={{color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)'}}
+            style={{
+              color: "rgba(255,255,255,0.5)",
+              fontFamily: "var(--font-body)",
+            }}
           >
-            Each practice serves a different market with the same values: transparency,
-            skin in the game, and principals who execute.
+            Each practice serves a different market with the same values:
+            transparency, skin in the game, and principals who execute.
           </p>
         </div>
       </section>
 
       {/* Practice Cards */}
-      <section className="py-24" style={{background: '#0d1117'}}>
+      <section className="py-24" style={{ background: "#0d1117" }}>
         <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-12">
           {practices.map((p) => (
             <div
               key={p.name}
               className="relative rounded-2xl overflow-hidden"
               style={{
-                border: '1px solid rgba(255,255,255,0.1)',
-                background: 'rgba(255,255,255,0.02)',
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.02)",
               }}
             >
               {/* Colored left border accent */}
               <div
                 className="absolute top-0 left-0 w-1 h-full"
-                style={{backgroundColor: p.color}}
+                style={{ backgroundColor: p.color }}
               />
 
               <div className="p-8 sm:p-10">
@@ -153,8 +162,8 @@ export default function ExpertisePage() {
                   className="text-xs uppercase mb-2"
                   style={{
                     color: p.color,
-                    letterSpacing: '0.2em',
-                    fontFamily: 'var(--font-mono)',
+                    letterSpacing: "0.2em",
+                    fontFamily: "var(--font-mono)",
                   }}
                 >
                   {p.tagline}
@@ -163,7 +172,7 @@ export default function ExpertisePage() {
                 {/* Name */}
                 <h2
                   className="text-3xl sm:text-4xl font-bold text-white mb-4"
-                  style={{fontFamily: 'var(--font-display)'}}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {p.name}
                 </h2>
@@ -171,7 +180,10 @@ export default function ExpertisePage() {
                 {/* Description */}
                 <p
                   className="leading-relaxed max-w-2xl mb-6"
-                  style={{color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)'}}
+                  style={{
+                    color: "rgba(255,255,255,0.6)",
+                    fontFamily: "var(--font-body)",
+                  }}
                 >
                   {p.desc}
                 </p>
@@ -186,7 +198,7 @@ export default function ExpertisePage() {
                         border: `1px solid color-mix(in oklch, ${p.color} 30%, transparent)`,
                         color: p.color,
                         backgroundColor: `color-mix(in oklch, ${p.color} 8%, transparent)`,
-                        fontFamily: 'var(--font-mono)',
+                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       {s}
@@ -200,8 +212,8 @@ export default function ExpertisePage() {
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110"
                   style={{
                     backgroundColor: p.color,
-                    color: 'oklch(0.15 0.02 75)',
-                    fontFamily: 'var(--font-body)',
+                    color: "oklch(0.15 0.02 75)",
+                    fontFamily: "var(--font-body)",
                   }}
                 >
                   Learn More
@@ -225,29 +237,33 @@ export default function ExpertisePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24" style={{background: '#0a0f1a'}}>
+      <section className="py-24" style={{ background: "#0a0f1a" }}>
         <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
           <h2
             className="text-3xl sm:text-4xl font-bold text-white mb-6"
-            style={{fontFamily: 'var(--font-display)'}}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Not Sure Which Practice Fits?
           </h2>
           <p
             className="mb-10 max-w-xl mx-auto"
-            style={{color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)'}}
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontFamily: "var(--font-body)",
+            }}
           >
-            Tell us what&apos;s broken. We&apos;ll figure out which team — or combination — gets it
-            done.
+            Tell us what&apos;s broken. We&apos;ll figure out which team - or
+            combination - gets it done.
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:brightness-110"
             style={{
-              background: 'oklch(0.82 0.15 75)',
-              color: 'oklch(0.15 0.02 75)',
-              boxShadow: '0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)',
-              fontFamily: 'var(--font-body)',
+              background: "oklch(0.82 0.15 75)",
+              color: "oklch(0.15 0.02 75)",
+              boxShadow:
+                "0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)",
+              fontFamily: "var(--font-body)",
             }}
           >
             Tell Us What&apos;s Broken
@@ -267,5 +283,5 @@ export default function ExpertisePage() {
         </div>
       </section>
     </>
-  )
+  );
 }

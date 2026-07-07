@@ -5,7 +5,10 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { sanityFetch } from "@/lib/sanity/client";
 import { siteSettingsQuery } from "@/lib/sanity/queries";
-import JsonLd, { organizationJsonLd, webSiteJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, {
+  organizationJsonLd,
+  webSiteJsonLd,
+} from "@/components/shared/JsonLd";
 import ExitSurvey from "@/components/shared/ExitSurvey";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 
@@ -75,7 +78,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        {/* Google Analytics — only render when an ID exists (avoids id=undefined) */}
+        {/* Google Analytics - only render when an ID exists (avoids id=undefined) */}
         {gaId && (
           <>
             <Script
@@ -112,7 +115,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        <JsonLd data={webSiteJsonLd({name: settings?.companyName})} />
+        <JsonLd data={webSiteJsonLd({ name: settings?.companyName })} />
         <JsonLd
           data={organizationJsonLd({
             name: settings?.companyName,

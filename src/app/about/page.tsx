@@ -154,10 +154,10 @@ export default async function AboutPage() {
 
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
             {[
-              {value: "2000", label: "Founded"},
-              {value: "$10B+", label: "Decisions Transacted"},
-              {value: "50+", label: "Countries"},
-              {value: "B Corp", label: "Certified"},
+              { value: "2000", label: "Founded" },
+              { value: "$10B+", label: "Decisions Transacted" },
+              { value: "50+", label: "Countries" },
+              { value: "B Corp", label: "Certified" },
             ].map((s) => (
               <div key={s.label}>
                 <div
@@ -229,7 +229,7 @@ export default async function AboutPage() {
               potential.
             </p>
             <p>
-              So that&apos;s what we&apos;re doing today — we find the next
+              So that&apos;s what we&apos;re doing today - we find the next
               unicorns and gatekeepers to impact that will not just earn
               millions yet better millions of lives. We grok their vision while
               putting them through bootcamp to be ready for life-changing
@@ -810,7 +810,7 @@ export default async function AboutPage() {
               {
                 ring: "Bench",
                 count: "35+ Specialists",
-                desc: "Deep technical experts in specific domains — from cloud architecture to telecom pricing to blockchain security to ESG measurement. Activated on-demand for specific engagements. Fortune 500 alumni. Davos, YPO, Summit, Hatch, XPRIZE, Aspen.",
+                desc: "Deep technical experts in specific domains - from cloud architecture to telecom pricing to blockchain security to ESG measurement. Activated on-demand for specific engagements. Fortune 500 alumni. Davos, YPO, Summit, Hatch, XPRIZE, Aspen.",
               },
             ].map((r) => (
               <div

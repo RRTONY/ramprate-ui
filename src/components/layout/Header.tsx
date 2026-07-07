@@ -43,7 +43,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Pages with light/white backgrounds — force dark nav from the start (no dark hero)
+  // Pages with light/white backgrounds - force dark nav from the start (no dark hero)
   const lightBgPaths = [
     "/attorney",
     "/henry-jannol",

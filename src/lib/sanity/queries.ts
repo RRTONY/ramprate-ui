@@ -1,4 +1,4 @@
-import {groq} from 'next-sanity'
+import { groq } from "next-sanity";
 
 // Site Settings
 export const siteSettingsQuery = groq`
@@ -18,7 +18,7 @@ export const siteSettingsQuery = groq`
     timeline,
     corporateFacts
   }
-`
+`;
 
 // Pages
 export const pageBySlugQuery = groq`
@@ -44,7 +44,7 @@ export const pageBySlugQuery = groq`
     },
     seo
   }
-`
+`;
 
 // Blog Posts (excludes thinking section)
 export const postsQuery = groq`
@@ -57,7 +57,7 @@ export const postsQuery = groq`
     mainImage,
     categories[]->{title, slug}
   }
-`
+`;
 
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0]{
@@ -73,35 +73,35 @@ export const postBySlugQuery = groq`
     categories[]->{title, slug},
     seo
   }
-`
+`;
 
-export const postCountQuery = groq`count(*[_type == "post" && section != "thinking"])`
+export const postCountQuery = groq`count(*[_type == "post" && section != "thinking"])`;
 
 // Related posts: same section, sharing a category, excluding the current post
 export const relatedPostsQuery = groq`
   *[_type == "post" && section != "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
-`
+`;
 
 // Fallback when a post has no categories (or no other post shares one)
 export const recentPostsQuery = groq`
   *[_type == "post" && section != "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
-`
+`;
 
 export const relatedThinkingPostsQuery = groq`
   *[_type == "post" && section == "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
-`
+`;
 
 export const recentThinkingPostsQuery = groq`
   *[_type == "post" && section == "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
-`
+`;
 
 // Thinking Posts
 export const thinkingPostsQuery = groq`
@@ -114,11 +114,11 @@ export const thinkingPostsQuery = groq`
     mainImage,
     categories[]->{title, slug}
   }
-`
+`;
 
-export const thinkingPostCountQuery = groq`count(*[_type == "post" && section == "thinking"])`
+export const thinkingPostCountQuery = groq`count(*[_type == "post" && section == "thinking"])`;
 
-// Categories — ordered by number of posts desc so populated categories appear first
+// Categories - ordered by number of posts desc so populated categories appear first
 export const categoriesQuery = groq`
   *[_type == "category"]{
     _id,
@@ -126,7 +126,7 @@ export const categoriesQuery = groq`
     slug,
     "postCount": count(*[_type == "post" && section != "thinking" && ^._id in categories[]._ref])
   } | order(postCount desc, title asc)
-`
+`;
 
 export const postsByCategoryQuery = groq`
   *[_type == "post" && section != "thinking" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) [$start...$end]{
@@ -138,11 +138,11 @@ export const postsByCategoryQuery = groq`
     mainImage,
     categories[]->{title, slug}
   }
-`
+`;
 
 export const postCountByCategoryQuery = groq`
   count(*[_type == "post" && section != "thinking" && $categorySlug in categories[]->slug.current])
-`
+`;
 
 // Team Members
 export const teamMembersQuery = groq`
@@ -157,7 +157,7 @@ export const teamMembersQuery = groq`
     linkedin,
     twitter
   }
-`
+`;
 
 // Testimonials
 export const testimonialsQuery = groq`
@@ -174,7 +174,7 @@ export const testimonialsQuery = groq`
     "companyLogoUrl": companyLogo.asset->url,
     "photoUrl": photo.asset->url
   }
-`
+`;
 
 // Board Advisors
 export const boardAdvisorsQuery = groq`
@@ -188,7 +188,7 @@ export const boardAdvisorsQuery = groq`
     twitter,
     photo
   }
-`
+`;
 
 // Case Studies
 export const caseStudiesQuery = groq`
@@ -199,7 +199,7 @@ export const caseStudiesQuery = groq`
     desc,
     metrics
   }
-`
+`;
 
 // Confidential Testimonials
 export const confidentialTestimonialsQuery = groq`
@@ -209,7 +209,7 @@ export const confidentialTestimonialsQuery = groq`
     attribution,
     division
   }
-`
+`;
 
 // Client Logos
 export const clientLogosQuery = groq`
@@ -219,9 +219,9 @@ export const clientLogosQuery = groq`
     url,
     "logoUrl": logo.asset->url
   }
-`
+`;
 
-// All thinking posts (no pagination — archive view)
+// All thinking posts (no pagination - archive view)
 export const allThinkingPostsQuery = groq`
   *[_type == "post" && section == "thinking"] | order(publishedAt desc){
     _id,
@@ -230,10 +230,10 @@ export const allThinkingPostsQuery = groq`
     publishedAt,
     excerpt
   }
-`
+`;
 
 // All slugs (for static generation)
-export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug, _updatedAt}`
+export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug, _updatedAt}`;
 
 // SPY Index page SEO
 export const spyIndexPageQuery = groq`
@@ -241,9 +241,9 @@ export const spyIndexPageQuery = groq`
     title,
     seo
   }
-`
-export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`
-export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug, _updatedAt}`
+`;
+export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`;
+export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug, _updatedAt}`;
 
 // Full-text search across all posts (blog + thinking)
 export const searchPostsQuery = groq`
@@ -260,5 +260,4 @@ export const searchPostsQuery = groq`
     section,
     categories[]->{title, slug}
   }
-`
-
+`;

@@ -4,17 +4,13 @@ import Link from "next/link";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Careers | RampRate — Work With Principals, Not Layers",
+  title: "Careers | RampRate - Work With Principals, Not Layers",
   description:
     "25 years. 250+ global brands. One senior team. No staffing pyramid. No middlemen. Just principals executing end-to-end. Join the coalition.",
-  keywords: [
-    "RampRate careers",
-    "advisory firm jobs",
-    "IT sourcing careers",
-  ],
+  keywords: ["RampRate careers", "advisory firm jobs", "IT sourcing careers"],
   alternates: { canonical: "https://ramprate.com/careers" },
   openGraph: {
-    title: "Careers | RampRate — Work With Principals, Not Layers",
+    title: "Careers | RampRate - Work With Principals, Not Layers",
     description:
       "No junior layers. No account managers. You work directly with 25-year veterans and Fortune 100 principals.",
     type: "website",
@@ -49,7 +45,7 @@ const whyCards = [
   {
     emoji: "🎯",
     title: "Skin in the Game",
-    body: "Our compensation is aligned to the value we create. We don't advise from the sidelines — we execute end-to-end. Your win is our win.",
+    body: "Our compensation is aligned to the value we create. We don't advise from the sidelines - we execute end-to-end. Your win is our win.",
     tag: "300%+ ROI OR DON'T PAY",
   },
   {
@@ -61,19 +57,19 @@ const whyCards = [
   {
     emoji: "🔧",
     title: "Five Practices, One Coalition",
-    body: "Work across enterprise IT sourcing, founder growth, Web3 advisory, impact consulting, and executive advisory — or go deep in your domain. The team shares everything.",
+    body: "Work across enterprise IT sourcing, founder growth, Web3 advisory, impact consulting, and executive advisory - or go deep in your domain. The team shares everything.",
     tag: "SOURCING · SYZYGY · STRATUM · IMPACTSOUL · PRIVATE ADVISORY",
   },
   {
     emoji: "💡",
     title: "Fix the Signal First",
-    body: "Our process starts before the solution — with finding the real problem, not the symptom. You'll be trained to diagnose before prescribing.",
+    body: "Our process starts before the solution - with finding the real problem, not the symptom. You'll be trained to diagnose before prescribing.",
     tag: "FIX THE SIGNAL, CLOSE THE DEAL.",
   },
   {
     emoji: "📊",
     title: "150K+ Data Points",
-    body: "Our proprietary SPY Index carries 25 years of real market intelligence. You'll make decisions others can only guess at — with data few in the world possess.",
+    body: "Our proprietary SPY Index carries 25 years of real market intelligence. You'll make decisions others can only guess at - with data few in the world possess.",
     tag: "$10B+ IN DECISIONS BROKERED",
   },
 ];
@@ -84,7 +80,7 @@ const compareRows = [
     theRest:
       "Junior layers handle client work. Seniors are rarely client-facing.",
     ramprate:
-      "Same senior team — 25 years — directly client-facing, every engagement.",
+      "Same senior team - 25 years - directly client-facing, every engagement.",
   },
   {
     dimension: "How success is measured",
@@ -97,7 +93,7 @@ const compareRows = [
     dimension: "Accuracy of forecasts",
     theRest: "Estimates run 30–40% over. Or no forecasts at all.",
     ramprate:
-      "Forecasts within 5–10% — backed by 25 years of real market data.",
+      "Forecasts within 5–10% - backed by 25 years of real market data.",
   },
   {
     dimension: "Scope of execution",
@@ -107,7 +103,7 @@ const compareRows = [
   {
     dimension: "Impact & ethics",
     theRest: "Impact treated as an afterthought or a PR exercise.",
-    ramprate: "B Corp certified — impact is in our DNA",
+    ramprate: "B Corp certified - impact is in our DNA",
   },
 ];
 
@@ -149,7 +145,7 @@ export default function CareersPage() {
           <p className="mb-9 leading-relaxed text-white/60 text-[clamp(0.93rem,1.8vw,1.08rem)] max-w-[520px]">
             25 years. 250+ global brands. One senior team that&rsquo;s been here
             since the beginning. No staffing pyramid. No middlemen. Just
-            principals — executing end-to-end.
+            principals - executing end-to-end.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-14">
@@ -169,16 +165,18 @@ export default function CareersPage() {
 
           <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap gap-y-3 gap-x-0 sm:gap-x-0 sm:items-center">
             {[
-              '25 Years',
-              '$10B+ in Decisions',
-              '50+ Countries',
-              'B Corp Certified',
+              "25 Years",
+              "$10B+ in Decisions",
+              "50+ Countries",
+              "B Corp Certified",
             ].map((stat, i, arr) => (
               <span key={stat} className="flex items-center gap-3 sm:gap-5">
                 <span className="w-1 h-1 shrink-0 rounded-full bg-(--gold) opacity-60" />
                 <span className={`${sectionLabel} text-white/30`}>{stat}</span>
                 {i < arr.length - 1 && (
-                  <span className="hidden sm:inline text-white/10 text-[10px] ml-2">·</span>
+                  <span className="hidden sm:inline text-white/10 text-[10px] ml-2">
+                    ·
+                  </span>
                 )}
               </span>
             ))}
@@ -203,7 +201,7 @@ export default function CareersPage() {
             <p className={`${bodyText} text-(--text-mid)`}>
               RampRate is a global advisory firm founded in 2000 on the premise
               of elevating the way business does business. Private, self-funded,
-              and profitable since birth — we&rsquo;ve never needed to
+              and profitable since birth - we&rsquo;ve never needed to
               compromise on who we hire or how we work.
             </p>
             <p className={`${bodyText} text-(--text-mid)`}>
@@ -216,7 +214,7 @@ export default function CareersPage() {
               The purpose-driven economy is here. Its leaders will be powered by
               RampRate.{" "}
               <span className="font-normal text-(--text-mid)">
-                If that mission speaks to you — you belong here.
+                If that mission speaks to you - you belong here.
               </span>
             </p>
             <blockquote className="pl-5 border-l-[3px] border-(--rust) italic text-(--text-mid) text-sm leading-relaxed">
@@ -236,7 +234,7 @@ export default function CareersPage() {
               the Needle.
             </h2>
             <p className="max-w-lg mx-auto text-sm leading-relaxed text-white/45">
-              Each practice is purpose-built for a distinct audience — but they
+              Each practice is purpose-built for a distinct audience - but they
               share the same team of superstars behind the scenes.
             </p>
           </div>
@@ -390,7 +388,7 @@ export default function CareersPage() {
             </h3>
             <p className="text-sm leading-relaxed max-w-sm mx-auto mb-8 text-white/45">
               We hire slowly and deliberately. When the right role opens,
-              it&rsquo;s listed here. Check back — or start a conversation
+              it&rsquo;s listed here. Check back - or start a conversation
               directly.
             </p>
             <Link
@@ -459,7 +457,7 @@ export default function CareersPage() {
           <p className="text-sm leading-relaxed mb-10 text-(--text-mid)">
             We&rsquo;ve built RampRate on people who see broken things and
             can&rsquo;t walk away. If that&rsquo;s you, we want to hear from you
-            — open role or not.
+            - open role or not.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">

@@ -1,23 +1,27 @@
-import type {Metadata} from 'next'
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Our Process — How RampRate Delivers',
+  title: "Our Process - How RampRate Delivers",
   description:
-    "RampRate's advisory process aligns the right roles, removes friction, and turns strategy into execution — from ideation to orchestration and measurable results.",
+    "RampRate's advisory process aligns the right roles, removes friction, and turns strategy into execution - from ideation to orchestration and measurable results.",
   keywords: [
-    'IT sourcing advisory process',
-    'enterprise advisory methodology',
-    'exclusive mandate advisory',
+    "IT sourcing advisory process",
+    "enterprise advisory methodology",
+    "exclusive mandate advisory",
   ],
-  alternates: {canonical: '/process'},
+  alternates: { canonical: "/process" },
   openGraph: {
-    title: 'Our Process — How RampRate Delivers | RampRate',
+    title: "Our Process - How RampRate Delivers | RampRate",
     description:
-      'How RampRate aligns roles, removes friction, and turns strategy into execution.',
-    url: 'https://ramprate.com/process',
+      "How RampRate aligns roles, removes friction, and turns strategy into execution.",
+    url: "https://ramprate.com/process",
   },
-}
+};
 
-export default function ProcessLayout({children}: {children: React.ReactNode}) {
-  return children
+export default function ProcessLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
 }

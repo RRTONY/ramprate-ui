@@ -1,185 +1,270 @@
-'use client'
+"use client";
 
-import { useState, useMemo } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { urlFor } from '@/lib/sanity/image'
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { urlFor } from "@/lib/sanity/image";
 
 export interface SanityLogo {
-  _id: string
-  name: string
-  url: string | null
-  logoUrl: string | null
+  _id: string;
+  name: string;
+  url: string | null;
+  logoUrl: string | null;
 }
 
 export interface SanityTestimonial {
-  _id: string
-  personName: string
-  role: string
-  company: string
-  quote: string
-  tag: string
-  tier: 'principal' | 'firm'
-  linkedin: string | null
-  twitter: string | null
-  companyLogoUrl: string | null
-  photoUrl: string | null
+  _id: string;
+  personName: string;
+  role: string;
+  company: string;
+  quote: string;
+  tag: string;
+  tier: "principal" | "firm";
+  linkedin: string | null;
+  twitter: string | null;
+  companyLogoUrl: string | null;
+  photoUrl: string | null;
 }
 
 export interface SanityBoardAdvisor {
-  _id: string
-  name: string
-  role: string
-  bio: string
-  whyAdvise: string | null
-  linkedin: string | null
-  twitter: string | null
-  photo: {asset: {_ref: string}} | null
+  _id: string;
+  name: string;
+  role: string;
+  bio: string;
+  whyAdvise: string | null;
+  linkedin: string | null;
+  twitter: string | null;
+  photo: { asset: { _ref: string } } | null;
 }
 
 export interface SanityCaseStudy {
-  _id: string
-  title: string
-  result: string
-  desc: string
-  metrics: string[]
+  _id: string;
+  title: string;
+  result: string;
+  desc: string;
+  metrics: string[];
 }
 
 export interface SanityConfidentialTestimonial {
-  _id: string
-  quote: string
-  attribution: string
-  division: string
+  _id: string;
+  quote: string;
+  attribution: string;
+  division: string;
 }
 
 interface ProofClientProps {
-  clientLogos: SanityLogo[]
-  testimonials: SanityTestimonial[]
-  boardAdvisors: SanityBoardAdvisor[]
-  caseStudies: SanityCaseStudy[]
-  confidentialTestimonials: SanityConfidentialTestimonial[]
+  clientLogos: SanityLogo[];
+  testimonials: SanityTestimonial[];
+  boardAdvisors: SanityBoardAdvisor[];
+  caseStudies: SanityCaseStudy[];
+  confidentialTestimonials: SanityConfidentialTestimonial[];
 }
 
-const CATEGORIES = ["All", "Enterprise", "Media", "Blockchain", "Gaming", "Finance"] as const
+const CATEGORIES = [
+  "All",
+  "Enterprise",
+  "Media",
+  "Blockchain",
+  "Gaming",
+  "Finance",
+] as const;
 
 const divisionColors: Record<string, string> = {
   RampRate: "oklch(0.82 0.15 75)",
   Syzygy: "oklch(0.7 0.2 280)",
   Stratum: "oklch(0.65 0.2 150)",
   ImpactSoul: "oklch(0.7 0.15 30)",
-}
+};
 
 const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
   {
     _id: "cs-1",
     title: "The Digital Asset Protocol That Needed a Backbone",
     result: "Enterprise-grade infrastructure across 6 jurisdictions in 90 days",
-    desc: "A next-generation digital asset protocol had the tokenomics figured out. What they didn't have was the institutional plumbing — banking rails, compliance architecture, custodial relationships, multi-jurisdiction licensing. We built the operational backbone that turned a whitepaper into a regulated, functioning financial instrument.",
-    metrics: ["6 jurisdictions", "90-day deployment", "Banking rails established", "Regulatory compliance achieved"]
+    desc: "A next-generation digital asset protocol had the tokenomics figured out. What they didn't have was the institutional plumbing - banking rails, compliance architecture, custodial relationships, multi-jurisdiction licensing. We built the operational backbone that turned a whitepaper into a regulated, functioning financial instrument.",
+    metrics: [
+      "6 jurisdictions",
+      "90-day deployment",
+      "Banking rails established",
+      "Regulatory compliance achieved",
+    ],
   },
   {
     _id: "cs-2",
     title: "The Fund That Couldn't See Its Own Portfolio",
-    result: "34% reduction in operational drag; full portfolio visibility in weeks",
+    result:
+      "34% reduction in operational drag; full portfolio visibility in weeks",
     desc: "A multi-strategy fund with $2B+ AUM was hemorrhaging value through fragmented vendor relationships, redundant infrastructure, and zero cross-portfolio visibility. We mapped the entire operational topology, consolidated 14 vendor contracts into 5 strategic partnerships, and gave them a dashboard they'd been trying to build for three years.",
-    metrics: ["$2B+ AUM", "34% cost reduction", "14 vendors → 5", "Real-time visibility"]
+    metrics: [
+      "$2B+ AUM",
+      "34% cost reduction",
+      "14 vendors → 5",
+      "Real-time visibility",
+    ],
   },
   {
     _id: "cs-3",
     title: "The DeFi Protocol That Outgrew Its Founders",
-    result: "Enterprise partnerships secured; institutional adoption accelerated by 2 years",
-    desc: "Brilliant protocol. Passionate community. Zero enterprise credibility. We didn't rebrand them — we repositioned them. Opened doors to institutional partners who don't take meetings with Discord-native teams. Converted developer traction into boardroom traction.",
-    metrics: ["8 enterprise partnerships", "Institutional pipeline built", "2-year acceleration", "Series B positioning"]
+    result:
+      "Enterprise partnerships secured; institutional adoption accelerated by 2 years",
+    desc: "Brilliant protocol. Passionate community. Zero enterprise credibility. We didn't rebrand them - we repositioned them. Opened doors to institutional partners who don't take meetings with Discord-native teams. Converted developer traction into boardroom traction.",
+    metrics: [
+      "8 enterprise partnerships",
+      "Institutional pipeline built",
+      "2-year acceleration",
+      "Series B positioning",
+    ],
   },
   {
     _id: "cs-4",
     title: "The Compliance Maze Nobody Wanted to Enter",
     result: "Licensed across 4 regulatory frameworks in 8 months",
-    desc: "They wanted to operate in the US, EU, Singapore, and UAE. Four regulatory frameworks. Four sets of lawyers. Four timelines that didn't align. We orchestrated the entire compliance architecture — not as lawyers, but as the people who know which doors to knock on and in what order.",
-    metrics: ["4 jurisdictions", "8-month timeline", "Zero regulatory setbacks", "Operational from day one"]
+    desc: "They wanted to operate in the US, EU, Singapore, and UAE. Four regulatory frameworks. Four sets of lawyers. Four timelines that didn't align. We orchestrated the entire compliance architecture - not as lawyers, but as the people who know which doors to knock on and in what order.",
+    metrics: [
+      "4 jurisdictions",
+      "8-month timeline",
+      "Zero regulatory setbacks",
+      "Operational from day one",
+    ],
   },
   {
     _id: "cs-5",
     title: "The $800M Decision That Took 72 Hours",
     result: "$800M vendor decision compressed from 6 months to 72 hours",
     desc: "The board wanted a decision by Friday. The procurement team had been circling for six months. We walked in with 150,000+ data points, benchmarked the three finalists against real-world contracts, and delivered a recommendation with 5-10% forecast accuracy. The board signed Monday.",
-    metrics: ["$800M decision", "72-hour turnaround", "150K+ benchmarks", "5-10% forecast accuracy"]
+    metrics: [
+      "$800M decision",
+      "72-hour turnaround",
+      "150K+ benchmarks",
+      "5-10% forecast accuracy",
+    ],
   },
   {
     _id: "cs-6",
     title: "The Tokenized Fund That Needed Trust",
     result: "First institutional LP commitments secured within 60 days",
-    desc: "A tokenized fund with strong returns but zero institutional credibility. The problem wasn't performance — it was provenance. We transacted introductions to allocators who'd never touched digital assets, structured the narrative around risk-adjusted returns they understood, and secured first institutional LP commitments in 60 days.",
-    metrics: ["First institutional LPs", "60-day timeline", "Risk narrative restructured", "Allocator pipeline built"]
+    desc: "A tokenized fund with strong returns but zero institutional credibility. The problem wasn't performance - it was provenance. We transacted introductions to allocators who'd never touched digital assets, structured the narrative around risk-adjusted returns they understood, and secured first institutional LP commitments in 60 days.",
+    metrics: [
+      "First institutional LPs",
+      "60-day timeline",
+      "Risk narrative restructured",
+      "Allocator pipeline built",
+    ],
   },
   {
     _id: "cs-7",
     title: "The Infrastructure Nobody Could Audit",
     result: "75% infrastructure cost reduction over 16-year relationship",
     desc: "Across four CTO tenures, we became the institutional memory no org chart could replace. Every new executive inherited a vendor landscape nobody fully understood. We were the map. Exposed hundreds of millions in hidden redundancies and created methodology now adopted at the executive level.",
-    metrics: ["16-year relationship", "75% cost reduction", "4 CTO tenures", "Methodology adopted org-wide"]
+    metrics: [
+      "16-year relationship",
+      "75% cost reduction",
+      "4 CTO tenures",
+      "Methodology adopted org-wide",
+    ],
   },
   {
     _id: "cs-8",
     title: "The Web3 Bridge to Enterprise",
     result: "US market penetration and enterprise pipeline in months",
-    desc: "4+ years of daily advisory. We didn't just introduce them to enterprises — we taught them how to speak enterprise. Converted a developer-first protocol into a platform that Fortune 500 procurement teams could evaluate, approve, and deploy. Accelerated growth by years.",
-    metrics: ["4+ years daily advisory", "US market entry", "Fortune 500 pipeline", "Acquisition-ready positioning"]
+    desc: "4+ years of daily advisory. We didn't just introduce them to enterprises - we taught them how to speak enterprise. Converted a developer-first protocol into a platform that Fortune 500 procurement teams could evaluate, approve, and deploy. Accelerated growth by years.",
+    metrics: [
+      "4+ years daily advisory",
+      "US market entry",
+      "Fortune 500 pipeline",
+      "Acquisition-ready positioning",
+    ],
   },
   {
     _id: "cs-9",
     title: "The Custodial Architecture That Passed Every Audit",
     result: "SOC 2 Type II compliant from zero to audit-ready in 5 months",
-    desc: "They needed institutional-grade custody. Not the marketing version — the version that survives a Big Four audit. We designed the architecture, selected the technology stack, negotiated the insurance, and built the operational playbook. Passed SOC 2 Type II on the first attempt.",
-    metrics: ["SOC 2 Type II first-pass", "5-month build", "Insurance secured", "Institutional-grade ops"]
+    desc: "They needed institutional-grade custody. Not the marketing version - the version that survives a Big Four audit. We designed the architecture, selected the technology stack, negotiated the insurance, and built the operational playbook. Passed SOC 2 Type II on the first attempt.",
+    metrics: [
+      "SOC 2 Type II first-pass",
+      "5-month build",
+      "Insurance secured",
+      "Institutional-grade ops",
+    ],
   },
   {
     _id: "cs-10",
     title: "The Deal That Became the Benchmark",
-    result: "\"Best IT deal during executive tenure\" — their words, not ours",
+    result: '"Best IT deal during executive tenure" - their words, not ours',
     desc: "We structured a win-win that became the benchmark for every IT deal that followed. When the executive moved to another company, they called us again. When that company was acquired, the acquirer called us too. That's not consulting. That's gravity.",
-    metrics: ["Benchmark-setting terms", "Multi-company relationship", "Win-win structure", "20+ year trust"]
+    metrics: [
+      "Benchmark-setting terms",
+      "Multi-company relationship",
+      "Win-win structure",
+      "20+ year trust",
+    ],
   },
-]
+];
 
-export default function ProofClient({ clientLogos, testimonials, boardAdvisors, caseStudies, confidentialTestimonials }: ProofClientProps) {
+export default function ProofClient({
+  clientLogos,
+  testimonials,
+  boardAdvisors,
+  caseStudies,
+  confidentialTestimonials,
+}: ProofClientProps) {
   const allCaseStudies = useMemo(() => {
-    const sanityIds = new Set(caseStudies.map(cs => cs._id))
-    const merged = [...caseStudies]
+    const sanityIds = new Set(caseStudies.map((cs) => cs._id));
+    const merged = [...caseStudies];
     for (const hc of HARDCODED_CASE_STUDIES) {
-      if (!sanityIds.has(hc._id)) merged.push(hc)
+      if (!sanityIds.has(hc._id)) merged.push(hc);
     }
-    return merged
-  }, [caseStudies])
+    return merged;
+  }, [caseStudies]);
 
-  const [activeFilter, setActiveFilter] = useState<string>("All")
+  const [activeFilter, setActiveFilter] = useState<string>("All");
 
   const filteredTestimonials = useMemo(() => {
-    if (activeFilter === "All") return testimonials
-    return testimonials.filter((t) => t.tag === activeFilter)
-  }, [activeFilter, testimonials])
+    if (activeFilter === "All") return testimonials;
+    return testimonials.filter((t) => t.tag === activeFilter);
+  }, [activeFilter, testimonials]);
 
   const counts = useMemo(() => {
-    const map: Record<string, number> = { All: testimonials.length }
-    testimonials.forEach((t) => { map[t.tag] = (map[t.tag] || 0) + 1 })
-    return map
-  }, [testimonials])
+    const map: Record<string, number> = { All: testimonials.length };
+    testimonials.forEach((t) => {
+      map[t.tag] = (map[t.tag] || 0) + 1;
+    });
+    return map;
+  }, [testimonials]);
 
   return (
     <main>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden" style={{ background: 'var(--dark)' }}>
+      <section
+        className="relative pt-32 pb-20 overflow-hidden"
+        style={{ background: "var(--dark)" }}
+      >
         <div className="glass-orb glass-orb-rust w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block" style={{ fontFamily: 'var(--font-body)' }}>Proof</span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              24 Years of{' '}
-              <span className="text-[oklch(0.55_0.15_30)]">Trajectory-Changing</span> Results
+            <span
+              className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              Proof
+            </span>
+            <h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              24 Years of{" "}
+              <span className="text-[oklch(0.55_0.15_30)]">
+                Trajectory-Changing
+              </span>{" "}
+              Results
             </h1>
-            <p className="text-white/70 text-lg leading-relaxed mb-10" style={{ fontFamily: 'var(--font-body)' }}>
-              Don't take our word for it. Here's what our clients say about working with RampRate — and why they keep coming back.
+            <p
+              className="text-white/70 text-lg leading-relaxed mb-10"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              Don't take our word for it. Here's what our clients say about
+              working with RampRate - and why they keep coming back.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {[
@@ -189,8 +274,18 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                 { value: "24yrs", label: "Track Record" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div className="text-2xl font-bold text-[oklch(0.82_0.15_75)] mb-1" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
-                  <div className="text-xs text-white/50" style={{ fontFamily: 'var(--font-body)' }}>{stat.label}</div>
+                  <div
+                    className="text-2xl font-bold text-[oklch(0.82_0.15_75)] mb-1"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div
+                    className="text-xs text-white/50"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -205,27 +300,78 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
           <div className="glass-orb glass-orb-amber w-[200px] h-[200px] bottom-10 -left-20" />
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
             <div className="mb-14">
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-body)' }}>Case Studies</span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                Enterprise-Grade <span className="text-[oklch(0.55_0.15_30)]">Results</span>
+              <span
+                className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                Case Studies
+              </span>
+              <h2
+                className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Enterprise-Grade{" "}
+                <span className="text-[oklch(0.55_0.15_30)]">Results</span>
               </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {allCaseStudies.map((cs) => (
-                <div key={cs._id} className="glass-card-warm p-7 hover:shadow-md transition-shadow">
+                <div
+                  key={cs._id}
+                  className="glass-card-warm p-7 hover:shadow-md transition-shadow"
+                >
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'oklch(0.55 0.15 30 / 0.1)' }}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.55 0.15 30)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="oklch(0.55 0.15 30)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                      </svg>
                     </div>
-                    <h3 className="text-sm font-bold leading-tight" style={{ fontFamily: 'var(--font-display)' }}>{cs.title}</h3>
+                    <h3
+                      className="text-sm font-bold leading-tight"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {cs.title}
+                    </h3>
                   </div>
-                  <div className="mb-4 px-3 py-2 rounded-md" style={{ background: 'oklch(0.55 0.15 30 / 0.08)' }}>
-                    <span className="text-sm font-bold text-[oklch(0.45_0.12_30)]" style={{ fontFamily: 'var(--font-mono)' }}>{cs.result}</span>
+                  <div
+                    className="mb-4 px-3 py-2 rounded-md"
+                    style={{ background: "oklch(0.55 0.15 30 / 0.08)" }}
+                  >
+                    <span
+                      className="text-sm font-bold text-[oklch(0.45_0.12_30)]"
+                      style={{ fontFamily: "var(--font-mono)" }}
+                    >
+                      {cs.result}
+                    </span>
                   </div>
-                  <p className="text-sm text-[oklch(0.4_0.02_50)] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>{cs.desc}</p>
+                  <p
+                    className="text-sm text-[oklch(0.4_0.02_50)] leading-relaxed mb-4"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {cs.desc}
+                  </p>
                   <div className="flex flex-wrap gap-1.5">
                     {(cs.metrics || []).map((m) => (
-                      <span key={m} className="text-xs px-2 py-1 rounded-full bg-[oklch(0.94_0.03_80)] text-[oklch(0.45_0.02_50)] font-medium" style={{ fontFamily: 'var(--font-body)' }}>{m}</span>
+                      <span
+                        key={m}
+                        className="text-xs px-2 py-1 rounded-full bg-[oklch(0.94_0.03_80)] text-[oklch(0.45_0.02_50)] font-medium"
+                        style={{ fontFamily: "var(--font-body)" }}
+                      >
+                        {m}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -235,55 +381,112 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
         </section>
       )}
 
-      {/* Client Logos — from Sanity (121 logos) */}
+      {/* Client Logos - from Sanity (121 logos) */}
       <section className="section-light py-16">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <h3 className="text-center text-xs font-semibold tracking-[0.2em] uppercase mb-10" style={{ color: 'oklch(0.5 0.02 50)', fontFamily: 'var(--font-body)' }}>
+          <h3
+            className="text-center text-xs font-semibold tracking-[0.2em] uppercase mb-10"
+            style={{
+              color: "oklch(0.5 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
             Trusted by Industry Leaders
           </h3>
-          {clientLogos.length > 0 ? (() => {
-            const withImage = clientLogos.filter(l => l.logoUrl)
-            const featuredLogos = withImage.slice(0, 24)
-            const remainingWithImage = withImage.slice(24)
-            const noImage = clientLogos.filter(l => !l.logoUrl)
-            const textNames = [...remainingWithImage.map(l => l.name), ...noImage.map(l => l.name)]
-            return (
-              <>
-                <div className="flex flex-wrap justify-center items-center gap-4">
-                  {featuredLogos.map((logo) => (
-                    <div
-                      key={logo._id}
-                      className="flex items-center justify-center transition-all duration-200 hover:scale-105"
-                      style={{
-                        background: 'oklch(0.94 0.02 75)',
-                        borderRadius: '10px',
-                        padding: '12px 20px',
-                        minWidth: '100px',
-                        minHeight: '56px',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-                      }}
-                    >
-                      {logo.url ? (
-                        <a href={logo.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                          <Image src={logo.logoUrl!} alt={logo.name} width={100} height={28} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} unoptimized />
-                        </a>
-                      ) : (
-                        <Image src={logo.logoUrl!} alt={logo.name} width={100} height={28} className="object-contain" style={{ height: '28px', maxWidth: '100px', width: 'auto' }} unoptimized />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                {textNames.length > 0 && (
-                  <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mt-8">
-                    {textNames.map((name) => (
-                      <span key={name} className="text-xs font-medium" style={{ color: 'oklch(0.55 0.02 50)', fontFamily: 'var(--font-body)' }}>{name}</span>
+          {clientLogos.length > 0 ? (
+            (() => {
+              const withImage = clientLogos.filter((l) => l.logoUrl);
+              const featuredLogos = withImage.slice(0, 24);
+              const remainingWithImage = withImage.slice(24);
+              const noImage = clientLogos.filter((l) => !l.logoUrl);
+              const textNames = [
+                ...remainingWithImage.map((l) => l.name),
+                ...noImage.map((l) => l.name),
+              ];
+              return (
+                <>
+                  <div className="flex flex-wrap justify-center items-center gap-4">
+                    {featuredLogos.map((logo) => (
+                      <div
+                        key={logo._id}
+                        className="flex items-center justify-center transition-all duration-200 hover:scale-105"
+                        style={{
+                          background: "oklch(0.94 0.02 75)",
+                          borderRadius: "10px",
+                          padding: "12px 20px",
+                          minWidth: "100px",
+                          minHeight: "56px",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                        }}
+                      >
+                        {logo.url ? (
+                          <a
+                            href={logo.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center"
+                          >
+                            <Image
+                              src={logo.logoUrl!}
+                              alt={logo.name}
+                              width={100}
+                              height={28}
+                              className="object-contain"
+                              style={{
+                                height: "28px",
+                                maxWidth: "100px",
+                                width: "auto",
+                              }}
+                              unoptimized
+                            />
+                          </a>
+                        ) : (
+                          <Image
+                            src={logo.logoUrl!}
+                            alt={logo.name}
+                            width={100}
+                            height={28}
+                            className="object-contain"
+                            style={{
+                              height: "28px",
+                              maxWidth: "100px",
+                              width: "auto",
+                            }}
+                            unoptimized
+                          />
+                        )}
+                      </div>
                     ))}
                   </div>
-                )}
-              </>
-            )
-          })() : (
-            <p className="text-center text-sm" style={{ color: 'oklch(0.5 0.02 50)', fontFamily: 'var(--font-body)' }}>250+ enterprise clients across 50+ countries.</p>
+                  {textNames.length > 0 && (
+                    <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mt-8">
+                      {textNames.map((name) => (
+                        <span
+                          key={name}
+                          className="text-xs font-medium"
+                          style={{
+                            color: "oklch(0.55 0.02 50)",
+                            fontFamily: "var(--font-body)",
+                          }}
+                        >
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()
+          ) : (
+            <p
+              className="text-center text-sm"
+              style={{
+                color: "oklch(0.5 0.02 50)",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              250+ enterprise clients across 50+ countries.
+            </p>
           )}
         </div>
       </section>
@@ -293,30 +496,83 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
         <section className="relative section-dark py-16 sm:py-20 overflow-hidden">
           <div className="glass-orb glass-orb-rust w-[200px] h-[200px] top-0 -left-20" />
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8" style={{ fontFamily: 'var(--font-display)' }}>
-              Board of <span className="text-[oklch(0.55_0.15_30)]">Advisors</span>
+            <h2
+              className="text-2xl sm:text-3xl font-bold text-white mb-8"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Board of{" "}
+              <span className="text-[oklch(0.55_0.15_30)]">Advisors</span>
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {boardAdvisors.map((m) => (
                 <div key={m._id} className="text-center">
-                  <div className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                  <div
+                    className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-3"
+                    style={{ background: "rgba(255,255,255,0.1)" }}
+                  >
                     {m.photo ? (
-                      <Image src={urlFor(m.photo).width(160).height(160).fit('crop').url()} alt={m.name} width={160} height={160} className="w-full h-full object-cover" />
+                      <Image
+                        src={urlFor(m.photo)
+                          .width(160)
+                          .height(160)
+                          .fit("crop")
+                          .url()}
+                        alt={m.name}
+                        width={160}
+                        height={160}
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/30 text-lg font-bold">
-                        {m.name.split(' ').map((n) => n[0]).join('')}
+                        {m.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
                       </div>
                     )}
                   </div>
                   {m.linkedin ? (
-                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-[oklch(0.55_0.15_30)] transition-colors" style={{ fontFamily: 'var(--font-body)' }}>{m.name}</a>
+                    <a
+                      href={m.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-white hover:text-[oklch(0.55_0.15_30)] transition-colors"
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {m.name}
+                    </a>
                   ) : (
-                    <span className="text-sm font-semibold text-white" style={{ fontFamily: 'var(--font-body)' }}>{m.name}</span>
+                    <span
+                      className="text-sm font-semibold text-white"
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {m.name}
+                    </span>
                   )}
-                  <div className="text-xs text-white/50 mt-0.5" style={{ fontFamily: 'var(--font-body)' }}>{m.role}</div>
+                  <div
+                    className="text-xs text-white/50 mt-0.5"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {m.role}
+                  </div>
                   {m.linkedin && (
-                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex mt-1.5 w-5 h-5 rounded-full items-center justify-center hover:bg-white/20 transition-colors" style={{ background: 'rgba(255,255,255,0.1)' }}>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="text-white/60"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                    <a
+                      href={m.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex mt-1.5 w-5 h-5 rounded-full items-center justify-center hover:bg-white/20 transition-colors"
+                      style={{ background: "rgba(255,255,255,0.1)" }}
+                    >
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="text-white/60"
+                      >
+                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
                     </a>
                   )}
                 </div>
@@ -329,11 +585,30 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
       {/* B Corp Badge */}
       <section className="section-light py-12">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <div className="inline-flex items-center gap-4 px-8 py-5 rounded-xl border border-black/5" style={{ background: 'oklch(0.97 0.01 80)' }}>
-            <div className="text-3xl font-bold text-[oklch(0.55_0.15_30)]" style={{ fontFamily: 'var(--font-display)' }}>B</div>
+          <div
+            className="inline-flex items-center gap-4 px-8 py-5 rounded-xl border border-black/5"
+            style={{ background: "oklch(0.97 0.01 80)" }}
+          >
+            <div
+              className="text-3xl font-bold text-[oklch(0.55_0.15_30)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              B
+            </div>
             <div className="text-left">
-              <div className="text-sm font-bold" style={{ fontFamily: 'var(--font-body)' }}>Certified B Corporation</div>
-              <div className="text-xs text-[oklch(0.5_0.02_50)]" style={{ fontFamily: 'var(--font-body)' }}>Meeting the highest standards of social and environmental performance</div>
+              <div
+                className="text-sm font-bold"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                Certified B Corporation
+              </div>
+              <div
+                className="text-xs text-[oklch(0.5_0.02_50)]"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                Meeting the highest standards of social and environmental
+                performance
+              </div>
             </div>
           </div>
         </div>
@@ -346,29 +621,65 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-                What Our <span className="text-[oklch(0.55_0.15_30)]">Clients</span> Say
+              <h2
+                className="text-3xl sm:text-4xl font-bold tracking-tight mb-2"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                What Our{" "}
+                <span className="text-[oklch(0.55_0.15_30)]">Clients</span> Say
               </h2>
-              <p className="text-sm text-[oklch(0.5_0.02_50)]" style={{ fontFamily: 'var(--font-body)' }}>
-                {activeFilter === "All" ? `${testimonials.length} voices. Two decades. One consistent thread: Tony and his team deliver.` : `${filteredTestimonials.length} ${activeFilter} testimonials.`}
+              <p
+                className="text-sm text-[oklch(0.5_0.02_50)]"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                {activeFilter === "All"
+                  ? `${testimonials.length} voices. Two decades. One consistent thread: Tony and his team deliver.`
+                  : `${filteredTestimonials.length} ${activeFilter} testimonials.`}
               </p>
             </div>
             <div className="flex items-center gap-1.5 flex-wrap">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(0.5 0.02 50)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="oklch(0.5 0.02 50)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-1"
+              >
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
                   className="text-xs px-3 py-2 rounded-full font-semibold tracking-wide transition-all shadow-sm"
                   style={{
-                    fontFamily: 'var(--font-mono)',
-                    background: activeFilter === cat ? 'oklch(0.55 0.15 30)' : 'oklch(0.94 0.03 80)',
-                    color: activeFilter === cat ? 'white' : 'oklch(0.45 0.02 50)',
+                    fontFamily: "var(--font-mono)",
+                    background:
+                      activeFilter === cat
+                        ? "oklch(0.55 0.15 30)"
+                        : "oklch(0.94 0.03 80)",
+                    color:
+                      activeFilter === cat ? "white" : "oklch(0.45 0.02 50)",
                   }}
-                  onMouseEnter={e => { if (activeFilter !== cat) (e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.90 0.04 60)' }}
-                  onMouseLeave={e => { if (activeFilter !== cat) (e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.94 0.03 80)' }}
+                  onMouseEnter={(e) => {
+                    if (activeFilter !== cat)
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "oklch(0.90 0.04 60)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeFilter !== cat)
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "oklch(0.94 0.03 80)";
+                  }}
                 >
-                  {cat} <span style={{ opacity: 0.6, marginLeft: '2px' }}>({counts[cat] || 0})</span>
+                  {cat}{" "}
+                  <span style={{ opacity: 0.6, marginLeft: "2px" }}>
+                    ({counts[cat] || 0})
+                  </span>
                 </button>
               ))}
             </div>
@@ -379,38 +690,117 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
                 key={i}
                 className="break-inside-avoid rounded-xl p-7 border hover:shadow-md transition-shadow"
                 style={{
-                  background: t.tier === 'principal' ? 'oklch(0.97 0.02 30)' : 'oklch(0.97 0.01 80)',
-                  borderColor: t.tier === 'principal' ? 'oklch(0.55 0.15 30 / 0.15)' : 'rgba(0,0,0,0.05)',
+                  background:
+                    t.tier === "principal"
+                      ? "oklch(0.97 0.02 30)"
+                      : "oklch(0.97 0.01 80)",
+                  borderColor:
+                    t.tier === "principal"
+                      ? "oklch(0.55 0.15 30 / 0.15)"
+                      : "rgba(0,0,0,0.05)",
                 }}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="oklch(0.55 0.15 30 / 0.3)" stroke="none"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="oklch(0.55 0.15 30 / 0.3)"
+                    stroke="none"
+                  >
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.94 0.03 80)', color: 'oklch(0.45 0.02 50)' }}>{t.tag}</span>
-                    {t.tier === 'principal' && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.55 0.15 30 / 0.1)', color: 'oklch(0.45 0.12 30)' }}>Principal</span>
+                    <span
+                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        background: "oklch(0.94 0.03 80)",
+                        color: "oklch(0.45 0.02 50)",
+                      }}
+                    >
+                      {t.tag}
+                    </span>
+                    {t.tier === "principal" && (
+                      <span
+                        className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          background: "oklch(0.55 0.15 30 / 0.1)",
+                          color: "oklch(0.45 0.12 30)",
+                        }}
+                      >
+                        Principal
+                      </span>
                     )}
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed mb-5 italic" style={{ color: 'oklch(0.35 0.02 50)', fontFamily: 'var(--font-body)' }}>&ldquo;{t.quote}&rdquo;</p>
+                <p
+                  className="text-sm leading-relaxed mb-5 italic"
+                  style={{
+                    color: "oklch(0.35 0.02 50)",
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </p>
                 <div className="border-t border-black/5 pt-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-semibold" style={{ fontFamily: 'var(--font-body)' }}>{t.personName}</div>
-                      <div className="text-xs" style={{ color: 'oklch(0.5 0.02 50)', fontFamily: 'var(--font-body)' }}>
-                        {t.role}{t.company ? `, ${t.company}` : ""}
+                      <div
+                        className="text-sm font-semibold"
+                        style={{ fontFamily: "var(--font-body)" }}
+                      >
+                        {t.personName}
+                      </div>
+                      <div
+                        className="text-xs"
+                        style={{
+                          color: "oklch(0.5 0.02 50)",
+                          fontFamily: "var(--font-body)",
+                        }}
+                      >
+                        {t.role}
+                        {t.company ? `, ${t.company}` : ""}
                       </div>
                     </div>
                     {(t.linkedin || t.twitter) && (
                       <div className="flex gap-1.5">
                         {t.linkedin && (
-                          <a href={t.linkedin} target="_blank" rel="noopener noreferrer" className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors" style={{ background: 'oklch(0.55 0.15 30 / 0.1)' }}>
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="oklch(0.55 0.15 30)"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                          <a
+                            href={t.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors"
+                            style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                          >
+                            <svg
+                              width="11"
+                              height="11"
+                              viewBox="0 0 24 24"
+                              fill="oklch(0.55 0.15 30)"
+                            >
+                              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+                              <circle cx="4" cy="4" r="2" />
+                            </svg>
                           </a>
                         )}
                         {t.twitter && (
-                          <a href={t.twitter} target="_blank" rel="noopener noreferrer" className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors" style={{ background: 'oklch(0.55 0.15 30 / 0.1)' }}>
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="oklch(0.55 0.15 30)"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+                          <a
+                            href={t.twitter}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors"
+                            style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                          >
+                            <svg
+                              width="11"
+                              height="11"
+                              viewBox="0 0 24 24"
+                              fill="oklch(0.55 0.15 30)"
+                            >
+                              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                            </svg>
                           </a>
                         )}
                       </div>
@@ -431,37 +821,105 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
             <div className="text-center mb-14">
               <div className="inline-flex items-center gap-2 mb-4">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(0.82 0.15 75)" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)]" style={{ fontFamily: 'var(--font-body)' }}>Confidential Engagements</span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="oklch(0.82 0.15 75)"
+                  strokeWidth="2"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <span
+                  className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)]"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  Confidential Engagements
+                </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-                What Our <span className="text-[oklch(0.82_0.15_75)]">Confidential Clients</span> Say
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-white mb-4"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                What Our{" "}
+                <span className="text-[oklch(0.82_0.15_75)]">
+                  Confidential Clients
+                </span>{" "}
+                Say
               </h2>
-              <p className="text-sm text-white/50 max-w-2xl mx-auto leading-relaxed italic" style={{ fontFamily: 'var(--font-body)' }}>
-                Many of our most impactful engagements are protected by NDA. We've shared these with permission, with identifying details removed. References are available to qualified prospects upon request.
+              <p
+                className="text-sm text-white/50 max-w-2xl mx-auto leading-relaxed italic"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                Many of our most impactful engagements are protected by NDA.
+                We've shared these with permission, with identifying details
+                removed. References are available to qualified prospects upon
+                request.
               </p>
             </div>
             <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
               {confidentialTestimonials.map((t, i) => (
-                <div key={i} className="glass-card break-inside-avoid p-7 hover:bg-white/[0.08] transition-all">
+                <div
+                  key={i}
+                  className="glass-card break-inside-avoid p-7 hover:bg-white/[0.08] transition-all"
+                >
                   <div className="flex items-center justify-between mb-4">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="oklch(0.82 0.15 75 / 0.3)" stroke="none"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="oklch(0.82 0.15 75 / 0.3)"
+                      stroke="none"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
                     <span
                       className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
                       style={{
-                        fontFamily: 'var(--font-mono)',
-                        background: `color-mix(in oklch, ${divisionColors[t.division] ?? 'oklch(0.82 0.15 75)'}, transparent 85%)`,
-                        color: divisionColors[t.division] ?? 'oklch(0.82 0.15 75)',
+                        fontFamily: "var(--font-mono)",
+                        background: `color-mix(in oklch, ${divisionColors[t.division] ?? "oklch(0.82 0.15 75)"}, transparent 85%)`,
+                        color:
+                          divisionColors[t.division] ?? "oklch(0.82 0.15 75)",
                       }}
                     >
                       {t.division}
                     </span>
                   </div>
-                  <p className="text-sm text-white/70 leading-relaxed mb-5 italic" style={{ fontFamily: 'var(--font-body)' }}>"{t.quote}"</p>
+                  <p
+                    className="text-sm text-white/70 leading-relaxed mb-5 italic"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    "{t.quote}"
+                  </p>
                   <div className="border-t border-white/[0.06] pt-4">
                     <div className="flex items-center gap-2">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" className="shrink-0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                      <span className="text-xs text-white/40 italic" style={{ fontFamily: 'var(--font-body)' }}>{t.attribution}</span>
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.3)"
+                        strokeWidth="2"
+                        className="shrink-0"
+                      >
+                        <rect
+                          x="3"
+                          y="11"
+                          width="18"
+                          height="11"
+                          rx="2"
+                          ry="2"
+                        />
+                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                      </svg>
+                      <span
+                        className="text-xs text-white/40 italic"
+                        style={{ fontFamily: "var(--font-body)" }}
+                      >
+                        {t.attribution}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -471,42 +929,113 @@ export default function ProofClient({ clientLogos, testimonials, boardAdvisors, 
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-all shadow-lg"
-                style={{ background: 'oklch(0.82 0.15 75)', color: 'oklch(0.15 0.02 75)', fontFamily: 'var(--font-body)', boxShadow: '0 10px 30px oklch(0.82 0.15 75 / 0.2)' }}
+                style={{
+                  background: "oklch(0.82 0.15 75)",
+                  color: "oklch(0.15 0.02 75)",
+                  fontFamily: "var(--font-body)",
+                  boxShadow: "0 10px 30px oklch(0.82 0.15 75 / 0.2)",
+                }}
               >
                 Request References
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </Link>
-              <p className="text-xs text-white/30 mt-4" style={{ fontFamily: 'var(--font-body)' }}>References available to qualified prospects under NDA</p>
+              <p
+                className="text-xs text-white/30 mt-4"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                References available to qualified prospects under NDA
+              </p>
             </div>
           </div>
         </section>
       )}
 
       {/* CTA */}
-      <section className="py-16 sm:py-20" style={{ background: 'oklch(0.55 0.15 30)' }}>
+      <section
+        className="py-16 sm:py-20"
+        style={{ background: "oklch(0.55 0.15 30)" }}
+      >
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-white mb-4"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             Ready to Write Your Own Success Story?
           </h2>
-          <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ fontFamily: 'var(--font-body)' }}>
+          <p
+            className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
             The audit is free. The ROI guarantee is real. Let's talk.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg" style={{ color: 'oklch(0.35 0.1 30)', fontFamily: 'var(--font-body)' }}>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
+              style={{
+                color: "oklch(0.35 0.1 30)",
+                fontFamily: "var(--font-body)",
+              }}
+            >
               Start a Conversation
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
-            <Link href="/process#flow-circuit" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all" style={{ fontFamily: 'var(--font-body)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <Link
+              href="/process#flow-circuit"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
               Flow Circuit Assessment
             </Link>
-            <Link href="/process#find-me" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all" style={{ fontFamily: 'var(--font-body)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            <Link
+              href="/process#find-me"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
               Find Your Me
             </Link>
           </div>
         </div>
       </section>
     </main>
-  )
+  );
 }
