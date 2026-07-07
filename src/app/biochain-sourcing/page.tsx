@@ -36,8 +36,7 @@ const products = [
     desc: "BPC-157, TB-500, TB-4, CJC-1295, GHK-Cu, Epithalon, MOTS-c, and custom-synthesis compounds. cGMP certified. COA, HPLC, and mass spec on every lot.",
     meta: "Research · Compounding · Custom Synthesis",
     street: "$35–$75/vial",
-    rr: "$12–$22/vial",
-    save: "Save 38–65%",
+    save: "Typical BioChain Saving: 38–65%+",
     links: [
       {
         label: "Peptide Sciences - Research Benchmark",
@@ -54,9 +53,8 @@ const products = [
     title: "Exosomes",
     desc: "MSC-derived, platelet-rich, and plant-based exosome carriers. IV-grade and topical. NTA particle sizing and endotoxin testing on every lot.",
     meta: "MSC-Derived · IV-Grade · NTA Verified",
-    street: "$800–$3,500/vial",
-    rr: "$420–$1,200/vial",
-    save: "Save 30–55%",
+    street: "$1,200–$3,500/vial",
+    save: "Typical BioChain Saving: 30–55%+",
     links: [
       {
         label: "Kimera Labs - Documented US Supplier",
@@ -74,8 +72,7 @@ const products = [
     desc: "Umbilical cord MSCs, Wharton's jelly, amniotic membrane, adipose-derived concentrates. AATB-accredited tissue banks only, full donor traceability.",
     meta: "MSC · Wharton's Jelly · AATB Accredited",
     street: "$2,000–$8,000/unit",
-    rr: "$1,100–$3,800/unit",
-    save: "Save 25–50%",
+    save: "Typical BioChain Saving: 25–50%+",
     links: [
       {
         label: "BioLife Solutions - AATB Gold Standard",
@@ -92,9 +89,8 @@ const products = [
     title: "NAD+ & Longevity Compounds",
     desc: "NMN, NR, NAD+ precursors, Spermidine, MOTS-c, Tesamorelin. Pharmaceutical-grade sourcing from cGMP manufacturers - verified against the same API grade retail brands resell.",
     meta: "NAD+ · NMN · Longevity Stack",
-    street: "$4,000–$9,000/kg",
-    rr: "$1,800–$3,200/kg",
-    save: "Save 40–60%",
+    street: "$800–$2,500/kg",
+    save: "Typical BioChain Saving: 40–60%+",
     links: [
       {
         label: "Renue By Science - Retail Benchmark",
@@ -112,8 +108,7 @@ const products = [
     desc: "IGF-1, EGF, FGF, PDGF, TGF-β, and proprietary blends. Full cytokine profile validation, endotoxin testing, and cold-chain logistics included.",
     meta: "IGF-1 · EGF · Clinical + Research Grade",
     street: "$80–$220/unit",
-    rr: "$35–$85/unit",
-    save: "Save 40–60%",
+    save: "Typical BioChain Saving: 40–60%+",
     links: [],
   },
   {
@@ -122,8 +117,7 @@ const products = [
     desc: "Lion's Mane, Ashwagandha KSM-66, Bacopa, Rhodiola, and other pharmaceutical-grade adaptogen actives, third-party tested.",
     meta: "Adaptogens · Nootropics · Research Compounds",
     street: "$180–$400/kg",
-    rr: "$90–$160/kg",
-    save: "Save 45–60%",
+    save: "Typical BioChain Saving: 45–60%+",
     links: [],
   },
   {
@@ -132,8 +126,7 @@ const products = [
     desc: "Microneedle patches, liposomal encapsulation systems, IV bag systems, and reconstitution kits - medical-device-grade consumables sourced alongside your biologics.",
     meta: "Delivery Systems · Medical-Device-Grade",
     street: "$180–$380/kit",
-    rr: "$80–$140/kit",
-    save: "Save 45–63%",
+    save: "Typical BioChain Saving: 45–63%+",
     links: [],
   },
   {
@@ -142,8 +135,7 @@ const products = [
     desc: "Concept-to-finished-product: custom synthesis, proprietary blends, private-label manufacturing. Every vendor negotiation includes MOQ, exclusivity, and quality-guarantee clauses.",
     meta: "Custom Synthesis · White Label · OEM",
     street: "Varies by spec",
-    rr: "Performance-fee negotiated",
-    save: "Save 45–70%",
+    save: "Typical BioChain Saving: 45–70%+",
     links: [
       {
         label: "Blue Sky Peptide - Market Rate Comp",
@@ -156,6 +148,60 @@ const products = [
     ],
   },
 ];
+
+const clientCharacteristics = [
+  "Annual biologics spend of $50,000 minimum — sweet spot $150,000–$2M+",
+  "Currently purchasing through retail or distribution channels and suspect they are overpaying",
+  "Have experienced quality inconsistency or documentation gaps from current suppliers",
+  "Scaling fast enough that vendor relationships need to be structured, not transactional",
+  "Value verified provenance and chain-of-custody as much as price",
+  "Have a purchasing decision-maker who can move in 30–60 days",
+];
+
+const clientOrgTypes = [
+  "Longevity Clinics",
+  "Compounding Pharmacy Networks",
+  "Regenerative Medicine Brands",
+  "Biotech & Nutraceutical Companies",
+  "Medical Spas & Aesthetic Chains",
+  "Research Institutions",
+  "Wellness Resorts & Integrative Health Centers",
+];
+
+const exampleClient = {
+  account: "Pacific Longevity Partners",
+  type: "Multi-location longevity clinic group — 3 locations, Southern California",
+  spend: "$380,000",
+  categories: "Peptides, MSC exosomes, NAD+ IV kits, NMN bulk",
+  problem:
+    "Purchasing through two distributors and one direct manufacturer. No unified COA standard. Exosome particle counts unverified. NMN sourced at retail pricing with no volume commitment.",
+  outcome:
+    "41% average reduction across benchmarked categories. Vendor consolidation from 3 to 1 primary. First-time exclusivity window on top peptide SKU. Elimination of 2 documentation gaps carrying regulatory exposure.",
+};
+
+const vendorStrengthVariables = [
+  { variable: "GMP Certification Status", weight: "15%" },
+  { variable: "COA Completeness (HPLC, mass spec, endotoxin, heavy metals, microbial)", weight: "15%" },
+  { variable: "Third-Party Testing Independence", weight: "12%" },
+  { variable: "Cold-Chain Infrastructure", weight: "10%" },
+  { variable: "Lot Traceability", weight: "10%" },
+  { variable: "Volume Capacity at Your Scale", weight: "10%" },
+  { variable: "Reorder Reliability (12-month on-time rate)", weight: "8%" },
+  { variable: "Regulatory History (warning letters, recall history)", weight: "8%" },
+  { variable: "Contract Flexibility (MOQ, exclusivity, quality guarantee)", weight: "7%" },
+];
+
+const exampleVendor = {
+  name: "Pacific Biologics Supply Co. (illustrative)",
+  category: "MSC-Derived Exosomes — IV-Grade",
+  score: "87/100",
+  certs: "FDA-registered facility · cGTP compliant · Dual-lab COA verified · NTA particle-count verified",
+  capacity: "Up to 500 vials/month at 60B particle count",
+  history: "Zero warning letters · Zero recalls · 4-year operating history",
+  posture:
+    "Open to exclusivity windows for accounts above $200K annually · Quality guarantee clause available · Lot reservation rights negotiable at 90-day commit",
+  why: "This vendor is in active growth mode and needs anchor accounts in new geographies. An account committing $150K+ annually with 90-day purchase orders qualifies for distributor-tier pricing. Fit determines access to that tier.",
+};
 
 const process = [
   {
@@ -232,18 +278,6 @@ const testimonials = [
     attr: "VP Operations · BioTech Brand",
   },
 ];
-
-function FuzzyPrice({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="inline-block select-none"
-      style={{ filter: "blur(5px)" }}
-      aria-hidden="true"
-    >
-      {children}
-    </span>
-  );
-}
 
 function Reveal({
   children,
@@ -459,7 +493,7 @@ export default function BioChainSourcingPage() {
                     background: "#fff",
                   }}
                 >
-                  <div className="flex justify-between items-baseline gap-2 mb-1">
+                  <div className="flex justify-between items-baseline gap-2 mb-2">
                     <span
                       className="text-xs uppercase tracking-wider"
                       style={{
@@ -467,7 +501,7 @@ export default function BioChainSourcingPage() {
                         fontFamily: "var(--font-mono)",
                       }}
                     >
-                      Street
+                      Street Price
                     </span>
                     <span
                       className="text-sm font-semibold line-through"
@@ -476,35 +510,18 @@ export default function BioChainSourcingPage() {
                         fontFamily: "var(--font-body)",
                       }}
                     >
-                      <FuzzyPrice>{p.street}</FuzzyPrice>
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-baseline gap-2">
-                    <span
-                      className="text-xs uppercase tracking-wider"
-                      style={{
-                        color: "oklch(0.55 0.02 50)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      RampRate
-                    </span>
-                    <span
-                      className="text-sm font-bold"
-                      style={{ color: gold, fontFamily: "var(--font-body)" }}
-                    >
-                      <FuzzyPrice>{p.rr}</FuzzyPrice>
+                      {p.street}
                     </span>
                   </div>
                   <div
-                    className="mt-2 inline-block text-xs font-semibold px-2 py-0.5 rounded"
+                    className="text-xs font-semibold px-2 py-1.5 rounded text-center"
                     style={{
                       background: "oklch(0.6 0.14 150 / 0.12)",
                       color: "oklch(0.45 0.14 150)",
                       fontFamily: "var(--font-mono)",
                     }}
                   >
-                    <FuzzyPrice>{p.save}</FuzzyPrice>
+                    {p.save}
                   </div>
                 </div>
                 {p.links.length > 0 && (
@@ -541,6 +558,51 @@ export default function BioChainSourcingPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Minimum Account Callout */}
+      <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: gold }}>
+        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <div className="rounded-2xl bg-white p-8 sm:p-10 shadow-lg">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10 mb-6">
+                <div>
+                  <div
+                    className="text-4xl sm:text-5xl font-bold"
+                    style={{ color: gold, fontFamily: "var(--font-display)" }}
+                  >
+                    $50,000
+                  </div>
+                  <div
+                    className="text-xs uppercase tracking-wider mt-1"
+                    style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}
+                  >
+                    Minimum Annual Biologics Spend
+                  </div>
+                </div>
+                <div className="hidden sm:block w-px self-stretch" style={{ background: "oklch(0.9 0.01 80)" }} />
+                <div className="grid grid-cols-2 gap-6 flex-1">
+                  <div>
+                    <div className="text-lg font-bold" style={{ color: "oklch(0.2 0.02 50)", fontFamily: "var(--font-display)" }}>$75K–$2M+</div>
+                    <div className="text-xs uppercase tracking-wider mt-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Typical Client Range</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold" style={{ color: "oklch(0.2 0.02 50)", fontFamily: "var(--font-display)" }}>35–55%</div>
+                    <div className="text-xs uppercase tracking-wider mt-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Avg. First-Year Savings</div>
+                  </div>
+                </div>
+              </div>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+              >
+                BioChain is a professional-grade practice built for established accounts. We require a
+                minimum of $50,000 in annual biologics spend to engage — below that threshold, the savings
+                math doesn&apos;t clear our fee structure. At $50K and above, it compounds dramatically.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -592,7 +654,6 @@ export default function BioChainSourcingPage() {
                   {[
                     "Product",
                     "Street Price",
-                    "RampRate Benchmark",
                     "Typical Saving",
                     "What Else You Get",
                   ].map((h) => (
@@ -614,62 +675,54 @@ export default function BioChainSourcingPage() {
                   {
                     product: "BPC-157 · 5mg vial",
                     street: "$35–$75/vial",
-                    rr: "$12–$22/vial",
-                    save: "38–65%",
+                    save: "38–65%+",
                     extra:
                       "HPLC purity report, lot traceability, cold-chain SLA",
                   },
                   {
                     product: "TB-500 · 5mg vial",
                     street: "$40–$80/vial",
-                    rr: "$14–$26/vial",
-                    save: "45–68%",
+                    save: "45–68%+",
                     extra:
                       "Mass spec, sequence confirmation, research-use docs",
                   },
                   {
                     product: "Semaglutide analog · 10mg research",
                     street: "$280–$650/unit",
-                    rr: "$95–$195/unit",
-                    save: "45–70%",
+                    save: "45–70%+",
                     extra:
                       "Synthesis pathway confirmation, import compliance docs",
                   },
                   {
                     product: "MSC Exosomes · 1B particles",
-                    street: "$800–$3,500/vial",
-                    rr: "$420–$1,200/vial",
-                    save: "30–55%",
+                    street: "$1,200–$3,500/vial",
+                    save: "30–55%+",
                     extra:
                       "NTA particle sizing, endotoxin test, donor consent docs",
                   },
                   {
                     product: "Umbilical Cord MSCs · 5M cells",
                     street: "$2,000–$8,000/unit",
-                    rr: "$1,100–$3,800/unit",
-                    save: "25–50%",
+                    save: "25–50%+",
                     extra:
                       "Viability guarantee, cryopreservation SLA, full donor chain",
                   },
                   {
                     product: "NMN pharmaceutical grade · 1kg",
-                    street: "$4,000–$9,000/kg",
-                    rr: "$1,800–$3,200/kg",
-                    save: "40–60%",
+                    street: "$800–$2,500/kg",
+                    save: "40–60%+",
                     extra: "HPLC purity ≥99%, heavy metals testing",
                   },
                   {
                     product: "NAD+ IV Drip Kit · clinic-grade",
                     street: "$180–$380/kit",
-                    rr: "$80–$140/kit",
-                    save: "45–63%",
+                    save: "45–63%+",
                     extra:
                       "Medical-device-grade consumables, unified supply chain",
                   },
                   {
                     product: "Full BioChain Advisory · ongoing",
                     street: "Standard retainer",
-                    rr: "Performance fee on savings only",
                     save: "300%+ ROI",
                     extra:
                       "SPY Index access, vendor negotiation, contract architecture",
@@ -693,13 +746,7 @@ export default function BioChainSourcingPage() {
                         fontFamily: "var(--font-body)",
                       }}
                     >
-                      <FuzzyPrice>{row.street}</FuzzyPrice>
-                    </td>
-                    <td
-                      className="px-5 py-4 align-top font-semibold"
-                      style={{ color: gold, fontFamily: "var(--font-body)" }}
-                    >
-                      <FuzzyPrice>{row.rr}</FuzzyPrice>
+                      {row.street}
                     </td>
                     <td className="px-5 py-4 align-top">
                       <span
@@ -710,7 +757,7 @@ export default function BioChainSourcingPage() {
                           fontFamily: "var(--font-mono)",
                         }}
                       >
-                        <FuzzyPrice>{row.save}</FuzzyPrice>
+                        {row.save}
                       </span>
                     </td>
                     <td
@@ -729,16 +776,252 @@ export default function BioChainSourcingPage() {
             </div>
           </Reveal>
           <p
-            className="mt-4 text-xs"
+            className="mt-4 text-xs leading-relaxed"
             style={{
               color: "oklch(0.55 0.02 50)",
               fontFamily: "var(--font-mono)",
             }}
           >
-            Indicative pricing based on BioChain SPY Index closed transaction
-            data. Actual pricing varies by volume, specification, and geography.
-            Contact RampRate for a formal audit against your current invoices.
+            Savings percentages reflect BioChain SPY Index closed transaction data. Street prices verified
+            from current retail and direct-channel sources as of Q2 2026. The + on every saving reflects
+            that RampRate&apos;s vendor partnerships frequently produce pricing below published wholesale
+            depending on account fit, volume commitment, and vendor strategic alignment. All accounts
+            require a minimum of $50,000 in annual biologics spend. RampRate does not publish target prices
+            — the sourcing audit produces your actual benchmark.
           </p>
+
+          <Reveal className="mt-14">
+            <div
+              className="rounded-2xl p-8 sm:p-10 border"
+              style={{ borderColor: "oklch(0.88 0.01 80)", background: "#fff" }}
+            >
+              <h3
+                className="text-xl sm:text-2xl font-bold mb-4"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Why Some of Our Clients Pay Less Than Wholesale
+              </h3>
+              <p
+                className="text-sm leading-relaxed mb-6 max-w-3xl"
+                style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+              >
+                Most procurement advisors negotiate against the street price. RampRate negotiates against
+                the vendor&apos;s cost structure. After 24 years of directing volume at the manufacturers
+                and labs that supply the supply chain, we have relationships that exist below the
+                distributor tier entirely. When the fit is right — meaning your account volume,
+                specification consistency, and payment terms align with what a vendor needs to grow — we
+                can structure agreements that put you at or below the price a regional distributor pays.
+                The fit determines the outcome. The sourcing audit determines the fit.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold text-white transition-all shadow-lg"
+                style={{ background: gold, fontFamily: "var(--font-body)" }}
+              >
+                Request Your Sourcing Audit
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Client Profile */}
+      <section className="relative section-warm overflow-hidden py-20 sm:py-28" id="client-profile">
+        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
+        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            Who BioChain Is Built For
+          </span>
+          <h2
+            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            The Accounts That Get Maximum Value From BioChain
+          </h2>
+          <p
+            className="mt-6 text-base leading-relaxed max-w-3xl"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            Not every buyer is the right fit. We do our best work with organizations that have meaningful
+            scale, documented quality requirements, and a commitment to verified sourcing over
+            lowest-price guessing.
+          </p>
+
+          <Reveal className="mt-10">
+            <div className="rounded-xl p-7 border border-black/5 bg-white">
+              <h3 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: gold, fontFamily: "var(--font-mono)" }}>
+                Ideal Client Characteristics
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {clientCharacteristics.map((c) => (
+                  <div key={c} className="flex items-start gap-3">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+                      <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{c}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-6">
+            <div className="flex flex-wrap gap-2">
+              {clientOrgTypes.map((org) => (
+                <span
+                  key={org}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full border"
+                  style={{ borderColor: "oklch(0.85 0.02 80)", color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-mono)" }}
+                >
+                  {org}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-10">
+            <div className="rounded-xl p-7 sm:p-8 border-2" style={{ borderColor: gold, background: "#fff" }}>
+              <span
+                className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-4"
+                style={{ background: goldBg, color: gold, fontFamily: "var(--font-mono)" }}
+              >
+                Illustrative Example
+              </span>
+              <h4 className="text-lg font-bold mb-1" style={{ fontFamily: "var(--font-display)" }}>{exampleClient.account}</h4>
+              <p className="text-xs uppercase tracking-wider mb-5" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>{exampleClient.type}</p>
+              <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Annual Spend at Engagement</div>
+                  <div className="text-sm font-semibold" style={{ fontFamily: "var(--font-body)" }}>{exampleClient.spend}</div>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Primary Categories</div>
+                  <div className="text-sm font-semibold" style={{ fontFamily: "var(--font-body)" }}>{exampleClient.categories}</div>
+                </div>
+              </div>
+              <div className="mb-5">
+                <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Problem</div>
+                <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleClient.problem}</p>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider mb-1" style={{ color: gold, fontFamily: "var(--font-mono)" }}>BioChain Outcome — Year One</div>
+                <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleClient.outcome}</p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Vendor Profile */}
+      <section className="relative section-light overflow-hidden py-20 sm:py-28" id="vendor-profile">
+        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            How Vendor Strength Determines Your Outcome
+          </span>
+          <h2
+            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Not All Vendors Are Equal. Vendor Strength Is Everything.
+          </h2>
+          <p
+            className="mt-6 text-base leading-relaxed max-w-3xl"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            At BioChain, we do not simply find you a cheaper supplier. We evaluate every vendor against a
+            12-variable qualification matrix and score them on Vendor Strength — a composite measure of
+            how much leverage, reliability, and documentation they can deliver to your account. The
+            stronger the vendor&apos;s profile relative to your account size and specification, the better
+            your outcome. And the better the fit between your account and the vendor&apos;s growth
+            objectives, the more likely you are to land below-wholesale terms.
+          </p>
+
+          <Reveal className="mt-10">
+            <div className="overflow-x-auto rounded-xl border" style={{ borderColor: "oklch(0.9 0.01 80)" }}>
+              <table className="w-full text-sm" style={{ borderCollapse: "collapse", minWidth: 480 }}>
+                <thead>
+                  <tr className="border-b-2" style={{ borderColor: "oklch(0.9 0.01 80)" }}>
+                    <th className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide" style={{ color: "oklch(0.5 0.02 50)", fontFamily: "var(--font-mono)" }}>Variable</th>
+                    <th className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide" style={{ color: "oklch(0.5 0.02 50)", fontFamily: "var(--font-mono)" }}>Weight</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {vendorStrengthVariables.map((v, i, arr) => (
+                    <tr key={v.variable} className={i < arr.length - 1 ? "border-b" : ""} style={{ borderColor: "oklch(0.93 0.01 80)" }}>
+                      <td className="px-5 py-3.5 align-top" style={{ fontFamily: "var(--font-body)" }}>{v.variable}</td>
+                      <td className="px-5 py-3.5 align-top font-semibold" style={{ color: gold, fontFamily: "var(--font-body)" }}>{v.weight}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+
+          <div className="grid sm:grid-cols-2 gap-6 mt-6">
+            <Reveal>
+              <div className="rounded-xl p-6 border border-black/5" style={{ background: "oklch(0.97 0.01 80)" }}>
+                <div className="text-2xl font-bold" style={{ color: gold, fontFamily: "var(--font-display)" }}>72/100</div>
+                <div className="text-xs uppercase tracking-wider mt-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Minimum Qualifying Score to Enter the Network</div>
+              </div>
+            </Reveal>
+            <Reveal>
+              <div className="rounded-xl p-6 border border-black/5" style={{ background: "oklch(0.97 0.01 80)" }}>
+                <div className="text-2xl font-bold" style={{ color: gold, fontFamily: "var(--font-display)" }}>81/100</div>
+                <div className="text-xs uppercase tracking-wider mt-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Average Score Across Active BioChain Vendors</div>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal className="mt-10">
+            <div className="rounded-xl p-7 sm:p-8 border-2" style={{ borderColor: gold, background: "oklch(0.97 0.01 80)" }}>
+              <span
+                className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-4"
+                style={{ background: goldBg, color: gold, fontFamily: "var(--font-mono)" }}
+              >
+                Illustrative Example
+              </span>
+              <h4 className="text-lg font-bold mb-1" style={{ fontFamily: "var(--font-display)" }}>{exampleVendor.name}</h4>
+              <p className="text-xs uppercase tracking-wider mb-5" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>{exampleVendor.category}</p>
+              <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Vendor Strength Score</div>
+                  <div className="text-2xl font-bold" style={{ color: gold, fontFamily: "var(--font-display)" }}>{exampleVendor.score}</div>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Capacity</div>
+                  <div className="text-sm font-semibold" style={{ fontFamily: "var(--font-body)" }}>{exampleVendor.capacity}</div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Certifications</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleVendor.certs}</p>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Regulatory History</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleVendor.history}</p>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-mono)" }}>Contract Posture</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleVendor.posture}</p>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wider mb-1" style={{ color: gold, fontFamily: "var(--font-mono)" }}>Why This Vendor Creates Below-Wholesale Opportunity</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}>{exampleVendor.why}</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
