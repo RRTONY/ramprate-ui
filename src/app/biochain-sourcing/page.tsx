@@ -233,6 +233,18 @@ const testimonials = [
   },
 ];
 
+function FuzzyPrice({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="inline-block select-none"
+      style={{ filter: "blur(5px)" }}
+      aria-hidden="true"
+    >
+      {children}
+    </span>
+  );
+}
+
 function Reveal({
   children,
   className,
@@ -395,10 +407,10 @@ export default function BioChainSourcingPage() {
               fontFamily: "var(--font-body)",
             }}
           >
-            Street prices reflect what clinics and brands currently pay through
-            retail channels. RampRate benchmarked pricing reflects what
-            comparable buyers paid in closed transactions over the last 90 days
-            - documented, auditable, and negotiated on your behalf.
+            We benchmark every category against closed transactions from the
+            last 90 days - documented, auditable, and negotiated on your
+            behalf. We're a sourcing partner, not a price list: exact figures
+            are shared once we understand your fit, not before.
           </p>
         </div>
       </section>
@@ -464,7 +476,7 @@ export default function BioChainSourcingPage() {
                         fontFamily: "var(--font-body)",
                       }}
                     >
-                      {p.street}
+                      <FuzzyPrice>{p.street}</FuzzyPrice>
                     </span>
                   </div>
                   <div className="flex justify-between items-baseline gap-2">
@@ -481,7 +493,7 @@ export default function BioChainSourcingPage() {
                       className="text-sm font-bold"
                       style={{ color: gold, fontFamily: "var(--font-body)" }}
                     >
-                      {p.rr}
+                      <FuzzyPrice>{p.rr}</FuzzyPrice>
                     </span>
                   </div>
                   <div
@@ -492,7 +504,7 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-mono)",
                     }}
                   >
-                    {p.save}
+                    <FuzzyPrice>{p.save}</FuzzyPrice>
                   </div>
                 </div>
                 {p.links.length > 0 && (
@@ -548,7 +560,7 @@ export default function BioChainSourcingPage() {
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            What the Market Charges vs. What You Should Pay
+            Verified Market Intelligence, By Category
           </h2>
           <p
             className="mt-6 text-base leading-relaxed max-w-3xl mb-10"
@@ -559,7 +571,9 @@ export default function BioChainSourcingPage() {
           >
             Based on BioChain SPY Index closed transaction data from the last 90
             days. Quality-adjusted only - if the cheaper option has inferior
-            documentation, it is not the benchmark.
+            documentation, it is not the benchmark. Exact figures are shared
+            once we understand your fit - we're a sourcing partner, not a
+            price list.
           </p>
           <Reveal>
             <div
@@ -679,13 +693,13 @@ export default function BioChainSourcingPage() {
                         fontFamily: "var(--font-body)",
                       }}
                     >
-                      {row.street}
+                      <FuzzyPrice>{row.street}</FuzzyPrice>
                     </td>
                     <td
                       className="px-5 py-4 align-top font-semibold"
                       style={{ color: gold, fontFamily: "var(--font-body)" }}
                     >
-                      {row.rr}
+                      <FuzzyPrice>{row.rr}</FuzzyPrice>
                     </td>
                     <td className="px-5 py-4 align-top">
                       <span
@@ -696,7 +710,7 @@ export default function BioChainSourcingPage() {
                           fontFamily: "var(--font-mono)",
                         }}
                       >
-                        {row.save}
+                        <FuzzyPrice>{row.save}</FuzzyPrice>
                       </span>
                     </td>
                     <td
