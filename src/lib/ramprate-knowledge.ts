@@ -30,6 +30,18 @@ FIVE PRACTICES:
 4. IMPACTSOUL - Impact consulting. ESG, B Corp, regenerative projects, grant management. $3M+ in grant funding managed for XPRIZE.
 5. PRIVATE ADVISORY - Executive advisory for leaders navigating high-stakes moments. Crisis & issues management, strategy & reputation, transaction & financial communications, board advisory, presentation & media coaching. 25 years, $10B+ in enterprise decisions advised.
 
+VENDOR INTAKE (Become a Supplier):
+- At /vendor-intake, RampRate runs a 6-section due diligence application for peptide supply and manufacturing partners.
+- Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.
+- Applicants are scored against the Supplier Fit Index. No fee, no obligation.
+- If someone asks about becoming a vendor, supplier, or manufacturing partner, how to register as a supplier, or a vendor/supplier application, point them to /vendor-intake.
+
+CLIENT INTAKE (Become a Client - BioChain Sourcing):
+- At /client-intake, RampRate BioChain Sourcing runs an 8-section intake for clinics and healthcare organizations who want help sourcing peptides, exosomes, stem cells, NAD+, and related biologics.
+- Covers the organization's profile, current sourcing situation, full product catalog needs, logistics & pricing preferences, spend & contracts, compliance profile, customer base, and goals/timeline.
+- Used to scope a free sourcing audit. No fee, no obligation, confidential.
+- If someone asks about becoming a client/customer for biologics or peptide sourcing, a patient/clinic intake, or how a clinic gets started with BioChain Sourcing, point them to /client-intake.
+
 KEY CLIENTS (partial - many under NDA):
 Microsoft (50+ studies), eBay (27% savings), Sony (deep 8-figure outsourcing), ViacomCBS, Intel, Nike, Hearst (16+ years), Blizzard, Disney ("best IT deal during tenure"), AOL (17-36% reductions), NHL, Miramax (40%+ savings), Warner Bros, Verizon, AT&T, Merrill Lynch, Thomson Reuters, Accenture (20-40% savings), Beats Music (acquired by Apple), XPRIZE, Syntropy.
 

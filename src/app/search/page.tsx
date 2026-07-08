@@ -5,6 +5,7 @@ import { searchPostsQuery } from "@/lib/sanity/queries";
 import SearchInput from "@/components/shared/SearchInput";
 import SanityImage from "@/components/shared/SanityImage";
 import JsonLd from "@/components/shared/JsonLd";
+import { matchSitePages, type SitePage } from "@/lib/site-pages";
 
 interface SanityPost {
   _id: string;
@@ -31,8 +32,8 @@ export async function generateMetadata({
   return {
     title: q ? `Results for "${q}" | RampRate Search` : "Search | RampRate",
     description: q
-      ? `Search results for "${q}" - browse RampRate blog posts, insights, and articles on enterprise IT sourcing, cloud, and infrastructure.`
-      : "Search RampRate - find blog posts, articles, and insights on enterprise IT sourcing, cloud, and infrastructure advisory.",
+      ? `Search results for "${q}" - browse RampRate pages, blog posts, and insights on enterprise IT sourcing, cloud, and infrastructure.`
+      : "Search RampRate - find pages, blog posts, and insights on enterprise IT sourcing, cloud, and infrastructure advisory.",
     alternates: {
       canonical: q
         ? `https://ramprate.com/search?q=${encodeURIComponent(q)}`
@@ -130,7 +131,8 @@ export default async function SearchPage({
 
   const blogPosts = allPosts.filter((p) => p.section !== "thinking");
   const thinkingPosts = allPosts.filter((p) => p.section === "thinking");
-  const totalCount = allPosts.length;
+  const pageMatches = q ? matchSitePages(q, 6) : [];
+  const totalCount = allPosts.length + pageMatches.length;
 
   const searchJsonLd = {
     "@context": "https://schema.org",
@@ -202,6 +204,31 @@ export default async function SearchPage({
         {!q && <EmptyQuery />}
         {q && totalCount === 0 && <NoResults query={q} />}
 
+        {/* Pages */}
+        {pageMatches.length > 0 && (
+          <section className="mb-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2
+                className="text-lg sm:text-xl font-bold text-white"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Pages
+                <span
+                  className="ml-2 text-sm font-normal"
+                  style={{ color: "rgba(255,255,255,0.35)" }}
+                >
+                  ({pageMatches.length})
+                </span>
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pageMatches.map((page) => (
+                <SearchPageCard key={page.path} page={page} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Blog Posts */}
         {blogPosts.length > 0 && (
           <section className="mb-16">
@@ -271,6 +298,44 @@ export default async function SearchPage({
         )}
       </div>
     </div>
+  );
+}
+
+/* ── Card for a matched static page (not a Sanity post) ── */
+function SearchPageCard({ page }: { page: SitePage }) {
+  return (
+    <Link
+      href={page.path}
+      className="block rounded-xl p-5 sm:p-6 transition-all duration-300 hover:translate-y-[-2px]"
+      style={{
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
+      <span
+        className="inline-block text-[9px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full mb-3"
+        style={{
+          background: "rgba(212,168,67,0.10)",
+          color: "var(--gold)",
+          border: "1px solid rgba(212,168,67,0.18)",
+          fontFamily: "var(--font-mono)",
+        }}
+      >
+        {page.type === "practice" ? "Practice" : "Page"}
+      </span>
+      <h3
+        className="text-base font-bold text-white mb-2 leading-snug hover:opacity-80 transition-opacity"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {page.title}
+      </h3>
+      <p
+        className="text-sm leading-relaxed"
+        style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-body)" }}
+      >
+        {page.description}
+      </p>
+    </Link>
   );
 }
 
@@ -473,8 +538,8 @@ function EmptyQuery() {
           fontFamily: "var(--font-body)",
         }}
       >
-        Search blog posts, articles, and insights on enterprise IT sourcing,
-        cloud infrastructure, Web3, and emerging technology.
+        Search pages, blog posts, and insights across RampRate - enterprise IT
+        sourcing, cloud infrastructure, Web3, BioChain Sourcing, and more.
       </p>
       <div className="flex flex-wrap gap-2.5 justify-center">
         {suggested.map((term) => (
