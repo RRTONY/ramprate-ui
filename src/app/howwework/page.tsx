@@ -4,7 +4,7 @@ import CtaSection from '@/components/sections/CtaSection'
 import HowWeWorkTabs from '@/components/sections/HowWeWorkTabs'
 
 export const metadata: Metadata = {
-  title: 'How We Work | RampRate',
+  title: 'How We Work',
   description:
     "RampRate's engagement model: exclusive mandates, one-party fees, and fully transparent deal structure. 25 years, $10B+ in decisions structured, 250+ enterprise clients.",
   keywords: [

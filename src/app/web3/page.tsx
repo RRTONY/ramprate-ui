@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Stratum - Web3 & Enterprise Blockchain Advisory | RampRate",
+  title: "Stratum - Web3 & Enterprise Blockchain Advisory",
   description:
     "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
   keywords: [

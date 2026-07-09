@@ -4,7 +4,7 @@ import Link from "next/link";
 import CtaSection from "@/components/sections/CtaSection";
 
 export const metadata: Metadata = {
-  title: "Service Provider Intelligence Index (SPY Index) | RampRate",
+  title: "Service Provider Intelligence Index (SPY Index)",
   description:
     "The first platform for IT sourcing decisions & planning. Supplier-neutral analysis across 350+ suppliers, 80 countries, 315 variables. 99%+ deal success rate. 23.8% average savings.",
   keywords: [

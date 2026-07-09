@@ -4,7 +4,7 @@ import Link from "next/link";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Careers | RampRate - Work With Principals, Not Layers",
+  title: "Careers - Work With Principals, Not Layers",
   description:
     "25 years. 250+ global brands. One senior team. No staffing pyramid. No middlemen. Just principals executing end-to-end. Join the coalition.",
   keywords: ["RampRate careers", "advisory firm jobs", "IT sourcing careers"],

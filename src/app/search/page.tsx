@@ -30,7 +30,7 @@ export async function generateMetadata({
   const q = sp.q?.trim() || "";
 
   return {
-    title: q ? `Results for "${q}" | RampRate Search` : "Search | RampRate",
+    title: q ? `Results for "${q}"` : "Search",
     description: q
       ? `Search results for "${q}" - browse RampRate pages, blog posts, and insights on enterprise IT sourcing, cloud, and infrastructure.`
       : "Search RampRate - find pages, blog posts, and insights on enterprise IT sourcing, cloud, and infrastructure advisory.",

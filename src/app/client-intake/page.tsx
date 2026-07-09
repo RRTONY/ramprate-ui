@@ -3,7 +3,7 @@ import ClientIntakeForm from "@/components/biochain/ClientIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/client-intake-fields";
 
 export const metadata: Metadata = {
-  title: "Client Intake Application - BioChain Sourcing | RampRate",
+  title: "Client Intake Application - BioChain Sourcing",
   description: `RampRate BioChain Sourcing's 8-section, ${TOTAL_FIELD_COUNT}-field client intake. Covers your organization, current sourcing, full product catalog, logistics & pricing, spend, compliance profile, customers, and goals - so we can scope your sourcing audit.`,
   keywords: [
     "client intake",

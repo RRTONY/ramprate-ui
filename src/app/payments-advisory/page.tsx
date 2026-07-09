@@ -4,7 +4,7 @@ import Link from "next/link";
 const gold = "oklch(0.52 0.12 70)";
 
 export const metadata: Metadata = {
-  title: "Payments Advisory - RFP Authorship & Processor Negotiation | RampRate",
+  title: "Payments Advisory - RFP Authorship & Processor Negotiation",
   description:
     "RampRate writes your payment processing RFP, shops it to 25+ vetted processors, and negotiates the contract on your behalf. For merchants processing $1M+ annually.",
   keywords: [

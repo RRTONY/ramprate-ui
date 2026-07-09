@@ -6,7 +6,7 @@ import JsonLd, {
 } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Expertise | RampRate",
+  title: "Expertise",
   description:
     "Five practices. One mission: transparency, skin in the game, and principals who execute.",
   keywords: [

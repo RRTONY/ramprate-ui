@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | RampRate",
+  title: "Terms of Service",
   description: "Terms governing use of the RampRate website.",
   keywords: [
     "terms of service",

@@ -6,7 +6,7 @@ import {toTelHref} from '@/lib/utils'
 import ContactForm from '@/components/sections/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact | RampRate',
+  title: 'Contact',
   description: 'Start a conversation with RampRate. The first conversation is always free.',
   keywords: [
     'contact RampRate',

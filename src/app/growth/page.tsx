@@ -2,8 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital | RampRate",
+  title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
   description:
     "Anchor clients, advisors, capital, impact, strategy, and dispute resolution - all aligned to your vision. For Founders & Impactpreneurs.",
   keywords: [

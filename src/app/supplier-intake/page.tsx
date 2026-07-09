@@ -3,7 +3,7 @@ import SupplierIntakeForm from "@/components/supplier/SupplierIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 
 export const metadata: Metadata = {
-  title: "Supplier Intake - Peptide Supply Partner Application | RampRate",
+  title: "Supplier Intake - Peptide Supply Partner Application",
   description: `RampRate's 6-section, ${TOTAL_FIELD_COUNT}-field due diligence form for peptide supply partners. Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.`,
   keywords: [
     "supplier",

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ImpactSoul - Tokenize Assets to Rally Impact Movements | RampRate",
+  title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
   description:
     "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
   keywords: [

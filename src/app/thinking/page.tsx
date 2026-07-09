@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Thinking - 25 Years of Perspectives | RampRate",
+  title: "Thinking - 25 Years of Perspectives",
   description:
     "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on IT infrastructure, blockchain, and enterprise strategy.",
   keywords: [

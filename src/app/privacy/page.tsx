@@ -2,7 +2,7 @@ import type {Metadata} from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | RampRate',
+  title: 'Privacy Policy',
   description: 'How RampRate handles your data. Privacy policy for ramprate.com.',
   keywords: [
     'privacy policy',

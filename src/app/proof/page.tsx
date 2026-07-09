@@ -16,7 +16,7 @@ import ProofClient, {
 } from "./ProofClient";
 
 export const metadata: Metadata = {
-  title: "Proof - Real Clients, Real Results | RampRate",
+  title: "Proof - Real Clients, Real Results",
   description:
     "24 years of trajectory-changing results. Fortune 500 case studies, client testimonials, and the data behind our 300%+ ROI guarantee.",
   keywords: [

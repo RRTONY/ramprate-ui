@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Values - Powering Purpose-driven Innovation | RampRate",
+  title: "Values - Powering Purpose-driven Innovation",
   description:
     "We build an ecosystem of impact-preneurs and trailblazers powered by opportunities, resources, innovation and human spirit.",
   keywords: [

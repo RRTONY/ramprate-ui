@@ -33,7 +33,7 @@ export const revalidate = 60;
 const POSTS_PER_PAGE = 9;
 
 export const metadata: Metadata = {
-  title: "Blog | RampRate - IT Sourcing & Infrastructure Insights",
+  title: "Blog - IT Sourcing & Infrastructure Insights",
   description:
     "Expert insights on enterprise IT sourcing, cloud optimization, data center procurement, network strategy, and emerging technology from the RampRate advisory team.",
   keywords: [

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PaymentsIntakeForm from "@/components/payments/PaymentsIntakeForm";
 
 export const metadata: Metadata = {
-  title: "Payments Advisory Client Intake | RampRate",
+  title: "Payments Advisory Client Intake",
   description:
     "7-section intake for merchants processing $1M+ annually. RampRate authors your payment processing RFP, shops it to 25+ vetted processors, and negotiates on your behalf.",
 };

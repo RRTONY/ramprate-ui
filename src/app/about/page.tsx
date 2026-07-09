@@ -10,7 +10,7 @@ import {
 import { urlFor } from "@/lib/sanity/image";
 
 export const metadata: Metadata = {
-  title: "About | RampRate",
+  title: "About",
   description:
     "RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.",
   keywords: [
