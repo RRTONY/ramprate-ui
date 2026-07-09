@@ -495,12 +495,18 @@ function SearchPostCard({
 /* ── Empty state: no query entered ── */
 function EmptyQuery() {
   const suggested = [
-    "Cloud optimization",
-    "Data center",
-    "IT sourcing",
+    "IT Sourcing",
+    "Syzygy",
     "Web3",
-    "B Corp",
+    "ImpactSoul",
+    "Private Advisory",
+    "BioChain Sourcing",
+    "Payments Advisory",
+    "Become a Supplier",
+    "Client Intake",
     "SPY Index",
+    "B Corp",
+    "Data Center",
   ];
   return (
     <div className="flex flex-col items-center justify-center py-20 sm:py-28 text-center px-4">
