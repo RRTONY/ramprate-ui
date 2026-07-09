@@ -42,13 +42,13 @@ export const SITE_PAGES: SitePage[] = [
       "Impact consulting - ESG, B Corp, regenerative projects, and grant management for NGOs and mission-driven organizations.",
   },
   {
-    title: "Private Advisory - Executive Advisory",
+    title: "Private Advisory - Because Some Challenges Require More Than an Advisor",
     path: "/private-advisory",
     type: "practice",
     keywords:
-      "crisis management reputation strategy board advisory transaction communications executive media coaching",
+      "dispute resolution specialist sourcing coordination equity dispute creditor claim discovery windfall asset protection portfolio remediation litigation support squeezed out operator slow walked creditor protected principal mixed ledger principal",
     description:
-      "Executive advisory for high-stakes moments - crisis management, reputation strategy, board advisory, and media coaching.",
+      "We source, vet, and coordinate the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
   },
   {
     title: "Supplier Intake - Become a Supplier",
@@ -90,7 +90,7 @@ export const SITE_PAGES: SitePage[] = [
     path: "/expertise",
     type: "page",
     keywords:
-      "expertise practices services capabilities what we do five practices overview RampRate practices enterprise IT sourcing growth strategy advisory Web3 blockchain advisory impact consulting private advisory executive crisis management",
+      "expertise practices services capabilities what we do five practices overview RampRate practices enterprise IT sourcing growth strategy advisory Web3 blockchain advisory impact consulting private advisory dispute resolution",
     description:
       "Five practices. One mission: transparency, skin in the game, and principals who execute.",
   },

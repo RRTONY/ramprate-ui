@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Web3 blockchain advisory",
     "impact consulting",
     "private advisory",
-    "executive crisis management",
+    "dispute resolution advisory",
   ],
   alternates: { canonical: "/expertise" },
 };
@@ -57,7 +57,7 @@ const practices = [
   {
     name: "Private Advisory",
     tagline: "Because Some Challenges Require More Than an Advisor",
-    desc: "Crisis management, strategy and reputation, transaction communications, and board advisory for leaders navigating moments that matter most. 25 years and $10B+ in enterprise decisions.",
+    desc: "Sourcing and coordinating the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, and asset protection. 25 years and $10B+ in enterprise decisions.",
     color: "oklch(0.52 0.12 70)",
     href: "/private-advisory",
     stats: ["25 Years", "$10B+ Advised", "B Corp Certified"],

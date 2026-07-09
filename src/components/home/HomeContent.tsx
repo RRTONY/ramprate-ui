@@ -204,9 +204,9 @@ const brands = [
     since: "Since 2000",
     audience: "Executives & Boards",
     description:
-      "Crisis management, reputation strategy, and transaction communications for leaders navigating moments that matter most.",
+      "Sourcing and coordinating the legal and financial specialists high-stakes disputes require, for leaders navigating moments that matter most.",
     keyValue: "25 years · $10B+ advised · B Corp Certified",
-    compensation: "Retainer + scope-based engagement",
+    compensation: "Success fee, retainer, or escrow - agreed upfront",
     commitment: "Principals only - no junior hand-off",
     href: "/private-advisory",
     Icon: Shield,
