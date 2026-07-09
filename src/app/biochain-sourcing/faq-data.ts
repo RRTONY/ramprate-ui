@@ -36,6 +36,6 @@ export const faqs = [
     num: "06",
     question: "How is this different from just going direct to a supplier?",
     answer:
-      "Going direct gives you one supplier’s price and one supplier’s documentation. RampRate gives you the market - what our vetted network charges, what independent labs confirm, and what comparable buyers paid recently. We also build multi-vendor architecture so a single supplier backlog does not shut down your operation, and we negotiate on your behalf.",
+      "Going direct gives you one supplier’s price and one supplier’s documentation. RampRate gives you the market - what our vetted network charges, what independent labs confirm, and what comparable buyers paid recently. We also build multi-supplier architecture so a single supplier backlog does not shut down your operation, and we negotiate on your behalf.",
   },
 ];

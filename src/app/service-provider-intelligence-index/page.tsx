@@ -6,7 +6,15 @@ import CtaSection from "@/components/sections/CtaSection";
 export const metadata: Metadata = {
   title: "Service Provider Intelligence Index (SPY Index) | RampRate",
   description:
-    "The first platform for IT sourcing decisions & planning. Vendor-neutral analysis across 350+ vendors, 80 countries, 315 variables. 99%+ deal success rate. 23.8% average savings.",
+    "The first platform for IT sourcing decisions & planning. Supplier-neutral analysis across 350+ suppliers, 80 countries, 315 variables. 99%+ deal success rate. 23.8% average savings.",
+  keywords: [
+    "SPY Index",
+    "service provider intelligence index",
+    "supplier analysis",
+    "IT sourcing decisions",
+    "supplier neutral benchmarking",
+    "sourcing intelligence platform",
+  ],
 };
 
 const heroStats = [
@@ -67,7 +75,7 @@ const dataPillars = [
     ),
     title: "Analyst Research View",
     points: [
-      "Industry trends & best-practice vendor ratings",
+      "Industry trends & best-practice supplier ratings",
       "Gartner, IDC, Telegeography, 451 Research inputs",
     ],
   },
@@ -89,7 +97,7 @@ const dataPillars = [
     title: "Supplier Capabilities",
     points: [
       "Services data, list prices & actual quotes",
-      "Pre-loaded database of 1,000+ vendors",
+      "Pre-loaded database of 1,000+ suppliers",
     ],
   },
   {
@@ -131,14 +139,14 @@ const dataPillars = [
     ),
     title: "Cultural Compatibility",
     points: [
-      "Cultural fit matching of clients and vendors",
+      "Cultural fit matching of clients and suppliers",
       "Alignment on CSR & energy efficiency criteria",
     ],
   },
 ];
 
 const scaleStats = [
-  { value: "350+", label: "Vendors Tracked" },
+  { value: "350+", label: "Suppliers Tracked" },
   { value: "80", label: "Countries Covered" },
   { value: "300", label: "Metro Regions" },
   { value: "20", label: "IT Service Types" },
@@ -148,8 +156,8 @@ const scaleStats = [
 
 const outputItems = [
   "Real, actionable market price for a given set of services",
-  "Vendor capability rating matched to your exact requirements",
-  "Near real-time intelligence on 350+ vendors worldwide",
+  "Supplier capability rating matched to your exact requirements",
+  "Near real-time intelligence on 350+ suppliers worldwide",
   "Coverage across 80 countries and 300 metro regions",
   "20 different IT service types analysed simultaneously",
   "5-year forward-looking market projections included",
@@ -212,8 +220,8 @@ export default function SpiiPage() {
             style={{ color: "rgba(255,255,255,0.6)" }}
           >
             The SPY Index™ easily and quickly matches buyer needs with IT
-            service providers in a vendor-neutral analysis - taking the
-            guesswork out of vendor selection and contract negotiations.
+            service providers in a supplier-neutral analysis - taking the
+            guesswork out of supplier selection and contract negotiations.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
@@ -279,7 +287,7 @@ export default function SpiiPage() {
         </div>
       </section>
 
-      {/* ── PLATFORM IMAGE 1 - VENDOR MATCHING ── */}
+      {/* ── PLATFORM IMAGE 1 - SUPPLIER MATCHING ── */}
       <section
         className="py-20 px-5 sm:px-8"
         style={{ background: "oklch(0.14 0.01 250)" }}
@@ -291,7 +299,7 @@ export default function SpiiPage() {
                 className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
                 style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
               >
-                Vendor-Neutral Matching Engine
+                Supplier-Neutral Matching Engine
               </p>
               <h2
                 className="font-bold text-white mb-5 leading-tight"
@@ -307,7 +315,7 @@ export default function SpiiPage() {
                 style={{ color: "rgba(255,255,255,0.6)" }}
               >
                 The SPY Index™ easily and quickly matches buyer needs with IT
-                service providers in a vendor-neutral analysis. Configurable
+                service providers in a supplier-neutral analysis. Configurable
                 buying criteria matching ensures results are tailored to your
                 exact operational and commercial requirements.
               </p>
@@ -323,10 +331,10 @@ export default function SpiiPage() {
 
               <div className="mt-8 flex flex-col gap-3">
                 {[
-                  "Takes the guesswork out of vendor selection",
-                  "Matches vendor capabilities to your exact requirements",
+                  "Takes the guesswork out of supplier selection",
+                  "Matches supplier capabilities to your exact requirements",
                   "Delivers real, actionable market pricing",
-                  "Vendor ratings based on how well services match requirements",
+                  "Supplier ratings based on how well services match requirements",
                 ].map((pt) => (
                   <div
                     key={pt}
@@ -363,7 +371,7 @@ export default function SpiiPage() {
             >
               <Image
                 src="/images/spii/spii-platform-1.png"
-                alt="SPY Index Platform - Vendor-Neutral Matching Engine"
+                alt="SPY Index Platform - Supplier-Neutral Matching Engine"
                 width={1024}
                 height={763}
                 className="w-full h-auto"
@@ -671,7 +679,7 @@ export default function SpiiPage() {
                 style={{ color: "rgba(255,255,255,0.6)" }}
               >
                 This massive database cross-references your highly configurable
-                buying criteria against a comprehensive database of IT vendor
+                buying criteria against a comprehensive database of IT supplier
                 and market information - for now and for the next 5 years.
               </p>
               <p
@@ -698,7 +706,7 @@ export default function SpiiPage() {
               {[
                 {
                   title: "New Procurement",
-                  desc: "First-time sourcing for a service category? We benchmark against 150K+ actual quotes to set the right target price before you ever talk to a vendor.",
+                  desc: "First-time sourcing for a service category? We benchmark against 150K+ actual quotes to set the right target price before you ever talk to a supplier.",
                 },
                 {
                   title: "Mid-Contract Negotiations",
@@ -709,8 +717,8 @@ export default function SpiiPage() {
                   desc: "Renewals are your highest-leverage moment. The SPY Index shows you what the market looks like today - not when you signed 3 years ago.",
                 },
                 {
-                  title: "Vendor Consolidation",
-                  desc: "Vendor sprawl is the silent budget killer. We identify consolidation opportunities that save 20–35% without breaking production.",
+                  title: "Supplier Consolidation",
+                  desc: "Supplier sprawl is the silent budget killer. We identify consolidation opportunities that save 20–35% without breaking production.",
                 },
               ].map((item) => (
                 <div key={item.title} className="glass-card p-5">
@@ -736,7 +744,7 @@ export default function SpiiPage() {
       {/* ── CTA ── */}
       <CtaSection
         heading="Ready to Leverage the SPY Index?"
-        body="Let us match your requirements against our full vendor database and deliver a real, actionable market price - in days, not months."
+        body="Let us match your requirements against our full supplier database and deliver a real, actionable market price - in days, not months."
         buttonText="Start a Conversation"
         buttonLink="/contact"
       />

@@ -81,7 +81,7 @@ const PAIN_POINTS_OPTIONS = [
   "Inconsistent product quality",
   "Supply disruptions or stockouts",
   "Regulatory uncertainty",
-  "Too many vendors to manage",
+  "Too many suppliers to manage",
   "Lack of COA / documentation",
   "Compliance concerns",
   "No time to find better suppliers",
@@ -512,7 +512,7 @@ const PRIMARY_GOAL_OPTIONS = [
   "Reduce cost of current supply — same products, better pricing",
   "Improve product quality and consistency",
   "Find new suppliers for products I can't currently source",
-  "Consolidate vendors — too many relationships to manage",
+  "Consolidate suppliers — too many relationships to manage",
   "Add new product categories to my protocol menu",
   "Ensure regulatory compliance before scaling",
   "Build a verified, auditable supply chain",
@@ -994,7 +994,7 @@ function Step5({ formik }: StepProps) {
       <TextField formik={formik} name="spend_nad" label="NAD+ / Longevity — Monthly Est." placeholder="e.g. $3,000" />
 
       <Divider label="Contract Status" />
-      <SelectField formik={formik} name="contract_status" label="Do You Have Long-Term Supply Contracts in Place With Current Vendors?" options={CONTRACT_STATUS_OPTIONS} full />
+      <SelectField formik={formik} name="contract_status" label="Do You Have Long-Term Supply Contracts in Place With Current Suppliers?" options={CONTRACT_STATUS_OPTIONS} full />
     </div>
   );
 }

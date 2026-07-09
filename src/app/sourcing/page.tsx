@@ -29,8 +29,8 @@ const capabilities = [
   },
   {
     title: "Benchmark Pricing Intelligence",
-    desc: "The SPY Index holds 24 years of transaction data - 150K+ quotes across 350+ vendors in 80 countries. We don't estimate. We show you what the last 50 buyers actually paid for the same configuration in the same metro.",
-    tag: "150K+ quotes · 350+ vendors · 80 countries",
+    desc: "The SPY Index holds 24 years of transaction data - 150K+ quotes across 350+ suppliers in 80 countries. We don't estimate. We show you what the last 50 buyers actually paid for the same configuration in the same metro.",
+    tag: "150K+ quotes · 350+ suppliers · 80 countries",
     icon: (
       <svg
         width="22"
@@ -142,7 +142,7 @@ const spyPillars = [
   },
   {
     title: "Supplier Capabilities",
-    desc: "1,000+ pre-loaded vendors with detailed capability profiles.",
+    desc: "1,000+ pre-loaded suppliers with detailed capability profiles.",
   },
   {
     title: "Customer Experience",
@@ -150,7 +150,7 @@ const spyPillars = [
   },
   {
     title: "Cultural Compatibility",
-    desc: "CSR alignment, energy efficiency matching, and values-based vendor scoring.",
+    desc: "CSR alignment, energy efficiency matching, and values-based supplier scoring.",
   },
 ];
 
@@ -803,7 +803,7 @@ export default function SourcingPage() {
               <div className="mt-8 grid grid-cols-3 gap-4">
                 {[
                   { value: "150K+", label: "Quotes Analyzed" },
-                  { value: "350+", label: "Vendors Tracked" },
+                  { value: "350+", label: "Suppliers Tracked" },
                   { value: "80", label: "Countries" },
                   { value: "300", label: "Metro Regions" },
                   { value: "20", label: "IT Service Types" },

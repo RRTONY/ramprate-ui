@@ -263,6 +263,8 @@
 /impact                     /impactsoul                  301
 /biochain/                  /biochain-sourcing           301
 /biochain                   /biochain-sourcing           301
+/vendor-intake/             /supplier-intake              301
+/vendor-intake              /supplier-intake              301
 
 # ===== WORDPRESS SYSTEM REDIRECTS =====
 /wp-admin/                  /                            301

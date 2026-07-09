@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: "Payments Advisory - RFP Authorship & Processor Negotiation | RampRate",
   description:
     "RampRate writes your payment processing RFP, shops it to 25+ vetted processors, and negotiates the contract on your behalf. For merchants processing $1M+ annually.",
+  keywords: [
+    "payments advisory",
+    "payment processing RFP",
+    "merchant processor negotiation",
+    "credit card processing fees",
+    "interchange",
+    "payment gateway",
+    "processor RFP",
+    "merchant services",
+  ],
 };
 
 const PROCESS_STEPS = [

@@ -19,7 +19,7 @@ import {
   Scale,
   FolderOpen,
 } from "lucide-react";
-import { REQUIRED_FIELD_COUNT } from "@/lib/vendor-intake-fields";
+import { REQUIRED_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 
 const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 const ta = `${inp} resize-y min-h-[110px]`;
@@ -1534,7 +1534,7 @@ function StepBar({
   );
 }
 
-export default function VendorIntakeForm() {
+export default function SupplierIntakeForm() {
   const [active, setActive] = useState(0);
   const [pricingRows, setPricingRows] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -1575,7 +1575,7 @@ export default function VendorIntakeForm() {
           }
         }
 
-        const res = await fetch("/api/vendor-intake", {
+        const res = await fetch("/api/supplier-intake", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1641,7 +1641,7 @@ export default function VendorIntakeForm() {
             fontFamily: "var(--font-body)",
           }}
         >
-          Thank you for submitting your vendor profile. We will review your
+          Thank you for submitting your supplier profile. We will review your
           application against active buyer mandates and contact you if there is
           a fit. No response means no current match - not a rejection.
         </p>
@@ -1665,7 +1665,7 @@ export default function VendorIntakeForm() {
 
   return (
     <form
-      name="vendor-intake"
+      name="supplier-intake"
       onSubmit={formik.handleSubmit}
       style={{ fontFamily: "var(--font-body)" }}
     >

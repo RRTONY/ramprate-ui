@@ -132,7 +132,7 @@ const products = [
   {
     slug: "custom-formulation",
     title: "Custom Formulation & White-Label",
-    desc: "Concept-to-finished-product: custom synthesis, proprietary blends, private-label manufacturing. Every vendor negotiation includes MOQ, exclusivity, and quality-guarantee clauses.",
+    desc: "Concept-to-finished-product: custom synthesis, proprietary blends, private-label manufacturing. Every supplier negotiation includes MOQ, exclusivity, and quality-guarantee clauses.",
     meta: "Custom Synthesis · White Label · OEM",
     street: "Varies by spec",
     save: "Typical BioChain Saving: 45–70%+",
@@ -153,7 +153,7 @@ const clientCharacteristics = [
   "Annual biologics spend of $50,000 minimum - sweet spot $150,000–$2M+",
   "Currently purchasing through retail or distribution channels and suspect they are overpaying",
   "Have experienced quality inconsistency or documentation gaps from current suppliers",
-  "Scaling fast enough that vendor relationships need to be structured, not transactional",
+  "Scaling fast enough that supplier relationships need to be structured, not transactional",
   "Value verified provenance and chain-of-custody as much as price",
   "Have a purchasing decision-maker who can move in 30–60 days",
 ];
@@ -176,10 +176,10 @@ const exampleClient = {
   problem:
     "Purchasing through two distributors and one direct manufacturer. No unified COA standard. Exosome particle counts unverified. NMN sourced at retail pricing with no volume commitment.",
   outcome:
-    "41% average reduction across benchmarked categories. Vendor consolidation from 3 to 1 primary. First-time exclusivity window on top peptide SKU. Elimination of 2 documentation gaps carrying regulatory exposure.",
+    "41% average reduction across benchmarked categories. Supplier consolidation from 3 to 1 primary. First-time exclusivity window on top peptide SKU. Elimination of 2 documentation gaps carrying regulatory exposure.",
 };
 
-const vendorStrengthVariables = [
+const supplierStrengthVariables = [
   { variable: "GMP Certification Status", weight: "15%" },
   {
     variable:
@@ -201,7 +201,7 @@ const vendorStrengthVariables = [
   },
 ];
 
-const exampleVendor = {
+const exampleSupplier = {
   name: "Pacific Biologics Supply Co. (illustrative)",
   category: "MSC-Derived Exosomes - IV-Grade",
   score: "87/100",
@@ -211,13 +211,13 @@ const exampleVendor = {
   history: "Zero warning letters · Zero recalls · 4-year operating history",
   posture:
     "Open to exclusivity windows for accounts above $200K annually · Quality guarantee clause available · Lot reservation rights negotiable at 90-day commit",
-  why: "This vendor is in active growth mode and needs anchor accounts in new geographies. An account committing $150K+ annually with 90-day purchase orders qualifies for distributor-tier pricing. Fit determines access to that tier.",
+  why: "This supplier is in active growth mode and needs anchor accounts in new geographies. An account committing $150K+ annually with 90-day purchase orders qualifies for distributor-tier pricing. Fit determines access to that tier.",
 };
 
 const process = [
   {
     num: "01",
-    title: "Vendor Qualification Matrix",
+    title: "Supplier Qualification Matrix",
     desc: "12-variable scoring: GMP status, COA completeness, HPLC purity standards, endotoxin testing, NTA particle sizing, cold-chain infrastructure, and real buyer feedback. No supplier enters the network on reputation alone.",
   },
   {
@@ -280,7 +280,7 @@ const testimonials = [
   },
   {
     quote:
-      "We had no idea our exosome supplier's particle counts were off. RampRate's vendor audit caught it before we used the product clinically.",
+      "We had no idea our exosome supplier's particle counts were off. RampRate's supplier audit caught it before we used the product clinically.",
     attr: "Founder · Regenerative Medicine Practice",
   },
   {
@@ -396,7 +396,7 @@ export default function BioChainSourcingPage() {
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
               {[
                 { value: "$10B+", label: "Transactions Architected" },
-                { value: "300+", label: "Vetted Bio Vendors" },
+                { value: "300+", label: "Vetted Bio Suppliers" },
                 { value: "COA", label: "Verified Every Order" },
                 { value: "24 yrs", label: "Sourcing Intelligence" },
                 { value: "300%+", label: "ROI Guarantee" },
@@ -785,7 +785,7 @@ export default function BioChainSourcingPage() {
                       street: "Standard retainer",
                       save: "300%+ ROI",
                       extra:
-                        "SPY Index access, vendor negotiation, contract architecture",
+                        "SPY Index access, supplier negotiation, contract architecture",
                     },
                   ].map((row, i, arr) => (
                     <tr
@@ -845,9 +845,9 @@ export default function BioChainSourcingPage() {
             Savings percentages reflect BioChain SPY Index closed transaction
             data. Street prices verified from current retail and direct-channel
             sources as of Q2 2026. The + on every saving reflects that
-            RampRate&apos;s vendor partnerships frequently produce pricing below
+            RampRate&apos;s supplier partnerships frequently produce pricing below
             published wholesale depending on account fit, volume commitment, and
-            vendor strategic alignment. All accounts require a minimum of
+            supplier strategic alignment. All accounts require a minimum of
             $50,000 in annual biologics spend. RampRate does not publish target
             prices - the sourcing audit produces your actual benchmark.
           </p>
@@ -871,12 +871,12 @@ export default function BioChainSourcingPage() {
                 }}
               >
                 Most procurement advisors negotiate against the street price.
-                RampRate negotiates against the vendor&apos;s cost structure.
+                RampRate negotiates against the supplier&apos;s cost structure.
                 After 24 years of directing volume at the manufacturers and labs
                 that supply the supply chain, we have relationships that exist
                 below the distributor tier entirely. When the fit is right -
                 meaning your account volume, specification consistency, and
-                payment terms align with what a vendor needs to grow - we can
+                payment terms align with what a supplier needs to grow - we can
                 structure agreements that put you at or below the price a
                 regional distributor pays. The fit determines the outcome. The
                 sourcing audit determines the fit.
@@ -1101,23 +1101,23 @@ export default function BioChainSourcingPage() {
         </div>
       </section>
 
-      {/* Vendor Profile */}
+      {/* Supplier Profile */}
       <section
         className="relative section-light overflow-hidden py-20 sm:py-28"
-        id="vendor-profile"
+        id="supplier-profile"
       >
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
             style={{ color: gold, fontFamily: "var(--font-body)" }}
           >
-            How Vendor Strength Determines Your Outcome
+            How Supplier Strength Determines Your Outcome
           </span>
           <h2
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Not All Vendors Are Equal. Vendor Strength Is Everything.
+            Not All Suppliers Are Equal. Supplier Strength Is Everything.
           </h2>
           <p
             className="mt-6 text-base leading-relaxed max-w-3xl"
@@ -1127,12 +1127,12 @@ export default function BioChainSourcingPage() {
             }}
           >
             At BioChain, we do not simply find you a cheaper supplier. We
-            evaluate every vendor against a 12-variable qualification matrix and
-            score them on Vendor Strength - a composite measure of how much
+            evaluate every supplier against a 12-variable qualification matrix and
+            score them on Supplier Strength - a composite measure of how much
             leverage, reliability, and documentation they can deliver to your
-            account. The stronger the vendor&apos;s profile relative to your
+            account. The stronger the supplier&apos;s profile relative to your
             account size and specification, the better your outcome. And the
-            better the fit between your account and the vendor&apos;s growth
+            better the fit between your account and the supplier&apos;s growth
             objectives, the more likely you are to land below-wholesale terms.
           </p>
 
@@ -1171,7 +1171,7 @@ export default function BioChainSourcingPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vendorStrengthVariables.map((v, i, arr) => (
+                  {supplierStrengthVariables.map((v, i, arr) => (
                     <tr
                       key={v.variable}
                       className={i < arr.length - 1 ? "border-b" : ""}
@@ -1237,7 +1237,7 @@ export default function BioChainSourcingPage() {
                     fontFamily: "var(--font-mono)",
                   }}
                 >
-                  Average Score Across Active BioChain Vendors
+                  Average Score Across Active BioChain Suppliers
                 </div>
               </div>
             </Reveal>
@@ -1262,7 +1262,7 @@ export default function BioChainSourcingPage() {
                 className="text-lg font-bold mb-1"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                {exampleVendor.name}
+                {exampleSupplier.name}
               </h4>
               <p
                 className="text-xs uppercase tracking-wider mb-5"
@@ -1271,7 +1271,7 @@ export default function BioChainSourcingPage() {
                   fontFamily: "var(--font-mono)",
                 }}
               >
-                {exampleVendor.category}
+                {exampleSupplier.category}
               </p>
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
                 <div>
@@ -1282,13 +1282,13 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-mono)",
                     }}
                   >
-                    Vendor Strength Score
+                    Supplier Strength Score
                   </div>
                   <div
                     className="text-2xl font-bold"
                     style={{ color: gold, fontFamily: "var(--font-display)" }}
                   >
-                    {exampleVendor.score}
+                    {exampleSupplier.score}
                   </div>
                 </div>
                 <div>
@@ -1305,7 +1305,7 @@ export default function BioChainSourcingPage() {
                     className="text-sm font-semibold"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
-                    {exampleVendor.capacity}
+                    {exampleSupplier.capacity}
                   </div>
                 </div>
               </div>
@@ -1327,7 +1327,7 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-body)",
                     }}
                   >
-                    {exampleVendor.certs}
+                    {exampleSupplier.certs}
                   </p>
                 </div>
                 <div>
@@ -1347,7 +1347,7 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-body)",
                     }}
                   >
-                    {exampleVendor.history}
+                    {exampleSupplier.history}
                   </p>
                 </div>
                 <div>
@@ -1367,7 +1367,7 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-body)",
                     }}
                   >
-                    {exampleVendor.posture}
+                    {exampleSupplier.posture}
                   </p>
                 </div>
                 <div>
@@ -1375,7 +1375,7 @@ export default function BioChainSourcingPage() {
                     className="text-xs uppercase tracking-wider mb-1"
                     style={{ color: gold, fontFamily: "var(--font-mono)" }}
                   >
-                    Why This Vendor Creates Below-Wholesale Opportunity
+                    Why This Supplier Creates Below-Wholesale Opportunity
                   </div>
                   <p
                     className="text-sm leading-relaxed"
@@ -1384,7 +1384,7 @@ export default function BioChainSourcingPage() {
                       fontFamily: "var(--font-body)",
                     }}
                   >
-                    {exampleVendor.why}
+                    {exampleSupplier.why}
                   </p>
                 </div>
               </div>

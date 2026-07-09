@@ -15,7 +15,7 @@ import ScrollToTop from "@/components/shared/ScrollToTop";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ramprate.com"),
   title: {
-    default: "RampRate - IT Infrastructure Advisory",
+    default: "RampRate - Investment & Advisory",
     template: "%s | RampRate",
   },
   description:
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "IT infrastructure advisory",
     "enterprise IT sourcing",
     "data center procurement",
-    "vendor negotiation",
+    "supplier negotiation",
     "B Corp advisory",
     "RampRate",
   ],

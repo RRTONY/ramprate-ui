@@ -5,6 +5,22 @@ import { TOTAL_FIELD_COUNT } from "@/lib/client-intake-fields";
 export const metadata: Metadata = {
   title: "Client Intake Application - BioChain Sourcing | RampRate",
   description: `RampRate BioChain Sourcing's 8-section, ${TOTAL_FIELD_COUNT}-field client intake. Covers your organization, current sourcing, full product catalog, logistics & pricing, spend, compliance profile, customers, and goals - so we can scope your sourcing audit.`,
+  keywords: [
+    "client intake",
+    "become a client",
+    "become a customer",
+    "patient intake",
+    "clinic intake",
+    "sourcing audit",
+    "sourcing application",
+    "biochain sourcing",
+    "peptide sourcing",
+    "exosomes",
+    "stem cells",
+    "NAD+",
+    "healthcare organization",
+    "clinic application",
+  ],
 };
 
 export default function ClientIntakePage() {

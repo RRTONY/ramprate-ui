@@ -94,11 +94,11 @@ const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
     title: "The Fund That Couldn't See Its Own Portfolio",
     result:
       "34% reduction in operational drag; full portfolio visibility in weeks",
-    desc: "A multi-strategy fund with $2B+ AUM was hemorrhaging value through fragmented vendor relationships, redundant infrastructure, and zero cross-portfolio visibility. We mapped the entire operational topology, consolidated 14 vendor contracts into 5 strategic partnerships, and gave them a dashboard they'd been trying to build for three years.",
+    desc: "A multi-strategy fund with $2B+ AUM was hemorrhaging value through fragmented supplier relationships, redundant infrastructure, and zero cross-portfolio visibility. We mapped the entire operational topology, consolidated 14 supplier contracts into 5 strategic partnerships, and gave them a dashboard they'd been trying to build for three years.",
     metrics: [
       "$2B+ AUM",
       "34% cost reduction",
-      "14 vendors → 5",
+      "14 suppliers → 5",
       "Real-time visibility",
     ],
   },
@@ -130,7 +130,7 @@ const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
   {
     _id: "cs-5",
     title: "The $800M Decision That Took 72 Hours",
-    result: "$800M vendor decision compressed from 6 months to 72 hours",
+    result: "$800M supplier decision compressed from 6 months to 72 hours",
     desc: "The board wanted a decision by Friday. The procurement team had been circling for six months. We walked in with 150,000+ data points, benchmarked the three finalists against real-world contracts, and delivered a recommendation with 5-10% forecast accuracy. The board signed Monday.",
     metrics: [
       "$800M decision",
@@ -155,7 +155,7 @@ const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
     _id: "cs-7",
     title: "The Infrastructure Nobody Could Audit",
     result: "75% infrastructure cost reduction over 16-year relationship",
-    desc: "Across four CTO tenures, we became the institutional memory no org chart could replace. Every new executive inherited a vendor landscape nobody fully understood. We were the map. Exposed hundreds of millions in hidden redundancies and created methodology now adopted at the executive level.",
+    desc: "Across four CTO tenures, we became the institutional memory no org chart could replace. Every new executive inherited a supplier landscape nobody fully understood. We were the map. Exposed hundreds of millions in hidden redundancies and created methodology now adopted at the executive level.",
     metrics: [
       "16-year relationship",
       "75% cost reduction",

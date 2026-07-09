@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   title: "Thinking - 25 Years of Perspectives | RampRate",
   description:
     "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on IT infrastructure, blockchain, and enterprise strategy.",
+  keywords: [
+    "thinking",
+    "insights",
+    "essays",
+    "thought leadership",
+    "enterprise strategy perspectives",
+    "IT infrastructure analysis",
+    "blockchain analysis",
+  ],
 };
 
 interface ThinkingPost {

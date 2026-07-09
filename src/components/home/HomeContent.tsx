@@ -30,7 +30,7 @@ const engagements = [
     label: "eBay",
     stats: "27% savings while strengthening relationships",
     detail:
-      "Risk-free model: 2× fee guarantee or full refund. Global data center optimization. Millions in ongoing value. Vendor relationships stronger than before.",
+      "Risk-free model: 2× fee guarantee or full refund. Global data center optimization. Millions in ongoing value. Supplier relationships stronger than before.",
     accent: "oklch(0.6 0.2 280)",
   },
   {
@@ -125,14 +125,14 @@ const operateSteps = [
   {
     num: "01",
     title: "Deep Research",
-    desc: "$10B+ transaction intelligence. Million+ data points. 350+ vendors. 80 countries. Forecasts within 5-10% of outcome.",
+    desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers. 80 countries. Forecasts within 5-10% of outcome.",
     Icon: Database,
     link: { label: "Our Process →", href: "/our-process" },
   },
   {
     num: "02",
     title: "Strategic Blueprint",
-    desc: "Pressure-test positioning, vendor structures, GTM, revenue pathways against real market data. Not theory.",
+    desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
     Icon: Target,
     link: { label: "See How We Think →", href: "/thinking" },
   },
@@ -191,7 +191,7 @@ const brands = [
     since: "Since 2000",
     audience: "Enterprise IT Procurement",
     description:
-      "Connect enterprise IT needs to the right vendors. 150K+ data points. Transparent pricing. Zero-commission model.",
+      "Connect enterprise IT needs to the right suppliers. 150K+ data points. Transparent pricing. Zero-commission model.",
     keyValue: "Non-dilutive capital & zero-cost transformative tech",
     compensation: "% of value created",
     commitment: "Right person in the room from all sides",

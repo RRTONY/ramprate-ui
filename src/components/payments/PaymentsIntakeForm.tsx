@@ -41,7 +41,7 @@ const LOCAL_ACQUIRING_OPTIONS = ["Yes — EU / EEA", "Yes — UK", "Yes — APAC
 const CB_TREND_OPTIONS = ["Stable — consistent for 12+ months", "Improving — trending down", "Worsening — trending up", "Seasonal — varies significantly", "N/A — new merchant"];
 const THREE_DS_OPTIONS = ["Yes — on all transactions", "Yes — on high-risk only", "No", "Evaluating", "Required by our market (EU PSD2)"];
 const RISK_TOLERANCE_OPTIONS = ["Conservative — minimize fraud above conversion impact", "Balanced — optimize approval rate vs. fraud loss", "Growth-first — maximize conversions, accept some fraud", "Depends on product / channel"];
-const CB_DISPUTE_OPTIONS = ["Fully in-house — dedicated team", "In-house but under-resourced", "Outsourced — existing vendor", "No formal process — need help", "Using processor's built-in tools"];
+const CB_DISPUTE_OPTIONS = ["Fully in-house — dedicated team", "In-house but under-resourced", "Outsourced — existing supplier", "No formal process — need help", "Using processor's built-in tools"];
 const PRICING_MODEL_OPTIONS = ["Interchange Plus — transparent cost-plus (recommended at $50M+)", "Flat Rate — predictable, slightly higher", "Membership / Subscription (Stax-style) — fixed monthly + interchange", "Tiered — common but rarely favorable", "No preference — show me the analysis"];
 const CONTRACT_LENGTH_OPTIONS = ["Month-to-month (maximum flexibility)", "1 year", "2 years", "3 years — willing for the right deal", "Open to negotiation"];
 const ANNUAL_REVIEW_OPTIONS = ["Yes — annual review clause is non-negotiable", "Yes — preferred but flexible", "No — happy to lock in for contract term", "Depends on rate lock guarantee"];
@@ -73,7 +73,7 @@ const STEP_FIELDS: string[][] = [
   ["currentMonthlyVolume", "projectedMonthlyVolume", "avgTicketSize", "highestTicket", "cardMixCredit", "currentProcessor", "secondaryProcessor", "processingHistory", "switchReason", "hasTermination", "terminationReason"],
   ["currentGateway", "gatewayContracts", "ecommerceCart", "posSystem", "apiIntegration", "mobilePayments", "recurringBilling", "subscriptionModel", "needsOrchestration", "orchestrationGoal", "redundancy", "tokenization"],
   ["pciCompliant", "pciLevel", "lastAudit", "hasBreach", "amlProgram", "kycProgram", "countries", "currencies", "foreignCardPercent", "localAcquiring", "restrictedCategories", "regulatoryLicenses"],
-  ["chargebackRate", "chargebackTrend", "fraudToolCurrent", "fraudBudget", "threeDSEnabled", "riskToleranceLevel", "chargebackDisputes", "cbMgmtVendor"],
+  ["chargebackRate", "chargebackTrend", "fraudToolCurrent", "fraudBudget", "threeDSEnabled", "riskToleranceLevel", "chargebackDisputes", "cbMgmtSupplier"],
   ["pricingModel", "contractLength", "eTermFeeOK", "reserveAcceptable", "reservePercent", "switchTimeline", "reviewCadence", "coMarketingInterest", "partnershipPriorities", "additionalNotes"],
 ];
 
@@ -466,7 +466,7 @@ function Step5({ formik }: StepProps) {
         advisory="Chargeback rate is your single biggest processor underwriting risk factor. If you're above 0.5%, we prepare a chargeback remediation narrative for the RFP. If you're above 1%, we prioritize processors with dispute management capabilities."
       />
       <SelectField formik={formik} name="chargebackTrend" label="Chargeback Rate Trend" options={CB_TREND_OPTIONS} />
-      <TextField formik={formik} name="fraudToolCurrent" label="Current Fraud Tool / Vendor" placeholder="e.g. Kount, Signifyd, Riskified, Stripe Radar, in-house rules engine, none..." />
+      <TextField formik={formik} name="fraudToolCurrent" label="Current Fraud Tool / Supplier" placeholder="e.g. Kount, Signifyd, Riskified, Stripe Radar, in-house rules engine, none..." />
       <TextField formik={formik} name="fraudBudget" label="Monthly Fraud & Risk Budget (USD)" type="number" placeholder="e.g. 15000" />
       <SelectField formik={formik} name="threeDSEnabled" label="3D Secure 2.0 (3DS2) Active?" options={THREE_DS_OPTIONS} />
       <SelectField
@@ -477,7 +477,7 @@ function Step5({ formik }: StepProps) {
         advisory="There is no universally correct answer. Conservative works for regulated industries; growth-first works for digital goods with low chargeback risk. We structure fraud tool RFP requirements around your philosophy."
       />
       <SelectField formik={formik} name="chargebackDisputes" label="Chargeback Dispute Management" options={CB_DISPUTE_OPTIONS} />
-      <TextField formik={formik} name="cbMgmtVendor" label="Current CB Management Vendor (if any)" placeholder="e.g. Chargebacks911, DisputeHelp, Ethoca, Verifi, none..." />
+      <TextField formik={formik} name="cbMgmtSupplier" label="Current CB Management Supplier (if any)" placeholder="e.g. Chargebacks911, DisputeHelp, Ethoca, Verifi, none..." />
     </div>
   );
 }

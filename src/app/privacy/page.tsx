@@ -4,6 +4,13 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Privacy Policy | RampRate',
   description: 'How RampRate handles your data. Privacy policy for ramprate.com.',
+  keywords: [
+    'privacy policy',
+    'data privacy',
+    'personal information',
+    'cookie policy',
+    'data protection',
+  ],
 }
 
 const sections = [

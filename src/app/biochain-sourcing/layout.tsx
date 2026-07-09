@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "exosome sourcing",
     "stem cell procurement",
     "regenerative medicine supply chain",
-    "biologics vendor sourcing",
+    "biologics supplier sourcing",
     "NAD+ sourcing",
   ],
   alternates: { canonical: "/biochain-sourcing" },
@@ -38,7 +38,7 @@ export default function BioChainLayout({
         data={serviceJsonLd({
           name: "BioChain Sourcing",
           description:
-            "Verified sourcing advisory for peptides, exosomes, stem cells, and regenerative biologics - vendor qualification, benchmarked pricing, and contract negotiation.",
+            "Verified sourcing advisory for peptides, exosomes, stem cells, and regenerative biologics - supplier qualification, benchmarked pricing, and contract negotiation.",
           url: "https://ramprate.com/biochain-sourcing",
           serviceType: "Biologics sourcing advisory",
         })}

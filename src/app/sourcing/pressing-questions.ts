@@ -17,7 +17,7 @@ export const pressingQuestions = [
   {
     num: "03",
     question:
-      "Are my SLAs actually protecting me - or just protecting the vendor?",
+      "Are my SLAs actually protecting me - or just protecting the supplier?",
     context:
       "Most enterprise SLAs are written by the provider's legal team. Credit structures, force majeure clauses, and uptime definitions are designed to minimize their exposure, not maximize yours.",
   },
@@ -42,9 +42,9 @@ export const pressingQuestions = [
   {
     num: "07",
     question:
-      "How do I consolidate 12 vendor relationships without breaking production?",
+      "How do I consolidate 12 supplier relationships without breaking production?",
     context:
-      "Vendor sprawl is the silent budget killer. Consolidation saves 20–35%, but the migration risk is real. You need a sequenced plan, not a spreadsheet.",
+      "Supplier sprawl is the silent budget killer. Consolidation saves 20–35%, but the migration risk is real. You need a sequenced plan, not a spreadsheet.",
   },
   {
     num: "08",

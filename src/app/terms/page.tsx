@@ -4,6 +4,13 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service | RampRate",
   description: "Terms governing use of the RampRate website.",
+  keywords: [
+    "terms of service",
+    "legal",
+    "terms and conditions",
+    "website terms",
+    "user agreement",
+  ],
 };
 
 const sections = [

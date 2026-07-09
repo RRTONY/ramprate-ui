@@ -16,7 +16,7 @@ const practices = [
 ];
 
 const becomeA = [
-  { label: "Become a Supplier", href: "/vendor-intake", desc: "Vendor intake" },
+  { label: "Become a Supplier", href: "/supplier-intake", desc: "Supplier intake" },
   { label: "Become a Client", href: "/client-intake", desc: "BioChain sourcing" },
 ];
 

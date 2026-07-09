@@ -5,6 +5,16 @@ export const metadata: Metadata = {
   title: "Values - Powering Purpose-driven Innovation | RampRate",
   description:
     "We build an ecosystem of impact-preneurs and trailblazers powered by opportunities, resources, innovation and human spirit.",
+  keywords: [
+    "values",
+    "mission",
+    "purpose driven innovation",
+    "impact-preneurs",
+    "trailblazers",
+    "ecosystem",
+    "culture",
+    "B Corp",
+  ],
 };
 
 const principles = [

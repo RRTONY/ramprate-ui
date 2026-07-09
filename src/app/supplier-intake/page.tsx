@@ -1,13 +1,28 @@
 import type { Metadata } from "next";
-import VendorIntakeForm from "@/components/vendor/VendorIntakeForm";
-import { TOTAL_FIELD_COUNT } from "@/lib/vendor-intake-fields";
+import SupplierIntakeForm from "@/components/supplier/SupplierIntakeForm";
+import { TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 
 export const metadata: Metadata = {
-  title: "Vendor Intake - Peptide Supply Partner Application | RampRate",
+  title: "Supplier Intake - Peptide Supply Partner Application | RampRate",
   description: `RampRate's 6-section, ${TOTAL_FIELD_COUNT}-field due diligence form for peptide supply partners. Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.`,
+  keywords: [
+    "supplier",
+    "vendor",
+    "supplier intake",
+    "vendor intake",
+    "supplier registration",
+    "vendor registration",
+    "become a supplier",
+    "manufacturing partner",
+    "peptides",
+    "supply chain",
+    "supplier application",
+    "vendor application",
+    "supplier fit index",
+  ],
 };
 
-export default function VendorIntakePage() {
+export default function SupplierIntakePage() {
   return (
     <main>
       {/* Hero */}
@@ -31,7 +46,7 @@ export default function VendorIntakePage() {
             className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Vendor Intake Form
+            Supplier Intake Form
           </h1>
           <p
             className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl"
@@ -47,7 +62,7 @@ export default function VendorIntakePage() {
       {/* Tabbed form */}
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <VendorIntakeForm />
+          <SupplierIntakeForm />
         </div>
       </section>
     </main>

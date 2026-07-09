@@ -69,17 +69,17 @@ Additional Notes: ${f.additionalNotes || "None"}
 Generate a complete RFP with these sections, each as a markdown "# " heading:
 1. Executive Summary - company profile, strategic objectives, relationship goals (emphasize long-term partnership over price-only)
 2. Scope of Services - gateway, acquiring, fraud, orchestration, recurring billing, international
-3. Vendor Qualification Criteria - minimum thresholds to respond; disqualifiers
+3. Supplier Qualification Criteria - minimum thresholds to respond; disqualifiers
 4. Technical Requirements - APIs, integrations, uptime SLAs, tokenization, orchestration architecture
 5. Pricing & Commercial Requirements - rate format, reserve terms, early termination, annual review rights
 6. Fraud & Risk Management Requirements - tools, 3DS2, chargeback ratios, dispute SLAs
 7. Compliance & Security - PCI, AML, data residency, breach notification SLAs
 8. Relationship & Service Requirements - dedicated account management, QBR cadence, escalation paths, SLA remedies
 9. Evaluation Criteria & Weighted Scorecard - price 30%, service/relationship 25%, technical 25%, compliance 20%
-10. Recommended Vendors to Solicit - 5-7 specific processors matched to this profile with brief rationale
+10. Recommended Suppliers to Solicit - 5-7 specific processors matched to this profile with brief rationale
 11. RampRate Advisory Notes - strategic recommendations, red flags, negotiation leverage, 3-year value projection
 
-Be specific with SLA numbers, rate benchmarks, and red flags. Emphasize that the client is selecting a long-term infrastructure partner, not a commodity vendor. This is a draft preview only - it will be refined by a RampRate advisor before distribution.`;
+Be specific with SLA numbers, rate benchmarks, and red flags. Emphasize that the client is selecting a long-term infrastructure partner, not a commodity supplier. This is a draft preview only - it will be refined by a RampRate advisor before distribution.`;
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     callsToday++;

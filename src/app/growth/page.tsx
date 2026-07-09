@@ -290,7 +290,7 @@ export default function GrowthPage() {
             </p>
             <p>
               Most growth advisors sell you a methodology. We sell you access.
-              Access to the 350+ vendor relationships, 50+ country network, and
+              Access to the 350+ supplier relationships, 50+ country network, and
               24 years of enterprise trust that our principals have built. When
               a CIO at a Fortune 500 company takes our call, they&apos;re not
               taking a cold call from an advisor - they&apos;re taking a call

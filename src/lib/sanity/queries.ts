@@ -245,11 +245,15 @@ export const spyIndexPageQuery = groq`
 export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`;
 export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug, _updatedAt}`;
 
-// Full-text search across all posts (blog + thinking)
+// Full-text search across all posts (blog + thinking) - matches title,
+// excerpt, category names, and the article body itself so a term that only
+// appears deep in the post copy still surfaces the result.
 export const searchPostsQuery = groq`
   *[_type == "post" && defined(slug.current) && (
     title match $q ||
-    excerpt match $q
+    excerpt match $q ||
+    count(categories[title match $q]) > 0 ||
+    pt::text(body) match $q
   )] | order(publishedAt desc)[0...30]{
     _id,
     title,

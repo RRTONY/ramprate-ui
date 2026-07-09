@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL
 
   if (!scriptUrl) {
-    return NextResponse.json({ ok: false, error: 'Vendor intake is not configured.' }, { status: 500 })
+    return NextResponse.json({ ok: false, error: 'Supplier intake is not configured.' }, { status: 500 })
   }
 
   const body = await req.json()

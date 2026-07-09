@@ -800,7 +800,7 @@ export default async function AboutPage() {
               {
                 ring: "Core",
                 count: "4 Principals",
-                desc: "Tony Greenberg, Alex Veytsel, Josh Bykowski and Rob Holmes. 24 years of shared history, complementary expertise, and a combined network spanning every major technology vendor and enterprise buyer.",
+                desc: "Tony Greenberg, Alex Veytsel, Josh Bykowski and Rob Holmes. 24 years of shared history, complementary expertise, and a combined network spanning every major technology supplier and enterprise buyer.",
               },
               {
                 ring: "Board",
