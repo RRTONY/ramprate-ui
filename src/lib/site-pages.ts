@@ -57,7 +57,7 @@ export const SITE_PAGES: SitePage[] = [
     keywords:
       "supplier vendor supplier intake vendor intake supplier registration vendor registration become a supplier manufacturing partner peptides peptide supply chain supplier application vendor application due diligence supplier fit index",
     description:
-      "Supplier due diligence application for peptide supply and manufacturing partners who want to become a RampRate supplier.",
+      "Quick first-touch application (no uploads, ~2-3 minutes) for peptide supply and manufacturing partners who want to become a RampRate supplier. Suppliers we want to pursue get a longer due-diligence follow-up.",
   },
   {
     title: "Client Intake - BioChain Sourcing Application",

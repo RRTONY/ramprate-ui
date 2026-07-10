@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import SupplierIntakeForm from "@/components/supplier/SupplierIntakeForm";
-import { TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
+import SupplierIntakeStage1Form from "@/components/supplier/SupplierIntakeStage1Form";
+import { STAGE1_TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 
 export const metadata: Metadata = {
   title: "Supplier Intake - Peptide Supply Partner Application",
-  description: `RampRate's 6-section, ${TOTAL_FIELD_COUNT}-field due diligence form for peptide supply partners. Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.`,
+  description: `RampRate's quick, ${STAGE1_TOTAL_FIELD_COUNT}-field first-touch application for peptide supply partners - no uploads, about 2-3 minutes. Suppliers we want to pursue get a longer due-diligence follow-up.`,
   keywords: [
     "supplier",
     "vendor",
@@ -52,9 +52,9 @@ export default function SupplierIntakePage() {
             className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            RampRate&apos;s 6-section due diligence form for peptide supply
-            partners. Complete all sections to be scored against the Supplier
-            Fit Index. No fee. No obligation.
+            A quick, {STAGE1_TOTAL_FIELD_COUNT}-field first look - no uploads, about 2-3
+            minutes. If there&apos;s a fit, we&apos;ll follow up with a longer
+            application to confirm the details. No fee. No obligation.
           </p>
         </div>
       </section>
@@ -62,7 +62,7 @@ export default function SupplierIntakePage() {
       {/* Tabbed form */}
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <SupplierIntakeForm />
+          <SupplierIntakeStage1Form />
         </div>
       </section>
     </main>

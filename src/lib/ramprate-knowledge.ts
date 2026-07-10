@@ -40,8 +40,8 @@ FIVE PRACTICES:
 5. PRIVATE ADVISORY - We are not your lawyer, accountant, publicist, or investigator, but we work with all of them. We source and negotiate the right specialists, coordinate them against one strategy, and handle everything on the file that doesn't require a law license. Five recurring client situations: the Squeezed-Out Operator (pushed out of earned equity), the Slow-Walked Creditor (a stalled but valid claim), the Discovery Windfall (new information reopens a resolved matter), the Protected Principal (ongoing protection before anything goes wrong), and the Mixed-Ledger Principal (a large, disorganized portfolio of assets and liabilities). Engagement models: success fee, retainer + success fee, or upfront + escrow + certifier - terms agreed in writing before any money moves. We do not hold client funds, act as fiduciary custodian, do broker-dealer-adjacent structuring, or lead on criminal defense, family law, personal injury, or immigration matters.
 
 SUPPLIER INTAKE (Become a Supplier):
-- At /supplier-intake, RampRate runs a 6-section due diligence application for peptide supply and manufacturing partners.
-- Covers company info, manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.
+- At /supplier-intake, RampRate runs a quick 18-field first-touch application for peptide supply and manufacturing partners - no uploads, about 2-3 minutes.
+- Suppliers RampRate wants to pursue get a longer, link-gated deep-dive application afterward covering manufacturing capabilities, quality assurance, commercial terms, regulatory compliance, and document upload.
 - Applicants are scored against the Supplier Fit Index. No fee, no obligation.
 - If someone asks about becoming a supplier or manufacturing partner, how to register as a supplier, or a supplier application, point them to /supplier-intake.
 
