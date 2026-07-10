@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { sanityFetch } from "@/lib/sanity/client";
 import { searchPostsQuery } from "@/lib/sanity/queries";
+import { buildGroqSearchTerm } from "@/lib/search";
 import SearchInput from "@/components/shared/SearchInput";
 import SanityImage from "@/components/shared/SanityImage";
 import JsonLd from "@/components/shared/JsonLd";
@@ -74,51 +75,7 @@ export default async function SearchPage({
   let allPosts: SanityPost[] = [];
 
   if (q) {
-    // Filter stop-words and keep up to 4 meaningful terms with prefix wildcard.
-    // GROQ `match` uses AND logic across space-separated tokens, so fewer,
-    // more specific words give better recall than a 10-word phrase.
-    const STOP = new Set([
-      "a",
-      "an",
-      "the",
-      "and",
-      "or",
-      "but",
-      "in",
-      "on",
-      "at",
-      "to",
-      "for",
-      "of",
-      "with",
-      "by",
-      "from",
-      "up",
-      "is",
-      "it",
-      "its",
-      "this",
-      "that",
-      "are",
-      "was",
-      "be",
-      "do",
-      "how",
-      "what",
-      "why",
-      "when",
-      "where",
-      "who",
-    ]);
-    const words = q.split(/\s+/).filter(Boolean);
-    const significant = words.filter(
-      (w) => w.length > 2 && !STOP.has(w.toLowerCase()),
-    );
-    const searchWords = (significant.length > 0 ? significant : words).slice(
-      0,
-      4,
-    );
-    const groqQ = searchWords.map((w) => `${w}*`).join(" ");
+    const groqQ = buildGroqSearchTerm(q);
 
     allPosts =
       (await sanityFetch<SanityPost[]>({
@@ -148,21 +105,21 @@ export default async function SearchPage({
       <JsonLd data={searchJsonLd} />
 
       {/* ── HERO ── */}
-      <section className="relative pt-28 sm:pt-36 pb-14 sm:pb-20 overflow-hidden">
+      <section className="relative pt-24 sm:pt-36 pb-8 sm:pb-20 overflow-hidden">
         <div className="glass-orb glass-orb-amber absolute w-96 h-96 -top-40 -right-40 opacity-15" />
         <div className="glass-orb glass-orb-blue absolute w-64 h-64 bottom-0 -left-24 opacity-10" />
 
         {/* max-w-7xl matches the header and results section so left edges align */}
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
+            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 sm:mb-4 block"
             style={{ color: "var(--gold)", fontFamily: "var(--font-body)" }}
           >
             Search
           </span>
 
           <h1
-            className="font-bold text-white mb-8 leading-tight"
+            className="font-bold text-white mb-5 sm:mb-8 leading-tight"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(2rem, 5vw, 3.5rem)",
@@ -509,17 +466,16 @@ function EmptyQuery() {
     "Data Center",
   ];
   return (
-    <div className="flex flex-col items-center justify-center py-20 sm:py-28 text-center px-4">
+    <div className="flex flex-col items-center justify-center py-6 sm:py-28 text-center px-4">
       <div
-        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-8"
+        className="w-11 h-11 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 sm:mb-8"
         style={{
           background: "rgba(212,168,67,0.07)",
           border: "1px solid rgba(212,168,67,0.18)",
         }}
       >
         <svg
-          width="28"
-          height="28"
+          className="w-5 h-5 sm:w-7 sm:h-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="var(--gold)"
@@ -532,13 +488,13 @@ function EmptyQuery() {
         </svg>
       </div>
       <h2
-        className="text-xl sm:text-2xl font-bold text-white mb-3"
+        className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-3"
         style={{ fontFamily: "var(--font-display)" }}
       >
         What are you looking for?
       </h2>
       <p
-        className="text-sm max-w-sm leading-relaxed mb-8"
+        className="text-sm max-w-sm leading-relaxed mb-4 sm:mb-8"
         style={{
           color: "rgba(255,255,255,0.4)",
           fontFamily: "var(--font-body)",

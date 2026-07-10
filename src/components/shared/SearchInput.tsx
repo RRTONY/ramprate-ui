@@ -39,7 +39,7 @@ export default function SearchInput({ initialQuery = '' }: { initialQuery?: stri
   }
 
   return (
-    <form onSubmit={submit} className="w-full max-w-2xl">
+    <form onSubmit={submit} className="relative w-full max-w-2xl">
       <div
         className="flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all"
         style={{
