@@ -35,10 +35,11 @@ function isValidPhone(value: string): boolean {
 }
 
 export function fieldValidator(field: FieldDef) {
+  const requiredMsg = `${field.label} is required`;
   switch (field.type) {
     case "email":
       return field.required
-        ? Yup.string().email("Invalid email").required("Required")
+        ? Yup.string().email("Invalid email").required(requiredMsg)
         : Yup.string().email("Invalid email");
     case "tel": {
       const validator = Yup.string().test(
@@ -46,16 +47,16 @@ export function fieldValidator(field: FieldDef) {
         "Enter a valid phone number",
         (v) => !v || isValidPhone(v),
       );
-      return field.required ? validator.required("Required") : validator;
+      return field.required ? validator.required(requiredMsg) : validator;
     }
     case "url":
       return field.required
-        ? Yup.string().matches(WEBSITE_RE, "Enter a valid website").required("Required")
+        ? Yup.string().matches(WEBSITE_RE, "Enter a valid website").required(requiredMsg)
         : Yup.string().matches(WEBSITE_RE, "Enter a valid website");
     case "file":
-      return field.required ? Yup.mixed().required("Required") : Yup.mixed();
+      return field.required ? Yup.mixed().required(requiredMsg) : Yup.mixed();
     case "pricing-table":
-      return Yup.string().required("Required");
+      return Yup.string().required(requiredMsg);
     default: {
       if (field.key === "monthly_production_capacity") {
         return Yup.string().test(
@@ -64,7 +65,7 @@ export function fieldValidator(field: FieldDef) {
           (v) => !v || /\d/.test(v),
         );
       }
-      return field.required ? Yup.string().required("Required") : Yup.string();
+      return field.required ? Yup.string().required(requiredMsg) : Yup.string();
     }
   }
 }
@@ -73,7 +74,7 @@ export function buildValidationSchema(fields: FieldDef[]) {
   const shape: Record<string, ReturnType<typeof fieldValidator>> = {};
   fields.forEach((f) => {
     if (f.type === "pricing-table") {
-      shape.pricing_compound_1 = Yup.string().required("Required");
+      shape.pricing_compound_1 = Yup.string().required(`${f.label} - at least one compound is required`);
       return;
     }
     shape[f.key] = fieldValidator(f);
@@ -254,7 +255,7 @@ export function FieldRenderer({
             );
           })}
         </div>
-        {rows === 1 && <FieldError formik={formik} name="pricing_compound_1" />}
+        <FieldError formik={formik} name="pricing_compound_1" />
         {rows < 5 && setPricingRows && (
           <button
             type="button"

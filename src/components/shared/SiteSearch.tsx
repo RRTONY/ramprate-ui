@@ -29,6 +29,7 @@ const SUGGESTED = [
   "What is the SPY Index?",
   "Tell me about Web3 advisory",
   "How does your fee model work?",
+  "What is BioChain Sourcing?",
 ];
 
 function TypingDots() {

@@ -2,12 +2,20 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { ArrowRight, Search, X } from "lucide-react";
 import { useSearchSuggestions, SearchSuggestionsDropdown } from "./SearchSuggestions";
+import { SITE_PAGES } from "@/lib/site-pages";
 
 interface Props {
   scrolled?: boolean;
 }
+
+// Shown before the visitor has typed anything (2+ chars are required to hit
+// the live /api/search suggestions below) - a handful of hand-picked
+// destinations rather than a blank bar with nothing to click.
+const DEFAULT_SUGGESTION_PATHS = ["/proof", "/expertise", "/biochain-sourcing", "/blog"];
+const DEFAULT_SUGGESTIONS = SITE_PAGES.filter((p) => DEFAULT_SUGGESTION_PATHS.includes(p.path));
 
 export default function HeaderSearch({ scrolled = false }: Props) {
   const [open, setOpen] = useState(false);
@@ -121,7 +129,7 @@ export default function HeaderSearch({ scrolled = false }: Props) {
                   <X size={18} />
                 </button>
               )}
-              {query.trim().length >= 2 && (
+              {query.trim().length >= 2 ? (
                 <SearchSuggestionsDropdown
                   pages={pages}
                   posts={posts}
@@ -129,6 +137,35 @@ export default function HeaderSearch({ scrolled = false }: Props) {
                   onNavigate={close}
                   variant="light"
                 />
+              ) : (
+                <div
+                  className="absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50"
+                  style={{ background: "white", border: "1px solid rgba(0,0,0,0.08)" }}
+                >
+                  <div className="px-2 py-2">
+                    <p
+                      className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
+                      style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-body)" }}
+                    >
+                      Popular
+                    </p>
+                    {DEFAULT_SUGGESTIONS.map((p) => (
+                      <Link
+                        key={p.path}
+                        href={p.path}
+                        onClick={close}
+                        className="block px-3 py-2 rounded-lg transition-colors hover:bg-[rgba(212,168,67,0.08)]"
+                      >
+                        <p className="text-sm font-semibold" style={{ color: "oklch(0.2 0.02 50)", fontFamily: "var(--font-body)" }}>
+                          {p.title}
+                        </p>
+                        <p className="text-xs line-clamp-1" style={{ color: "oklch(0.5 0.02 50)", fontFamily: "var(--font-body)" }}>
+                          {p.description}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               )}
             </form>
           </div>

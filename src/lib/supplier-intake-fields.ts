@@ -25,15 +25,15 @@ export interface FieldDef {
  */
 export const STAGE1_STEPS: FieldDef[][] = [
   [
-    { key: "legal_entity_name", label: "Legal Entity Name", type: "text", required: true },
-    { key: "state_country_of_incorporation", label: "State / Country of Incorporation", type: "text", required: true },
-    { key: "primary_contact_name", label: "Primary Contact Name", type: "text", required: true },
-    { key: "email", label: "Email", type: "email", required: true, placeholder: "name@company.com" },
-    { key: "phone", label: "Phone", type: "tel", required: false, placeholder: "+1 (555) 000-0000" },
-    { key: "website", label: "Website", type: "url", required: false, placeholder: "yourcompany.com" },
+    { key: "legal_entity_name", label: "Legal Entity Name", type: "text", required: true, placeholder: "Enter legal entity name" },
+    { key: "state_country_of_incorporation", label: "State / Country of Incorporation", type: "text", required: true, placeholder: "Enter state or country of incorporation" },
+    { key: "primary_contact_name", label: "Primary Contact Name", type: "text", required: true, placeholder: "Enter primary contact name" },
+    { key: "email", label: "Email", type: "email", required: true, placeholder: "Enter email address" },
+    { key: "phone", label: "Phone", type: "tel", required: false, placeholder: "Enter phone number" },
+    { key: "website", label: "Website", type: "url", required: false, placeholder: "Enter website" },
   ],
   [
-    { key: "current_peptide_products", label: "Current Peptide Products", type: "textarea", required: true, placeholder: "List all compounds currently manufactured (BPC-157, TB-500, Semaglutide, Tirzepatide, etc.)" },
+    { key: "current_peptide_products", label: "Current Peptide Products", type: "textarea", required: true, placeholder: "Enter current peptide products" },
     {
       key: "facility_type",
       label: "Facility Type",
@@ -48,7 +48,7 @@ export const STAGE1_STEPS: FieldDef[][] = [
       required: true,
       options: ["1–10", "11–50", "51–200", "201+"],
     },
-    { key: "monthly_production_capacity", label: "Monthly Production Capacity", type: "text", required: false, placeholder: "e.g. 50,000 vials / month" },
+    { key: "monthly_production_capacity", label: "Monthly Production Capacity", type: "text", required: false, placeholder: "Enter monthly production capacity" },
     {
       key: "chain_of_custody_capability",
       label: "Chain-of-Custody Capability",
@@ -137,17 +137,17 @@ export const SCORING_CEILING = Object.values(SCORING_FIELD_CEILINGS).reduce((a, 
  */
 export const STAGE2_STEPS: FieldDef[][] = [
   [
-    { key: "dba_name", label: "DBA / Trade Name", type: "text", required: false },
+    { key: "dba_name", label: "DBA / Trade Name", type: "text", required: false, placeholder: "Enter DBA or trade name" },
     { key: "year_founded", label: "Year Founded", type: "year-select", required: true },
-    { key: "headquarters_address", label: "Headquarters Address", type: "text", required: true, placeholder: "Full street address, city, state, zip" },
-    { key: "manufacturing_facility_address", label: "Manufacturing Facility Address", type: "text", required: false, placeholder: "If different from HQ" },
-    { key: "contact_title", label: "Title / Role", type: "text", required: true, placeholder: "e.g. VP of Sales" },
+    { key: "headquarters_address", label: "Headquarters Address", type: "text", required: true, placeholder: "Enter headquarters address" },
+    { key: "manufacturing_facility_address", label: "Manufacturing Facility Address", type: "text", required: false, placeholder: "Enter manufacturing facility address" },
+    { key: "contact_title", label: "Title / Role", type: "text", required: true, placeholder: "Enter title or role" },
     {
       key: "ownership_principals",
       label: "Ownership & Principals / Founders",
       type: "textarea",
       required: true,
-      placeholder: "Name – Title – Ownership % for all individuals with >10% ownership, plus overall ownership structure (e.g. LLC, Corp, private-equity backed)",
+      placeholder: "Enter ownership and principals / founders",
     },
   ],
   [
@@ -158,7 +158,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Solid Phase (SPPS)", "Liquid Phase", "Hybrid", "Contract Synthesis (third-party)"],
     },
-    { key: "purity_levels_achieved", label: "Purity Levels Achieved", type: "text", required: true, placeholder: "e.g. ≥98% HPLC purity" },
+    { key: "purity_levels_achieved", label: "Purity Levels Achieved", type: "text", required: true, placeholder: "Enter purity levels achieved" },
     {
       key: "sterile_fill_capability",
       label: "Sterile Fill Capability",
@@ -166,7 +166,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Yes - In-house", "Yes - Contract", "In Development", "No"],
     },
-    { key: "cold_chain_storage_capabilities", label: "Cold Chain / Storage Capabilities", type: "textarea", required: false, placeholder: "Temperature-controlled storage, cold chain logistics, shipping capabilities" },
+    { key: "cold_chain_storage_capabilities", label: "Cold Chain / Storage Capabilities", type: "textarea", required: false, placeholder: "Enter cold chain / storage capabilities" },
   ],
   [
     {
@@ -183,18 +183,17 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["All batches", "Representative samples only", "On request only", "None currently"],
     },
-    { key: "testing_lab_name", label: "Testing Lab Name", type: "text", required: true, placeholder: "e.g. Janoshik Analytical, MZ Biolabs" },
+    { key: "testing_lab_name", label: "Testing Lab Name", type: "text", required: true, placeholder: "Enter testing lab name" },
     { key: "coa_lot_batch_specific", label: "COA Lot/Batch-Specific?", type: "select", required: true, options: ["Yes", "No"] },
     { key: "coa_publicly_viewable", label: "COA Publicly Viewable Before Purchase?", type: "select", required: true, options: ["Yes", "No"] },
-    { key: "coa_public_link", label: "COA Public Link", type: "url", required: true, placeholder: "https://" },
-    { key: "identity_confirmation_method", label: "Identity Confirmation Method", type: "text", required: true, placeholder: "e.g. Mass spectrometry" },
+    { key: "coa_public_link", label: "COA Public Link", type: "url", required: true, placeholder: "Enter COA public link" },
+    { key: "identity_confirmation_method", label: "Identity Confirmation Method", type: "text", required: true, placeholder: "Enter identity confirmation method" },
     {
       key: "testing_protocols",
       label: "Testing Protocols",
       type: "textarea",
       required: true,
-      placeholder: "HPLC, Mass Spec, Endotoxin, Sterility, Microbial, Identity, Potency",
-      helpText: "Describe every protocol you run - mentioning mass spectrometry / LC-MS / HPLC-MS earns bonus scoring points.",
+      placeholder: "Enter testing protocols",
     },
     {
       key: "stability_testing_program",
@@ -208,7 +207,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
       label: "Batch Documentation",
       type: "textarea",
       required: true,
-      placeholder: "Batch record system, COA generation process, document retention policy, and lot traceability practices (QR/blockchain, ERP tracking, etc.)",
+      placeholder: "Enter batch documentation",
     },
   ],
   [
@@ -219,8 +218,8 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Net 30", "Net 60", "50% upfront / 50% on delivery", "100% upfront", "Other"],
     },
-    { key: "existing_distribution_channels", label: "Existing Distribution Channels", type: "textarea", required: false, placeholder: "Current distribution partnerships, clinic networks, retail channels" },
-    { key: "references", label: "References", type: "textarea", required: true, placeholder: "2–3 current client references (company name, contact, relationship duration)" },
+    { key: "existing_distribution_channels", label: "Existing Distribution Channels", type: "textarea", required: false, placeholder: "Enter existing distribution channels" },
+    { key: "references", label: "References", type: "textarea", required: true, placeholder: "Enter references" },
     {
       key: "pricing_for_top_compounds",
       label: "Pricing for Top Compounds",
@@ -231,7 +230,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
     { key: "full_price_list_catalog", label: "Full Price List / Catalog", type: "file", required: false, helpText: "Upload your complete pricing sheet if you'd like the marketplace to consider your full catalog for future RFPs." },
   ],
   [
-    { key: "fda_registration_number", label: "FDA Registration Number", type: "text", required: false, placeholder: "FEI number" },
+    { key: "fda_registration_number", label: "FDA Registration Number", type: "text", required: false, placeholder: "Enter FDA registration number" },
     {
       key: "dea_registration",
       label: "DEA Registration",
@@ -239,7 +238,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Yes - Schedule III", "Yes - Schedule IV", "Yes - Schedule V", "In Progress", "No"],
     },
-    { key: "state_licenses", label: "State Licenses", type: "textarea", required: false, placeholder: "State - License Type - Number (all active licenses)" },
+    { key: "state_licenses", label: "State Licenses", type: "textarea", required: false, placeholder: "Enter state licenses" },
     {
       key: "buyer_eligibility",
       label: "Buyer Eligibility",
@@ -247,8 +246,8 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Institutional/researcher only", "Clinics only", "Clinics and individuals", "All accounts"],
     },
-    { key: "shipping_jurisdictions", label: "Shipping Jurisdictions", type: "text", required: true, placeholder: "Countries/states you ship to and from" },
-    { key: "last_fda_inspection_date", label: "Last FDA Inspection Date", type: "text", required: false, placeholder: "MM/YYYY or N/A" },
+    { key: "shipping_jurisdictions", label: "Shipping Jurisdictions", type: "text", required: true, placeholder: "Enter shipping jurisdictions" },
+    { key: "last_fda_inspection_date", label: "Last FDA Inspection Date", type: "text", required: false, placeholder: "Enter last FDA inspection date" },
     {
       key: "fda_inspection_outcome",
       label: "FDA Inspection Outcome",
@@ -256,9 +255,9 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: false,
       options: ["No Action Indicated (NAI)", "Voluntary Action Indicated (VAI)", "Official Action Indicated (OAI)", "Never Inspected"],
     },
-    { key: "manufacturing_certifications", label: "Manufacturing Certifications", type: "textarea", required: false, placeholder: "ISO, GMP, or other manufacturing certifications held (body, cert number, expiry)" },
-    { key: "warning_letters_regulatory_disclosure", label: "Warning Letters / Regulatory Disclosure", type: "textarea", required: false, placeholder: "FDA warning letters or enforcement actions in past 5 years. Enter 'None' if not applicable." },
-    { key: "insurance_coverage", label: "Insurance Coverage", type: "textarea", required: true, placeholder: "Product liability, general liability, professional liability coverage amounts" },
+    { key: "manufacturing_certifications", label: "Manufacturing Certifications", type: "textarea", required: false, placeholder: "Enter manufacturing certifications" },
+    { key: "warning_letters_regulatory_disclosure", label: "Warning Letters / Regulatory Disclosure", type: "textarea", required: false, placeholder: "Enter warning letters or regulatory disclosure" },
+    { key: "insurance_coverage", label: "Insurance Coverage", type: "textarea", required: true, placeholder: "Enter insurance coverage" },
   ],
   [
     { key: "doc_coa", label: "Certificate of Analysis (COA)", type: "file", required: true, helpText: "Most recent batch COA for primary peptide product" },
