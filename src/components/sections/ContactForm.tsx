@@ -7,6 +7,8 @@ const inquiryTypes = [
   {label: 'Growth Advisory / Syzygy',         value: 'growth'},
   {label: 'Web3 / Stratum',                   value: 'web3'},
   {label: 'Impact / ImpactSoul',              value: 'impact'},
+  {label: 'BioChain Sourcing (Buyer/Clinic)', value: 'biochain'},
+  {label: 'Peptide Supplier / Become a Vendor', value: 'peptide-supplier'},
   {label: 'General Inquiry',                  value: 'general'},
 ]
 
