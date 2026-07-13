@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import SupplierIntakeStage2Form from "@/components/supplier/SupplierIntakeStage2Form";
-import { STAGE2_TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 
 export const metadata: Metadata = {
   title: "Supplier Deep-Dive Application",
@@ -31,10 +30,10 @@ export default async function SupplierIntakeStage2Page({
             Supplier Due Diligence Form
           </h1>
           <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl" style={{ fontFamily: "var(--font-body)" }}>
-            Thanks for the first look - we&apos;d like the full picture. This {STAGE2_TOTAL_FIELD_COUNT}-field
-            form covers manufacturing, quality, commercial terms, regulatory compliance, and
-            document upload. Your progress saves automatically as you go, so it&apos;s safe to
-            come back to this same link later.
+            Thanks for the first look - we&apos;d like the full picture. This form covers
+            manufacturing, quality, commercial terms, regulatory compliance, and document
+            upload. Your progress saves automatically as you go, so it&apos;s safe to come
+            back to this same link later.
           </p>
         </div>
       </section>
