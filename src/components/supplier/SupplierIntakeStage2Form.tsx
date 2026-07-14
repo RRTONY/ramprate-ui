@@ -82,6 +82,17 @@ export default function SupplierIntakeStage2Form({ token }: { token: string }) {
             base64: await fileToBase64(value),
           });
         }
+      } else if (Array.isArray(value)) {
+        if (final) {
+          for (const file of value) {
+            fileEntries.push({
+              fieldName: name,
+              filename: file.name,
+              mimeType: file.type || "application/octet-stream",
+              base64: await fileToBase64(file),
+            });
+          }
+        }
       } else if (value !== undefined && value !== "") {
         formData[name] = value;
       }

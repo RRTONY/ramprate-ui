@@ -7,7 +7,8 @@ export type FieldType =
   | "select"
   | "file"
   | "year-select"
-  | "pricing-table";
+  | "pricing-table"
+  | "date";
 
 export interface FieldDef {
   key: string;
@@ -17,6 +18,8 @@ export interface FieldDef {
   options?: string[];
   placeholder?: string;
   helpText?: string;
+  /** file fields only - lets the supplier attach more than one document under this field instead of replacing the previous one. */
+  multiple?: boolean;
 }
 
 /**
@@ -227,7 +230,7 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       helpText: "List pricing for your top 3–5 volume compounds (compound, unit size, price per unit, MOQ tier).",
     },
-    { key: "full_price_list_catalog", label: "Full Price List / Catalog", type: "file", required: false, helpText: "Upload your complete pricing sheet if you'd like the marketplace to consider your full catalog for future RFPs." },
+    { key: "full_price_list_catalog", label: "Full Price List / Catalog", type: "file", required: false, multiple: true, helpText: "Upload your complete pricing sheet(s) if you'd like the marketplace to consider your full catalog for future RFPs. You can attach more than one file." },
   ],
   [
     { key: "fda_registration_number", label: "FDA Registration Number", type: "text", required: false, placeholder: "Enter FDA registration number" },
@@ -246,8 +249,8 @@ export const STAGE2_STEPS: FieldDef[][] = [
       required: true,
       options: ["Institutional/researcher only", "Clinics only", "Clinics and individuals", "All accounts"],
     },
-    { key: "shipping_jurisdictions", label: "Shipping Jurisdictions", type: "text", required: true, placeholder: "Enter shipping jurisdictions" },
-    { key: "last_fda_inspection_date", label: "Last FDA Inspection Date", type: "text", required: false, placeholder: "Enter last FDA inspection date" },
+    { key: "shipping_jurisdictions", label: "Shipping Jurisdictions", type: "textarea", required: true, placeholder: "List every state/country you're licensed and able to ship to" },
+    { key: "last_fda_inspection_date", label: "Last FDA Inspection Date", type: "date", required: false },
     {
       key: "fda_inspection_outcome",
       label: "FDA Inspection Outcome",

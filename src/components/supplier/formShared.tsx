@@ -13,7 +13,7 @@ export const lbl = `block text-[11px] font-semibold tracking-[0.16em] uppercase 
 export const fw = `flex flex-col`;
 export const req = <span className="text-[var(--gold)] ml-0.5">*</span>;
 
-export type FormValues = Record<string, string | File | undefined>;
+export type FormValues = Record<string, string | File | File[] | undefined>;
 
 // Lenient on purpose: accepts bare domains ("example.com") as well as full
 // URLs, unlike Yup's built-in .url() which requires a protocol.
@@ -57,12 +57,27 @@ export function fieldValidator(field: FieldDef) {
       return field.required ? Yup.mixed().required(requiredMsg) : Yup.mixed();
     case "pricing-table":
       return Yup.string().required(requiredMsg);
+    case "date": {
+      const validator = Yup.string().test(
+        "valid-date",
+        "Enter a valid date",
+        (v) => !v || /^\d{4}-\d{2}-\d{2}$/.test(v),
+      );
+      return field.required ? validator.required(requiredMsg) : validator;
+    }
     default: {
       if (field.key === "monthly_production_capacity") {
         return Yup.string().test(
           "has-digit",
           "Include a number (e.g. 50,000 units/month)",
           (v) => !v || /\d/.test(v),
+        );
+      }
+      if (field.key === "fda_registration_number") {
+        return Yup.string().test(
+          "valid-fda-reg",
+          "Enter a valid FDA registration number (6-10 digits)",
+          (v) => !v || /^\d{6,10}$/.test(v.replace(/[\s-]/g, "")),
         );
       }
       return field.required ? Yup.string().required(requiredMsg) : Yup.string();
@@ -271,6 +286,7 @@ export function FieldRenderer({
   }
 
   if (field.type === "file") {
+    const existingFiles = field.multiple ? ((v[field.key] as File[] | undefined) ?? []) : undefined;
     return (
       <div className={fw}>
         <label className={lbl} style={{ color: "oklch(0.52 0.12 70)" }}>
@@ -284,18 +300,46 @@ export function FieldRenderer({
         <input
           type="file"
           name={field.key}
+          multiple={field.multiple}
           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx,.csv"
           onChange={(e) => {
-            formik.setFieldValue(field.key, e.target.files?.[0]);
+            const chosen = Array.from(e.target.files ?? []);
+            if (field.multiple) {
+              formik.setFieldValue(field.key, [...(existingFiles ?? []), ...chosen]);
+            } else {
+              formik.setFieldValue(field.key, chosen[0]);
+            }
             formik.setFieldTouched(field.key, true);
+            // Reset so choosing the same file again (e.g. after removing it) still fires onChange.
+            e.target.value = "";
           }}
           className="text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:cursor-pointer"
         />
-        {v[field.key] instanceof File && (
-          <p className="mt-1 text-[10px] font-medium" style={{ color: "oklch(0.52 0.12 70)" }}>
-            {(v[field.key] as File).name}
-          </p>
-        )}
+        {field.multiple
+          ? (v[field.key] as File[] | undefined)?.map((f, i) => (
+              <div key={`${f.name}-${i}`} className="mt-1 flex items-center gap-2">
+                <p className="text-[10px] font-medium" style={{ color: "oklch(0.52 0.12 70)" }}>
+                  {f.name}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const next = [...((v[field.key] as File[]) ?? [])];
+                    next.splice(i, 1);
+                    formik.setFieldValue(field.key, next);
+                  }}
+                  aria-label={`Remove ${f.name}`}
+                  className="text-black/30 hover:text-black/60"
+                >
+                  <X size={11} />
+                </button>
+              </div>
+            ))
+          : v[field.key] instanceof File && (
+              <p className="mt-1 text-[10px] font-medium" style={{ color: "oklch(0.52 0.12 70)" }}>
+                {(v[field.key] as File).name}
+              </p>
+            )}
         <FieldError formik={formik} name={field.key} />
       </div>
     );
@@ -327,6 +371,8 @@ export function FieldRenderer({
             <option key={y}>{y}</option>
           ))}
         </select>
+      ) : field.type === "date" ? (
+        <input type="date" name={field.key} value={value} onChange={formik.handleChange} className={inp} />
       ) : (
         <input
           type={field.type === "email" ? "email" : field.type === "tel" ? "tel" : "text"}
