@@ -8,8 +8,9 @@ import {
   siteSettingsQuery,
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "About",
   description:
     "RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.",
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
     "enterprise advisory firm history",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/about");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const LinkedInIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">

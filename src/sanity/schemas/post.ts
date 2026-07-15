@@ -14,10 +14,7 @@ export default defineType({
     defineField({name: 'author', title: 'Author', type: 'reference', to: [{type: 'teamMember'}]}),
     defineField({name: 'categories', title: 'Categories', type: 'array', of: [{type: 'reference', to: [{type: 'category'}]}]}),
     defineField({name: 'body', title: 'Body', type: 'array', of: [{type: 'block'}, {type: 'image'}]}),
-    defineField({name: 'seo', title: 'SEO', type: 'object', fields: [
-      {name: 'title', type: 'string', title: 'SEO Title'},
-      {name: 'description', type: 'text', title: 'SEO Description'},
-    ]}),
+    defineField({name: 'seo', title: 'SEO', type: 'seo'}),
   ],
   preview: {select: {title: 'title', subtitle: 'publishedAt', media: 'mainImage'}},
 })

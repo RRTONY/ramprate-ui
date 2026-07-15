@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "NAD+",
     "healthcare organization",
     "clinic application",
+    "peptide clinic supplier",
+    "wholesale peptide supplier",
+    "bulk peptide sourcing",
+    "peptide distributor vetting",
   ],
 };
 

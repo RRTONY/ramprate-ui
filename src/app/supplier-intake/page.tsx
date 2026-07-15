@@ -19,6 +19,15 @@ export const metadata: Metadata = {
     "supplier application",
     "vendor application",
     "supplier fit index",
+    "third-party tested peptides",
+    "Certificate of Analysis (COA) verified",
+    "batch-specific COA",
+    "chain-of-custody tracking",
+    "cGMP certified peptide manufacturer",
+    "independent lab testing",
+    "peptide synthesis",
+    "peptide supply partner",
+    "peptide distributor vetting",
   ],
 };
 

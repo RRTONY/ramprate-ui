@@ -4,8 +4,9 @@ import JsonLd, {
   serviceJsonLd,
   breadcrumbJsonLd,
 } from "@/components/shared/JsonLd";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Expertise",
   description:
     "Five practices. One mission: transparency, skin in the game, and principals who execute.",
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/expertise" },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/expertise");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const practices = [
   {

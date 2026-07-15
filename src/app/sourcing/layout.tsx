@@ -5,8 +5,9 @@ import JsonLd, {
   faqJsonLd,
 } from "@/components/shared/JsonLd";
 import { pressingQuestions } from "./pressing-questions";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "IT & Data Center Sourcing Advisory",
   description:
     "Independent sourcing advisory for data center, cloud, GPU compute, and network. RampRate benchmarks pricing, negotiates SLAs, and helps enterprises stop overpaying suppliers.",
@@ -26,6 +27,11 @@ export const metadata: Metadata = {
     url: "https://ramprate.com/sourcing",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/sourcing");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 export default function SourcingLayout({
   children,

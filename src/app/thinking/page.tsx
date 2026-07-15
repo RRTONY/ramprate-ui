@@ -3,10 +3,11 @@ import Image from "next/image";
 import { client } from "@/lib/sanity/client";
 import { allThinkingPostsQuery } from "@/lib/sanity/queries";
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Thinking - 25 Years of Perspectives",
   description:
     "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on IT infrastructure, blockchain, and enterprise strategy.",
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
     "blockchain analysis",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/thinking");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 interface ThinkingPost {
   _id: string;

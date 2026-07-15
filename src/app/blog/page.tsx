@@ -11,6 +11,7 @@ import {
 import PostCard from "@/components/blog/PostCard";
 import Pagination from "@/components/blog/Pagination";
 import CategoryFilter from "@/components/blog/CategoryFilter";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 interface SanityPost {
   _id: string;
@@ -32,7 +33,7 @@ interface SanityCategory {
 export const revalidate = 60;
 const POSTS_PER_PAGE = 9;
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Blog - IT Sourcing & Infrastructure Insights",
   description:
     "Expert insights on enterprise IT sourcing, cloud optimization, data center procurement, network strategy, and emerging technology from the RampRate advisory team.",
@@ -64,6 +65,11 @@ export const metadata: Metadata = {
       "Expert insights on enterprise IT sourcing, cloud optimization, and emerging technology from RampRate.",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/blog");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 export default async function BlogPage({
   searchParams,

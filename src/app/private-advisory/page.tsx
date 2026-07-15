@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title:
     "Private Advisory - Because Some Challenges Require More Than an Advisor",
   description:
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
     "litigation support coordination",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/private-advisory");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const engageIcons = {
   source: (

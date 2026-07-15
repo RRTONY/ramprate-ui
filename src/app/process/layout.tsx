@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Our Process - How We Deliver",
   description:
     "RampRate's advisory process aligns the right roles, removes friction, and turns strategy into execution - from ideation to orchestration and measurable results.",
@@ -17,6 +18,11 @@ export const metadata: Metadata = {
     url: "https://ramprate.com/process",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/process");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 export default function ProcessLayout({
   children,

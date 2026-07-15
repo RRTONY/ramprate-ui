@@ -21,10 +21,7 @@ export default defineType({
         {name: 'testimonials', type: 'array', title: 'Testimonials', of: [{type: 'reference', to: [{type: 'testimonial'}]}]},
       ]},
     ]}),
-    defineField({name: 'seo', title: 'SEO', type: 'object', fields: [
-      {name: 'title', type: 'string', title: 'SEO Title'},
-      {name: 'description', type: 'text', title: 'SEO Description'},
-    ]}),
+    defineField({name: 'seo', title: 'SEO', type: 'seo'}),
   ],
   preview: {select: {title: 'title', subtitle: 'slug.current'}},
 })

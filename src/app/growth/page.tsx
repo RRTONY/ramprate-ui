@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
   description:
     "Anchor clients, advisors, capital, impact, strategy, and dispute resolution - all aligned to your vision. For Founders & Impactpreneurs.",
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
     "anchor client introductions",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/growth");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const highlightServices = [
   {

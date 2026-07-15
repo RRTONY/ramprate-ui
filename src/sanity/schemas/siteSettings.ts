@@ -15,6 +15,12 @@ export default defineType({
     defineField({name: 'email', title: 'Email', type: 'string'}),
     defineField({name: 'googleAnalyticsId', title: 'Google Analytics ID', type: 'string'}),
     defineField({
+      name: 'defaultSeo',
+      title: 'Default SEO',
+      type: 'seo',
+      description: 'Site-wide fallback used when a page has no Page SEO entry of its own.',
+    }),
+    defineField({
       name: 'socialLinks',
       title: 'Social Links',
       type: 'array',

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Careers - Work With Principals, Not Layers",
   description:
     "25 years. 250+ global brands. One senior team. No staffing pyramid. No middlemen. Just principals executing end-to-end. Join the coalition.",
@@ -18,6 +19,11 @@ export const metadata: Metadata = {
     siteName: "RampRate",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/careers");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 /* ─── Arrow icon shared across CTAs ─────────── */
 const Arrow = () => (

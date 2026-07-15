@@ -8,10 +8,14 @@ import clientLogo from './clientLogo'
 import confidentialTestimonial from './confidentialTestimonial'
 import siteSettings from './siteSettings'
 import page from './page'
+import pageSeo from './pageSeo'
+import seo from './seo'
 
 export const schemaTypes = [
   siteSettings,
   page,
+  pageSeo,
+  seo,
   teamMember,
   boardAdvisor,
   post,

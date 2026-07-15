@@ -30,14 +30,17 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   const {slug} = await params
   const post = await client.fetch(postBySlugQuery, {slug})
   if (!post) return {}
+  const ogImage = post.seo?.ogImage || post.mainImage
   return {
     title: post.seo?.metaTitle || post.title,
     description: post.seo?.metaDescription || post.excerpt,
-    keywords: [
-      ...(post.categories?.map((c: {title: string}) => c.title) ?? []),
-      'RampRate thinking',
-      'enterprise advisory insights',
-    ],
+    keywords: post.seo?.keywords?.length
+      ? post.seo.keywords
+      : [
+          ...(post.categories?.map((c: {title: string}) => c.title) ?? []),
+          'RampRate thinking',
+          'enterprise advisory insights',
+        ],
     alternates: {canonical: `/thinking/${slug}`},
     openGraph: {
       title: post.seo?.metaTitle || post.title,
@@ -46,7 +49,7 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
       url: `https://ramprate.com/thinking/${slug}`,
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,
-      ...(post.mainImage && {images: [urlFor(post.mainImage).width(1200).height(630).url()]}),
+      ...(ogImage && {images: [urlFor(ogImage).width(1200).height(630).url()]}),
     },
   }
 }

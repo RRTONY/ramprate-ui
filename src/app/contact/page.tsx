@@ -4,8 +4,9 @@ import {sanityFetch} from '@/lib/sanity/client'
 import {siteSettingsQuery} from '@/lib/sanity/queries'
 import {toTelHref} from '@/lib/utils'
 import ContactForm from '@/components/sections/ContactForm'
+import {getPageSeo, withSeoOverrides} from '@/lib/sanity/seo'
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: 'Contact',
   description: 'Start a conversation with RampRate. The first conversation is always free.',
   keywords: [
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
     'IT sourcing advisory contact',
     'enterprise advisory engagement',
   ],
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo('/contact')
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo)
 }
 
 const offices = [

@@ -16,7 +16,15 @@ export const siteSettingsQuery = groq`
     googleAnalyticsId,
     companyValues,
     timeline,
-    corporateFacts
+    corporateFacts,
+    defaultSeo
+  }
+`;
+
+// Page SEO overrides, keyed by route (e.g. "/", "/sourcing")
+export const pageSeoQuery = groq`
+  *[_type == "pageSeo" && route == $route][0]{
+    seo
   }
 `;
 

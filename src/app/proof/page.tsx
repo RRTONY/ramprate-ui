@@ -14,8 +14,9 @@ import ProofClient, {
   type SanityCaseStudy,
   type SanityConfidentialTestimonial,
 } from "./ProofClient";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Proof - Real Clients, Real Results",
   description:
     "24 years of trajectory-changing results. Fortune 500 case studies, client testimonials, and the data behind our 300%+ ROI guarantee.",
@@ -26,6 +27,11 @@ export const metadata: Metadata = {
     "Fortune 500 case studies",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/proof");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 export default async function ProofPage() {
   const [

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "Stratum - Web3 & Enterprise Blockchain Advisory",
   description:
     "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
     "enterprise blockchain consulting",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/web3");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const services = [
   {

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
-export const metadata: Metadata = {
+const FALLBACK_METADATA: Metadata = {
   title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
   description:
     "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
     "regenerative consulting",
   ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPageSeo("/impactsoul");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+}
 
 const services = [
   {
