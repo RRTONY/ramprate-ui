@@ -29,6 +29,12 @@ export const metadata: Metadata = {
     "peptide supply partner",
     "peptide distributor vetting",
   ],
+  alternates: { canonical: "/biochain/supplier-intake" },
+  openGraph: {
+    title: "Supplier Intake - Peptide Supply Partner Application | RampRate",
+    description: `RampRate's quick, ${STAGE1_TOTAL_FIELD_COUNT}-field first-touch application for peptide supply partners.`,
+    url: "https://ramprate.com/biochain/supplier-intake",
+  },
 };
 
 export default function SupplierIntakePage() {

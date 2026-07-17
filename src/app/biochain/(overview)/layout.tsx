@@ -4,7 +4,7 @@ import JsonLd, {
   breadcrumbJsonLd,
   faqJsonLd,
 } from "@/components/shared/JsonLd";
-import { faqs } from "../biochain/(overview)/faq-data";
+import { faqs } from "./faq-data";
 
 export const metadata: Metadata = {
   title: "BioChain Sourcing - Verified Biologics Procurement",
@@ -32,16 +32,16 @@ export const metadata: Metadata = {
     "Certificate of Analysis (COA) verified",
     "cGMP certified peptide manufacturer",
   ],
-  alternates: { canonical: "/biochain-sourcing" },
+  alternates: { canonical: "/biochain" },
   openGraph: {
     title: "BioChain Sourcing | RampRate",
     description:
       "Verified sourcing intelligence for peptides, exosomes, stem cells, and regenerative biologics.",
-    url: "https://ramprate.com/biochain-sourcing",
+    url: "https://ramprate.com/biochain",
   },
 };
 
-export default function BioChainSourcingLayout({
+export default function BioChainLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -53,7 +53,7 @@ export default function BioChainSourcingLayout({
           name: "BioChain Sourcing",
           description:
             "Verified sourcing advisory for peptides, exosomes, stem cells, and regenerative biologics - supplier qualification, benchmarked pricing, and contract negotiation.",
-          url: "https://ramprate.com/biochain-sourcing",
+          url: "https://ramprate.com/biochain",
           serviceType: "Biologics sourcing advisory",
         })}
       />
@@ -62,7 +62,7 @@ export default function BioChainSourcingLayout({
           { name: "Home", url: "https://ramprate.com" },
           {
             name: "BioChain Sourcing",
-            url: "https://ramprate.com/biochain-sourcing",
+            url: "https://ramprate.com/biochain",
           },
         ])}
       />

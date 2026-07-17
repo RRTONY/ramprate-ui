@@ -52,7 +52,7 @@ export const SITE_PAGES: SitePage[] = [
   },
   {
     title: "Supplier Intake - Become a Supplier",
-    path: "/supplier-intake",
+    path: "/biochain/supplier-intake",
     type: "page",
     keywords:
       "supplier vendor supplier intake vendor intake supplier registration vendor registration become a supplier manufacturing partner peptides peptide supply chain supplier application vendor application due diligence supplier fit index peptide supply partner peptide synthesis peptide distributor vetting third-party tested peptides Certificate of Analysis COA verified batch-specific COA chain-of-custody tracking cGMP certified peptide manufacturer independent lab testing",
@@ -61,7 +61,7 @@ export const SITE_PAGES: SitePage[] = [
   },
   {
     title: "Client Intake - BioChain Sourcing Application",
-    path: "/client-intake",
+    path: "/biochain/buyer-intake",
     type: "page",
     keywords:
       "client intake become a client become a customer patient intake clinic intake sourcing audit sourcing application biochain sourcing peptide sourcing exosomes stem cells NAD+ healthcare organization clinic application peptide clinic supplier wholesale peptide supplier bulk peptide sourcing peptide distributor vetting",
@@ -131,7 +131,7 @@ export const SITE_PAGES: SitePage[] = [
   },
   {
     title: "BioChain Sourcing - Verified Biologics Procurement",
-    path: "/biochain-sourcing",
+    path: "/biochain",
     type: "page",
     keywords:
       "biochain sourcing peptide sourcing exosome sourcing stem cell procurement regenerative medicine supply chain biologics supplier sourcing NAD+ sourcing verified biologics procurement healing economy peptides exosomes stem cells peptide marketplace peptide supplier network verified peptide suppliers B2B peptide sourcing research peptides BPC-157 TB-500 semaglutide tirzepatide research-use-only RUO peptides compounded pharmacy peptides peptide synthesis Certificate of Analysis COA verified cGMP certified peptide manufacturer",

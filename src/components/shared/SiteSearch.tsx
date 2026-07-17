@@ -30,6 +30,7 @@ const SUGGESTED = [
   "Tell me about Web3 advisory",
   "How does your fee model work?",
   "What is BioChain Sourcing?",
+  "How do I apply as a BioChain supplier or buyer?",
 ];
 
 function TypingDots() {

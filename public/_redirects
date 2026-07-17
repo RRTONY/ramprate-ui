@@ -261,10 +261,14 @@
 /connect                    /contact                     301
 /impact/                    /impactsoul                  301
 /impact                     /impactsoul                  301
-/biochain/                  /biochain-sourcing           301
-/biochain                   /biochain-sourcing           301
-/vendor-intake/             /supplier-intake              301
-/vendor-intake              /supplier-intake              301
+/vendor-intake/             /biochain/supplier-intake     301
+/vendor-intake              /biochain/supplier-intake     301
+
+# Supplier/client intake moved under /biochain (2026-07-18)
+/supplier-intake/           /biochain/supplier-intake     301
+/supplier-intake            /biochain/supplier-intake     301
+/client-intake/             /biochain/buyer-intake        301
+/client-intake              /biochain/buyer-intake        301
 
 # ===== WORDPRESS SYSTEM REDIRECTS =====
 /wp-admin/                  /                            301

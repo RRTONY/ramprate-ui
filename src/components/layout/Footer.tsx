@@ -18,6 +18,7 @@ const brandLinks = [
   { label: "RampRate", href: "/sourcing", desc: "Enterprise IT Sourcing" },
   { label: "Syzygy", href: "/growth", desc: "Growth Strategy" },
   { label: "Stratum", href: "/web3", desc: "Web3 & Blockchain" },
+  { label: "BioChain", href: "/biochain", desc: "Verified Bio-Sourcing" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "Impact & Regenerative" },
   {
     label: "Private Advisory",

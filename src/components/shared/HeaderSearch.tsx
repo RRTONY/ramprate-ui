@@ -14,7 +14,7 @@ interface Props {
 // Shown before the visitor has typed anything (2+ chars are required to hit
 // the live /api/search suggestions below) - a handful of hand-picked
 // destinations rather than a blank bar with nothing to click.
-const DEFAULT_SUGGESTION_PATHS = ["/proof", "/expertise", "/biochain-sourcing", "/blog"];
+const DEFAULT_SUGGESTION_PATHS = ["/proof", "/expertise", "/biochain", "/blog"];
 const DEFAULT_SUGGESTIONS = SITE_PAGES.filter((p) => DEFAULT_SUGGESTION_PATHS.includes(p.path));
 
 export default function HeaderSearch({ scrolled = false }: Props) {

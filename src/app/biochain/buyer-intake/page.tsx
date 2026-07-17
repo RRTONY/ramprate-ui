@@ -25,6 +25,12 @@ export const metadata: Metadata = {
     "bulk peptide sourcing",
     "peptide distributor vetting",
   ],
+  alternates: { canonical: "/biochain/buyer-intake" },
+  openGraph: {
+    title: "Client Intake Application - BioChain Sourcing | RampRate",
+    description: `RampRate BioChain Sourcing's ${TOTAL_FIELD_COUNT}-field client intake for clinics and healthcare organizations sourcing peptides, exosomes, stem cells, and NAD+.`,
+    url: "https://ramprate.com/biochain/buyer-intake",
+  },
 };
 
 export default function ClientIntakePage() {

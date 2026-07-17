@@ -11,13 +11,14 @@ const practices = [
   { label: "Sourcing", href: "/sourcing", desc: "Enterprise IT" },
   { label: "Syzygy", href: "/growth", desc: "Founders" },
   { label: "Stratum", href: "/web3", desc: "Web3" },
+  { label: "BioChain", href: "/biochain", desc: "Bio-Sourcing" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "NGOs" },
   { label: "Private Advisory", href: "/private-advisory", desc: "Executive" },
 ];
 
 const becomeA = [
-  { label: "Become a Supplier", href: "/supplier-intake", desc: "Supplier intake" },
-  { label: "Become a Client", href: "/client-intake", desc: "BioChain sourcing" },
+  { label: "Become a Supplier", href: "/biochain/supplier-intake", desc: "Supplier intake" },
+  { label: "Become a Client", href: "/biochain/buyer-intake", desc: "BioChain sourcing" },
 ];
 
 const navItems = [
