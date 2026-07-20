@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import ClientIntakeForm from "@/components/biochain/ClientIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/client-intake-fields";
 
@@ -71,7 +72,9 @@ export default function ClientIntakePage() {
       {/* Multi-step form */}
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <ClientIntakeForm />
+          <Suspense fallback={null}>
+            <ClientIntakeForm />
+          </Suspense>
         </div>
       </section>
     </main>

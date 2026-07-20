@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ComponentType } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFormik, type FormikProps } from "formik";
 import * as Yup from "yup";
 import {
@@ -17,7 +18,10 @@ import {
   ShieldCheck,
   Users,
   Target,
+  ChevronDown,
+  Info,
 } from "lucide-react";
+import { PRODUCT_CATEGORIES, catField } from "@/lib/biochain-catalogue";
 
 const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 const ta = `${inp} resize-y min-h-[100px]`;
@@ -88,195 +92,6 @@ const PAIN_POINTS_OPTIONS = [
   "No market pricing intelligence",
   "Other",
 ];
-
-const PRODUCT_CATEGORIES: { name: string; items: string[] }[] = [
-  {
-    name: "Tissue Repair & Recovery",
-    items: [
-      "BPC-157",
-      "BPC-157 (oral / arginate form)",
-      "TB-500 (Thymosin Beta-4)",
-      "GHK-Cu (Copper Peptide)",
-      "KPV",
-      "LL-37",
-      "Thymalin",
-      "Thymosin Alpha-1 (Ta1)",
-      "AOD-9604",
-      "SNAP-8",
-      "Larazotide",
-      "Desmopressin",
-    ],
-  },
-  {
-    name: "Growth Hormone & Anti-Aging",
-    items: [
-      "Ipamorelin",
-      "CJC-1295 (no DAC)",
-      "CJC-1295 (with DAC)",
-      "GHRP-2",
-      "GHRP-6",
-      "Sermorelin",
-      "Tesamorelin",
-      "Hexarelin",
-      "MK-677 (Ibutamoren)",
-      "Epithalon (Epitalon)",
-      "IGF-1 (standard)",
-      "IGF-1 LR3",
-      "MGF (Mechano Growth Factor)",
-    ],
-  },
-  {
-    name: "Metabolic, Weight & GLP-1",
-    items: [
-      "Semaglutide",
-      "Tirzepatide",
-      "Retatrutide",
-      "Liraglutide",
-      "MOTS-c",
-      "5-Amino-1MQ",
-      "AOD-9604 (metabolic focus)",
-      "Insulin (compounded)",
-      "Other GLP-1 / GIP Analog",
-    ],
-  },
-  {
-    name: "Cognitive & Neurological",
-    items: [
-      "Semax",
-      "Selank",
-      "Dihexa",
-      "P21",
-      "Cerebrolysin",
-      "Pinealon",
-      "Cortagen",
-      "VIP (Vasoactive Intestinal Peptide)",
-      "DSIP (Delta Sleep-Inducing Peptide)",
-      "Noopept",
-    ],
-  },
-  {
-    name: "Longevity & Cellular Health",
-    items: [
-      "Humanin",
-      "SS-31 (Elamipretide)",
-      "FOXO4-DRI",
-      "Klotho",
-      "NAD+ (IV / injectable)",
-      "NMN (pharmaceutical grade)",
-      "NR (Nicotinamide Riboside)",
-      "Rapamycin (compounded)",
-      "Vilon (Lys-Glu)",
-      "Vesugen (vascular bioregulator)",
-    ],
-  },
-  {
-    name: "Russian Bioregulator Peptides (Khavinson)",
-    items: [
-      "Sigumir (cartilage / joints)",
-      "Cartalax (cartilage)",
-      "Crystagen (immune)",
-      "Testagen (testosterone support)",
-      "Ovagen (ovarian)",
-      "Prostamax (prostate)",
-      "Retinalamin (retinal / eye)",
-      "Cerluten (brain / CNS)",
-      "Other Khavinson Bioregulator",
-    ],
-  },
-  {
-    name: "Sexual Health & Hormone Support",
-    items: [
-      "PT-141 (Bremelanotide)",
-      "Kisspeptin",
-      "Oxytocin (compounded)",
-      "Gonadorelin / GnRH",
-      "HCG (Human Chorionic Gonadotropin)",
-      "Testosterone (compounded)",
-      "Estradiol (compounded)",
-      "Progesterone (compounded)",
-      "Tadalafil (compounded)",
-      "DHEA (compounded)",
-    ],
-  },
-  {
-    name: "Immune & Anti-Inflammatory",
-    items: [
-      "Thymosin Alpha-1 (immune focus)",
-      "KPV (gut / anti-inflammatory)",
-      "LL-37 (antimicrobial)",
-      "BPC-157 (gut / immune)",
-      "Thymulin",
-      "Splenopentin",
-      "Thymosin Beta-4 Fragment (immune)",
-    ],
-  },
-  {
-    name: "Skin, Aesthetic & Hair",
-    items: [
-      "GHK-Cu (topical)",
-      "Argireline (Acetyl Hexapeptide-3)",
-      "Matrixyl (Palmitoyl Pentapeptide)",
-      "Leuphasyl",
-      "Melanotan II",
-      "Melanotan I (Afamelanotide)",
-      "Hair Peptide Complexes",
-      "PTD-DBM / Regenerative Hair Peptides",
-      "Other Aesthetic Peptides",
-    ],
-  },
-  {
-    name: "Performance & Muscle",
-    items: [
-      "Follistatin FST-344",
-      "PEG-MGF",
-      "ACE-031",
-      "BPC-157 (performance / tendon)",
-      "TB-500 (performance / recovery)",
-      "Thymosin Beta-4 (sports recovery)",
-    ],
-  },
-  {
-    name: "IV Nutrients & Adjuncts",
-    items: [
-      "Glutathione (IV push)",
-      "Vitamin C (high-dose IV)",
-      "Alpha Lipoic Acid (IV)",
-      "Myers' Cocktail base",
-      "Phosphatidylcholine (IV)",
-      "NAD+ (IV drip, high-dose)",
-      "Thyroid (compounded T3/T4)",
-      "Other IV compound / nutrient",
-    ],
-  },
-  {
-    name: "Biologics — Exosomes & Stem Cells",
-    items: [
-      "MSC-Derived Exosomes (IV-grade)",
-      "Extracellular Matrix (EXM)",
-      "MSC Secretomes (EXS)",
-      "Umbilical Cord MSCs",
-      "Wharton's Jelly",
-      "Amniotic Membrane",
-      "Platelet-Rich Plasma (PRP kits)",
-      "Growth Factors (EGF, FGF, VEGF)",
-    ],
-  },
-  {
-    name: "Botanicals, Adaptogens & Other",
-    items: [
-      "Adaptogenic APIs",
-      "Custom Formulation / White-Label",
-      "Other — not listed above",
-    ],
-  },
-];
-
-function catField(name: string) {
-  return `products_${name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "")}`;
-}
 
 const DELIVERY_FORMAT_OPTIONS = [
   "Lyophilized dry powder — single-use vials (reconstitute with BAC water)",
@@ -552,22 +367,68 @@ const REFERRAL_OPTIONS = [
 
 const requiredStr = () => Yup.string().required("Required");
 
-const validationSchema = Yup.object().shape({
-  org_name: requiredStr(),
-  org_type: requiredStr(),
-  contact_name: requiredStr(),
-  contact_email: Yup.string().email("Invalid email").required("Required"),
-  current_suppliers: Yup.array()
-    .of(Yup.string())
-    .min(1, "Add at least one supplier"),
-  monthly_volume: requiredStr(),
-  monthly_spend: requiredStr(),
-  state: requiredStr(),
-  license_type: requiredStr(),
-  personal_use: requiredStr(),
-  primary_goal: requiredStr(),
-  timeline: requiredStr(),
-});
+// Lenient on purpose: accepts bare domains ("example.com") as well as full
+// URLs, unlike Yup's built-in .url() which requires a protocol.
+const WEBSITE_RE = /^(https?:\/\/)?([\da-z-]+\.)+[a-z]{2,}([/?#].*)?$/i;
+
+const PHONE_ALLOWED_CHARS_RE = /^\+?[\d\s().-]+$/;
+function isValidPhone(value: string): boolean {
+  if (!PHONE_ALLOWED_CHARS_RE.test(value)) return false;
+  const digitCount = value.replace(/\D/g, "").length;
+  return digitCount >= 7 && digitCount <= 15;
+}
+
+const CURRENCY_RE = /^\$?\d[\d,]*(\.\d{1,2})?$/;
+function isValidCurrency(value: string): boolean {
+  return CURRENCY_RE.test(value.trim());
+}
+
+const PRODUCT_FIELD_NAMES = PRODUCT_CATEGORIES.map((c) => catField(c.name));
+
+const currencyTest = (name: string) =>
+  Yup.string().test(name, "Enter a number (e.g. 8,000)", (v) => !v || isValidCurrency(v));
+
+const validationSchema = Yup.object()
+  .shape({
+    org_name: requiredStr(),
+    org_type: requiredStr(),
+    website: Yup.string().test("valid-website", "Enter a valid website", (v) => !v || WEBSITE_RE.test(v)),
+    contact_name: requiredStr(),
+    contact_email: Yup.string().email("Invalid email").required("Required"),
+    contact_phone: Yup.string().test("valid-phone", "Enter a valid phone number", (v) => !v || isValidPhone(v)),
+    current_suppliers: Yup.array()
+      .of(Yup.string())
+      .min(1, "Add at least one supplier"),
+    pain_points_other_text: Yup.string().test(
+      "required-if-other",
+      "Please specify",
+      function (value) {
+        const painPoints = this.parent.pain_points as string[] | undefined;
+        if (painPoints?.includes("Other")) return !!value && value.trim().length > 0;
+        return true;
+      },
+    ),
+    monthly_volume: requiredStr(),
+    delivery_regions: Yup.array().of(Yup.string()).min(1, "Select at least one region"),
+    monthly_spend: requiredStr(),
+    spend_peptides: currencyTest("valid-currency-peptides"),
+    spend_exosomes: currencyTest("valid-currency-exosomes"),
+    spend_stemcell: currencyTest("valid-currency-stemcell"),
+    spend_nad: currencyTest("valid-currency-nad"),
+    state: requiredStr(),
+    license_type: requiredStr(),
+    personal_use: requiredStr(),
+    primary_goal: requiredStr(),
+    timeline: requiredStr(),
+  })
+  .test("at-least-one-product", "Select at least one product from the catalog below", function (values) {
+    const record = values as Record<string, unknown>;
+    const anySelected = PRODUCT_FIELD_NAMES.some(
+      (name) => Array.isArray(record[name]) && (record[name] as string[]).length > 0,
+    );
+    if (anySelected) return true;
+    return this.createError({ path: "products_any", message: "Select at least one product from the catalog below" });
+  });
 
 const STEP_META = [
   { section: "YOUR ORGANIZATION", title: "Tell us about your organization", minutes: 2, Icon: Building2 },
@@ -584,8 +445,8 @@ const TOTAL_MINUTES = STEP_META.reduce((sum, s) => sum + s.minutes, 0);
 
 const STEP_FIELDS: string[][] = [
   ["org_name", "org_type", "website", "contact_name", "contact_title", "contact_email", "contact_phone", "num_locations", "patients_per_month"],
-  ["current_suppliers", "supplier_discovery", "sourcing_satisfaction", "pain_points"],
-  [...PRODUCT_CATEGORIES.map((c) => catField(c.name)), "delivery_formats", "monthly_volume", "priority_category"],
+  ["current_suppliers", "supplier_discovery", "sourcing_satisfaction", "pain_points", "pain_points_other_text"],
+  [...PRODUCT_FIELD_NAMES, "products_any", "delivery_formats", "monthly_volume", "priority_category"],
   ["pricing_origin", "pricing_notes", "delivery_regions", "cold_chain", "delivery_urgency", "trade_reference_types", "trade_references_text"],
   ["monthly_spend", "spend_peptides", "spend_exosomes", "spend_stemcell", "spend_nad", "contract_status"],
   ["state", "license_type", "dea_registration", "physician_oversight", "fda_warning"],
@@ -594,6 +455,20 @@ const STEP_FIELDS: string[][] = [
 ];
 
 /* ── Shared field primitives ── */
+
+function Tooltip({ text }: { text: string }) {
+  return (
+    <span className="relative inline-flex group ml-1.5 align-middle normal-case tracking-normal">
+      <Info size={13} style={{ color: "oklch(0.6 0.05 60)" }} />
+      <span
+        className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-60 px-3 py-2 rounded-lg text-[11px] font-normal leading-relaxed opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity z-20"
+        style={{ background: "oklch(0.2 0.02 50)", color: "white", fontFamily: "var(--font-body)" }}
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
 
 function FieldError({ formik, name }: { formik: FormikProps<FormValues>; name: string }) {
   const message = formik.touched[name] && formik.errors[name];
@@ -636,6 +511,44 @@ function TextField({
         placeholder={placeholder}
         className={inp}
       />
+      <FieldError formik={formik} name={name} />
+    </div>
+  );
+}
+
+function CurrencyField({
+  formik,
+  name,
+  label,
+  placeholder,
+}: {
+  formik: FormikProps<FormValues>;
+  name: string;
+  label: string;
+  placeholder?: string;
+}) {
+  return (
+    <div className={fw}>
+      <label className={lbl} style={{ color: labelColor }}>
+        {label}
+      </label>
+      <div className="relative">
+        <span
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-sm select-none"
+          style={{ color: "oklch(0.5 0.02 50)" }}
+        >
+          $
+        </span>
+        <input
+          type="text"
+          inputMode="decimal"
+          name={name}
+          value={(formik.values[name] as string) ?? ""}
+          onChange={formik.handleChange}
+          placeholder={placeholder}
+          className={`${inp} pl-8`}
+        />
+      </div>
       <FieldError formik={formik} name={name} />
     </div>
   );
@@ -722,20 +635,31 @@ function CheckboxGroup({
   formik,
   name,
   label,
+  tooltip,
   options,
   columns = 3,
+  required,
+  exclusiveOptions,
 }: {
   formik: FormikProps<FormValues>;
   name: string;
   label?: string;
+  tooltip?: string;
   options: string[];
   columns?: number;
+  required?: boolean;
+  exclusiveOptions?: string[];
 }) {
   const selected = (formik.values[name] as string[]) ?? [];
   function toggle(opt: string) {
-    const next = selected.includes(opt)
-      ? selected.filter((o) => o !== opt)
-      : [...selected, opt];
+    let next: string[];
+    if (selected.includes(opt)) {
+      next = selected.filter((o) => o !== opt);
+    } else if (exclusiveOptions?.includes(opt) || exclusiveOptions?.some((ex) => selected.includes(ex))) {
+      next = [opt];
+    } else {
+      next = [...selected, opt];
+    }
     formik.setFieldValue(name, next);
   }
   return (
@@ -743,6 +667,8 @@ function CheckboxGroup({
       {label && (
         <label className={lbl} style={{ color: labelColor }}>
           {label}
+          {required && req}
+          {tooltip && <Tooltip text={tooltip} />}
         </label>
       )}
       <div className={`grid grid-cols-1 ${GRID_COLS[columns] ?? GRID_COLS[3]} gap-2.5`}>
@@ -771,6 +697,7 @@ function CheckboxGroup({
           );
         })}
       </div>
+      <FieldError formik={formik} name={name} />
     </div>
   );
 }
@@ -917,35 +844,108 @@ function Step1({ formik }: StepProps) {
 }
 
 function Step2({ formik }: StepProps) {
+  const painPoints = (formik.values.pain_points as string[]) ?? [];
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       <TagInput formik={formik} name="current_suppliers" label="Current Primary Suppliers" required placeholder="Search or type a supplier name, press Enter to add..." />
-      <SelectField formik={formik} name="supplier_discovery" label="How Did You Find Your Current Suppliers?" options={SUPPLIER_DISCOVERY_OPTIONS} full />
+      <CheckboxGroup formik={formik} name="supplier_discovery" label="How Did You Find Your Current Suppliers? Select All That Apply." options={SUPPLIER_DISCOVERY_OPTIONS} />
       <SelectField formik={formik} name="sourcing_satisfaction" label="Overall Satisfaction With Current Sourcing" options={SATISFACTION_OPTIONS} full />
-      <CheckboxGroup formik={formik} name="pain_points" label="What Are Your Biggest Sourcing Pain Points?" options={PAIN_POINTS_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="pain_points"
+        label="What Are Your Biggest Sourcing Pain Points?"
+        tooltip="COA = Certificate of Analysis, the lab report verifying a product's identity, purity, and safety."
+        options={PAIN_POINTS_OPTIONS}
+      />
+      {painPoints.includes("Other") && (
+        <TextField formik={formik} name="pain_points_other_text" label="Please Specify" required placeholder="Describe the pain point" full />
+      )}
+    </div>
+  );
+}
+
+function CatalogCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div
+      className="sm:col-span-2 rounded-xl border p-5"
+      style={{ borderColor: "oklch(0.88 0.02 70)", background: "oklch(0.98 0.01 75)" }}
+    >
+      <p className={lbl} style={{ color: labelColor }}>
+        {title}
+      </p>
+      <div className="grid sm:grid-cols-2 gap-5 mt-4">{children}</div>
+    </div>
+  );
+}
+
+function CategoryAccordion({ formik, category }: { formik: FormikProps<FormValues>; category: { name: string; items: string[] } }) {
+  const [open, setOpen] = useState(false);
+  const fieldName = catField(category.name);
+  const selected = (formik.values[fieldName] as string[]) ?? [];
+
+  return (
+    <div className="sm:col-span-2 rounded-lg border overflow-hidden" style={{ borderColor: "oklch(0.88 0.02 70)", background: "white" }}>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between px-4 py-3.5 text-left"
+      >
+        <span className="text-sm font-semibold" style={{ fontFamily: "var(--font-body)", color: "oklch(0.25 0.02 50)" }}>
+          {category.name}
+        </span>
+        <span className="flex items-center gap-3 shrink-0">
+          {selected.length > 0 && (
+            <span
+              className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+              style={{ background: "oklch(0.72 0.15 75 / 0.15)", color: "oklch(0.45 0.12 70)" }}
+            >
+              {selected.length} selected
+            </span>
+          )}
+          <ChevronDown
+            size={16}
+            style={{ transform: open ? "rotate(180deg)" : undefined, transition: "transform 0.2s" }}
+          />
+        </span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4">
+          <CheckboxGroup formik={formik} name={fieldName} options={category.items} />
+        </div>
+      )}
     </div>
   );
 }
 
 function Step3({ formik }: StepProps) {
+  const productsError = formik.touched.products_any && formik.errors.products_any;
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      {PRODUCT_CATEGORIES.map((cat) => (
-        <div key={cat.name} className="sm:col-span-2 contents">
-          <Divider label={cat.name} />
-          <CheckboxGroup formik={formik} name={catField(cat.name)} options={cat.items} />
+      {productsError && (
+        <p className="sm:col-span-2 text-[11px] font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+          {String(productsError)}
+        </p>
+      )}
+
+      <CatalogCard title="Full Product Catalog — Select At Least One">
+        <div className="sm:col-span-2 flex flex-col gap-2.5">
+          {PRODUCT_CATEGORIES.map((cat) => (
+            <CategoryAccordion key={cat.name} formik={formik} category={cat} />
+          ))}
         </div>
-      ))}
+      </CatalogCard>
 
-      <Divider label="Delivery Format & Form Factor" />
-      <SectionIntro>
-        Select every format you currently purchase or need. Supply chain, cold-chain, compliance posture, and pricing all differ materially by form. This is one of the highest-leverage questions in the intake.
-      </SectionIntro>
-      <CheckboxGroup formik={formik} name="delivery_formats" options={DELIVERY_FORMAT_OPTIONS} />
+      <CatalogCard title="Delivery Format & Form Factor">
+        <SectionIntro>
+          Select every format you currently purchase or need. Supply chain, cold-chain, compliance posture, and pricing all differ materially by form. This is one of the highest-leverage questions in the intake.
+        </SectionIntro>
+        <CheckboxGroup formik={formik} name="delivery_formats" options={DELIVERY_FORMAT_OPTIONS} />
+      </CatalogCard>
 
-      <Divider label="Volume" />
-      <SelectField formik={formik} name="monthly_volume" label="Estimated Total Monthly Quantity Across All Peptides / Biologics" required options={MONTHLY_VOLUME_OPTIONS} full />
-      <SelectField formik={formik} name="priority_category" label="Highest-Priority Product Category Right Now" options={PRIORITY_CATEGORY_OPTIONS} full />
+      <CatalogCard title="Volume">
+        <SelectField formik={formik} name="monthly_volume" label="Estimated Total Monthly Quantity Across All Peptides / Biologics" required options={MONTHLY_VOLUME_OPTIONS} full />
+        <SelectField formik={formik} name="priority_category" label="Highest-Priority Product Category Right Now" options={PRIORITY_CATEGORY_OPTIONS} full />
+      </CatalogCard>
     </div>
   );
 }
@@ -957,14 +957,21 @@ function Step4({ formik }: StepProps) {
       <SectionIntro>
         Chinese API manufacturers often offer 40–70% lower pricing on peptides with comparable purity when properly vetted. US-manufactured carries premium pricing and simpler regulatory positioning. Select all you are open to.
       </SectionIntro>
-      <CheckboxGroup formik={formik} name="pricing_origin" options={PRICING_ORIGIN_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="pricing_origin"
+        label="Select All You're Open To"
+        tooltip="API = Active Pharmaceutical Ingredient, the raw compound itself. cGMP = current Good Manufacturing Practice, an FDA-recognized quality standard for the facility that makes it."
+        options={PRICING_ORIGIN_OPTIONS}
+        exclusiveOptions={["US-sourced only", "No preference — advise us"]}
+      />
       <TextAreaField formik={formik} name="pricing_notes" label="Any Specific Pricing Notes or Hard Requirements?" placeholder="e.g. Must have COA from US-accredited lab regardless of origin. Or: open to Chinese API for research peptides, US-only for injectables." />
 
       <Divider label="Key Delivery Regions" />
       <SectionIntro>
         Select all regions where you currently operate or plan to distribute. This shapes cold-chain logistics and customs strategy.
       </SectionIntro>
-      <CheckboxGroup formik={formik} name="delivery_regions" options={DELIVERY_REGION_OPTIONS} />
+      <CheckboxGroup formik={formik} name="delivery_regions" label="Select All That Apply" required options={DELIVERY_REGION_OPTIONS} />
       <SelectField formik={formik} name="cold_chain" label="Cold-Chain / Temperature-Controlled Shipping Required?" options={COLD_CHAIN_OPTIONS} />
       <SelectField formik={formik} name="delivery_urgency" label="Typical Delivery Urgency" options={DELIVERY_URGENCY_OPTIONS} />
 
@@ -986,12 +993,12 @@ function Step5({ formik }: StepProps) {
     <div className="grid sm:grid-cols-2 gap-5">
       <SelectField formik={formik} name="monthly_spend" label="Estimated Total Monthly Biologics Spend (All Categories)" required options={MONTHLY_SPEND_OPTIONS} full />
 
-      <Divider label="Breakdown by Category (Optional but Valuable)" />
-      <SectionIntro>Even rough estimates help us prioritize where to find savings first.</SectionIntro>
-      <TextField formik={formik} name="spend_peptides" label="Peptides — Monthly Est." placeholder="e.g. $8,000" />
-      <TextField formik={formik} name="spend_exosomes" label="Exosomes / Biologics — Monthly Est." placeholder="e.g. $25,000" />
-      <TextField formik={formik} name="spend_stemcell" label="Stem Cell Products — Monthly Est." placeholder="e.g. $12,000" />
-      <TextField formik={formik} name="spend_nad" label="NAD+ / Longevity — Monthly Est." placeholder="e.g. $3,000" />
+      <Divider label="Breakdown by Category (Optional but Valuable, USD)" />
+      <SectionIntro>Even rough estimates help us prioritize where to find savings first. Figures are in US dollars.</SectionIntro>
+      <CurrencyField formik={formik} name="spend_peptides" label="Peptides — Monthly Est." placeholder="8,000" />
+      <CurrencyField formik={formik} name="spend_exosomes" label="Exosomes / Biologics — Monthly Est." placeholder="25,000" />
+      <CurrencyField formik={formik} name="spend_stemcell" label="Stem Cell Products — Monthly Est." placeholder="12,000" />
+      <CurrencyField formik={formik} name="spend_nad" label="NAD+ / Longevity — Monthly Est." placeholder="3,000" />
 
       <Divider label="Contract Status" />
       <SelectField formik={formik} name="contract_status" label="Do You Have Long-Term Supply Contracts in Place With Current Suppliers?" options={CONTRACT_STATUS_OPTIONS} full />
@@ -1048,6 +1055,45 @@ function Step8({ formik }: StepProps) {
 
 const STEPS: ComponentType<StepProps>[] = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8];
 
+function ReviewSummary({
+  formik,
+  onEdit,
+}: {
+  formik: FormikProps<FormValues>;
+  onEdit: (step: number) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-6">
+      {STEP_META.map((meta, i) => {
+        const StepComp = STEPS[i];
+        return (
+          <div key={meta.title} className="rounded-xl border p-5 sm:p-6" style={{ borderColor: "oklch(0.88 0.02 70)" }}>
+            <div className="flex items-center justify-between mb-5">
+              <span
+                className="text-xs font-semibold tracking-[0.16em] uppercase"
+                style={{ color: labelColor, fontFamily: "var(--font-body)" }}
+              >
+                {i + 1}. {meta.title}
+              </span>
+              <button
+                type="button"
+                onClick={() => onEdit(i)}
+                className="text-xs font-semibold px-3 py-1.5 rounded-md border transition-colors hover:bg-[oklch(0.97_0.02_75)]"
+                style={{ borderColor: "var(--gold)", color: "var(--gold)", fontFamily: "var(--font-body)" }}
+              >
+                Edit
+              </button>
+            </div>
+            <fieldset disabled className="opacity-90">
+              <StepComp formik={formik} />
+            </fieldset>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ── Progress bar ── */
 
 function ProgressBar({ active }: { active: number }) {
@@ -1092,20 +1138,33 @@ function ProgressBar({ active }: { active: number }) {
 
 /* ── Main component ── */
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve((reader.result as string).split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+function flattenValues(values: FormValues, onlyFields?: string[]): Record<string, string> {
+  const formData: Record<string, string> = {};
+  for (const [name, value] of Object.entries(values)) {
+    if (onlyFields && !onlyFields.includes(name)) continue;
+    if (value instanceof File) continue;
+    if (Array.isArray(value)) {
+      if (value.length) formData[name] = value.join(", ");
+    } else if (value !== undefined) {
+      formData[name] = value;
+    }
+  }
+  return formData;
 }
 
+type Phase = "stage1" | "stage1-submitted" | "loading-resume" | "invalid-token" | "stage2";
+
 export default function ClientIntakeForm() {
-  const [active, setActive] = useState(0);
+  const searchParams = useSearchParams();
+  const resumeToken = searchParams.get("token");
+
+  const [phase, setPhase] = useState<Phase>(resumeToken ? "loading-resume" : "stage1");
+  const [active, setActive] = useState(resumeToken ? 1 : 0);
+  const [reviewing, setReviewing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resumeError, setResumeError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement | null>(null);
 
   const formik = useFormik<FormValues>({
@@ -1120,43 +1179,79 @@ export default function ClientIntakeForm() {
       setSubmitting(true);
 
       try {
-        const formData: Record<string, string> = {};
-        const fileEntries: { fieldName: string; filename: string; mimeType: string; base64: string }[] = [];
-
-        for (const [name, value] of Object.entries(values)) {
-          if (value instanceof File) {
-            fileEntries.push({
-              fieldName: name,
-              filename: value.name,
-              mimeType: value.type || "application/octet-stream",
-              base64: await fileToBase64(value),
-            });
-          } else if (Array.isArray(value)) {
-            if (value.length) formData[name] = value.join(", ");
-          } else if (value !== undefined) {
-            formData[name] = value;
-          }
-        }
-
         const res = await fetch("/api/client-intake", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            formData,
-            files: fileEntries,
+            formData: flattenValues(values),
+            files: [],
             sourceUrl: window.location.href,
+            formStage: "stage2-client-intake",
+            token: resumeToken,
+            final: true,
           }),
         });
-
-        if (!res.ok) throw new Error("Submission failed");
+        const result = await res.json().catch(() => ({ ok: res.ok }));
+        if (!res.ok || result.ok === false) throw new Error(result.error || "Submission failed");
         setSubmitted(true);
-      } catch {
-        setError("Something went wrong submitting your application. Please try again or email us directly.");
+      } catch (err) {
+        setError(err instanceof Error && err.message ? err.message : "Something went wrong submitting your application. Please try again or email us directly.");
       } finally {
         setSubmitting(false);
       }
     },
   });
+
+  // Prefill from the resume link a client gets by email once a RampRate
+  // team member approves their Stage 1 (org + contact) submission - see
+  // scripts/supplier-intake-apps-script.gs, which mirrors the same
+  // human-approval-gated pattern already used for supplier onboarding.
+  useEffect(() => {
+    if (!resumeToken) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/client-intake?token=${encodeURIComponent(resumeToken)}`);
+        const result = await res.json();
+        if (cancelled) return;
+        if (!result.ok) {
+          setResumeError(result.error || "This link is invalid or has expired.");
+          setPhase("invalid-token");
+          return;
+        }
+        formik.setValues(result.values as FormValues);
+        setPhase("stage2");
+      } catch {
+        if (cancelled) return;
+        setResumeError("We couldn't load your saved progress. Please try again or email us directly.");
+        setPhase("invalid-token");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeToken]);
+
+  async function saveDraft() {
+    if (!resumeToken) return;
+    try {
+      await fetch("/api/client-intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formData: flattenValues(formik.values),
+          files: [],
+          sourceUrl: window.location.href,
+          formStage: "stage2-client-intake",
+          token: resumeToken,
+          final: false,
+        }),
+      });
+    } catch {
+      // Best-effort autosave - final submit re-validates and re-sends on its own.
+    }
+  }
 
   async function goToStep(target: number) {
     if (target > active) {
@@ -1170,9 +1265,160 @@ export default function ClientIntakeForm() {
         formik.setTouched(touched);
         return;
       }
+      void saveDraft();
     }
     setActive(target);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function proceedToReview() {
+    const errors = await formik.validateForm();
+    const stepErrorFields = STEP_FIELDS[active].filter((name) => errors[name]);
+    if (stepErrorFields.length) {
+      const touched = { ...formik.touched };
+      stepErrorFields.forEach((name) => {
+        touched[name] = true;
+      });
+      formik.setTouched(touched);
+      return;
+    }
+    void saveDraft();
+    setReviewing(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function submitStage1() {
+    if (honeypotRef.current?.value) return;
+
+    const errors = await formik.validateForm();
+    const stepErrorFields = STEP_FIELDS[0].filter((name) => errors[name]);
+    if (stepErrorFields.length) {
+      const touched = { ...formik.touched };
+      stepErrorFields.forEach((name) => {
+        touched[name] = true;
+      });
+      formik.setTouched(touched);
+      return;
+    }
+
+    setError(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/client-intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formData: flattenValues(formik.values, STEP_FIELDS[0]),
+          files: [],
+          sourceUrl: window.location.href,
+          formStage: "stage1-client-intake",
+          stage2UrlBase: `${window.location.origin}/biochain/buyer-intake?token=`,
+        }),
+      });
+      if (!res.ok) throw new Error("Submission failed");
+      setPhase("stage1-submitted");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setError("Something went wrong submitting your details. Please try again or email us directly.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (phase === "loading-resume") {
+    return (
+      <div className="max-w-xl mx-auto text-center py-20 px-5">
+        <p className="text-sm" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
+          Loading your saved progress…
+        </p>
+      </div>
+    );
+  }
+
+  if (phase === "invalid-token") {
+    return (
+      <div className="max-w-xl mx-auto text-center py-20 px-5">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+          We Can&apos;t Load This Link
+        </h2>
+        <p className="text-base leading-relaxed" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
+          {resumeError} If you believe this is a mistake, please email us directly.
+        </p>
+      </div>
+    );
+  }
+
+  if (phase === "stage1-submitted") {
+    return (
+      <div className="max-w-xl mx-auto text-center py-20 px-5">
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
+          style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))" }}
+        >
+          <Check size={32} stroke="white" strokeWidth={2.5} />
+        </div>
+        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+          Thanks — We&apos;ll Be In Touch
+        </h2>
+        <p
+          className="text-base leading-relaxed mb-8"
+          style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+        >
+          We&apos;ve received your organization and contact details. Our team will review them and follow up by
+          email shortly with a link to continue the rest of your BioChain Sourcing intake.
+        </p>
+      </div>
+    );
+  }
+
+  if (phase === "stage1") {
+    return (
+      <form
+        name="client-intake-stage1"
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitStage1();
+        }}
+        style={{ fontFamily: "var(--font-body)" }}
+      >
+        <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
+        <p
+          className="text-xs font-semibold tracking-[0.14em] uppercase mb-3"
+          style={{ color: "oklch(0.5 0.06 60)", fontFamily: "var(--font-body)" }}
+        >
+          Part 1 of 2 — Your Organization
+        </p>
+        <h2
+          className="text-2xl sm:text-3xl font-bold mb-3"
+          style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+        >
+          Tell us about your organization
+        </h2>
+        <p
+          className="text-sm leading-relaxed mb-6"
+          style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+        >
+          We&apos;ll review these details and follow up by email with a link to complete the rest of the intake.
+        </p>
+        <Step1 formik={formik} />
+        {error && (
+          <p className="mt-6 text-sm font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+            {error}
+          </p>
+        )}
+        <div className="flex justify-end mt-8">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+          >
+            {submitting ? "Submitting…" : "Submit"}
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      </form>
+    );
   }
 
   if (submitted) {
@@ -1207,22 +1453,47 @@ export default function ClientIntakeForm() {
 
   const meta = STEP_META[active];
   const Step = STEPS[active];
-  const isLast = active === STEP_META.length - 1;
+  const isLastFormStep = active === STEP_META.length - 1;
 
   return (
     <form name="client-intake" onSubmit={formik.handleSubmit} style={{ fontFamily: "var(--font-body)" }}>
       <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
 
-      <ProgressBar active={active} />
-
-      <h2
-        className="text-2xl sm:text-3xl font-bold mb-3"
-        style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
-      >
-        {meta.title}
-      </h2>
-
-      <Step formik={formik} />
+      {reviewing ? (
+        <>
+          <h2
+            className="text-2xl sm:text-3xl font-bold mb-3"
+            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+          >
+            Review Your Application
+          </h2>
+          <p
+            className="text-sm leading-relaxed mb-6"
+            style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            Check everything below before submitting. Click Edit on any section to make changes.
+          </p>
+          <ReviewSummary
+            formik={formik}
+            onEdit={(step) => {
+              setReviewing(false);
+              setActive(step);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <ProgressBar active={active} />
+          <h2
+            className="text-2xl sm:text-3xl font-bold mb-3"
+            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+          >
+            {meta.title}
+          </h2>
+          <Step formik={formik} />
+        </>
+      )}
 
       {error && (
         <p className="mt-6 text-sm font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
@@ -1233,8 +1504,8 @@ export default function ClientIntakeForm() {
       <div className="flex justify-between items-center mt-8">
         <button
           type="button"
-          onClick={() => goToStep(Math.max(0, active - 1))}
-          disabled={active === 0}
+          onClick={() => (reviewing ? setReviewing(false) : goToStep(Math.max(1, active - 1)))}
+          disabled={!reviewing && active === 1}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
           style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)", fontFamily: "var(--font-body)" }}
         >
@@ -1243,10 +1514,10 @@ export default function ClientIntakeForm() {
         </button>
 
         <span className="text-xs" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
-          {active + 1} / {STEP_META.length}
+          {reviewing ? "Review" : `${active + 1} / ${STEP_META.length}`}
         </span>
 
-        {isLast ? (
+        {reviewing ? (
           <button
             type="submit"
             disabled={submitting}
@@ -1254,6 +1525,16 @@ export default function ClientIntakeForm() {
             style={{ background: "oklch(0.4 0.1 60)", fontFamily: "var(--font-body)" }}
           >
             {submitting ? "Submitting…" : "Submit Application"}
+          </button>
+        ) : isLastFormStep ? (
+          <button
+            type="button"
+            onClick={proceedToReview}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
+            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+          >
+            Review Application
+            <ArrowRight size={14} />
           </button>
         ) : (
           <button

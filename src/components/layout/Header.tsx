@@ -60,6 +60,7 @@ export default function Header() {
   ];
   const isLightPage = lightBgPaths.some((p) => pathname.startsWith(p));
   const dark = scrolled || isLightPage;
+  const isBiochainPage = pathname.startsWith("/biochain");
 
   const navTextColor = dark ? "oklch(0.35 0.03 50)" : "rgba(255,255,255,0.8)";
   const navHoverColor = dark ? "oklch(0.18 0.03 50)" : "#ffffff";
@@ -186,6 +187,19 @@ export default function Header() {
               </div>
             )}
           </div>
+
+          {/* Catalogue link - only on BioChain pages */}
+          {isBiochainPage && (
+            <Link
+              href="/biochain/catalogue"
+              className="text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-colors duration-300"
+              style={{ color: navTextColor, fontFamily: "var(--font-body)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = navHoverColor)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = navTextColor)}
+            >
+              Browse Catalogue
+            </Link>
+          )}
 
           {/* Regular nav items */}
           {navItems.map((item) => (
@@ -332,6 +346,18 @@ export default function Header() {
               </Link>
             ))}
             <div className="border-t border-black/5 my-3" />
+            {isBiochainPage && (
+              <Link
+                href="/biochain/catalogue"
+                className="block px-3 py-3 text-sm font-medium rounded-md transition-colors"
+                style={{ color: "oklch(0.18 0.03 50)", fontFamily: "var(--font-body)" }}
+                onClick={() => setMobileOpen(false)}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "oklch(0.94 0.03 80)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                Browse Catalogue
+              </Link>
+            )}
             {navItems.map((item) => (
               <Link
                 key={item.href}

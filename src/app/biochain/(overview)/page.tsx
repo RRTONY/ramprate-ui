@@ -1832,6 +1832,15 @@ export default function BioChainSourcingPage() {
               </div>
             </Reveal>
           </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/biochain/catalogue"
+              className="text-sm font-semibold underline underline-offset-4"
+              style={{ color: gold, fontFamily: "var(--font-body)" }}
+            >
+              Browse our full product catalog first →
+            </Link>
+          </div>
         </div>
       </section>
 
