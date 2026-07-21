@@ -1031,7 +1031,13 @@ function Step4({ formik }: StepProps) {
       <SectionIntro>
         We verify purchasing history for volume accounts. Strong trade references unlock better pricing tiers from our supplier network.
       </SectionIntro>
-      <CheckboxGroup formik={formik} name="trade_reference_types" label="Types of Trade References You Can Provide" options={TRADE_REF_TYPE_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="trade_reference_types"
+        label="Types of Trade References You Can Provide"
+        options={TRADE_REF_TYPE_OPTIONS}
+        exclusiveOptions={["No trade references yet"]}
+      />
       <TextAreaField formik={formik} name="trade_references_text" label="Name Up to 3 Trade References (Company Name and Contact — Kept Confidential)" placeholder="e.g. Kimera Labs — Sarah Chen, VP Sales | DirectBiologics — procurement dept | Local compounding pharmacy — Dr. Martinez" />
       <Callout>
         Trade references are never contacted without your explicit permission. They are used internally to expedite supplier approval and negotiate volume pricing tiers on your behalf.
