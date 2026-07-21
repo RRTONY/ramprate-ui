@@ -4,18 +4,16 @@ import {
   ArrowRight,
   ArrowDown,
   Target,
-  Zap,
   Users,
   Shield,
   Database,
   DollarSign,
-  TrendingUp,
-  Grid3X3,
-  Heart,
 } from "lucide-react";
+import type { CSSProperties } from "react";
 import ClientWall from "./ClientWall";
 import TestimonialsCarousel from "./TestimonialsCarousel";
 import NewsletterSection from "./NewsletterSection";
+import PracticeIcon from "./PracticeIcon";
 
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
@@ -148,68 +146,57 @@ const operateSteps = [
 /* ── BRANDS ── */
 const brands = [
   {
-    name: "RampRate",
-    since: "Since 2000",
-    audience: "For Enterprise CTOs",
+    name: "Sourcing",
+    tag: "Enterprise IT",
     description:
-      "Edge, compute & AI data center intelligence. AI studies the process - our Transaction Architects get the deal done.",
-    keyValue: "$10B+ transacted · 23.8% avg savings · 90-day validated",
-    compensation: "% of impact achieved",
-    commitment: "300%+ ROI or don't pay",
-    href: "/expertise",
-    Icon: TrendingUp,
+      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement.",
+    href: "/sourcing",
+    iconKind: "sourcing" as const,
     accentColor: "oklch(0.82 0.15 75)",
   },
   {
-    name: "ImpactSoul",
-    since: "Since 2024",
-    audience: "NGOs & Stewards of Art",
+    name: "Syzygy",
+    tag: "Founders",
     description:
-      "Born from 25 years of enterprise advisory. Tokenize assets to rally impact movements. Turn cultural treasures and purpose into powerful economic engines.",
-    keyValue: "Millions for impact · 3× revenue · up to 10× value",
-    compensation: "7.5% of asset equity to launch a movement",
-    commitment: "A fan club at worst; a global brand at peak",
-    href: "/impactsoul",
-    Icon: Heart,
-    accentColor: "oklch(0.7 0.18 30)",
-  },
-  {
-    name: "Syzygy Growth",
-    since: "Since 2018",
-    audience: "For Founders & Impactpreneurs",
-    description:
-      "Anchor clients, advisors, capital, impact, strategy, and dispute resolution - all aligned to your vision.",
-    keyValue: "Kick down barriers · Find allies · Focus on build",
-    compensation: "Break-even cash; upside in equity / tokens",
-    commitment: "Custom-designed milestones for you",
-    href: "/about",
-    Icon: Zap,
+      "Advisory built for founders navigating growth, fundraising, and the decisions that define a company's trajectory.",
+    href: "/growth",
+    iconKind: "syzygy" as const,
     accentColor: "oklch(0.65 0.2 150)",
   },
   {
-    name: "IT Sourcing",
-    since: "Since 2000",
-    audience: "Enterprise IT Procurement",
+    name: "Stratum",
+    tag: "Web3",
     description:
-      "Connect enterprise IT needs to the right suppliers. 150K+ data points. Transparent pricing. Zero-commission model.",
-    keyValue: "Non-dilutive capital & zero-cost transformative tech",
-    compensation: "% of value created",
-    commitment: "Right person in the room from all sides",
-    href: "/sourcing",
-    Icon: Grid3X3,
+      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure.",
+    href: "/web3",
+    iconKind: "stratum" as const,
     accentColor: "oklch(0.6 0.2 280)",
   },
   {
-    name: "Private Advisory",
-    since: "Since 2000",
-    audience: "Executives & Boards",
+    name: "BioChain",
+    tag: "Bio-Sourcing",
     description:
-      "Sourcing and coordinating the legal and financial specialists high-stakes disputes require, for leaders navigating moments that matter most.",
-    keyValue: "25 years · $10B+ advised · B Corp Certified",
-    compensation: "Success fee, retainer, or escrow - agreed upfront",
-    commitment: "Principals only - no junior hand-off",
+      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, chain-of-custody tracking.",
+    href: "/biochain",
+    iconKind: "biochain" as const,
+    accentColor: "oklch(0.62 0.12 190)",
+  },
+  {
+    name: "ImpactSoul",
+    tag: "NGOs",
+    description:
+      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable operating models.",
+    href: "/impactsoul",
+    iconKind: "impact" as const,
+    accentColor: "oklch(0.7 0.18 30)",
+  },
+  {
+    name: "Private Advisory",
+    tag: "Executive",
+    description:
+      "Confidential, executive-level advisory for leaders who need a trusted outside perspective in the room.",
     href: "/private-advisory",
-    Icon: Shield,
+    iconKind: "advisory" as const,
     accentColor: "oklch(0.52 0.12 70)",
   },
 ];
@@ -434,7 +421,7 @@ export default function HomeContent() {
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Five practices. One coalition.
+              Six practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
@@ -450,50 +437,54 @@ export default function HomeContent() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {brands.map((brand) => (
+          <div className="flex flex-wrap justify-center gap-5">
+            {brands.map((brand, i) => (
               <div
                 key={brand.name}
-                className="group rounded-xl p-6 transition-all duration-300 hover:translate-y-[-2px]"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
+                className="group relative basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-5"
-                  style={{
-                    background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
-                  }}
-                >
-                  <brand.Icon size={22} style={{ color: brand.accentColor }} />
-                </div>
-                <h3
-                  className="text-xl font-bold text-white mb-1"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {brand.name}
-                </h3>
-                <p
-                  className="text-xs mb-1"
+                <span
+                  className="absolute top-7 right-7 text-[11px] tracking-[0.2em]"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    color: "rgba(255,255,255,0.4)",
+                    color: "rgba(255,255,255,0.22)",
                   }}
                 >
-                  {brand.since}
-                </p>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div className="relative w-12 h-12 mb-5">
+                  <div
+                    className="absolute -inset-2 rounded-full blur-lg opacity-0 transition-opacity duration-500 group-hover:opacity-40"
+                    style={{ background: brand.accentColor }}
+                  />
+                  <div
+                    className="relative w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-400 group-hover:scale-110 group-hover:rounded-xl"
+                    style={{
+                      background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
+                    }}
+                  >
+                    <PracticeIcon kind={brand.iconKind} color={brand.accentColor} />
+                  </div>
+                </div>
                 <p
-                  className="text-xs font-semibold uppercase tracking-wider mb-4"
+                  className="text-xs font-semibold uppercase tracking-wider mb-2"
                   style={{
                     color: brand.accentColor,
                     fontFamily: "var(--font-body)",
                   }}
                 >
-                  {brand.audience}
+                  {brand.tag}
                 </p>
+                <h3
+                  className="text-xl font-bold text-white mb-3"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {brand.name}
+                </h3>
                 <p
-                  className="text-sm leading-relaxed mb-5"
+                  className="text-sm leading-relaxed mb-6"
                   style={{
                     fontFamily: "var(--font-body)",
                     color: "rgba(255,255,255,0.6)",
@@ -501,46 +492,6 @@ export default function HomeContent() {
                 >
                   {brand.description}
                 </p>
-                <div className="mb-3">
-                  <span
-                    className="text-[10px] uppercase tracking-widest"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.3)",
-                    }}
-                  >
-                    Key Value
-                  </span>
-                  <p
-                    className="text-sm mt-0.5"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.7)",
-                    }}
-                  >
-                    {brand.keyValue}
-                  </p>
-                </div>
-                <div className="mb-6">
-                  <span
-                    className="text-[10px] uppercase tracking-widest"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.3)",
-                    }}
-                  >
-                    Our Commitment
-                  </span>
-                  <p
-                    className="text-sm mt-0.5"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.7)",
-                    }}
-                  >
-                    {brand.commitment}
-                  </p>
-                </div>
                 <Link
                   href={brand.href}
                   className="inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"

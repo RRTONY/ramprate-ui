@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { ComponentType } from "react";
-import { useSearchParams } from "next/navigation";
 import { useFormik, type FormikProps } from "formik";
 import * as Yup from "yup";
 import {
@@ -20,8 +19,11 @@ import {
   Target,
   ChevronDown,
   Info,
+  Package,
+  BarChart3,
 } from "lucide-react";
 import { PRODUCT_CATEGORIES, catField } from "@/lib/biochain-catalogue";
+import PhoneInput from "@/components/shared/PhoneInput";
 
 const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 const ta = `${inp} resize-y min-h-[100px]`;
@@ -396,9 +398,13 @@ const validationSchema = Yup.object()
     contact_name: requiredStr(),
     contact_email: Yup.string().email("Invalid email").required("Required"),
     contact_phone: Yup.string().test("valid-phone", "Enter a valid phone number", (v) => !v || isValidPhone(v)),
+    // Yup silently skips .min() on an untouched (undefined) field unless
+    // .required() is also chained - without it, a client who never touches
+    // this array at all sails past Continue with nothing selected.
     current_suppliers: Yup.array()
       .of(Yup.string())
-      .min(1, "Add at least one supplier"),
+      .min(1, "Add at least one supplier")
+      .required("Add at least one supplier"),
     pain_points_other_text: Yup.string().test(
       "required-if-other",
       "Please specify",
@@ -409,7 +415,10 @@ const validationSchema = Yup.object()
       },
     ),
     monthly_volume: requiredStr(),
-    delivery_regions: Yup.array().of(Yup.string()).min(1, "Select at least one region"),
+    delivery_regions: Yup.array()
+      .of(Yup.string())
+      .min(1, "Select at least one region")
+      .required("Select at least one region"),
     monthly_spend: requiredStr(),
     spend_peptides: currencyTest("valid-currency-peptides"),
     spend_exosomes: currencyTest("valid-currency-exosomes"),
@@ -497,6 +506,24 @@ function TextField({
   required?: boolean;
   full?: boolean;
 }) {
+  if (type === "tel") {
+    return (
+      <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
+        <label className={lbl} style={{ color: labelColor }}>
+          {label}
+          {required && req}
+        </label>
+        <PhoneInput
+          name={name}
+          value={(formik.values[name] as string) ?? ""}
+          onChange={(next) => formik.setFieldValue(name, next)}
+          onBlur={() => formik.setFieldTouched(name, true)}
+          placeholder={placeholder}
+        />
+        <FieldError formik={formik} name={name} />
+      </div>
+    );
+  }
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
       <label className={lbl} style={{ color: labelColor }}>
@@ -835,7 +862,7 @@ function Step1({ formik }: StepProps) {
       <TextField formik={formik} name="contact_name" label="Full Name" required placeholder="Your name" />
       <TextField formik={formik} name="contact_title" label="Title / Role" placeholder="Medical Director, CEO, etc." />
       <TextField formik={formik} name="contact_email" label="Email" type="email" required placeholder="you@clinic.com" />
-      <TextField formik={formik} name="contact_phone" label="Phone" type="tel" placeholder="+1 (___) ___-____" />
+      <TextField formik={formik} name="contact_phone" label="Phone" type="tel" placeholder="(___) ___-____" />
       <Divider label="Scale" />
       <SelectField formik={formik} name="num_locations" label="Number of Locations" options={LOCATIONS_OPTIONS} />
       <SelectField formik={formik} name="patients_per_month" label="Approximate Patients Served Per Month" options={PATIENTS_PER_MONTH_OPTIONS} />
@@ -848,7 +875,13 @@ function Step2({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       <TagInput formik={formik} name="current_suppliers" label="Current Primary Suppliers" required placeholder="Search or type a supplier name, press Enter to add..." />
-      <CheckboxGroup formik={formik} name="supplier_discovery" label="How Did You Find Your Current Suppliers? Select All That Apply." options={SUPPLIER_DISCOVERY_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="supplier_discovery"
+        label="How Did You Find Your Current Suppliers? Select All That Apply."
+        tooltip="GPO = Group Purchasing Organization, an entity that pools buying volume across multiple clinics to negotiate better pricing."
+        options={SUPPLIER_DISCOVERY_OPTIONS}
+      />
       <SelectField formik={formik} name="sourcing_satisfaction" label="Overall Satisfaction With Current Sourcing" options={SATISFACTION_OPTIONS} full />
       <CheckboxGroup
         formik={formik}
@@ -864,15 +897,34 @@ function Step2({ formik }: StepProps) {
   );
 }
 
-function CatalogCard({ title, children }: { title: string; children: React.ReactNode }) {
+function CatalogCard({
+  title,
+  step,
+  Icon,
+  children,
+}: {
+  title: string;
+  step: string;
+  Icon: ComponentType<{ size?: number; style?: React.CSSProperties }>;
+  children: React.ReactNode;
+}) {
   return (
     <div
       className="sm:col-span-2 rounded-xl border p-5"
       style={{ borderColor: "oklch(0.88 0.02 70)", background: "oklch(0.98 0.01 75)" }}
     >
-      <p className={lbl} style={{ color: labelColor }}>
-        {title}
-      </p>
+      <div className="flex items-center gap-3">
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+          style={{ background: "oklch(0.72 0.15 75 / 0.18)" }}
+        >
+          <Icon size={17} style={{ color: labelColor }} />
+        </div>
+        <p className={lbl} style={{ color: labelColor, marginBottom: 0 }}>
+          <span style={{ opacity: 0.55, fontWeight: 400 }}>{step} — </span>
+          {title}
+        </p>
+      </div>
       <div className="grid sm:grid-cols-2 gap-5 mt-4">{children}</div>
     </div>
   );
@@ -927,7 +979,7 @@ function Step3({ formik }: StepProps) {
         </p>
       )}
 
-      <CatalogCard title="Full Product Catalog — Select At Least One">
+      <CatalogCard title="Full Product Catalog — Select At Least One" step="Part 1 of 3" Icon={FlaskConical}>
         <div className="sm:col-span-2 flex flex-col gap-2.5">
           {PRODUCT_CATEGORIES.map((cat) => (
             <CategoryAccordion key={cat.name} formik={formik} category={cat} />
@@ -935,14 +987,14 @@ function Step3({ formik }: StepProps) {
         </div>
       </CatalogCard>
 
-      <CatalogCard title="Delivery Format & Form Factor">
+      <CatalogCard title="Delivery Format & Form Factor" step="Part 2 of 3" Icon={Package}>
         <SectionIntro>
           Select every format you currently purchase or need. Supply chain, cold-chain, compliance posture, and pricing all differ materially by form. This is one of the highest-leverage questions in the intake.
         </SectionIntro>
         <CheckboxGroup formik={formik} name="delivery_formats" options={DELIVERY_FORMAT_OPTIONS} />
       </CatalogCard>
 
-      <CatalogCard title="Volume">
+      <CatalogCard title="Volume" step="Part 3 of 3" Icon={BarChart3}>
         <SelectField formik={formik} name="monthly_volume" label="Estimated Total Monthly Quantity Across All Peptides / Biologics" required options={MONTHLY_VOLUME_OPTIONS} full />
         <SelectField formik={formik} name="priority_category" label="Highest-Priority Product Category Right Now" options={PRIORITY_CATEGORY_OPTIONS} full />
       </CatalogCard>
@@ -1138,10 +1190,9 @@ function ProgressBar({ active }: { active: number }) {
 
 /* ── Main component ── */
 
-function flattenValues(values: FormValues, onlyFields?: string[]): Record<string, string> {
+function flattenValues(values: FormValues): Record<string, string> {
   const formData: Record<string, string> = {};
   for (const [name, value] of Object.entries(values)) {
-    if (onlyFields && !onlyFields.includes(name)) continue;
     if (value instanceof File) continue;
     if (Array.isArray(value)) {
       if (value.length) formData[name] = value.join(", ");
@@ -1152,19 +1203,12 @@ function flattenValues(values: FormValues, onlyFields?: string[]): Record<string
   return formData;
 }
 
-type Phase = "stage1" | "stage1-submitted" | "loading-resume" | "invalid-token" | "stage2";
-
 export default function ClientIntakeForm() {
-  const searchParams = useSearchParams();
-  const resumeToken = searchParams.get("token");
-
-  const [phase, setPhase] = useState<Phase>(resumeToken ? "loading-resume" : "stage1");
-  const [active, setActive] = useState(resumeToken ? 1 : 0);
+  const [active, setActive] = useState(0);
   const [reviewing, setReviewing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [resumeError, setResumeError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement | null>(null);
 
   const formik = useFormik<FormValues>({
@@ -1186,14 +1230,12 @@ export default function ClientIntakeForm() {
             formData: flattenValues(values),
             files: [],
             sourceUrl: window.location.href,
-            formStage: "stage2-client-intake",
-            token: resumeToken,
-            final: true,
           }),
         });
         const result = await res.json().catch(() => ({ ok: res.ok }));
         if (!res.ok || result.ok === false) throw new Error(result.error || "Submission failed");
         setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (err) {
         setError(err instanceof Error && err.message ? err.message : "Something went wrong submitting your application. Please try again or email us directly.");
       } finally {
@@ -1201,57 +1243,6 @@ export default function ClientIntakeForm() {
       }
     },
   });
-
-  // Prefill from the resume link a client gets by email once a RampRate
-  // team member approves their Stage 1 (org + contact) submission - see
-  // scripts/supplier-intake-apps-script.gs, which mirrors the same
-  // human-approval-gated pattern already used for supplier onboarding.
-  useEffect(() => {
-    if (!resumeToken) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`/api/client-intake?token=${encodeURIComponent(resumeToken)}`);
-        const result = await res.json();
-        if (cancelled) return;
-        if (!result.ok) {
-          setResumeError(result.error || "This link is invalid or has expired.");
-          setPhase("invalid-token");
-          return;
-        }
-        formik.setValues(result.values as FormValues);
-        setPhase("stage2");
-      } catch {
-        if (cancelled) return;
-        setResumeError("We couldn't load your saved progress. Please try again or email us directly.");
-        setPhase("invalid-token");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeToken]);
-
-  async function saveDraft() {
-    if (!resumeToken) return;
-    try {
-      await fetch("/api/client-intake", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          formData: flattenValues(formik.values),
-          files: [],
-          sourceUrl: window.location.href,
-          formStage: "stage2-client-intake",
-          token: resumeToken,
-          final: false,
-        }),
-      });
-    } catch {
-      // Best-effort autosave - final submit re-validates and re-sends on its own.
-    }
-  }
 
   async function goToStep(target: number) {
     if (target > active) {
@@ -1265,7 +1256,6 @@ export default function ClientIntakeForm() {
         formik.setTouched(touched);
         return;
       }
-      void saveDraft();
     }
     setActive(target);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1282,143 +1272,8 @@ export default function ClientIntakeForm() {
       formik.setTouched(touched);
       return;
     }
-    void saveDraft();
     setReviewing(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  async function submitStage1() {
-    if (honeypotRef.current?.value) return;
-
-    const errors = await formik.validateForm();
-    const stepErrorFields = STEP_FIELDS[0].filter((name) => errors[name]);
-    if (stepErrorFields.length) {
-      const touched = { ...formik.touched };
-      stepErrorFields.forEach((name) => {
-        touched[name] = true;
-      });
-      formik.setTouched(touched);
-      return;
-    }
-
-    setError(null);
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/client-intake", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          formData: flattenValues(formik.values, STEP_FIELDS[0]),
-          files: [],
-          sourceUrl: window.location.href,
-          formStage: "stage1-client-intake",
-          stage2UrlBase: `${window.location.origin}/biochain/buyer-intake?token=`,
-        }),
-      });
-      if (!res.ok) throw new Error("Submission failed");
-      setPhase("stage1-submitted");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setError("Something went wrong submitting your details. Please try again or email us directly.");
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  if (phase === "loading-resume") {
-    return (
-      <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <p className="text-sm" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
-          Loading your saved progress…
-        </p>
-      </div>
-    );
-  }
-
-  if (phase === "invalid-token") {
-    return (
-      <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
-          We Can&apos;t Load This Link
-        </h2>
-        <p className="text-base leading-relaxed" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
-          {resumeError} If you believe this is a mistake, please email us directly.
-        </p>
-      </div>
-    );
-  }
-
-  if (phase === "stage1-submitted") {
-    return (
-      <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-          style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))" }}
-        >
-          <Check size={32} stroke="white" strokeWidth={2.5} />
-        </div>
-        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
-          Thanks — We&apos;ll Be In Touch
-        </h2>
-        <p
-          className="text-base leading-relaxed mb-8"
-          style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
-        >
-          We&apos;ve received your organization and contact details. Our team will review them and follow up by
-          email shortly with a link to continue the rest of your BioChain Sourcing intake.
-        </p>
-      </div>
-    );
-  }
-
-  if (phase === "stage1") {
-    return (
-      <form
-        name="client-intake-stage1"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submitStage1();
-        }}
-        style={{ fontFamily: "var(--font-body)" }}
-      >
-        <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
-        <p
-          className="text-xs font-semibold tracking-[0.14em] uppercase mb-3"
-          style={{ color: "oklch(0.5 0.06 60)", fontFamily: "var(--font-body)" }}
-        >
-          Part 1 of 2 — Your Organization
-        </p>
-        <h2
-          className="text-2xl sm:text-3xl font-bold mb-3"
-          style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
-        >
-          Tell us about your organization
-        </h2>
-        <p
-          className="text-sm leading-relaxed mb-6"
-          style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
-        >
-          We&apos;ll review these details and follow up by email with a link to complete the rest of the intake.
-        </p>
-        <Step1 formik={formik} />
-        {error && (
-          <p className="mt-6 text-sm font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
-            {error}
-          </p>
-        )}
-        <div className="flex justify-end mt-8">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
-          >
-            {submitting ? "Submitting…" : "Submit"}
-            <ArrowRight size={14} />
-          </button>
-        </div>
-      </form>
-    );
   }
 
   if (submitted) {
@@ -1504,8 +1359,8 @@ export default function ClientIntakeForm() {
       <div className="flex justify-between items-center mt-8">
         <button
           type="button"
-          onClick={() => (reviewing ? setReviewing(false) : goToStep(Math.max(1, active - 1)))}
-          disabled={!reviewing && active === 1}
+          onClick={() => (reviewing ? setReviewing(false) : goToStep(Math.max(0, active - 1)))}
+          disabled={!reviewing && active === 0}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
           style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)", fontFamily: "var(--font-body)" }}
         >

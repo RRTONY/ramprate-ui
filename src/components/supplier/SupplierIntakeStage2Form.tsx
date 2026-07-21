@@ -37,7 +37,7 @@ const validationSchema = buildValidationSchema(STAGE2_STEPS.flat());
 
 type Phase = "loading" | "ready" | "invalid" | "used" | "submitted";
 
-export default function SupplierIntakeStage2Form({ token }: { token: string }) {
+export default function SupplierIntakeStage2Form({ token, project }: { token: string; project?: string }) {
   const [phase, setPhase] = useState<Phase>("loading");
   const [initialValues, setInitialValues] = useState<FormValues>({});
   const [active, setActive] = useState(0);
@@ -103,6 +103,7 @@ export default function SupplierIntakeStage2Form({ token }: { token: string }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         token,
+        project,
         final,
         formData,
         files: fileEntries,
@@ -123,7 +124,8 @@ export default function SupplierIntakeStage2Form({ token }: { token: string }) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch(`/api/supplier-intake-long?token=${encodeURIComponent(token)}`);
+        const projectParam = project ? `&project=${encodeURIComponent(project)}` : "";
+        const res = await fetch(`/api/supplier-intake-long?token=${encodeURIComponent(token)}${projectParam}`);
         const result = await res.json();
         if (cancelled) return;
         if (!result.ok) {
@@ -139,7 +141,7 @@ export default function SupplierIntakeStage2Form({ token }: { token: string }) {
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, [token, project]);
 
   // Autosave on every step advance (not on the very first render).
   useEffect(() => {

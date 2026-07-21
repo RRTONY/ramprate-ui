@@ -5,6 +5,7 @@ import type { FormikProps } from "formik";
 import * as Yup from "yup";
 import { Check, X } from "lucide-react";
 import type { FieldDef } from "@/lib/supplier-intake-fields";
+import PhoneInput from "@/components/shared/PhoneInput";
 
 export const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 export const ta = `${inp} resize-y min-h-[110px]`;
@@ -67,11 +68,12 @@ export function fieldValidator(field: FieldDef) {
     }
     default: {
       if (field.key === "monthly_production_capacity") {
-        return Yup.string().test(
+        const validator = Yup.string().test(
           "has-digit",
           "Include a number (e.g. 50,000 units/month)",
           (v) => !v || /\d/.test(v),
         );
+        return field.required ? validator.required(requiredMsg) : validator;
       }
       if (field.key === "fda_registration_number") {
         return Yup.string().test(
@@ -373,9 +375,17 @@ export function FieldRenderer({
         </select>
       ) : field.type === "date" ? (
         <input type="date" name={field.key} value={value} onChange={formik.handleChange} className={inp} />
+      ) : field.type === "tel" ? (
+        <PhoneInput
+          name={field.key}
+          value={value}
+          onChange={(next) => formik.setFieldValue(field.key, next)}
+          onBlur={() => formik.setFieldTouched(field.key, true)}
+          placeholder={field.placeholder}
+        />
       ) : (
         <input
-          type={field.type === "email" ? "email" : field.type === "tel" ? "tel" : "text"}
+          type={field.type === "email" ? "email" : "text"}
           name={field.key}
           value={value}
           onChange={formik.handleChange}

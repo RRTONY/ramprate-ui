@@ -57,7 +57,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'Missing token' }, { status: 400 })
   }
 
-  const projectName = projectNameFromRequest(req)
+  // The `project` query param (carried on the link itself since generation)
+  // is authoritative when present - only fall back to the fragile
+  // Referer-derived guess for older links sent before that param existed.
+  const explicitProject = req.nextUrl.searchParams.get('project')
+  const projectName = explicitProject || projectNameFromRequest(req)
   const url = new URL(scriptUrl)
   url.searchParams.set('token', token)
   url.searchParams.set('projectName', projectName)
@@ -95,7 +99,7 @@ export async function POST(req: NextRequest) {
   }
 
   const sourceUrl = req.headers.get('referer') || body.sourceUrl || ''
-  const projectName = projectNameFromRequest(req, body.sourceUrl)
+  const projectName = body.project || projectNameFromRequest(req, body.sourceUrl)
 
   const payload = {
     formStage: 'stage2-supplier-intake',

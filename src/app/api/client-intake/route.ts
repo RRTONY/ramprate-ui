@@ -14,38 +14,6 @@ function projectNameFromSourceUrl(sourceUrl: string) {
   }
 }
 
-// Prefill lookup for the resume link a client gets once a team member
-// approves their Stage 1 submission and continues to Stage 2 - mirrors
-// supplier-intake-long's GET-by-token route.
-export async function GET(req: NextRequest) {
-  const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL
-  if (!scriptUrl) {
-    return NextResponse.json({ ok: false, error: 'Client intake is not configured.' }, { status: 500 })
-  }
-
-  const token = req.nextUrl.searchParams.get('token')
-  if (!token) {
-    return NextResponse.json({ ok: false, error: 'Missing token' }, { status: 400 })
-  }
-
-  const sourceUrl = req.headers.get('referer') || ''
-  const projectName = projectNameFromSourceUrl(sourceUrl)
-
-  const url = new URL(scriptUrl)
-  url.searchParams.set('token', token)
-  url.searchParams.set('projectName', projectName)
-
-  let result: { ok: boolean; error?: string; used?: boolean; values?: Record<string, string> }
-  try {
-    const res = await fetch(url.toString())
-    result = await res.json()
-  } catch {
-    return NextResponse.json({ ok: false, error: 'Lookup failed.' }, { status: 502 })
-  }
-
-  return NextResponse.json(result)
-}
-
 export async function POST(req: NextRequest) {
   const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL
 
@@ -62,14 +30,10 @@ export async function POST(req: NextRequest) {
     files: body.files,
     sourceUrl,
     projectName,
-    // formStage distinguishes the Step-1-only submission ('stage1-client-intake')
-    // from the token-gated continuation ('stage2-client-intake') - see
-    // scripts/supplier-intake-apps-script.gs, which mirrors the same
-    // human-approval-gated pattern already used for supplier onboarding.
-    formStage: body.formStage,
-    clientToken: body.token,
-    stage2UrlBase: body.stage2UrlBase,
-    final: body.final,
+    // The whole buyer-intake form is filled and posted in one shot now - no
+    // more stage1/stage2 split, so this is the only marker handleAppend
+    // needs (see scripts/supplier-intake-apps-script.gs).
+    formStage: 'client-intake',
   }
 
   const res = await fetch(scriptUrl, {

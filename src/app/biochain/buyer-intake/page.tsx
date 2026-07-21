@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import ClientIntakeForm from "@/components/biochain/ClientIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/client-intake-fields";
 
@@ -66,15 +67,21 @@ export default function ClientIntakePage() {
             audit and calibrate the right supply strategy from day one. No
             fee. No obligation. Confidential.
           </p>
+          <Link
+            href="/biochain/catalogue"
+            className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-80"
+            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+          >
+            Browse our full product catalogue first
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
 
       {/* Multi-step form */}
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <Suspense fallback={null}>
-            <ClientIntakeForm />
-          </Suspense>
+          <ClientIntakeForm />
         </div>
       </section>
     </main>

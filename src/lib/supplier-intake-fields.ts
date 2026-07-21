@@ -51,7 +51,7 @@ export const STAGE1_STEPS: FieldDef[][] = [
       required: true,
       options: ["1–10", "11–50", "51–200", "201+"],
     },
-    { key: "monthly_production_capacity", label: "Monthly Production Capacity", type: "text", required: false, placeholder: "Enter monthly production capacity" },
+    { key: "monthly_production_capacity", label: "Monthly Production Capacity", type: "text", required: true, placeholder: "Enter monthly production capacity" },
     {
       key: "chain_of_custody_capability",
       label: "Chain-of-Custody Capability",

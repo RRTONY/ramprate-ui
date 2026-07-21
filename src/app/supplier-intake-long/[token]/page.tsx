@@ -8,10 +8,13 @@ export const metadata: Metadata = {
 
 export default async function SupplierIntakeStage2Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ token: string }>;
+  searchParams: Promise<{ project?: string }>;
 }) {
   const { token } = await params;
+  const { project } = await searchParams;
 
   return (
     <main>
@@ -41,7 +44,7 @@ export default async function SupplierIntakeStage2Page({
       {/* Tabbed form */}
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <SupplierIntakeStage2Form token={token} />
+          <SupplierIntakeStage2Form token={token} project={project} />
         </div>
       </section>
     </main>

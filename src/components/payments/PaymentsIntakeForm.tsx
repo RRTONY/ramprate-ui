@@ -5,6 +5,7 @@ import { useFormik, type FormikProps } from "formik";
 import * as Yup from "yup";
 import { Check, ArrowLeft, ArrowRight, Download } from "lucide-react";
 import { PAYMENTS_INDUSTRIES, PAYMENTS_SECTIONS } from "@/lib/payments-advisory-data";
+import PhoneInput from "@/components/shared/PhoneInput";
 
 const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 const ta = `${inp} resize-y min-h-[100px]`;
@@ -138,14 +139,24 @@ function TextField({
       </label>
       {hint && <Hint>{hint}</Hint>}
       {advisory && <Advisory>{advisory}</Advisory>}
-      <input
-        type={type}
-        name={name}
-        value={formik.values[name] ?? ""}
-        onChange={formik.handleChange}
-        placeholder={placeholder}
-        className={inp}
-      />
+      {type === "tel" ? (
+        <PhoneInput
+          name={name}
+          value={(formik.values[name] as string) ?? ""}
+          onChange={(next) => formik.setFieldValue(name, next)}
+          onBlur={() => formik.setFieldTouched(name, true)}
+          placeholder={placeholder}
+        />
+      ) : (
+        <input
+          type={type}
+          name={name}
+          value={formik.values[name] ?? ""}
+          onChange={formik.handleChange}
+          placeholder={placeholder}
+          className={inp}
+        />
+      )}
       <FieldError formik={formik} name={name} />
     </div>
   );
@@ -264,7 +275,7 @@ function Step0({ formik }: StepProps) {
       <TextField formik={formik} name="ownerName" label="Primary Contact Name" required placeholder="Jane Smith" />
       <TextField formik={formik} name="ownerTitle" label="Title" required placeholder="CFO / VP Finance / CEO / Controller" />
       <TextField formik={formik} name="ownerEmail" label="Contact Email" type="email" required placeholder="jane@acme.com" />
-      <TextField formik={formik} name="ownerPhone" label="Contact Phone" type="tel" placeholder="+1 (310) 555-0100" />
+      <TextField formik={formik} name="ownerPhone" label="Contact Phone" type="tel" placeholder="(310) 555-0100" />
       <SelectField formik={formik} name="howHeard" label="How Did You Hear About RampRate?" options={HOW_HEARD_OPTIONS} />
       <TextField formik={formik} name="referredBy" label="Referred By (if applicable)" placeholder="Name and company of referrer" />
       <SelectField
