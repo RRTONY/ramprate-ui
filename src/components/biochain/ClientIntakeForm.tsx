@@ -1216,6 +1216,19 @@ export default function ClientIntakeForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement | null>(null);
+  // Set to true only by an explicit click on the real "Submit Application"
+  // button (see below), and read once at the top of onSubmit. Deliberately
+  // NOT derived from the `reviewing` state: Formik's internal submit
+  // pipeline can fire onSubmit the moment the whole form validates clean -
+  // which first happens exactly when the user reaches the last step with
+  // everything filled in, i.e. right as they click "Review Application,"
+  // well before they've seen the review screen or clicked "Submit."
+  // Confirmed live - that click alone POSTed a real submission. Guarding on
+  // `reviewing` instead doesn't work, because `proceedToReview` sets
+  // `reviewing` to true on the very same path that triggers the premature
+  // fire, before the delayed onSubmit call actually runs - a ref set only
+  // by the real button's own click can't be raced that way.
+  const intentionalSubmitRef = useRef(false);
 
   const formik = useFormik<FormValues>({
     initialValues: {},
@@ -1223,6 +1236,8 @@ export default function ClientIntakeForm() {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
+      if (!intentionalSubmitRef.current) return;
+      intentionalSubmitRef.current = false;
       if (honeypotRef.current?.value) return;
 
       setError(null);
@@ -1381,6 +1396,9 @@ export default function ClientIntakeForm() {
         {reviewing ? (
           <button
             type="submit"
+            onClick={() => {
+              intentionalSubmitRef.current = true;
+            }}
             disabled={submitting}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
             style={{ background: "oklch(0.4 0.1 60)", fontFamily: "var(--font-body)" }}
