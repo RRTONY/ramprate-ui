@@ -22,7 +22,7 @@ export default function BioChainCataloguePage() {
 
   return (
     <main>
-      <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
+      <section className="relative pt-36 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
