@@ -343,7 +343,7 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="section-dark py-28 sm:py-36">
+      <section className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span
@@ -405,7 +405,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="section-dark py-24 sm:py-32">
+      <section id="brands" className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <span
@@ -439,9 +439,10 @@ export default function HomeContent() {
 
           <div className="flex flex-wrap justify-center gap-5">
             {brands.map((brand, i) => (
-              <div
+              <Link
                 key={brand.name}
-                className="group relative basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                href={brand.href}
+                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
                 <span
@@ -492,8 +493,7 @@ export default function HomeContent() {
                 >
                   {brand.description}
                 </p>
-                <Link
-                  href={brand.href}
+                <span
                   className="inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
                   style={{
                     color: brand.accentColor,
@@ -502,15 +502,15 @@ export default function HomeContent() {
                 >
                   Explore {brand.name}
                   <ArrowRight size={14} />
-                </Link>
-              </div>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="section-warm py-24 sm:py-32">
+      <section className="section-warm py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
             <span
@@ -664,7 +664,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="section-dark py-24 sm:py-32 overflow-hidden">
+      <section className="section-dark py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <h2
@@ -761,7 +761,7 @@ export default function HomeContent() {
       <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="section-warm py-24 sm:py-32">
+      <section className="section-warm py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span
@@ -844,7 +844,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="section-light py-24 sm:py-32">
+      <section className="section-light py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -991,7 +991,7 @@ export default function HomeContent() {
       <NewsletterSection />
 
       <section
-        className="py-24 sm:py-32"
+        className="py-16 sm:py-20"
         style={{
           background: "var(--rust)",
           color: "#fff",

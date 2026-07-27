@@ -71,7 +71,7 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="section-dark py-16 sm:py-20">
+    <section className="section-dark py-12 sm:py-16">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-10">
           <h2

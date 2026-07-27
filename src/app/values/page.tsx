@@ -74,7 +74,7 @@ const whatWeDo = [
 const howWeDoIt = [
   {
     title: "Deep Industry Expertise",
-    desc: "Sector-leading knowledge across IT infrastructure, Web3, ESG, and impact investing - built over 25 years of active engagement.",
+    desc: "Sector-leading knowledge across technology, Web3, ESG, and impact investing - built over 25 years of active engagement.",
     items: [],
   },
   {

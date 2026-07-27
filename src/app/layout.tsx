@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     template: "%s | RampRate",
   },
   description:
-    "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+    "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
   keywords: [
-    "IT infrastructure advisory",
+    "technology advisory",
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
@@ -120,7 +120,7 @@ export default async function RootLayout({
           data={organizationJsonLd({
             name: settings?.companyName,
             description:
-              "RampRate is a B-Corp certified IT infrastructure advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+              "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
             address: settings?.address,
             phone: settings?.phone,
             email: settings?.email,

@@ -216,6 +216,29 @@ const exampleSupplier = {
   why: "This supplier is in active growth mode and needs anchor accounts in new geographies. An account committing $150K+ annually with 90-day purchase orders qualifies for distributor-tier pricing. Fit determines access to that tier.",
 };
 
+const vettingPipeline = [
+  {
+    step: "01",
+    label: "Supplier Applies",
+    desc: "A quick first-touch application - company, product line, certifications. No uploads, 2-3 minutes.",
+  },
+  {
+    step: "02",
+    label: "Scored",
+    desc: "Every application is scored against our 12-variable qualification matrix - not accepted on reputation alone.",
+  },
+  {
+    step: "03",
+    label: "COA / Chain-of-Custody Verified",
+    desc: "Documentation, lab reports, and provenance records are independently checked against the submitted claims.",
+  },
+  {
+    step: "04",
+    label: "Approved",
+    desc: "Cleared suppliers join the verified BioChain network and become eligible for buyer introductions.",
+  },
+];
+
 const process = [
   {
     num: "01",
@@ -237,6 +260,13 @@ const process = [
     title: "Negotiation & Contract Architecture",
     desc: "Volume pricing, exclusivity windows, quality-guarantee clauses, and reorder SLAs negotiated on your behalf - structured to protect you as you scale.",
   },
+];
+
+const proofStats = [
+  { value: "114+", label: "Compounds Sourced" },
+  { value: "13", label: "Supplier Categories" },
+  { value: "300+", label: "Vetted Suppliers" },
+  { value: "$10B+", label: "Transactions Architected" },
 ];
 
 const blogPosts = [
@@ -388,53 +418,131 @@ export default function BioChainSourcingPage() {
                 </svg>
               </Link>
               <a
-                href="#products"
+                href="#supplier-categories"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 See What We Source
               </a>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-              {[
-                { value: "$10B+", label: "Transactions Architected" },
-                { value: "300+", label: "Vetted Bio Suppliers" },
-                { value: "COA", label: "Verified Every Order" },
-                { value: "24 yrs", label: "Sourcing Intelligence" },
-                { value: "300%+", label: "ROI Guarantee" },
-              ].map((stat, i) => (
-                <Reveal
-                  key={stat.label}
-                  className={i === 4 ? "col-span-2 sm:col-span-1" : ""}
-                >
-                  <div className="glass-card p-4">
-                    <div
-                      className="text-xl font-bold mb-1"
-                      style={{
-                        color: "oklch(0.82 0.15 75)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
-                      {stat.value}
-                    </div>
-                    <div
-                      className="text-xs text-white/50"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      {stat.label}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </div>
       </section>
 
-      {/* What We Source intro */}
+      {/* Introduction */}
+      <section className="relative section-warm overflow-hidden py-16 sm:py-20">
+        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -right-32" />
+        <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            Welcome to BioChain
+          </span>
+          <p
+            className="mt-6 text-lg leading-relaxed"
+            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            For over 25 years, RampRate has helped organizations make smarter
+            procurement and sourcing decisions across complex industries. As we
+            entered the life sciences and healthcare supply chain, we
+            recognized a growing challenge: buyers often struggle to identify
+            trusted suppliers, verify product provenance, and protect against
+            fraud and counterfeit products in an increasingly fragmented
+            marketplace.
+          </p>
+          <p
+            className="mt-5 text-lg font-semibold leading-relaxed"
+            style={{ color: "oklch(0.22 0.02 50)", fontFamily: "var(--font-display)" }}
+          >
+            That&apos;s why we created BioChain.
+          </p>
+        </div>
+      </section>
+
+      {/* Proof Stats Band */}
+      <section className="py-12 sm:py-14" style={{ background: "var(--dark)" }}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {proofStats.map((s) => (
+              <Reveal key={s.label} className="text-center">
+                <div
+                  className="text-2xl sm:text-3xl font-bold"
+                  style={{ color: gold, fontFamily: "var(--font-display)" }}
+                >
+                  {s.value}
+                </div>
+                <div
+                  className="mt-1 text-xs uppercase tracking-wider"
+                  style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}
+                >
+                  {s.label}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why BioChain Exists */}
+      <section className="relative section-light overflow-hidden py-16 sm:py-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            Why BioChain Exists
+          </span>
+          <h2
+            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            No Bad Vendors. Only Bad Fits.
+          </h2>
+          <p
+            className="mt-6 text-base leading-relaxed"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            BioChain is RampRate&apos;s trusted sourcing and supplier
+            intelligence platform, built to bring transparency, confidence, and
+            procurement expertise to the life sciences ecosystem. Rather than
+            simply listing vendors, we focus on connecting organizations with
+            verified suppliers that best match their specific business needs.
+          </p>
+          <p
+            className="mt-5 text-base leading-relaxed"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            We believe there are no bad vendors - only bad fits. Our role is to
+            help organizations identify the right partners through structured
+            evaluation, verified sourcing, and decades of procurement
+            expertise.
+          </p>
+          <p
+            className="mt-5 text-base leading-relaxed"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            By combining supplier validation, procurement intelligence, and
+            marketplace transparency, BioChain is building a cleaner, more
+            trusted ecosystem where buyers can make informed sourcing decisions
+            with confidence.
+          </p>
+          <p
+            className="mt-5 text-base leading-relaxed"
+            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            Whether you&apos;re looking for a manufacturing partner, laboratory
+            services, ingredients, packaging, logistics, technology, or other
+            life sciences solutions, BioChain provides a curated marketplace
+            backed by RampRate&apos;s proven procurement methodology.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Procurement Expertise (formerly "Supplier Profile") */}
       <section
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
-        id="products"
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
+        id="procurement-expertise"
       >
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
@@ -442,7 +550,404 @@ export default function BioChainSourcingPage() {
             className="text-xs font-semibold tracking-[0.2em] uppercase"
             style={{ color: gold, fontFamily: "var(--font-body)" }}
           >
-            What We Source
+            Our Procurement Expertise
+          </span>
+          <h2
+            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Not All Suppliers Are Equal. Supplier Strength Is Everything.
+          </h2>
+          <p
+            className="mt-6 text-base leading-relaxed max-w-3xl"
+            style={{
+              color: "oklch(0.4 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            At BioChain, we do not simply find you a cheaper supplier. We
+            evaluate every supplier against a 12-variable qualification matrix and
+            score them on Supplier Strength - a composite measure of how much
+            leverage, reliability, and documentation they can deliver to your
+            account. The stronger the supplier&apos;s profile relative to your
+            account size and specification, the better your outcome. And the
+            better the fit between your account and the supplier&apos;s growth
+            objectives, the more likely you are to land below-wholesale terms.
+          </p>
+
+          <Reveal className="mt-10">
+            <div
+              className="overflow-x-auto rounded-xl border"
+              style={{ borderColor: "oklch(0.9 0.01 80)" }}
+            >
+              <table
+                className="w-full text-sm"
+                style={{ borderCollapse: "collapse", minWidth: 480 }}
+              >
+                <thead>
+                  <tr
+                    className="border-b-2"
+                    style={{ borderColor: "oklch(0.9 0.01 80)" }}
+                  >
+                    <th
+                      className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide"
+                      style={{
+                        color: "oklch(0.5 0.02 50)",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      Variable
+                    </th>
+                    <th
+                      className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide"
+                      style={{
+                        color: "oklch(0.5 0.02 50)",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      Weight
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {supplierStrengthVariables.map((v, i, arr) => (
+                    <tr
+                      key={v.variable}
+                      className={i < arr.length - 1 ? "border-b" : ""}
+                      style={{ borderColor: "oklch(0.93 0.01 80)" }}
+                    >
+                      <td
+                        className="px-5 py-3.5 align-top"
+                        style={{ fontFamily: "var(--font-body)" }}
+                      >
+                        {v.variable}
+                      </td>
+                      <td
+                        className="px-5 py-3.5 align-top font-semibold"
+                        style={{ color: gold, fontFamily: "var(--font-body)" }}
+                      >
+                        {v.weight}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+
+          <div className="grid sm:grid-cols-2 gap-6 mt-6">
+            <Reveal>
+              <div
+                className="rounded-xl p-6 border border-black/5"
+                style={{ background: "#fff" }}
+              >
+                <div
+                  className="text-2xl font-bold"
+                  style={{ color: gold, fontFamily: "var(--font-display)" }}
+                >
+                  72/100
+                </div>
+                <div
+                  className="text-xs uppercase tracking-wider mt-1"
+                  style={{
+                    color: "oklch(0.55 0.02 50)",
+                    fontFamily: "var(--font-mono)",
+                  }}
+                >
+                  Minimum Qualifying Score to Enter the Network
+                </div>
+              </div>
+            </Reveal>
+            <Reveal>
+              <div
+                className="rounded-xl p-6 border border-black/5"
+                style={{ background: "#fff" }}
+              >
+                <div
+                  className="text-2xl font-bold"
+                  style={{ color: gold, fontFamily: "var(--font-display)" }}
+                >
+                  81/100
+                </div>
+                <div
+                  className="text-xs uppercase tracking-wider mt-1"
+                  style={{
+                    color: "oklch(0.55 0.02 50)",
+                    fontFamily: "var(--font-mono)",
+                  }}
+                >
+                  Average Score Across Active BioChain Suppliers
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal className="mt-10">
+            <div
+              className="rounded-xl p-7 sm:p-8 border-2"
+              style={{ borderColor: gold, background: "#fff" }}
+            >
+              <span
+                className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-4"
+                style={{
+                  background: goldBg,
+                  color: gold,
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                Illustrative Example
+              </span>
+              <h4
+                className="text-lg font-bold mb-1"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {exampleSupplier.name}
+              </h4>
+              <p
+                className="text-xs uppercase tracking-wider mb-5"
+                style={{
+                  color: "oklch(0.55 0.02 50)",
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                {exampleSupplier.category}
+              </p>
+              <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{
+                      color: "oklch(0.55 0.02 50)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    Supplier Strength Score
+                  </div>
+                  <div
+                    className="text-2xl font-bold"
+                    style={{ color: gold, fontFamily: "var(--font-display)" }}
+                  >
+                    {exampleSupplier.score}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{
+                      color: "oklch(0.55 0.02 50)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    Capacity
+                  </div>
+                  <div
+                    className="text-sm font-semibold"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {exampleSupplier.capacity}
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{
+                      color: "oklch(0.55 0.02 50)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    Certifications
+                  </div>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{
+                      color: "oklch(0.4 0.02 50)",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {exampleSupplier.certs}
+                  </p>
+                </div>
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{
+                      color: "oklch(0.55 0.02 50)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    Regulatory History
+                  </div>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{
+                      color: "oklch(0.4 0.02 50)",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {exampleSupplier.history}
+                  </p>
+                </div>
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{
+                      color: "oklch(0.55 0.02 50)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    Contract Posture
+                  </div>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{
+                      color: "oklch(0.4 0.02 50)",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {exampleSupplier.posture}
+                  </p>
+                </div>
+                <div>
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{ color: gold, fontFamily: "var(--font-mono)" }}
+                  >
+                    Why This Supplier Creates Below-Wholesale Opportunity
+                  </div>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{
+                      color: "oklch(0.4 0.02 50)",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {exampleSupplier.why}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* How BioChain Works (formerly "BioChain Process") */}
+      <section
+        className="relative section-dark overflow-hidden py-16 sm:py-20"
+        id="how-it-works"
+      >
+        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -top-40 -right-40" />
+        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] bottom-20 -left-20" />
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            How BioChain Works
+          </span>
+          <h2
+            className="mt-4 text-3xl sm:text-4xl font-bold text-white max-w-2xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            From Application to Approved Supplier
+          </h2>
+
+          {/* Vetting pipeline visual */}
+          <div className="mt-12 flex flex-col sm:flex-row items-stretch gap-3 sm:gap-2">
+            {vettingPipeline.map((s, i, arr) => (
+              <div key={s.step} className="flex-1 flex items-center gap-2">
+                <Reveal className="flex-1 h-full">
+                  <div
+                    className="h-full rounded-xl p-5 border border-white/10"
+                    style={{ background: "rgba(255,255,255,0.05)" }}
+                  >
+                    <span
+                      className="text-xs font-semibold tracking-wider"
+                      style={{ color: gold, fontFamily: "var(--font-mono)" }}
+                    >
+                      {s.step}
+                    </span>
+                    <h4
+                      className="mt-2 text-sm font-bold text-white"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {s.label}
+                    </h4>
+                    <p
+                      className="mt-2 text-xs leading-relaxed text-white/60"
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {s.desc}
+                    </p>
+                  </div>
+                </Reveal>
+                {i < arr.length - 1 && (
+                  <div
+                    className="hidden sm:flex items-center justify-center shrink-0"
+                    style={{ color: gold }}
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Supporting detail cards */}
+          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {process.map((step) => (
+              <Reveal key={step.num}>
+                <div
+                  className="rounded-xl p-6 border border-white/10 h-full"
+                  style={{ background: "rgba(255,255,255,0.05)" }}
+                >
+                  <span
+                    className="text-xs font-semibold tracking-wider"
+                    style={{ color: gold, fontFamily: "var(--font-mono)" }}
+                  >
+                    {step.num}
+                  </span>
+                  <h3
+                    className="mt-3 text-lg font-bold text-white"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="mt-3 text-sm leading-relaxed text-white/60"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {step.desc}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Supplier Categories (formerly "What We Source" + Product Grid) */}
+      <section
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
+        id="supplier-categories"
+      >
+        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
+        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+          <span
+            className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            Supplier Categories
           </span>
           <h2
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
@@ -465,8 +970,7 @@ export default function BioChainSourcingPage() {
         </div>
       </section>
 
-      {/* Product Grid */}
-      <section className="relative section-light overflow-hidden py-20 sm:py-28">
+      <section className="relative section-light overflow-hidden py-16 sm:py-20">
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((p) => (
@@ -670,7 +1174,7 @@ export default function BioChainSourcingPage() {
 
       {/* Price-to-Value Table */}
       <section
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="value-table"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
@@ -907,7 +1411,7 @@ export default function BioChainSourcingPage() {
 
       {/* Client Profile */}
       <section
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="client-profile"
       >
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
@@ -1103,353 +1607,9 @@ export default function BioChainSourcingPage() {
         </div>
       </section>
 
-      {/* Supplier Profile */}
-      <section
-        className="relative section-light overflow-hidden py-20 sm:py-28"
-        id="supplier-profile"
-      >
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{ color: gold, fontFamily: "var(--font-body)" }}
-          >
-            How Supplier Strength Determines Your Outcome
-          </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Not All Suppliers Are Equal. Supplier Strength Is Everything.
-          </h2>
-          <p
-            className="mt-6 text-base leading-relaxed max-w-3xl"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            At BioChain, we do not simply find you a cheaper supplier. We
-            evaluate every supplier against a 12-variable qualification matrix and
-            score them on Supplier Strength - a composite measure of how much
-            leverage, reliability, and documentation they can deliver to your
-            account. The stronger the supplier&apos;s profile relative to your
-            account size and specification, the better your outcome. And the
-            better the fit between your account and the supplier&apos;s growth
-            objectives, the more likely you are to land below-wholesale terms.
-          </p>
-
-          <Reveal className="mt-10">
-            <div
-              className="overflow-x-auto rounded-xl border"
-              style={{ borderColor: "oklch(0.9 0.01 80)" }}
-            >
-              <table
-                className="w-full text-sm"
-                style={{ borderCollapse: "collapse", minWidth: 480 }}
-              >
-                <thead>
-                  <tr
-                    className="border-b-2"
-                    style={{ borderColor: "oklch(0.9 0.01 80)" }}
-                  >
-                    <th
-                      className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide"
-                      style={{
-                        color: "oklch(0.5 0.02 50)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      Variable
-                    </th>
-                    <th
-                      className="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-wide"
-                      style={{
-                        color: "oklch(0.5 0.02 50)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      Weight
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supplierStrengthVariables.map((v, i, arr) => (
-                    <tr
-                      key={v.variable}
-                      className={i < arr.length - 1 ? "border-b" : ""}
-                      style={{ borderColor: "oklch(0.93 0.01 80)" }}
-                    >
-                      <td
-                        className="px-5 py-3.5 align-top"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
-                        {v.variable}
-                      </td>
-                      <td
-                        className="px-5 py-3.5 align-top font-semibold"
-                        style={{ color: gold, fontFamily: "var(--font-body)" }}
-                      >
-                        {v.weight}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Reveal>
-
-          <div className="grid sm:grid-cols-2 gap-6 mt-6">
-            <Reveal>
-              <div
-                className="rounded-xl p-6 border border-black/5"
-                style={{ background: "oklch(0.97 0.01 80)" }}
-              >
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: gold, fontFamily: "var(--font-display)" }}
-                >
-                  72/100
-                </div>
-                <div
-                  className="text-xs uppercase tracking-wider mt-1"
-                  style={{
-                    color: "oklch(0.55 0.02 50)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
-                  Minimum Qualifying Score to Enter the Network
-                </div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div
-                className="rounded-xl p-6 border border-black/5"
-                style={{ background: "oklch(0.97 0.01 80)" }}
-              >
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: gold, fontFamily: "var(--font-display)" }}
-                >
-                  81/100
-                </div>
-                <div
-                  className="text-xs uppercase tracking-wider mt-1"
-                  style={{
-                    color: "oklch(0.55 0.02 50)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
-                  Average Score Across Active BioChain Suppliers
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal className="mt-10">
-            <div
-              className="rounded-xl p-7 sm:p-8 border-2"
-              style={{ borderColor: gold, background: "oklch(0.97 0.01 80)" }}
-            >
-              <span
-                className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-4"
-                style={{
-                  background: goldBg,
-                  color: gold,
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
-                Illustrative Example
-              </span>
-              <h4
-                className="text-lg font-bold mb-1"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {exampleSupplier.name}
-              </h4>
-              <p
-                className="text-xs uppercase tracking-wider mb-5"
-                style={{
-                  color: "oklch(0.55 0.02 50)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
-                {exampleSupplier.category}
-              </p>
-              <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{
-                      color: "oklch(0.55 0.02 50)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    Supplier Strength Score
-                  </div>
-                  <div
-                    className="text-2xl font-bold"
-                    style={{ color: gold, fontFamily: "var(--font-display)" }}
-                  >
-                    {exampleSupplier.score}
-                  </div>
-                </div>
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{
-                      color: "oklch(0.55 0.02 50)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    Capacity
-                  </div>
-                  <div
-                    className="text-sm font-semibold"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {exampleSupplier.capacity}
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{
-                      color: "oklch(0.55 0.02 50)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    Certifications
-                  </div>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "oklch(0.4 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {exampleSupplier.certs}
-                  </p>
-                </div>
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{
-                      color: "oklch(0.55 0.02 50)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    Regulatory History
-                  </div>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "oklch(0.4 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {exampleSupplier.history}
-                  </p>
-                </div>
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{
-                      color: "oklch(0.55 0.02 50)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    Contract Posture
-                  </div>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "oklch(0.4 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {exampleSupplier.posture}
-                  </p>
-                </div>
-                <div>
-                  <div
-                    className="text-xs uppercase tracking-wider mb-1"
-                    style={{ color: gold, fontFamily: "var(--font-mono)" }}
-                  >
-                    Why This Supplier Creates Below-Wholesale Opportunity
-                  </div>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "oklch(0.4 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {exampleSupplier.why}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Process */}
-      <section
-        className="relative section-dark overflow-hidden py-20 sm:py-28"
-        id="how-it-works"
-      >
-        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] bottom-20 -left-20" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{ color: gold, fontFamily: "var(--font-body)" }}
-          >
-            BioChain Process
-          </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold text-white max-w-2xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Supply Chain Intelligence Built for Biology
-          </h2>
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {process.map((step) => (
-              <Reveal key={step.num}>
-                <div
-                  className="rounded-xl p-6 border border-white/10 h-full"
-                  style={{ background: "rgba(255,255,255,0.05)" }}
-                >
-                  <span
-                    className="text-xs font-semibold tracking-wider"
-                    style={{ color: gold, fontFamily: "var(--font-mono)" }}
-                  >
-                    {step.num}
-                  </span>
-                  <h3
-                    className="mt-3 text-lg font-bold text-white"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-sm leading-relaxed text-white/60"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {step.desc}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Blog Rail */}
       <section
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="blog"
       >
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
@@ -1530,7 +1690,7 @@ export default function BioChainSourcingPage() {
 
       {/* FAQ */}
       <section
-        className="relative section-light overflow-hidden py-20 sm:py-28"
+        className="relative section-light overflow-hidden py-16 sm:py-20"
         id="faq"
       >
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
@@ -1598,7 +1758,7 @@ export default function BioChainSourcingPage() {
 
       {/* ImpactSoul cross-link */}
       <section
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
+        className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="impactsoul"
       >
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
@@ -1649,7 +1809,7 @@ export default function BioChainSourcingPage() {
 
       {/* Testimonials */}
       <section
-        className="relative section-light overflow-hidden py-20 sm:py-28 border-y"
+        className="relative section-light overflow-hidden py-16 sm:py-20 border-y"
         style={{
           background: "oklch(0.96 0.015 80)",
           borderColor: "oklch(0.9 0.01 80)",
@@ -1706,8 +1866,8 @@ export default function BioChainSourcingPage() {
         </div>
       </section>
 
-      {/* Two Paths - Supplier / Buyer CTA */}
-      <section className="relative section-warm overflow-hidden py-20 sm:py-28">
+      {/* CTAs - Two Paths: Sourcing vs. Supplying */}
+      <section className="relative section-warm overflow-hidden py-16 sm:py-20">
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -left-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <Reveal>
@@ -1736,65 +1896,13 @@ export default function BioChainSourcingPage() {
                   className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
                   style={{ background: goldBg, color: gold }}
                 >
-                  <LuFactory size={20} />
-                </div>
-                <h3
-                  className="text-lg font-bold mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Become a Supplier
-                </h3>
-                <p
-                  className="text-sm leading-relaxed mb-6 flex-1"
-                  style={{
-                    color: "oklch(0.45 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  Peptide manufacturers, research peptide suppliers, and
-                  compounded pharmacy producers - apply for RampRate&apos;s
-                  verified supplier network. Quick first-touch application, no
-                  uploads, about 2-3 minutes.
-                </p>
-                <Link
-                  href="/biochain/supplier-intake"
-                  className="inline-flex items-center justify-center gap-2 text-sm font-bold px-4 py-3.5 rounded-md transition-colors"
-                  style={{
-                    background: gold,
-                    color: "#fff",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  Apply as a Supplier
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div
-                className="rounded-xl p-8 border border-black/5 flex flex-col h-full"
-                style={{ background: "#fff" }}
-              >
-                <div
-                  className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
-                  style={{ background: goldBg, color: gold }}
-                >
                   <LuHandshake size={20} />
                 </div>
                 <h3
                   className="text-lg font-bold mb-3"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  Become a Buyer
+                  Sourcing Peptides?
                 </h3>
                 <p
                   className="text-sm leading-relaxed mb-6 flex-1"
@@ -1818,6 +1926,58 @@ export default function BioChainSourcingPage() {
                   }}
                 >
                   Apply as a Buyer
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal>
+              <div
+                className="rounded-xl p-8 border border-black/5 flex flex-col h-full"
+                style={{ background: "#fff" }}
+              >
+                <div
+                  className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
+                  style={{ background: goldBg, color: gold }}
+                >
+                  <LuFactory size={20} />
+                </div>
+                <h3
+                  className="text-lg font-bold mb-3"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Supplying Peptides?
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-6 flex-1"
+                  style={{
+                    color: "oklch(0.45 0.02 50)",
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  Peptide manufacturers, research peptide suppliers, and
+                  compounded pharmacy producers - apply for RampRate&apos;s
+                  verified supplier network. Quick first-touch application, no
+                  uploads, about 2-3 minutes.
+                </p>
+                <Link
+                  href="/biochain/supplier-intake"
+                  className="inline-flex items-center justify-center gap-2 text-sm font-bold px-4 py-3.5 rounded-md transition-colors"
+                  style={{
+                    background: gold,
+                    color: "#fff",
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  Apply as a Supplier
                   <svg
                     width="16"
                     height="16"

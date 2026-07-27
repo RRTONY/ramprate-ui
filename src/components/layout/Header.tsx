@@ -17,6 +17,7 @@ const practices = [
 ];
 
 const navItems = [
+  { label: "Process", href: "/process" },
   { label: "Proof", href: "/proof" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },

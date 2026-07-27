@@ -42,7 +42,7 @@ const FALLBACK_METADATA: Metadata = {
     "cloud optimization",
     "data center procurement",
     "enterprise IT",
-    "IT infrastructure",
+    "technology",
     "network strategy",
     "managed services",
     "RampRate blog",
@@ -138,7 +138,7 @@ export default async function BlogPage({
           >
             {activeCategoryObj
               ? `${count} post${count !== 1 ? "s" : ""} in this category`
-              : "Practical insights on IT infrastructure, sourcing, cloud, and emerging technology."}
+              : "Practical insights on technology, sourcing, cloud, and emerging technology."}
           </p>
         </div>
       </section>

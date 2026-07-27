@@ -9,9 +9,9 @@ const FALLBACK_METADATA: Metadata = {
   // ("RampRate - Investment & Advisory") verbatim, with no "| RampRate"
   // suffix appended (that suffix only applies to child-route titles).
   description:
-    "RampRate is a B-Corp certified advisory firm helping enterprises optimize IT infrastructure sourcing, cut technology costs, and drive measurable impact - plus verified peptide supplier sourcing through RampRate BioChain. 24+ years of independent advisory.",
+    "RampRate is a B-Corp certified advisory firm helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact - plus verified peptide supplier sourcing through RampRate BioChain. 24+ years of independent advisory.",
   keywords: [
-    "IT infrastructure advisory",
+    "technology advisory",
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
@@ -25,7 +25,7 @@ const FALLBACK_METADATA: Metadata = {
   openGraph: {
     title: "RampRate - Investment & Advisory",
     description:
-      "Independent advisory helping enterprises optimize IT infrastructure sourcing, cut technology costs, and drive measurable impact.",
+      "Independent advisory helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact.",
     url: "https://ramprate.com",
   },
 };

@@ -10,14 +10,14 @@ export const revalidate = 60;
 const FALLBACK_METADATA: Metadata = {
   title: "Thinking - 25 Years of Perspectives",
   description:
-    "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on IT infrastructure, blockchain, and enterprise strategy.",
+    "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on technology, blockchain, and enterprise strategy.",
   keywords: [
     "thinking",
     "insights",
     "essays",
     "thought leadership",
     "enterprise strategy perspectives",
-    "IT infrastructure analysis",
+    "technology decisions analysis",
     "blockchain analysis",
   ],
 };
@@ -79,7 +79,7 @@ export default async function ThinkingPage() {
             className="text-white/60 text-lg leading-relaxed max-w-2xl"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Evergreen analysis on IT infrastructure, blockchain, enterprise
+            Evergreen analysis on technology, blockchain, enterprise
             strategy, and conscious business. Not trends - principles.
           </p>
         </div>
