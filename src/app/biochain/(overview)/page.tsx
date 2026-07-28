@@ -467,25 +467,6 @@ export default function BioChainSourcingPage() {
             that doing it right stays the more profitable choice, with the
             savings passed to everyone in the deal.
           </p>
-
-          <span
-            className="mt-12 block text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{ color: gold, fontFamily: "var(--font-body)" }}
-          >
-            Welcome to BioChain
-          </span>
-          <p
-            className="mt-6 text-lg leading-relaxed"
-            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
-          >
-            For over 25 years, RampRate has helped organizations make smarter
-            procurement and sourcing decisions across complex industries. As we
-            entered the life sciences and healthcare supply chain, we
-            recognized a growing challenge: buyers often struggle to identify
-            trusted suppliers, verify product provenance, and protect against
-            fraud and counterfeit products in an increasingly fragmented
-            marketplace.
-          </p>
           <p
             className="mt-5 text-lg font-semibold leading-relaxed"
             style={{ color: "oklch(0.22 0.02 50)", fontFamily: "var(--font-display)" }}
