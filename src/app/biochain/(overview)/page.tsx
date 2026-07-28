@@ -369,10 +369,7 @@ export default function BioChainSourcingPage() {
   return (
     <main>
       {/* Hero */}
-      <section
-        className="relative pt-36 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
+      <section className="relative pt-44 pb-20 overflow-hidden section-light">
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[280px] h-[280px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
@@ -384,15 +381,18 @@ export default function BioChainSourcingPage() {
               BioChain Sourcing - Regenerative &amp; Healing Industries
             </span>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
               We Source What <span style={{ color: gold }}>Heals</span> - With
               the Same Rigor We Apply to Billion-Dollar IT Deals
             </h1>
             <p
-              className="text-white/70 text-lg leading-relaxed mb-10"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="text-lg leading-relaxed mb-10"
+              style={{
+                color: "oklch(0.4 0.02 50)",
+                fontFamily: "var(--font-body)",
+              }}
             >
               Peptides. Exosomes. Stem cells. NAD+. RampRate&apos;s 24-year
               procurement intelligence engine now serves the healing economy -
@@ -419,7 +419,7 @@ export default function BioChainSourcingPage() {
               </Link>
               <a
                 href="#supplier-categories"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-black/15 hover:bg-black/5 transition-all"
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 See What We Source
@@ -429,12 +429,47 @@ export default function BioChainSourcingPage() {
         </div>
       </section>
 
-      {/* Introduction */}
+      {/* Origin Story + Introduction */}
       <section className="relative section-warm overflow-hidden py-16 sm:py-20">
+        <div className="glass-orb glass-orb-rust w-[280px] h-[280px] -bottom-32 -left-32" />
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -right-32" />
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: gold, fontFamily: "var(--font-body)" }}
+          >
+            Twenty-Five Years in the Making
+          </span>
+          <p
+            className="mt-6 text-lg leading-relaxed"
+            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            Twenty-five years ago, RampRate started managing IT supply chains
+            for Fortune 500 buyers who cared more about quality, timeliness,
+            and fit to their specific needs than about the lowest price.
+            There was no way to verify who could actually deliver on those
+            things, so we built it: benchmarked pricing, verified track
+            records, and a reputational layer the industry didn&apos;t have.
+            That&apos;s the business we&apos;re still in.
+          </p>
+          <p
+            className="mt-5 text-lg leading-relaxed"
+            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
+          >
+            The biologics and regenerative health market has the same problem
+            today, plus a fraud problem the IT industry never had at this
+            scale. Peptides, exosomes, stem cells: real product moving
+            through supply chains nobody has independently verified, priced
+            however the seller feels like pricing it. We&apos;re bringing the
+            same discipline here that we built in tech. There are no bad
+            suppliers in biochain, only bad fits, and our job is to find the
+            right one for every transaction, fast enough and cheap enough
+            that doing it right stays the more profitable choice, with the
+            savings passed to everyone in the deal.
+          </p>
+
+          <span
+            className="mt-12 block text-xs font-semibold tracking-[0.2em] uppercase"
             style={{ color: gold, fontFamily: "var(--font-body)" }}
           >
             Welcome to BioChain

@@ -51,7 +51,10 @@ export default function Header() {
     "/josh-bykowski",
     "/legal-master",
   ];
-  const isLightPage = lightBgPaths.some((p) => pathname.startsWith(p));
+  const lightBgExactPaths = ["/biochain"];
+  const isLightPage =
+    lightBgPaths.some((p) => pathname.startsWith(p)) ||
+    lightBgExactPaths.includes(pathname);
   const dark = scrolled || isLightPage;
   const isBiochainPage = pathname.startsWith("/biochain");
 
