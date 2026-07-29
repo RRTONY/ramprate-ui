@@ -8,7 +8,7 @@ const tabs = [
   { label: "Overview", href: "/biochain" },
   { label: "Become a Supplier", href: "/biochain/supplier-intake" },
   { label: "Become a Client", href: "/biochain/buyer-intake" },
-  { label: "Process", href: "/process" },
+  { label: "Process", href: "/biochain/process" },
 ];
 
 const gold = "oklch(0.52 0.12 70)";

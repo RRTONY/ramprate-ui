@@ -30,7 +30,6 @@ const brandLinks = [
 const companyLinks = [
   { label: "Proof", href: "/proof" },
   { label: "About", href: "/about" },
-  { label: "Process", href: "/process" },
   { label: "Blog", href: "/blog" },
   { label: "Thinking", href: "/thinking" },
   { label: "Careers", href: "/careers" },

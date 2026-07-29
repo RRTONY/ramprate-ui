@@ -1043,18 +1043,11 @@ export default function SourcingPage() {
               </svg>
             </Link>
             <Link
-              href="/process"
+              href="/sourcing/process"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Flow Circuit
-            </Link>
-            <Link
-              href="/process"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Find Your Me
+              See Our Process
             </Link>
           </div>
         </div>

@@ -77,6 +77,24 @@ export const SITE_PAGES: SitePage[] = [
     description: "How RampRate works - our methodology and engagement process.",
   },
   {
+    title: "How Sourcing Works - Process",
+    path: "/sourcing/process",
+    type: "page",
+    keywords:
+      "sourcing process stack spend leverage infrastructure audit vendor negotiation RFP procurement methodology how it works",
+    description:
+      "RampRate's IT sourcing process: find your stack, find your spend, find your leverage. From first audit to signed contract in 90 days.",
+  },
+  {
+    title: "How Sourcing Works - BioChain Process",
+    path: "/biochain/process",
+    type: "page",
+    keywords:
+      "biochain sourcing process compound standard supply chain audit verified supplier onboarding supplier verification methodology how it works",
+    description:
+      "BioChain's verified sourcing process: find your compound, find your standard, find your supply. From first call to verified supplier in 90 days.",
+  },
+  {
     title: "How We Work - Engagement Model",
     path: "/howwework",
     type: "page",
