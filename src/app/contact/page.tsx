@@ -14,6 +14,7 @@ const FALLBACK_METADATA: Metadata = {
     'IT sourcing advisory contact',
     'enterprise advisory engagement',
   ],
+  alternates: { canonical: '/contact' },
 }
 
 export async function generateMetadata(): Promise<Metadata> {

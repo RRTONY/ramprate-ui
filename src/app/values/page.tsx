@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "culture",
     "B Corp",
   ],
+  alternates: { canonical: "/values" },
 };
 
 const principles = [

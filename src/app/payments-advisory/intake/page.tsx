@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Payments Advisory Client Intake",
   description:
     "7-section intake for merchants processing $1M+ annually. RampRate authors your payment processing RFP, shops it to 25+ vetted processors, and negotiates on your behalf.",
+  alternates: { canonical: "/payments-advisory/intake" },
 };
 
 export default function PaymentsIntakePage() {

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     'cookie policy',
     'data protection',
   ],
+  alternates: { canonical: '/privacy' },
 }
 
 const sections = [

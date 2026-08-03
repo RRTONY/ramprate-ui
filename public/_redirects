@@ -112,6 +112,9 @@
 
 # ===== CATEGORY REDIRECTS =====
 /category/blockchain/       /blog/category/blockchain    301
+/category/iaas/              /blog/category/iaas          301
+/category/web3/              /blog/category/web3          301
+/blog/page/*                 /blog                        301
 /category/cloud-optimization-and-migration/  /blog/category/cloud-optimization-and-migration  301
 /category/data-center-power-efficiency/  /blog/category/data-center-power-efficiency  301
 /category/it-infrastructure/  /blog/category/it-infrastructure  301
@@ -185,6 +188,8 @@
 # /values/ now has its own dedicated page - no redirect needed
 /impact-advisory-scope-of-services/  /impactsoul         301
 /syzygy-impact-sourcing-2020/  /impactsoul              301
+/ramprate-impact/           /impactsoul                  301
+/ramprate-impact            /impactsoul                  301
 
 # SPY Index / Platform pages → /expertise
 # /service-provider-intelligence-index/ now has its own dedicated page - no redirect needed
@@ -217,6 +222,9 @@
 
 # Get quote → /contact
 /get-quote/                 /contact                     301
+
+# Old FAQ page (best-guess target, no direct new-site equivalent - confirm with Chitraket)
+/faq/                        /about                       301
 
 # Date-based archive URLs → /blog
 /2010/*                     /blog                        301

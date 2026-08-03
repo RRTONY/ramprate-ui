@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "website terms",
     "user agreement",
   ],
+  alternates: { canonical: "/terms" },
 };
 
 const sections = [

@@ -20,6 +20,7 @@ const FALLBACK_METADATA: Metadata = {
     "technology decisions analysis",
     "blockchain analysis",
   ],
+  alternates: { canonical: "/thinking" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

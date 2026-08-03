@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "supplier neutral benchmarking",
     "sourcing intelligence platform",
   ],
+  alternates: { canonical: "/service-provider-intelligence-index" },
 };
 
 const heroStats = [

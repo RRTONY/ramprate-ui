@@ -13,6 +13,7 @@ const FALLBACK_METADATA: Metadata = {
     "token economics",
     "enterprise blockchain consulting",
   ],
+  alternates: { canonical: "/web3" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

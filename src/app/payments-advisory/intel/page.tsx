@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Payments Market Intel - Industry Risk & Processor Benchmarks",
   description:
     "25 industry verticals classified by processing risk, average ticket, and fraud rate, plus benchmark rates across 25 payment processors and gateways.",
+  alternates: { canonical: "/payments-advisory/intel" },
 };
 
 export default function PaymentsIntelPage() {

@@ -13,6 +13,7 @@ const FALLBACK_METADATA: Metadata = {
     "fundraising advisory",
     "anchor client introductions",
   ],
+  alternates: { canonical: "/growth" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

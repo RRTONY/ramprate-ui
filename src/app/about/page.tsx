@@ -20,6 +20,7 @@ const FALLBACK_METADATA: Metadata = {
     "B Corp certified advisory",
     "enterprise advisory firm history",
   ],
+  alternates: { canonical: "/about" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

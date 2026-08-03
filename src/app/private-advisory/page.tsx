@@ -15,6 +15,7 @@ const FALLBACK_METADATA: Metadata = {
     "asset protection advisory",
     "litigation support coordination",
   ],
+  alternates: { canonical: "/private-advisory" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

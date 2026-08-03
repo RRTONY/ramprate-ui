@@ -14,6 +14,7 @@ const FALLBACK_METADATA: Metadata = {
     "NGO advisory",
     "regenerative consulting",
   ],
+  alternates: { canonical: "/impactsoul" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

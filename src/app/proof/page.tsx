@@ -26,6 +26,7 @@ const FALLBACK_METADATA: Metadata = {
     "enterprise IT savings",
     "Fortune 500 case studies",
   ],
+  alternates: { canonical: "/proof" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

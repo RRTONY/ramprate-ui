@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "processor RFP",
     "merchant services",
   ],
+  alternates: { canonical: "/payments-advisory" },
 };
 
 const PROCESS_STEPS = [

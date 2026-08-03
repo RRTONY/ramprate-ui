@@ -47,7 +47,7 @@ export function organizationJsonLd({
         addressCountry: 'US',
       },
     }),
-    ...(phone && {telephone: phone}),
+    ...(phone && {telephone: phone.replace(/[‎‏‪-‮⁦-⁩]/g, '')}),
     ...(email && {email}),
     ...(socialLinks?.length && {sameAs: socialLinks.map((l) => l.url)}),
   }
