@@ -1,13 +1,20 @@
 import {client} from '@/lib/sanity/client'
-import {allPageSlugsQuery, allPostSlugsQuery, allCategorySlugsQuery} from '@/lib/sanity/queries'
+import {allPostSlugsQuery, allCategorySlugsQuery} from '@/lib/sanity/queries'
 import {urlFor} from '@/lib/sanity/image'
 import type {MetadataRoute} from 'next'
 
 const BASE_URL = 'https://ramprate.com'
 
+// XML text content can't contain a bare '&' - it must be an entity reference
+// (&amp;, &lt;, ...). Sanity's CDN image URLs always carry a raw '&' in their
+// query string (?w=1200&auto=format), which breaks the sitemap's XML if left
+// unescaped - browsers and Search Console both reject the feed at that point.
+function escapeXml(value: string): string {
+  return value.replace(/&/g, '&amp;')
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [pages, posts, categories] = await Promise.all([
-    client.fetch(allPageSlugsQuery),
+  const [posts, categories] = await Promise.all([
     client.fetch(allPostSlugsQuery),
     client.fetch(allCategorySlugsQuery),
   ])
@@ -45,14 +52,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {url: `${BASE_URL}/search`, changeFrequency: 'monthly', priority: 0.5},
   ]
 
-  const pageRoutes: MetadataRoute.Sitemap = pages
-    .filter((p: {slug: {current: string}}) => !['home'].includes(p.slug.current))
-    .map((p: {slug: {current: string}; _updatedAt?: string}) => ({
-      url: `${BASE_URL}/${p.slug.current}`,
-      ...(p._updatedAt && {lastModified: new Date(p._updatedAt)}),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }))
+  // Note: intentionally not iterating Sanity's generic "page" documents here.
+  // That document type has no matching `/[slug]/page.tsx` catch-all route - it's
+  // only used for SEO/content lookups on specific hardcoded pages - so mapping
+  // every doc's slug to a URL produced both duplicates of routes already listed
+  // above and URLs for slugs with no real page (404s), e.g. leftover WordPress
+  // migration docs like "purpose-promise" and "our-process". Every real static
+  // route is already listed explicitly above.
 
   // Route each post under its real section path so the sitemap matches where the
   // page is actually served (and its canonical URL): thinking posts → /thinking,
@@ -72,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...((p._updatedAt || p.publishedAt) && {lastModified: new Date(p._updatedAt || p.publishedAt!)}),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
-      ...(p.mainImage && {images: [urlFor(p.mainImage).width(1200).url()]}),
+      ...(p.mainImage && {images: [escapeXml(urlFor(p.mainImage).width(1200).url())]}),
     }),
   )
 
@@ -83,5 +89,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }))
 
-  return [...staticRoutes, ...pageRoutes, ...postRoutes, ...categoryRoutes]
+  return [...staticRoutes, ...postRoutes, ...categoryRoutes]
 }

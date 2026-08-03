@@ -240,9 +240,6 @@ export const allThinkingPostsQuery = groq`
   }
 `;
 
-// All slugs (for static generation)
-export const allPageSlugsQuery = groq`*[_type == "page" && defined(slug.current)]{slug, _updatedAt}`;
-
 // SPY Index page SEO
 export const spyIndexPageQuery = groq`
   *[_type == "page" && slug.current == "spy-index"][0]{
