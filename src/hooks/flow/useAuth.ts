@@ -21,7 +21,9 @@ export function useAuth(options?: UseAuthOptions) {
   const logout = useCallback(async () => {
     await signOut({ redirect: false });
     utils.auth.me.setData(undefined, null);
-    await utils.auth.me.invalidate();
+    // Fire-and-forget: a failure here must never block the caller's own
+    // redirect/cleanup - setData above has already cleared the cached user.
+    utils.auth.me.invalidate().catch(() => {});
   }, [utils]);
 
   const state = useMemo(

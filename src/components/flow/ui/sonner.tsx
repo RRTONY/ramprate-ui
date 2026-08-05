@@ -10,9 +10,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       style={
         {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
+          // sonner portals its container to document.body, outside .flow-scope,
+          // so var(--popover) etc never resolve there - literal values travel
+          // with the element regardless of where it renders.
+          "--normal-bg": "oklch(0.98 0.005 260)",
+          "--normal-text": "oklch(0.15 0.02 260)",
+          "--normal-border": "oklch(0.85 0.02 260)",
         } as React.CSSProperties
       }
       {...props}

@@ -33,7 +33,9 @@ function LoginForm() {
         return;
       }
       toast.success("Logged in successfully");
-      await utils.auth.me.invalidate();
+      // Fire-and-forget: a failure here must never block the redirect below,
+      // since the hard reload already guarantees fresh auth state on its own.
+      utils.auth.me.invalidate().catch(() => {});
       setTimeout(() => {
         window.location.href = redirect;
       }, 600);

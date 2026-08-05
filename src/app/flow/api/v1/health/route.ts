@@ -1,12 +1,17 @@
 const UPSTREAM = "https://flow.tonygreenberg.com";
+const SKIP_REQUEST_HEADERS = new Set(["host", "content-length", "connection"]);
 
 async function proxy(req: Request) {
+  const forwardHeaders = new Headers();
+  req.headers.forEach((value, key) => {
+    if (!SKIP_REQUEST_HEADERS.has(key.toLowerCase())) {
+      forwardHeaders.set(key, value);
+    }
+  });
+
   const upstream = await fetch(`${UPSTREAM}/api/v1/health`, {
     method: req.method,
-    headers: {
-      "x-api-key": req.headers.get("x-api-key") ?? "",
-      authorization: req.headers.get("authorization") ?? "",
-    },
+    headers: forwardHeaders,
   });
   const headers = new Headers(upstream.headers);
   headers.delete("content-encoding");
