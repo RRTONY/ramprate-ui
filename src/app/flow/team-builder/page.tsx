@@ -1,0 +1,18 @@
+import type { Metadata } from "next";
+import TeamBuilderClient from "./TeamBuilderClient";
+import { ClientOnly } from "@/components/flow/ClientOnly";
+
+export const metadata: Metadata = {
+  title: "Team Architecture | The Flow Circuit",
+  description:
+    "Map your innovation relay. Take the 12-question assessment individually or join with a team code, then view your team's Energy Matrix and sample reports.",
+  alternates: { canonical: "https://ramprate.com/flow/team-builder" },
+};
+
+export default function TeamBuilderPage() {
+  return (
+    <ClientOnly>
+      <TeamBuilderClient />
+    </ClientOnly>
+  );
+}

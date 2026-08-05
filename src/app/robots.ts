@@ -9,6 +9,10 @@ const disallow = [
   '/henry-jannol',
   '/josh-bykowski',
   '/legal-master',
+  // The Flow Circuit is mid-migration (auth/DB/payments not yet wired up) -
+  // keep the whole section out of search until it's launch-ready, then
+  // remove this line and add its real routes to sitemap.ts + llms.txt.
+  '/flow/',
 ]
 
 // AI/answer-engine crawlers. Listing them explicitly (rather than relying on the

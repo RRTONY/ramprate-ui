@@ -1,0 +1,18 @@
+import type { Metadata } from "next";
+import WhyTeamsFailClient from "./WhyTeamsFailClient";
+import { ClientOnly } from "@/components/flow/ClientOnly";
+
+export const metadata: Metadata = {
+  title: "Why Teams Fail | Four Circuit Failure Patterns",
+  description:
+    "It's never about talent. Diagnose the four team circuit failures — the All-Spark Team, the Ghost Circuit, the Trust Deficit, and the Filter Trap — and learn the fix for each.",
+  alternates: { canonical: "https://ramprate.com/flow/why-teams-fail" },
+};
+
+export default function Page() {
+  return (
+    <ClientOnly>
+      <WhyTeamsFailClient />
+    </ClientOnly>
+  );
+}

@@ -9,8 +9,8 @@ import JsonLd, {
   organizationJsonLd,
   webSiteJsonLd,
 } from "@/components/shared/JsonLd";
-import ExitSurvey from "@/components/shared/ExitSurvey";
 import ScrollToTop from "@/components/shared/ScrollToTop";
+import { ConditionalChrome } from "@/components/shared/ConditionalChrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ramprate.com"),
@@ -76,7 +76,7 @@ export default async function RootLayout({
   const gaId =
     settings?.googleAnalyticsId?.trim() || process.env.NEXT_PUBLIC_GA_ID;
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Google Analytics - only render when an ID exists (avoids id=undefined) */}
         {gaId && (
@@ -127,15 +127,19 @@ export default async function RootLayout({
             socialLinks: settings?.socialLinks,
           })}
         />
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer
-          companyName={settings?.companyName}
-          phone={settings?.phone}
-          email={settings?.email}
-          socialLinks={settings?.socialLinks}
-        />
-        <ExitSurvey />
+        <ConditionalChrome
+          header={<Header />}
+          footer={
+            <Footer
+              companyName={settings?.companyName}
+              phone={settings?.phone}
+              email={settings?.email}
+              socialLinks={settings?.socialLinks}
+            />
+          }
+        >
+          {children}
+        </ConditionalChrome>
         <ScrollToTop />
       </body>
     </html>
