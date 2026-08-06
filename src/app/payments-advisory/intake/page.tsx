@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PaymentsIntakeForm from "@/components/payments/PaymentsIntakeForm";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Payments Advisory Client Intake",
@@ -11,6 +12,13 @@ export const metadata: Metadata = {
 export default function PaymentsIntakePage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
+          { name: "Intake", url: "https://ramprate.com/payments-advisory/intake" },
+        ])}
+      />
       <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">

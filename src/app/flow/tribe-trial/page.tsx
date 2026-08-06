@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TribeTrialClient from "./TribeTrialClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Start Your 30-Day Tribe Trial | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <TribeTrialClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Tribe Trial", url: "https://ramprate.com/flow/tribe-trial" },
+        ])}
+      />
+      <ClientOnly>
+        <TribeTrialClient />
+      </ClientOnly>
+    </>
   );
 }

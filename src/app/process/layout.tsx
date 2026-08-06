@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Our Process - How We Deliver",
@@ -29,5 +30,15 @@ export default function ProcessLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Process", url: "https://ramprate.com/process" },
+        ])}
+      />
+      {children}
+    </>
+  );
 }

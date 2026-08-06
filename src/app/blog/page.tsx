@@ -12,6 +12,7 @@ import PostCard from "@/components/blog/PostCard";
 import Pagination from "@/components/blog/Pagination";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 interface SanityPost {
   _id: string;
@@ -108,6 +109,12 @@ export default async function BlogPage({
 
   return (
     <div style={{ background: "var(--dark)", minHeight: "100vh" }}>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Blog", url: "https://ramprate.com/blog" },
+        ])}
+      />
       {/* ── HERO ── */}
       <section className="relative pt-32 pb-14 sm:pb-20 overflow-hidden">
         <div className="glass-orb glass-orb-amber absolute w-100 h-100 -top-40 -right-40 opacity-20" />

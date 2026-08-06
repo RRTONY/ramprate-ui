@@ -4,6 +4,7 @@ import { client } from "@/lib/sanity/client";
 import { allThinkingPostsQuery } from "@/lib/sanity/queries";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const revalidate = 60;
 
@@ -55,6 +56,12 @@ export default async function ThinkingPage() {
 
   return (
     <main style={{ background: "var(--dark)", minHeight: "100vh" }}>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Thinking", url: "https://ramprate.com/thinking" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

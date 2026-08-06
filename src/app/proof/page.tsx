@@ -15,6 +15,7 @@ import ProofClient, {
   type SanityConfidentialTestimonial,
 } from "./ProofClient";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Proof - Real Clients, Real Results",
@@ -64,12 +65,20 @@ export default async function ProofPage() {
     }),
   ]);
   return (
-    <ProofClient
-      clientLogos={clientLogos ?? []}
-      testimonials={testimonials ?? []}
-      boardAdvisors={boardAdvisors ?? []}
-      caseStudies={caseStudies ?? []}
-      confidentialTestimonials={confidentialTestimonials ?? []}
-    />
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Proof", url: "https://ramprate.com/proof" },
+        ])}
+      />
+      <ProofClient
+        clientLogos={clientLogos ?? []}
+        testimonials={testimonials ?? []}
+        boardAdvisors={boardAdvisors ?? []}
+        caseStudies={caseStudies ?? []}
+        confidentialTestimonials={confidentialTestimonials ?? []}
+      />
+    </>
   );
 }

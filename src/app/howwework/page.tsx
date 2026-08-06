@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import Link from 'next/link'
 import CtaSection from '@/components/sections/CtaSection'
 import HowWeWorkTabs from '@/components/sections/HowWeWorkTabs'
+import JsonLd, {breadcrumbJsonLd} from '@/components/shared/JsonLd'
 
 export const metadata: Metadata = {
   title: 'How We Work',
@@ -43,6 +44,12 @@ const badges = ['Buyer Exclusive', 'One-Party Fee', 'Apples-to-Apples', 'B Corp 
 export default function HowWeWorkPage() {
   return (
     <div style={{background: 'var(--dark)'}}>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'How We Work', url: 'https://ramprate.com/howwework'},
+        ])}
+      />
 
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28 px-5 sm:px-8">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "How Sourcing Works - RampRate Process",
@@ -119,6 +120,13 @@ const summaryRows = [
 export default function SourcingProcessPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Sourcing", url: "https://ramprate.com/sourcing" },
+          { name: "Process", url: "https://ramprate.com/sourcing/process" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

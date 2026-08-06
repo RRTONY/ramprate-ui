@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AlphaInviteClient from "./AlphaInviteClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Join the Alpha | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function AlphaPage() {
   return (
-    <ClientOnly>
-      <AlphaInviteClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Alpha", url: "https://ramprate.com/flow/alpha" },
+        ])}
+      />
+      <ClientOnly>
+        <AlphaInviteClient />
+      </ClientOnly>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import WhyTeamsFailClient from "./WhyTeamsFailClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Why Teams Fail | Four Circuit Failure Patterns",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <WhyTeamsFailClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Why Teams Fail", url: "https://ramprate.com/flow/why-teams-fail" },
+        ])}
+      />
+      <ClientOnly>
+        <WhyTeamsFailClient />
+      </ClientOnly>
+    </>
   );
 }

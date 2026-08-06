@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import FindYourPathClient from "./FindYourPathClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Find Your Frequency | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <FindYourPathClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Find Your Path", url: "https://ramprate.com/flow/find-your-path" },
+        ])}
+      />
+      <ClientOnly>
+        <FindYourPathClient />
+      </ClientOnly>
+    </>
   );
 }

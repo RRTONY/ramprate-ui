@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
@@ -195,6 +196,21 @@ const highlightIcons = [
 export default function GrowthPage() {
   return (
     <main>
+      <JsonLd
+        data={serviceJsonLd({
+          name: "Syzygy Growth Advisory",
+          description:
+            "Anchor clients, advisors, capital, impact, strategy, and dispute resolution for founders and impactpreneurs.",
+          url: "https://ramprate.com/growth",
+          serviceType: "Growth strategy advisory",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Growth", url: "https://ramprate.com/growth" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

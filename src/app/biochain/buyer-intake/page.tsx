@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ClientIntakeForm from "@/components/biochain/ClientIntakeForm";
 import { TOTAL_FIELD_COUNT } from "@/lib/client-intake-fields";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Client Intake Application - BioChain Sourcing",
@@ -38,6 +39,13 @@ export const metadata: Metadata = {
 export default function ClientIntakePage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "BioChain", url: "https://ramprate.com/biochain" },
+          { name: "Buyer Intake", url: "https://ramprate.com/biochain/buyer-intake" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-36 pb-20 overflow-hidden"

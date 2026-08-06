@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ComputeCoreClient from "./ComputeCoreClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Compute Core | Silicon Sanctuary Terminal",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <ComputeCoreClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Compute Core", url: "https://ramprate.com/flow/compute-core" },
+        ])}
+      />
+      <ClientOnly>
+        <ComputeCoreClient />
+      </ClientOnly>
+    </>
   );
 }

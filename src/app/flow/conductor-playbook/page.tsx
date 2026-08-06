@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ConductorPlaybookClient from "./ConductorPlaybookClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "The Conductor's Playbook — Rules for Orchestrating Introductions",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <ConductorPlaybookClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Conductor Playbook", url: "https://ramprate.com/flow/conductor-playbook" },
+        ])}
+      />
+      <ClientOnly>
+        <ConductorPlaybookClient />
+      </ClientOnly>
+    </>
   );
 }

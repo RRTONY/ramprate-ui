@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import RelationshipCalculatorClient from "./RelationshipCalculatorClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "The Relationship Calculator — Flow Circuit Role Dynamics",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <RelationshipCalculatorClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Relationship Calculator", url: "https://ramprate.com/flow/relationship-calculator" },
+        ])}
+      />
+      <ClientOnly>
+        <RelationshipCalculatorClient />
+      </ClientOnly>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -61,6 +62,12 @@ const sections = [
 export default function TermsPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Terms of Service", url: "https://ramprate.com/terms" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"

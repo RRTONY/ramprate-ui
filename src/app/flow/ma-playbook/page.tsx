@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MAPlaybookClient from "./MAPlaybookClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "The M&A Integration Playbook — Flow Circuit for Mergers",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <MAPlaybookClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "M&A Playbook", url: "https://ramprate.com/flow/ma-playbook" },
+        ])}
+      />
+      <ClientOnly>
+        <MAPlaybookClient />
+      </ClientOnly>
+    </>
   );
 }

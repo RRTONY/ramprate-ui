@@ -1,5 +1,6 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
+import JsonLd, {breadcrumbJsonLd} from '@/components/shared/JsonLd'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -57,6 +58,12 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'Privacy Policy', url: 'https://ramprate.com/privacy'},
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"

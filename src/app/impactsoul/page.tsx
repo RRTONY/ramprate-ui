@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
@@ -239,6 +240,21 @@ const dnaIcons = [
 export default function ImpactSoulPage() {
   return (
     <main>
+      <JsonLd
+        data={serviceJsonLd({
+          name: "ImpactSoul",
+          description:
+            "Tokenize cultural treasures and purpose-driven assets to rally impact movements, for NGOs and stewards of art and artifacts.",
+          url: "https://ramprate.com/impactsoul",
+          serviceType: "Impact and regenerative consulting",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "ImpactSoul", url: "https://ramprate.com/impactsoul" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

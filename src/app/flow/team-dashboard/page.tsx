@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TeamDashboardClient from "./TeamDashboardClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Team Dashboard | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function TeamDashboardPage() {
   return (
-    <ClientOnly>
-      <TeamDashboardClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Team Dashboard", url: "https://ramprate.com/flow/team-dashboard" },
+        ])}
+      />
+      <ClientOnly>
+        <TeamDashboardClient />
+      </ClientOnly>
+    </>
   );
 }

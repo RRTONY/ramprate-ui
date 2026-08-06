@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BioClient from "./BioClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Tony Greenberg | Architect of the Invisible",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <BioClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Bio", url: "https://ramprate.com/flow/bio" },
+        ])}
+      />
+      <ClientOnly>
+        <BioClient />
+      </ClientOnly>
+    </>
   );
 }

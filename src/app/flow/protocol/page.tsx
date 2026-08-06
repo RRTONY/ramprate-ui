@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ProtocolClient from "./ProtocolClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "The Protocol | The Operating Manual for High-Performance Teams",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <ProtocolClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Protocol", url: "https://ramprate.com/flow/protocol" },
+        ])}
+      />
+      <ClientOnly>
+        <ProtocolClient />
+      </ClientOnly>
+    </>
   );
 }

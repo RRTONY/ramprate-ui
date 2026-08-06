@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ShareResultsClient from "./ShareResultsClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Shared Assessment Result | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function SharePage() {
   return (
-    <ClientOnly>
-      <ShareResultsClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Share", url: "https://ramprate.com/flow/share" },
+        ])}
+      />
+      <ClientOnly>
+        <ShareResultsClient />
+      </ClientOnly>
+    </>
   );
 }

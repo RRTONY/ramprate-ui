@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AssessmentClient from "./AssessmentClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Take the Assessment | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <AssessmentClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Assessment", url: "https://ramprate.com/flow/assessment" },
+        ])}
+      />
+      <ClientOnly>
+        <AssessmentClient />
+      </ClientOnly>
+    </>
   );
 }

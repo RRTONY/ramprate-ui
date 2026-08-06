@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title:
@@ -203,6 +204,21 @@ const team = [
 export default function PrivateAdvisoryPage() {
   return (
     <main>
+      <JsonLd
+        data={serviceJsonLd({
+          name: "RampRate Private Advisory",
+          description:
+            "Sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
+          url: "https://ramprate.com/private-advisory",
+          serviceType: "Dispute resolution and specialist coordination advisory",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Private Advisory", url: "https://ramprate.com/private-advisory" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SoulPrintClient from "./SoulPrintClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "SoulPrint | The Flow Circuit",
@@ -10,8 +11,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <SoulPrintClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "SoulPrint", url: "https://ramprate.com/flow/soulprint" },
+        ])}
+      />
+      <ClientOnly>
+        <SoulPrintClient />
+      </ClientOnly>
+    </>
   );
 }

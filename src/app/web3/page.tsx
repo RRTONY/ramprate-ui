@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Stratum - Web3 & Enterprise Blockchain Advisory",
@@ -234,6 +235,21 @@ const serviceIcons = [
 export default function Web3Page() {
   return (
     <main>
+      <JsonLd
+        data={serviceJsonLd({
+          name: "Stratum Web3 & Blockchain Advisory",
+          description:
+            "Enterprise blockchain bridge, non-dilutive tokenized funding, DAO governance design, and regulatory navigation for Web3 initiatives.",
+          url: "https://ramprate.com/web3",
+          serviceType: "Web3 and blockchain advisory",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Web3", url: "https://ramprate.com/web3" },
+        ])}
+      />
       {/* Deep Dive Banner */}
       <div
         className="py-3 mt-20"

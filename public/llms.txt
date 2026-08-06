@@ -38,6 +38,14 @@
 - [Payments Market Intel](https://ramprate.com/payments-advisory/intel): Industry risk classifications and processor benchmark rates
 - [Payments Client Intake](https://ramprate.com/payments-advisory/intake): Intake form to start a payments advisory engagement
 
+## Flow (team & relationship assessment platform)
+- [Flow](https://ramprate.com/flow): The Flow Circuit - discover your natural energy role (Spark, Amplifier, Filter, Ground, Conductor) and map team performance
+- [Flow Assessment](https://ramprate.com/flow/assessment): Take the core Flow Circuit assessment
+- [Flow Pricing](https://ramprate.com/flow/pricing): Flow Circuit plans and pricing
+- [Flow Science](https://ramprate.com/flow/science): The research and methodology behind the Flow Circuit model
+- [Flow Sample Reports](https://ramprate.com/flow/sample-reports): Example Flow Circuit assessment reports
+- [Flow Testimonials](https://ramprate.com/flow/testimonials): Teams and companies using the Flow Circuit
+
 ## Content & insights
 - [Blog](https://ramprate.com/blog): Articles on IT infrastructure, sourcing, AI compute, and enterprise strategy
 - [Thinking](https://ramprate.com/thinking): Evergreen analysis and frameworks from 25 years of advisory

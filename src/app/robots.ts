@@ -9,10 +9,15 @@ const disallow = [
   '/henry-jannol',
   '/josh-bykowski',
   '/legal-master',
-  // The Flow Circuit is mid-migration (auth/DB/payments not yet wired up) -
-  // keep the whole section out of search until it's launch-ready, then
-  // remove this line and add its real routes to sitemap.ts + llms.txt.
-  '/flow/',
+  // Per-user/per-token result links - no stable public content to index,
+  // and there's no list of valid tokens to enumerate in a sitemap anyway.
+  '/flow/360/',
+  '/flow/360-results/',
+  '/flow/consciousness/',
+  '/flow/family-360/',
+  '/flow/peer-review/',
+  '/flow/soulprint/report/',
+  '/flow/team/',
 ]
 
 // AI/answer-engine crawlers. Listing them explicitly (rather than relying on the

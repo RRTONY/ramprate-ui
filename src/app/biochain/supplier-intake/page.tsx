@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SupplierIntakeStage1Form from "@/components/supplier/SupplierIntakeStage1Form";
 import { STAGE1_TOTAL_FIELD_COUNT } from "@/lib/supplier-intake-fields";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Supplier Intake - Peptide Supply Partner Application",
@@ -40,6 +41,13 @@ export const metadata: Metadata = {
 export default function SupplierIntakePage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "BioChain", url: "https://ramprate.com/biochain" },
+          { name: "Supplier Intake", url: "https://ramprate.com/biochain/supplier-intake" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-36 pb-20 overflow-hidden"

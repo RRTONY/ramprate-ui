@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SoulPrintLayerClient from "./SoulPrintLayerClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Consciousness Layer | The Flow Circuit",
@@ -10,8 +11,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <SoulPrintLayerClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Consciousness", url: "https://ramprate.com/flow/consciousness" },
+        ])}
+      />
+      <ClientOnly>
+        <SoulPrintLayerClient />
+      </ClientOnly>
+    </>
   );
 }

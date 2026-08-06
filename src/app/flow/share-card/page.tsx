@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ShareCardClient from "./ShareCardClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Your Flow Card | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <ShareCardClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Share Card", url: "https://ramprate.com/flow/share-card" },
+        ])}
+      />
+      <ClientOnly>
+        <ShareCardClient />
+      </ClientOnly>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import WhiteLabelClient from "./WhiteLabelClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "White-Label Configuration | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <WhiteLabelClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "White Label", url: "https://ramprate.com/flow/white-label" },
+        ])}
+      />
+      <ClientOnly>
+        <WhiteLabelClient />
+      </ClientOnly>
+    </>
   );
 }

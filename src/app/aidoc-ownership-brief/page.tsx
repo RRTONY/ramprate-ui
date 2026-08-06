@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AiDocGate from "./AiDocGate";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "AI Doc Film Tokenization - Ownership Brief",
@@ -9,5 +10,15 @@ export const metadata: Metadata = {
 };
 
 export default function AiDocOwnershipBriefPage() {
-  return <AiDocGate />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "AI Doc Ownership Brief", url: "https://ramprate.com/aidoc-ownership-brief" },
+        ])}
+      />
+      <AiDocGate />
+    </>
+  );
 }

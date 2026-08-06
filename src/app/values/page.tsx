@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Values - Powering Purpose-driven Innovation",
@@ -130,6 +131,12 @@ const ArrowRight = () => (
 export default function ValuesPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Values", url: "https://ramprate.com/values" },
+        ])}
+      />
       {/* ─── Hero ─── */}
       <section
         className="relative pt-32 pb-24 overflow-hidden"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JourneyClient from "./JourneyClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "The Journey | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function JourneyPage() {
   return (
-    <ClientOnly>
-      <JourneyClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Journey", url: "https://ramprate.com/flow/journey" },
+        ])}
+      />
+      <ClientOnly>
+        <JourneyClient />
+      </ClientOnly>
+    </>
   );
 }

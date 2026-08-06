@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const gold = "oklch(0.52 0.12 70)";
 
@@ -46,6 +47,21 @@ const PROCESS_STEPS = [
 export default function PaymentsAdvisoryPage() {
   return (
     <main>
+      <JsonLd
+        data={serviceJsonLd({
+          name: "RampRate Payments Advisory",
+          description:
+            "RampRate writes your payment processing RFP, shops it to 25+ vetted processors, and negotiates the contract on your behalf.",
+          url: "https://ramprate.com/payments-advisory",
+          serviceType: "Payment processing RFP authorship and negotiation",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"

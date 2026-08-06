@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PAYMENTS_PROCESSORS } from "@/lib/payments-advisory-data";
 import IndustryGrid from "@/components/payments/IndustryGrid";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Payments Market Intel - Industry Risk & Processor Benchmarks",
@@ -12,6 +13,13 @@ export const metadata: Metadata = {
 export default function PaymentsIntelPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
+          { name: "Intel", url: "https://ramprate.com/payments-advisory/intel" },
+        ])}
+      />
       <section className="pt-32 pb-14" style={{ background: "var(--dark)" }}>
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <span

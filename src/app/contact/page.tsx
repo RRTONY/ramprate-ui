@@ -5,6 +5,7 @@ import {siteSettingsQuery} from '@/lib/sanity/queries'
 import {toTelHref} from '@/lib/utils'
 import ContactForm from '@/components/sections/ContactForm'
 import {getPageSeo, withSeoOverrides} from '@/lib/sanity/seo'
+import JsonLd, {breadcrumbJsonLd} from '@/components/shared/JsonLd'
 
 const FALLBACK_METADATA: Metadata = {
   title: 'Contact',
@@ -44,6 +45,12 @@ export default async function ContactPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          {name: 'Home', url: 'https://ramprate.com'},
+          {name: 'Contact', url: 'https://ramprate.com/contact'},
+        ])}
+      />
       {/* ── HERO ── */}
       <section
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"

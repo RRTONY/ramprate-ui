@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import OriginStoryClient from "./OriginStoryClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Origin Story | From the Z Process to The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <OriginStoryClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Origin Story", url: "https://ramprate.com/flow/origin-story" },
+        ])}
+      />
+      <ClientOnly>
+        <OriginStoryClient />
+      </ClientOnly>
+    </>
   );
 }

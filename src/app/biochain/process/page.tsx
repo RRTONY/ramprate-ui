@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "How Sourcing Works - BioChain Process",
@@ -119,6 +120,13 @@ const summaryRows = [
 export default function BioChainProcessPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "BioChain", url: "https://ramprate.com/biochain" },
+          { name: "Process", url: "https://ramprate.com/biochain/process" },
+        ])}
+      />
       {/* Hero */}
       <section
         className="relative pt-36 pb-20 overflow-hidden"

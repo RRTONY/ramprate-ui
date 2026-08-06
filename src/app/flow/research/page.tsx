@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ResearchDashboardClient from "./ResearchDashboardClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Live Research Dashboard | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <ResearchDashboardClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Research", url: "https://ramprate.com/flow/research" },
+        ])}
+      />
+      <ClientOnly>
+        <ResearchDashboardClient />
+      </ClientOnly>
+    </>
   );
 }

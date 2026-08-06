@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const revalidate = 60;
 
@@ -123,6 +124,12 @@ const bodyText = "text-sm leading-relaxed";
 export default function CareersPage() {
   return (
     <div>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Careers", url: "https://ramprate.com/careers" },
+        ])}
+      />
       <section className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-20 bg-(--dark)">
         <div className="glass-orb glass-orb-amber absolute w-[560px] h-[560px] -top-40 -right-40 opacity-20 pointer-events-none" />
         <div className="glass-orb glass-orb-blue  absolute w-[380px] h-[380px] -bottom-20 -left-24 opacity-10 pointer-events-none" />

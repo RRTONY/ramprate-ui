@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCT_CATEGORIES } from "@/lib/biochain-catalogue";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Full Product Catalog - BioChain Sourcing",
@@ -22,6 +23,13 @@ export default function BioChainCataloguePage() {
 
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "BioChain", url: "https://ramprate.com/biochain" },
+          { name: "Catalogue", url: "https://ramprate.com/biochain/catalogue" },
+        ])}
+      />
       <section className="relative pt-36 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />

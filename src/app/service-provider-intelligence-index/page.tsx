@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CtaSection from "@/components/sections/CtaSection";
+import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Service Provider Intelligence Index (SPY Index)",
@@ -173,6 +174,24 @@ export default function SpiiPage() {
         fontFamily: "var(--font-body)",
       }}
     >
+      <JsonLd
+        data={serviceJsonLd({
+          name: "Service Provider Intelligence Index (SPY Index)",
+          description:
+            "Supplier-neutral IT sourcing analysis across 350+ suppliers, 80 countries, and 315 variables.",
+          url: "https://ramprate.com/service-provider-intelligence-index",
+          serviceType: "IT sourcing intelligence platform",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          {
+            name: "Service Provider Intelligence Index",
+            url: "https://ramprate.com/service-provider-intelligence-index",
+          },
+        ])}
+      />
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-28 pb-20 px-5 sm:px-8">
         <div className="glass-orb glass-orb-amber absolute w-125 h-125 -top-24 -right-32 opacity-20" />

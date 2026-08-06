@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TeamBuilderClient from "./TeamBuilderClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Team Architecture | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function TeamBuilderPage() {
   return (
-    <ClientOnly>
-      <TeamBuilderClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Team Builder", url: "https://ramprate.com/flow/team-builder" },
+        ])}
+      />
+      <ClientOnly>
+        <TeamBuilderClient />
+      </ClientOnly>
+    </>
   );
 }

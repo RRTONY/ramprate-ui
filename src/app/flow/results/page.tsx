@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AlignmentResultsClient from "./AlignmentResultsClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Your Flow Circuit Results | The Flow Circuit",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <AlignmentResultsClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Results", url: "https://ramprate.com/flow/results" },
+        ])}
+      />
+      <ClientOnly>
+        <AlignmentResultsClient />
+      </ClientOnly>
+    </>
   );
 }

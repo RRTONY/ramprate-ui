@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MagicQuestionsClient from "./MagicQuestionsClient";
 import { ClientOnly } from "@/components/flow/ClientOnly";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "10 Magic Questions to Make Your Project Go Right",
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ClientOnly>
-      <MagicQuestionsClient />
-    </ClientOnly>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Flow", url: "https://ramprate.com/flow" },
+          { name: "Magic Questions", url: "https://ramprate.com/flow/magic-questions" },
+        ])}
+      />
+      <ClientOnly>
+        <MagicQuestionsClient />
+      </ClientOnly>
+    </>
   );
 }
