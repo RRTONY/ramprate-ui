@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  SECRETS_SCAN_OMIT_PATHS = ".next/cache/**,.netlify/.next/cache/**"
+  SECRETS_SCAN_OMIT_PATHS = "**/.next/cache/**"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
