@@ -4,12 +4,21 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import {
-  BookOpen, ExternalLink, Lightbulb, Heart, Sparkles,
-  GraduationCap, FlaskConical, Users, Brain, Zap, Code2
+  BookOpen,
+  ExternalLink,
+  Lightbulb,
+  Heart,
+  Sparkles,
+  GraduationCap,
+  FlaskConical,
+  Users,
+  Brain,
+  Zap,
+  Code2,
 } from "lucide-react";
 import Link from "next/link";
 
-// Amazon referral tag — replace with actual referral code
+// Amazon referral tag - replace with actual referral code
 const AMAZON_TAG = "flowcircuit-20";
 
 interface Thinker {
@@ -37,15 +46,16 @@ const thinkers: Thinker[] = [
     title: "Innovation Architect & Stand-Up Philosopher",
     institution: "Innovation On Demand",
     contribution:
-      "Identified that innovation isn't a solo act — it's a relay. His Team Dimensions framework mapped the distinct cognitive roles people play in the innovation process: Creator, Advancer, Refiner, Executor. The original spark behind The Flow Circuit's five-role model.",
+      "Identified that innovation isn't a solo act - it's a relay. His Team Dimensions framework mapped the distinct cognitive roles people play in the innovation process: Creator, Advancer, Refiner, Executor. The original spark behind The Flow Circuit's five-role model.",
     connectionToFlowCircuit:
-      "The direct ancestor. Fahden's insight that people have innate innovation styles — and that forcing someone out of their natural role kills both the idea and the person — is the foundational DNA of everything we've built.",
+      "The direct ancestor. Fahden's insight that people have innate innovation styles - and that forcing someone out of their natural role kills both the idea and the person - is the foundational DNA of everything we've built.",
     keyWork: {
       title: "Innovation on Demand",
       year: "1993",
       amazonUrl: `https://www.amazon.com/Innovation-Demand-Allen-Fahden/dp/0962966312?tag=${AMAZON_TAG}`,
     },
-    quote: "The fastest way to kill innovation is to put the wrong person in the wrong seat at the wrong time.",
+    quote:
+      "The fastest way to kill innovation is to put the wrong person in the wrong seat at the wrong time.",
     icon: <Zap className="w-6 h-6" />,
     accentColor: "text-yellow-400",
   },
@@ -55,9 +65,9 @@ const thinkers: Thinker[] = [
     title: "The Godfather of Evaluation",
     institution: "Claremont Graduate University",
     contribution:
-      "Created the foundational distinction between formative and summative evaluation that underpins all modern assessment science. His work established that evaluation is not a luxury — it's a discipline with its own logic, its own rigor, and its own ethics. Without Scriven, there is no defensible assessment.",
+      "Created the foundational distinction between formative and summative evaluation that underpins all modern assessment science. His work established that evaluation is not a luxury - it's a discipline with its own logic, its own rigor, and its own ethics. Without Scriven, there is no defensible assessment.",
     connectionToFlowCircuit:
-      "Every ipsative question, every construct validity check, every percentile ranking in The Flow Circuit stands on the shoulders of Scriven's evaluation methodology. He taught us that measuring people is a moral act — do it right or don't do it at all.",
+      "Every ipsative question, every construct validity check, every percentile ranking in The Flow Circuit stands on the shoulders of Scriven's evaluation methodology. He taught us that measuring people is a moral act - do it right or don't do it at all.",
     keyWork: {
       title: "Evaluation Thesaurus",
       year: "1991",
@@ -67,7 +77,8 @@ const thinkers: Thinker[] = [
       { title: "The Logic of Evaluation", year: "1980" },
       { title: "Key Evaluation Checklist (KEC)", year: "2007" },
     ],
-    quote: "Bad evaluation is worse than no evaluation, because it creates the illusion of knowledge.",
+    quote:
+      "Bad evaluation is worse than no evaluation, because it creates the illusion of knowledge.",
     icon: <GraduationCap className="w-6 h-6" />,
     accentColor: "text-blue-400",
   },
@@ -77,9 +88,9 @@ const thinkers: Thinker[] = [
     title: "Executive Intelligence Pioneer",
     institution: "Claremont Graduate University / DHR Global",
     contribution:
-      "Proved that the cognitive qualities separating great leaders from average ones can be isolated and measured. His work on Executive Intelligence — cited by Malcolm Gladwell in The New Yorker — demonstrated that what leaders do under pressure reveals who they are, not what they've memorized.",
+      "Proved that the cognitive qualities separating great leaders from average ones can be isolated and measured. His work on Executive Intelligence - cited by Malcolm Gladwell in The New Yorker - demonstrated that what leaders do under pressure reveals who they are, not what they've memorized.",
     connectionToFlowCircuit:
-      "Menkes validated the thesis that innate cognitive patterns matter more than credentials. His research on how leaders perform under pressure directly informs our stress radiation model — the cost of operating outside your natural role.",
+      "Menkes validated the thesis that innate cognitive patterns matter more than credentials. His research on how leaders perform under pressure directly informs our stress radiation model - the cost of operating outside your natural role.",
     keyWork: {
       title: "Executive Intelligence: What All Great Leaders Have",
       year: "2005",
@@ -87,12 +98,14 @@ const thinkers: Thinker[] = [
     },
     additionalWorks: [
       {
-        title: "Better Under Pressure: How Great Leaders Bring Out the Best in Themselves and Others",
+        title:
+          "Better Under Pressure: How Great Leaders Bring Out the Best in Themselves and Others",
         year: "2011",
         amazonUrl: `https://www.amazon.com/Better-Under-Pressure-Leaders-Themselves/dp/1422138704?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "The right people aren't the smartest people. They're the people whose minds work the right way for the challenge at hand.",
+    quote:
+      "The right people aren't the smartest people. They're the people whose minds work the right way for the challenge at hand.",
     icon: <Brain className="w-6 h-6" />,
     accentColor: "text-purple-400",
   },
@@ -104,7 +117,7 @@ const thinkers: Thinker[] = [
     contribution:
       "Showed the world that great companies fail not because they're stupid, but because they're rational. His theory of disruptive innovation revealed that the very processes that make organizations successful eventually make them blind to existential threats.",
     connectionToFlowCircuit:
-      "Christensen proved that organizational DNA matters. The Flow Circuit extends this: it's not just the company's DNA that determines survival — it's whether the right human operating systems are in the right seats when disruption arrives.",
+      "Christensen proved that organizational DNA matters. The Flow Circuit extends this: it's not just the company's DNA that determines survival - it's whether the right human operating systems are in the right seats when disruption arrives.",
     keyWork: {
       title: "The Innovator's Dilemma",
       year: "1997",
@@ -122,7 +135,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/How-Will-Measure-Your-Life/dp/0062102419?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "The reason why it is so difficult for existing firms to capitalize on disruptive innovations is that their processes and their business model that make them good at the existing business actually make them bad at competing for the disruption.",
+    quote:
+      "The reason why it is so difficult for existing firms to capitalize on disruptive innovations is that their processes and their business model that make them good at the existing business actually make them bad at competing for the disruption.",
     icon: <Lightbulb className="w-6 h-6" />,
     accentColor: "text-orange-400",
   },
@@ -132,7 +146,7 @@ const thinkers: Thinker[] = [
     title: "The Inventor of Modern Management",
     institution: "Claremont Graduate University",
     contribution:
-      "Before Drucker, management was instinct. After Drucker, it was a discipline. He coined 'knowledge worker,' predicted the rise of the information economy, and insisted that the purpose of a business is to create a customer — not to maximize shareholder value.",
+      "Before Drucker, management was instinct. After Drucker, it was a discipline. He coined 'knowledge worker,' predicted the rise of the information economy, and insisted that the purpose of a business is to create a customer - not to maximize shareholder value.",
     connectionToFlowCircuit:
       "Drucker's insight that effectiveness is a habit, not a talent, is the philosophical bedrock. The Flow Circuit asks: what if effectiveness isn't just about habits, but about operating from your innate wiring? Drucker opened the door. We walked through it.",
     keyWork: {
@@ -152,7 +166,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Practice-Management-Peter-F-Drucker/dp/0060878975?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "The most important thing in communication is hearing what isn't said.",
+    quote:
+      "The most important thing in communication is hearing what isn't said.",
     icon: <BookOpen className="w-6 h-6" />,
     accentColor: "text-emerald-400",
   },
@@ -162,9 +177,9 @@ const thinkers: Thinker[] = [
     title: "The Architect of Flow",
     institution: "Claremont Graduate University",
     contribution:
-      "Discovered and named the 'flow state' — that optimal experience where challenge meets skill, self-consciousness dissolves, and time distorts. His research proved that happiness isn't something that happens to you; it's something you engineer through the right conditions.",
+      "Discovered and named the 'flow state' - that optimal experience where challenge meets skill, self-consciousness dissolves, and time distorts. His research proved that happiness isn't something that happens to you; it's something you engineer through the right conditions.",
     connectionToFlowCircuit:
-      "The name says it all. The Flow Circuit exists because Csikszentmihalyi proved that humans have an optimal operating frequency. Our assessment maps where that frequency lives for each person — and what happens when organizations force them to broadcast on the wrong channel.",
+      "The name says it all. The Flow Circuit exists because Csikszentmihalyi proved that humans have an optimal operating frequency. Our assessment maps where that frequency lives for each person - and what happens when organizations force them to broadcast on the wrong channel.",
     keyWork: {
       title: "Flow: The Psychology of Optimal Experience",
       year: "1990",
@@ -182,7 +197,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Finding-Flow-Psychology-Engagement-Masterminds/dp/0465024114?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "The best moments in our lives are not the passive, receptive, relaxing times. The best moments usually occur if a person's body or mind is stretched to its limits in a voluntary effort to accomplish something difficult and worthwhile.",
+    quote:
+      "The best moments in our lives are not the passive, receptive, relaxing times. The best moments usually occur if a person's body or mind is stretched to its limits in a voluntary effort to accomplish something difficult and worthwhile.",
     icon: <Sparkles className="w-6 h-6" />,
     accentColor: "text-cyan-400",
   },
@@ -190,7 +206,8 @@ const thinkers: Thinker[] = [
     name: "Richard Condon",
     years: "1960s–2024",
     title: "Transformation Architect",
-    institution: "MissionB / Inside Consulting / Condon Consulting International",
+    institution:
+      "MissionB / Inside Consulting / Condon Consulting International",
     contribution:
       "A former submarine officer and McKinsey engagement manager who spent decades proving that sustainable business transformation requires understanding the human operating system, not just the balance sheet. Co-founded MissionB and Inside Consulting to bridge the gap between strategy and execution through people.",
     connectionToFlowCircuit:
@@ -200,7 +217,8 @@ const thinkers: Thinker[] = [
       year: "2005",
       amazonUrl: `https://insideconsulting.net/about/`,
     },
-    quote: "The distance between a brilliant strategy and a failed execution is always measured in people.",
+    quote:
+      "The distance between a brilliant strategy and a failed execution is always measured in people.",
     icon: <Users className="w-6 h-6" />,
     accentColor: "text-red-400",
   },
@@ -235,7 +253,7 @@ const thinkers: Thinker[] = [
     title: "The Trust Architect",
     institution: "The Table Group",
     contribution:
-      "Made the invisible visible. His Five Dysfunctions model showed that team failure cascades from a single root: absence of trust. When people can't be vulnerable about their weaknesses, everything downstream — conflict, commitment, accountability, results — breaks.",
+      "Made the invisible visible. His Five Dysfunctions model showed that team failure cascades from a single root: absence of trust. When people can't be vulnerable about their weaknesses, everything downstream - conflict, commitment, accountability, results - breaks.",
     connectionToFlowCircuit:
       "Lencioni diagnosed the disease. The Flow Circuit prescribes the treatment. When people know their role and trust that others will play theirs, vulnerability becomes natural. The assessment creates a shared language that makes Lencioni's trust possible.",
     keyWork: {
@@ -255,7 +273,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Advantage-Organizational-Health-Everything-Business/dp/0470941529?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "Not finance. Not strategy. Not technology. It is teamwork that remains the ultimate competitive advantage, both because it is so powerful and so rare.",
+    quote:
+      "Not finance. Not strategy. Not technology. It is teamwork that remains the ultimate competitive advantage, both because it is so powerful and so rare.",
     icon: <Heart className="w-6 h-6" />,
     accentColor: "text-pink-400",
   },
@@ -265,17 +284,19 @@ const thinkers: Thinker[] = [
     title: "The Flow Genome Decoder",
     institution: "Flow Research Collective",
     contribution:
-      "Took Csikszentmihalyi's flow state from the psychology lab to the battlefield, the boardroom, and the mountain. His research quantified the neurochemistry of peak performance — dopamine, norepinephrine, endorphins, anandamide, serotonin — and proved that flow states can be engineered, not just hoped for.",
+      "Took Csikszentmihalyi's flow state from the psychology lab to the battlefield, the boardroom, and the mountain. His research quantified the neurochemistry of peak performance - dopamine, norepinephrine, endorphins, anandamide, serotonin - and proved that flow states can be engineered, not just hoped for.",
     connectionToFlowCircuit:
-      "Kotler proved that flow has a biological signature and organizational triggers. The Flow Circuit maps the conditions under which each role type enters flow — and the specific friction that pulls them out of it.",
+      "Kotler proved that flow has a biological signature and organizational triggers. The Flow Circuit maps the conditions under which each role type enters flow - and the specific friction that pulls them out of it.",
     keyWork: {
-      title: "Stealing Fire: How Silicon Valley, the Navy SEALs, and Maverick Scientists Are Revolutionizing the Way We Live and Work",
+      title:
+        "Stealing Fire: How Silicon Valley, the Navy SEALs, and Maverick Scientists Are Revolutionizing the Way We Live and Work",
       year: "2017",
       amazonUrl: `https://www.amazon.com/Stealing-Fire-Maverick-Scientists-Revolutionizing/dp/0062429655?tag=${AMAZON_TAG}`,
     },
     additionalWorks: [
       {
-        title: "The Rise of Superman: Decoding the Science of Ultimate Human Performance",
+        title:
+          "The Rise of Superman: Decoding the Science of Ultimate Human Performance",
         year: "2014",
         amazonUrl: `https://www.amazon.com/Rise-Superman-Decoding-Ultimate-Performance/dp/1477800832?tag=${AMAZON_TAG}`,
       },
@@ -285,7 +306,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Art-Impossible-Peak-Performance-Primer/dp/0062977539?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "Flow is an optimal state of consciousness where we feel our best and perform our best.",
+    quote:
+      "Flow is an optimal state of consciousness where we feel our best and perform our best.",
     icon: <FlaskConical className="w-6 h-6" />,
     accentColor: "text-violet-400",
   },
@@ -295,11 +317,12 @@ const thinkers: Thinker[] = [
     title: "The Safety Engineer of Teams",
     institution: "Harvard Business School",
     contribution:
-      "Proved that the number one predictor of team performance isn't talent, resources, or strategy — it's psychological safety. Her research at Google (Project Aristotle) and in hospitals showed that teams where people feel safe to take risks, admit mistakes, and speak up consistently outperform 'safer' teams.",
+      "Proved that the number one predictor of team performance isn't talent, resources, or strategy - it's psychological safety. Her research at Google (Project Aristotle) and in hospitals showed that teams where people feel safe to take risks, admit mistakes, and speak up consistently outperform 'safer' teams.",
     connectionToFlowCircuit:
       "Psychological safety is the soil. The Flow Circuit is the seed. Edmondson proved you need the environment; we provide the self-knowledge. When people understand their role and see it valued, psychological safety emerges organically.",
     keyWork: {
-      title: "The Fearless Organization: Creating Psychological Safety in the Workplace for Learning, Innovation, and Growth",
+      title:
+        "The Fearless Organization: Creating Psychological Safety in the Workplace for Learning, Innovation, and Growth",
       year: "2018",
       amazonUrl: `https://www.amazon.com/Fearless-Organization-Psychological-Workplace-Innovation/dp/1119477247?tag=${AMAZON_TAG}`,
     },
@@ -310,7 +333,8 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Right-Kind-Wrong-Science-Failing/dp/1982195061?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "Psychological safety is not about being nice. It's about giving candid feedback, openly admitting mistakes, and learning from each other.",
+    quote:
+      "Psychological safety is not about being nice. It's about giving candid feedback, openly admitting mistakes, and learning from each other.",
     icon: <Heart className="w-6 h-6" />,
     accentColor: "text-green-400",
   },
@@ -320,9 +344,9 @@ const thinkers: Thinker[] = [
     title: "The Culture Decoder",
     institution: "Independent Researcher & Author",
     contribution:
-      "Went inside the world's most successful groups — Navy SEALs, Pixar, the San Antonio Spurs, Zappos — and reverse-engineered what makes them tick. Found three universal skills: Build Safety, Share Vulnerability, Establish Purpose. Simple to name. Extraordinarily hard to execute.",
+      "Went inside the world's most successful groups - Navy SEALs, Pixar, the San Antonio Spurs, Zappos - and reverse-engineered what makes them tick. Found three universal skills: Build Safety, Share Vulnerability, Establish Purpose. Simple to name. Extraordinarily hard to execute.",
     connectionToFlowCircuit:
-      "Coyle proved that culture is not vibes — it's signals. The Flow Circuit gives teams a shared signal system: 'Here's who I am, here's what I bring, here's where I need you.' That signal clarity is what Coyle found in every high-performing group he studied.",
+      "Coyle proved that culture is not vibes - it's signals. The Flow Circuit gives teams a shared signal system: 'Here's who I am, here's what I bring, here's where I need you.' That signal clarity is what Coyle found in every high-performing group he studied.",
     keyWork: {
       title: "The Culture Code: The Secrets of Highly Successful Groups",
       year: "2018",
@@ -335,13 +359,16 @@ const thinkers: Thinker[] = [
         amazonUrl: `https://www.amazon.com/Talent-Code-Greatness-Born-Grown/dp/055380684X?tag=${AMAZON_TAG}`,
       },
     ],
-    quote: "Group culture is one of the most powerful forces on the planet. We sense its presence inside successful businesses, championship teams, and thriving families.",
+    quote:
+      "Group culture is one of the most powerful forces on the planet. We sense its presence inside successful businesses, championship teams, and thriving families.",
     icon: <Users className="w-6 h-6" />,
     accentColor: "text-amber-400",
   },
 ];
 
-// Research citations that underpin The Flow Circuit
+// Research that inspired The Flow Circuit's design. These are general findings from
+// established literature - not studies of The Flow Circuit itself, and not proof the
+// tool has been independently validated. See /flow/science for our current validation status.
 const researchCitations = [
   {
     study: "The Apollo Syndrome",
@@ -350,46 +377,37 @@ const researchCitations = [
     finding:
       "Teams composed entirely of high-IQ individuals consistently underperformed balanced teams. Cognitive diversity in team roles predicted success better than raw intelligence.",
     relevance: "Foundation for 'who you ARE > what you KNOW'",
+    sourceUrl: "https://www.belbin.com/resources/articles-directory/belbin-apollo-teams",
   },
   {
-    study: "Deloitte Role Misfit & Turnover Research",
-    authors: "Deloitte Human Capital Trends",
-    year: "2019",
-    finding:
-      "Employees in role-misfit positions are 3.5x more likely to leave within 18 months. Organizations lose an average of $15,000 per misfit departure in replacement costs alone.",
-    relevance: "Validates the stress radiation model — operating outside your role has measurable economic cost",
-  },
-  {
-    study: "Flow State Neurochemistry",
+    study: "Neurocognitive Mechanisms Underlying Flow",
     authors: "Arne Dietrich, American University of Beirut",
     year: "2004",
     finding:
-      "Flow states involve transient hypofrontality — temporary deactivation of the prefrontal cortex — accompanied by a cocktail of neurochemicals (dopamine, norepinephrine, endorphins, anandamide, serotonin) that produce peak performance.",
-    relevance: "The neurological basis for why operating in your natural role feels effortless and produces better outcomes",
+      "Flow states are associated with transient hypofrontality - temporary deactivation of parts of the prefrontal cortex - alongside neurochemical changes linked to focus and effortless performance.",
+    relevance:
+      "The neurological basis for why operating in your natural role can feel effortless",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/15522630/",
   },
   {
-    study: "Cortisol and Cognitive Performance",
-    authors: "Lupien et al., McGill University",
+    study: "Stress Hormones and Human Cognition",
+    authors: "Lupien, Maheu, Tu, Fiocco & Schramek, Brain and Cognition",
     year: "2007",
     finding:
-      "Chronic cortisol elevation from sustained stress impairs hippocampal function, reducing memory consolidation, creative problem-solving, and decision-making quality by up to 40%.",
-    relevance: "The biological mechanism behind stress radiation — forcing people out of their natural role triggers chronic cortisol, degrading the very performance you're trying to optimize",
+      "Chronic elevation of stress hormones like cortisol is associated with impaired hippocampal function, affecting memory and decision-making quality.",
+    relevance:
+      "General biological plausibility for why sustained role-misfit stress could degrade performance",
+    sourceUrl: "https://www.sciencedirect.com/science/article/abs/pii/S0278262607000322",
   },
   {
-    study: "Google Project Aristotle",
-    authors: "Google People Analytics / Amy Edmondson",
+    study: "Project Aristotle",
+    authors: "Google re:Work, drawing on Amy Edmondson's psychological safety research",
     year: "2015",
     finding:
-      "After studying 180+ teams, Google found that psychological safety — not talent, seniority, or resources — was the #1 predictor of team effectiveness.",
-    relevance: "Self-knowledge (knowing your role) creates the conditions for psychological safety that Edmondson and Google identified",
-  },
-  {
-    study: "Ipsative Assessment Validity in Team Contexts",
-    authors: "Bartram, D., International Journal of Selection and Assessment",
-    year: "1996",
-    finding:
-      "Ipsative (forced-choice) measures produce more reliable within-person profiles than normative Likert scales for team role identification, as they eliminate social desirability bias and acquiescence effects.",
-    relevance: "The psychometric foundation for The Flow Circuit's forced-choice assessment methodology",
+      "After studying 180+ internal teams, Google found psychological safety was the strongest predictor of team effectiveness it measured - ahead of who was on the team.",
+    relevance:
+      "Supports the idea that how a team operates together matters as much as individual talent",
+    sourceUrl: "https://rework.withgoogle.com/en/subjects/psychological-safety",
   },
 ];
 
@@ -414,8 +432,10 @@ export default function Inspirations() {
               Standing on the Shoulders of Giants
             </p>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.9]">
-              THE <span className="text-primary">MINDS</span><br />
-              BEHIND THE<br />
+              THE <span className="text-primary">MINDS</span>
+              <br />
+              BEHIND THE
+              <br />
               CIRCUIT
             </h1>
           </motion.div>
@@ -425,11 +445,15 @@ export default function Inspirations() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
-            style={{ textWrap: 'pretty' as any }}
+            style={{ textWrap: "pretty" as any }}
           >
-            The Flow Circuit didn't emerge from thin air. It was forged in the crucible of
-            decades of research by people who dared to ask the uncomfortable question:
-            <span className="text-foreground font-semibold"> what if we've been building teams wrong this entire time?</span>
+            The Flow Circuit didn't emerge from thin air. It was forged in the
+            crucible of decades of research by people who dared to ask the
+            uncomfortable question:
+            <span className="text-foreground font-semibold">
+              {" "}
+              what if we've been building teams wrong this entire time?
+            </span>
           </motion.p>
 
           <motion.p
@@ -438,8 +462,8 @@ export default function Inspirations() {
             transition={{ delay: 0.2 }}
             className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto italic"
           >
-            These are the thinkers, researchers, and practitioners whose work made ours possible.
-            We owe them everything. Buy their books.
+            These are the thinkers, researchers, and practitioners whose work
+            made ours possible. We owe them everything. Buy their books.
           </motion.p>
         </div>
       </section>
@@ -460,12 +484,16 @@ export default function Inspirations() {
                 <CardContent className="p-0">
                   <div className="flex flex-col lg:flex-row">
                     {/* Left accent bar */}
-                    <div className={`lg:w-1.5 w-full h-1.5 lg:h-auto bg-gradient-to-b from-current to-transparent ${thinker.accentColor}`} />
+                    <div
+                      className={`lg:w-1.5 w-full h-1.5 lg:h-auto bg-gradient-to-b from-current to-transparent ${thinker.accentColor}`}
+                    />
 
                     <div className="flex-1 p-6 lg:p-8">
                       {/* Header */}
                       <div className="flex items-start gap-4 mb-4">
-                        <div className={`p-2.5 rounded-lg bg-muted/50 ${thinker.accentColor} shrink-0`}>
+                        <div
+                          className={`p-2.5 rounded-lg bg-muted/50 ${thinker.accentColor} shrink-0`}
+                        >
                           {thinker.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -473,13 +501,17 @@ export default function Inspirations() {
                             {thinker.name}
                           </h3>
                           <p className="text-sm text-muted-foreground mt-0.5">
-                            {thinker.title} &middot; {thinker.institution} &middot; {thinker.years}
+                            {thinker.title} &middot; {thinker.institution}{" "}
+                            &middot; {thinker.years}
                           </p>
                         </div>
                       </div>
 
                       {/* Contribution */}
-                      <p className="text-base text-muted-foreground leading-relaxed mb-4" style={{ textWrap: 'pretty' as any }}>
+                      <p
+                        className="text-base text-muted-foreground leading-relaxed mb-4"
+                        style={{ textWrap: "pretty" as any }}
+                      >
                         {thinker.contribution}
                       </p>
 
@@ -488,7 +520,10 @@ export default function Inspirations() {
                         <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-1.5">
                           Connection to The Flow Circuit
                         </p>
-                        <p className="text-sm text-foreground/90 leading-relaxed" style={{ textWrap: 'pretty' as any }}>
+                        <p
+                          className="text-sm text-foreground/90 leading-relaxed"
+                          style={{ textWrap: "pretty" as any }}
+                        >
                           {thinker.connectionToFlowCircuit}
                         </p>
                       </div>
@@ -517,7 +552,9 @@ export default function Inspirations() {
                           <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors flex-1">
                             {thinker.keyWork.title}
                           </span>
-                          <span className="text-xs text-muted-foreground">{thinker.keyWork.year}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {thinker.keyWork.year}
+                          </span>
                           <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                         </a>
 
@@ -534,7 +571,9 @@ export default function Inspirations() {
                             <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors flex-1">
                               {work.title}
                             </span>
-                            <span className="text-xs text-muted-foreground">{work.year}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {work.year}
+                            </span>
                             {work.amazonUrl && (
                               <ExternalLink className="w-3 h-3 text-muted-foreground/50 group-hover:text-primary transition-colors shrink-0" />
                             )}
@@ -564,12 +603,24 @@ export default function Inspirations() {
               The Evidence Base
             </p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
-              RESEARCH THAT<br />
+              RESEARCH THAT
+              <br />
               <span className="text-primary">CHANGED THE GAME</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" style={{ textWrap: 'pretty' as any }}>
-              The Flow Circuit isn't built on opinion. It's built on decades of peer-reviewed research
-              from some of the most rigorous institutions in the world.
+            <p
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              style={{ textWrap: "pretty" as any }}
+            >
+              The Flow Circuit's design draws on decades of established research from
+              some of the most rigorous institutions in the world.
+            </p>
+            <p
+              className="text-sm text-amber-700 max-w-2xl mx-auto mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3"
+              style={{ textWrap: "pretty" as any }}
+            >
+              These are general findings that inspired the framework's design - not studies
+              of The Flow Circuit itself. See our{" "}
+              <a href="/flow/science#validation-status" className="underline hover:text-amber-900">current validation status</a>.
             </p>
           </motion.div>
 
@@ -585,7 +636,9 @@ export default function Inspirations() {
                   <CardContent className="p-5">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-sm font-bold text-primary">{index + 1}</span>
+                        <span className="text-sm font-bold text-primary">
+                          {index + 1}
+                        </span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-lg font-bold text-foreground mb-1">
@@ -593,8 +646,24 @@ export default function Inspirations() {
                         </h4>
                         <p className="text-xs text-muted-foreground mb-2">
                           {citation.authors} &middot; {citation.year}
+                          {citation.sourceUrl && (
+                            <>
+                              {" "}&middot;{" "}
+                              <a
+                                href={citation.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-primary"
+                              >
+                                source
+                              </a>
+                            </>
+                          )}
                         </p>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-2" style={{ textWrap: 'pretty' as any }}>
+                        <p
+                          className="text-sm text-muted-foreground leading-relaxed mb-2"
+                          style={{ textWrap: "pretty" as any }}
+                        >
                           {citation.finding}
                         </p>
                         <p className="text-xs font-medium text-primary/80 flex items-center gap-1.5">
@@ -626,23 +695,33 @@ export default function Inspirations() {
                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">
                   Built on Open Source
                 </h3>
-                <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6" style={{ textWrap: 'pretty' as any }}>
-                  The Flow Circuit is built with React, TypeScript, Tailwind CSS, Framer Motion, Recharts,
-                  and dozens of other open source projects maintained by developers who share their work
-                  freely with the world. We are grateful to every contributor who makes modern software possible.
+                <p
+                  className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6"
+                  style={{ textWrap: "pretty" as any }}
+                >
+                  The Flow Circuit is built with React, TypeScript, Tailwind
+                  CSS, Framer Motion, Recharts, and dozens of other open source
+                  projects maintained by developers who share their work freely
+                  with the world. We are grateful to every contributor who makes
+                  modern software possible.
                 </p>
                 <p className="text-sm text-muted-foreground/70 italic mb-8">
-                  Special thanks to the open source community — the ultimate example of Sparks, Amplifiers,
-                  Filters, Grounds, and Conductors working in concert across time zones and cultures
+                  Special thanks to the open source community - the ultimate
+                  example of Sparks, Amplifiers, Filters, Grounds, and
+                  Conductors working in concert across time zones and cultures
                   without ever meeting in person.
                 </p>
 
                 <div className="border-t border-border/30 pt-8 mt-2">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Know someone whose work should be on this page? We're always learning.
+                    Know someone whose work should be on this page? We're always
+                    learning.
                   </p>
                   <Link href="/flow/feedback">
-                    <Button variant="outline" className="border-primary/30 hover:bg-primary/10">
+                    <Button
+                      variant="outline"
+                      className="border-primary/30 hover:bg-primary/10"
+                    >
                       <Heart className="mr-2 h-4 w-4" />
                       Suggest an Inspiration
                     </Button>
@@ -665,20 +744,29 @@ export default function Inspirations() {
             className="space-y-6"
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Ready to Find Your Role<br />in the Circuit?
+              Ready to Find Your Role
+              <br />
+              in the Circuit?
             </h2>
             <p className="text-lg text-muted-foreground">
               These thinkers built the science. Now it's your turn to live it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/flow/assessment">
-                <Button size="lg" className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold shadow-lg">
+                <Button
+                  size="lg"
+                  className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold shadow-lg"
+                >
                   <Zap className="mr-2 h-5 w-5" />
                   Take the Assessment
                 </Button>
               </Link>
               <Link href="/flow/science">
-                <Button size="lg" variant="outline" className="border-border/50">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-border/50"
+                >
                   <Brain className="mr-2 h-5 w-5" />
                   Explore the Science
                 </Button>

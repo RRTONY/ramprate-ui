@@ -32,7 +32,7 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "The Flow Circuit | RampRate",
   description:
-    "12 questions. 5 minutes. Discover if you're the Spark, Amplifier, Filter, Ground, or Conductor. Map your team's invisible architecture and cut 70% of innovation friction.",
+    "12 questions. 5 minutes. Discover if you're the Spark, Amplifier, Filter, Ground, or Conductor. Map your team's invisible architecture and find where the friction lives.",
 };
 
 export default function FlowLayout({ children }: { children: React.ReactNode }) {

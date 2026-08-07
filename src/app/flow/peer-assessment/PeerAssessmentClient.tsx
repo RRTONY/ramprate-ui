@@ -4,8 +4,19 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
-import { ArrowRight, CheckCircle2, Users, Eye, AlertTriangle, Loader2 } from "lucide-react";
-import { surveyQuestions, calculateRoleScores, getDominantRole } from "@/lib/flow/surveyData";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Users,
+  Eye,
+  AlertTriangle,
+  Loader2,
+} from "lucide-react";
+import {
+  surveyQuestions,
+  calculateRoleScores,
+  getDominantRole,
+} from "@/lib/flow/surveyData";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/flow/trpc";
 
@@ -15,17 +26,23 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   let s = seed;
   for (let i = shuffled.length - 1; i > 0; i--) {
     s = (s * 1664525 + 1013904223) & 0xffffffff;
-    const j = ((s >>> 0) % (i + 1));
+    const j = (s >>> 0) % (i + 1);
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
 }
 
-export default function PeerAssessmentClient({ token: tokenProp }: { token?: string }) {
+export default function PeerAssessmentClient({
+  token: tokenProp,
+}: {
+  token?: string;
+}) {
   // Extract token from route param (passed down from server page component)
   const token = tokenProp || "";
 
-  const [phase, setPhase] = useState<"loading" | "intro" | "questions" | "complete" | "error">("loading");
+  const [phase, setPhase] = useState<
+    "loading" | "intro" | "questions" | "complete" | "error"
+  >("loading");
   const [reviewerName, setReviewerName] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
@@ -34,17 +51,18 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
   const [sessionSeed] = useState(() => Math.floor(Math.random() * 2147483647));
 
   const shuffledQuestions = useMemo(() => {
-    return surveyQuestions.map(q => ({
+    return surveyQuestions.map((q) => ({
       ...q,
-      options: seededShuffle(q.options, sessionSeed + q.id)
+      options: seededShuffle(q.options, sessionSeed + q.id),
     }));
   }, [sessionSeed]);
 
   // Fetch the peer review invite by token
-  const { data: invite, isLoading, error } = trpc.peerReview.getByToken.useQuery(
-    { token },
-    { enabled: !!token }
-  );
+  const {
+    data: invite,
+    isLoading,
+    error,
+  } = trpc.peerReview.getByToken.useQuery({ token }, { enabled: !!token });
 
   const completeMutation = trpc.peerReview.complete.useMutation();
 
@@ -63,8 +81,13 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
         <AlertTriangle className="w-16 h-16 text-red-400 mb-4" />
         <h1 className="text-3xl font-bold mb-2">Invalid Review Link</h1>
-        <p className="text-gray-400 mb-6">This peer review link is invalid or has expired.</p>
-        <Button onClick={() => router.push("/flow")} className="bg-white text-black hover:bg-gray-200">
+        <p className="text-gray-400 mb-6">
+          This peer review link is invalid or has expired.
+        </p>
+        <Button
+          onClick={() => router.push("/flow")}
+          className="bg-white text-black hover:bg-gray-200"
+        >
           Go Home
         </Button>
       </div>
@@ -76,8 +99,13 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
         <CheckCircle2 className="w-16 h-16 text-green-400 mb-4" />
         <h1 className="text-3xl font-bold mb-2">Already Completed</h1>
-        <p className="text-gray-400 mb-6">This peer review has already been submitted. Thank you!</p>
-        <Button onClick={() => router.push("/flow")} className="bg-white text-black hover:bg-gray-200">
+        <p className="text-gray-400 mb-6">
+          This peer review has already been submitted. Thank you!
+        </p>
+        <Button
+          onClick={() => router.push("/flow")}
+          className="bg-white text-black hover:bg-gray-200"
+        >
           Go Home
         </Button>
       </div>
@@ -86,14 +114,15 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
 
   const targetName = invite?.targetName || "your colleague";
   const currentQuestion = shuffledQuestions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+  const progress =
+    ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
 
   const handleAnswer = (answerText: string) => {
-    setAnswers(prev => ({ ...prev, [currentQuestion.id]: answerText }));
+    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: answerText }));
 
     if (currentQuestionIndex < shuffledQuestions.length - 1) {
       setTimeout(() => {
-        setCurrentQuestionIndex(prev => prev + 1);
+        setCurrentQuestionIndex((prev) => prev + 1);
       }, 250);
     } else {
       // Calculate scores and submit
@@ -101,19 +130,22 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
       const scores = calculateRoleScores(finalAnswers);
       const dominant = getDominantRole(scores);
 
-      completeMutation.mutate({
-        token,
-        reviewerName,
-        perceivedRole: dominant.role,
-        perceivedScores: scores,
-        answers: finalAnswers,
-      }, {
-        onSuccess: () => setPhase("complete"),
-        onError: (err: any) => {
-          console.error("Failed to submit review", err);
-          setPhase("error");
-        }
-      });
+      completeMutation.mutate(
+        {
+          token,
+          reviewerName,
+          perceivedRole: dominant.role,
+          perceivedScores: scores,
+          answers: finalAnswers,
+        },
+        {
+          onSuccess: () => setPhase("complete"),
+          onError: (err: any) => {
+            console.error("Failed to submit review", err);
+            setPhase("error");
+          },
+        },
+      );
     }
   };
 
@@ -121,7 +153,13 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
   if (phase === "intro" || phase === "loading") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }} />
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage:
+              "url('https://www.transparenttextures.com/patterns/cubes.png')",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,13 +182,18 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
             </h2>
             <div className="space-y-4 text-base md:text-lg text-gray-200 leading-relaxed">
               <p>
-                <strong className="text-white">{targetName}</strong> has completed their Flow Circuit assessment and wants to know how <em>you</em> perceive their energy.
+                <strong className="text-white">{targetName}</strong> has
+                completed their Flow Circuit assessment and wants to know how{" "}
+                <em>you</em> perceive their energy.
               </p>
               <p>
-                You'll answer the same 12 questions — but this time, answer based on how <strong>{targetName}</strong> actually shows up in the work. Not who they want to be. How they <em>are</em>.
+                You'll answer the same 12 questions - but this time, answer
+                based on how <strong>{targetName}</strong> actually shows up in
+                the work. Not who they want to be. How they <em>are</em>.
               </p>
               <p className="text-sm text-gray-400">
-                Your responses are anonymous. {targetName} will only see the aggregate perception, not your individual answers.
+                Your responses are anonymous. {targetName} will only see the
+                aggregate perception, not your individual answers.
               </p>
 
               <div className="pt-4">
@@ -191,12 +234,17 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
           <div className="flex justify-center">
             <CheckCircle2 className="w-24 h-24 text-blue-600" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">Signal Locked</h1>
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
+            Signal Locked
+          </h1>
           <p className="text-lg md:text-xl text-gray-600">
-            Your observation of <strong>{targetName}</strong> has been recorded. The perception gap will now be calculated and added to their Flow Circuit profile.
+            Your observation of <strong>{targetName}</strong> has been recorded.
+            The perception gap will now be calculated and added to their Flow
+            Circuit profile.
           </p>
           <p className="text-sm text-gray-400">
-            Thank you, {reviewerName}. Your feedback is anonymous and helps {targetName} understand how others experience their energy.
+            Thank you, {reviewerName}. Your feedback is anonymous and helps{" "}
+            {targetName} understand how others experience their energy.
           </p>
           <Button
             onClick={() => router.push("/flow")}
@@ -215,8 +263,13 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
         <AlertTriangle className="w-16 h-16 text-red-400 mb-4" />
         <h1 className="text-3xl font-bold mb-2">Submission Failed</h1>
-        <p className="text-gray-400 mb-6">Something went wrong. This review may have already been submitted.</p>
-        <Button onClick={() => router.push("/flow")} className="bg-white text-black hover:bg-gray-200">
+        <p className="text-gray-400 mb-6">
+          Something went wrong. This review may have already been submitted.
+        </p>
+        <Button
+          onClick={() => router.push("/flow")}
+          className="bg-white text-black hover:bg-gray-200"
+        >
           Go Home
         </Button>
       </div>
@@ -238,7 +291,6 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
 
       <div className="flex-1 flex flex-col items-center justify-center p-3 md:p-8">
         <div className="max-w-3xl w-full space-y-4 md:space-y-6">
-
           {/* Question Header */}
           <div className="flex justify-between items-end border-b-2 border-blue-600 pb-2">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
@@ -259,7 +311,9 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
               transition={{ duration: 0.3 }}
             >
               <h2 className="text-lg md:text-2xl font-bold leading-tight mb-4 md:mb-6">
-                {currentQuestion.text.replace(/\byour\b/gi, `${targetName}'s`).replace(/\byou\b/gi, targetName)}
+                {currentQuestion.text
+                  .replace(/\byour\b/gi, `${targetName}'s`)
+                  .replace(/\byou\b/gi, targetName)}
               </h2>
 
               <div className="grid gap-2 md:gap-3">
@@ -271,7 +325,9 @@ export default function PeerAssessmentClient({ token: tokenProp }: { token?: str
                     onClick={() => handleAnswer(option.text)}
                     className="group text-left py-3 px-4 border-2 border-gray-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 rounded-lg flex items-center justify-between"
                   >
-                    <span className="text-sm md:text-base font-medium">{option.text}</span>
+                    <span className="text-sm md:text-base font-medium">
+                      {option.text}
+                    </span>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </motion.button>
                 ))}

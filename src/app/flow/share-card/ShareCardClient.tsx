@@ -8,12 +8,35 @@ import { useAuth } from "@/hooks/flow/useAuth";
 import { toast } from "sonner";
 import Link from "next/link";
 
-const ROLE_COLORS: Record<string, { primary: string; secondary: string; glow: string }> = {
-  Spark: { primary: "#f59e0b", secondary: "#fbbf24", glow: "rgba(245,158,11,0.3)" },
-  Amplifier: { primary: "#3b82f6", secondary: "#60a5fa", glow: "rgba(59,130,246,0.3)" },
-  Filter: { primary: "#8b5cf6", secondary: "#a78bfa", glow: "rgba(139,92,246,0.3)" },
-  Ground: { primary: "#10b981", secondary: "#34d399", glow: "rgba(16,185,129,0.3)" },
-  Conductor: { primary: "#ec4899", secondary: "#f472b6", glow: "rgba(236,72,153,0.3)" },
+const ROLE_COLORS: Record<
+  string,
+  { primary: string; secondary: string; glow: string }
+> = {
+  Spark: {
+    primary: "#f59e0b",
+    secondary: "#fbbf24",
+    glow: "rgba(245,158,11,0.3)",
+  },
+  Amplifier: {
+    primary: "#3b82f6",
+    secondary: "#60a5fa",
+    glow: "rgba(59,130,246,0.3)",
+  },
+  Filter: {
+    primary: "#8b5cf6",
+    secondary: "#a78bfa",
+    glow: "rgba(139,92,246,0.3)",
+  },
+  Ground: {
+    primary: "#10b981",
+    secondary: "#34d399",
+    glow: "rgba(16,185,129,0.3)",
+  },
+  Conductor: {
+    primary: "#ec4899",
+    secondary: "#f472b6",
+    glow: "rgba(236,72,153,0.3)",
+  },
 };
 
 const ROLE_SYMBOLS: Record<string, string> = {
@@ -36,7 +59,9 @@ export default function ShareCardClient() {
 
   const assessment = results?.[0];
   const primaryRole = assessment?.role?.split("-")[0] || "Spark";
-  const secondaryRole = assessment?.role?.includes("-") ? assessment.role.split("-")[1] : "";
+  const secondaryRole = assessment?.role?.includes("-")
+    ? assessment.role.split("-")[1]
+    : "";
   const purity = assessment?.score || 0;
   const userName = user?.name || "Anonymous Explorer";
   const colors = ROLE_COLORS[primaryRole] || ROLE_COLORS.Spark;
@@ -166,7 +191,11 @@ export default function ShareCardClient() {
     if (navigator.share && imageUrl) {
       try {
         const blob = await (await fetch(imageUrl)).blob();
-        const file = new File([blob], `flow-circuit-${primaryRole.toLowerCase()}.png`, { type: "image/png" });
+        const file = new File(
+          [blob],
+          `flow-circuit-${primaryRole.toLowerCase()}.png`,
+          { type: "image/png" },
+        );
         await navigator.share({
           title: `I'm a ${primaryRole} on The Flow Circuit`,
           text: `I just discovered my natural operational energy. I'm a ${primaryRole}${secondaryRole ? `-${secondaryRole}` : ""}. What are you?`,
@@ -191,7 +220,10 @@ export default function ShareCardClient() {
             your shareable results card.
           </p>
           <Link href="/flow/assessment">
-            <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-black font-bold">
+            <Button
+              size="lg"
+              className="bg-amber-500 hover:bg-amber-600 text-black font-bold"
+            >
               Take the Assessment
             </Button>
           </Link>
@@ -206,8 +238,8 @@ export default function ShareCardClient() {
         <div className="text-center space-y-3">
           <h1 className="text-4xl font-black tracking-tight">Your Flow Card</h1>
           <p className="text-white/50">
-            Share your energy DNA with the world. Post it on LinkedIn, send it to your team,
-            or just save it as a reminder of who you really are.
+            Share your energy DNA with the world. Post it on LinkedIn, send it
+            to your team, or just save it as a reminder of who you really are.
           </p>
         </div>
 
@@ -224,14 +256,32 @@ export default function ShareCardClient() {
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button onClick={handleDownload} size="lg" className="gap-2 bg-white text-black hover:bg-gray-200">
+          <Button
+            onClick={handleDownload}
+            size="lg"
+            className="gap-2 bg-white text-black hover:bg-gray-200"
+          >
             <Download className="w-5 h-5" /> Download PNG
           </Button>
-          <Button onClick={handleShare} size="lg" variant="outline" className="gap-2 border-white/20 text-white hover:bg-white/10">
+          <Button
+            onClick={handleShare}
+            size="lg"
+            variant="outline"
+            className="gap-2 border-white/20 text-white hover:bg-white/10"
+          >
             <Share2 className="w-5 h-5" /> Share
           </Button>
-          <Button onClick={handleCopyLink} size="lg" variant="outline" className="gap-2 border-white/20 text-white hover:bg-white/10">
-            {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+          <Button
+            onClick={handleCopyLink}
+            size="lg"
+            variant="outline"
+            className="gap-2 border-white/20 text-white hover:bg-white/10"
+          >
+            {copied ? (
+              <Check className="w-5 h-5 text-green-400" />
+            ) : (
+              <Copy className="w-5 h-5" />
+            )}
             {copied ? "Copied!" : "Copy Link"}
           </Button>
         </div>
@@ -242,12 +292,14 @@ export default function ShareCardClient() {
             Suggested LinkedIn Caption
           </p>
           <p className="text-sm text-white/60 leading-relaxed">
-            Just discovered I'm a <strong className="text-white">{primaryRole}</strong> on The Flow Circuit
+            Just discovered I'm a{" "}
+            <strong className="text-white">{primaryRole}</strong> on The Flow
+            Circuit
             {secondaryRole ? ` with ${secondaryRole} tendencies` : ""}.
             {purity >= 80
-              ? " My purity score is off the charts — this is my natural operating system."
-              : " Understanding my operational energy changes how I show up in teams."}
-            {" "}What's your energy DNA? 👉 theflowcircuit.com
+              ? " My purity score is off the charts - this is my natural operating system."
+              : " Understanding my operational energy changes how I show up in teams."}{" "}
+            What's your energy DNA? 👉 theflowcircuit.com
           </p>
         </div>
       </div>

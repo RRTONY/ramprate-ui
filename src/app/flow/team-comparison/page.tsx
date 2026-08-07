@@ -6,7 +6,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 export const metadata: Metadata = {
   title: "Team Comparison | The Flow Circuit",
   description:
-    "Side-by-side Flow Circuit analysis for two teams — see where energy profiles align, where they clash, and what gaps a merger or integration would fill.",
+    "Side-by-side Flow Circuit analysis for two teams - see where energy profiles align, where they clash, and what gaps a merger or integration would fill.",
   alternates: { canonical: "https://flow.tonygreenberg.com/team-comparison" },
 };
 
@@ -17,7 +17,10 @@ export default function TeamComparisonPage() {
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
           { name: "Flow", url: "https://ramprate.com/flow" },
-          { name: "Team Comparison", url: "https://ramprate.com/flow/team-comparison" },
+          {
+            name: "Team Comparison",
+            url: "https://ramprate.com/flow/team-comparison",
+          },
         ])}
       />
       <ClientOnly>

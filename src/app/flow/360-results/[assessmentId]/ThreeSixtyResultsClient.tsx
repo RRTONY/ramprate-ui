@@ -44,32 +44,47 @@ const ROLE_COLORS: Record<string, string> = {
   conductor: "#EC4899",
 };
 
-export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp }: { assessmentId: string }) {
+export default function ThreeSixtyResultsClient({
+  assessmentId: assessmentIdProp,
+}: {
+  assessmentId: string;
+}) {
   const router = useRouter();
-  const assessmentId = assessmentIdProp
-    ? parseInt(assessmentIdProp)
-    : null;
+  const assessmentId = assessmentIdProp ? parseInt(assessmentIdProp) : null;
 
   // Fetch the assessment record itself (always available)
-  const { data: assessmentRecord, isLoading: assessmentLoading } = trpc.assessment.getById.useQuery(
-    { id: assessmentId! },
-    { enabled: !!assessmentId }
-  );
+  const { data: assessmentRecord, isLoading: assessmentLoading } =
+    trpc.assessment.getById.useQuery(
+      { id: assessmentId! },
+      { enabled: !!assessmentId },
+    );
 
   // First get the session by assessment ID
-  const { data: sessionData, isLoading: sessionLoading } = trpc.threeSixty.getByAssessment.useQuery(
-    { assessmentId: assessmentId! },
-    { enabled: !!assessmentId, refetchInterval: 15000 }
-  );
+  const { data: sessionData, isLoading: sessionLoading } =
+    trpc.threeSixty.getByAssessment.useQuery(
+      { assessmentId: assessmentId! },
+      { enabled: !!assessmentId, refetchInterval: 15000 },
+    );
 
   // Then get the full status with gap report using the token
-  const { data: statusData, isLoading: statusLoading } = trpc.threeSixty.getStatus.useQuery(
-    { token: sessionData?.session?.token || "" },
-    { enabled: !!sessionData?.session?.token, refetchInterval: 15000 }
-  );
+  const { data: statusData, isLoading: statusLoading } =
+    trpc.threeSixty.getStatus.useQuery(
+      { token: sessionData?.session?.token || "" },
+      { enabled: !!sessionData?.session?.token, refetchInterval: 15000 },
+    );
 
-  const isLoading = assessmentLoading || sessionLoading || (!!sessionData && statusLoading);
-  const data = statusData || (sessionData ? { session: sessionData.session, responseCount: sessionData.responseCount, gapReportReady: false, gapReport: null } : null);
+  const isLoading =
+    assessmentLoading || sessionLoading || (!!sessionData && statusLoading);
+  const data =
+    statusData ||
+    (sessionData
+      ? {
+          session: sessionData.session,
+          responseCount: sessionData.responseCount,
+          gapReportReady: false,
+          gapReport: null,
+        }
+      : null);
 
   // Extract gap report data
   const gapReport = data?.gapReport || null;
@@ -81,8 +96,10 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
       const label = ROLE_LABELS[role];
       return {
         subject: label,
-        "How I See Myself": gapReport.selfScores?.[label] || gapReport.selfScores?.[role] || 0,
-        "How Others See Me": gapReport.peerScores?.[label] || gapReport.peerScores?.[role] || 0,
+        "How I See Myself":
+          gapReport.selfScores?.[label] || gapReport.selfScores?.[role] || 0,
+        "How Others See Me":
+          gapReport.peerScores?.[label] || gapReport.peerScores?.[role] || 0,
       };
     });
   }, [gapReport]);
@@ -92,8 +109,10 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
     if (!gapReport?.selfScores || !gapReport?.peerScores) return [];
     return ROLES.map((role) => {
       const label = ROLE_LABELS[role];
-      const self = gapReport.selfScores[label] || gapReport.selfScores[role] || 0;
-      const peers = gapReport.peerScores[label] || gapReport.peerScores[role] || 0;
+      const self =
+        gapReport.selfScores[label] || gapReport.selfScores[role] || 0;
+      const peers =
+        gapReport.peerScores[label] || gapReport.peerScores[role] || 0;
       const gap = peers - self;
       return {
         role,
@@ -103,12 +122,13 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
         peers: Math.round(peers),
         gap: Math.round(gap),
         absGap: Math.abs(Math.round(gap)),
-        direction: gap > 0 ? "blind_strength" : gap < 0 ? "blind_spot" : "aligned",
+        direction:
+          gap > 0 ? "blind_strength" : gap < 0 ? "blind_spot" : "aligned",
         insight:
           gap > 10
-            ? `Others see more ${ROLE_LABELS[role]} in you than you see in yourself. This is a hidden strength — lean into it.`
+            ? `Others see more ${ROLE_LABELS[role]} in you than you see in yourself. This is a hidden strength - lean into it.`
             : gap < -10
-              ? `You rate your ${ROLE_LABELS[role]} energy higher than others do. This gap is worth exploring — it may indicate an area where intent doesn't match impact.`
+              ? `You rate your ${ROLE_LABELS[role]} energy higher than others do. This gap is worth exploring - it may indicate an area where intent doesn't match impact.`
               : `Your self-perception aligns with how others experience your ${ROLE_LABELS[role]} energy.`,
       };
     }).sort((a, b) => b.absGap - a.absGap);
@@ -128,7 +148,7 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
   }
 
   if (!data) {
-    // No 360 session yet — but show assessment record + link generator
+    // No 360 session yet - but show assessment record + link generator
     if (assessmentRecord) {
       const scores = (assessmentRecord.scores as Record<string, number>) || {};
       return (
@@ -150,7 +170,8 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                 {assessmentRecord.guestName || "Your"} Flow Circuit
               </h1>
               <p className="text-lg text-[#2C1810]/80">
-                Dominant Role: <span className="font-bold">{assessmentRecord.role}</span>
+                Dominant Role:{" "}
+                <span className="font-bold">{assessmentRecord.role}</span>
                 {assessmentRecord.score ? ` (${assessmentRecord.score}%)` : ""}
               </p>
             </div>
@@ -159,23 +180,32 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
             {Object.keys(scores).length > 0 && (
               <Card className="border-[#E8DDD3]">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold text-[#2C1810] mb-4">Your Energy Distribution</h3>
+                  <h3 className="font-semibold text-[#2C1810] mb-4">
+                    Your Energy Distribution
+                  </h3>
                   <div className="space-y-3">
-                    {Object.entries(scores).sort(([,a], [,b]) => (b as number) - (a as number)).map(([role, score]) => (
-                      <div key={role} className="flex items-center gap-3">
-                        <span className="w-24 text-sm font-medium text-[#2C1810]">{role}</span>
-                        <div className="flex-1 h-3 bg-[#E8DDD3] rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full transition-all"
-                            style={{
-                              width: `${Math.min(100, ((score as number) / 120) * 100)}%`,
-                              backgroundColor: ROLE_COLORS[role.toLowerCase()] || "#666",
-                            }}
-                          />
+                    {Object.entries(scores)
+                      .sort(([, a], [, b]) => (b as number) - (a as number))
+                      .map(([role, score]) => (
+                        <div key={role} className="flex items-center gap-3">
+                          <span className="w-24 text-sm font-medium text-[#2C1810]">
+                            {role}
+                          </span>
+                          <div className="flex-1 h-3 bg-[#E8DDD3] rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all"
+                              style={{
+                                width: `${Math.min(100, ((score as number) / 120) * 100)}%`,
+                                backgroundColor:
+                                  ROLE_COLORS[role.toLowerCase()] || "#666",
+                              }}
+                            />
+                          </div>
+                          <span className="w-10 text-right text-sm font-mono text-[#2C1810]/70">
+                            {score as number}
+                          </span>
                         </div>
-                        <span className="w-10 text-right text-sm font-mono text-[#2C1810]/70">{score as number}</span>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </CardContent>
               </Card>
@@ -204,8 +234,8 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
               Assessment Not Found
             </h2>
             <p className="text-[#2C1810]/60">
-              We couldn't find an assessment with this ID. Take the
-              assessment first to get your Flow Circuit results.
+              We couldn't find an assessment with this ID. Take the assessment
+              first to get your Flow Circuit results.
             </p>
             <Button
               onClick={() => router.push("/flow/assessment")}
@@ -249,8 +279,8 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
             {firstName}'s Perception Gap
           </h1>
           <p className="text-[#2C1810]/60 max-w-lg mx-auto">
-            How you see yourself vs. how others experience you.
-            The gap is where growth lives.
+            How you see yourself vs. how others experience you. The gap is where
+            growth lives.
           </p>
         </motion.div>
 
@@ -324,7 +354,7 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
           </motion.div>
         )}
 
-        {/* Gap Report — only show if 3+ responses */}
+        {/* Gap Report - only show if 3+ responses */}
         {!needsMore && (
           <>
             {/* Radar Chart */}
@@ -389,7 +419,10 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                         Biggest Blind Spot
                       </h4>
                     </div>
-                    <p className="text-2xl font-bold mb-1" style={{ color: biggestBlindSpot.color }}>
+                    <p
+                      className="text-2xl font-bold mb-1"
+                      style={{ color: biggestBlindSpot.color }}
+                    >
                       {biggestBlindSpot.label}
                     </p>
                     <p className="text-sm text-red-800/70">
@@ -409,7 +442,10 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                         Hidden Strength
                       </h4>
                     </div>
-                    <p className="text-2xl font-bold mb-1" style={{ color: biggestStrength.color }}>
+                    <p
+                      className="text-2xl font-bold mb-1"
+                      style={{ color: biggestStrength.color }}
+                    >
                       {biggestStrength.label}
                     </p>
                     <p className="text-sm text-emerald-800/70">
@@ -493,9 +529,7 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                 <CardContent className="p-6 space-y-4">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="w-6 h-6 text-amber-400" />
-                    <h3 className="font-bold text-lg">
-                      What To Do With This
-                    </h3>
+                    <h3 className="font-bold text-lg">What To Do With This</h3>
                   </div>
                   <div className="space-y-3 text-sm text-white/80">
                     {biggestBlindSpot && (
@@ -507,10 +541,9 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                           <strong className="text-white">
                             Investigate your {biggestBlindSpot.label} gap.
                           </strong>{" "}
-                          Ask a trusted colleague: "When do you see me
-                          trying to be the {biggestBlindSpot.label} but
-                          it doesn't land?" Their answer will be specific
-                          and actionable.
+                          Ask a trusted colleague: "When do you see me trying to
+                          be the {biggestBlindSpot.label} but it doesn't land?"
+                          Their answer will be specific and actionable.
                         </p>
                       </div>
                     )}
@@ -523,9 +556,9 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                           <strong className="text-white">
                             Lean into your hidden {biggestStrength.label}.
                           </strong>{" "}
-                          Others see this in you more than you claim it.
-                          Name it. Own it. Use it deliberately in your
-                          next project kickoff.
+                          Others see this in you more than you claim it. Name
+                          it. Own it. Use it deliberately in your next project
+                          kickoff.
                         </p>
                       </div>
                     )}
@@ -537,10 +570,9 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
                         <strong className="text-white">
                           Share this with your team.
                         </strong>{" "}
-                        When everyone on the team does a 360, you can
-                        see the full relay — who's covering what, where
-                        the handoff friction lives, and what role the
-                        team is missing.
+                        When everyone on the team does a 360, you can see the
+                        full relay - who's covering what, where the handoff
+                        friction lives, and what role the team is missing.
                       </p>
                     </div>
                   </div>
@@ -553,9 +585,9 @@ export default function ThreeSixtyResultsClient({ assessmentId: assessmentIdProp
         {/* Footer */}
         <div className="text-center pt-4 pb-8">
           <p className="text-xs text-[#2C1810]/40">
-            Based on {responseCount} peer review{responseCount !== 1 ? "s" : ""}.
-            Responses are aggregated anonymously — you never see
-            individual rankings.
+            Based on {responseCount} peer review{responseCount !== 1 ? "s" : ""}
+            . Responses are aggregated anonymously - you never see individual
+            rankings.
           </p>
         </div>
       </div>

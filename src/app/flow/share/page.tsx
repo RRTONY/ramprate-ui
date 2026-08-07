@@ -6,7 +6,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 export const metadata: Metadata = {
   title: "Shared Assessment Result | The Flow Circuit",
   description:
-    "View a shared Flow Circuit assessment result — see the role, energy distribution, and personalized report for this shared link.",
+    "View a shared Flow Circuit assessment result - see the role, energy distribution, and personalized report for this shared link.",
   alternates: { canonical: "https://flow.tonygreenberg.com/share" },
 };
 

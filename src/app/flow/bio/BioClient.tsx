@@ -1,15 +1,19 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { Linkedin, Globe, Award, Zap, Heart, ExternalLink } from "lucide-react";
 import { bioContent } from "@/content/flow/bio_content";
-import BlogBridge from '@/components/flow/BlogBridge';
+import BlogBridge from "@/components/flow/BlogBridge";
 
 export default function BioClient() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -21,7 +25,6 @@ export default function BioClient() {
       </div>
 
       <div className="container mx-auto px-4 py-24 space-y-24 relative z-10">
-
         {/* Hero Section */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -33,20 +36,40 @@ export default function BioClient() {
             </p>
             <div className="prose prose-lg prose-invert">
               <p>
-                Tony Greenberg doesn't just build companies; he builds the <strong>operating systems</strong> that run them.
+                Tony Greenberg doesn't just build companies; he builds the{" "}
+                <strong>operating systems</strong> that run them.
               </p>
               <p>
-                As the founder of RampRate, he has saved Fortune 500 companies billions of dollars. But his true legacy isn't in the data center—it's in the <strong>human center</strong>.
+                As the founder of RampRate, he has saved Fortune 500 companies
+                billions of dollars. But his true legacy isn't in the data
+                center-it's in the <strong>human center</strong>.
               </p>
               <p>
-                He believes that the greatest inefficiency in the world isn't server latency; it's <strong>human friction</strong>.
+                He believes that the greatest inefficiency in the world isn't
+                server latency; it's <strong>human friction</strong>.
               </p>
             </div>
             <div className="flex gap-4">
-              <Button size="lg" className="gap-2" onClick={() => window.open('https://www.linkedin.com/in/tonygreenberg/', '_blank')}>
+              <Button
+                size="lg"
+                className="gap-2"
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/tonygreenberg/",
+                    "_blank",
+                  )
+                }
+              >
                 <Linkedin className="h-5 w-5" /> LinkedIn
               </Button>
-              <Button size="lg" variant="outline" className="gap-2" onClick={() => window.open('https://tonygreenberg.com', '_blank')}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2"
+                onClick={() =>
+                  window.open("https://tonygreenberg.com", "_blank")
+                }
+              >
                 <Globe className="h-5 w-5" /> Website
               </Button>
             </div>
@@ -61,8 +84,12 @@ export default function BioClient() {
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-8 left-8 z-20">
-              <p className="text-sm font-mono text-primary uppercase tracking-widest mb-2">The Vision</p>
-              <p className="text-2xl font-bold">"We are boiling the human out of the machine."</p>
+              <p className="text-sm font-mono text-primary uppercase tracking-widest mb-2">
+                The Vision
+              </p>
+              <p className="text-2xl font-bold">
+                "We are boiling the human out of the machine."
+              </p>
             </div>
           </div>
         </div>
@@ -84,7 +111,9 @@ export default function BioClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  From transforming the digital supply chain to redefining social impact, Tony's career is a testament to the power of <strong>disruptive altruism</strong>.
+                  From transforming the digital supply chain to redefining
+                  social impact, Tony's career is a testament to the power of{" "}
+                  <strong>disruptive altruism</strong>.
                 </p>
               </CardContent>
             </Card>
@@ -95,7 +124,9 @@ export default function BioClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  He operates as a high-voltage <strong>Spark/Amplifier</strong>, igniting movements and connecting the disconnected nodes of the global grid.
+                  He operates as a high-voltage <strong>Spark/Amplifier</strong>
+                  , igniting movements and connecting the disconnected nodes of
+                  the global grid.
                 </p>
               </CardContent>
             </Card>
@@ -106,7 +137,8 @@ export default function BioClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Believing that "communities drive asset value," he focuses on building ecosystems where every participant thrives.
+                  Believing that "communities drive asset value," he focuses on
+                  building ecosystems where every participant thrives.
                 </p>
               </CardContent>
             </Card>
@@ -118,19 +150,30 @@ export default function BioClient() {
           <h2 className="text-3xl font-bold mb-6">Why This Matters Now</h2>
           <div className="prose prose-xl prose-invert mx-auto max-w-3xl">
             <p>
-              "We are standing at the precipice of the AI age. If we do not understand our own 'source code'—our human operating system—we will be overwritten by the synthetic one."
+              "We are standing at the precipice of the AI age. If we do not
+              understand our own 'source code'-our human operating system-we
+              will be overwritten by the synthetic one."
             </p>
-            <p className="font-bold text-primary">
-              — Tony Greenberg
-            </p>
+            <p className="font-bold text-primary">- Tony Greenberg</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-8 justify-center">
-            <Button size="lg" className="text-lg h-14" onClick={() => window.open('https://tonygreenberg.com', '_blank')}>
+            <Button
+              size="lg"
+              className="text-lg h-14"
+              onClick={() => window.open("https://tonygreenberg.com", "_blank")}
+            >
               <ExternalLink className="mr-2 h-5 w-5" />
               Access Source Code
             </Button>
-            <Button size="lg" variant="outline" className="text-lg h-14" onClick={() => window.open('https://clariceabelardi.com', '_blank')}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg h-14"
+              onClick={() =>
+                window.open("https://clariceabelardi.com", "_blank")
+              }
+            >
               <Heart className="mr-2 h-5 w-5 text-pink-500" />
               Meet The Muse
             </Button>

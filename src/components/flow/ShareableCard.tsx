@@ -20,7 +20,12 @@ interface ShareableCardProps {
   dominantRole: Role;
 }
 
-export default function ShareableCard({ name, comboProfile, rolePercentages, dominantRole }: ShareableCardProps) {
+export default function ShareableCard({
+  name,
+  comboProfile,
+  rolePercentages,
+  dominantRole,
+}: ShareableCardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const drawCard = useCallback(() => {
@@ -79,11 +84,12 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
     ctx.fillText(comboProfile.label.toUpperCase(), 60, 200);
 
     // Purity badge
-    const purityText = comboProfile.purityScore > 70
-      ? "HIGHLY CONCENTRATED"
-      : comboProfile.purityScore > 40
-      ? "MODERATELY FOCUSED"
-      : "VERSATILE BLEND";
+    const purityText =
+      comboProfile.purityScore > 70
+        ? "HIGHLY CONCENTRATED"
+        : comboProfile.purityScore > 40
+          ? "MODERATELY FOCUSED"
+          : "VERSATILE BLEND";
     ctx.fillStyle = "rgba(255,255,255,0.15)";
     const badgeWidth = ctx.measureText(purityText).width + 30;
     roundRect(ctx, 60, 220, badgeWidth, 32, 16);
@@ -95,7 +101,11 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
     // Purity score
     ctx.fillStyle = "rgba(255,255,255,0.5)";
     ctx.font = "600 14px system-ui, -apple-system, sans-serif";
-    ctx.fillText(`Purity: ${comboProfile.purityScore}/100`, 60 + badgeWidth + 16, 241);
+    ctx.fillText(
+      `Purity: ${comboProfile.purityScore}/100`,
+      60 + badgeWidth + 16,
+      241,
+    );
 
     // Role bars
     const barStartY = 290;
@@ -127,14 +137,24 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
       // Percentage
       ctx.fillStyle = "rgba(255,255,255,0.7)";
       ctx.font = "bold 22px system-ui, -apple-system, sans-serif";
-      ctx.fillText(`${item.percentage}%`, barX + barMaxWidth + 20, y + barHeight - 2);
+      ctx.fillText(
+        `${item.percentage}%`,
+        barX + barMaxWidth + 20,
+        y + barHeight - 2,
+      );
     });
 
     // Radar visualization (right side)
     const centerX = 900;
     const centerY = 340;
     const radius = 160;
-    const roles: Role[] = ["Spark", "Amplifier", "Filter", "Ground", "Conductor"];
+    const roles: Role[] = [
+      "Spark",
+      "Amplifier",
+      "Filter",
+      "Ground",
+      "Conductor",
+    ];
 
     // Draw radar grid
     for (let ring = 1; ring <= 4; ring++) {
@@ -159,7 +179,10 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
       ctx.beginPath();
       ctx.strokeStyle = "rgba(255,255,255,0.06)";
       ctx.moveTo(centerX, centerY);
-      ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius);
+      ctx.lineTo(
+        centerX + Math.cos(angle) * radius,
+        centerY + Math.sin(angle) * radius,
+      );
       ctx.stroke();
     });
 
@@ -168,9 +191,9 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
     ctx.fillStyle = accentColor + "30";
     ctx.strokeStyle = accentColor;
     ctx.lineWidth = 3;
-    const maxScore = Math.max(...rolePercentages.map(r => r.percentage));
+    const maxScore = Math.max(...rolePercentages.map((r) => r.percentage));
     roles.forEach((role: Role, i: number) => {
-      const pct = rolePercentages.find(r => r.role === role)?.percentage || 0;
+      const pct = rolePercentages.find((r) => r.role === role)?.percentage || 0;
       const r = (pct / Math.max(maxScore, 50)) * radius * 0.85;
       const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
       const x = centerX + Math.cos(angle) * r;
@@ -200,7 +223,11 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
     // Bottom tagline
     ctx.fillStyle = "rgba(255,255,255,0.3)";
     ctx.font = "600 14px system-ui, -apple-system, sans-serif";
-    ctx.fillText("flow.tonygreenberg.com  •  Take the Assessment  •  Find Your Tribe", 60, H - 30);
+    ctx.fillText(
+      "flow.tonygreenberg.com  •  Take the Assessment  •  Find Your Tribe",
+      60,
+      H - 30,
+    );
 
     // Copyright
     ctx.fillStyle = "rgba(255,255,255,0.15)";
@@ -226,14 +253,18 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
     if (!canvas) return;
 
     try {
-      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/png"),
+      );
       if (!blob) return;
 
       if (navigator.share && navigator.canShare) {
-        const file = new File([blob], "flow-circuit-results.png", { type: "image/png" });
+        const file = new File([blob], "flow-circuit-results.png", {
+          type: "image/png",
+        });
         const shareData = {
           title: `My Flow Circuit: ${comboProfile.label}`,
-          text: `I'm a ${comboProfile.label} on The Flow Circuit — ${rolePercentages[0]?.percentage}% ${dominantRole}. Take the assessment to find your role.`,
+          text: `I'm a ${comboProfile.label} on The Flow Circuit - ${rolePercentages[0]?.percentage}% ${dominantRole}. Take the assessment to find your role.`,
           files: [file],
         };
         if (navigator.canShare(shareData)) {
@@ -256,7 +287,7 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
         setTimeout(drawCard, 100);
       }
     },
-    [drawCard]
+    [drawCard],
   );
 
   return (
@@ -289,7 +320,14 @@ export default function ShareableCard({ name, comboProfile, rolePercentages, dom
   );
 }
 
-function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+function roundRect(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number,
+) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
   ctx.lineTo(x + w - r, y);

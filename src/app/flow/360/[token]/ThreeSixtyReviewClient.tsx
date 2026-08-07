@@ -51,7 +51,7 @@ const ENERGY_TYPES = [
 export default function ThreeSixtyReviewClient({ token }: { token: string }) {
   const { data, isLoading, error } = trpc.threeSixty.getSession.useQuery(
     { token },
-    { enabled: !!token, retry: false }
+    { enabled: !!token, retry: false },
   );
 
   const submitMutation = trpc.threeSixty.submitResponse.useMutation();
@@ -79,7 +79,7 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
       ];
       setRankings(newRankings);
     },
-    [rankings]
+    [rankings],
   );
 
   const handleSubmit = async () => {
@@ -123,9 +123,8 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
               Link Not Found
             </p>
             <p className="text-[#2C1810]/60">
-              This 360 review link may have expired or is invalid.
-              Please ask the person who sent it
-              to generate a new one.
+              This 360 review link may have expired or is invalid. Please ask
+              the person who sent it to generate a new one.
             </p>
           </CardContent>
         </Card>
@@ -144,11 +143,9 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
             </h2>
             <p className="text-[#2C1810]/70 mb-6">
               Your review of{" "}
-              <span className="font-semibold">
-                {data.session.subjectName}
-              </span>{" "}
-              has been submitted. They'll see the aggregated
-              results once 3 or more people respond.
+              <span className="font-semibold">{data.session.subjectName}</span>{" "}
+              has been submitted. They'll see the aggregated results once 3 or
+              more people respond.
             </p>
             <div className="border-t border-[#E8DDD3] pt-6 mt-6">
               <p className="text-sm text-[#2C1810]/60 mb-3">
@@ -177,8 +174,7 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
             360 Peer Review
           </p>
           <h1 className="text-3xl font-bold text-[#2C1810] mb-2">
-            How does{" "}
-            <span className="text-amber-600">{subjectFirstName}</span>{" "}
+            How does <span className="text-amber-600">{subjectFirstName}</span>{" "}
             show up?
           </h1>
           <p className="text-[#2C1810]/70 max-w-sm mx-auto">
@@ -256,7 +252,7 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
         <Card className="border-[#E8DDD3] mb-6">
           <CardContent className="p-4 sm:p-6 space-y-4">
             <p className="text-sm text-[#2C1810]/60 font-medium">
-              Optional — helps {subjectFirstName} understand context
+              Optional - helps {subjectFirstName} understand context
             </p>
 
             <div className="space-y-3">
@@ -302,9 +298,7 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
                     <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="manager">
-                      Their manager
-                    </SelectItem>
+                    <SelectItem value="manager">Their manager</SelectItem>
                     <SelectItem value="direct_report">
                       Their direct report
                     </SelectItem>
@@ -331,8 +325,8 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
         </Button>
 
         <p className="text-xs text-center text-[#2C1810]/40 mt-4">
-          Responses are aggregated anonymously.{" "}
-          {subjectFirstName} only sees averages, never individual rankings.
+          Responses are aggregated anonymously. {subjectFirstName} only sees
+          averages, never individual rankings.
         </p>
       </div>
     </div>

@@ -3,17 +3,48 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { trpc } from "@/lib/flow/trpc";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { useRouter } from "next/navigation";
 import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid,
-  PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-  ScatterChart, Scatter, ZAxis, Legend
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  PieChart,
+  Pie,
+  Cell,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ScatterChart,
+  Scatter,
+  ZAxis,
+  Legend,
 } from "recharts";
 import {
-  FlaskConical, Users, BarChart3, Shield, TrendingUp,
-  Activity, Zap, Radio, Anchor, ArrowLeft, Database, Target
+  FlaskConical,
+  Users,
+  BarChart3,
+  Shield,
+  TrendingUp,
+  Activity,
+  Zap,
+  Radio,
+  Anchor,
+  ArrowLeft,
+  Database,
+  Target,
 } from "lucide-react";
 
 const ROLE_COLORS: Record<string, string> = {
@@ -65,7 +96,8 @@ export default function ResearchDashboardClient() {
 
   // Calculate live accuracy metrics from real data
   const liveMetrics = useMemo(() => {
-    if (!stats?.researchScores || stats.researchScores.length === 0) return null;
+    if (!stats?.researchScores || stats.researchScores.length === 0)
+      return null;
 
     const n = stats.researchScores.length;
     const roleFrequencies: Record<string, number> = {};
@@ -154,9 +186,13 @@ export default function ResearchDashboardClient() {
               <h1 className="text-3xl md:text-4xl font-black tracking-tight">
                 Live Research Dashboard
               </h1>
-              <p className="text-gray-500 mt-1 max-w-2xl" style={{ textWrap: 'pretty' as any }}>
-                Real-time validation data from opted-in participants. Comparing theoretical Monte Carlo
-                predictions against actual respondent behavior.
+              <p
+                className="text-gray-500 mt-1 max-w-2xl"
+                style={{ textWrap: "pretty" as any }}
+              >
+                Real-time validation data from opted-in participants. Comparing
+                theoretical Monte Carlo predictions against actual respondent
+                behavior.
               </p>
             </div>
           </div>
@@ -170,18 +206,26 @@ export default function ResearchDashboardClient() {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
                 <Database className="w-4 h-4 text-gray-400" />
-                <span className="text-xs text-gray-500 uppercase tracking-wider font-bold">Total Assessments</span>
+                <span className="text-xs text-gray-500 uppercase tracking-wider font-bold">
+                  Total Assessments
+                </span>
               </div>
-              <p className="text-4xl font-black">{stats?.totalAssessments ?? 0}</p>
+              <p className="text-4xl font-black">
+                {stats?.totalAssessments ?? 0}
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
                 <FlaskConical className="w-4 h-4 text-sky-500" />
-                <span className="text-xs text-sky-600 uppercase tracking-wider font-bold">Research Opt-Ins</span>
+                <span className="text-xs text-sky-600 uppercase tracking-wider font-bold">
+                  Research Opt-Ins
+                </span>
               </div>
-              <p className="text-4xl font-black text-sky-600">{stats?.researchOptIns ?? 0}</p>
+              <p className="text-4xl font-black text-sky-600">
+                {stats?.researchOptIns ?? 0}
+              </p>
               <p className="text-xs text-gray-400 mt-1">
                 {stats && stats.totalAssessments > 0
                   ? `${((stats.researchOptIns / stats.totalAssessments) * 100).toFixed(1)}% opt-in rate`
@@ -193,9 +237,13 @@ export default function ResearchDashboardClient() {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="w-4 h-4 text-emerald-500" />
-                <span className="text-xs text-emerald-600 uppercase tracking-wider font-bold">Deep Calibrated</span>
+                <span className="text-xs text-emerald-600 uppercase tracking-wider font-bold">
+                  Deep Calibrated
+                </span>
               </div>
-              <p className="text-4xl font-black text-emerald-600">{stats?.calibratedCount ?? 0}</p>
+              <p className="text-4xl font-black text-emerald-600">
+                {stats?.calibratedCount ?? 0}
+              </p>
               <p className="text-xs text-gray-400 mt-1">
                 Forced-rank validated
               </p>
@@ -205,10 +253,14 @@ export default function ResearchDashboardClient() {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="w-4 h-4 text-amber-500" />
-                <span className="text-xs text-amber-600 uppercase tracking-wider font-bold">Unique Domains</span>
+                <span className="text-xs text-amber-600 uppercase tracking-wider font-bold">
+                  Unique Domains
+                </span>
               </div>
               <p className="text-4xl font-black text-amber-600">
-                {stats?.domainDistribution ? Object.keys(stats.domainDistribution).length : 0}
+                {stats?.domainDistribution
+                  ? Object.keys(stats.domainDistribution).length
+                  : 0}
               </p>
               <p className="text-xs text-gray-400 mt-1">
                 Organizations represented
@@ -222,16 +274,28 @@ export default function ResearchDashboardClient() {
           <Card>
             <CardContent className="py-16 text-center">
               <FlaskConical className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-700 mb-2">Waiting for Research Data</h3>
-              <p className="text-gray-500 max-w-md mx-auto mb-6" style={{ textWrap: 'pretty' as any }}>
-                No participants have opted into the research study yet. Once people complete the assessment
-                and opt in, their anonymized data will appear here in real time.
+              <h3 className="text-xl font-bold text-gray-700 mb-2">
+                Waiting for Research Data
+              </h3>
+              <p
+                className="text-gray-500 max-w-md mx-auto mb-6"
+                style={{ textWrap: "pretty" as any }}
+              >
+                No participants have opted into the research study yet. Once
+                people complete the assessment and opt in, their anonymized data
+                will appear here in real time.
               </p>
               <div className="flex gap-3 justify-center">
-                <Button onClick={() => router.push("/flow/assessment")} className="bg-black text-white hover:bg-gray-800">
+                <Button
+                  onClick={() => router.push("/flow/assessment")}
+                  className="bg-black text-white hover:bg-gray-800"
+                >
                   Take the Assessment
                 </Button>
-                <Button onClick={() => router.push("/flow/efficacy")} variant="outline">
+                <Button
+                  onClick={() => router.push("/flow/efficacy")}
+                  variant="outline"
+                >
                   View Simulation Data
                 </Button>
               </div>
@@ -249,22 +313,29 @@ export default function ResearchDashboardClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-500 mb-6">
-                  Comparing Monte Carlo predictions (10,000 synthetic respondents) against live participant data.
-                  The closer the real numbers match predictions, the stronger the validation.
+                  Comparing Monte Carlo predictions (10,000 synthetic
+                  respondents) against live participant data. The closer the
+                  real numbers match predictions, the stronger the validation.
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Spark Inflation */}
                   <div className="bg-gray-50 rounded-xl p-5 space-y-3">
-                    <h4 className="font-bold text-sm uppercase tracking-wider text-gray-600">Spark Inflation Rate</h4>
+                    <h4 className="font-bold text-sm uppercase tracking-wider text-gray-600">
+                      Spark Inflation Rate
+                    </h4>
                     <div className="flex items-end gap-4">
                       <div>
-                        <p className="text-xs text-gray-400">Predicted (Likert)</p>
-                        <p className="text-2xl font-black text-amber-500">{BENCHMARKS.likertSparkInflation}%</p>
+                        <p className="text-xs text-gray-400">
+                          Predicted (Likert)
+                        </p>
+                        <p className="text-2xl font-black text-amber-500">
+                          {BENCHMARKS.likertSparkInflation}%
+                        </p>
                       </div>
                       <div>
                         <p className="text-xs text-gray-400">Observed (Live)</p>
                         <p className="text-2xl font-black text-sky-600">
-                          {liveMetrics ? `${liveMetrics.sparkInflation}%` : "—"}
+                          {liveMetrics ? `${liveMetrics.sparkInflation}%` : "-"}
                         </p>
                       </div>
                     </div>
@@ -272,31 +343,37 @@ export default function ResearchDashboardClient() {
                       {liveMetrics && Number(liveMetrics.sparkInflation) > 25
                         ? "Confirms Spark inflation bias in Likert-based assessment."
                         : liveMetrics && Number(liveMetrics.sparkInflation) < 10
-                        ? "Lower than predicted — sample may be self-aware or domain-specific."
-                        : "Collecting more data for statistical significance."}
+                          ? "Lower than predicted - sample may be self-aware or domain-specific."
+                          : "Collecting more data for statistical significance."}
                     </p>
                   </div>
 
                   {/* Score Spread */}
                   <div className="bg-gray-50 rounded-xl p-5 space-y-3">
-                    <h4 className="font-bold text-sm uppercase tracking-wider text-gray-600">Role Differentiation</h4>
+                    <h4 className="font-bold text-sm uppercase tracking-wider text-gray-600">
+                      Role Differentiation
+                    </h4>
                     <div className="flex items-end gap-4">
                       <div>
-                        <p className="text-xs text-gray-400">Entropy (normalized)</p>
+                        <p className="text-xs text-gray-400">
+                          Entropy (normalized)
+                        </p>
                         <p className="text-2xl font-black text-purple-600">
-                          {liveMetrics ? liveMetrics.entropy : "—"}
+                          {liveMetrics ? liveMetrics.entropy : "-"}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400">Avg Score Spread</p>
+                        <p className="text-xs text-gray-400">
+                          Avg Score Spread
+                        </p>
                         <p className="text-2xl font-black text-purple-600">
-                          {liveMetrics ? liveMetrics.avgSpread : "—"}
+                          {liveMetrics ? liveMetrics.avgSpread : "-"}
                         </p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-500">
-                      Entropy of 1.0 = perfectly uniform distribution. Values below 0.85 suggest
-                      clustering around certain roles.
+                      Entropy of 1.0 = perfectly uniform distribution. Values
+                      below 0.85 suggest clustering around certain roles.
                     </p>
                   </div>
                 </div>
@@ -317,11 +394,20 @@ export default function ResearchDashboardClient() {
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart data={roleData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                        <XAxis dataKey="role" tick={{ fontSize: 12, fontWeight: 600 }} />
+                        <XAxis
+                          dataKey="role"
+                          tick={{ fontSize: 12, fontWeight: 600 }}
+                        />
                         <YAxis tick={{ fontSize: 11 }} />
                         <Tooltip
-                          contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb" }}
-                          formatter={(value: number) => [`${value} participants`, "Count"]}
+                          contentStyle={{
+                            borderRadius: 12,
+                            border: "1px solid #e5e7eb",
+                          }}
+                          formatter={(value: number) => [
+                            `${value} participants`,
+                            "Count",
+                          ]}
                         />
                         <Bar dataKey="count" radius={[8, 8, 0, 0]}>
                           {roleData.map((entry, index) => (
@@ -358,13 +444,20 @@ export default function ResearchDashboardClient() {
                           paddingAngle={3}
                           dataKey="count"
                           nameKey="role"
-                          label={({ role, percent }) => `${role} ${(percent * 100).toFixed(0)}%`}
+                          label={({ role, percent }) =>
+                            `${role} ${(percent * 100).toFixed(0)}%`
+                          }
                         >
                           {roleData.map((entry, index) => (
                             <Cell key={`pie-${index}`} fill={entry.fill} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(value: number) => [`${value}`, "Participants"]} />
+                        <Tooltip
+                          formatter={(value: number) => [
+                            `${value}`,
+                            "Participants",
+                          ]}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
@@ -387,8 +480,9 @@ export default function ResearchDashboardClient() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-500 mb-4">
-                    Each dot is an anonymized participant. The Spark-Ground axis reveals the primary
-                    tension in team dynamics — visionaries vs. executors.
+                    Each dot is an anonymized participant. The Spark-Ground axis
+                    reveals the primary tension in team dynamics - visionaries
+                    vs. executors.
                   </p>
                   <ResponsiveContainer width="100%" height={350}>
                     <ScatterChart>
@@ -398,19 +492,34 @@ export default function ResearchDashboardClient() {
                         dataKey="spark"
                         name="Spark Score"
                         tick={{ fontSize: 11 }}
-                        label={{ value: "Spark Score", position: "bottom", fontSize: 12 }}
+                        label={{
+                          value: "Spark Score",
+                          position: "bottom",
+                          fontSize: 12,
+                        }}
                       />
                       <YAxis
                         type="number"
                         dataKey="ground"
                         name="Ground Score"
                         tick={{ fontSize: 11 }}
-                        label={{ value: "Ground Score", angle: -90, position: "left", fontSize: 12 }}
+                        label={{
+                          value: "Ground Score",
+                          angle: -90,
+                          position: "left",
+                          fontSize: 12,
+                        }}
                       />
                       <ZAxis range={[40, 200]} />
                       <Tooltip
-                        contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb" }}
-                        formatter={(value: number, name: string) => [value, name]}
+                        contentStyle={{
+                          borderRadius: 12,
+                          border: "1px solid #e5e7eb",
+                        }}
+                        formatter={(value: number, name: string) => [
+                          value,
+                          name,
+                        ]}
                       />
                       <Legend />
                       {Object.keys(ROLE_COLORS).map((role) => (
@@ -440,16 +549,24 @@ export default function ResearchDashboardClient() {
                   <div className="space-y-3">
                     {domainData.map((d, i) => (
                       <div key={d.domain} className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-gray-400 w-6">{i + 1}.</span>
+                        <span className="text-xs font-mono text-gray-400 w-6">
+                          {i + 1}.
+                        </span>
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium text-sm">{d.domain}</span>
-                            <span className="text-xs text-gray-500">{d.count} participants</span>
+                            <span className="font-medium text-sm">
+                              {d.domain}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {d.count} participants
+                            </span>
                           </div>
                           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
-                              animate={{ width: `${(d.count / (domainData[0]?.count || 1)) * 100}%` }}
+                              animate={{
+                                width: `${(d.count / (domainData[0]?.count || 1)) * 100}%`,
+                              }}
                               transition={{ duration: 0.8, delay: i * 0.1 }}
                               className="h-full bg-sky-500 rounded-full"
                             />
@@ -465,14 +582,22 @@ export default function ResearchDashboardClient() {
             {/* Methodology Note */}
             <Card className="bg-gray-50 border-dashed">
               <CardContent className="py-6">
-                <h4 className="font-bold text-sm uppercase tracking-wider text-gray-500 mb-2">Methodology Note</h4>
-                <p className="text-sm text-gray-600 leading-relaxed" style={{ textWrap: 'pretty' as any }}>
-                  All data on this dashboard is anonymized. No names, emails, or personally identifiable
-                  information is displayed or stored in the research dataset. Role scores and distributions
-                  are aggregated from participants who explicitly opted in to the research study. The Monte Carlo
-                  benchmarks were generated from 10,000 synthetic respondents using the same scoring algorithm.
-                  Statistical significance requires a minimum of n=30 for role distribution comparisons and
-                  n=100 for reliability estimates. Current sample: n={stats?.researchOptIns ?? 0}.
+                <h4 className="font-bold text-sm uppercase tracking-wider text-gray-500 mb-2">
+                  Methodology Note
+                </h4>
+                <p
+                  className="text-sm text-gray-600 leading-relaxed"
+                  style={{ textWrap: "pretty" as any }}
+                >
+                  All data on this dashboard is anonymized. No names, emails, or
+                  personally identifiable information is displayed or stored in
+                  the research dataset. Role scores and distributions are
+                  aggregated from participants who explicitly opted in to the
+                  research study. The Monte Carlo benchmarks were generated from
+                  10,000 synthetic respondents using the same scoring algorithm.
+                  Statistical significance requires a minimum of n=30 for role
+                  distribution comparisons and n=100 for reliability estimates.
+                  Current sample: n={stats?.researchOptIns ?? 0}.
                 </p>
               </CardContent>
             </Card>
@@ -507,7 +632,9 @@ export default function ResearchDashboardClient() {
         {/* Footer */}
         <div className="text-center text-xs text-gray-400 pt-4 border-t border-gray-200">
           <p>Flow Circuit Research Validation Dashboard</p>
-          <p className="mt-1">&copy; 2000-2026 Tony Greenberg and RampRate. All Rights Reserved.</p>
+          <p className="mt-1">
+            &copy; 2000-2026 Tony Greenberg and RampRate. All Rights Reserved.
+          </p>
         </div>
       </div>
     </div>

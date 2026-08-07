@@ -3,31 +3,54 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { BrainCircuit, ArrowRight, CheckCircle2, AlertTriangle, Clock, MapPin, Calendar, User, Mail, Users, Building2 } from "lucide-react";
-import { surveyQuestions, calculateRoleScores, getDominantRole, type RankingAnswer } from "@/lib/flow/surveyData";
+import {
+  BrainCircuit,
+  ArrowRight,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  MapPin,
+  Calendar,
+  User,
+  Mail,
+  Users,
+  Building2,
+} from "lucide-react";
+import {
+  surveyQuestions,
+  calculateRoleScores,
+  getDominantRole,
+  type RankingAnswer,
+} from "@/lib/flow/surveyData";
 import RankableQuestion from "@/components/flow/RankableQuestion";
 import { logAssessmentData } from "@/lib/flow/dataLogger";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/flow/ui/input";
 import { Label } from "@/components/flow/ui/label";
 import { trpc } from "@/lib/flow/trpc";
-import { saveAssessmentToHistory, markAssessmentCompleted, hasCompletedAssessment, getLatestAssessment, type PersistedAssessment } from "@/lib/flow/assessmentPersistence";
+import {
+  saveAssessmentToHistory,
+  markAssessmentCompleted,
+  hasCompletedAssessment,
+  getLatestAssessment,
+  type PersistedAssessment,
+} from "@/lib/flow/assessmentPersistence";
 import ThreeSixtyLinkGenerator from "@/components/flow/ThreeSixtyLinkGenerator";
 import { Copy, Share2, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/flow/useAuth";
 
-// Mulberry32 PRNG — better distribution than LCG, no positional bias
+// Mulberry32 PRNG - better distribution than LCG, no positional bias
 function mulberry32(seed: number): () => number {
   let s = seed | 0;
   return () => {
-    s = (s + 0x6D2B79F5) | 0;
+    s = (s + 0x6d2b79f5) | 0;
     let t = Math.imul(s ^ (s >>> 15), 1 | s);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
 
-// Fisher-Yates shuffle with Mulberry32 PRNG — unbiased uniform distribution
+// Fisher-Yates shuffle with Mulberry32 PRNG - unbiased uniform distribution
 function seededShuffle<T>(arr: T[], seed: number): T[] {
   const shuffled = [...arr];
   const rng = mulberry32(seed);
@@ -41,7 +64,14 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
 const SESSION_KEY = "fc_assessment_session";
 
 interface SavedSession {
-  phase: "intro" | "name" | "questions" | "birth" | "submitting" | "complete" | "invite360";
+  phase:
+    | "intro"
+    | "name"
+    | "questions"
+    | "birth"
+    | "submitting"
+    | "complete"
+    | "invite360";
   currentQuestionIndex: number;
   answers: Record<number, string | RankingAnswer>;
   guestName: string;
@@ -74,7 +104,10 @@ export default function Assessment() {
   const { user, isAuthenticated } = useAuth();
 
   // ─── Fix #2: Show results dashboard for returning users ───
-  const searchParamsInit = useMemo(() => new URLSearchParams(window.location.search), []);
+  const searchParamsInit = useMemo(
+    () => new URLSearchParams(window.location.search),
+    [],
+  );
   const isRetake = searchParamsInit.get("retake") === "true";
 
   // Check localStorage first for completion
@@ -89,10 +122,11 @@ export default function Assessment() {
   }, [completionCheck.completed]);
 
   // Also check server for logged-in user's assessment (covers cross-device)
-  const userEmail = user?.email || localStorage.getItem("assessment_guest_email") || undefined;
+  const userEmail =
+    user?.email || localStorage.getItem("assessment_guest_email") || undefined;
   const serverAssessment = trpc.assessment.getByEmail.useQuery(
     { email: userEmail! },
-    { enabled: !isRetake && !localPriorAssessment && !!userEmail && !saved }
+    { enabled: !isRetake && !localPriorAssessment && !!userEmail && !saved },
   );
 
   // Build the prior assessment from either local or server data
@@ -108,7 +142,9 @@ export default function Assessment() {
         domain: serverAssessment.data.domain || undefined,
         teamCode: undefined,
         shareToken: serverAssessment.data.shareToken || undefined,
-        completedAt: serverAssessment.data.createdAt ? String(serverAssessment.data.createdAt) : new Date().toISOString(),
+        completedAt: serverAssessment.data.createdAt
+          ? String(serverAssessment.data.createdAt)
+          : new Date().toISOString(),
       };
     }
     return null;
@@ -116,30 +152,62 @@ export default function Assessment() {
 
   // Show returning dashboard if we have prior data (local or server)
   const [showReturningDashboard, setShowReturningDashboard] = useState(
-    !isRetake && completionCheck.completed && !saved
+    !isRetake && completionCheck.completed && !saved,
   );
 
   // Also trigger dashboard when server data arrives
   useEffect(() => {
-    if (!isRetake && !saved && !showReturningDashboard && priorAssessment && !localPriorAssessment) {
+    if (
+      !isRetake &&
+      !saved &&
+      !showReturningDashboard &&
+      priorAssessment &&
+      !localPriorAssessment
+    ) {
       setShowReturningDashboard(true);
     }
-  }, [priorAssessment, isRetake, saved, showReturningDashboard, localPriorAssessment]);
+  }, [
+    priorAssessment,
+    isRetake,
+    saved,
+    showReturningDashboard,
+    localPriorAssessment,
+  ]);
 
-  const [phase, setPhase] = useState<"intro" | "name" | "questions" | "birth" | "submitting" | "complete" | "invite360">(saved?.phase || "intro");
+  const [phase, setPhase] = useState<
+    | "intro"
+    | "name"
+    | "questions"
+    | "birth"
+    | "submitting"
+    | "complete"
+    | "invite360"
+  >(saved?.phase || "intro");
   const [inviteEmails, setInviteEmails] = useState<string[]>([""]);
   const [invitesSent, setInvitesSent] = useState(false);
-  const [generatedInviteLinks, setGeneratedInviteLinks] = useState<{email: string; url: string}[]>([]);
-  const [assessmentId, setAssessmentId] = useState<number | null>(saved?.assessmentId || null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(saved?.currentQuestionIndex || 0);
-  const [answers, setAnswers] = useState<Record<number, string | RankingAnswer>>(saved?.answers || {});
+  const [generatedInviteLinks, setGeneratedInviteLinks] = useState<
+    { email: string; url: string }[]
+  >([]);
+  const [assessmentId, setAssessmentId] = useState<number | null>(
+    saved?.assessmentId || null,
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
+    saved?.currentQuestionIndex || 0,
+  );
+  const [answers, setAnswers] = useState<
+    Record<number, string | RankingAnswer>
+  >(saved?.answers || {});
   const [guestName, setGuestName] = useState(saved?.guestName || "");
   const [guestEmail, setGuestEmail] = useState(saved?.guestEmail || "");
-  const [birthData, setBirthData] = useState(saved?.birthData || { date: "", time: "", city: "" });
+  const [birthData, setBirthData] = useState(
+    saved?.birthData || { date: "", time: "", city: "" },
+  );
   const [submissionError, setSubmissionError] = useState("");
 
   // Generate a stable session seed once (persists across re-renders and page reloads)
-  const [sessionSeed] = useState(() => saved?.sessionSeed || Math.floor(Math.random() * 2147483647));
+  const [sessionSeed] = useState(
+    () => saved?.sessionSeed || Math.floor(Math.random() * 2147483647),
+  );
 
   // Shuffle BOTH question order AND option order within each question per session.
   // Uses different seed offsets so question order and option order are independent.
@@ -151,7 +219,7 @@ export default function Assessment() {
     // Then: shuffle options within each question using a different seed per question
     return questionOrder.map((q, idx) => ({
       ...q,
-      options: seededShuffle(q.options, sessionSeed * 31 + q.id * 7919 + idx)
+      options: seededShuffle(q.options, sessionSeed * 31 + q.id * 7919 + idx),
     }));
   }, [sessionSeed]);
 
@@ -169,7 +237,16 @@ export default function Assessment() {
       timestamp: Date.now(),
     };
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-  }, [phase, currentQuestionIndex, answers, guestName, guestEmail, birthData, sessionSeed, assessmentId]);
+  }, [
+    phase,
+    currentQuestionIndex,
+    answers,
+    guestName,
+    guestEmail,
+    birthData,
+    sessionSeed,
+    assessmentId,
+  ]);
 
   useEffect(() => {
     // Don't save intro phase (let them see the intro fresh)
@@ -177,21 +254,30 @@ export default function Assessment() {
     if (phase !== "intro" && phase !== "submitting") {
       saveSession();
     }
-  }, [phase, currentQuestionIndex, answers, guestName, guestEmail, saveSession]);
+  }, [
+    phase,
+    currentQuestionIndex,
+    answers,
+    guestName,
+    guestEmail,
+    saveSession,
+  ]);
 
   // Clear session after successful submission and viewing results
   const clearSession = useCallback(() => {
     localStorage.removeItem(SESSION_KEY);
   }, []);
 
-  // Handle Soulprint retake — jump directly to birth data step
+  // Handle Soulprint retake - jump directly to birth data step
   useEffect(() => {
     const soulprintRetake = localStorage.getItem("fc_soulprint_retake");
     if (soulprintRetake === "true") {
       localStorage.removeItem("fc_soulprint_retake");
       // Load existing answers if available
       const storedResults = localStorage.getItem("assessment_results");
-      const storedName = localStorage.getItem("assessment_guest_name") || localStorage.getItem("assessment_name");
+      const storedName =
+        localStorage.getItem("assessment_guest_name") ||
+        localStorage.getItem("assessment_name");
       if (storedResults && storedName) {
         setAnswers(JSON.parse(storedResults));
         setGuestName(storedName);
@@ -201,14 +287,17 @@ export default function Assessment() {
   }, []);
 
   // Capture team code and domain from URL if present
-  const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const searchParams = useMemo(
+    () => new URLSearchParams(window.location.search),
+    [],
+  );
   const teamCode = searchParams.get("team");
   const domainParam = searchParams.get("domain");
 
   // Get team info if team code is present
   const { data: teamInfo } = trpc.team.getByCode.useQuery(
     { code: teamCode! },
-    { enabled: !!teamCode }
+    { enabled: !!teamCode },
   );
 
   const submitAssessment = trpc.assessment.submit.useMutation();
@@ -217,16 +306,21 @@ export default function Assessment() {
   const [reportUrl, setReportUrl] = useState<string | null>(null);
   const [reportGenerating, setReportGenerating] = useState(false);
 
-  const currentQuestion = shuffledQuestions[currentQuestionIndex] ?? shuffledQuestions[shuffledQuestions.length - 1];
-  const progress = ((Math.min(currentQuestionIndex, shuffledQuestions.length - 1) + 1) / shuffledQuestions.length) * 100;
+  const currentQuestion =
+    shuffledQuestions[currentQuestionIndex] ??
+    shuffledQuestions[shuffledQuestions.length - 1];
+  const progress =
+    ((Math.min(currentQuestionIndex, shuffledQuestions.length - 1) + 1) /
+      shuffledQuestions.length) *
+    100;
 
   // Legacy single-select handler (kept for backward compatibility)
   const handleAnswerLegacy = (answerText: string) => {
-    setAnswers(prev => ({ ...prev, [currentQuestion.id]: answerText }));
+    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: answerText }));
 
     if (currentQuestionIndex < shuffledQuestions.length - 1) {
       setTimeout(() => {
-        setCurrentQuestionIndex(prev => prev + 1);
+        setCurrentQuestionIndex((prev) => prev + 1);
       }, 300);
     } else {
       setPhase("birth");
@@ -235,12 +329,15 @@ export default function Assessment() {
 
   // Forced-rank handler: saves the full ranking array for each question
   const handleRankComplete = (ranking: { role: string; text: string }[]) => {
-    const rankingAnswer: RankingAnswer = ranking.map(r => ({ role: r.role as any, text: r.text }));
-    setAnswers(prev => ({ ...prev, [currentQuestion.id]: rankingAnswer }));
+    const rankingAnswer: RankingAnswer = ranking.map((r) => ({
+      role: r.role as any,
+      text: r.text,
+    }));
+    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: rankingAnswer }));
 
     if (currentQuestionIndex < shuffledQuestions.length - 1) {
       setTimeout(() => {
-        setCurrentQuestionIndex(prev => prev + 1);
+        setCurrentQuestionIndex((prev) => prev + 1);
       }, 400);
     } else {
       setPhase("birth");
@@ -254,7 +351,11 @@ export default function Assessment() {
     handleFinalSubmit(skip ? undefined : birthData);
   };
 
-  const handleFinalSubmit = async (birth?: { date: string; time: string; city: string }) => {
+  const handleFinalSubmit = async (birth?: {
+    date: string;
+    time: string;
+    city: string;
+  }) => {
     setPhase("submitting");
     setSubmissionError("");
 
@@ -282,7 +383,9 @@ export default function Assessment() {
 
     try {
       // Auto-extract domain from email
-      const emailDomain = guestEmail ? guestEmail.split("@")[1]?.toLowerCase() : undefined;
+      const emailDomain = guestEmail
+        ? guestEmail.split("@")[1]?.toLowerCase()
+        : undefined;
       const effectiveDomain = domainParam || emailDomain;
 
       const result = await submitAssessment.mutateAsync({
@@ -305,11 +408,17 @@ export default function Assessment() {
         localStorage.setItem("assessment_id", String(result.id));
         if (teamCode) {
           localStorage.setItem("assessment_team_code", teamCode);
-          localStorage.setItem("assessment_team_id", String(result.teamId ?? ""));
+          localStorage.setItem(
+            "assessment_team_id",
+            String(result.teamId ?? ""),
+          );
         }
         if (effectiveDomain) {
           localStorage.setItem("assessment_domain", effectiveDomain);
-          localStorage.setItem("assessment_team_id", String(result.teamId ?? ""));
+          localStorage.setItem(
+            "assessment_team_id",
+            String(result.teamId ?? ""),
+          );
         }
         setAssessmentId(result.id);
 
@@ -342,7 +451,13 @@ export default function Assessment() {
   };
 
   // ─── Loading state: checking server for prior assessment ──────────
-  if (!isRetake && !saved && !localPriorAssessment && !!userEmail && serverAssessment.isLoading) {
+  if (
+    !isRetake &&
+    !saved &&
+    !localPriorAssessment &&
+    !!userEmail &&
+    serverAssessment.isLoading
+  ) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-yellow-400 mb-4" />
@@ -389,12 +504,22 @@ export default function Assessment() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center space-y-4"
           >
-            <p className="text-sm uppercase tracking-widest text-gray-400">Welcome back, {priorAssessment.name}</p>
+            <p className="text-sm uppercase tracking-widest text-gray-400">
+              Welcome back, {priorAssessment.name}
+            </p>
             <h1 className="text-4xl md:text-6xl font-black tracking-tighter">
-              You are a <span className={roleColorMap[priorAssessment.role] || "text-yellow-400"}>{priorAssessment.role}</span>
+              You are a{" "}
+              <span
+                className={
+                  roleColorMap[priorAssessment.role] || "text-yellow-400"
+                }
+              >
+                {priorAssessment.role}
+              </span>
             </h1>
             <p className="text-lg text-gray-300 max-w-xl mx-auto">
-              {roleDescMap[priorAssessment.role] || "Your natural energy role has been identified."}
+              {roleDescMap[priorAssessment.role] ||
+                "Your natural energy role has been identified."}
             </p>
           </motion.div>
 
@@ -405,23 +530,33 @@ export default function Assessment() {
             transition={{ delay: 0.1 }}
             className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4"
           >
-            <h2 className="text-lg font-bold text-white uppercase tracking-wider">Your Energy Distribution</h2>
-            {Object.entries(priorAssessment.scores || {}).sort(([,a], [,b]) => (b as number) - (a as number)).map(([role, score]) => (
-              <div key={role} className="space-y-1">
-                <div className="flex justify-between text-sm">
-                  <span className={roleColorMap[role] || "text-gray-300"}>{role}</span>
-                  <span className="text-gray-400">{score as number}</span>
+            <h2 className="text-lg font-bold text-white uppercase tracking-wider">
+              Your Energy Distribution
+            </h2>
+            {Object.entries(priorAssessment.scores || {})
+              .sort(([, a], [, b]) => (b as number) - (a as number))
+              .map(([role, score]) => (
+                <div key={role} className="space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span className={roleColorMap[role] || "text-gray-300"}>
+                      {role}
+                    </span>
+                    <span className="text-gray-400">{score as number}</span>
+                  </div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-700 ${
+                        role === priorAssessment.role
+                          ? "bg-yellow-400"
+                          : "bg-white/30"
+                      }`}
+                      style={{
+                        width: `${Math.min(((score as number) / 60) * 100, 100)}%`,
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-700 ${
-                      role === priorAssessment.role ? "bg-yellow-400" : "bg-white/30"
-                    }`}
-                    style={{ width: `${Math.min(((score as number) / 60) * 100, 100)}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))}
           </motion.div>
 
           {/* 360 Feedback Section */}
@@ -447,7 +582,8 @@ export default function Assessment() {
             className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4"
           >
             <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Share2 className="w-5 h-5 text-yellow-400" /> Share With Your Team
+              <Share2 className="w-5 h-5 text-yellow-400" /> Share With Your
+              Team
             </h2>
             <p className="text-gray-300">
               Send this link to your teammates so they can take the assessment
@@ -500,7 +636,12 @@ export default function Assessment() {
 
           {/* Completed date */}
           <p className="text-center text-sm text-gray-500">
-            Completed {new Date(priorAssessment.completedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+            Completed{" "}
+            {new Date(priorAssessment.completedAt).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
           </p>
         </div>
       </div>
@@ -511,7 +652,13 @@ export default function Assessment() {
   if (phase === "intro") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }} />
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage:
+              "url('https://www.transparenttextures.com/patterns/cubes.png')",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -525,18 +672,24 @@ export default function Assessment() {
           </div>
 
           <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-            The Flow Circuit<br />Assessment
+            The Flow Circuit
+            <br />
+            Assessment
           </h1>
 
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Discover your innate operational energy — the role you were <em>born</em> to play in any team.
+            Discover your innate operational energy - the role you were{" "}
+            <em>born</em> to play in any team.
           </p>
 
           {teamInfo && (
             <div className="bg-blue-900/30 border border-blue-400/30 p-4 rounded-xl">
               <p className="text-blue-200 text-lg">
-                You are joining <strong className="text-white">{teamInfo.name}</strong>
-                {teamInfo.companyName && <span> at {teamInfo.companyName}</span>}
+                You are joining{" "}
+                <strong className="text-white">{teamInfo.name}</strong>
+                {teamInfo.companyName && (
+                  <span> at {teamInfo.companyName}</span>
+                )}
               </p>
             </div>
           )}
@@ -544,8 +697,9 @@ export default function Assessment() {
           {domainParam && !teamInfo && (
             <div className="bg-emerald-900/30 border border-emerald-400/30 p-4 rounded-xl">
               <p className="text-emerald-200 text-lg">
-                You are joining the <strong className="text-white">{domainParam}</strong> team.
-                Your results will be added to the team map.
+                You are joining the{" "}
+                <strong className="text-white">{domainParam}</strong> team. Your
+                results will be added to the team map.
               </p>
             </div>
           )}
@@ -553,17 +707,28 @@ export default function Assessment() {
           {/* ── Intention Setting ── */}
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-6 md:p-8 rounded-2xl text-left space-y-6">
             <h2 className="text-xl md:text-2xl font-bold text-yellow-400 uppercase tracking-widest flex items-center gap-2">
-              <AlertTriangle className="w-6 h-6" /> Before You Begin: Set Your Intention
+              <AlertTriangle className="w-6 h-6" /> Before You Begin: Set Your
+              Intention
             </h2>
             <div className="space-y-4 text-base md:text-lg text-gray-200 leading-relaxed">
               <p>
-                This is not a personality test. This is a <strong className="text-white">signal detection</strong> — designed to find the energy you carry <em>naturally</em>, not the one your job title forces you into.
+                This is not a personality test. This is a{" "}
+                <strong className="text-white">signal detection</strong> -
+                designed to find the energy you carry <em>naturally</em>, not
+                the one your job title forces you into.
               </p>
               <p>
-                Think about how you showed up as a <strong className="text-white">child</strong>. Were you the one who started the game, or the one who made sure everyone played fair? Did you get excited telling everyone about the idea, or did you quietly build the fort while others talked? That instinct — that first impulse — is what we're looking for.
+                Think about how you showed up as a{" "}
+                <strong className="text-white">child</strong>. Were you the one
+                who started the game, or the one who made sure everyone played
+                fair? Did you get excited telling everyone about the idea, or
+                did you quietly build the fort while others talked? That
+                instinct - that first impulse - is what we're looking for.
               </p>
               <p className="text-white font-bold text-lg md:text-xl border-l-4 border-yellow-400 pl-4 py-2 bg-white/5">
-                Answer from your innate superpower — who you are when no one is watching, when nothing is at stake, when you are simply <em>in flow</em>.
+                Answer from your innate superpower - who you are when no one is
+                watching, when nothing is at stake, when you are simply{" "}
+                <em>in flow</em>.
               </p>
             </div>
           </div>
@@ -575,20 +740,49 @@ export default function Assessment() {
             </h2>
             <div className="space-y-3 text-base md:text-lg text-gray-300">
               <div className="flex items-start gap-3">
-                <span className="text-yellow-400 font-black text-xl mt-0.5">01</span>
-                <p><strong className="text-white">Rank, don't pick.</strong> For each question, you'll see five responses. Drag them into order from "most like me" at the top to "least like me" at the bottom. Every response gets a position — no ties, no skipping.</p>
+                <span className="text-yellow-400 font-black text-xl mt-0.5">
+                  01
+                </span>
+                <p>
+                  <strong className="text-white">Rank, don't pick.</strong> For
+                  each question, you'll see five responses. Drag them into order
+                  from "most like me" at the top to "least like me" at the
+                  bottom. Every response gets a position - no ties, no skipping.
+                </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-yellow-400 font-black text-xl mt-0.5">02</span>
-                <p><strong className="text-white">Go with your gut.</strong> Your first instinct is the right one. If you deliberate, you're answering from your job, not your core. Speed is accuracy here.</p>
+                <span className="text-yellow-400 font-black text-xl mt-0.5">
+                  02
+                </span>
+                <p>
+                  <strong className="text-white">Go with your gut.</strong> Your
+                  first instinct is the right one. If you deliberate, you're
+                  answering from your job, not your core. Speed is accuracy
+                  here.
+                </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-yellow-400 font-black text-xl mt-0.5">03</span>
-                <p><strong className="text-white">Answer for YOU, not your role.</strong> Forget your title, your KPIs, your boss's expectations. This is about the human underneath.</p>
+                <span className="text-yellow-400 font-black text-xl mt-0.5">
+                  03
+                </span>
+                <p>
+                  <strong className="text-white">
+                    Answer for YOU, not your role.
+                  </strong>{" "}
+                  Forget your title, your KPIs, your boss's expectations. This
+                  is about the human underneath.
+                </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-yellow-400 font-black text-xl mt-0.5">04</span>
-                <p><strong className="text-white">Every role matters.</strong> There are no wrong answers. The circuit doesn't work without all five energies. The ranking just reveals your <em>distribution</em>.</p>
+                <span className="text-yellow-400 font-black text-xl mt-0.5">
+                  04
+                </span>
+                <p>
+                  <strong className="text-white">Every role matters.</strong>{" "}
+                  There are no wrong answers. The circuit doesn't work without
+                  all five energies. The ranking just reveals your{" "}
+                  <em>distribution</em>.
+                </p>
               </div>
             </div>
           </div>
@@ -601,18 +795,34 @@ export default function Assessment() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div className="bg-white/5 rounded-xl p-5 space-y-2">
                 <div className="text-3xl font-black text-yellow-400">12</div>
-                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">Questions</div>
-                <p className="text-xs text-gray-500">Forced-rank: drag to order, not pick one</p>
+                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">
+                  Questions
+                </div>
+                <p className="text-xs text-gray-500">
+                  Forced-rank: drag to order, not pick one
+                </p>
               </div>
               <div className="bg-white/5 rounded-xl p-5 space-y-2">
-                <div className="text-3xl font-black text-yellow-400">~8 min</div>
-                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">To Complete</div>
-                <p className="text-xs text-gray-500">Go with your gut — speed is accuracy here</p>
+                <div className="text-3xl font-black text-yellow-400">
+                  ~8 min
+                </div>
+                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">
+                  To Complete
+                </div>
+                <p className="text-xs text-gray-500">
+                  Go with your gut - speed is accuracy here
+                </p>
               </div>
               <div className="bg-white/5 rounded-xl p-5 space-y-2">
-                <div className="text-3xl font-black text-yellow-400">Your Role</div>
-                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">Revealed</div>
-                <p className="text-xs text-gray-500">Spark, Amplifier, Filter, Ground, or Conductor</p>
+                <div className="text-3xl font-black text-yellow-400">
+                  Your Role
+                </div>
+                <div className="text-sm text-gray-300 uppercase tracking-wider font-bold">
+                  Revealed
+                </div>
+                <p className="text-xs text-gray-500">
+                  Spark, Amplifier, Filter, Ground, or Conductor
+                </p>
               </div>
             </div>
           </div>
@@ -625,22 +835,46 @@ export default function Assessment() {
             <div className="space-y-3 text-base md:text-lg text-gray-300">
               <div className="flex items-start gap-3">
                 <span className="text-yellow-400 text-xl">⚡</span>
-                <p><strong className="text-white">Your Dominant Energy Profile</strong> — which of the five Flow Circuit roles you naturally carry, with a percentage breakdown across all five.</p>
+                <p>
+                  <strong className="text-white">
+                    Your Dominant Energy Profile
+                  </strong>{" "}
+                  - which of the five Flow Circuit roles you naturally carry,
+                  with a percentage breakdown across all five.
+                </p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-yellow-400 text-xl">📊</span>
-                <p><strong className="text-white">A Personal Report</strong> — your strengths, your friction points, and how to operate at your highest level.</p>
+                <p>
+                  <strong className="text-white">A Personal Report</strong> -
+                  your strengths, your friction points, and how to operate at
+                  your highest level.
+                </p>
               </div>
               {(domainParam || teamCode) && (
                 <div className="flex items-start gap-3">
                   <span className="text-yellow-400 text-xl">🗺️</span>
-                  <p><strong className="text-white">Your Team Map</strong> — see where you land on the team's energy grid. Identify gaps, overlaps, and friction points across the entire group. Learn who to hand the baton to, and who should never be in the same lane.</p>
+                  <p>
+                    <strong className="text-white">Your Team Map</strong> - see
+                    where you land on the team's energy grid. Identify gaps,
+                    overlaps, and friction points across the entire group. Learn
+                    who to hand the baton to, and who should never be in the
+                    same lane.
+                  </p>
                 </div>
               )}
               {!(domainParam || teamCode) && (
                 <div className="flex items-start gap-3">
                   <span className="text-yellow-400 text-xl">🗺️</span>
-                  <p><strong className="text-white">Team Mapping (Optional)</strong> — after your individual results, invite your team. Enter your company domain and everyone's results get mapped together — revealing the real dynamics, the friction, and the flow.</p>
+                  <p>
+                    <strong className="text-white">
+                      Team Mapping (Optional)
+                    </strong>{" "}
+                    - after your individual results, invite your team. Enter
+                    your company domain and everyone's results get mapped
+                    together - revealing the real dynamics, the friction, and
+                    the flow.
+                  </p>
                 </div>
               )}
             </div>
@@ -665,7 +899,13 @@ export default function Assessment() {
   if (phase === "name") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/stardust.png')" }} />
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage:
+              "url('https://www.transparenttextures.com/patterns/stardust.png')",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -673,7 +913,9 @@ export default function Assessment() {
           className="max-w-lg w-full space-y-8 relative z-10"
         >
           <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Identity Lock</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Identity Lock
+            </h2>
             <p className="text-gray-400 text-lg">
               Before we begin, we need to know who you are.
             </p>
@@ -705,17 +947,38 @@ export default function Assessment() {
                 value={guestEmail}
                 onChange={(e) => setGuestEmail(e.target.value)}
               />
-              <p className="text-xs text-gray-400">Required. Your email domain determines your team (e.g. @ramprate.com = RampRate team). You must verify your email to access the team report.</p>
+              <p className="text-xs text-gray-400">
+                Required. Your email domain determines your team (e.g.
+                @ramprate.com = RampRate team). You must verify your email to
+                access the team report.
+              </p>
             </div>
 
             {/* Live domain detection banner */}
             <AnimatePresence>
               {(() => {
                 const emailMatch = guestEmail.match(/@([^\s@]+\.[^\s@]+)$/);
-                const detectedDomain = emailMatch ? emailMatch[1].toLowerCase() : null;
-                const freeEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com', 'protonmail.com', 'mail.com', 'zoho.com', 'yandex.com'];
-                const isCompanyEmail = detectedDomain && !freeEmailDomains.includes(detectedDomain);
-                const companyName = isCompanyEmail ? detectedDomain.split('.')[0].charAt(0).toUpperCase() + detectedDomain.split('.')[0].slice(1) : null;
+                const detectedDomain = emailMatch
+                  ? emailMatch[1].toLowerCase()
+                  : null;
+                const freeEmailDomains = [
+                  "gmail.com",
+                  "yahoo.com",
+                  "hotmail.com",
+                  "outlook.com",
+                  "aol.com",
+                  "icloud.com",
+                  "protonmail.com",
+                  "mail.com",
+                  "zoho.com",
+                  "yandex.com",
+                ];
+                const isCompanyEmail =
+                  detectedDomain && !freeEmailDomains.includes(detectedDomain);
+                const companyName = isCompanyEmail
+                  ? detectedDomain.split(".")[0].charAt(0).toUpperCase() +
+                    detectedDomain.split(".")[0].slice(1)
+                  : null;
 
                 if (!isCompanyEmail) return null;
 
@@ -730,17 +993,25 @@ export default function Assessment() {
                     <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-4 space-y-2">
                       <div className="flex items-center gap-2">
                         <Building2 className="w-4 h-4 text-yellow-400" />
-                        <span className="text-yellow-400 font-bold text-sm uppercase tracking-wider">{companyName} Detected</span>
+                        <span className="text-yellow-400 font-bold text-sm uppercase tracking-wider">
+                          {companyName} Detected
+                        </span>
                       </div>
                       <p className="text-yellow-200/80 text-xs leading-relaxed">
-                        Your results will automatically join the <strong className="text-yellow-300">{companyName} Team Map</strong>.
-                        Everyone with an @{detectedDomain} email is mapped together — individual results stay private,
-                        but the team's energy distribution is visible to all members.
+                        Your results will automatically join the{" "}
+                        <strong className="text-yellow-300">
+                          {companyName} Team Map
+                        </strong>
+                        . Everyone with an @{detectedDomain} email is mapped
+                        together - individual results stay private, but the
+                        team's energy distribution is visible to all members.
                       </p>
                       <div className="flex items-center gap-3 pt-1">
                         <div className="flex items-center gap-1.5">
                           <Users className="w-3.5 h-3.5 text-yellow-400/70" />
-                          <span className="text-[10px] text-yellow-300/70 uppercase tracking-wider">Individual + Team Assessment</span>
+                          <span className="text-[10px] text-yellow-300/70 uppercase tracking-wider">
+                            Individual + Team Assessment
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -751,7 +1022,11 @@ export default function Assessment() {
 
             <Button
               onClick={() => setPhase("questions")}
-              disabled={!guestName.trim() || !guestEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail)}
+              disabled={
+                !guestName.trim() ||
+                !guestEmail.trim() ||
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail)
+              }
               className="w-full bg-yellow-400 text-black hover:bg-white h-14 text-xl font-bold uppercase tracking-widest"
             >
               Proceed <ArrowRight className="ml-2 w-5 h-5" />
@@ -762,25 +1037,34 @@ export default function Assessment() {
     );
   }
 
-  // ─── Phase: Birth Data (Soulprint — Optional & Fun) ─────────
+  // ─── Phase: Birth Data (Soulprint - Optional & Fun) ─────────
   if (phase === "birth") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/stardust.png')" }} />
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage:
+              "url('https://www.transparenttextures.com/patterns/stardust.png')",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-2xl w-full space-y-8 relative z-10"
         >
-          {/* Header — clearly optional */}
+          {/* Header - clearly optional */}
           <div className="text-center space-y-4">
             <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-400/30 px-4 py-1.5 rounded-full text-sm text-purple-300 font-medium">
-              <span>✨</span> Optional — just for fun
+              <span>✨</span> Optional - just for fun
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Unlock Your Soulprint</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Unlock Your Soulprint
+            </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-              Want to go deeper? Add your birth data and we'll layer in a whole new dimension.
+              Want to go deeper? Add your birth data and we'll layer in a whole
+              new dimension.
             </p>
           </div>
 
@@ -790,25 +1074,44 @@ export default function Assessment() {
             </div>
           )}
 
-          {/* What IS Soulprint — explain before asking */}
+          {/* What IS Soulprint - explain before asking */}
           <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/20 p-6 rounded-2xl space-y-4">
-            <h3 className="text-lg font-bold text-purple-300">What is a Soulprint?</h3>
+            <h3 className="text-lg font-bold text-purple-300">
+              What is a Soulprint?
+            </h3>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Your <strong className="text-white">Soulprint</strong> is a multi-framework personality map that synthesizes <strong className="text-white">8 different systems</strong> — Enneagram, Human Design, Gene Keys, Western Astrology, Vedic Astrology, Chinese Astrology, Spiral Dynamics, and Numerology — into a single, unified archetype profile.
+              Your <strong className="text-white">Soulprint</strong> is a
+              multi-framework personality map that synthesizes{" "}
+              <strong className="text-white">8 different systems</strong> -
+              Enneagram, Human Design, Gene Keys, Western Astrology, Vedic
+              Astrology, Chinese Astrology, Spiral Dynamics, and Numerology -
+              into a single, unified archetype profile.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Think of it as the "cosmic fingerprint" that sits underneath your Flow Circuit role. Your Flow Circuit tells you <em>what you do</em> on a team. Your Soulprint tells you <em>why you do it that way</em>.
+              Think of it as the "cosmic fingerprint" that sits underneath your
+              Flow Circuit role. Your Flow Circuit tells you{" "}
+              <em>what you do</em> on a team. Your Soulprint tells you{" "}
+              <em>why you do it that way</em>.
             </p>
             <div className="bg-white/5 border border-white/10 rounded-lg p-3 mt-2">
               <p className="text-xs text-gray-400 leading-relaxed">
-                <strong className="text-yellow-400">Coming soon:</strong> The full Soulprint report is being wired up now and will be seamlessly integrated into your Flow Circuit results in the next couple of weeks. If you enter your birth data now, your Soulprint will be waiting for you when it launches — no need to retake anything.
+                <strong className="text-yellow-400">Coming soon:</strong> The
+                full Soulprint report is being wired up now and will be
+                seamlessly integrated into your Flow Circuit results in the next
+                couple of weeks. If you enter your birth data now, your
+                Soulprint will be waiting for you when it launches - no need to
+                retake anything.
               </p>
             </div>
           </div>
 
           {/* Birth data form */}
           <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl space-y-6">
-            <p className="text-sm text-gray-400">All three fields are needed to generate an accurate Soulprint. Don't know your birth time? That's okay — skip this step and come back later.</p>
+            <p className="text-sm text-gray-400">
+              All three fields are needed to generate an accurate Soulprint.
+              Don't know your birth time? That's okay - skip this step and come
+              back later.
+            </p>
 
             <div className="space-y-5">
               <div className="space-y-2">
@@ -819,7 +1122,9 @@ export default function Assessment() {
                   type="date"
                   className="bg-black/50 border-white/20 text-white h-12"
                   value={birthData.date}
-                  onChange={(e) => setBirthData({ ...birthData, date: e.target.value })}
+                  onChange={(e) =>
+                    setBirthData({ ...birthData, date: e.target.value })
+                  }
                 />
               </div>
 
@@ -832,9 +1137,13 @@ export default function Assessment() {
                     type="time"
                     className="bg-black/50 border-white/20 text-white h-12"
                     value={birthData.time}
-                    onChange={(e) => setBirthData({ ...birthData, time: e.target.value })}
+                    onChange={(e) =>
+                      setBirthData({ ...birthData, time: e.target.value })
+                    }
                   />
-                  <p className="text-[10px] text-gray-500">As close as you can remember</p>
+                  <p className="text-[10px] text-gray-500">
+                    As close as you can remember
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-gray-300 flex items-center gap-2">
@@ -845,7 +1154,9 @@ export default function Assessment() {
                     placeholder="e.g. London, UK"
                     className="bg-black/50 border-white/20 text-white h-12"
                     value={birthData.city}
-                    onChange={(e) => setBirthData({ ...birthData, city: e.target.value })}
+                    onChange={(e) =>
+                      setBirthData({ ...birthData, city: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -864,7 +1175,7 @@ export default function Assessment() {
                 onClick={() => handleBirthDataSubmit(true)}
                 className="w-full text-gray-400 hover:text-white h-12 text-base"
               >
-                Skip — just show me my Flow Circuit results
+                Skip - just show me my Flow Circuit results
               </Button>
             </div>
           </div>
@@ -883,8 +1194,12 @@ export default function Assessment() {
           className="text-center space-y-6"
         >
           <div className="w-16 h-16 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto" />
-          <h2 className="text-2xl font-bold">Calculating your operational physics...</h2>
-          <p className="text-gray-400">Syncing with the Flow Circuit database.</p>
+          <h2 className="text-2xl font-bold">
+            Calculating your operational physics...
+          </h2>
+          <p className="text-gray-400">
+            Syncing with the Flow Circuit database.
+          </p>
         </motion.div>
       </div>
     );
@@ -892,7 +1207,9 @@ export default function Assessment() {
 
   // ─── Phase: 360 Invite ───────────────────────────────────────
   if (phase === "invite360") {
-    const emailDomain = guestEmail ? guestEmail.split("@")[1]?.toLowerCase() : "";
+    const emailDomain = guestEmail
+      ? guestEmail.split("@")[1]?.toLowerCase()
+      : "";
 
     const handleAddEmail = () => {
       if (inviteEmails.length < 10) {
@@ -905,7 +1222,9 @@ export default function Assessment() {
     };
 
     const handleSendInvites = async () => {
-      const validEmails = inviteEmails.filter(e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e));
+      const validEmails = inviteEmails.filter((e) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e),
+      );
       if (validEmails.length === 0 || !assessmentId) return;
 
       try {
@@ -915,7 +1234,12 @@ export default function Assessment() {
           reviewerEmails: validEmails,
           origin: window.location.origin,
         });
-        setGeneratedInviteLinks(result.invites.map((i: any) => ({ email: i.email, url: i.inviteUrl })));
+        setGeneratedInviteLinks(
+          result.invites.map((i: any) => ({
+            email: i.email,
+            url: i.inviteUrl,
+          })),
+        );
         setInvitesSent(true);
       } catch (err) {
         console.error("Failed to send invites", err);
@@ -924,7 +1248,13 @@ export default function Assessment() {
 
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/stardust.png')" }} />
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage:
+              "url('https://www.transparenttextures.com/patterns/stardust.png')",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -933,9 +1263,12 @@ export default function Assessment() {
         >
           <div className="text-center space-y-4">
             <CheckCircle2 className="w-16 h-16 text-green-400 mx-auto" />
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Assessment Complete!</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Assessment Complete!
+            </h2>
             <p className="text-gray-300 text-lg">
-              Now let's get your 360° view, <strong className="text-white">{guestName}</strong>.
+              Now let's get your 360° view,{" "}
+              <strong className="text-white">{guestName}</strong>.
             </p>
           </div>
 
@@ -943,15 +1276,18 @@ export default function Assessment() {
           <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 md:p-6 rounded-2xl">
             <div className="flex items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-bold text-white uppercase tracking-widest">Your Flow Circuit Report</h3>
+                <h3 className="text-sm font-bold text-white uppercase tracking-widest">
+                  Your Flow Circuit Report
+                </h3>
                 <p className="text-gray-400 text-xs mt-1 leading-relaxed">
-                  A personalized PDF with your results, resonance guide, and 360° invite template.
+                  A personalized PDF with your results, resonance guide, and
+                  360° invite template.
                 </p>
               </div>
               <Button
                 onClick={async () => {
                   if (reportUrl) {
-                    window.open(reportUrl, '_blank');
+                    window.open(reportUrl, "_blank");
                     return;
                   }
                   if (!assessmentId || reportGenerating) return;
@@ -962,9 +1298,9 @@ export default function Assessment() {
                       origin: window.location.origin,
                     });
                     setReportUrl(result.url);
-                    window.open(result.url, '_blank');
+                    window.open(result.url, "_blank");
                   } catch (err) {
-                    console.error('Failed to generate report', err);
+                    console.error("Failed to generate report", err);
                   } finally {
                     setReportGenerating(false);
                   }
@@ -972,7 +1308,11 @@ export default function Assessment() {
                 disabled={reportGenerating || !assessmentId}
                 className="bg-yellow-400 text-black hover:bg-white font-bold px-6 h-10 shrink-0"
               >
-                {reportGenerating ? 'Generating...' : reportUrl ? 'Download PDF' : 'Get Your PDF'}
+                {reportGenerating
+                  ? "Generating..."
+                  : reportUrl
+                    ? "Download PDF"
+                    : "Get Your PDF"}
               </Button>
             </div>
           </div>
@@ -980,10 +1320,14 @@ export default function Assessment() {
           {!invitesSent ? (
             <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl space-y-6">
               <div className="space-y-3">
-                <h3 className="text-xl font-bold text-yellow-400 uppercase tracking-widest">Invite Your 360° Reviewers</h3>
+                <h3 className="text-xl font-bold text-yellow-400 uppercase tracking-widest">
+                  Invite Your 360° Reviewers
+                </h3>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  How do others see you? Invite colleagues, managers, or direct reports to share their perception of your Flow Circuit role.
-                  Their responses are anonymous and will reveal the gap between how you see yourself and how others experience you.
+                  How do others see you? Invite colleagues, managers, or direct
+                  reports to share their perception of your Flow Circuit role.
+                  Their responses are anonymous and will reveal the gap between
+                  how you see yourself and how others experience you.
                 </p>
               </div>
 
@@ -992,7 +1336,7 @@ export default function Assessment() {
                   <div key={idx} className="flex gap-2">
                     <Input
                       type="email"
-                      placeholder={`colleague${idx + 1}@${emailDomain || 'company.com'}`}
+                      placeholder={`colleague${idx + 1}@${emailDomain || "company.com"}`}
                       className="bg-black/50 border-white/20 text-white h-10 flex-1"
                       value={email}
                       onChange={(e) => {
@@ -1026,7 +1370,11 @@ export default function Assessment() {
               <div className="flex flex-col gap-3">
                 <Button
                   onClick={handleSendInvites}
-                  disabled={!inviteEmails.some(e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) || createInvites.isPending}
+                  disabled={
+                    !inviteEmails.some((e) =>
+                      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e),
+                    ) || createInvites.isPending
+                  }
                   className="w-full bg-yellow-400 text-black hover:bg-white h-12 text-lg font-bold uppercase tracking-widest"
                 >
                   {createInvites.isPending ? "Sending..." : "Send 360° Invites"}
@@ -1044,15 +1392,21 @@ export default function Assessment() {
             <div className="bg-white/5 backdrop-blur-md border border-green-500/30 p-6 md:p-8 rounded-2xl space-y-6">
               <div className="text-center">
                 <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto mb-3" />
-                <h3 className="text-xl font-bold text-green-400">360° Links Generated!</h3>
+                <h3 className="text-xl font-bold text-green-400">
+                  360° Links Generated!
+                </h3>
                 <p className="text-gray-300 text-sm mt-2">
-                  Share these links with your reviewers. Their anonymous feedback will reveal how others experience your energy.
+                  Share these links with your reviewers. Their anonymous
+                  feedback will reveal how others experience your energy.
                 </p>
               </div>
 
               <div className="space-y-3">
                 {generatedInviteLinks.map((link, idx) => (
-                  <div key={idx} className="bg-black/40 border border-white/10 rounded-lg p-3 space-y-1">
+                  <div
+                    key={idx}
+                    className="bg-black/40 border border-white/10 rounded-lg p-3 space-y-1"
+                  >
                     <p className="text-xs text-gray-400">{link.email}</p>
                     <div className="flex gap-2 items-center">
                       <input
@@ -1076,7 +1430,9 @@ export default function Assessment() {
 
               <Button
                 onClick={() => {
-                  const allLinks = generatedInviteLinks.map(l => `${l.email}: ${l.url}`).join('\n');
+                  const allLinks = generatedInviteLinks
+                    .map((l) => `${l.email}: ${l.url}`)
+                    .join("\n");
                   navigator.clipboard.writeText(allLinks);
                 }}
                 variant="outline"
@@ -1100,11 +1456,28 @@ export default function Assessment() {
 
   // ─── Phase: Complete ─────────────────────────────────────────
   if (phase === "complete") {
-    const emailDomain = guestEmail ? guestEmail.split("@")[1]?.toLowerCase() : "";
+    const emailDomain = guestEmail
+      ? guestEmail.split("@")[1]?.toLowerCase()
+      : "";
     const effectiveDomain = domainParam || emailDomain;
-    const freeEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com', 'protonmail.com', 'mail.com', 'zoho.com', 'yandex.com'];
-    const isCompanyEmail = effectiveDomain && !freeEmailDomains.includes(effectiveDomain);
-    const companyName = isCompanyEmail ? effectiveDomain.split('.')[0].charAt(0).toUpperCase() + effectiveDomain.split('.')[0].slice(1) : null;
+    const freeEmailDomains = [
+      "gmail.com",
+      "yahoo.com",
+      "hotmail.com",
+      "outlook.com",
+      "aol.com",
+      "icloud.com",
+      "protonmail.com",
+      "mail.com",
+      "zoho.com",
+      "yandex.com",
+    ];
+    const isCompanyEmail =
+      effectiveDomain && !freeEmailDomains.includes(effectiveDomain);
+    const companyName = isCompanyEmail
+      ? effectiveDomain.split(".")[0].charAt(0).toUpperCase() +
+        effectiveDomain.split(".")[0].slice(1)
+      : null;
 
     return (
       <div className="min-h-screen bg-white text-black flex flex-col items-center justify-center p-4">
@@ -1116,9 +1489,13 @@ export default function Assessment() {
           <div className="flex justify-center">
             <CheckCircle2 className="w-24 h-24 text-green-600" />
           </div>
-          <h1 className="text-5xl font-black uppercase tracking-tighter">Data Captured</h1>
+          <h1 className="text-5xl font-black uppercase tracking-tighter">
+            Data Captured
+          </h1>
           <p className="text-xl text-gray-600">
-            Your intuitive signal has been recorded and synced, <strong>{guestName}</strong>. We are now calculating your operational physics.
+            Your intuitive signal has been recorded and synced,{" "}
+            <strong>{guestName}</strong>. We are now calculating your
+            operational physics.
           </p>
 
           {/* Company team auto-join confirmation */}
@@ -1131,37 +1508,49 @@ export default function Assessment() {
             >
               <div className="flex items-center gap-2 mb-2">
                 <Building2 className="w-5 h-5 text-yellow-600" />
-                <span className="font-bold text-yellow-800">{companyName} Team Joined</span>
+                <span className="font-bold text-yellow-800">
+                  {companyName} Team Joined
+                </span>
               </div>
               <p className="text-sm text-yellow-700 leading-relaxed">
-                Your individual results and team contribution have been recorded simultaneously.
-                View your personal Flow Circuit report, or jump straight to the <strong>{companyName} Team Map</strong> to
-                see how your team's energy is distributed.
+                Your individual results and team contribution have been recorded
+                simultaneously. View your personal Flow Circuit report, or jump
+                straight to the <strong>{companyName} Team Map</strong> to see
+                how your team's energy is distributed.
               </p>
             </motion.div>
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              onClick={() => { clearSession(); router.push("/flow/results"); }}
+              onClick={() => {
+                clearSession();
+                router.push("/flow/results");
+              }}
               className="px-8 py-6 text-xl font-bold uppercase bg-black text-white hover:bg-gray-800"
             >
               View Your Results
             </Button>
             {effectiveDomain && (
               <Button
-                onClick={() => { clearSession(); router.push(`/flow/team-map?domain=${encodeURIComponent(effectiveDomain)}`); }}
+                onClick={() => {
+                  clearSession();
+                  router.push(
+                    `/flow/team-map?domain=${encodeURIComponent(effectiveDomain)}`,
+                  );
+                }}
                 variant="outline"
-                className={`px-8 py-6 text-xl font-bold uppercase border-2 ${isCompanyEmail ? 'border-yellow-500 text-yellow-700 hover:bg-yellow-500 hover:text-white' : 'border-black text-black hover:bg-black hover:text-white'}`}
+                className={`px-8 py-6 text-xl font-bold uppercase border-2 ${isCompanyEmail ? "border-yellow-500 text-yellow-700 hover:bg-yellow-500 hover:text-white" : "border-black text-black hover:bg-black hover:text-white"}`}
               >
                 <Users className="mr-2 w-5 h-5" />
-                {isCompanyEmail ? `${companyName} Team Map` : 'View Team Map'}
+                {isCompanyEmail ? `${companyName} Team Map` : "View Team Map"}
               </Button>
             )}
           </div>
           {effectiveDomain && !isCompanyEmail && (
             <p className="text-sm text-gray-500">
-              Your results have been added to the <strong>{effectiveDomain}</strong> team map.
+              Your results have been added to the{" "}
+              <strong>{effectiveDomain}</strong> team map.
             </p>
           )}
         </motion.div>
@@ -1204,12 +1593,20 @@ export default function Assessment() {
               transition={{ duration: 0.3 }}
               className="flex flex-col flex-1"
             >
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center" style={{ textWrap: 'balance' as any }}>
+              <h2
+                className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center"
+                style={{ textWrap: "balance" as any }}
+              >
                 {currentQuestion.text}
               </h2>
 
               <p className="text-center text-white/50 text-xs md:text-sm mb-4 md:mb-6 font-medium">
-                Rank from <span className="text-emerald-400 font-bold">most like you</span> to <span className="text-red-400 font-bold">least like you</span>
+                Rank from{" "}
+                <span className="text-emerald-400 font-bold">
+                  most like you
+                </span>{" "}
+                to{" "}
+                <span className="text-red-400 font-bold">least like you</span>
               </p>
 
               <RankableQuestion

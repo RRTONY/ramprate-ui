@@ -7,7 +7,13 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import { Card, CardContent } from "@/components/flow/ui/card";
-import { Users, User, ArrowRight, ClipboardCheck, BarChart3 } from "lucide-react";
+import {
+  Users,
+  User,
+  ArrowRight,
+  ClipboardCheck,
+  BarChart3,
+} from "lucide-react";
 
 export default function TeamBuilderClient() {
   const router = useRouter();
@@ -16,7 +22,9 @@ export default function TeamBuilderClient() {
   const handleJoinTeam = (e: React.FormEvent) => {
     e.preventDefault();
     if (teamCode.trim()) {
-      router.push(`/flow/assessment?team=${encodeURIComponent(teamCode.trim())}`);
+      router.push(
+        `/flow/assessment?team=${encodeURIComponent(teamCode.trim())}`,
+      );
     }
   };
 
@@ -46,12 +54,17 @@ export default function TeamBuilderClient() {
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
                 <div className="flex items-center justify-center gap-3 mb-2">
-                  <span className="w-10 h-10 rounded-full bg-yellow-400 text-black font-bold flex items-center justify-center text-lg">1</span>
-                  <h2 className="text-2xl md:text-3xl font-bold">Take the 12-Question Assessment</h2>
+                  <span className="w-10 h-10 rounded-full bg-yellow-400 text-black font-bold flex items-center justify-center text-lg">
+                    1
+                  </span>
+                  <h2 className="text-2xl md:text-3xl font-bold">
+                    Take the 12-Question Assessment
+                  </h2>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                  Every team member starts here. The assessment reveals your natural energy role —
-                  Spark, Amplifier, Filter, Ground, or Conductor. It takes about 5 minutes.
+                  Every team member starts here. The assessment reveals your
+                  natural energy role - Spark, Amplifier, Filter, Ground, or
+                  Conductor. It takes about 5 minutes.
                 </p>
 
                 <div className="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto pt-4">
@@ -95,15 +108,23 @@ export default function TeamBuilderClient() {
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
                 <div className="flex items-center justify-center gap-3 mb-2">
-                  <span className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-lg">2</span>
-                  <h2 className="text-2xl md:text-3xl font-bold">View Your Team Dashboard</h2>
+                  <span className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-lg">
+                    2
+                  </span>
+                  <h2 className="text-2xl md:text-3xl font-bold">
+                    View Your Team Dashboard
+                  </h2>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                  Once your team has taken the assessment, the Team Dashboard shows the Energy Matrix,
-                  friction points, gap analysis, and hiring recommendations.
+                  Once your team has taken the assessment, the Team Dashboard
+                  shows the Energy Matrix, friction points, gap analysis, and
+                  hiring recommendations.
                 </p>
                 <Link href="/flow/team-dashboard">
-                  <Button variant="outline" className="h-14 text-lg px-8 border-2">
+                  <Button
+                    variant="outline"
+                    className="h-14 text-lg px-8 border-2"
+                  >
                     <BarChart3 className="mr-2 h-5 w-5" />
                     Go to Team Dashboard
                   </Button>
@@ -122,10 +143,13 @@ export default function TeamBuilderClient() {
           <Card className="bg-black text-white border-0 shadow-xl">
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
-                <h2 className="text-2xl md:text-3xl font-bold">Want to See What You'll Get?</h2>
+                <h2 className="text-2xl md:text-3xl font-bold">
+                  Want to See What You'll Get?
+                </h2>
                 <p className="text-lg text-white/70 max-w-xl mx-auto">
-                  View a sample team report with 10 pre-filled profiles, complete with Energy Matrix,
-                  radar charts, friction analysis, and executive summary.
+                  View a sample team report with 10 pre-filled profiles,
+                  complete with Energy Matrix, radar charts, friction analysis,
+                  and executive summary.
                 </p>
                 <Link href="/flow/sample-reports">
                   <Button className="h-14 text-lg px-8 bg-yellow-400 text-black hover:bg-yellow-300 font-bold">

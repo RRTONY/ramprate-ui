@@ -3,7 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, CheckCircle2, Circle, ExternalLink, Zap, Target, Users, MessageCircle, Shield, Handshake } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Circle,
+  ExternalLink,
+  Zap,
+  Target,
+  Users,
+  MessageCircle,
+  Shield,
+  Handshake,
+} from "lucide-react";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 const playbookSteps = [
@@ -12,8 +23,10 @@ const playbookSteps = [
     icon: Target,
     title: "The Mind Meld",
     subtitle: "Before you connect anyone, understand both sides completely.",
-    description: "A Conductor doesn't introduce people — they orchestrate collisions between complementary energies. Before making any introduction, you need to understand what each person actually needs (not what they say they need), what they bring, and where the multiplication zone lives.",
-    question: "Can you articulate what both parties need in one sentence each — without using the word 'synergy'?",
+    description:
+      "A Conductor doesn't introduce people - they orchestrate collisions between complementary energies. Before making any introduction, you need to understand what each person actually needs (not what they say they need), what they bring, and where the multiplication zone lives.",
+    question:
+      "Can you articulate what both parties need in one sentence each - without using the word 'synergy'?",
     blogRef: {
       title: "Mastering Human and Business Development",
       url: "https://tonygreenberg.com/mastering-human-and-business-development/",
@@ -24,8 +37,10 @@ const playbookSteps = [
     icon: Shield,
     title: "The Audit",
     subtitle: "Verify the energy before you transmit it.",
-    description: "Not every connection should be made. The Conductor's power comes from discernment — knowing when NOT to connect people is more valuable than knowing when to. A bad introduction doesn't just waste time; it burns trust capital that took years to build.",
-    question: "If this introduction goes badly, are you willing to own the fallout?",
+    description:
+      "Not every connection should be made. The Conductor's power comes from discernment - knowing when NOT to connect people is more valuable than knowing when to. A bad introduction doesn't just waste time; it burns trust capital that took years to build.",
+    question:
+      "If this introduction goes badly, are you willing to own the fallout?",
     blogRef: {
       title: "The Ethics and Art of Introductions",
       url: "https://tonygreenberg.com/mastering-human-and-business-development/",
@@ -36,17 +51,22 @@ const playbookSteps = [
     icon: MessageCircle,
     title: "The Friendly Guidance",
     subtitle: "Frame the introduction so both sides arrive prepared.",
-    description: "Never make a blind introduction. Each person should know exactly why they're meeting, what the other person brings, and what the expected outcome is. The Conductor sets the stage — they don't just open the curtain and hope for the best.",
-    question: "Have you told each person specifically what to expect from the other — and what's expected of them?",
+    description:
+      "Never make a blind introduction. Each person should know exactly why they're meeting, what the other person brings, and what the expected outcome is. The Conductor sets the stage - they don't just open the curtain and hope for the best.",
+    question:
+      "Have you told each person specifically what to expect from the other - and what's expected of them?",
     blogRef: null,
   },
   {
     id: 4,
     icon: Handshake,
     title: "The Social Impact Check",
-    subtitle: "Will this connection create value beyond the two people involved?",
-    description: "The best Conductor introductions ripple outward. They don't just serve the two people being connected — they serve the ecosystem. Ask yourself: does this introduction make the network stronger, or does it just make two people slightly less lonely?",
-    question: "Who else benefits if this connection works? If the answer is 'nobody,' reconsider.",
+    subtitle:
+      "Will this connection create value beyond the two people involved?",
+    description:
+      "The best Conductor introductions ripple outward. They don't just serve the two people being connected - they serve the ecosystem. Ask yourself: does this introduction make the network stronger, or does it just make two people slightly less lonely?",
+    question:
+      "Who else benefits if this connection works? If the answer is 'nobody,' reconsider.",
     blogRef: null,
   },
   {
@@ -54,8 +74,10 @@ const playbookSteps = [
     icon: Users,
     title: "The Informed Introduction",
     subtitle: "Execute with precision, not enthusiasm.",
-    description: "The introduction itself should be surgical. Three sentences: who Person A is and why they matter, who Person B is and why they matter, and the specific reason they should talk. No fluff. No 'you two should totally connect!' The Conductor is a precision instrument, not a social butterfly.",
-    question: "Can you write the introduction email in under 100 words and make both people feel like the most important person in the room?",
+    description:
+      "The introduction itself should be surgical. Three sentences: who Person A is and why they matter, who Person B is and why they matter, and the specific reason they should talk. No fluff. No 'you two should totally connect!' The Conductor is a precision instrument, not a social butterfly.",
+    question:
+      "Can you write the introduction email in under 100 words and make both people feel like the most important person in the room?",
     blogRef: null,
   },
   {
@@ -63,8 +85,10 @@ const playbookSteps = [
     icon: Zap,
     title: "Getting to No Faster",
     subtitle: "The Conductor's secret weapon: speed of disqualification.",
-    description: "Most people waste months on connections that should have been killed in the first conversation. The Conductor's job is to accelerate the 'no' — to surface incompatibilities early so everyone can redirect their energy to connections that actually multiply.",
-    question: "What would make you kill this connection in the first 5 minutes? Define your disqualifiers before the meeting.",
+    description:
+      "Most people waste months on connections that should have been killed in the first conversation. The Conductor's job is to accelerate the 'no' - to surface incompatibilities early so everyone can redirect their energy to connections that actually multiply.",
+    question:
+      "What would make you kill this connection in the first 5 minutes? Define your disqualifiers before the meeting.",
     blogRef: {
       title: "The Arithmetic of Relationships",
       url: "https://tonygreenberg.com/the-arithmetic-of-relationships-whats-our-mutual-net-profit/",
@@ -75,8 +99,10 @@ const playbookSteps = [
     icon: CheckCircle2,
     title: "Making the Most of a 'Yes'",
     subtitle: "When the connection works, amplify it.",
-    description: "A successful introduction isn't the end — it's the beginning of the Conductor's real work. Follow up. Check in. Ask both sides what happened. Feed the results back into your understanding of the network. The Conductor who follows up is the one who gets invited to orchestrate the next connection.",
-    question: "Do you have a system for following up on every introduction you make within 2 weeks?",
+    description:
+      "A successful introduction isn't the end - it's the beginning of the Conductor's real work. Follow up. Check in. Ask both sides what happened. Feed the results back into your understanding of the network. The Conductor who follows up is the one who gets invited to orchestrate the next connection.",
+    question:
+      "Do you have a system for following up on every introduction you make within 2 weeks?",
     blogRef: null,
   },
 ];
@@ -105,7 +131,9 @@ export default function ConductorPlaybook() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-8">
             <Target className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-mono text-purple-400">The Conductor's Manual</span>
+            <span className="text-sm font-mono text-purple-400">
+              The Conductor's Manual
+            </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
             The Conductor's
@@ -117,7 +145,7 @@ export default function ConductorPlaybook() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             The Conductor is the least understood and most valuable role in The
             Flow Circuit. Most people think it's networking. It's not. It's
-            orchestration — and it has rules.
+            orchestration - and it has rules.
           </p>
         </div>
       </section>
@@ -230,8 +258,8 @@ export default function ConductorPlaybook() {
             </h3>
             <p className="text-muted-foreground mb-6">
               You've internalized the Conductor's operating system. Now go
-              orchestrate something that matters. Remember: the Conductor doesn't
-              seek credit — they seek multiplication.
+              orchestrate something that matters. Remember: the Conductor
+              doesn't seek credit - they seek multiplication.
             </p>
           </div>
         </section>
@@ -244,7 +272,7 @@ export default function ConductorPlaybook() {
             Are You a Natural Conductor?
           </h2>
           <p className="text-muted-foreground mb-8">
-            Take the assessment to find out if Conductor is your dominant role —
+            Take the assessment to find out if Conductor is your dominant role -
             or if you've been playing Conductor when you're actually wired as
             something else.
           </p>

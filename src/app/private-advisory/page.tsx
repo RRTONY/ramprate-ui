@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title:
@@ -26,20 +29,47 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const engageIcons = {
   source: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--gold)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.35-4.35" />
     </svg>
   ),
   coordinate: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--gold)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="6" cy="6" r="3" />
       <circle cx="18" cy="18" r="3" />
       <path d="M9 6h6a3 3 0 0 1 3 3v6" />
     </svg>
   ),
   handle: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--gold)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M2 12h5l2 3h6l2-3h5" />
       <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
     </svg>
@@ -50,12 +80,20 @@ const situations = [
   {
     tag: "SITUATION A",
     title: "The Squeezed-Out Operator",
-    hook: "Timing is everything — and it's rarely yours.",
-    desc:
-      "A business partner or co-founder gets pushed out of equity they earned, timed to land right before the value becomes obvious — a raise, a sale, a big contract. We source and negotiate the right litigation counsel, manage that relationship and communication cadence, and keep your side of the file organized, while staying out of the privileged strategy conversations that belong to your attorney.",
-    structure: "Success fee — no recovery, no fee.",
+    hook: "Timing is everything - and it's rarely yours.",
+    desc: "A business partner or co-founder gets pushed out of equity they earned, timed to land right before the value becomes obvious - a raise, a sale, a big contract. We source and negotiate the right litigation counsel, manage that relationship and communication cadence, and keep your side of the file organized, while staying out of the privileged strategy conversations that belong to your attorney.",
+    structure: "Success fee - no recovery, no fee.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <line x1="17" y1="8" x2="22" y2="13" />
@@ -67,11 +105,20 @@ const situations = [
     tag: "SITUATION B",
     title: "The Slow-Walked Creditor",
     hook: "A clear claim, moving at someone else's pace.",
-    desc:
-      "You're owed money on a claim that isn't legally complicated, but it's stalled, and you have no way to know if that pace is normal. We audit what your counsel has and hasn't done, apply pressure on timeline, and handle the parts of the file that don't require a law license, so you're not the one chasing.",
-    structure: "Success-fee-adjacent — value is urgency and project management.",
+    desc: "You're owed money on a claim that isn't legally complicated, but it's stalled, and you have no way to know if that pace is normal. We audit what your counsel has and hasn't done, apply pressure on timeline, and handle the parts of the file that don't require a law license, so you're not the one chasing.",
+    structure:
+      "Success-fee-adjacent - value is urgency and project management.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M5 22h14" />
         <path d="M5 2h14" />
         <path d="M17 22v-4.17a2 2 0 0 0-.59-1.41L12 12l-4.41 4.42a2 2 0 0 0-.59 1.41V22" />
@@ -83,11 +130,20 @@ const situations = [
     tag: "SITUATION C",
     title: "The Discovery Windfall",
     hook: "New information changes everything.",
-    desc:
-      "A near-final resolution gets reopened by something your own counsel didn't have, and doesn't have the infrastructure to pursue. We assemble and sequence the specialists a matter like this actually requires — additional counsel, forensic investigators — under one strategy, with strict rules about who knows what.",
-    structure: "Retainer + tiered success fee — multi-track, upfront spend required.",
+    desc: "A near-final resolution gets reopened by something your own counsel didn't have, and doesn't have the infrastructure to pursue. We assemble and sequence the specialists a matter like this actually requires - additional counsel, forensic investigators - under one strategy, with strict rules about who knows what.",
+    structure:
+      "Retainer + tiered success fee - multi-track, upfront spend required.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="11" cy="11" r="8" />
         <path d="m21 21-4.35-4.35" />
         <path d="M11 8v3l2 2" />
@@ -98,11 +154,20 @@ const situations = [
     tag: "SITUATION D",
     title: "The Protected Principal",
     hook: "Protection in place before there's anything to fight.",
-    desc:
-      "Nothing has gone wrong yet, and that's the point. An ongoing mandate to keep your existing position, name, and equity from being quietly eroded by counterparties who assume you won't notice. We vet new relationships before they're entered into and keep every agreement bearing your name accurate to the role you actually hold.",
-    structure: "Standing retainer — the relationship to have before a dispute starts.",
+    desc: "Nothing has gone wrong yet, and that's the point. An ongoing mandate to keep your existing position, name, and equity from being quietly eroded by counterparties who assume you won't notice. We vet new relationships before they're entered into and keep every agreement bearing your name accurate to the role you actually hold.",
+    structure:
+      "Standing retainer - the relationship to have before a dispute starts.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         <path d="m9 12 2 2 4-4" />
       </svg>
@@ -112,11 +177,19 @@ const situations = [
     tag: "SITUATION E",
     title: "The Mixed-Ledger Principal",
     hook: "Sorting out a portfolio that cuts both ways.",
-    desc:
-      "A large, disorganized set of holdings — some of it owed to you, some of it owed by you. We conduct a full, honest inventory, including the possibility that a position resolves against you, and run remediation under a locked baseline with an independent party confirming what's actually delivered.",
+    desc: "A large, disorganized set of holdings - some of it owed to you, some of it owed by you. We conduct a full, honest inventory, including the possibility that a position resolves against you, and run remediation under a locked baseline with an independent party confirming what's actually delivered.",
     structure: "Upfront commitment + escrow, with a neutral certifier.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <line x1="12" y1="3" x2="12" y2="21" />
         <path d="M5 7h5l-2.5 7a2.5 2.5 0 0 1-5 0z" />
         <path d="M14 7h5l-2.5 7a2.5 2.5 0 0 1-5 0z" />
@@ -130,10 +203,18 @@ const situations = [
 const engagementModels = [
   {
     title: "Success Fee",
-    desc:
-      "For documented claims against a solvent, identifiable counterparty. No fee if there's no recovery.",
+    desc: "For documented claims against a solvent, identifiable counterparty. No fee if there's no recovery.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <line x1="19" y1="5" x2="5" y2="19" />
         <circle cx="6.5" cy="6.5" r="2.5" />
         <circle cx="17.5" cy="17.5" r="2.5" />
@@ -142,10 +223,18 @@ const engagementModels = [
   },
   {
     title: "Retainer + Success Fee",
-    desc:
-      "When investigative or forensic spend is needed before recovery, or the matter runs across multiple fronts.",
+    desc: "When investigative or forensic spend is needed before recovery, or the matter runs across multiple fronts.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <polygon points="12 2 2 7 12 12 22 7 12 2" />
         <polyline points="2 17 12 22 22 17" />
         <polyline points="2 12 12 17 22 12" />
@@ -154,10 +243,18 @@ const engagementModels = [
   },
   {
     title: "Upfront + Escrow + Certifier",
-    desc:
-      "For complex portfolio or reputational remediation, with an independent party certifying delivery against a locked baseline.",
+    desc: "For complex portfolio or reputational remediation, with an independent party certifying delivery against a locked baseline.",
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--gold)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
       </svg>
@@ -168,30 +265,30 @@ const engagementModels = [
 const differenceRows = [
   {
     without:
-      "Finding and vetting the right specialist — attorney, investigator, forensic accountant — on your own, with no way to check their track record.",
-    with:
-      "The right specialist identified, referenced, and terms negotiated before your first meeting.",
+      "Finding and vetting the right specialist - attorney, investigator, forensic accountant - on your own, with no way to check their track record.",
+    with: "The right specialist identified, referenced, and terms negotiated before your first meeting.",
   },
   {
-    without: "Your specialist spends billable hours learning your situation from scratch.",
+    without:
+      "Your specialist spends billable hours learning your situation from scratch.",
     with: "A complete, organized case file is ready before their clock starts.",
   },
   {
-    without: "Strategy starts weeks in; momentum is lost before the first real move.",
+    without:
+      "Strategy starts weeks in; momentum is lost before the first real move.",
     with: "Execution begins on day one.",
   },
   {
     without: "An open-ended retainer: “we'll see where this goes.”",
-    with:
-      "A written scope of work: defined deliverables, timeline, and fee structure agreed upfront.",
+    with: "A written scope of work: defined deliverables, timeline, and fee structure agreed upfront.",
   },
 ];
 
 const boundaries = [
-  "Anything requiring a law license — drafting pleadings, appearing in court, or giving a legal opinion you'd rely on. We find and manage the lawyer; we don't become one.",
+  "Anything requiring a law license - drafting pleadings, appearing in court, or giving a legal opinion you'd rely on. We find and manage the lawyer; we don't become one.",
   "Holding client funds or acting as fiduciary custodian of assets in dispute.",
   "Broker-dealer-adjacent structuring or anything resembling securities intermediation.",
-  "Criminal defense, standalone family law, personal injury, or immigration as a lead service — we can augment the counsel handling these, but we're not the primary point of contact.",
+  "Criminal defense, standalone family law, personal injury, or immigration as a lead service - we can augment the counsel handling these, but we're not the primary point of contact.",
   "Purely verbal, undocumented claims against a counterparty with no identifiable assets.",
 ];
 
@@ -210,13 +307,17 @@ export default function PrivateAdvisoryPage() {
           description:
             "Sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
           url: "https://ramprate.com/private-advisory",
-          serviceType: "Dispute resolution and specialist coordination advisory",
+          serviceType:
+            "Dispute resolution and specialist coordination advisory",
         })}
       />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "Private Advisory", url: "https://ramprate.com/private-advisory" },
+          {
+            name: "Private Advisory",
+            url: "https://ramprate.com/private-advisory",
+          },
         ])}
       />
       {/* Hero */}
@@ -374,9 +475,18 @@ export default function PrivateAdvisoryPage() {
               </p>
               <ul className="space-y-4">
                 {[
-                  { icon: engageIcons.source, label: "Source & negotiate specialists" },
-                  { icon: engageIcons.coordinate, label: "Coordinate them against one strategy" },
-                  { icon: engageIcons.handle, label: "Handle what doesn't require a law license" },
+                  {
+                    icon: engageIcons.source,
+                    label: "Source & negotiate specialists",
+                  },
+                  {
+                    icon: engageIcons.coordinate,
+                    label: "Coordinate them against one strategy",
+                  },
+                  {
+                    icon: engageIcons.handle,
+                    label: "Handle what doesn't require a law license",
+                  },
                 ].map((item) => (
                   <li key={item.label} className="flex items-center gap-3">
                     <span
@@ -541,8 +651,8 @@ export default function PrivateAdvisoryPage() {
             className="mt-10 text-sm italic text-white/50 text-center"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Terms are agreed in writing before any money moves. No ambiguity,
-            no moving goalposts.
+            Terms are agreed in writing before any money moves. No ambiguity, no
+            moving goalposts.
           </p>
         </div>
       </section>
@@ -706,7 +816,16 @@ export default function PrivateAdvisoryPage() {
                   className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5"
                   style={{ background: "oklch(0.72 0.15 75 / 0.12)" }}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.12 70)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="oklch(0.52 0.12 70)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="12" cy="12" r="10" />
                     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
                   </svg>
@@ -747,9 +866,9 @@ export default function PrivateAdvisoryPage() {
             className="mt-6 text-base text-white/60 leading-relaxed max-w-2xl"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            We connect to confirm mutual fit, and from there we draft a
-            proposal outlining the scope of engagement and commercial terms.
-            Everything moves at your pace.
+            We connect to confirm mutual fit, and from there we draft a proposal
+            outlining the scope of engagement and commercial terms. Everything
+            moves at your pace.
           </p>
           <div className="mt-10 flex flex-wrap gap-8 sm:gap-14">
             {["Connect", "Confirm Fit", "Draft Proposal"].map((step, i) => (

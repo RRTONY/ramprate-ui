@@ -4,10 +4,15 @@ import { ClientOnly } from "@/components/flow/ClientOnly";
 
 export const metadata: Metadata = {
   title: "360 Gap Report | The Flow Circuit",
-  description: "How you see yourself vs. how others experience you — your self vs. peer perception gap report.",
+  description:
+    "How you see yourself vs. how others experience you - your self vs. peer perception gap report.",
 };
 
-export default async function Page({ params }: { params: Promise<{ assessmentId: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ assessmentId: string }>;
+}) {
   const { assessmentId } = await params;
   return (
     <ClientOnly>

@@ -8,84 +8,262 @@ import { Switch } from "@/components/flow/ui/switch";
 import { trpc } from "@/lib/flow/trpc";
 import { useRouter } from "next/navigation";
 import {
-  Eye, EyeOff, Users, Sparkles, Brain, Compass, Star, Moon,
-  ChevronDown, ChevronUp, Shield, Flame, Heart, Zap,
-  Activity, Anchor, Radio, Lock, Unlock, AlertTriangle,
-  BookOpen, ExternalLink, TrendingUp, Award, Building2
+  Eye,
+  EyeOff,
+  Users,
+  Sparkles,
+  Brain,
+  Compass,
+  Star,
+  Moon,
+  ChevronDown,
+  ChevronUp,
+  Shield,
+  Flame,
+  Heart,
+  Zap,
+  Activity,
+  Anchor,
+  Radio,
+  Lock,
+  Unlock,
+  AlertTriangle,
+  BookOpen,
+  ExternalLink,
+  TrendingUp,
+  Award,
+  Building2,
 } from "lucide-react";
 import { toast } from "sonner";
 
 // ─── Enneagram → Flow Circuit Role Cross-Reference ─────────────────────────
-const enneagramToFlowCircuit: Record<string, {
-  primaryRole: string;
-  secondaryRole: string;
-  resonance: string;
-  insight: string;
-}> = {
-  "1": { primaryRole: "Filter", secondaryRole: "Ground", resonance: "Quality guardian — your perfectionism is the Filter's superpower", insight: "Your inner critic is actually a finely-tuned quality sensor. In Flow Circuit terms, you're the team's immune system." },
-  "2": { primaryRole: "Amplifier", secondaryRole: "Conductor", resonance: "Relational catalyst — you amplify others' potential", insight: "Your drive to help is the Amplifier's gift. You make everyone around you perform at a higher level." },
-  "3": { primaryRole: "Spark", secondaryRole: "Amplifier", resonance: "Achievement engine — you ignite and accelerate", insight: "Your adaptability and drive make you a natural Spark. You see possibilities and make them real." },
-  "4": { primaryRole: "Spark", secondaryRole: "Filter", resonance: "Creative visionary — you see what's missing and create it", insight: "Your emotional depth fuels original thinking. The Spark needs your ability to see beneath the surface." },
-  "5": { primaryRole: "Filter", secondaryRole: "Ground", resonance: "Knowledge architect — you build the intellectual foundation", insight: "Your analytical depth is the Filter's precision instrument. You see patterns others miss." },
-  "6": { primaryRole: "Ground", secondaryRole: "Filter", resonance: "Stability anchor — you anticipate and prepare", insight: "Your vigilance is the Ground's gift. You hold the team steady when others lose their footing." },
-  "7": { primaryRole: "Spark", secondaryRole: "Amplifier", resonance: "Innovation catalyst — you generate and energize", insight: "Your enthusiasm is pure Spark energy. You see connections and possibilities everywhere." },
-  "8": { primaryRole: "Conductor", secondaryRole: "Ground", resonance: "Power orchestrator — you direct and protect", insight: "Your natural authority is the Conductor's instrument. You create the space for others to perform." },
-  "9": { primaryRole: "Ground", secondaryRole: "Amplifier", resonance: "Harmony architect — you hold the center", insight: "Your ability to see all perspectives is the Ground's wisdom. You're the team's gravitational center." },
+const enneagramToFlowCircuit: Record<
+  string,
+  {
+    primaryRole: string;
+    secondaryRole: string;
+    resonance: string;
+    insight: string;
+  }
+> = {
+  "1": {
+    primaryRole: "Filter",
+    secondaryRole: "Ground",
+    resonance:
+      "Quality guardian - your perfectionism is the Filter's superpower",
+    insight:
+      "Your inner critic is actually a finely-tuned quality sensor. In Flow Circuit terms, you're the team's immune system.",
+  },
+  "2": {
+    primaryRole: "Amplifier",
+    secondaryRole: "Conductor",
+    resonance: "Relational catalyst - you amplify others' potential",
+    insight:
+      "Your drive to help is the Amplifier's gift. You make everyone around you perform at a higher level.",
+  },
+  "3": {
+    primaryRole: "Spark",
+    secondaryRole: "Amplifier",
+    resonance: "Achievement engine - you ignite and accelerate",
+    insight:
+      "Your adaptability and drive make you a natural Spark. You see possibilities and make them real.",
+  },
+  "4": {
+    primaryRole: "Spark",
+    secondaryRole: "Filter",
+    resonance: "Creative visionary - you see what's missing and create it",
+    insight:
+      "Your emotional depth fuels original thinking. The Spark needs your ability to see beneath the surface.",
+  },
+  "5": {
+    primaryRole: "Filter",
+    secondaryRole: "Ground",
+    resonance: "Knowledge architect - you build the intellectual foundation",
+    insight:
+      "Your analytical depth is the Filter's precision instrument. You see patterns others miss.",
+  },
+  "6": {
+    primaryRole: "Ground",
+    secondaryRole: "Filter",
+    resonance: "Stability anchor - you anticipate and prepare",
+    insight:
+      "Your vigilance is the Ground's gift. You hold the team steady when others lose their footing.",
+  },
+  "7": {
+    primaryRole: "Spark",
+    secondaryRole: "Amplifier",
+    resonance: "Innovation catalyst - you generate and energize",
+    insight:
+      "Your enthusiasm is pure Spark energy. You see connections and possibilities everywhere.",
+  },
+  "8": {
+    primaryRole: "Conductor",
+    secondaryRole: "Ground",
+    resonance: "Power orchestrator - you direct and protect",
+    insight:
+      "Your natural authority is the Conductor's instrument. You create the space for others to perform.",
+  },
+  "9": {
+    primaryRole: "Ground",
+    secondaryRole: "Amplifier",
+    resonance: "Harmony architect - you hold the center",
+    insight:
+      "Your ability to see all perspectives is the Ground's wisdom. You're the team's gravitational center.",
+  },
 };
 
-const topicConfig: Record<string, { icon: any; label: string; color: string; glowColor: string; description: string }> = {
-  enneagram: { icon: Brain, label: "Enneagram", color: "text-violet-400", glowColor: "shadow-violet-500/20", description: "Your core personality architecture — drives, fears, and growth paths" },
-  human_design: { icon: Compass, label: "Human Design", color: "text-emerald-400", glowColor: "shadow-emerald-500/20", description: "Your energetic blueprint — strategy, authority, and life force type" },
-  western_astrology: { icon: Star, label: "Western Astrology", color: "text-amber-400", glowColor: "shadow-amber-500/20", description: "Your celestial map — planetary positions and cosmic influences" },
-  chinese_astrology: { icon: Moon, label: "Chinese Astrology", color: "text-red-400", glowColor: "shadow-red-500/20", description: "Your elemental nature — animal signs and five-element harmony" },
-  numerology: { icon: Sparkles, label: "Numerology", color: "text-cyan-400", glowColor: "shadow-cyan-500/20", description: "Your numerical signature — life path, expression, and soul urge" },
-  soulprint_combinations: { icon: Heart, label: "Soulprint Synthesis", color: "text-pink-400", glowColor: "shadow-pink-500/20", description: "Where all systems converge — your unique cross-system patterns" },
+const topicConfig: Record<
+  string,
+  {
+    icon: any;
+    label: string;
+    color: string;
+    glowColor: string;
+    description: string;
+  }
+> = {
+  enneagram: {
+    icon: Brain,
+    label: "Enneagram",
+    color: "text-violet-400",
+    glowColor: "shadow-violet-500/20",
+    description:
+      "Your core personality architecture - drives, fears, and growth paths",
+  },
+  human_design: {
+    icon: Compass,
+    label: "Human Design",
+    color: "text-emerald-400",
+    glowColor: "shadow-emerald-500/20",
+    description:
+      "Your energetic blueprint - strategy, authority, and life force type",
+  },
+  western_astrology: {
+    icon: Star,
+    label: "Western Astrology",
+    color: "text-amber-400",
+    glowColor: "shadow-amber-500/20",
+    description:
+      "Your celestial map - planetary positions and cosmic influences",
+  },
+  chinese_astrology: {
+    icon: Moon,
+    label: "Chinese Astrology",
+    color: "text-red-400",
+    glowColor: "shadow-red-500/20",
+    description:
+      "Your elemental nature - animal signs and five-element harmony",
+  },
+  numerology: {
+    icon: Sparkles,
+    label: "Numerology",
+    color: "text-cyan-400",
+    glowColor: "shadow-cyan-500/20",
+    description:
+      "Your numerical signature - life path, expression, and soul urge",
+  },
+  soulprint_combinations: {
+    icon: Heart,
+    label: "Soulprint Synthesis",
+    color: "text-pink-400",
+    glowColor: "shadow-pink-500/20",
+    description:
+      "Where all systems converge - your unique cross-system patterns",
+  },
 };
 
 const roleIcons: Record<string, any> = {
-  Spark: Zap, Amplifier: Activity, Filter: Shield, Ground: Anchor, Conductor: Radio,
+  Spark: Zap,
+  Amplifier: Activity,
+  Filter: Shield,
+  Ground: Anchor,
+  Conductor: Radio,
 };
 
 const evidenceData = [
-  { company: "SAP", stat: "200% ROI", detail: "Global mindfulness & self-awareness program", source: "Reuters, 2018", icon: TrendingUp },
-  { company: "Aetna", stat: "$9M Saved", detail: "Healthcare costs reduced 7% through consciousness practices", source: "Fierce Healthcare, 2015", icon: Building2 },
-  { company: "Google", stat: "SIY Program", detail: "Search Inside Yourself — neuroscience + mindfulness + EI", source: "SIY Global", icon: Brain },
-  { company: "Intel", stat: "+10% Performance", detail: "Awake@Intel: 12% focus increase, stress reduction", source: "Intel Internal Studies", icon: Award },
-  { company: "Fortune 500", stat: "80% Adoption", detail: "Over 80M personality assessments administered annually", source: "Fortune, 2025", icon: Users },
-  { company: "Dutch Gaming Co.", stat: "0% Attrition", detail: "Enneagram-trained teams: zero departures vs high turnover", source: "Truity, 2024", icon: Shield },
+  {
+    company: "SAP",
+    stat: "200% ROI",
+    detail: "Global mindfulness & self-awareness program",
+    source: "Reuters, 2018",
+    sourceUrl: "https://www.reuters.com/article/business/at-germanys-sap-employee-mindfulness-leads-to-higher-profits-idUSKCN1IP0BF/",
+    icon: TrendingUp,
+  },
+  {
+    company: "Aetna",
+    stat: "$9M Saved",
+    detail: "Paid medical claims per employee dropped over 7% following mindfulness programs",
+    source: "Fierce Healthcare, 2015",
+    sourceUrl: "https://www.fiercehealthcare.com/payer/how-aetna-s-bertolini-embraces-mindfulness-to-improve-company-culture",
+    icon: Building2,
+  },
+  {
+    company: "Google",
+    stat: "SIY Program",
+    detail: "Search Inside Yourself - neuroscience + mindfulness + EI",
+    source: "SIY Global",
+    sourceUrl: "https://www.siyglobal.com/",
+    icon: Brain,
+  },
+  {
+    company: "Intel",
+    stat: "Awake@Intel",
+    detail: "Internal mindfulness program reporting improved focus and reduced stress in participant surveys",
+    source: "Intel internal reporting",
+    sourceUrl: undefined,
+    icon: Award,
+  },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 function parseSections(data: any[]) {
   if (!Array.isArray(data)) return [];
   return data
-    .filter(s => s.topic && s.topic !== "dashboard" && s.topic !== "dashboard_clone")
+    .filter(
+      (s) =>
+        s.topic && s.topic !== "dashboard" && s.topic !== "dashboard_clone",
+    )
     .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
-    .map(s => ({
+    .map((s) => ({
       topic: s.topic,
       title: s.title || s.subtitle || s.topic,
       subtitle: s.subtitle,
-      blocks: (s.blocks || []).sort((a: any, b: any) => (a.index ?? 0) - (b.index ?? 0)),
+      blocks: (s.blocks || []).sort(
+        (a: any, b: any) => (a.index ?? 0) - (b.index ?? 0),
+      ),
     }));
 }
 
 function getSynthesis(data: any[]): string {
   if (!Array.isArray(data)) return "";
-  const d = data.find(s => s.topic === "dashboard_clone");
+  const d = data.find((s) => s.topic === "dashboard_clone");
   return d?.blocks?.[0]?.text || "";
 }
 
 function getEnneagramNum(data: any[]): string | null {
   if (!Array.isArray(data)) return null;
-  const e = data.find(s => s.topic === "enneagram");
+  const e = data.find((s) => s.topic === "enneagram");
   const title = e?.blocks?.[0]?.title;
   if (!title) return null;
   const map: Record<string, string> = {
-    reformer: "1", perfectionist: "1", helper: "2", giver: "2",
-    achiever: "3", performer: "3", individualist: "4", romantic: "4",
-    investigator: "5", observer: "5", loyalist: "6", skeptic: "6",
-    enthusiast: "7", epicure: "7", challenger: "8", protector: "8",
-    peacemaker: "9", mediator: "9",
+    reformer: "1",
+    perfectionist: "1",
+    helper: "2",
+    giver: "2",
+    achiever: "3",
+    performer: "3",
+    individualist: "4",
+    romantic: "4",
+    investigator: "5",
+    observer: "5",
+    loyalist: "6",
+    skeptic: "6",
+    enthusiast: "7",
+    epicure: "7",
+    challenger: "8",
+    protector: "8",
+    peacemaker: "9",
+    mediator: "9",
   };
   const lower = title.toLowerCase();
   for (const [k, v] of Object.entries(map)) {
@@ -100,44 +278,81 @@ function BlockText({ block }: { block: any }) {
     return (
       <div className="space-y-3">
         {block.text.map((t: string, i: number) => (
-          <p key={i} className="text-white/75 leading-relaxed text-sm">{t}</p>
+          <p key={i} className="text-white/75 leading-relaxed text-sm">
+            {t}
+          </p>
         ))}
       </div>
     );
   }
-  return <p className="text-white/75 leading-relaxed text-sm whitespace-pre-line">{block.text}</p>;
+  return (
+    <p className="text-white/75 leading-relaxed text-sm whitespace-pre-line">
+      {block.text}
+    </p>
+  );
 }
 
 // ─── Section Accordion ─────────────────────────────────────────────────────
-function Section({ section }: { section: { topic: string; title: string; subtitle?: string; blocks: any[] } }) {
+function Section({
+  section,
+}: {
+  section: { topic: string; title: string; subtitle?: string; blocks: any[] };
+}) {
   const [open, setOpen] = useState(false);
-  const cfg = topicConfig[section.topic] || { icon: Sparkles, label: section.topic, color: "text-white", glowColor: "", description: "" };
+  const cfg = topicConfig[section.topic] || {
+    icon: Sparkles,
+    label: section.topic,
+    color: "text-white",
+    glowColor: "",
+    description: "",
+  };
   const Icon = cfg.icon;
-  const visible = section.blocks.filter(b => b.title || b.text);
+  const visible = section.blocks.filter((b) => b.title || b.text);
   const preview = visible.slice(0, 2);
   const rest = visible.slice(2);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="group">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="group"
+    >
       <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.15] transition-all duration-500">
-        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${cfg.glowColor} blur-3xl -z-10`} />
-        <button onClick={() => setOpen(!open)} className="w-full flex items-center gap-4 p-6 text-left">
-          <div className={`p-3 rounded-xl bg-white/[0.06] border border-white/[0.1] ${cfg.color}`}>
+        <div
+          className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${cfg.glowColor} blur-3xl -z-10`}
+        />
+        <button
+          onClick={() => setOpen(!open)}
+          className="w-full flex items-center gap-4 p-6 text-left"
+        >
+          <div
+            className={`p-3 rounded-xl bg-white/[0.06] border border-white/[0.1] ${cfg.color}`}
+          >
             <Icon className="w-6 h-6" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className={`text-lg font-semibold ${cfg.color}`}>{cfg.label}</h3>
+            <h3 className={`text-lg font-semibold ${cfg.color}`}>
+              {cfg.label}
+            </h3>
             <p className="text-white/50 text-sm mt-0.5">{cfg.description}</p>
           </div>
           <div className="text-white/40">
-            {open ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            {open ? (
+              <ChevronUp className="w-5 h-5" />
+            ) : (
+              <ChevronDown className="w-5 h-5" />
+            )}
           </div>
         </button>
 
         <div className="px-6 pb-4 space-y-4">
           {preview.map((block, i) => (
             <div key={block.id || i}>
-              {block.title && <h4 className="text-white/90 font-medium text-sm mb-1.5">{block.title}</h4>}
+              {block.title && (
+                <h4 className="text-white/90 font-medium text-sm mb-1.5">
+                  {block.title}
+                </h4>
+              )}
               <BlockText block={block} />
             </div>
           ))}
@@ -155,7 +370,11 @@ function Section({ section }: { section: { topic: string; title: string; subtitl
               <div className="px-6 pb-6 space-y-5 border-t border-white/[0.06] pt-4">
                 {rest.map((block, i) => (
                   <div key={block.id || i}>
-                    {block.title && <h4 className="text-white/90 font-medium text-sm mb-1.5">{block.title}</h4>}
+                    {block.title && (
+                      <h4 className="text-white/90 font-medium text-sm mb-1.5">
+                        {block.title}
+                      </h4>
+                    )}
                     <BlockText block={block} />
                   </div>
                 ))}
@@ -166,7 +385,10 @@ function Section({ section }: { section: { topic: string; title: string; subtitl
 
         {!open && rest.length > 0 && (
           <div className="px-6 pb-4">
-            <button onClick={() => setOpen(true)} className="text-xs text-white/40 hover:text-white/60 transition-colors">
+            <button
+              onClick={() => setOpen(true)}
+              className="text-xs text-white/40 hover:text-white/60 transition-colors"
+            >
               + {rest.length} more sections
             </button>
           </div>
@@ -200,17 +422,20 @@ function ConsentDialog({ onConsent }: { onConsent: () => void }) {
                 Want to See Your Deeper Reading?
               </h2>
               <p className="text-white/60 text-sm leading-relaxed">
-                Your SoulPrint is a consciousness layer that sits alongside your Flow Circuit profile.
-                It draws from ancient wisdom systems — Enneagram, Human Design, Astrology, Numerology —
-                to reveal patterns that sometimes adjust you to an even more natural state.
+                Your SoulPrint is a consciousness layer that sits alongside your
+                Flow Circuit profile. It draws from ancient wisdom systems -
+                Enneagram, Human Design, Astrology, Numerology - to reveal
+                patterns that sometimes adjust you to an even more natural
+                state.
               </p>
             </div>
 
             <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-left">
               <p className="text-white/50 text-xs leading-relaxed">
-                This reading is separate from your Flow Circuit assessment. You can toggle it on or off
-                at any time, and choose whether to share it with your team. Your Flow Circuit role
-                remains your primary identity — this is an optional deeper lens.
+                This reading is separate from your Flow Circuit assessment. You
+                can toggle it on or off at any time, and choose whether to share
+                it with your team. Your Flow Circuit role remains your primary
+                identity - this is an optional deeper lens.
               </p>
             </div>
 
@@ -238,7 +463,13 @@ function ConsentDialog({ onConsent }: { onConsent: () => void }) {
 }
 
 // ─── Cross-Reference Card ──────────────────────────────────────────────────
-function CrossReferenceCard({ enneagramNum, flowRole }: { enneagramNum: string; flowRole?: string }) {
+function CrossReferenceCard({
+  enneagramNum,
+  flowRole,
+}: {
+  enneagramNum: string;
+  flowRole?: string;
+}) {
   const mapping = enneagramToFlowCircuit[enneagramNum];
   if (!mapping) return null;
 
@@ -260,8 +491,12 @@ function CrossReferenceCard({ enneagramNum, flowRole }: { enneagramNum: string; 
               <Sparkles className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <h3 className="text-white font-semibold">Enneagram × Flow Circuit</h3>
-              <p className="text-white/50 text-xs">Where consciousness meets team dynamics</p>
+              <h3 className="text-white font-semibold">
+                Enneagram × Flow Circuit
+              </h3>
+              <p className="text-white/50 text-xs">
+                Where consciousness meets team dynamics
+              </p>
             </div>
           </div>
 
@@ -271,29 +506,40 @@ function CrossReferenceCard({ enneagramNum, flowRole }: { enneagramNum: string; 
             <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
               <div className="flex items-center gap-2 mb-1">
                 <PrimaryIcon className="w-4 h-4 text-amber-400" />
-                <span className="text-white/90 text-xs font-medium">Primary Resonance</span>
+                <span className="text-white/90 text-xs font-medium">
+                  Primary Resonance
+                </span>
               </div>
-              <p className="text-white/60 text-sm font-semibold">{mapping.primaryRole}</p>
+              <p className="text-white/60 text-sm font-semibold">
+                {mapping.primaryRole}
+              </p>
             </div>
             <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
               <div className="flex items-center gap-2 mb-1">
                 <SecondaryIcon className="w-4 h-4 text-emerald-400" />
-                <span className="text-white/90 text-xs font-medium">Secondary Resonance</span>
+                <span className="text-white/90 text-xs font-medium">
+                  Secondary Resonance
+                </span>
               </div>
-              <p className="text-white/60 text-sm font-semibold">{mapping.secondaryRole}</p>
+              <p className="text-white/60 text-sm font-semibold">
+                {mapping.secondaryRole}
+              </p>
             </div>
           </div>
 
           <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
-            <p className="text-white/60 text-sm italic leading-relaxed">{mapping.insight}</p>
+            <p className="text-white/60 text-sm italic leading-relaxed">
+              {mapping.insight}
+            </p>
           </div>
 
           {flowRole && flowRole !== mapping.primaryRole && (
             <div className="mt-3 bg-amber-500/[0.08] rounded-xl p-3 border border-amber-500/20">
               <p className="text-amber-300/80 text-xs">
                 <AlertTriangle className="w-3 h-3 inline mr-1" />
-                Your Flow Circuit role ({flowRole}) differs from the Enneagram prediction ({mapping.primaryRole}).
-                This tension can be a source of creative power — you operate in a space most people don't.
+                Your Flow Circuit role ({flowRole}) differs from the Enneagram
+                prediction ({mapping.primaryRole}). This tension can be a source
+                of creative power - you operate in a space most people don't.
               </p>
             </div>
           )}
@@ -304,7 +550,11 @@ function CrossReferenceCard({ enneagramNum, flowRole }: { enneagramNum: string; 
 }
 
 // ─── Main Component ────────────────────────────────────────────────────────
-export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }: { assessmentId?: string }) {
+export default function SoulPrintLayerClient({
+  assessmentId: assessmentIdProp,
+}: {
+  assessmentId?: string;
+}) {
   const router = useRouter();
 
   // Get assessmentId from route or localStorage
@@ -314,17 +564,20 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
         try {
           const stored = localStorage.getItem("flowcircuit_assessment_id");
           return stored ? parseInt(stored) : null;
-        } catch { return null; }
+        } catch {
+          return null;
+        }
       })();
 
   const [consented, setConsented] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
 
   // Fetch soulprint profile
-  const { data: profile, isLoading } = trpc.soulprintLayer.getByAssessment.useQuery(
-    { assessmentId: assessmentId! },
-    { enabled: !!assessmentId }
-  );
+  const { data: profile, isLoading } =
+    trpc.soulprintLayer.getByAssessment.useQuery(
+      { assessmentId: assessmentId! },
+      { enabled: !!assessmentId },
+    );
 
   const consentMutation = trpc.soulprintLayer.giveConsent.useMutation({
     onSuccess: () => {
@@ -343,16 +596,27 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
 
   // Parse the data
   const soulprintData = profile?.soulprintData as any[] | null;
-  const sections = useMemo(() => parseSections(soulprintData || []), [soulprintData]);
-  const synthesis = useMemo(() => getSynthesis(soulprintData || []), [soulprintData]);
-  const enneagramNum = useMemo(() => getEnneagramNum(soulprintData || []), [soulprintData]);
+  const sections = useMemo(
+    () => parseSections(soulprintData || []),
+    [soulprintData],
+  );
+  const synthesis = useMemo(
+    () => getSynthesis(soulprintData || []),
+    [soulprintData],
+  );
+  const enneagramNum = useMemo(
+    () => getEnneagramNum(soulprintData || []),
+    [soulprintData],
+  );
 
   // Get flow circuit role from localStorage
   const flowRole = (() => {
     try {
       const stored = localStorage.getItem("flowcircuit_role");
       return stored || undefined;
-    } catch { return undefined; }
+    } catch {
+      return undefined;
+    }
   })();
 
   const hasConsented = profile?.consentGiven || consented;
@@ -362,7 +626,10 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
-        <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }}>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        >
           <Sparkles className="w-8 h-8 text-violet-400" />
         </motion.div>
       </div>
@@ -375,10 +642,12 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
       <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center p-6">
         <div className="max-w-md text-center space-y-4">
           <Lock className="w-12 h-12 text-white/20 mx-auto" />
-          <h2 className="text-xl font-bold text-white">No SoulPrint Reading Available</h2>
+          <h2 className="text-xl font-bold text-white">
+            No SoulPrint Reading Available
+          </h2>
           <p className="text-white/50 text-sm">
-            Complete your Flow Circuit assessment first, then connect your SoulPrint
-            to unlock the consciousness layer.
+            Complete your Flow Circuit assessment first, then connect your
+            SoulPrint to unlock the consciousness layer.
           </p>
           <Button
             variant="outline"
@@ -425,16 +694,21 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] mb-6">
             <Eye className="w-4 h-4 text-violet-400" />
-            <span className="text-white/60 text-xs font-medium tracking-wider uppercase">Consciousness Layer</span>
+            <span className="text-white/60 text-xs font-medium tracking-wider uppercase">
+              Consciousness Layer
+            </span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Your <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">SoulPrint</span>
+            Your{" "}
+            <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              SoulPrint
+            </span>
           </h1>
 
           <p className="text-white/50 text-sm max-w-lg mx-auto leading-relaxed">
-            A deeper lens on who you are. This reading sits alongside your Flow Circuit profile —
-            toggle it in or out at any time.
+            A deeper lens on who you are. This reading sits alongside your Flow
+            Circuit profile - toggle it in or out at any time.
           </p>
         </motion.div>
 
@@ -452,12 +726,20 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
                   <Switch
                     checked={isEnabled}
                     onCheckedChange={(checked) => {
-                      if (profile.id) toggleEnabledMutation.mutate({ id: profile.id, enabled: checked });
+                      if (profile.id)
+                        toggleEnabledMutation.mutate({
+                          id: profile.id,
+                          enabled: checked,
+                        });
                     }}
                   />
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Show on Profile</p>
-                    <p className="text-white/40 text-xs">Visible on your Flow Circuit results</p>
+                    <p className="text-white/90 text-sm font-medium">
+                      Show on Profile
+                    </p>
+                    <p className="text-white/40 text-xs">
+                      Visible on your Flow Circuit results
+                    </p>
                   </div>
                 </div>
 
@@ -467,12 +749,20 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
                   <Switch
                     checked={profile.showInTeam ?? false}
                     onCheckedChange={(checked) => {
-                      if (profile.id) toggleTeamMutation.mutate({ id: profile.id, showInTeam: checked });
+                      if (profile.id)
+                        toggleTeamMutation.mutate({
+                          id: profile.id,
+                          showInTeam: checked,
+                        });
                     }}
                   />
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Show in Team View</p>
-                    <p className="text-white/40 text-xs">Teammates can see your reading</p>
+                    <p className="text-white/90 text-sm font-medium">
+                      Show in Team View
+                    </p>
+                    <p className="text-white/40 text-xs">
+                      Teammates can see your reading
+                    </p>
                   </div>
                 </div>
               </div>
@@ -495,7 +785,9 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
                   <Sparkles className="w-4 h-4 text-violet-400" />
                   Your Synthesis
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed italic">{synthesis}</p>
+                <p className="text-white/70 text-sm leading-relaxed italic">
+                  {synthesis}
+                </p>
               </div>
             </div>
           </motion.div>
@@ -504,14 +796,22 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
         {/* Cross-Reference Card */}
         {enneagramNum && (
           <div className="mb-8">
-            <CrossReferenceCard enneagramNum={enneagramNum} flowRole={flowRole} />
+            <CrossReferenceCard
+              enneagramNum={enneagramNum}
+              flowRole={flowRole}
+            />
           </div>
         )}
 
         {/* Topic Sections */}
         <div className="space-y-4 mb-12">
           {sections.map((section, i) => (
-            <motion.div key={section.topic} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * (i + 3) }}>
+            <motion.div
+              key={section.topic}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * (i + 3) }}
+            >
               <Section section={section} />
             </motion.div>
           ))}
@@ -533,11 +833,19 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
                 <BookOpen className="w-6 h-6" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-emerald-400">The Science Behind This</h3>
-                <p className="text-white/50 text-sm">Fortune 500 case studies & research evidence</p>
+                <h3 className="text-lg font-semibold text-emerald-400">
+                  The Science Behind This
+                </h3>
+                <p className="text-white/50 text-sm">
+                  Fortune 500 case studies & research evidence
+                </p>
               </div>
               <div className="text-white/40">
-                {showEvidence ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                {showEvidence ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
               </div>
             </button>
 
@@ -552,36 +860,77 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
                 >
                   <div className="px-6 pb-6 space-y-4">
                     <p className="text-white/60 text-sm leading-relaxed">
-                      Consciousness-based personality frameworks are no longer fringe. Over 80% of Fortune 500
-                      companies use personality assessments, and a growing number integrate deeper self-awareness
-                      practices — from the Enneagram to mindfulness programs — with measurable business results.
+                      Consciousness-based personality frameworks are no longer
+                      fringe. Over 80% of Fortune 500 companies use personality
+                      assessments, and a growing number integrate deeper
+                      self-awareness practices - from the Enneagram to
+                      mindfulness programs - with measurable business results.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {evidenceData.map((item, i) => {
                         const Icon = item.icon;
                         return (
-                          <div key={i} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
+                          <div
+                            key={i}
+                            className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]"
+                          >
                             <div className="flex items-center gap-2 mb-2">
                               <Icon className="w-4 h-4 text-emerald-400" />
-                              <span className="text-white/90 text-sm font-semibold">{item.company}</span>
+                              <span className="text-white/90 text-sm font-semibold">
+                                {item.company}
+                              </span>
                             </div>
-                            <p className="text-emerald-400 text-lg font-bold mb-1">{item.stat}</p>
-                            <p className="text-white/50 text-xs">{item.detail}</p>
-                            <p className="text-white/30 text-xs mt-1">{item.source}</p>
+                            <p className="text-emerald-400 text-lg font-bold mb-1">
+                              {item.stat}
+                            </p>
+                            <p className="text-white/50 text-xs">
+                              {item.detail}
+                            </p>
+                            <p className="text-white/30 text-xs mt-1">
+                              {item.sourceUrl ? (
+                                <a
+                                  href={item.sourceUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline hover:text-white/60"
+                                >
+                                  {item.source}
+                                </a>
+                              ) : (
+                                item.source
+                              )}
+                            </p>
                           </div>
                         );
                       })}
                     </div>
 
                     <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
-                      <h4 className="text-white/80 text-sm font-medium mb-2">Honest Limitations</h4>
+                      <h4 className="text-white/80 text-sm font-medium mb-2">
+                        Honest Limitations
+                      </h4>
                       <ul className="text-white/50 text-xs space-y-1.5">
-                        <li>The Enneagram has growing but mixed psychometric validation (Hook et al., 2021 — 104 samples)</li>
-                        <li>Astrology and numerology lack peer-reviewed empirical support for predictive accuracy</li>
-                        <li>Human Design combines multiple systems; scientific validation is limited</li>
-                        <li>These frameworks are best used as reflective tools, not diagnostic instruments</li>
-                        <li>The value lies in self-awareness and team dialogue, not in categorical truth</li>
+                        <li>
+                          The Enneagram has growing but mixed psychometric
+                          validation (Hook et al., 2021 - 104 samples)
+                        </li>
+                        <li>
+                          Astrology and numerology lack peer-reviewed empirical
+                          support for predictive accuracy
+                        </li>
+                        <li>
+                          Human Design combines multiple systems; scientific
+                          validation is limited
+                        </li>
+                        <li>
+                          These frameworks are best used as reflective tools,
+                          not diagnostic instruments
+                        </li>
+                        <li>
+                          The value lies in self-awareness and team dialogue,
+                          not in categorical truth
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -599,8 +948,9 @@ export default function SoulPrintLayerClient({ assessmentId: assessmentIdProp }:
           className="text-center pb-12"
         >
           <p className="text-white/30 text-xs">
-            SoulPrint data provided by TrueSelf. This reading is separate from your Flow Circuit assessment
-            and can be toggled on or off at any time.
+            SoulPrint data provided by TrueSelf. This reading is separate from
+            your Flow Circuit assessment and can be toggled on or off at any
+            time.
           </p>
         </motion.div>
       </div>

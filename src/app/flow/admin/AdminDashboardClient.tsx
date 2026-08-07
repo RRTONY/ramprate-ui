@@ -2,9 +2,26 @@
 
 import { useAuth } from "@/hooks/flow/useAuth";
 import { trpc } from "@/lib/flow/trpc";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
-import { Loader2, Users, BarChart3, Building2, MessageSquare, Mail, Shield, ArrowLeft, TrendingUp, Zap, Activity } from "lucide-react";
+import {
+  Loader2,
+  Users,
+  BarChart3,
+  Building2,
+  MessageSquare,
+  Mail,
+  Shield,
+  ArrowLeft,
+  TrendingUp,
+  Zap,
+  Activity,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 
@@ -19,21 +36,23 @@ const ROLE_COLORS: Record<string, string> = {
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [emailDripDay, setEmailDripDay] = useState<'day1' | 'day3' | 'day7'>('day1');
+  const [emailDripDay, setEmailDripDay] = useState<"day1" | "day3" | "day7">(
+    "day1",
+  );
 
   const { data: stats, isLoading } = trpc.admin.stats.useQuery(undefined, {
-    enabled: !!user && user.role === 'admin',
+    enabled: !!user && user.role === "admin",
   });
 
   const { data: pendingDrips } = trpc.emailDrip.pending.useQuery(
     { day: emailDripDay },
-    { enabled: !!user && user.role === 'admin' }
+    { enabled: !!user && user.role === "admin" },
   );
 
   const generateEmail = trpc.emailDrip.generateEmail.useMutation();
   const markSent = trpc.emailDrip.markSent.useMutation();
 
-  const [generatedEmail, setGeneratedEmail] = useState<string>('');
+  const [generatedEmail, setGeneratedEmail] = useState<string>("");
   const [generatingFor, setGeneratingFor] = useState<number | null>(null);
 
   if (authLoading || isLoading) {
@@ -44,7 +63,7 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
+  if (!user || user.role !== "admin") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center space-y-4">
@@ -69,7 +88,7 @@ export default function AdminDashboard() {
 
   const maxRoleCount = Math.max(
     ...stats.roleDistribution.map((r: any) => r.count),
-    1
+    1,
   );
 
   return (
@@ -103,8 +122,12 @@ export default function AdminDashboard() {
                   <Zap className="w-5 h-5 text-amber-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-black">{stats.totals.assessments}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Assessments</p>
+                  <p className="text-2xl font-black">
+                    {stats.totals.assessments}
+                  </p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Assessments
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -117,7 +140,9 @@ export default function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-2xl font-black">{stats.totals.teams}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Teams</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Teams
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -130,7 +155,9 @@ export default function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-2xl font-black">{stats.totals.users}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Users</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Users
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -142,8 +169,12 @@ export default function AdminDashboard() {
                   <Activity className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-black">{stats.totals.peerReviews}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">360 Reviews</p>
+                  <p className="text-2xl font-black">
+                    {stats.totals.peerReviews}
+                  </p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    360 Reviews
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -156,7 +187,9 @@ export default function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-2xl font-black">{stats.totals.feedback}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Feedback</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Feedback
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -168,8 +201,12 @@ export default function AdminDashboard() {
                   <Mail className="w-5 h-5 text-cyan-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-black">{stats.totals.emailDrips}</p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Email Drips</p>
+                  <p className="text-2xl font-black">
+                    {stats.totals.emailDrips}
+                  </p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Email Drips
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -198,7 +235,7 @@ export default function AdminDashboard() {
                         className="h-full rounded-full transition-all duration-500"
                         style={{
                           width: `${(r.count / maxRoleCount) * 100}%`,
-                          backgroundColor: ROLE_COLORS[r.role] || '#6b7280',
+                          backgroundColor: ROLE_COLORS[r.role] || "#6b7280",
                         }}
                       />
                     </div>
@@ -259,24 +296,44 @@ export default function AdminDashboard() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b text-left">
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Name</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Email</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Domain</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Role</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Score</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Date</th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Name
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Email
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Domain
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Role
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Score
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Date
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
                   {stats.recentAssessments.map((a: any) => (
                     <tr key={a.id} className="hover:bg-gray-50">
-                      <td className="py-2 px-3 font-medium">{a.guestName || '—'}</td>
-                      <td className="py-2 px-3 text-muted-foreground">{a.guestEmail || '—'}</td>
-                      <td className="py-2 px-3 text-muted-foreground">{a.domain || '—'}</td>
+                      <td className="py-2 px-3 font-medium">
+                        {a.guestName || "-"}
+                      </td>
+                      <td className="py-2 px-3 text-muted-foreground">
+                        {a.guestEmail || "-"}
+                      </td>
+                      <td className="py-2 px-3 text-muted-foreground">
+                        {a.domain || "-"}
+                      </td>
                       <td className="py-2 px-3">
                         <span
                           className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold text-white"
-                          style={{ backgroundColor: ROLE_COLORS[a.role] || '#6b7280' }}
+                          style={{
+                            backgroundColor: ROLE_COLORS[a.role] || "#6b7280",
+                          }}
                         >
                           {a.role}
                         </span>
@@ -308,24 +365,42 @@ export default function AdminDashboard() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b text-left">
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Name</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Company</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Domain</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Max</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Alpha</th>
-                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">Created</th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Name
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Company
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Domain
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Max
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Alpha
+                    </th>
+                    <th className="py-2 px-3 font-bold text-gray-500 uppercase text-xs">
+                      Created
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
                   {stats.teamStats.map((t: any) => (
                     <tr key={t.id} className="hover:bg-gray-50">
                       <td className="py-2 px-3 font-medium">{t.name}</td>
-                      <td className="py-2 px-3 text-muted-foreground">{t.companyName || '—'}</td>
-                      <td className="py-2 px-3 text-muted-foreground">{t.domain || '—'}</td>
-                      <td className="py-2 px-3">{t.maxMembers || '∞'}</td>
+                      <td className="py-2 px-3 text-muted-foreground">
+                        {t.companyName || "-"}
+                      </td>
+                      <td className="py-2 px-3 text-muted-foreground">
+                        {t.domain || "-"}
+                      </td>
+                      <td className="py-2 px-3">{t.maxMembers || "∞"}</td>
                       <td className="py-2 px-3">
                         {t.isAlpha ? (
-                          <span className="text-green-600 font-bold text-xs">YES</span>
+                          <span className="text-green-600 font-bold text-xs">
+                            YES
+                          </span>
                         ) : (
                           <span className="text-gray-400 text-xs">No</span>
                         )}
@@ -351,16 +426,18 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex gap-2 mb-6">
-              {(['day1', 'day3', 'day7'] as const).map((day) => (
+              {(["day1", "day3", "day7"] as const).map((day) => (
                 <Button
                   key={day}
-                  variant={emailDripDay === day ? 'default' : 'outline'}
+                  variant={emailDripDay === day ? "default" : "outline"}
                   size="sm"
                   onClick={() => setEmailDripDay(day)}
                 >
-                  {day === 'day1' ? 'Day 1: Results Recap' :
-                   day === 'day3' ? 'Day 3: Invite Tribe' :
-                   'Day 7: Stress Cost'}
+                  {day === "day1"
+                    ? "Day 1: Results Recap"
+                    : day === "day3"
+                      ? "Day 3: Invite Tribe"
+                      : "Day 7: Stress Cost"}
                 </Button>
               ))}
             </div>
@@ -375,7 +452,8 @@ export default function AdminDashboard() {
                     <div>
                       <p className="font-medium">{drip.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {drip.email} {drip.domain && `· ${drip.domain}`} {drip.role && `· ${drip.role}`}
+                        {drip.email} {drip.domain && `· ${drip.domain}`}{" "}
+                        {drip.role && `· ${drip.role}`}
                       </p>
                     </div>
                     <div className="flex gap-2">
@@ -388,7 +466,7 @@ export default function AdminDashboard() {
                           try {
                             const result = await generateEmail.mutateAsync({
                               day: emailDripDay,
-                              recipientName: drip.name || 'there',
+                              recipientName: drip.name || "there",
                               role: drip.role || undefined,
                               domain: drip.domain || undefined,
                             });
@@ -401,13 +479,16 @@ export default function AdminDashboard() {
                         {generatingFor === drip.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
                         ) : (
-                          'Generate Email'
+                          "Generate Email"
                         )}
                       </Button>
                       <Button
                         size="sm"
                         onClick={async () => {
-                          await markSent.mutateAsync({ id: drip.id, day: emailDripDay });
+                          await markSent.mutateAsync({
+                            id: drip.id,
+                            day: emailDripDay,
+                          });
                         }}
                       >
                         Mark Sent

@@ -2,7 +2,19 @@
 
 import Link from "next/link";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, ExternalLink, Award, Globe, Mic, BookOpen, Building2, Users, Zap, Newspaper, TrendingUp } from "lucide-react";
+import {
+  ArrowRight,
+  ExternalLink,
+  Award,
+  Globe,
+  Mic,
+  BookOpen,
+  Building2,
+  Users,
+  Zap,
+  Newspaper,
+  TrendingUp,
+} from "lucide-react";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 const milestones = [
@@ -11,7 +23,8 @@ const milestones = [
     category: "Company",
     icon: Building2,
     title: "RampRate Founded",
-    description: "Tony Greenberg launches RampRate, the world's first technology sourcing advisory. The mission: eliminate friction between what companies need and what vendors provide. The pattern recognition begins.",
+    description:
+      "Tony Greenberg launches RampRate, the world's first technology sourcing advisory. The mission: eliminate friction between what companies need and what vendors provide. The pattern recognition begins.",
     link: null,
     color: "bg-blue-500",
   },
@@ -20,7 +33,8 @@ const milestones = [
     category: "Discovery",
     icon: Zap,
     title: "Al Fahden & The Z Process",
-    description: "Tony encounters Al Fahden's Team Dimensions Profile — Creator, Advancer, Refiner, Executor, Flexer. The framework that will become The Flow Circuit gets its first skeleton.",
+    description:
+      "Tony encounters Al Fahden's Team Dimensions Profile - Creator, Advancer, Refiner, Executor, Flexer. The framework that will become The Flow Circuit gets its first skeleton.",
     link: null,
     color: "bg-yellow-500",
   },
@@ -29,7 +43,8 @@ const milestones = [
     category: "Recognition",
     icon: Award,
     title: "Ernst & Young Entrepreneur of the Year Finalist",
-    description: "RampRate's friction-reduction model earns national recognition. The business case for understanding human wiring in commercial relationships is validated at scale.",
+    description:
+      "RampRate's friction-reduction model earns national recognition - early evidence that the business case for understanding human wiring in commercial relationships resonates at scale. (This recognizes RampRate the consultancy, not an independent study of The Flow Circuit assessment.)",
     link: null,
     color: "bg-emerald-500",
   },
@@ -37,8 +52,9 @@ const milestones = [
     year: "2010",
     category: "Speaking",
     icon: Mic,
-    title: "Harvard H+ Summit — \"Boiling the Human\"",
-    description: "On stage with Ray Kurzweil, Tony argues that exponential technology without a human operating system creates catastrophe. Madoff's Law is born: the faster the system, the faster the fraud.",
+    title: 'Harvard H+ Summit - "Boiling the Human"',
+    description:
+      "On stage with Ray Kurzweil, Tony argues that exponential technology without a human operating system creates catastrophe. Madoff's Law is born: the faster the system, the faster the fraud.",
     link: "https://tonygreenberg.com/boiling-the-human-h-summit-transcript-harvard-kurzweil/",
     color: "bg-red-500",
   },
@@ -47,7 +63,8 @@ const milestones = [
     category: "Media",
     icon: Newspaper,
     title: "Forbes, Inc., Huffington Post",
-    description: "Tony's insights on technology sourcing, entrepreneurship, and human dynamics reach mainstream business media. The ideas that will become The Flow Circuit start reaching a broader audience.",
+    description:
+      "Tony's insights on technology sourcing, entrepreneurship, and human dynamics reach mainstream business media. The ideas that will become The Flow Circuit start reaching a broader audience.",
     link: null,
     color: "bg-purple-500",
   },
@@ -55,8 +72,9 @@ const milestones = [
     year: "2014",
     category: "Publication",
     icon: BookOpen,
-    title: "\"10 Magic Questions\" Published",
-    description: "The breakthrough article that explicitly names the relay: Creator → Advancer → Refiner → Executor → Flexer. The Z Process gets its first public documentation with practical application.",
+    title: '"10 Magic Questions" Published',
+    description:
+      "The breakthrough article that explicitly names the relay: Creator → Advancer → Refiner → Executor → Flexer. The Z Process gets its first public documentation with practical application.",
     link: "https://tonygreenberg.com/10-magic-questions-to-make-your-project-go-right-how-to-kick-ass-by-kicking-assumptions/",
     color: "bg-amber-500",
   },
@@ -64,8 +82,9 @@ const milestones = [
     year: "2015",
     category: "Publication",
     icon: BookOpen,
-    title: "\"Human Operating System\" Essay",
-    description: "The philosophical foundation crystallizes: technology should fit humans like a glove, not the reverse. The vision of building systems around human wiring becomes explicit.",
+    title: '"Human Operating System" Essay',
+    description:
+      "The philosophical foundation crystallizes: technology should fit humans like a glove, not the reverse. The vision of building systems around human wiring becomes explicit.",
     link: "https://tonygreenberg.com/human-operating-system/",
     color: "bg-indigo-500",
   },
@@ -74,7 +93,8 @@ const milestones = [
     category: "Company",
     icon: Building2,
     title: "RampRate Reaches $40B in Managed Transactions",
-    description: "The friction-reduction model proves itself at scale. $40 billion in technology transactions optimized through the same pattern recognition that will power The Flow Circuit.",
+    description:
+      "The friction-reduction model proves itself at scale. $40 billion in technology transactions optimized through the same pattern recognition that will power The Flow Circuit.",
     link: null,
     color: "bg-emerald-500",
   },
@@ -83,7 +103,8 @@ const milestones = [
     category: "Initiative",
     icon: Globe,
     title: "ImpactSoul Launches",
-    description: "\"Heal the Body, Mind, & Earth.\" Tony connects supply chain innovation to transformational impact. The seed of the SoulPrint integration — team dynamics meet spiritual dimension.",
+    description:
+      '"Heal the Body, Mind, & Earth." Tony connects supply chain innovation to transformational impact. The seed of the SoulPrint integration - team dynamics meet spiritual dimension.',
     link: "https://tonygreenberg.com/from-supply-chain-to-the-blockchain-heal-the-body-mind-earth/",
     color: "bg-pink-500",
   },
@@ -91,8 +112,9 @@ const milestones = [
     year: "2020",
     category: "Publication",
     icon: BookOpen,
-    title: "\"Mastering Human & Business Development\"",
-    description: "The Conductor's manual gets codified. The Triangle of Trust: Mind meld → Audit → Friendly guidance → Social impact → Informed introduction. The operating system for human orchestration.",
+    title: '"Mastering Human & Business Development"',
+    description:
+      "The Conductor's manual gets codified. The Triangle of Trust: Mind meld → Audit → Friendly guidance → Social impact → Informed introduction. The operating system for human orchestration.",
     link: "https://tonygreenberg.com/mastering-human-and-business-development/",
     color: "bg-teal-500",
   },
@@ -100,8 +122,9 @@ const milestones = [
     year: "2022",
     category: "Speaking",
     icon: Globe,
-    title: "World Economic Forum — Davos",
-    description: "The human operating system thesis goes global. Tony brings the framework to the world stage, arguing that leadership's biggest gap isn't technology — it's understanding human wiring.",
+    title: "World Economic Forum - Davos",
+    description:
+      "The human operating system thesis goes global. Tony brings the framework to the world stage, arguing that leadership's biggest gap isn't technology - it's understanding human wiring.",
     link: "https://tonygreenberg.com/davos-2022-world-economic-forum/",
     color: "bg-blue-500",
   },
@@ -109,8 +132,9 @@ const milestones = [
     year: "2024",
     category: "Publication",
     icon: BookOpen,
-    title: "\"The Decay of Modern Communication\"",
-    description: "Tony documents the collapse of accountability — ghosting, follow-through death, the end of the relay. The essay becomes the 'why now' argument for The Flow Circuit.",
+    title: '"The Decay of Modern Communication"',
+    description:
+      "Tony documents the collapse of accountability - ghosting, follow-through death, the end of the relay. The essay becomes the 'why now' argument for The Flow Circuit.",
     link: "https://tonygreenberg.com/the-decay-of-modern-day-communication/",
     color: "bg-rose-500",
   },
@@ -119,7 +143,8 @@ const milestones = [
     category: "Launch",
     icon: Zap,
     title: "The Flow Circuit Launches",
-    description: "25 years of pattern recognition becomes a platform. Creator → Spark. Advancer → Amplifier. Refiner → Filter. Executor → Ground. Flexer → Conductor. The relay goes digital.",
+    description:
+      "25 years of pattern recognition becomes a platform. Creator → Spark. Advancer → Amplifier. Refiner → Filter. Executor → Ground. Flexer → Conductor. The relay goes digital.",
     link: null,
     color: "bg-yellow-500",
   },
@@ -128,7 +153,8 @@ const milestones = [
     category: "Partnership",
     icon: Users,
     title: "SoulPrint Integration (Alpha)",
-    description: "Partnership with Max Marmer's TrueSelf platform. The Flow Circuit maps your team DNA. SoulPrint maps your soul blueprint. The combined report tells you why you can't stop being who you are.",
+    description:
+      "Partnership with Max Marmer's TrueSelf platform. The Flow Circuit maps your team DNA. SoulPrint maps your soul blueprint. The combined report tells you why you can't stop being who you are.",
     link: null,
     color: "bg-purple-500",
   },
@@ -165,7 +191,7 @@ export default function CredibilityTimeline() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             The Flow Circuit wasn't invented in a lab. It was forged in the
-            field — across $40 billion in technology transactions, stages from
+            field - across $40 billion in technology transactions, stages from
             Harvard to Davos, and 25 years of watching teams succeed and fail
             for the same preventable reasons.
           </p>
@@ -181,7 +207,10 @@ export default function CredibilityTimeline() {
             { value: "Harvard", label: "to Davos" },
             { value: "14", label: "Published Works" },
           ].map((stat, i) => (
-            <div key={i} className="text-center p-4 rounded-xl bg-muted/20 border border-border/30">
+            <div
+              key={i}
+              className="text-center p-4 rounded-xl bg-muted/20 border border-border/30"
+            >
               <span className="text-2xl md:text-3xl font-display font-bold text-primary">
                 {stat.value}
               </span>
@@ -203,14 +232,18 @@ export default function CredibilityTimeline() {
             {milestones.map((m, i) => (
               <div key={i} className="relative flex items-start gap-6 pl-14">
                 {/* Dot */}
-                <div className={`absolute left-4 w-5 h-5 rounded-full ${m.color} ring-4 ring-background z-10`} />
+                <div
+                  className={`absolute left-4 w-5 h-5 rounded-full ${m.color} ring-4 ring-background z-10`}
+                />
 
                 <div className="flex-1 p-5 rounded-xl border border-border/50 bg-card/30 hover:bg-card/50 transition-colors">
                   <div className="flex items-center gap-3 mb-2 flex-wrap">
                     <span className="text-sm font-mono font-bold text-primary">
                       {m.year}
                     </span>
-                    <span className={`text-xs font-mono uppercase tracking-wider ${categoryColors[m.category] || "text-muted-foreground"}`}>
+                    <span
+                      className={`text-xs font-mono uppercase tracking-wider ${categoryColors[m.category] || "text-muted-foreground"}`}
+                    >
                       {m.category}
                     </span>
                   </div>

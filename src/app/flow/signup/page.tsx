@@ -8,7 +8,12 @@ import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import { Label } from "@/components/flow/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -24,9 +29,13 @@ export default function SignupPage() {
     setError(null);
     try {
       await registerMutation.mutateAsync({ name, email, password });
-      const result = await signIn("credentials", { email, password, redirect: false });
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
       if (result?.error) {
-        setError("Account created — please sign in.");
+        setError("Account created - please sign in.");
         router.push("/flow/login");
         return;
       }
@@ -46,7 +55,13 @@ export default function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name" />
+              <Input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                autoComplete="name"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -72,7 +87,11 @@ export default function SignupPage() {
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={registerMutation.isPending}
+            >
               {registerMutation.isPending ? "Creating account..." : "Sign up"}
             </Button>
           </form>

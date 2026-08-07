@@ -3,9 +3,27 @@
 import { useAuth } from "@/hooks/flow/useAuth";
 import { trpc } from "@/lib/flow/trpc";
 import { useMemo, useRef, useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
-import { Loader2, Users, Zap, AlertTriangle, Download, Share2, ArrowRight, CheckCircle2, XCircle, Copy, Check, UserPlus } from "lucide-react";
+import {
+  Loader2,
+  Users,
+  Zap,
+  AlertTriangle,
+  Download,
+  Share2,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Copy,
+  Check,
+  UserPlus,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const RELAY_ORDER = ["Spark", "Amplifier", "Filter", "Ground", "Conductor"];
@@ -35,11 +53,16 @@ const ROLE_ICONS: Record<string, string> = {
 };
 
 const ROLE_DESCRIPTIONS: Record<string, string> = {
-  Spark: "Generates the raw ideas and provocations that ignite the innovation cycle.",
-  Amplifier: "Takes the Spark's raw idea and builds momentum, excitement, and coalition.",
-  Filter: "Stress-tests ideas for feasibility, risk, and quality before they move forward.",
-  Ground: "Converts refined ideas into executable plans, timelines, and deliverables.",
-  Conductor: "Orchestrates the relay, ensuring each role hands off at the right moment.",
+  Spark:
+    "Generates the raw ideas and provocations that ignite the innovation cycle.",
+  Amplifier:
+    "Takes the Spark's raw idea and builds momentum, excitement, and coalition.",
+  Filter:
+    "Stress-tests ideas for feasibility, risk, and quality before they move forward.",
+  Ground:
+    "Converts refined ideas into executable plans, timelines, and deliverables.",
+  Conductor:
+    "Orchestrates the relay, ensuring each role hands off at the right moment.",
 };
 
 interface AssessmentData {
@@ -56,7 +79,13 @@ interface AffiliateData extends AssessmentData {
   affiliationLabel: string;
 }
 
-function RadarChart({ avgScores, size = 280 }: { avgScores: Record<string, number>; size?: number }) {
+function RadarChart({
+  avgScores,
+  size = 280,
+}: {
+  avgScores: Record<string, number>;
+  size?: number;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -112,7 +141,7 @@ function RadarChart({ avgScores, size = 280 }: { avgScores: Record<string, numbe
     // Normalize scores
     const total = RELAY_ORDER.reduce((s, r) => s + (avgScores[r] || 0), 0);
     const pcts: Record<string, number> = {};
-    RELAY_ORDER.forEach(r => {
+    RELAY_ORDER.forEach((r) => {
       pcts[r] = total > 0 ? ((avgScores[r] || 0) / total) * 100 : 20;
     });
 
@@ -216,7 +245,7 @@ function MemberCard({ m, badge }: { m: AssessmentData; badge?: string }) {
       </div>
       {/* Mini score bar */}
       <div className="flex gap-0.5 mt-2">
-        {RELAY_ORDER.map(r => {
+        {RELAY_ORDER.map((r) => {
           const rPct = total > 0 ? ((scores[r] || 0) / total) * 100 : 20;
           return (
             <div
@@ -235,15 +264,20 @@ function MemberCard({ m, badge }: { m: AssessmentData; badge?: string }) {
   );
 }
 
-export default function TeamProfileClient({ domain: domainProp }: { domain: string }) {
+export default function TeamProfileClient({
+  domain: domainProp,
+}: {
+  domain: string;
+}) {
   const domain = domainProp || "";
   const router = useRouter();
   const [copied, setCopied] = useState(false);
 
-  const { data: teamData, isLoading } = trpc.assessment.teamWithAffiliates.useQuery(
-    { domain },
-    { enabled: !!domain }
-  );
+  const { data: teamData, isLoading } =
+    trpc.assessment.teamWithAffiliates.useQuery(
+      { domain },
+      { enabled: !!domain },
+    );
 
   const allMembers = useMemo(() => {
     if (!teamData) return [];
@@ -259,16 +293,16 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
     const roleScoreSums: Record<string, number> = {};
     const roleScoreCounts: Record<string, number> = {};
 
-    RELAY_ORDER.forEach(r => {
+    RELAY_ORDER.forEach((r) => {
       roleCounts[r] = 0;
       roleScoreSums[r] = 0;
       roleScoreCounts[r] = 0;
     });
 
-    allMembers.forEach(m => {
+    allMembers.forEach((m) => {
       roleCounts[m.role] = (roleCounts[m.role] || 0) + 1;
       const scores = (m.scores || {}) as Record<string, number>;
-      RELAY_ORDER.forEach(r => {
+      RELAY_ORDER.forEach((r) => {
         if (scores[r]) {
           roleScoreSums[r] += scores[r];
           roleScoreCounts[r]++;
@@ -277,19 +311,25 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
     });
 
     const avgScores: Record<string, number> = {};
-    RELAY_ORDER.forEach(r => {
-      avgScores[r] = roleScoreCounts[r] > 0 ? roleScoreSums[r] / roleScoreCounts[r] : 0;
+    RELAY_ORDER.forEach((r) => {
+      avgScores[r] =
+        roleScoreCounts[r] > 0 ? roleScoreSums[r] / roleScoreCounts[r] : 0;
     });
 
-    const missingRoles = RELAY_ORDER.filter(r => roleCounts[r] === 0);
-    const overloadedRoles = RELAY_ORDER.filter(r => roleCounts[r] >= 3);
-    const dominantRole = RELAY_ORDER.reduce((a, b) => (roleCounts[a] > roleCounts[b] ? a : b));
+    const missingRoles = RELAY_ORDER.filter((r) => roleCounts[r] === 0);
+    const overloadedRoles = RELAY_ORDER.filter((r) => roleCounts[r] >= 3);
+    const dominantRole = RELAY_ORDER.reduce((a, b) =>
+      roleCounts[a] > roleCounts[b] ? a : b,
+    );
 
     // Circuit health score
     const coverageScore = ((5 - missingRoles.length) / 5) * 40;
     const balanceScore = (() => {
       const ideal = allMembers.length / 5;
-      const deviation = RELAY_ORDER.reduce((sum, r) => sum + Math.abs(roleCounts[r] - ideal), 0);
+      const deviation = RELAY_ORDER.reduce(
+        (sum, r) => sum + Math.abs(roleCounts[r] - ideal),
+        0,
+      );
       const maxDeviation = allMembers.length * 2;
       return Math.max(0, (1 - deviation / maxDeviation) * 30);
     })();
@@ -313,9 +353,12 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const companyName = domain.split(".")[0].charAt(0).toUpperCase() + domain.split(".")[0].slice(1);
+  const companyName =
+    domain.split(".")[0].charAt(0).toUpperCase() +
+    domain.split(".")[0].slice(1);
 
-  const domainMembers = (teamData?.domainMembers || []) as unknown as AssessmentData[];
+  const domainMembers = (teamData?.domainMembers ||
+    []) as unknown as AssessmentData[];
   const affiliates = (teamData?.affiliates || []) as unknown as AffiliateData[];
 
   if (isLoading) {
@@ -323,7 +366,9 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
-          <p className="text-muted-foreground text-lg">Loading team data for {companyName}...</p>
+          <p className="text-muted-foreground text-lg">
+            Loading team data for {companyName}...
+          </p>
         </div>
       </div>
     );
@@ -335,12 +380,17 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
         <Card className="max-w-md mx-auto bg-card border-border">
           <CardContent className="p-8 text-center space-y-4">
             <Users className="w-12 h-12 text-muted-foreground mx-auto" />
-            <h2 className="text-xl font-display font-bold text-foreground">No Team Data Yet</h2>
+            <h2 className="text-xl font-display font-bold text-foreground">
+              No Team Data Yet
+            </h2>
             <p className="text-muted-foreground">
-              No assessments found for <strong>{domain}</strong>. Team members need to take the
-              Flow Circuit assessment first.
+              No assessments found for <strong>{domain}</strong>. Team members
+              need to take the Flow Circuit assessment first.
             </p>
-            <Button onClick={() => router.push("/flow/assessment")} className="mt-4">
+            <Button
+              onClick={() => router.push("/flow/assessment")}
+              className="mt-4"
+            >
               Take the Assessment <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </CardContent>
@@ -352,12 +402,18 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
   if (!analysis) return null;
 
   const healthColor =
-    analysis.healthScore >= 70 ? "text-emerald-400" :
-    analysis.healthScore >= 50 ? "text-amber-400" : "text-amber-500";
+    analysis.healthScore >= 70
+      ? "text-emerald-400"
+      : analysis.healthScore >= 50
+        ? "text-amber-400"
+        : "text-amber-500";
 
   const healthLabel =
-    analysis.healthScore >= 70 ? "Flowing" :
-    analysis.healthScore >= 50 ? "Building" : "Emerging";
+    analysis.healthScore >= 70
+      ? "Flowing"
+      : analysis.healthScore >= 50
+        ? "Building"
+        : "Emerging";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -375,18 +431,30 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                 {companyName}
               </h1>
               <p className="text-lg text-muted-foreground max-w-lg">
-                {analysis.totalMembers} team member{analysis.totalMembers !== 1 ? "s" : ""} assessed
-                {affiliates.length > 0 ? ` (including ${affiliates.length} candidate${affiliates.length > 1 ? "s" : ""})` : ""}.
+                {analysis.totalMembers} team member
+                {analysis.totalMembers !== 1 ? "s" : ""} assessed
+                {affiliates.length > 0
+                  ? ` (including ${affiliates.length} candidate${affiliates.length > 1 ? "s" : ""})`
+                  : ""}
+                .
                 {analysis.missingRoles.length > 0
                   ? ` ${5 - analysis.missingRoles.length} of 5 relay stages covered.`
                   : " All 5 relay stages covered."}
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <Button variant="outline" size="sm" onClick={handleCopyLink}>
-                  {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                  {copied ? (
+                    <Check className="w-4 h-4 mr-2" />
+                  ) : (
+                    <Copy className="w-4 h-4 mr-2" />
+                  )}
                   {copied ? "Copied!" : "Share Link"}
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => router.push("/flow/assessment")}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => router.push("/flow/assessment")}
+                >
                   <Zap className="w-4 h-4 mr-2" />
                   Join This Team
                 </Button>
@@ -397,13 +465,19 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
             <div className="flex flex-col items-center gap-2">
               <div className="relative w-36 h-36 rounded-full border-4 border-border flex items-center justify-center bg-card">
                 <div className="text-center">
-                  <span className={`text-4xl font-display font-bold ${healthColor}`}>
+                  <span
+                    className={`text-4xl font-display font-bold ${healthColor}`}
+                  >
                     {analysis.healthScore}
                   </span>
-                  <p className="text-xs text-muted-foreground mt-1">Relay Readiness</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Relay Readiness
+                  </p>
                 </div>
               </div>
-              <span className={`text-sm font-semibold ${healthColor}`}>{healthLabel}</span>
+              <span className={`text-sm font-semibold ${healthColor}`}>
+                {healthLabel}
+              </span>
             </div>
           </div>
         </div>
@@ -417,7 +491,9 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
             {/* Radar Chart */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle className="font-display text-lg">Team Energy Radar</CardTitle>
+                <CardTitle className="font-display text-lg">
+                  Team Energy Radar
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex justify-center">
                 <RadarChart avgScores={analysis.avgScores} size={280} />
@@ -427,12 +503,17 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
             {/* Role Distribution */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle className="font-display text-lg">Role Distribution</CardTitle>
+                <CardTitle className="font-display text-lg">
+                  Role Distribution
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {RELAY_ORDER.map(role => {
+                {RELAY_ORDER.map((role) => {
                   const count = analysis.roleCounts[role];
-                  const pct = analysis.totalMembers > 0 ? (count / analysis.totalMembers) * 100 : 0;
+                  const pct =
+                    analysis.totalMembers > 0
+                      ? (count / analysis.totalMembers) * 100
+                      : 0;
                   const isMissing = count === 0;
                   const isOverloaded = count >= 3;
 
@@ -441,7 +522,13 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                       <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-2">
                           <span>{ROLE_ICONS[role]}</span>
-                          <span className={isMissing ? "text-red-400 line-through" : "text-foreground font-medium"}>
+                          <span
+                            className={
+                              isMissing
+                                ? "text-red-400 line-through"
+                                : "text-foreground font-medium"
+                            }
+                          >
                             {role}
                           </span>
                           {isMissing && (
@@ -456,7 +543,8 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                           )}
                         </div>
                         <span className="text-muted-foreground">
-                          {count} member{count !== 1 ? "s" : ""} ({Math.round(pct)}%)
+                          {count} member{count !== 1 ? "s" : ""} (
+                          {Math.round(pct)}%)
                         </span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -464,7 +552,9 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                           className="h-full rounded-full transition-all duration-500"
                           style={{
                             width: `${Math.max(pct, 2)}%`,
-                            backgroundColor: isMissing ? "rgba(239,68,68,0.3)" : ROLE_COLORS[role],
+                            backgroundColor: isMissing
+                              ? "rgba(239,68,68,0.3)"
+                              : ROLE_COLORS[role],
                           }}
                         />
                       </div>
@@ -486,15 +576,16 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  The innovation relay requires all 5 roles to function. When a role is missing,
-                  the baton drops and ideas stall. This team is missing{" "}
+                  The innovation relay requires all 5 roles to function. When a
+                  role is missing, the baton drops and ideas stall. This team is
+                  missing{" "}
                   <strong className="text-red-400">
                     {analysis.missingRoles.join(" and ")}
                   </strong>
                   .
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {RELAY_ORDER.map(role => {
+                  {RELAY_ORDER.map((role) => {
                     const filled = analysis.roleCounts[role] > 0;
                     return (
                       <div
@@ -505,23 +596,39 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                             : "bg-red-500/10 border-red-500/20 text-red-400"
                         }`}
                       >
-                        {filled ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                        {filled ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <XCircle className="w-4 h-4" />
+                        )}
                         {role}
                       </div>
                     );
                   })}
                 </div>
                 <div className="mt-4 p-4 rounded-lg bg-card border border-border">
-                  <h4 className="font-semibold text-foreground mb-2">What This Means</h4>
-                  {analysis.missingRoles.map(role => (
-                    <p key={role} className="text-muted-foreground text-sm mb-2 last:mb-0">
-                      <strong style={{ color: ROLE_COLORS[role] }}>{ROLE_ICONS[role]} {role}:</strong>{" "}
+                  <h4 className="font-semibold text-foreground mb-2">
+                    What This Means
+                  </h4>
+                  {analysis.missingRoles.map((role) => (
+                    <p
+                      key={role}
+                      className="text-muted-foreground text-sm mb-2 last:mb-0"
+                    >
+                      <strong style={{ color: ROLE_COLORS[role] }}>
+                        {ROLE_ICONS[role]} {role}:
+                      </strong>{" "}
                       {ROLE_DESCRIPTIONS[role]} Without this role, the team{" "}
-                      {role === "Spark" && "has no source of new ideas — innovation dies at the starting line."}
-                      {role === "Amplifier" && "can't build momentum — good ideas die in silence."}
-                      {role === "Filter" && "ships untested ideas — quality suffers and trust erodes."}
-                      {role === "Ground" && "can't execute — brilliant plans never become reality."}
-                      {role === "Conductor" && "has no orchestrator — handoffs are chaotic and roles collide."}
+                      {role === "Spark" &&
+                        "has no source of new ideas - innovation dies at the starting line."}
+                      {role === "Amplifier" &&
+                        "can't build momentum - good ideas die in silence."}
+                      {role === "Filter" &&
+                        "ships untested ideas - quality suffers and trust erodes."}
+                      {role === "Ground" &&
+                        "can't execute - brilliant plans never become reality."}
+                      {role === "Conductor" &&
+                        "has no orchestrator - handoffs are chaotic and roles collide."}
                     </p>
                   ))}
                 </div>
@@ -529,7 +636,7 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
             </Card>
           )}
 
-          {/* Team Roster — Domain Members + Member Affiliates */}
+          {/* Team Roster - Domain Members + Member Affiliates */}
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="font-display text-lg flex items-center gap-2">
@@ -539,18 +646,25 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {domainMembers.map(m => (
+                {domainMembers.map((m) => (
                   <MemberCard key={m.id} m={m} />
                 ))}
-                {affiliates.filter(a => a.affiliationLabel === "member").map(a => (
-                  <MemberCard key={a.id} m={a} badge={a.guestEmail?.split("@")[1] || "affiliate"} />
-                ))}
+                {affiliates
+                  .filter((a) => a.affiliationLabel === "member")
+                  .map((a) => (
+                    <MemberCard
+                      key={a.id}
+                      m={a}
+                      badge={a.guestEmail?.split("@")[1] || "affiliate"}
+                    />
+                  ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* Candidates Under Evaluation — only non-member affiliates */}
-          {affiliates.filter(a => a.affiliationLabel !== "member").length > 0 && (
+          {/* Candidates Under Evaluation - only non-member affiliates */}
+          {affiliates.filter((a) => a.affiliationLabel !== "member").length >
+            0 && (
             <Card className="bg-cyan-500/5 border-cyan-500/20">
               <CardHeader>
                 <CardTitle className="font-display text-lg flex items-center gap-2 text-cyan-400">
@@ -560,12 +674,15 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm mb-4">
-                  These individuals have been assessed and are being evaluated for fit with the {companyName} team.
+                  These individuals have been assessed and are being evaluated
+                  for fit with the {companyName} team.
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {affiliates.filter(a => a.affiliationLabel !== "member").map(a => (
-                    <MemberCard key={a.id} m={a} badge={a.affiliationLabel} />
-                  ))}
+                  {affiliates
+                    .filter((a) => a.affiliationLabel !== "member")
+                    .map((a) => (
+                      <MemberCard key={a.id} m={a} badge={a.affiliationLabel} />
+                    ))}
                 </div>
               </CardContent>
             </Card>
@@ -583,7 +700,10 @@ export default function TeamProfileClient({ domain: domainProp }: { domain: stri
                   : "All roles are covered. Invite more team members to deepen the data and unlock coaching insights."}
               </p>
               <div className="flex flex-wrap gap-3 justify-center">
-                <Button onClick={() => router.push("/flow/assessment")} size="lg">
+                <Button
+                  onClick={() => router.push("/flow/assessment")}
+                  size="lg"
+                >
                   <Zap className="w-5 h-5 mr-2" />
                   Take the Assessment
                 </Button>

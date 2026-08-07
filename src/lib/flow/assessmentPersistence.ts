@@ -1,6 +1,6 @@
 /**
  * Assessment Persistence Layer
- * 
+ *
  * Provides user-keyed localStorage persistence for:
  * - Assessment history (all past results)
  * - Completion flag (skip form on return)
@@ -42,7 +42,7 @@ export function getAssessmentHistory(email?: string): PersistedAssessment[] {
     if (!raw) return [];
     const all: PersistedAssessment[] = JSON.parse(raw);
     if (email) {
-      return all.filter(a => a.email.toLowerCase() === email.toLowerCase());
+      return all.filter((a) => a.email.toLowerCase() === email.toLowerCase());
     }
     return all;
   } catch {
@@ -57,7 +57,9 @@ export function saveAssessmentToHistory(assessment: PersistedAssessment): void {
   try {
     const history = getAssessmentHistory();
     // Avoid duplicates by assessmentId
-    const existing = history.findIndex(a => a.assessmentId === assessment.assessmentId);
+    const existing = history.findIndex(
+      (a) => a.assessmentId === assessment.assessmentId,
+    );
     if (existing >= 0) {
       history[existing] = assessment;
     } else {
@@ -65,17 +67,22 @@ export function saveAssessmentToHistory(assessment: PersistedAssessment): void {
     }
     localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
   } catch {
-    // Silent fail — localStorage might be full
+    // Silent fail - localStorage might be full
   }
 }
 
 /**
  * Get the most recent assessment for a given email
  */
-export function getLatestAssessment(email?: string): PersistedAssessment | null {
+export function getLatestAssessment(
+  email?: string,
+): PersistedAssessment | null {
   const history = getAssessmentHistory(email);
   if (history.length === 0) return null;
-  return history.sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())[0];
+  return history.sort(
+    (a, b) =>
+      new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime(),
+  )[0];
 }
 
 // ─── Completion Flag ──────────────────────────────────────────────
@@ -84,7 +91,10 @@ export function getLatestAssessment(email?: string): PersistedAssessment | null 
  * Mark that a user (by email) has completed an assessment.
  * Stores the assessmentId so we can route them to results.
  */
-export function markAssessmentCompleted(email: string, assessmentId: number | string): void {
+export function markAssessmentCompleted(
+  email: string,
+  assessmentId: number | string,
+): void {
   try {
     const completions = getCompletions();
     completions[email.toLowerCase()] = {
@@ -100,34 +110,40 @@ export function markAssessmentCompleted(email: string, assessmentId: number | st
 /**
  * Check if a user has already completed an assessment
  */
-export function hasCompletedAssessment(email?: string): { completed: boolean; assessmentId?: number | string } {
+export function hasCompletedAssessment(email?: string): {
+  completed: boolean;
+  assessmentId?: number | string;
+} {
   // First check the completions map
   const completions = getCompletions();
-  
+
   if (email) {
     const entry = completions[email.toLowerCase()];
     if (entry) {
       return { completed: true, assessmentId: entry.assessmentId };
     }
   }
-  
+
   // Check generic completion (for non-logged-in users)
   const genericEntry = completions["__generic__"];
   if (genericEntry) {
     return { completed: true, assessmentId: genericEntry.assessmentId };
   }
-  
+
   // Fallback: check legacy localStorage keys
   const genericId = localStorage.getItem("assessment_id");
   const genericRole = localStorage.getItem("assessment_dominant_role");
   if (genericId && genericRole) {
     return { completed: true, assessmentId: genericId };
   }
-  
+
   return { completed: false };
 }
 
-function getCompletions(): Record<string, { assessmentId: number | string; completedAt: string }> {
+function getCompletions(): Record<
+  string,
+  { assessmentId: number | string; completedAt: string }
+> {
   try {
     const raw = localStorage.getItem(COMPLETION_KEY);
     if (!raw) return {};
@@ -145,7 +161,7 @@ function getCompletions(): Record<string, { assessmentId: number | string; compl
 export function saveTeamData(team: PersistedTeam): void {
   try {
     const teams = getPersistedTeams();
-    const existing = teams.findIndex(t => t.code === team.code);
+    const existing = teams.findIndex((t) => t.code === team.code);
     if (existing >= 0) {
       teams[existing] = team;
     } else {
@@ -176,7 +192,9 @@ export function getPersistedTeams(): PersistedTeam[] {
 export function getLatestTeam(): PersistedTeam | null {
   const teams = getPersistedTeams();
   if (teams.length === 0) return null;
-  return teams.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+  return teams.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )[0];
 }
 
 /**

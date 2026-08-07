@@ -1,7 +1,14 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Cpu, Brain, Globe, Zap, Database, Users, Briefcase, Bot } from 'lucide-react';
+import { motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Cpu,
+  Brain,
+  Globe,
+  Zap,
+  Database,
+} from "lucide-react";
 import { Button } from "@/components/flow/ui/button";
 
 export default function IntelClient() {
@@ -13,46 +20,12 @@ export default function IntelClient() {
       source: "HBR.org",
       date: "August 19, 2015",
       icon: <Brain className="h-6 w-6 text-primary" />,
-      summary: "Why traditional personality tests fail in the workplace: they measure 'who you are' (identity) rather than 'how you work' (operations). The Flow Circuit solves this by focusing on energy handoffs, not labels.",
-      quote: "These tests identify a black and white version of you... but work is grayscale.",
+      summary:
+        "Why traditional personality tests fail in the workplace: they measure 'who you are' (identity) rather than 'how you work' (operations). The Flow Circuit solves this by focusing on energy handoffs, not labels.",
+      quote:
+        "These tests identify a black and white version of you... but work is grayscale.",
       link: "https://hbr.org/2015/08/employees-cant-be-summed-up-by-a-personality-test",
-      tags: ["HBR", "Critique", "Workplace"]
-    },
-    {
-      id: 102,
-      title: "The End of the Job Description: Hiring for Flow",
-      author: "Josh Bersin",
-      source: "Bersin Academy",
-      date: "February 12, 2025",
-      icon: <Briefcase className="h-6 w-6 text-secondary" />,
-      summary: "Static job descriptions are obsolete. The future of hiring is about 'Role Fluidity'—matching candidates to the dynamic needs of the team circuit. Hiring for 'Spark' or 'Ground' predicts success better than hiring for 'Senior Manager'.",
-      quote: "We are moving from a hierarchy of titles to a network of capabilities.",
-      link: "https://joshbersin.com/",
-      tags: ["Hiring", "Future of Work", "Talent"]
-    },
-    {
-      id: 103,
-      title: "Orchestrating the Hybrid Workforce",
-      author: "McKinsey & Company",
-      source: "McKinsey Quarterly",
-      date: "November 15, 2024",
-      icon: <Users className="h-6 w-6 text-accent" />,
-      summary: "Hybrid work fails when it's uncoordinated. Successful teams use 'Asynchronous Orchestration'—clear protocols for when to collaborate (Spark/Amplifier) and when to execute alone (Filter/Ground).",
-      quote: "The office is no longer a place; it's a synchronization event.",
-      link: "https://www.mckinsey.com/",
-      tags: ["Hybrid Work", "Orchestration", "Management"]
-    },
-    {
-      id: 104,
-      title: "When AI Becomes the Manager",
-      author: "Wired Magazine",
-      source: "Wired",
-      date: "January 05, 2026",
-      icon: <Bot className="h-6 w-6 text-red-500" />,
-      summary: "AI agents are now capable of 'Algorithmic Management'—assigning tasks based on real-time flow data. The Flow Circuit provides the logic layer for these agents, ensuring they optimize for human energy, not just machine efficiency.",
-      quote: "The best boss of 2030 might be a bot that knows you're a 'Spark' and protects your calendar from 'Ground' work.",
-      link: "https://www.wired.com/",
-      tags: ["AI", "Automation", "Management"]
+      tags: ["HBR", "Critique", "Workplace"],
     },
     {
       id: 105,
@@ -61,11 +34,13 @@ export default function IntelClient() {
       source: "Forbes",
       date: "January 26, 2026",
       icon: <Zap className="h-6 w-6 text-yellow-500" />,
-      summary: "Managers are obsessed with ROI, but they measure it wrong. Real ROI comes from aligning people with their natural 'Flow Role'—maximizing their strengths rather than fixing their weaknesses.",
-      quote: "You should be evaluating whether your team members are in roles that maximize their strengths.",
+      summary:
+        "Managers are obsessed with ROI, but they measure it wrong. Real ROI comes from aligning people with their natural 'Flow Role'-maximizing their strengths rather than fixing their weaknesses.",
+      quote:
+        "You should be evaluating whether your team members are in roles that maximize their strengths.",
       link: "https://www.forbes.com/sites/andymolinsky/2026/01/26/that-personal-roi-question-is-destroying-your-best-people/",
-      tags: ["Forbes", "ROI", "Strengths"]
-    }
+      tags: ["Forbes", "ROI", "Strengths"],
+    },
   ];
 
   const articles = [
@@ -76,10 +51,12 @@ export default function IntelClient() {
       source: "Incomplete Ideas",
       date: "March 13, 2019",
       icon: <Cpu className="h-6 w-6 text-red-500" />,
-      summary: "The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin. We have to learn the bitter lesson that building in how we think we think does not work in the long run.",
-      quote: "The actual contents of minds are tremendously complex; we should stop trying to find simple ways to think about the contents of minds... and instead build tools that can find them for us.",
+      summary:
+        "The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin. We have to learn the bitter lesson that building in how we think we think does not work in the long run.",
+      quote:
+        "The actual contents of minds are tremendously complex; we should stop trying to find simple ways to think about the contents of minds... and instead build tools that can find them for us.",
       link: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
-      tags: ["Compute", "AI History", "Scale"]
+      tags: ["Compute", "AI History", "Scale"],
     },
     {
       id: 2,
@@ -88,10 +65,12 @@ export default function IntelClient() {
       source: "OpenAI Blog",
       date: "March 16, 2021",
       icon: <Database className="h-6 w-6 text-blue-500" />,
-      summary: "A great technological revolution is taking place. The technological progress we make in the next 100 years will be far larger than all we have made since we first controlled fire and invented the wheel. As AI lowers the cost of goods and services, we will see a phenomenal liberation of human potential.",
-      quote: "It is a moral imperative to realize this future, and we have to be aggressive about it. We need to design a system that embraces this technological future and taxes assets rather than labor.",
+      summary:
+        "A great technological revolution is taking place. The technological progress we make in the next 100 years will be far larger than all we have made since we first controlled fire and invented the wheel. As AI lowers the cost of goods and services, we will see a phenomenal liberation of human potential.",
+      quote:
+        "It is a moral imperative to realize this future, and we have to be aggressive about it. We need to design a system that embraces this technological future and taxes assets rather than labor.",
       link: "https://moores.samaltman.com/",
-      tags: ["Economics", "Abundance", "Future"]
+      tags: ["Economics", "Abundance", "Future"],
     },
     {
       id: 3,
@@ -100,10 +79,12 @@ export default function IntelClient() {
       source: "a16z",
       date: "October 16, 2023",
       icon: <Zap className="h-6 w-6 text-yellow-500" />,
-      summary: "We believe that there is no material problem – whether created by nature or by technology – that cannot be solved with more technology. We believe that the human population can easily grow to 50 billion or more, and then far beyond that as we ultimately settle other planets.",
-      quote: "We believe that intelligence is the ultimate engine of progress. We believe that we are poised for an intelligence explosion that will expand our capabilities by orders of magnitude.",
+      summary:
+        "We believe that there is no material problem – whether created by nature or by technology – that cannot be solved with more technology. We believe that the human population can easily grow to 50 billion or more, and then far beyond that as we ultimately settle other planets.",
+      quote:
+        "We believe that intelligence is the ultimate engine of progress. We believe that we are poised for an intelligence explosion that will expand our capabilities by orders of magnitude.",
       link: "https://a16z.com/the-techno-optimist-manifesto/",
-      tags: ["Philosophy", "Growth", "Acceleration"]
+      tags: ["Philosophy", "Growth", "Acceleration"],
     },
     {
       id: 4,
@@ -112,10 +93,12 @@ export default function IntelClient() {
       source: "Wired",
       date: "February 12, 2019",
       icon: <Globe className="h-6 w-6 text-green-500" />,
-      summary: "We are building a 1-to-1 map of almost unimaginable scope. When it's complete, our physical reality will merge with the digital universe. The Mirrorworld doesn't just reflect the world; it contextualizes it, giving us a god-like perspective on our own existence.",
-      quote: "The Mirrorworld will be the third great platform, after the web and social media. It will be the platform where the digital and physical worlds finally converge.",
+      summary:
+        "We are building a 1-to-1 map of almost unimaginable scope. When it's complete, our physical reality will merge with the digital universe. The Mirrorworld doesn't just reflect the world; it contextualizes it, giving us a god-like perspective on our own existence.",
+      quote:
+        "The Mirrorworld will be the third great platform, after the web and social media. It will be the platform where the digital and physical worlds finally converge.",
       link: "https://www.wired.com/story/mirrorworld-ar-next-big-tech-platform/",
-      tags: ["AR", "Digital Twin", "Spatial Computing"]
+      tags: ["AR", "Digital Twin", "Spatial Computing"],
     },
     {
       id: 5,
@@ -124,11 +107,13 @@ export default function IntelClient() {
       source: "Quanta Magazine",
       date: "January 22, 2014",
       icon: <Brain className="h-6 w-6 text-purple-500" />,
-      summary: "Life does not violate the second law of thermodynamics; it is a manifestation of it. Matter self-organizes into life-like structures specifically to dissipate heat more efficiently. Intelligence is just a thermodynamic process of prediction and adaptation.",
-      quote: "You start with a random clump of atoms, and if you shine light on it for long enough, it should not be so surprising that you get a plant.",
+      summary:
+        "Life does not violate the second law of thermodynamics; it is a manifestation of it. Matter self-organizes into life-like structures specifically to dissipate heat more efficiently. Intelligence is just a thermodynamic process of prediction and adaptation.",
+      quote:
+        "You start with a random clump of atoms, and if you shine light on it for long enough, it should not be so surprising that you get a plant.",
       link: "https://www.quantamagazine.org/a-new-thermodynamics-theory-of-the-origin-of-life-20140122/",
-      tags: ["Physics", "Thermodynamics", "Origin of Life"]
-    }
+      tags: ["Physics", "Thermodynamics", "Origin of Life"],
+    },
   ];
 
   return (
@@ -143,15 +128,20 @@ export default function IntelClient() {
             MISSION CRITICAL INTEL
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            The signal in the noise. Foundational texts that bridge the gap between silicon and soul, compute and consciousness.
+            The signal in the noise. Foundational texts that bridge the gap
+            between silicon and soul, compute and consciousness.
           </p>
         </motion.div>
 
         {/* Assessment Intelligence Section */}
         <div className="mb-24">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Assessments in the News</h2>
-            <p className="text-muted-foreground">Why the market is waking up to the "Human OS" problem.</p>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">
+              Assessments in the News
+            </h2>
+            <p className="text-muted-foreground">
+              Why the market is waking up to the "Human OS" problem.
+            </p>
           </div>
           <div className="grid gap-8 max-w-5xl mx-auto">
             {assessmentNews.map((article, index) => (
@@ -175,7 +165,9 @@ export default function IntelClient() {
 
                   <div className="flex-grow space-y-4">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                      <span className="font-mono text-secondary">{article.source}</span>
+                      <span className="font-mono text-secondary">
+                        {article.source}
+                      </span>
                       <span>•</span>
                       <span>{article.date}</span>
                     </div>
@@ -194,8 +186,11 @@ export default function IntelClient() {
 
                     <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
                       <div className="flex gap-2">
-                        {article.tags.map(tag => (
-                          <span key={tag} className="px-2 py-1 rounded-md bg-secondary/10 text-secondary text-xs font-mono uppercase tracking-wider">
+                        {article.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 rounded-md bg-secondary/10 text-secondary text-xs font-mono uppercase tracking-wider"
+                          >
                             {tag}
                           </span>
                         ))}
@@ -204,7 +199,7 @@ export default function IntelClient() {
                       <Button
                         variant="outline"
                         className="group-hover:bg-secondary group-hover:text-secondary-foreground transition-all duration-300"
-                        onClick={() => window.open(article.link, '_blank')}
+                        onClick={() => window.open(article.link, "_blank")}
                       >
                         Read Source
                       </Button>
@@ -217,8 +212,12 @@ export default function IntelClient() {
         </div>
 
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Foundational Intelligence</h2>
-          <p className="text-muted-foreground">The deep code of compute and consciousness.</p>
+          <h2 className="text-3xl font-bold tracking-tight mb-4">
+            Foundational Intelligence
+          </h2>
+          <p className="text-muted-foreground">
+            The deep code of compute and consciousness.
+          </p>
         </div>
 
         <div className="grid gap-8 max-w-5xl mx-auto">
@@ -243,7 +242,9 @@ export default function IntelClient() {
 
                 <div className="flex-grow space-y-4">
                   <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                    <span className="font-mono text-primary">{article.source}</span>
+                    <span className="font-mono text-primary">
+                      {article.source}
+                    </span>
                     <span>•</span>
                     <span>{article.date}</span>
                   </div>
@@ -262,8 +263,11 @@ export default function IntelClient() {
 
                   <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
                     <div className="flex gap-2">
-                      {article.tags.map(tag => (
-                        <span key={tag} className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-mono uppercase tracking-wider">
+                      {article.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-mono uppercase tracking-wider"
+                        >
                           {tag}
                         </span>
                       ))}
@@ -272,7 +276,7 @@ export default function IntelClient() {
                     <Button
                       variant="outline"
                       className="group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300"
-                      onClick={() => window.open(article.link, '_blank')}
+                      onClick={() => window.open(article.link, "_blank")}
                     >
                       Read Source
                     </Button>

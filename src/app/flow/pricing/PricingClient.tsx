@@ -1,14 +1,28 @@
 "use client";
 
 import { Button } from "@/components/flow/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
-import { Check, Zap, Users, Building2, ArrowRight, Crown, Loader2, Settings } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
+import {
+  Check,
+  Zap,
+  Users,
+  Building2,
+  ArrowRight,
+  Crown,
+  Loader2,
+  Settings,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
 import { useEffect, useState } from "react";
-import BlogBridge from '@/components/flow/BlogBridge';
+import BlogBridge from "@/components/flow/BlogBridge";
 
 const TIERS = [
   {
@@ -16,7 +30,8 @@ const TIERS = [
     subtitle: "Individual Discovery",
     price: "Free",
     period: "",
-    description: "Discover your natural Flow Circuit role and understand your operational energy.",
+    description:
+      "Discover your natural Flow Circuit role and understand your operational energy.",
     icon: Zap,
     color: "#f59e0b",
     features: [
@@ -26,7 +41,7 @@ const TIERS = [
       "Purity score and stress radiation map",
       "Shareable results card for social",
       "PDF report download",
-      "Optional Soulprint birth data collection",
+      "Optional Soulprint add-on (just-for-fun, sold separately)",
     ],
     cta: "Take the Assessment",
     tier: "explorer" as const,
@@ -37,7 +52,8 @@ const TIERS = [
     subtitle: "Team Performance",
     price: "$29",
     period: "/member/month",
-    description: "Map your entire team's energy circuit. See where friction lives and where flow happens.",
+    description:
+      "Map your entire team's energy circuit. See where friction lives and where flow happens.",
     icon: Users,
     color: "#3b82f6",
     features: [
@@ -60,7 +76,8 @@ const TIERS = [
     subtitle: "Organizational Intelligence",
     price: "Custom",
     period: "",
-    description: "Deploy across departments, M&A integrations, and venture due diligence.",
+    description:
+      "Deploy across departments, M&A integrations, and venture due diligence.",
     icon: Building2,
     color: "#8b5cf6",
     features: [
@@ -72,7 +89,6 @@ const TIERS = [
       "Venture due diligence team assessment",
       "Custom API access",
       "Dedicated success manager",
-      "Soulprint multi-framework personality reports",
       "White-label options",
       "SOC 2 compliance documentation",
     ],
@@ -92,14 +108,15 @@ export default function Pricing() {
     const params = new URLSearchParams(window.location.search);
     if (params.get("success") === "true") {
       toast.success("Welcome to the Tribe!", {
-        description: "Your subscription is active. You now have full access to team features.",
+        description:
+          "Your subscription is active. You now have full access to team features.",
         duration: 8000,
       });
       // Clean URL
       window.history.replaceState({}, "", "/pricing");
     } else if (params.get("canceled") === "true") {
       toast.info("Checkout canceled", {
-        description: "No worries — you can subscribe anytime.",
+        description: "No worries - you can subscribe anytime.",
       });
       window.history.replaceState({}, "", "/pricing");
     }
@@ -129,7 +146,9 @@ export default function Pricing() {
       window.open(data.url, "_blank");
     },
     onError: (err: any) => {
-      toast.error("Could not open billing portal", { description: err.message });
+      toast.error("Could not open billing portal", {
+        description: err.message,
+      });
     },
   });
 
@@ -141,7 +160,8 @@ export default function Pricing() {
 
     if (tier.tier === "enterprise") {
       toast.info("Enterprise Inquiry", {
-        description: "Enterprise pricing is coming soon. Contact us at hello@theflowcircuit.com for early access.",
+        description:
+          "Enterprise pricing is coming soon. Contact us at hello@theflowcircuit.com for early access.",
       });
       return;
     }
@@ -167,10 +187,15 @@ export default function Pricing() {
           Stop guessing. Start mapping.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Individual discovery is free. Team intelligence is where the real ROI lives.
-          Companies that align people to their natural operational energy see{" "}
-          <strong className="text-foreground">35% less friction cost</strong> and{" "}
-          <strong className="text-foreground">3x faster innovation cycles</strong>.
+          Individual discovery is free. Team intelligence is where the real ROI
+          lives. Companies that align people to their natural operational energy
+          see{" "}
+          <strong className="text-foreground">35% less friction cost</strong>{" "}
+          and{" "}
+          <strong className="text-foreground">
+            3x faster innovation cycles
+          </strong>
+          .
         </p>
       </section>
 
@@ -192,7 +217,9 @@ export default function Pricing() {
                 variant="outline"
                 size="sm"
                 className="gap-1"
-                onClick={() => createPortal.mutate({ origin: window.location.origin })}
+                onClick={() =>
+                  createPortal.mutate({ origin: window.location.origin })
+                }
               >
                 <Settings className="w-4 h-4" /> Manage
               </Button>
@@ -223,14 +250,21 @@ export default function Pricing() {
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-3"
                   style={{ backgroundColor: `${tier.color}20` }}
                 >
-                  <tier.icon className="w-6 h-6" style={{ color: tier.color }} />
+                  <tier.icon
+                    className="w-6 h-6"
+                    style={{ color: tier.color }}
+                  />
                 </div>
-                <CardTitle className="text-xl font-black">{tier.name}</CardTitle>
+                <CardTitle className="text-xl font-black">
+                  {tier.name}
+                </CardTitle>
                 <p className="text-sm text-muted-foreground">{tier.subtitle}</p>
                 <div className="mt-3">
                   <span className="text-4xl font-black">{tier.price}</span>
                   {tier.period && (
-                    <span className="text-sm text-muted-foreground">{tier.period}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {tier.period}
+                    </span>
                   )}
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
@@ -257,7 +291,8 @@ export default function Pricing() {
                 >
                   {checkingOut && tier.tier === "tribe" ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin" /> Creating checkout...
+                      <Loader2 className="w-4 h-4 animate-spin" /> Creating
+                      checkout...
                     </>
                   ) : subStatus?.active && tier.tier === "tribe" ? (
                     <>
@@ -278,10 +313,18 @@ export default function Pricing() {
       {/* Trial Terms below tier cards */}
       <section className="max-w-md mx-auto px-4 mb-16 text-center">
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 space-y-2">
-          <p className="text-sm font-bold text-blue-900">No credit card required.</p>
-          <p className="text-sm text-blue-800">Full Tribe access for 30 days. Up to 10 team members during trial.</p>
-          <p className="text-sm text-blue-700">Converts to $29/member/month on day 31.</p>
-          <p className="text-xs text-blue-600">Cancel anytime before then — one click, no questions.</p>
+          <p className="text-sm font-bold text-blue-900">
+            No credit card required.
+          </p>
+          <p className="text-sm text-blue-800">
+            Full Tribe access for 30 days. Up to 10 team members during trial.
+          </p>
+          <p className="text-sm text-blue-700">
+            Converts to $29/member/month on day 31.
+          </p>
+          <p className="text-xs text-blue-600">
+            Cancel anytime before then - one click, no questions.
+          </p>
         </div>
       </section>
 
@@ -291,17 +334,22 @@ export default function Pricing() {
           <CardContent className="p-8 space-y-4">
             <h3 className="font-black text-lg text-center">The ROI Math</h3>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">One wasted meeting (10 people)</span>
+              <span className="text-sm text-muted-foreground">
+                One wasted meeting (10 people)
+              </span>
               <span className="font-bold text-red-600">$1,200</span>
             </div>
             <div className="border-t border-amber-200" />
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">One month of Tribe (10 people)</span>
+              <span className="text-sm text-muted-foreground">
+                One month of Tribe (10 people)
+              </span>
               <span className="font-bold text-emerald-600">$290</span>
             </div>
             <div className="border-t border-amber-200" />
             <p className="text-xs text-center text-muted-foreground pt-2">
-              The Tribe plan pays for itself the first time a role-misfit handoff doesn't happen.
+              The Tribe plan pays for itself the first time a role-misfit
+              handoff doesn't happen.
             </p>
           </CardContent>
         </Card>
@@ -331,15 +379,16 @@ export default function Pricing() {
               <div>
                 <p className="text-3xl font-black text-blue-400">80%</p>
                 <p className="text-sm text-gray-300 mt-1">
-                  Of turnover comes from role misfit, not skill gaps. You're losing
-                  people because they're in the wrong seat, not the wrong company.
+                  Of turnover comes from role misfit, not skill gaps. You're
+                  losing people because they're in the wrong seat, not the wrong
+                  company.
                 </p>
               </div>
               <div>
                 <p className="text-3xl font-black text-green-400">3x</p>
                 <p className="text-sm text-gray-300 mt-1">
-                  Startups with balanced Spark-Ground ratios are 300% more likely
-                  to reach Series B than all-Spark visionary teams.
+                  Startups with balanced Spark-Ground ratios are 300% more
+                  likely to reach Series B than all-Spark visionary teams.
                 </p>
               </div>
             </div>
@@ -360,19 +409,19 @@ export default function Pricing() {
             },
             {
               q: "What's the difference between the free assessment and the Tribe plan?",
-              a: "The free assessment tells you who YOU are. The Tribe plan shows you how your energy interacts with your team's energy — where friction lives, where flow happens, and what's missing. Individual results are only 30% of the picture.",
+              a: "The free assessment tells you who YOU are. The Tribe plan shows you how your energy interacts with your team's energy - where friction lives, where flow happens, and what's missing. Individual results are only 30% of the picture.",
             },
             {
               q: "Can I try the team features before committing?",
-              a: "Yes — start a 30-day free trial with no credit card required. You get full Tribe access including team dashboards, 360 peer review, friction pair detection, and the manager guidebook for up to 10 team members. Cancel anytime before day 30, no charge.",
+              a: "Yes - start a 30-day free trial with no credit card required. You get full Tribe access including team dashboards, 360 peer review, friction pair detection, and the manager guidebook for up to 10 team members. Cancel anytime before day 30, no charge.",
             },
             {
               q: "What is the Soulprint report?",
-              a: "Soulprint is an optional deep-dive that maps your birth data across 8+ personality frameworks (Enneagram, Human Design, Gene Keys, Western/Vedic/Chinese Astrology, Spiral Dynamics, Numerology). It reveals WHY you play your Flow Circuit role the way you do. Coming soon as part of the Enterprise tier.",
+              a: "Soulprint is a separate, just-for-fun add-on - not part of any business or compliance tier. It maps your birth data across frameworks like Astrology, Human Design, and Numerology for personal exploration. It's sold individually as an optional purchase and isn't connected to the operational research behind the Flow Circuit assessment or to any Enterprise compliance features.",
             },
             {
               q: "How is this different from MBTI or StrengthsFinder?",
-              a: "Those tools measure personality traits. The Flow Circuit measures operational energy — how you naturally function in a team context. We don't care if you're an introvert or extrovert. We care whether you're a Spark who generates ideas, a Ground who executes them, or a Conductor who orchestrates the whole circuit.",
+              a: "Those tools measure personality traits. The Flow Circuit measures operational energy - how you naturally function in a team context. We don't care if you're an introvert or extrovert. We care whether you're a Spark who generates ideas, a Ground who executes them, or a Conductor who orchestrates the whole circuit.",
             },
           ].map((faq, i) => (
             <div key={i} className="border-b border-gray-200 pb-4">

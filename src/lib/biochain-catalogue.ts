@@ -158,7 +158,7 @@ export const PRODUCT_CATEGORIES: { name: string; items: string[] }[] = [
     ],
   },
   {
-    name: "Biologics — Exosomes & Stem Cells",
+    name: "Biologics - Exosomes & Stem Cells",
     items: [
       "MSC-Derived Exosomes (IV-grade)",
       "Extracellular Matrix (EXM)",
@@ -175,7 +175,7 @@ export const PRODUCT_CATEGORIES: { name: string; items: string[] }[] = [
     items: [
       "Adaptogenic APIs",
       "Custom Formulation / White-Label",
-      "Other — not listed above",
+      "Other - not listed above",
     ],
   },
 ];

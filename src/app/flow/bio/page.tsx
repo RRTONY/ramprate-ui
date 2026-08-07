@@ -6,7 +6,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 export const metadata: Metadata = {
   title: "Tony Greenberg | Architect of the Invisible",
   description:
-    "Meet Tony Greenberg, founder of RampRate and creator of The Flow Circuit — an entrepreneur turned architect of human operating systems, bridging business impact with the science of human energy.",
+    "Meet Tony Greenberg, founder of RampRate and creator of The Flow Circuit - an entrepreneur turned architect of human operating systems, bridging business impact with the science of human energy.",
   alternates: { canonical: "https://ramprate.com/flow/bio" },
 };
 

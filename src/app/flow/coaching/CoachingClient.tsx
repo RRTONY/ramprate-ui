@@ -3,7 +3,12 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { useAuth } from "@/hooks/flow/useAuth";
 import { trpc } from "@/lib/flow/trpc";
 import { useRouter } from "next/navigation";
@@ -14,23 +19,65 @@ import {
   getCombinationProfile,
 } from "@/lib/flow/surveyData";
 import {
-  Zap, Target, Shield, Sparkles, Brain,
-  Briefcase, Home, User, RefreshCw, Lock,
-  ArrowRight, ChevronRight
+  Zap,
+  Target,
+  Shield,
+  Sparkles,
+  Brain,
+  Briefcase,
+  Home,
+  User,
+  RefreshCw,
+  Lock,
+  ArrowRight,
+  ChevronRight,
 } from "lucide-react";
 
 type CoachingContext = "work" | "family" | "personal";
 
-const contextConfig: Record<CoachingContext, { label: string; icon: typeof Briefcase; description: string }> = {
-  work: { label: "Work", icon: Briefcase, description: "Optimize your role in professional teams" },
-  family: { label: "Family", icon: Home, description: "Navigate family dynamics with awareness" },
-  personal: { label: "Personal", icon: User, description: "Grow toward your best self" },
+const contextConfig: Record<
+  CoachingContext,
+  { label: string; icon: typeof Briefcase; description: string }
+> = {
+  work: {
+    label: "Work",
+    icon: Briefcase,
+    description: "Optimize your role in professional teams",
+  },
+  family: {
+    label: "Family",
+    icon: Home,
+    description: "Navigate family dynamics with awareness",
+  },
+  personal: {
+    label: "Personal",
+    icon: User,
+    description: "Grow toward your best self",
+  },
 };
 
-const categoryConfig: Record<string, { label: string; icon: typeof Zap; color: string; bg: string }> = {
-  leverage: { label: "Leverage", icon: Zap, color: "text-amber-600", bg: "bg-amber-50 border-amber-200" },
-  stretch: { label: "Stretch", icon: Target, color: "text-blue-600", bg: "bg-blue-50 border-blue-200" },
-  protect: { label: "Protect", icon: Shield, color: "text-emerald-600", bg: "bg-emerald-50 border-emerald-200" },
+const categoryConfig: Record<
+  string,
+  { label: string; icon: typeof Zap; color: string; bg: string }
+> = {
+  leverage: {
+    label: "Leverage",
+    icon: Zap,
+    color: "text-amber-600",
+    bg: "bg-amber-50 border-amber-200",
+  },
+  stretch: {
+    label: "Stretch",
+    icon: Target,
+    color: "text-blue-600",
+    bg: "bg-blue-50 border-blue-200",
+  },
+  protect: {
+    label: "Protect",
+    icon: Shield,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50 border-emerald-200",
+  },
 };
 
 export default function Coaching() {
@@ -70,7 +117,10 @@ export default function Coaching() {
       role: selfData.dominant.role,
       combinationProfile: combinationProfile.label,
       purityScore: combinationProfile.purityScore,
-      percentages: rolePercentages.map(p => ({ role: p.role, percentage: p.percentage })),
+      percentages: rolePercentages.map((p) => ({
+        role: p.role,
+        percentage: p.percentage,
+      })),
       context,
     });
   };
@@ -87,7 +137,10 @@ export default function Coaching() {
               Coaching prompts are personalized to your Flow Circuit profile.
               Sign in to access your weekly coaching.
             </p>
-            <Button onClick={() => window.location.href = "/flow/login"} className="bg-black text-white">
+            <Button
+              onClick={() => (window.location.href = "/flow/login")}
+              className="bg-black text-white"
+            >
               Sign In to Continue
             </Button>
           </CardContent>
@@ -103,12 +156,17 @@ export default function Coaching() {
         <Card className="max-w-md w-full text-center">
           <CardContent className="pt-8 pb-8">
             <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-            <h2 className="text-xl font-bold mb-2">Take the Assessment First</h2>
+            <h2 className="text-xl font-bold mb-2">
+              Take the Assessment First
+            </h2>
             <p className="text-gray-600 mb-6">
-              Your coaching prompts are generated from your Flow Circuit profile.
-              Complete the assessment to unlock personalized coaching.
+              Your coaching prompts are generated from your Flow Circuit
+              profile. Complete the assessment to unlock personalized coaching.
             </p>
-            <Button onClick={() => router.push("/flow/assessment")} className="bg-black text-white">
+            <Button
+              onClick={() => router.push("/flow/assessment")}
+              className="bg-black text-white"
+            >
               Take the Assessment <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </CardContent>
@@ -124,7 +182,10 @@ export default function Coaching() {
       {/* Header */}
       <section className="border-b">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <div className="flex items-center gap-2 mb-4">
               <Sparkles className="w-5 h-5 text-amber-500" />
               <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
@@ -135,9 +196,11 @@ export default function Coaching() {
               Your Coaching Prompts
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
-              Personalized actions based on your <strong>{combinationProfile.label}</strong> profile
-              ({combinationProfile.purityScore}% purity). Three prompts to leverage your strengths,
-              stretch your growth edge, and protect against burnout.
+              Personalized actions based on your{" "}
+              <strong>{combinationProfile.label}</strong> profile (
+              {combinationProfile.purityScore}% purity). Three prompts to
+              leverage your strengths, stretch your growth edge, and protect
+              against burnout.
             </p>
           </motion.div>
         </div>
@@ -147,10 +210,17 @@ export default function Coaching() {
       <section className="border-b bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-sm font-semibold text-gray-500">Context:</span>
+            <span className="text-sm font-semibold text-gray-500">
+              Context:
+            </span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            {(Object.entries(contextConfig) as [CoachingContext, typeof contextConfig.work][]).map(([key, cfg]) => {
+            {(
+              Object.entries(contextConfig) as [
+                CoachingContext,
+                typeof contextConfig.work,
+              ][]
+            ).map(([key, cfg]) => {
               const Icon = cfg.icon;
               return (
                 <button
@@ -214,40 +284,60 @@ export default function Coaching() {
                 animate={{ opacity: 1 }}
                 className="space-y-6"
               >
-                {prompts.map((prompt: { title: string; prompt: string; category: string }, i: number) => {
-                  const cat = categoryConfig[prompt.category] || categoryConfig.leverage;
-                  const Icon = cat.icon;
-                  return (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.15 }}
-                    >
-                      <Card className={`border-2 ${cat.bg}`}>
-                        <CardHeader className="pb-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Icon className={`w-5 h-5 ${cat.color}`} />
-                              <span className={`text-xs font-bold uppercase tracking-wider ${cat.color}`}>
-                                {cat.label}
+                {prompts.map(
+                  (
+                    prompt: { title: string; prompt: string; category: string },
+                    i: number,
+                  ) => {
+                    const cat =
+                      categoryConfig[prompt.category] ||
+                      categoryConfig.leverage;
+                    const Icon = cat.icon;
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.15 }}
+                      >
+                        <Card className={`border-2 ${cat.bg}`}>
+                          <CardHeader className="pb-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Icon className={`w-5 h-5 ${cat.color}`} />
+                                <span
+                                  className={`text-xs font-bold uppercase tracking-wider ${cat.color}`}
+                                >
+                                  {cat.label}
+                                </span>
+                              </div>
+                              <span className="text-xs text-gray-400">
+                                Prompt {i + 1} of 3
                               </span>
                             </div>
-                            <span className="text-xs text-gray-400">Prompt {i + 1} of 3</span>
-                          </div>
-                          <CardTitle className="text-lg font-bold mt-1">{prompt.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-gray-700 leading-relaxed">{prompt.prompt}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
+                            <CardTitle className="text-lg font-bold mt-1">
+                              {prompt.title}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-gray-700 leading-relaxed">
+                              {prompt.prompt}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    );
+                  },
+                )}
 
                 <div className="text-center pt-6 text-sm text-gray-500">
-                  <p>These prompts are tailored to your {combinationProfile.label} profile in a {context} context.</p>
-                  <p className="mt-1">Regenerate anytime for fresh perspective.</p>
+                  <p>
+                    These prompts are tailored to your{" "}
+                    {combinationProfile.label} profile in a {context} context.
+                  </p>
+                  <p className="mt-1">
+                    Regenerate anytime for fresh perspective.
+                  </p>
                 </div>
               </motion.div>
             ) : !generateMutation.isPending ? (
@@ -263,7 +353,8 @@ export default function Coaching() {
                 </h3>
                 <p className="text-gray-500 max-w-md mx-auto">
                   Click "Generate This Week's Coaching" above to get three
-                  personalized action prompts based on your Flow Circuit profile.
+                  personalized action prompts based on your Flow Circuit
+                  profile.
                 </p>
               </motion.div>
             ) : null}
@@ -274,12 +365,29 @@ export default function Coaching() {
       {/* How It Works */}
       <section className="border-t bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <h2 className="text-xl font-bold mb-6 text-center">How Coaching Works</h2>
+          <h2 className="text-xl font-bold mb-6 text-center">
+            How Coaching Works
+          </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: Zap, title: "Leverage", desc: "Actions that lean into your natural strengths. Do more of what comes naturally — this is where your highest ROI lives.", color: "text-amber-600" },
-              { icon: Target, title: "Stretch", desc: "Gentle growth toward your secondary role. Build capacity without burning out. Small steps, big compound returns.", color: "text-blue-600" },
-              { icon: Shield, title: "Protect", desc: "Guard against operating outside your nature. Recognize the stress signals and create boundaries that preserve your energy.", color: "text-emerald-600" },
+              {
+                icon: Zap,
+                title: "Leverage",
+                desc: "Actions that lean into your natural strengths. Do more of what comes naturally - this is where your highest ROI lives.",
+                color: "text-amber-600",
+              },
+              {
+                icon: Target,
+                title: "Stretch",
+                desc: "Gentle growth toward your secondary role. Build capacity without burning out. Small steps, big compound returns.",
+                color: "text-blue-600",
+              },
+              {
+                icon: Shield,
+                title: "Protect",
+                desc: "Guard against operating outside your nature. Recognize the stress signals and create boundaries that preserve your energy.",
+                color: "text-emerald-600",
+              },
             ].map((item, i) => (
               <Card key={i} className="text-center">
                 <CardContent className="pt-6">

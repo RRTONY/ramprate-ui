@@ -6,7 +6,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 export const metadata: Metadata = {
   title: "Mission Critical Intel | Signal in the Noise",
   description:
-    "Foundational texts bridging silicon and soul, compute and consciousness — curated commentary on assessments in the news plus the essays shaping how we think about AI, work, and human potential.",
+    "Foundational texts bridging silicon and soul, compute and consciousness - curated commentary on assessments in the news plus the essays shaping how we think about AI, work, and human potential.",
   alternates: { canonical: "https://ramprate.com/flow/intel" },
 };
 

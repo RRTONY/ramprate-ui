@@ -4,10 +4,15 @@ import { ClientOnly } from "@/components/flow/ClientOnly";
 
 export const metadata: Metadata = {
   title: "Family 360 Review | The Flow Circuit",
-  description: "Rank how a family member shows up at home across the five family energy archetypes — anonymous, aggregated feedback.",
+  description:
+    "Rank how a family member shows up at home across the five family energy archetypes - anonymous, aggregated feedback.",
 };
 
-export default async function Page({ params }: { params: Promise<{ token: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}) {
   const { token } = await params;
   return (
     <ClientOnly>

@@ -2,42 +2,56 @@
 
 import Link from "next/link";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, Fingerprint, Zap, Lock, Sparkles, Brain, Heart, Eye } from "lucide-react";
+import {
+  ArrowRight,
+  Fingerprint,
+  Zap,
+  Lock,
+  Sparkles,
+  Brain,
+  Heart,
+  Eye,
+} from "lucide-react";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 const reportSections = [
   {
     icon: Zap,
     title: "Your Flow Circuit DNA",
-    description: "Your dominant role, percentage breakdown across all five roles, behavioral patterns, blind spots, and how you relay energy in a team. The part of you that shows up at work whether you want it to or not.",
+    description:
+      "Your dominant role, percentage breakdown across all five roles, behavioral patterns, blind spots, and how you relay energy in a team. The part of you that shows up at work whether you want it to or not.",
     source: "Flow Circuit Assessment",
     color: "text-yellow-400",
   },
   {
     icon: Fingerprint,
     title: "Your SoulPrint Blueprint",
-    description: "Your natal chart, Human Design type, Enneagram pattern, and Gene Keys profile. The underlying inertia of your soul — what you're built for at a level deeper than personality.",
+    description:
+      "Your natal chart, Human Design type, Enneagram pattern, and Gene Keys profile. The underlying inertia of your soul - what you're built for at a level deeper than personality.",
     source: "TrueSelf SoulPrint",
     color: "text-purple-400",
   },
   {
     icon: Brain,
     title: "The Convergence Analysis",
-    description: "Where your team wiring and your soul blueprint align — and where they conflict. This is the section that explains why you keep ending up in the same role, the same conflicts, the same breakthroughs.",
+    description:
+      "Where your team wiring and your soul blueprint align - and where they conflict. This is the section that explains why you keep ending up in the same role, the same conflicts, the same breakthroughs.",
     source: "AI-Synthesized",
     color: "text-cyan-400",
   },
   {
     icon: Heart,
     title: "The Resistance Map",
-    description: "What your soul won't let you stop doing, even when your team role says otherwise. The tension between who you are in a meeting and who you are at 3am when nobody's watching.",
+    description:
+      "What your soul won't let you stop doing, even when your team role says otherwise. The tension between who you are in a meeting and who you are at 3am when nobody's watching.",
     source: "AI-Synthesized",
     color: "text-rose-400",
   },
   {
     icon: Eye,
     title: "The Integration Path",
-    description: "Actionable guidance for aligning your team role with your soul's blueprint. Not a prescription — a map. Where to lean in, where to let go, and where the real growth lives.",
+    description:
+      "Actionable guidance for aligning your team role with your soul's blueprint. Not a prescription - a map. Where to lean in, where to let go, and where the real growth lives.",
     source: "AI-Synthesized",
     color: "text-emerald-400",
   },
@@ -47,19 +61,22 @@ const tiers = [
   {
     name: "The Blueprint",
     subtitle: "Science-Driven",
-    description: "Behavioral psychology, neuroscience-backed personality patterns, cognitive tendencies. The things you can measure, replicate, and defend in a board meeting.",
+    description:
+      "Behavioral psychology, neuroscience-backed personality patterns, cognitive tendencies. The things you can measure, replicate, and defend in a board meeting.",
     icon: "🔬",
   },
   {
     name: "The Compass",
     subtitle: "Standard",
-    description: "Enneagram, Human Design, astrology fundamentals. The patterns that are just there — whether you believe in them or not.",
+    description:
+      "Enneagram, Human Design, astrology fundamentals. The patterns that are just there - whether you believe in them or not.",
     icon: "🧭",
   },
   {
     name: "The Oracle",
     subtitle: "Deeply Spiritual",
-    description: "Gene Keys, Vedic astrology, karmic patterns, soul purpose, shadow work. The dimension that assessment science pretends doesn't exist.",
+    description:
+      "Gene Keys, Vedic astrology, karmic patterns, soul purpose, shadow work. The dimension that assessment science pretends doesn't exist.",
     icon: "🔮",
   },
 ];
@@ -72,7 +89,9 @@ export default function CombinedReport() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-8">
             <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-mono text-purple-400">DNA + Soul</span>
+            <span className="text-sm font-mono text-purple-400">
+              DNA + Soul
+            </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
             The Combined Report
@@ -81,7 +100,7 @@ export default function CombinedReport() {
             Your Flow Circuit tells you how you wire into a team. Your SoulPrint
             tells you what your soul won't let you stop doing. The Combined
             Report tells you{" "}
-            <span className="text-foreground font-semibold">why</span> — and
+            <span className="text-foreground font-semibold">why</span> - and
             what to do about it.
           </p>
         </div>
@@ -169,7 +188,7 @@ export default function CombinedReport() {
               {
                 step: "02",
                 title: "Add Your Birth Data",
-                desc: "Date, time, and place of birth. This feeds the SoulPrint engine — your natal chart, Human Design, Enneagram, and Gene Keys profile.",
+                desc: "Date, time, and place of birth. This feeds the SoulPrint engine - your natal chart, Human Design, Enneagram, and Gene Keys profile.",
               },
               {
                 step: "03",

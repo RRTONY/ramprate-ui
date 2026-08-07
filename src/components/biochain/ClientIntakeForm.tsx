@@ -75,11 +75,11 @@ const SUPPLIER_DISCOVERY_OPTIONS = [
 ];
 
 const SATISFACTION_OPTIONS = [
-  "5 — Very satisfied, mostly looking to optimize",
-  "4 — Generally satisfied, some gaps",
-  "3 — Mixed — some suppliers work, others don't",
-  "2 — Frustrated — real problems need solving",
-  "1 — Significant issues — actively looking to switch",
+  "5 - Very satisfied, mostly looking to optimize",
+  "4 - Generally satisfied, some gaps",
+  "3 - Mixed - some suppliers work, others don't",
+  "2 - Frustrated - real problems need solving",
+  "1 - Significant issues - actively looking to switch",
 ];
 
 const PAIN_POINTS_OPTIONS = [
@@ -96,12 +96,12 @@ const PAIN_POINTS_OPTIONS = [
 ];
 
 const DELIVERY_FORMAT_OPTIONS = [
-  "Lyophilized dry powder — single-use vials (reconstitute with BAC water)",
-  "Pre-reconstituted injectable solution — ready to inject",
-  "Multi-dose vial — reconstituted, preserved",
-  "Bulk lyophilized powder — loose (research / repackaging)",
-  "Bulk API — raw powder, kilogram quantities",
-  "Oral capsule / tablet — compounded or encapsulated",
+  "Lyophilized dry powder - single-use vials (reconstitute with BAC water)",
+  "Pre-reconstituted injectable solution - ready to inject",
+  "Multi-dose vial - reconstituted, preserved",
+  "Bulk lyophilized powder - loose (research / repackaging)",
+  "Bulk API - raw powder, kilogram quantities",
+  "Oral capsule / tablet - compounded or encapsulated",
   "Oral liquid / suspension",
   "Sublingual drop, troche, or lozenge",
   "Nasal spray / intranasal",
@@ -124,8 +124,8 @@ const MONTHLY_VOLUME_OPTIONS = [
   "1,000 – 5,000 units / vials",
   "5,000 – 20,000 units / vials",
   "Over 20,000 units / vials",
-  "Measured in kg / bulk API — not unit vials",
-  "Not sure — need help calculating",
+  "Measured in kg / bulk API - not unit vials",
+  "Not sure - need help calculating",
 ];
 
 const PRIORITY_CATEGORY_OPTIONS = [
@@ -139,7 +139,7 @@ const PRIORITY_CATEGORY_OPTIONS = [
   "Aesthetic / Skin Peptides",
   "Performance / Muscle Peptides",
   "Custom Formulation",
-  "Not sure yet — need guidance",
+  "Not sure yet - need guidance",
 ];
 
 const PRICING_ORIGIN_OPTIONS = [
@@ -149,8 +149,8 @@ const PRICING_ORIGIN_OPTIONS = [
   "EU / Swiss / German preferred",
   "Indian cGMP acceptable",
   "Japanese pharmaceutical grade",
-  "Best verified value — origin flexible",
-  "No preference — advise us",
+  "Best verified value - origin flexible",
+  "No preference - advise us",
 ];
 
 const DELIVERY_REGION_OPTIONS = [
@@ -163,28 +163,28 @@ const DELIVERY_REGION_OPTIONS = [
   "Midwest",
   "Northeast / Mid-Atlantic",
   "Mountain / Rocky Mountain",
-  "National — multiple states",
+  "National - multiple states",
   "Canada",
   "Latin America",
   "Europe",
   "Asia / Pacific",
   "Middle East",
-  "Global — worldwide distribution",
+  "Global - worldwide distribution",
 ];
 
 const COLD_CHAIN_OPTIONS = [
-  "Yes — all products require 2–8°C cold chain",
-  "Yes — some products require cold chain",
-  "No — lyophilized / dry products only",
-  "Mixed — varies by product",
-  "Not sure — advise us",
+  "Yes - all products require 2–8°C cold chain",
+  "Yes - some products require cold chain",
+  "No - lyophilized / dry products only",
+  "Mixed - varies by product",
+  "Not sure - advise us",
 ];
 
 const DELIVERY_URGENCY_OPTIONS = [
-  "Standard — 5–10 business days acceptable",
-  "Priority — 2–3 business days preferred",
-  "Urgent — next-day sometimes needed",
-  "Flexible — depends on product",
+  "Standard - 5–10 business days acceptable",
+  "Priority - 2–3 business days preferred",
+  "Urgent - next-day sometimes needed",
+  "Flexible - depends on product",
 ];
 
 const TRADE_REF_TYPE_OPTIONS = [
@@ -206,45 +206,86 @@ const MONTHLY_SPEND_OPTIONS = [
   "$150,000 – $500,000",
   "$500,000 – $1M",
   "Over $1M",
-  "Not sure — need help auditing",
+  "Not sure - need help auditing",
 ];
 
 const CONTRACT_STATUS_OPTIONS = [
-  "No — purchase order by purchase order",
-  "Informal — verbal or email-based agreements",
-  "Yes — 1 or more formal contracts, under 12 months",
-  "Yes — 1 or more formal contracts, 12 months or longer",
+  "No - purchase order by purchase order",
+  "Informal - verbal or email-based agreements",
+  "Yes - 1 or more formal contracts, under 12 months",
+  "Yes - 1 or more formal contracts, 12 months or longer",
   "Not sure",
 ];
 
 const US_STATES = [
-  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
-  "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
-  "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
-  "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-  "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
-  "New Hampshire", "New Jersey", "New Mexico", "New York",
-  "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
-  "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
-  "West Virginia", "Wisconsin", "Wyoming", "District of Columbia",
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+  "District of Columbia",
 ];
 
 const LICENSE_TYPE_OPTIONS = [
-  "MD / DO — Physician",
-  "NP — Nurse Practitioner",
-  "PA — Physician Assistant",
-  "RN — Registered Nurse (supervised)",
-  "Pharmacy — Compounding",
-  "Clinic — Multi-Provider",
+  "MD / DO - Physician",
+  "NP - Nurse Practitioner",
+  "PA - Physician Assistant",
+  "RN - Registered Nurse (supervised)",
+  "Pharmacy - Compounding",
+  "Clinic - Multi-Provider",
   "Research Institution",
   "Distributor License",
   "Other licensed provider",
 ];
 
 const DEA_OPTIONS = [
-  "Yes — active DEA registration",
-  "No — not required for our scope",
+  "Yes - active DEA registration",
+  "No - not required for our scope",
   "In process",
   "Not sure",
 ];
@@ -259,8 +300,8 @@ const OVERSIGHT_OPTIONS = [
 
 const FDA_WARNING_OPTIONS = [
   "No",
-  "Yes — resolved",
-  "Yes — pending",
+  "Yes - resolved",
+  "Yes - pending",
   "Prefer to discuss directly",
 ];
 
@@ -282,23 +323,23 @@ const CUSTOMER_BASE_OPTIONS = [
 const DEMOGRAPHICS_OPTIONS = [
   "High-net-worth / luxury clientele",
   "General professional / upper-middle class",
-  "Athletes — amateur and semi-pro",
-  "Athletes — elite / professional",
-  "Broad demographic — insurance and cash pay mix",
-  "Cash-pay only — premium pricing",
+  "Athletes - amateur and semi-pro",
+  "Athletes - elite / professional",
+  "Broad demographic - insurance and cash pay mix",
+  "Cash-pay only - premium pricing",
   "Research participants",
-  "B2B — we sell to other providers, not patients",
+  "B2B - we sell to other providers, not patients",
   "Mixed",
 ];
 
 const ENGAGEMENT_OPTIONS = [
-  "In-clinic only — all treatments on-site",
-  "Take-home protocols — we dispense, they self-administer",
-  "Hybrid — clinic treatment + home maintenance",
-  "Telehealth — remote consults, ship to patient",
+  "In-clinic only - all treatments on-site",
+  "Take-home protocols - we dispense, they self-administer",
+  "Hybrid - clinic treatment + home maintenance",
+  "Telehealth - remote consults, ship to patient",
   "Membership / subscription model",
-  "Concierge — we come to them",
-  "B2B resale — we supply other clinics",
+  "Concierge - we come to them",
+  "B2B resale - we supply other clinics",
   "Direct-to-consumer online",
 ];
 
@@ -318,23 +359,23 @@ const PROTOCOLS_OPTIONS = [
 ];
 
 const PERSONAL_USE_OPTIONS = [
-  "Yes — I personally use them and have direct patient experience",
-  "Yes — I use them alongside my patients in the same protocols",
-  "Occasionally — limited personal use",
-  "No — these are for my patients / clients only",
-  "Not yet — interested in starting",
+  "Yes - I personally use them and have direct patient experience",
+  "Yes - I use them alongside my patients in the same protocols",
+  "Occasionally - limited personal use",
+  "No - these are for my patients / clients only",
+  "Not yet - interested in starting",
 ];
 
 const PRIMARY_GOAL_OPTIONS = [
-  "Reduce cost of current supply — same products, better pricing",
+  "Reduce cost of current supply - same products, better pricing",
   "Improve product quality and consistency",
   "Find new suppliers for products I can't currently source",
-  "Consolidate suppliers — too many relationships to manage",
+  "Consolidate suppliers - too many relationships to manage",
   "Add new product categories to my protocol menu",
   "Ensure regulatory compliance before scaling",
   "Build a verified, auditable supply chain",
   "Understand BioChain OS for blockchain-verified sourcing",
-  "All of the above — comprehensive sourcing overhaul",
+  "All of the above - comprehensive sourcing overhaul",
 ];
 
 const SECONDARY_GOAL_OPTIONS = [
@@ -343,19 +384,19 @@ const SECONDARY_GOAL_OPTIONS = [
   "ImpactSoul / impact-aligned supply chain",
   "Group purchasing for multi-location discount",
   "Supplier introduction without advisory engagement",
-  "None — one goal for now",
+  "None - one goal for now",
 ];
 
 const TIMELINE_OPTIONS = [
-  "Immediately — ready to move this week",
+  "Immediately - ready to move this week",
   "Within 30 days",
   "1–3 months",
   "3–6 months",
-  "Exploring — no hard timeline yet",
+  "Exploring - no hard timeline yet",
 ];
 
 const REFERRAL_OPTIONS = [
-  "Tony Greenberg — direct referral",
+  "Tony Greenberg - direct referral",
   "RampRate.com website",
   "LinkedIn",
   "Industry conference or event",
@@ -388,16 +429,28 @@ function isValidCurrency(value: string): boolean {
 const PRODUCT_FIELD_NAMES = PRODUCT_CATEGORIES.map((c) => catField(c.name));
 
 const currencyTest = (name: string) =>
-  Yup.string().test(name, "Enter a number (e.g. 8,000)", (v) => !v || isValidCurrency(v));
+  Yup.string().test(
+    name,
+    "Enter a number (e.g. 8,000)",
+    (v) => !v || isValidCurrency(v),
+  );
 
 const validationSchema = Yup.object()
   .shape({
     org_name: requiredStr(),
     org_type: requiredStr(),
-    website: Yup.string().test("valid-website", "Enter a valid website", (v) => !v || WEBSITE_RE.test(v)),
+    website: Yup.string().test(
+      "valid-website",
+      "Enter a valid website",
+      (v) => !v || WEBSITE_RE.test(v),
+    ),
     contact_name: requiredStr(),
     contact_email: Yup.string().email("Invalid email").required("Required"),
-    contact_phone: Yup.string().test("valid-phone", "Enter a valid phone number", (v) => !v || isValidPhone(v)),
+    contact_phone: Yup.string().test(
+      "valid-phone",
+      "Enter a valid phone number",
+      (v) => !v || isValidPhone(v),
+    ),
     // Yup silently skips .min() on an untouched (undefined) field unless
     // .required() is also chained - without it, a client who never touches
     // this array at all sails past Continue with nothing selected.
@@ -410,7 +463,8 @@ const validationSchema = Yup.object()
       "Please specify",
       function (value) {
         const painPoints = this.parent.pain_points as string[] | undefined;
-        if (painPoints?.includes("Other")) return !!value && value.trim().length > 0;
+        if (painPoints?.includes("Other"))
+          return !!value && value.trim().length > 0;
         return true;
       },
     ),
@@ -430,37 +484,140 @@ const validationSchema = Yup.object()
     primary_goal: requiredStr(),
     timeline: requiredStr(),
   })
-  .test("at-least-one-product", "Select at least one product from the catalog below", function (values) {
-    const record = values as Record<string, unknown>;
-    const anySelected = PRODUCT_FIELD_NAMES.some(
-      (name) => Array.isArray(record[name]) && (record[name] as string[]).length > 0,
-    );
-    if (anySelected) return true;
-    return this.createError({ path: "products_any", message: "Select at least one product from the catalog below" });
-  });
+  .test(
+    "at-least-one-product",
+    "Select at least one product from the catalog below",
+    function (values) {
+      const record = values as Record<string, unknown>;
+      const anySelected = PRODUCT_FIELD_NAMES.some(
+        (name) =>
+          Array.isArray(record[name]) && (record[name] as string[]).length > 0,
+      );
+      if (anySelected) return true;
+      return this.createError({
+        path: "products_any",
+        message: "Select at least one product from the catalog below",
+      });
+    },
+  );
 
 const STEP_META = [
-  { section: "YOUR ORGANIZATION", title: "Tell us about your organization", minutes: 2, Icon: Building2 },
-  { section: "CURRENT SOURCING", title: "How are you sourcing today?", minutes: 3, Icon: ClipboardList },
-  { section: "PRODUCTS & VOLUME", title: "Full product catalog", minutes: 4, Icon: FlaskConical },
-  { section: "LOGISTICS & PRICING", title: "Logistics, pricing & trade references", minutes: 3, Icon: Truck },
-  { section: "SPEND & CONTRACTS", title: "Spend and volume", minutes: 2, Icon: DollarSign },
-  { section: "COMPLIANCE PROFILE", title: "Compliance profile", minutes: 2, Icon: ShieldCheck },
-  { section: "CUSTOMERS & USE", title: "Your customers and how you use these products", minutes: 2, Icon: Users },
-  { section: "GOALS & TIMING", title: "Goals and timing", minutes: 2, Icon: Target },
+  {
+    section: "YOUR ORGANIZATION",
+    title: "Tell us about your organization",
+    minutes: 2,
+    Icon: Building2,
+  },
+  {
+    section: "CURRENT SOURCING",
+    title: "How are you sourcing today?",
+    minutes: 3,
+    Icon: ClipboardList,
+  },
+  {
+    section: "PRODUCTS & VOLUME",
+    title: "Full product catalog",
+    minutes: 4,
+    Icon: FlaskConical,
+  },
+  {
+    section: "LOGISTICS & PRICING",
+    title: "Logistics, pricing & trade references",
+    minutes: 3,
+    Icon: Truck,
+  },
+  {
+    section: "SPEND & CONTRACTS",
+    title: "Spend and volume",
+    minutes: 2,
+    Icon: DollarSign,
+  },
+  {
+    section: "COMPLIANCE PROFILE",
+    title: "Compliance profile",
+    minutes: 2,
+    Icon: ShieldCheck,
+  },
+  {
+    section: "CUSTOMERS & USE",
+    title: "Your customers and how you use these products",
+    minutes: 2,
+    Icon: Users,
+  },
+  {
+    section: "GOALS & TIMING",
+    title: "Goals and timing",
+    minutes: 2,
+    Icon: Target,
+  },
 ];
 
 const TOTAL_MINUTES = STEP_META.reduce((sum, s) => sum + s.minutes, 0);
 
 const STEP_FIELDS: string[][] = [
-  ["org_name", "org_type", "website", "contact_name", "contact_title", "contact_email", "contact_phone", "num_locations", "patients_per_month"],
-  ["current_suppliers", "supplier_discovery", "sourcing_satisfaction", "pain_points", "pain_points_other_text"],
-  [...PRODUCT_FIELD_NAMES, "products_any", "delivery_formats", "monthly_volume", "priority_category"],
-  ["pricing_origin", "pricing_notes", "delivery_regions", "cold_chain", "delivery_urgency", "trade_reference_types", "trade_references_text"],
-  ["monthly_spend", "spend_peptides", "spend_exosomes", "spend_stemcell", "spend_nad", "contract_status"],
-  ["state", "license_type", "dea_registration", "physician_oversight", "fda_warning"],
-  ["customer_base", "patient_demographics", "engagement_model", "protocols_offered", "personal_use"],
-  ["primary_goal", "secondary_goal", "timeline", "referral_source", "additional_notes"],
+  [
+    "org_name",
+    "org_type",
+    "website",
+    "contact_name",
+    "contact_title",
+    "contact_email",
+    "contact_phone",
+    "num_locations",
+    "patients_per_month",
+  ],
+  [
+    "current_suppliers",
+    "supplier_discovery",
+    "sourcing_satisfaction",
+    "pain_points",
+    "pain_points_other_text",
+  ],
+  [
+    ...PRODUCT_FIELD_NAMES,
+    "products_any",
+    "delivery_formats",
+    "monthly_volume",
+    "priority_category",
+  ],
+  [
+    "pricing_origin",
+    "pricing_notes",
+    "delivery_regions",
+    "cold_chain",
+    "delivery_urgency",
+    "trade_reference_types",
+    "trade_references_text",
+  ],
+  [
+    "monthly_spend",
+    "spend_peptides",
+    "spend_exosomes",
+    "spend_stemcell",
+    "spend_nad",
+    "contract_status",
+  ],
+  [
+    "state",
+    "license_type",
+    "dea_registration",
+    "physician_oversight",
+    "fda_warning",
+  ],
+  [
+    "customer_base",
+    "patient_demographics",
+    "engagement_model",
+    "protocols_offered",
+    "personal_use",
+  ],
+  [
+    "primary_goal",
+    "secondary_goal",
+    "timeline",
+    "referral_source",
+    "additional_notes",
+  ],
 ];
 
 /* ── Shared field primitives ── */
@@ -471,7 +628,11 @@ function Tooltip({ text }: { text: string }) {
       <Info size={13} style={{ color: "oklch(0.6 0.05 60)" }} />
       <span
         className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-60 px-3 py-2 rounded-lg text-[11px] font-normal leading-relaxed opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity z-20"
-        style={{ background: "oklch(0.2 0.02 50)", color: "white", fontFamily: "var(--font-body)" }}
+        style={{
+          background: "oklch(0.2 0.02 50)",
+          color: "white",
+          fontFamily: "var(--font-body)",
+        }}
       >
         {text}
       </span>
@@ -479,11 +640,20 @@ function Tooltip({ text }: { text: string }) {
   );
 }
 
-function FieldError({ formik, name }: { formik: FormikProps<FormValues>; name: string }) {
+function FieldError({
+  formik,
+  name,
+}: {
+  formik: FormikProps<FormValues>;
+  name: string;
+}) {
   const message = formik.touched[name] && formik.errors[name];
   if (!message) return null;
   return (
-    <p className="mt-1 text-[11px] font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+    <p
+      className="mt-1 text-[11px] font-medium"
+      style={{ color: "oklch(0.55 0.2 25)" }}
+    >
       {String(message)}
     </p>
   );
@@ -586,7 +756,7 @@ function SelectField({
   name,
   label,
   options,
-  placeholder = "Select —",
+  placeholder = "Select -",
   required,
   full,
 }: {
@@ -682,7 +852,10 @@ function CheckboxGroup({
     let next: string[];
     if (selected.includes(opt)) {
       next = selected.filter((o) => o !== opt);
-    } else if (exclusiveOptions?.includes(opt) || exclusiveOptions?.some((ex) => selected.includes(ex))) {
+    } else if (
+      exclusiveOptions?.includes(opt) ||
+      exclusiveOptions?.some((ex) => selected.includes(ex))
+    ) {
       next = [opt];
     } else {
       next = [...selected, opt];
@@ -698,7 +871,9 @@ function CheckboxGroup({
           {tooltip && <Tooltip text={tooltip} />}
         </label>
       )}
-      <div className={`grid grid-cols-1 ${GRID_COLS[columns] ?? GRID_COLS[3]} gap-2.5`}>
+      <div
+        className={`grid grid-cols-1 ${GRID_COLS[columns] ?? GRID_COLS[3]} gap-2.5`}
+      >
         {options.map((opt) => {
           const checked = selected.includes(opt);
           return (
@@ -807,14 +982,20 @@ function TagInput({
 function Divider({ label }: { label: string }) {
   return (
     <div className="sm:col-span-2 flex items-center gap-4 mt-1">
-      <div className="flex-1 h-px" style={{ background: "oklch(0.85 0.02 70)" }} />
+      <div
+        className="flex-1 h-px"
+        style={{ background: "oklch(0.85 0.02 70)" }}
+      />
       <span
         className="text-[10px] font-semibold tracking-[0.2em] uppercase shrink-0 text-center"
         style={{ color: "oklch(0.5 0.05 60)", fontFamily: "var(--font-body)" }}
       >
         {label}
       </span>
-      <div className="flex-1 h-px" style={{ background: "oklch(0.85 0.02 70)" }} />
+      <div
+        className="flex-1 h-px"
+        style={{ background: "oklch(0.85 0.02 70)" }}
+      />
     </div>
   );
 }
@@ -855,17 +1036,69 @@ interface StepProps {
 function Step1({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      <TextField formik={formik} name="org_name" label="Organization Name" required placeholder="Clinic or practice name" />
-      <SelectField formik={formik} name="org_type" label="Organization Type" required options={ORG_TYPE_OPTIONS} />
-      <TextField formik={formik} name="website" label="Website" placeholder="https://" full />
+      <TextField
+        formik={formik}
+        name="org_name"
+        label="Organization Name"
+        required
+        placeholder="Clinic or practice name"
+      />
+      <SelectField
+        formik={formik}
+        name="org_type"
+        label="Organization Type"
+        required
+        options={ORG_TYPE_OPTIONS}
+      />
+      <TextField
+        formik={formik}
+        name="website"
+        label="Website"
+        placeholder="https://"
+        full
+      />
       <Divider label="Primary Contact" />
-      <TextField formik={formik} name="contact_name" label="Full Name" required placeholder="Your name" />
-      <TextField formik={formik} name="contact_title" label="Title / Role" placeholder="Medical Director, CEO, etc." />
-      <TextField formik={formik} name="contact_email" label="Email" type="email" required placeholder="you@clinic.com" />
-      <TextField formik={formik} name="contact_phone" label="Phone" type="tel" placeholder="(___) ___-____" />
+      <TextField
+        formik={formik}
+        name="contact_name"
+        label="Full Name"
+        required
+        placeholder="Your name"
+      />
+      <TextField
+        formik={formik}
+        name="contact_title"
+        label="Title / Role"
+        placeholder="Medical Director, CEO, etc."
+      />
+      <TextField
+        formik={formik}
+        name="contact_email"
+        label="Email"
+        type="email"
+        required
+        placeholder="you@clinic.com"
+      />
+      <TextField
+        formik={formik}
+        name="contact_phone"
+        label="Phone"
+        type="tel"
+        placeholder="(___) ___-____"
+      />
       <Divider label="Scale" />
-      <SelectField formik={formik} name="num_locations" label="Number of Locations" options={LOCATIONS_OPTIONS} />
-      <SelectField formik={formik} name="patients_per_month" label="Approximate Patients Served Per Month" options={PATIENTS_PER_MONTH_OPTIONS} />
+      <SelectField
+        formik={formik}
+        name="num_locations"
+        label="Number of Locations"
+        options={LOCATIONS_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="patients_per_month"
+        label="Approximate Patients Served Per Month"
+        options={PATIENTS_PER_MONTH_OPTIONS}
+      />
     </div>
   );
 }
@@ -874,7 +1107,13 @@ function Step2({ formik }: StepProps) {
   const painPoints = (formik.values.pain_points as string[]) ?? [];
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      <TagInput formik={formik} name="current_suppliers" label="Current Primary Suppliers" required placeholder="Search or type a supplier name, press Enter to add..." />
+      <TagInput
+        formik={formik}
+        name="current_suppliers"
+        label="Current Primary Suppliers"
+        required
+        placeholder="Search or type a supplier name, press Enter to add..."
+      />
       <CheckboxGroup
         formik={formik}
         name="supplier_discovery"
@@ -882,7 +1121,13 @@ function Step2({ formik }: StepProps) {
         tooltip="GPO = Group Purchasing Organization, an entity that pools buying volume across multiple clinics to negotiate better pricing."
         options={SUPPLIER_DISCOVERY_OPTIONS}
       />
-      <SelectField formik={formik} name="sourcing_satisfaction" label="Overall Satisfaction With Current Sourcing" options={SATISFACTION_OPTIONS} full />
+      <SelectField
+        formik={formik}
+        name="sourcing_satisfaction"
+        label="Overall Satisfaction With Current Sourcing"
+        options={SATISFACTION_OPTIONS}
+        full
+      />
       <CheckboxGroup
         formik={formik}
         name="pain_points"
@@ -891,7 +1136,14 @@ function Step2({ formik }: StepProps) {
         options={PAIN_POINTS_OPTIONS}
       />
       {painPoints.includes("Other") && (
-        <TextField formik={formik} name="pain_points_other_text" label="Please Specify" required placeholder="Describe the pain point" full />
+        <TextField
+          formik={formik}
+          name="pain_points_other_text"
+          label="Please Specify"
+          required
+          placeholder="Describe the pain point"
+          full
+        />
       )}
     </div>
   );
@@ -911,7 +1163,10 @@ function CatalogCard({
   return (
     <div
       className="sm:col-span-2 rounded-xl border p-5"
-      style={{ borderColor: "oklch(0.88 0.02 70)", background: "oklch(0.98 0.01 75)" }}
+      style={{
+        borderColor: "oklch(0.88 0.02 70)",
+        background: "oklch(0.98 0.01 75)",
+      }}
     >
       <div className="flex items-center gap-3">
         <div
@@ -921,7 +1176,7 @@ function CatalogCard({
           <Icon size={17} style={{ color: labelColor }} />
         </div>
         <p className={lbl} style={{ color: labelColor, marginBottom: 0 }}>
-          <span style={{ opacity: 0.55, fontWeight: 400 }}>{step} — </span>
+          <span style={{ opacity: 0.55, fontWeight: 400 }}>{step} - </span>
           {title}
         </p>
       </div>
@@ -930,39 +1185,64 @@ function CatalogCard({
   );
 }
 
-function CategoryAccordion({ formik, category }: { formik: FormikProps<FormValues>; category: { name: string; items: string[] } }) {
+function CategoryAccordion({
+  formik,
+  category,
+}: {
+  formik: FormikProps<FormValues>;
+  category: { name: string; items: string[] };
+}) {
   const [open, setOpen] = useState(false);
   const fieldName = catField(category.name);
   const selected = (formik.values[fieldName] as string[]) ?? [];
 
   return (
-    <div className="sm:col-span-2 rounded-lg border overflow-hidden" style={{ borderColor: "oklch(0.88 0.02 70)", background: "white" }}>
+    <div
+      className="sm:col-span-2 rounded-lg border overflow-hidden"
+      style={{ borderColor: "oklch(0.88 0.02 70)", background: "white" }}
+    >
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between px-4 py-3.5 text-left"
       >
-        <span className="text-sm font-semibold" style={{ fontFamily: "var(--font-body)", color: "oklch(0.25 0.02 50)" }}>
+        <span
+          className="text-sm font-semibold"
+          style={{
+            fontFamily: "var(--font-body)",
+            color: "oklch(0.25 0.02 50)",
+          }}
+        >
           {category.name}
         </span>
         <span className="flex items-center gap-3 shrink-0">
           {selected.length > 0 && (
             <span
               className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
-              style={{ background: "oklch(0.72 0.15 75 / 0.15)", color: "oklch(0.45 0.12 70)" }}
+              style={{
+                background: "oklch(0.72 0.15 75 / 0.15)",
+                color: "oklch(0.45 0.12 70)",
+              }}
             >
               {selected.length} selected
             </span>
           )}
           <ChevronDown
             size={16}
-            style={{ transform: open ? "rotate(180deg)" : undefined, transition: "transform 0.2s" }}
+            style={{
+              transform: open ? "rotate(180deg)" : undefined,
+              transition: "transform 0.2s",
+            }}
           />
         </span>
       </button>
       {open && (
         <div className="px-4 pb-4">
-          <CheckboxGroup formik={formik} name={fieldName} options={category.items} />
+          <CheckboxGroup
+            formik={formik}
+            name={fieldName}
+            options={category.items}
+          />
         </div>
       )}
     </div>
@@ -970,16 +1250,24 @@ function CategoryAccordion({ formik, category }: { formik: FormikProps<FormValue
 }
 
 function Step3({ formik }: StepProps) {
-  const productsError = formik.touched.products_any && formik.errors.products_any;
+  const productsError =
+    formik.touched.products_any && formik.errors.products_any;
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       {productsError && (
-        <p className="sm:col-span-2 text-[11px] font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+        <p
+          className="sm:col-span-2 text-[11px] font-medium"
+          style={{ color: "oklch(0.55 0.2 25)" }}
+        >
           {String(productsError)}
         </p>
       )}
 
-      <CatalogCard title="Full Product Catalog — Select At Least One" step="Part 1 of 3" Icon={FlaskConical}>
+      <CatalogCard
+        title="Full Product Catalog - Select At Least One"
+        step="Part 1 of 3"
+        Icon={FlaskConical}
+      >
         <div className="sm:col-span-2 flex flex-col gap-2.5">
           {PRODUCT_CATEGORIES.map((cat) => (
             <CategoryAccordion key={cat.name} formik={formik} category={cat} />
@@ -987,16 +1275,39 @@ function Step3({ formik }: StepProps) {
         </div>
       </CatalogCard>
 
-      <CatalogCard title="Delivery Format & Form Factor" step="Part 2 of 3" Icon={Package}>
+      <CatalogCard
+        title="Delivery Format & Form Factor"
+        step="Part 2 of 3"
+        Icon={Package}
+      >
         <SectionIntro>
-          Select every format you currently purchase or need. Supply chain, cold-chain, compliance posture, and pricing all differ materially by form. This is one of the highest-leverage questions in the intake.
+          Select every format you currently purchase or need. Supply chain,
+          cold-chain, compliance posture, and pricing all differ materially by
+          form. This is one of the highest-leverage questions in the intake.
         </SectionIntro>
-        <CheckboxGroup formik={formik} name="delivery_formats" options={DELIVERY_FORMAT_OPTIONS} />
+        <CheckboxGroup
+          formik={formik}
+          name="delivery_formats"
+          options={DELIVERY_FORMAT_OPTIONS}
+        />
       </CatalogCard>
 
       <CatalogCard title="Volume" step="Part 3 of 3" Icon={BarChart3}>
-        <SelectField formik={formik} name="monthly_volume" label="Estimated Total Monthly Quantity Across All Peptides / Biologics" required options={MONTHLY_VOLUME_OPTIONS} full />
-        <SelectField formik={formik} name="priority_category" label="Highest-Priority Product Category Right Now" options={PRIORITY_CATEGORY_OPTIONS} full />
+        <SelectField
+          formik={formik}
+          name="monthly_volume"
+          label="Estimated Total Monthly Quantity Across All Peptides / Biologics"
+          required
+          options={MONTHLY_VOLUME_OPTIONS}
+          full
+        />
+        <SelectField
+          formik={formik}
+          name="priority_category"
+          label="Highest-Priority Product Category Right Now"
+          options={PRIORITY_CATEGORY_OPTIONS}
+          full
+        />
       </CatalogCard>
     </div>
   );
@@ -1007,7 +1318,10 @@ function Step4({ formik }: StepProps) {
     <div className="grid sm:grid-cols-2 gap-5">
       <Divider label="Pricing Origin Preference" />
       <SectionIntro>
-        Chinese API manufacturers often offer 40–70% lower pricing on peptides with comparable purity when properly vetted. US-manufactured carries premium pricing and simpler regulatory positioning. Select all you are open to.
+        Chinese API manufacturers often offer 40–70% lower pricing on peptides
+        with comparable purity when properly vetted. US-manufactured carries
+        premium pricing and simpler regulatory positioning. Select all you are
+        open to.
       </SectionIntro>
       <CheckboxGroup
         formik={formik}
@@ -1015,21 +1329,44 @@ function Step4({ formik }: StepProps) {
         label="Select All You're Open To"
         tooltip="API = Active Pharmaceutical Ingredient, the raw compound itself. cGMP = current Good Manufacturing Practice, an FDA-recognized quality standard for the facility that makes it."
         options={PRICING_ORIGIN_OPTIONS}
-        exclusiveOptions={["US-sourced only", "No preference — advise us"]}
+        exclusiveOptions={["US-sourced only", "No preference - advise us"]}
       />
-      <TextAreaField formik={formik} name="pricing_notes" label="Any Specific Pricing Notes or Hard Requirements?" placeholder="e.g. Must have COA from US-accredited lab regardless of origin. Or: open to Chinese API for research peptides, US-only for injectables." />
+      <TextAreaField
+        formik={formik}
+        name="pricing_notes"
+        label="Any Specific Pricing Notes or Hard Requirements?"
+        placeholder="e.g. Must have COA from US-accredited lab regardless of origin. Or: open to Chinese API for research peptides, US-only for injectables."
+      />
 
       <Divider label="Key Delivery Regions" />
       <SectionIntro>
-        Select all regions where you currently operate or plan to distribute. This shapes cold-chain logistics and customs strategy.
+        Select all regions where you currently operate or plan to distribute.
+        This shapes cold-chain logistics and customs strategy.
       </SectionIntro>
-      <CheckboxGroup formik={formik} name="delivery_regions" label="Select All That Apply" required options={DELIVERY_REGION_OPTIONS} />
-      <SelectField formik={formik} name="cold_chain" label="Cold-Chain / Temperature-Controlled Shipping Required?" options={COLD_CHAIN_OPTIONS} />
-      <SelectField formik={formik} name="delivery_urgency" label="Typical Delivery Urgency" options={DELIVERY_URGENCY_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="delivery_regions"
+        label="Select All That Apply"
+        required
+        options={DELIVERY_REGION_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="cold_chain"
+        label="Cold-Chain / Temperature-Controlled Shipping Required?"
+        options={COLD_CHAIN_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="delivery_urgency"
+        label="Typical Delivery Urgency"
+        options={DELIVERY_URGENCY_OPTIONS}
+      />
 
       <Divider label="Trade References" />
       <SectionIntro>
-        We verify purchasing history for volume accounts. Strong trade references unlock better pricing tiers from our supplier network.
+        We verify purchasing history for volume accounts. Strong trade
+        references unlock better pricing tiers from our supplier network.
       </SectionIntro>
       <CheckboxGroup
         formik={formik}
@@ -1038,9 +1375,16 @@ function Step4({ formik }: StepProps) {
         options={TRADE_REF_TYPE_OPTIONS}
         exclusiveOptions={["No trade references yet"]}
       />
-      <TextAreaField formik={formik} name="trade_references_text" label="Name Up to 3 Trade References (Company Name and Contact — Kept Confidential)" placeholder="e.g. Kimera Labs — Sarah Chen, VP Sales | DirectBiologics — procurement dept | Local compounding pharmacy — Dr. Martinez" />
+      <TextAreaField
+        formik={formik}
+        name="trade_references_text"
+        label="Name Up to 3 Trade References (Company Name and Contact - Kept Confidential)"
+        placeholder="e.g. Kimera Labs - Sarah Chen, VP Sales | DirectBiologics - procurement dept | Local compounding pharmacy - Dr. Martinez"
+      />
       <Callout>
-        Trade references are never contacted without your explicit permission. They are used internally to expedite supplier approval and negotiate volume pricing tiers on your behalf.
+        Trade references are never contacted without your explicit permission.
+        They are used internally to expedite supplier approval and negotiate
+        volume pricing tiers on your behalf.
       </Callout>
     </div>
   );
@@ -1049,17 +1393,53 @@ function Step4({ formik }: StepProps) {
 function Step5({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      <SelectField formik={formik} name="monthly_spend" label="Estimated Total Monthly Biologics Spend (All Categories)" required options={MONTHLY_SPEND_OPTIONS} full />
+      <SelectField
+        formik={formik}
+        name="monthly_spend"
+        label="Estimated Total Monthly Biologics Spend (All Categories)"
+        required
+        options={MONTHLY_SPEND_OPTIONS}
+        full
+      />
 
       <Divider label="Breakdown by Category (Optional but Valuable, USD)" />
-      <SectionIntro>Even rough estimates help us prioritize where to find savings first. Figures are in US dollars.</SectionIntro>
-      <CurrencyField formik={formik} name="spend_peptides" label="Peptides — Monthly Est." placeholder="8,000" />
-      <CurrencyField formik={formik} name="spend_exosomes" label="Exosomes / Biologics — Monthly Est." placeholder="25,000" />
-      <CurrencyField formik={formik} name="spend_stemcell" label="Stem Cell Products — Monthly Est." placeholder="12,000" />
-      <CurrencyField formik={formik} name="spend_nad" label="NAD+ / Longevity — Monthly Est." placeholder="3,000" />
+      <SectionIntro>
+        Even rough estimates help us prioritize where to find savings first.
+        Figures are in US dollars.
+      </SectionIntro>
+      <CurrencyField
+        formik={formik}
+        name="spend_peptides"
+        label="Peptides - Monthly Est."
+        placeholder="8,000"
+      />
+      <CurrencyField
+        formik={formik}
+        name="spend_exosomes"
+        label="Exosomes / Biologics - Monthly Est."
+        placeholder="25,000"
+      />
+      <CurrencyField
+        formik={formik}
+        name="spend_stemcell"
+        label="Stem Cell Products - Monthly Est."
+        placeholder="12,000"
+      />
+      <CurrencyField
+        formik={formik}
+        name="spend_nad"
+        label="NAD+ / Longevity - Monthly Est."
+        placeholder="3,000"
+      />
 
       <Divider label="Contract Status" />
-      <SelectField formik={formik} name="contract_status" label="Do You Have Long-Term Supply Contracts in Place With Current Suppliers?" options={CONTRACT_STATUS_OPTIONS} full />
+      <SelectField
+        formik={formik}
+        name="contract_status"
+        label="Do You Have Long-Term Supply Contracts in Place With Current Suppliers?"
+        options={CONTRACT_STATUS_OPTIONS}
+        full
+      />
     </div>
   );
 }
@@ -1067,13 +1447,44 @@ function Step5({ formik }: StepProps) {
 function Step6({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      <SelectField formik={formik} name="state" label="Primary State of Operation" required options={US_STATES} />
-      <SelectField formik={formik} name="license_type" label="Medical / Clinical License Type" required options={LICENSE_TYPE_OPTIONS} />
-      <SelectField formik={formik} name="dea_registration" label="DEA Registration?" options={DEA_OPTIONS} />
-      <SelectField formik={formik} name="physician_oversight" label="Physician Oversight Model" options={OVERSIGHT_OPTIONS} />
-      <SelectField formik={formik} name="fda_warning" label="Have You Received Any FDA Warning Letters or Enforcement Actions in the Last 5 Years?" options={FDA_WARNING_OPTIONS} full />
+      <SelectField
+        formik={formik}
+        name="state"
+        label="Primary State of Operation"
+        required
+        options={US_STATES}
+      />
+      <SelectField
+        formik={formik}
+        name="license_type"
+        label="Medical / Clinical License Type"
+        required
+        options={LICENSE_TYPE_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="dea_registration"
+        label="DEA Registration?"
+        options={DEA_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="physician_oversight"
+        label="Physician Oversight Model"
+        options={OVERSIGHT_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="fda_warning"
+        label="Have You Received Any FDA Warning Letters or Enforcement Actions in the Last 5 Years?"
+        options={FDA_WARNING_OPTIONS}
+        full
+      />
       <Callout>
-        California, Florida, and several other states have specific 2024–2026 regulations affecting which peptides and biologics can be dispensed. Our compliance pre-mapping covers your state before any sourcing recommendation is made.
+        California, Florida, and several other states have specific 2024–2026
+        regulations affecting which peptides and biologics can be dispensed. Our
+        compliance pre-mapping covers your state before any sourcing
+        recommendation is made.
       </Callout>
     </div>
   );
@@ -1083,17 +1494,48 @@ function Step7({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       <Divider label="Your Customer Base" />
-      <CheckboxGroup formik={formik} name="customer_base" label="Who Are Your Primary Customers / Patients? Select All That Apply." options={CUSTOMER_BASE_OPTIONS} />
-      <SelectField formik={formik} name="patient_demographics" label="How Would You Describe Your Patient / Client Demographics?" options={DEMOGRAPHICS_OPTIONS} full />
-      <SelectField formik={formik} name="engagement_model" label="How Do Patients or Clients Primarily Engage With You?" options={ENGAGEMENT_OPTIONS} full />
+      <CheckboxGroup
+        formik={formik}
+        name="customer_base"
+        label="Who Are Your Primary Customers / Patients? Select All That Apply."
+        options={CUSTOMER_BASE_OPTIONS}
+      />
+      <SelectField
+        formik={formik}
+        name="patient_demographics"
+        label="How Would You Describe Your Patient / Client Demographics?"
+        options={DEMOGRAPHICS_OPTIONS}
+        full
+      />
+      <SelectField
+        formik={formik}
+        name="engagement_model"
+        label="How Do Patients or Clients Primarily Engage With You?"
+        options={ENGAGEMENT_OPTIONS}
+        full
+      />
 
       <Divider label="Protocols Offered" />
-      <CheckboxGroup formik={formik} name="protocols_offered" label="Which Treatment Protocols Do You Currently Offer or Plan to Add?" options={PROTOCOLS_OPTIONS} />
+      <CheckboxGroup
+        formik={formik}
+        name="protocols_offered"
+        label="Which Treatment Protocols Do You Currently Offer or Plan to Add?"
+        options={PROTOCOLS_OPTIONS}
+      />
 
       <Divider label="Personal Use" />
-      <SelectField formik={formik} name="personal_use" label="Do You Personally Use Any of These Peptides or Biologics?" required options={PERSONAL_USE_OPTIONS} full />
+      <SelectField
+        formik={formik}
+        name="personal_use"
+        label="Do You Personally Use Any of These Peptides or Biologics?"
+        required
+        options={PERSONAL_USE_OPTIONS}
+        full
+      />
       <Callout>
-        Providers who personally use these protocols consistently achieve better patient outcomes and stronger client retention. This information helps us match you with the right product tiers and dosing documentation.
+        Providers who personally use these protocols consistently achieve better
+        patient outcomes and stronger client retention. This information helps
+        us match you with the right product tiers and dosing documentation.
       </Callout>
     </div>
   );
@@ -1102,16 +1544,56 @@ function Step7({ formik }: StepProps) {
 function Step8({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
-      <SelectField formik={formik} name="primary_goal" label="What Is Your Primary Goal for This Engagement?" required options={PRIMARY_GOAL_OPTIONS} full />
-      <SelectField formik={formik} name="secondary_goal" label="Secondary Goal (Optional)" options={SECONDARY_GOAL_OPTIONS} full />
-      <SelectField formik={formik} name="timeline" label="Timeline to Begin" required options={TIMELINE_OPTIONS} full />
-      <SelectField formik={formik} name="referral_source" label="How Did You Find Us?" options={REFERRAL_OPTIONS} full />
-      <TextAreaField formik={formik} name="additional_notes" label="Anything Else You Want Us to Know?" placeholder="Unique clinical protocols, specific supplier relationships you want to keep, goals not captured above, or anything that helps us prepare for our first call..." />
+      <SelectField
+        formik={formik}
+        name="primary_goal"
+        label="What Is Your Primary Goal for This Engagement?"
+        required
+        options={PRIMARY_GOAL_OPTIONS}
+        full
+      />
+      <SelectField
+        formik={formik}
+        name="secondary_goal"
+        label="Secondary Goal (Optional)"
+        options={SECONDARY_GOAL_OPTIONS}
+        full
+      />
+      <SelectField
+        formik={formik}
+        name="timeline"
+        label="Timeline to Begin"
+        required
+        options={TIMELINE_OPTIONS}
+        full
+      />
+      <SelectField
+        formik={formik}
+        name="referral_source"
+        label="How Did You Find Us?"
+        options={REFERRAL_OPTIONS}
+        full
+      />
+      <TextAreaField
+        formik={formik}
+        name="additional_notes"
+        label="Anything Else You Want Us to Know?"
+        placeholder="Unique clinical protocols, specific supplier relationships you want to keep, goals not captured above, or anything that helps us prepare for our first call..."
+      />
     </div>
   );
 }
 
-const STEPS: ComponentType<StepProps>[] = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8];
+const STEPS: ComponentType<StepProps>[] = [
+  Step1,
+  Step2,
+  Step3,
+  Step4,
+  Step5,
+  Step6,
+  Step7,
+  Step8,
+];
 
 function ReviewSummary({
   formik,
@@ -1125,7 +1607,11 @@ function ReviewSummary({
       {STEP_META.map((meta, i) => {
         const StepComp = STEPS[i];
         return (
-          <div key={meta.title} className="rounded-xl border p-5 sm:p-6" style={{ borderColor: "oklch(0.88 0.02 70)" }}>
+          <div
+            key={meta.title}
+            className="rounded-xl border p-5 sm:p-6"
+            style={{ borderColor: "oklch(0.88 0.02 70)" }}
+          >
             <div className="flex items-center justify-between mb-5">
               <span
                 className="text-xs font-semibold tracking-[0.16em] uppercase"
@@ -1137,7 +1623,11 @@ function ReviewSummary({
                 type="button"
                 onClick={() => onEdit(i)}
                 className="text-xs font-semibold px-3 py-1.5 rounded-md border transition-colors hover:bg-[oklch(0.97_0.02_75)]"
-                style={{ borderColor: "var(--gold)", color: "var(--gold)", fontFamily: "var(--font-body)" }}
+                style={{
+                  borderColor: "var(--gold)",
+                  color: "var(--gold)",
+                  fontFamily: "var(--font-body)",
+                }}
               >
                 Edit
               </button>
@@ -1156,7 +1646,10 @@ function ReviewSummary({
 
 function ProgressBar({ active }: { active: number }) {
   const meta = STEP_META[active];
-  const minutesRemaining = STEP_META.slice(active).reduce((sum, s) => sum + s.minutes, 0);
+  const minutesRemaining = STEP_META.slice(active).reduce(
+    (sum, s) => sum + s.minutes,
+    0,
+  );
   const pct = ((active + 1) / STEP_META.length) * 100;
 
   return (
@@ -1164,18 +1657,27 @@ function ProgressBar({ active }: { active: number }) {
       <div className="flex items-center justify-between mb-3 gap-4">
         <p
           className="text-xs font-semibold tracking-[0.14em] uppercase"
-          style={{ color: "oklch(0.5 0.06 60)", fontFamily: "var(--font-body)" }}
+          style={{
+            color: "oklch(0.5 0.06 60)",
+            fontFamily: "var(--font-body)",
+          }}
         >
-          Step {active + 1} of {STEP_META.length} — {meta.section}
+          Step {active + 1} of {STEP_META.length} - {meta.section}
         </p>
         <p
           className="text-xs font-semibold shrink-0"
-          style={{ color: "oklch(0.52 0.15 50)", fontFamily: "var(--font-body)" }}
+          style={{
+            color: "oklch(0.52 0.15 50)",
+            fontFamily: "var(--font-body)",
+          }}
         >
           Est. {minutesRemaining} min remaining
         </p>
       </div>
-      <div className="h-1 rounded-full overflow-hidden mb-3" style={{ background: "oklch(0.88 0.02 70)" }}>
+      <div
+        className="h-1 rounded-full overflow-hidden mb-3"
+        style={{ background: "oklch(0.88 0.02 70)" }}
+      >
         <div
           className="h-full rounded-full transition-all duration-300"
           style={{ width: `${pct}%`, background: "var(--gold)" }}
@@ -1186,7 +1688,9 @@ function ProgressBar({ active }: { active: number }) {
           <div
             key={s.section}
             className="w-2 h-2 rounded-full"
-            style={{ background: i <= active ? "var(--gold)" : "oklch(0.85 0.02 70)" }}
+            style={{
+              background: i <= active ? "var(--gold)" : "oklch(0.85 0.02 70)",
+            }}
           />
         ))}
       </div>
@@ -1254,11 +1758,16 @@ export default function ClientIntakeForm() {
           }),
         });
         const result = await res.json().catch(() => ({ ok: res.ok }));
-        if (!res.ok || result.ok === false) throw new Error(result.error || "Submission failed");
+        if (!res.ok || result.ok === false)
+          throw new Error(result.error || "Submission failed");
         setSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (err) {
-        setError(err instanceof Error && err.message ? err.message : "Something went wrong submitting your application. Please try again or email us directly.");
+        setError(
+          err instanceof Error && err.message
+            ? err.message
+            : "Something went wrong submitting your application. Please try again or email us directly.",
+        );
       } finally {
         setSubmitting(false);
       }
@@ -1268,7 +1777,9 @@ export default function ClientIntakeForm() {
   async function goToStep(target: number) {
     if (target > active) {
       const errors = await formik.validateForm();
-      const stepErrorFields = STEP_FIELDS[active].filter((name) => errors[name]);
+      const stepErrorFields = STEP_FIELDS[active].filter(
+        (name) => errors[name],
+      );
       if (stepErrorFields.length) {
         const touched = { ...formik.touched };
         stepErrorFields.forEach((name) => {
@@ -1302,25 +1813,41 @@ export default function ClientIntakeForm() {
       <div className="max-w-xl mx-auto text-center py-20 px-5">
         <div
           className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-          style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))" }}
+          style={{
+            background:
+              "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))",
+          }}
         >
           <Check size={32} stroke="white" strokeWidth={2.5} />
         </div>
-        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+        <h2
+          className="text-3xl font-bold mb-4"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
           Application Received
         </h2>
         <p
           className="text-base leading-relaxed mb-8"
-          style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+          style={{
+            color: "oklch(0.45 0.02 50)",
+            fontFamily: "var(--font-body)",
+          }}
         >
-          Thank you for completing the BioChain Sourcing client intake. We will review your
-          organization and product needs and reach out to schedule your sourcing audit.
+          Thank you for completing the BioChain Sourcing client intake. We will
+          review your organization and product needs and reach out to schedule
+          your sourcing audit.
         </p>
         <div
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
-          style={{ background: "oklch(0.72 0.15 75 / 0.12)", color: "oklch(0.45 0.12 70)" }}
+          style={{
+            background: "oklch(0.72 0.15 75 / 0.12)",
+            color: "oklch(0.45 0.12 70)",
+          }}
         >
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--gold)" }} />
+          <div
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: "var(--gold)" }}
+          />
           Submitted to RampRate BioChain Sourcing
         </div>
       </div>
@@ -1332,22 +1859,40 @@ export default function ClientIntakeForm() {
   const isLastFormStep = active === STEP_META.length - 1;
 
   return (
-    <form name="client-intake" onSubmit={formik.handleSubmit} style={{ fontFamily: "var(--font-body)" }}>
-      <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
+    <form
+      name="client-intake"
+      onSubmit={formik.handleSubmit}
+      style={{ fontFamily: "var(--font-body)" }}
+    >
+      <input
+        ref={honeypotRef}
+        type="text"
+        name="bot_field"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+      />
 
       {reviewing ? (
         <>
           <h2
             className="text-2xl sm:text-3xl font-bold mb-3"
-            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "oklch(0.2 0.02 50)",
+            }}
           >
             Review Your Application
           </h2>
           <p
             className="text-sm leading-relaxed mb-6"
-            style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.45 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
-            Check everything below before submitting. Click Edit on any section to make changes.
+            Check everything below before submitting. Click Edit on any section
+            to make changes.
           </p>
           <ReviewSummary
             formik={formik}
@@ -1363,7 +1908,10 @@ export default function ClientIntakeForm() {
           <ProgressBar active={active} />
           <h2
             className="text-2xl sm:text-3xl font-bold mb-3"
-            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "oklch(0.2 0.02 50)",
+            }}
           >
             {meta.title}
           </h2>
@@ -1372,7 +1920,10 @@ export default function ClientIntakeForm() {
       )}
 
       {error && (
-        <p className="mt-6 text-sm font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+        <p
+          className="mt-6 text-sm font-medium"
+          style={{ color: "oklch(0.55 0.2 25)" }}
+        >
           {error}
         </p>
       )}
@@ -1380,16 +1931,28 @@ export default function ClientIntakeForm() {
       <div className="flex justify-between items-center mt-8">
         <button
           type="button"
-          onClick={() => (reviewing ? setReviewing(false) : goToStep(Math.max(0, active - 1)))}
+          onClick={() =>
+            reviewing ? setReviewing(false) : goToStep(Math.max(0, active - 1))
+          }
           disabled={!reviewing && active === 0}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
-          style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)", fontFamily: "var(--font-body)" }}
+          style={{
+            borderColor: "oklch(0.85 0.04 70)",
+            color: "oklch(0.45 0.08 60)",
+            fontFamily: "var(--font-body)",
+          }}
         >
           <ArrowLeft size={14} />
           Back
         </button>
 
-        <span className="text-xs" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <span
+          className="text-xs"
+          style={{
+            color: "oklch(0.6 0.02 50)",
+            fontFamily: "var(--font-body)",
+          }}
+        >
           {reviewing ? "Review" : `${active + 1} / ${STEP_META.length}`}
         </span>
 
@@ -1401,7 +1964,10 @@ export default function ClientIntakeForm() {
             }}
             disabled={submitting}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: "oklch(0.4 0.1 60)", fontFamily: "var(--font-body)" }}
+            style={{
+              background: "oklch(0.4 0.1 60)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             {submitting ? "Submitting…" : "Submit Application"}
           </button>
@@ -1410,7 +1976,10 @@ export default function ClientIntakeForm() {
             type="button"
             onClick={proceedToReview}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+            style={{
+              background: "var(--gold)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Review Application
             <ArrowRight size={14} />
@@ -1420,7 +1989,10 @@ export default function ClientIntakeForm() {
             type="button"
             onClick={() => goToStep(Math.min(STEP_META.length - 1, active + 1))}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+            style={{
+              background: "var(--gold)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Continue
             <ArrowRight size={14} />

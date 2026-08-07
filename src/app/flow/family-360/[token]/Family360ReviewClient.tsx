@@ -16,7 +16,7 @@ import {
 import { CheckCircle, ArrowUp, ArrowDown, Heart, Sparkles } from "lucide-react";
 
 /**
- * Family 360 Review — same mechanics as the business 360,
+ * Family 360 Review - same mechanics as the business 360,
  * but with family-appropriate language, relationship options,
  * and the family archetype names (Dreamer, Cheerleader, etc.)
  */
@@ -26,7 +26,8 @@ const FAMILY_ENERGY_TYPES = [
     key: "spark",
     label: "The Dreamer",
     color: "#F59E0B",
-    description: "Imagines what the family could become, proposes new adventures",
+    description:
+      "Imagines what the family could become, proposes new adventures",
   },
   {
     key: "amplifier",
@@ -50,7 +51,8 @@ const FAMILY_ENERGY_TYPES = [
     key: "conductor",
     label: "The Peacemaker",
     color: "#10B981",
-    description: "Keeps everyone connected, resolves tensions, maintains harmony",
+    description:
+      "Keeps everyone connected, resolves tensions, maintains harmony",
   },
 ];
 
@@ -68,7 +70,7 @@ const FAMILY_RELATIONSHIPS = [
 export default function Family360ReviewClient({ token }: { token: string }) {
   const { data, isLoading, error } = trpc.threeSixty.getSession.useQuery(
     { token },
-    { enabled: !!token, retry: false }
+    { enabled: !!token, retry: false },
   );
 
   const submitMutation = trpc.threeSixty.submitResponse.useMutation();
@@ -96,7 +98,7 @@ export default function Family360ReviewClient({ token }: { token: string }) {
       ];
       setRankings(newRankings);
     },
-    [rankings]
+    [rankings],
   );
 
   const handleSubmit = async () => {
@@ -140,8 +142,8 @@ export default function Family360ReviewClient({ token }: { token: string }) {
               Link Not Found
             </p>
             <p className="text-gray-500">
-              This family review link may have expired or is invalid.
-              Ask your family member to generate a new one.
+              This family review link may have expired or is invalid. Ask your
+              family member to generate a new one.
             </p>
           </CardContent>
         </Card>
@@ -197,8 +199,7 @@ export default function Family360ReviewClient({ token }: { token: string }) {
             </p>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            How does{" "}
-            <span className="text-rose-600">{subjectFirstName}</span>{" "}
+            How does <span className="text-rose-600">{subjectFirstName}</span>{" "}
             show up at home?
           </h1>
           <p className="text-gray-600 max-w-sm mx-auto">
@@ -207,7 +208,7 @@ export default function Family360ReviewClient({ token }: { token: string }) {
             <strong>least like them</strong> (bottom).
           </p>
           <p className="text-sm text-gray-400 mt-2">
-            Think about how they are <em>at home</em> — not at work.
+            Think about how they are <em>at home</em> - not at work.
           </p>
         </div>
 
@@ -274,7 +275,7 @@ export default function Family360ReviewClient({ token }: { token: string }) {
         <Card className="border-rose-200 mb-6">
           <CardContent className="p-4 sm:p-6 space-y-4">
             <p className="text-sm text-gray-500 font-medium">
-              Optional — helps {subjectFirstName} understand your perspective
+              Optional - helps {subjectFirstName} understand your perspective
             </p>
 
             <div className="space-y-3">
@@ -292,7 +293,10 @@ export default function Family360ReviewClient({ token }: { token: string }) {
               </div>
 
               <div>
-                <Label htmlFor="reviewerEmail" className="text-xs text-gray-600">
+                <Label
+                  htmlFor="reviewerEmail"
+                  className="text-xs text-gray-600"
+                >
                   Your email
                 </Label>
                 <Input
@@ -338,8 +342,8 @@ export default function Family360ReviewClient({ token }: { token: string }) {
         </Button>
 
         <p className="text-xs text-center text-gray-400 mt-4">
-          Responses are aggregated anonymously.{" "}
-          {subjectFirstName} only sees averages, never individual rankings.
+          Responses are aggregated anonymously. {subjectFirstName} only sees
+          averages, never individual rankings.
         </p>
       </div>
     </div>

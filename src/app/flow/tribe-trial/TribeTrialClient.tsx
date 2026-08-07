@@ -67,12 +67,10 @@ export default function TribeTrial() {
           <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-emerald-600" />
           </div>
-          <h1 className="text-3xl font-bold text-[#2C1810]">
-            You're In.
-          </h1>
+          <h1 className="text-3xl font-bold text-[#2C1810]">You're In.</h1>
           <p className="text-[#2C1810]/70 text-lg">
-            Your 30-day Tribe trial is live. Full access to team dashboards,
-            360 peer review, friction pair detection, and the manager guidebook.
+            Your 30-day Tribe trial is live. Full access to team dashboards, 360
+            peer review, friction pair detection, and the manager guidebook.
           </p>
           <div className="bg-[#2C1810] text-white rounded-xl p-6 text-left space-y-3">
             <p className="font-bold text-amber-400 text-sm uppercase tracking-wide">
@@ -118,13 +116,14 @@ export default function TribeTrial() {
             30-Day Free Trial
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-[#2C1810] leading-tight">
-            See How Your Team<br />
+            See How Your Team
+            <br />
             <span className="text-amber-600">Actually Works Together</span>
           </h1>
           <p className="text-lg text-[#2C1810]/70 max-w-2xl mx-auto">
             The gap between how you see yourself and how your team experiences
-            you is the most actionable data you'll collect this quarter.
-            Start free. No credit card required.
+            you is the most actionable data you'll collect this quarter. Start
+            free. No credit card required.
           </p>
         </motion.div>
 
@@ -139,7 +138,7 @@ export default function TribeTrial() {
             {
               icon: Users,
               title: "360 Peer Review",
-              desc: "See how others experience your energy — anonymous, honest, actionable.",
+              desc: "See how others experience your energy - anonymous, honest, actionable.",
             },
             {
               icon: GitBranch,
@@ -216,7 +215,9 @@ export default function TribeTrial() {
                   className="w-full bg-[#2C1810] hover:bg-[#1a0f0a] text-white h-12 text-base"
                   disabled={signup.isPending}
                 >
-                  {signup.isPending ? "Activating..." : "Start Free for 30 Days"}
+                  {signup.isPending
+                    ? "Activating..."
+                    : "Start Free for 30 Days"}
                 </Button>
               </form>
 
@@ -238,18 +239,22 @@ export default function TribeTrial() {
           <h3 className="font-bold text-[#2C1810] text-lg">The ROI Math</h3>
           <div className="bg-[#2C1810] rounded-xl p-6 text-white space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-white/70">One wasted meeting (10 people)</span>
+              <span className="text-white/70">
+                One wasted meeting (10 people)
+              </span>
               <span className="font-bold text-red-400">$1,200</span>
             </div>
             <div className="border-t border-white/10" />
             <div className="flex justify-between items-center">
-              <span className="text-white/70">One month of Tribe (10 people)</span>
+              <span className="text-white/70">
+                One month of Tribe (10 people)
+              </span>
               <span className="font-bold text-emerald-400">$290</span>
             </div>
             <div className="border-t border-white/10" />
             <p className="text-sm text-white/60 pt-2">
-              The Tribe plan pays for itself the first time a
-              role-misfit handoff doesn't happen.
+              The Tribe plan pays for itself the first time a role-misfit
+              handoff doesn't happen.
             </p>
           </div>
         </motion.div>
@@ -257,7 +262,7 @@ export default function TribeTrial() {
         {/* Trial Terms */}
         <div className="max-w-md mx-auto text-center text-xs text-[#2C1810]/40 space-y-1">
           <p>30 days free. Converts to $29/member/month on day 31.</p>
-          <p>Cancel anytime before then — one click, no questions.</p>
+          <p>Cancel anytime before then - one click, no questions.</p>
         </div>
       </div>
     </div>

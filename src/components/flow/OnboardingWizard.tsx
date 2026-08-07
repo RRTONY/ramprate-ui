@@ -9,7 +9,18 @@ import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
 import { toast } from "sonner";
 import {
-  CheckCircle2, ArrowRight, Users, Map, Sparkles, Copy, X, Zap, Activity, Shield, Anchor, Radio
+  CheckCircle2,
+  ArrowRight,
+  Users,
+  Map,
+  Sparkles,
+  Copy,
+  X,
+  Zap,
+  Activity,
+  Shield,
+  Anchor,
+  Radio,
 } from "lucide-react";
 
 interface OnboardingWizardProps {
@@ -38,7 +49,8 @@ const STEPS = [
   {
     id: "invite",
     title: "Invite Your Tribe",
-    subtitle: "The real insight comes from seeing how your energy interacts with others",
+    subtitle:
+      "The real insight comes from seeing how your energy interacts with others",
     icon: Users,
   },
   {
@@ -49,7 +61,13 @@ const STEPS = [
   },
 ];
 
-export default function OnboardingWizard({ role, score, teamCode, assessmentId, onClose }: OnboardingWizardProps) {
+export default function OnboardingWizard({
+  role,
+  score,
+  teamCode,
+  assessmentId,
+  onClose,
+}: OnboardingWizardProps) {
   const [step, setStep] = useState(0);
   const router = useRouter();
   const { user } = useAuth();
@@ -72,7 +90,7 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
     if (step < STEPS.length - 1) {
       setStep(step + 1);
     } else {
-      // Final step — go to team map
+      // Final step - go to team map
       if (teamCode) {
         router.push(`/flow/team-map?team=${teamCode}`);
       } else {
@@ -132,24 +150,31 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
                       <div>
                         <h2 className="text-2xl font-black">You're a {role}</h2>
                         <p className="text-muted-foreground mt-1">
-                          Score: {score}% alignment with your natural operating energy
+                          Score: {score}% alignment with your natural operating
+                          energy
                         </p>
                       </div>
                       <div className="p-4 bg-gray-50 rounded-xl text-sm leading-relaxed">
                         <p>
-                          This isn't a personality label — it's your <strong>operational energy signature</strong>.
-                          It reveals how you naturally process information, make decisions, and contribute to teams.
+                          This isn't a personality label - it's your{" "}
+                          <strong>operational energy signature</strong>. It
+                          reveals how you naturally process information, make
+                          decisions, and contribute to teams.
                         </p>
                         <p className="mt-2 text-muted-foreground text-xs">
-                          Scroll down to see your full report with stress zones, combination profile, and growth insights.
+                          Scroll down to see your full report with stress zones,
+                          combination profile, and growth insights.
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg border border-amber-200">
                       <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
                       <p className="text-xs text-amber-700">
-                        <strong>Individual results are only 30% of the picture.</strong> The real insight comes from
-                        seeing how your energy interacts with your team's energy.
+                        <strong>
+                          Individual results are only 30% of the picture.
+                        </strong>{" "}
+                        The real insight comes from seeing how your energy
+                        interacts with your team's energy.
                       </p>
                     </div>
                   </>
@@ -163,9 +188,11 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
                         <Users className="w-10 h-10" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black">Invite 3-5 Colleagues</h2>
+                        <h2 className="text-2xl font-black">
+                          Invite 3-5 Colleagues
+                        </h2>
                         <p className="text-muted-foreground mt-1">
-                          Share this link with your team — it takes 5 minutes
+                          Share this link with your team - it takes 5 minutes
                         </p>
                       </div>
                     </div>
@@ -174,7 +201,9 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
                       className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"
                       onClick={copyInviteLink}
                     >
-                      <code className="flex-1 text-xs truncate">{inviteLink}</code>
+                      <code className="flex-1 text-xs truncate">
+                        {inviteLink}
+                      </code>
                       {invitesCopied ? (
                         <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
                       ) : (
@@ -188,15 +217,21 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
                         { label: "Free", desc: "for everyone" },
                         { label: "Instant", desc: "team map" },
                       ].map((item) => (
-                        <div key={item.label} className="p-3 bg-gray-50 rounded-lg">
+                        <div
+                          key={item.label}
+                          className="p-3 bg-gray-50 rounded-lg"
+                        >
                           <p className="font-black text-lg">{item.label}</p>
-                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {item.desc}
+                          </p>
                         </div>
                       ))}
                     </div>
 
                     <p className="text-xs text-center text-muted-foreground">
-                      When 3+ people from the same team complete the assessment, the Team Map unlocks automatically.
+                      When 3+ people from the same team complete the assessment,
+                      the Team Map unlocks automatically.
                     </p>
                   </>
                 )}
@@ -209,7 +244,9 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
                         <Map className="w-10 h-10" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black">Your Team Map Awaits</h2>
+                        <h2 className="text-2xl font-black">
+                          Your Team Map Awaits
+                        </h2>
                         <p className="text-muted-foreground mt-1">
                           See the invisible architecture of your team
                         </p>
@@ -218,12 +255,27 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
 
                     <div className="space-y-3">
                       {[
-                        { icon: "⚡", text: "See who's the Spark, who's the Ground, and where the gaps are" },
-                        { icon: "🔥", text: "Identify friction pairs — who's being forced outside their natural role" },
-                        { icon: "🎯", text: "Get hiring recommendations based on missing energy types" },
-                        { icon: "📊", text: "Compare your team against aggregate norms across all teams" },
+                        {
+                          icon: "⚡",
+                          text: "See who's the Spark, who's the Ground, and where the gaps are",
+                        },
+                        {
+                          icon: "🔥",
+                          text: "Identify friction pairs - who's being forced outside their natural role",
+                        },
+                        {
+                          icon: "🎯",
+                          text: "Get hiring recommendations based on missing energy types",
+                        },
+                        {
+                          icon: "📊",
+                          text: "Compare your team against aggregate norms across all teams",
+                        },
                       ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                        <div
+                          key={i}
+                          className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
+                        >
                           <span className="text-lg">{item.icon}</span>
                           <p className="text-sm">{item.text}</p>
                         </div>
@@ -246,7 +298,10 @@ export default function OnboardingWizard({ role, score, teamCode, assessmentId, 
               >
                 Skip wizard
               </button>
-              <Button onClick={handleNext} className="gap-2 bg-black hover:bg-gray-800">
+              <Button
+                onClick={handleNext}
+                className="gap-2 bg-black hover:bg-gray-800"
+              >
                 {step === STEPS.length - 1 ? (
                   <>
                     {teamCode ? "View Team Map" : "Build Your Team"}

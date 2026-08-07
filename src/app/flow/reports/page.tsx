@@ -6,7 +6,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 export const metadata: Metadata = {
   title: "Reports Dashboard | The Flow Circuit",
   description:
-    "Admin dashboard for The Flow Circuit — browse individual assessment reports, filter by domain and role, and generate individual or team PDF reports.",
+    "Admin dashboard for The Flow Circuit - browse individual assessment reports, filter by domain and role, and generate individual or team PDF reports.",
   alternates: { canonical: "https://flow.tonygreenberg.com/reports" },
 };
 

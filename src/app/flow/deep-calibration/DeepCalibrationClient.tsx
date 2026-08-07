@@ -50,7 +50,9 @@ const ROLE_BG: Record<Role, string> = {
 export default function DeepCalibrationClient() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [phase, setPhase] = useState<"intro" | "calibrating" | "submitting" | "results">("intro");
+  const [phase, setPhase] = useState<
+    "intro" | "calibrating" | "submitting" | "results"
+  >("intro");
   const [currentSet, setCurrentSet] = useState(0);
   const [rankings, setRankings] = useState<RankingResult[]>([]);
   const [currentOrder, setCurrentOrder] = useState<string[]>([]);
@@ -81,7 +83,9 @@ export default function DeepCalibrationClient() {
         role: data.calibratedRole,
         consistency: data.confidenceScore,
         originalRole: latestAssessment?.role,
-        originalScores: latestAssessment?.scores as Record<string, number> | undefined,
+        originalScores: latestAssessment?.scores as
+          | Record<string, number>
+          | undefined,
       });
       setPhase("results");
       toast.success("Deep Calibration complete!");
@@ -106,20 +110,23 @@ export default function DeepCalibrationClient() {
     setCurrentSet(0);
     setRankings([]);
     // Initialize first set order
-    setCurrentOrder(calibrationSets[0].statements.map(s => s.id));
+    setCurrentOrder(calibrationSets[0].statements.map((s) => s.id));
   }, [user, latestAssessment, router]);
 
   const handleNext = useCallback(() => {
     // Save current ranking
-    const newRankings = [...rankings, { setId: calibrationSets[currentSet].id, rankings: currentOrder }];
+    const newRankings = [
+      ...rankings,
+      { setId: calibrationSets[currentSet].id, rankings: currentOrder },
+    ];
     setRankings(newRankings);
 
     if (currentSet < calibrationSets.length - 1) {
       const nextSet = currentSet + 1;
       setCurrentSet(nextSet);
-      setCurrentOrder(calibrationSets[nextSet].statements.map(s => s.id));
+      setCurrentOrder(calibrationSets[nextSet].statements.map((s) => s.id));
     } else {
-      // All done — submit
+      // All done - submit
       setPhase("submitting");
       const scores = calculateCalibratedScores(newRankings);
       const consistency = calculateConsistency(newRankings);
@@ -130,7 +137,8 @@ export default function DeepCalibrationClient() {
         rankings: newRankings,
         calibratedScores: scores,
         calibratedRole: role,
-        originalScores: (latestAssessment?.scores as Record<string, number>) || {},
+        originalScores:
+          (latestAssessment?.scores as Record<string, number>) || {},
         originalRole: latestAssessment?.role || "",
         confidenceScore: consistency,
       });
@@ -147,7 +155,7 @@ export default function DeepCalibrationClient() {
         setCurrentOrder(prevRanking.rankings);
         setRankings(rankings.slice(0, prevSet));
       } else {
-        setCurrentOrder(calibrationSets[prevSet].statements.map(s => s.id));
+        setCurrentOrder(calibrationSets[prevSet].statements.map((s) => s.id));
       }
     }
   }, [currentSet, rankings]);
@@ -183,7 +191,7 @@ export default function DeepCalibrationClient() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-sm font-medium"
               >
                 <Shield className="w-4 h-4" />
-                Verified Assessment
+                Forced-Choice Deep Dive
               </motion.div>
 
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -191,8 +199,8 @@ export default function DeepCalibrationClient() {
               </h1>
 
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-                The standard assessment tells you who you are.
-                This tells you who you <em>can't pretend not to be</em>.
+                The standard assessment tells you who you are. This tells you
+                who you <em>can't pretend not to be</em>.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
@@ -201,10 +209,9 @@ export default function DeepCalibrationClient() {
                     <ArrowUpDown className="w-5 h-5 text-violet-400" />
                     <h3 className="font-semibold text-sm">Forced Ranking</h3>
                     <p className="text-xs text-muted-foreground">
-                      No more rating everything high.
-                      You rank 4 statements from most
-                      to least like you. The data
-                      forces honest differentiation.
+                      No more rating everything high. You rank 4 statements from
+                      most to least like you. The data forces honest
+                      differentiation.
                     </p>
                   </CardContent>
                 </Card>
@@ -213,22 +220,19 @@ export default function DeepCalibrationClient() {
                     <BarChart3 className="w-5 h-5 text-cyan-400" />
                     <h3 className="font-semibold text-sm">Ipsative Scoring</h3>
                     <p className="text-xs text-muted-foreground">
-                      Same method as Gallup
-                      CliftonStrengths and Belbin.
-                      Your scores show energy
-                      distribution, not absolutes.
+                      Same method as Gallup CliftonStrengths and Belbin. Your
+                      scores show energy distribution, not absolutes.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="bg-card/50 border-border/50">
                   <CardContent className="p-5 space-y-2">
                     <BadgeCheck className="w-5 h-5 text-emerald-400" />
-                    <h3 className="font-semibold text-sm">Verified Badge</h3>
+                    <h3 className="font-semibold text-sm">Calibrated Badge</h3>
                     <p className="text-xs text-muted-foreground">
-                      Completing calibration earns
-                      a "Verified" badge on your
-                      profile — proof your role
-                      assignment is battle-tested.
+                      Completing calibration earns a "Calibrated" badge on your
+                      profile - it means you've done the more rigorous
+                      forced-ranking pass, not an independent audit.
                     </p>
                   </CardContent>
                 </Card>
@@ -248,7 +252,11 @@ export default function DeepCalibrationClient() {
                   onClick={startCalibration}
                   className="bg-violet-600 hover:bg-violet-700 text-white px-8"
                 >
-                  {!user ? "Sign In to Start" : !latestAssessment ? "Take Assessment First" : "Begin Calibration"}
+                  {!user
+                    ? "Sign In to Start"
+                    : !latestAssessment
+                      ? "Take Assessment First"
+                      : "Begin Calibration"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
@@ -269,13 +277,17 @@ export default function DeepCalibrationClient() {
             {/* Progress bar */}
             <div className="w-full max-w-xl mb-8">
               <div className="flex justify-between text-xs text-muted-foreground mb-2">
-                <span>Set {currentSet + 1} of {calibrationSets.length}</span>
+                <span>
+                  Set {currentSet + 1} of {calibrationSets.length}
+                </span>
                 <span>{Math.round(progress)}%</span>
               </div>
               <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-violet-500 rounded-full"
-                  initial={{ width: `${((currentSet) / calibrationSets.length) * 100}%` }}
+                  initial={{
+                    width: `${(currentSet / calibrationSets.length) * 100}%`,
+                  }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.5 }}
                 />
@@ -288,8 +300,13 @@ export default function DeepCalibrationClient() {
                 {currentSetData.context}
               </h2>
               <p className="text-sm text-muted-foreground text-center">
-                Drag to rank from <strong className="text-violet-400">most like you</strong> (top)
-                to <strong className="text-muted-foreground">least like you</strong> (bottom)
+                Drag to rank from{" "}
+                <strong className="text-violet-400">most like you</strong> (top)
+                to{" "}
+                <strong className="text-muted-foreground">
+                  least like you
+                </strong>{" "}
+                (bottom)
               </p>
             </div>
 
@@ -302,8 +319,15 @@ export default function DeepCalibrationClient() {
                 className="space-y-3"
               >
                 {currentOrder.map((stmtId, index) => {
-                  const stmt = currentSetData.statements.find(s => s.id === stmtId)!;
-                  const rankLabels = ["Most Like Me", "Somewhat Like Me", "Less Like Me", "Least Like Me"];
+                  const stmt = currentSetData.statements.find(
+                    (s) => s.id === stmtId,
+                  )!;
+                  const rankLabels = [
+                    "Most Like Me",
+                    "Somewhat Like Me",
+                    "Less Like Me",
+                    "Least Like Me",
+                  ];
                   const rankColors = [
                     "border-violet-500/50 bg-violet-500/10",
                     "border-blue-500/30 bg-blue-500/5",
@@ -345,7 +369,11 @@ export default function DeepCalibrationClient() {
             {/* Navigation */}
             <div className="flex gap-4 mt-8">
               {currentSet > 0 && (
-                <Button variant="outline" onClick={handleBack} className="gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handleBack}
+                  className="gap-2"
+                >
                   <ArrowLeft className="w-4 h-4" /> Back
                 </Button>
               )}
@@ -354,9 +382,13 @@ export default function DeepCalibrationClient() {
                 className="bg-violet-600 hover:bg-violet-700 text-white gap-2 px-8"
               >
                 {currentSet === calibrationSets.length - 1 ? (
-                  <>Complete <CheckCircle2 className="w-4 h-4" /></>
+                  <>
+                    Complete <CheckCircle2 className="w-4 h-4" />
+                  </>
                 ) : (
-                  <>Next <ArrowRight className="w-4 h-4" /></>
+                  <>
+                    Next <ArrowRight className="w-4 h-4" />
+                  </>
                 )}
               </Button>
             </div>
@@ -378,10 +410,11 @@ export default function DeepCalibrationClient() {
               >
                 <Target className="w-12 h-12 text-violet-400 mx-auto" />
               </motion.div>
-              <p className="text-lg font-medium">Recalibrating your profile...</p>
+              <p className="text-lg font-medium">
+                Recalibrating your profile...
+              </p>
               <p className="text-sm text-muted-foreground">
-                Running ipsative analysis across
-                60 data points
+                Running ipsative analysis across 60 data points
               </p>
             </div>
           </motion.div>
@@ -405,37 +438,64 @@ export default function DeepCalibrationClient() {
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-medium"
                 >
                   <BadgeCheck className="w-4 h-4" />
-                  Verified Profile
+                  Calibrated Profile
                 </motion.div>
                 <h1 className="text-3xl md:text-4xl font-bold">
                   Calibration Complete
                 </h1>
                 <p className="text-muted-foreground">
-                  Consistency Score: <strong className={results.consistency >= 70 ? "text-emerald-400" : results.consistency >= 50 ? "text-amber-400" : "text-rose-400"}>
+                  Consistency Score:{" "}
+                  <strong
+                    className={
+                      results.consistency >= 70
+                        ? "text-emerald-400"
+                        : results.consistency >= 50
+                          ? "text-amber-400"
+                          : "text-rose-400"
+                    }
+                  >
                     {results.consistency}%
                   </strong>
-                  {results.consistency >= 70 ? " — Highly consistent" : results.consistency >= 50 ? " — Moderately consistent" : " — Low consistency (retake recommended)"}
+                  {results.consistency >= 70
+                    ? " - Highly consistent"
+                    : results.consistency >= 50
+                      ? " - Moderately consistent"
+                      : " - Low consistency (retake recommended)"}
                 </p>
               </div>
 
               {/* Role Result */}
               <Card className={`border-2 ${ROLE_BG[results.role]}`}>
                 <CardContent className="p-8 text-center space-y-4">
-                  <Sparkles className={`w-10 h-10 mx-auto ${ROLE_COLORS[results.role]}`} />
+                  <Sparkles
+                    className={`w-10 h-10 mx-auto ${ROLE_COLORS[results.role]}`}
+                  />
                   <h2 className="text-2xl font-bold">
-                    Calibrated Role: <span className={ROLE_COLORS[results.role]}>{results.role}</span>
+                    Calibrated Role:{" "}
+                    <span className={ROLE_COLORS[results.role]}>
+                      {results.role}
+                    </span>
                   </h2>
-                  {results.originalRole && results.originalRole !== results.role && (
-                    <p className="text-sm text-muted-foreground">
-                      Original assessment: <span className="text-foreground">{results.originalRole}</span> →
-                      Calibrated: <span className={ROLE_COLORS[results.role]}>{results.role}</span>
-                    </p>
-                  )}
-                  {results.originalRole && results.originalRole === results.role && (
-                    <p className="text-sm text-emerald-400">
-                      Confirmed — your original role held up under forced ranking
-                    </p>
-                  )}
+                  {results.originalRole &&
+                    results.originalRole !== results.role && (
+                      <p className="text-sm text-muted-foreground">
+                        Original assessment:{" "}
+                        <span className="text-foreground">
+                          {results.originalRole}
+                        </span>{" "}
+                        → Calibrated:{" "}
+                        <span className={ROLE_COLORS[results.role]}>
+                          {results.role}
+                        </span>
+                      </p>
+                    )}
+                  {results.originalRole &&
+                    results.originalRole === results.role && (
+                      <p className="text-sm text-emerald-400">
+                        Confirmed - your original role held up under forced
+                        ranking
+                      </p>
+                    )}
                 </CardContent>
               </Card>
 
@@ -447,12 +507,27 @@ export default function DeepCalibrationClient() {
                     Score Comparison
                   </h3>
                   <div className="space-y-3">
-                    {(["Spark", "Amplifier", "Filter", "Ground", "Conductor"] as Role[]).map(role => {
+                    {(
+                      [
+                        "Spark",
+                        "Amplifier",
+                        "Filter",
+                        "Ground",
+                        "Conductor",
+                      ] as Role[]
+                    ).map((role) => {
                       const calibPct = results.percentages[role];
                       const origPct = results.originalScores
                         ? Math.round(
                             ((results.originalScores[role] || 0) /
-                              Math.max(1, Object.values(results.originalScores).reduce((a, b) => a + b, 0))) * 100
+                              Math.max(
+                                1,
+                                Object.values(results.originalScores).reduce(
+                                  (a, b) => a + b,
+                                  0,
+                                ),
+                              )) *
+                              100,
                           )
                         : 0;
                       const delta = calibPct - origPct;
@@ -460,12 +535,26 @@ export default function DeepCalibrationClient() {
                       return (
                         <div key={role} className="space-y-1">
                           <div className="flex justify-between text-sm">
-                            <span className={`font-medium ${ROLE_COLORS[role]}`}>{role}</span>
+                            <span
+                              className={`font-medium ${ROLE_COLORS[role]}`}
+                            >
+                              {role}
+                            </span>
                             <span className="text-muted-foreground">
-                              {origPct}% → <strong className="text-foreground">{calibPct}%</strong>
+                              {origPct}% →{" "}
+                              <strong className="text-foreground">
+                                {calibPct}%
+                              </strong>
                               {delta !== 0 && (
-                                <span className={delta > 0 ? "text-emerald-400 ml-1" : "text-rose-400 ml-1"}>
-                                  ({delta > 0 ? "+" : ""}{delta})
+                                <span
+                                  className={
+                                    delta > 0
+                                      ? "text-emerald-400 ml-1"
+                                      : "text-rose-400 ml-1"
+                                  }
+                                >
+                                  ({delta > 0 ? "+" : ""}
+                                  {delta})
                                 </span>
                               )}
                             </span>
@@ -479,11 +568,15 @@ export default function DeepCalibrationClient() {
                             {/* Calibrated score */}
                             <motion.div
                               className={`absolute inset-y-0 left-0 rounded-full ${
-                                role === "Spark" ? "bg-amber-500" :
-                                role === "Amplifier" ? "bg-cyan-500" :
-                                role === "Filter" ? "bg-rose-500" :
-                                role === "Ground" ? "bg-emerald-500" :
-                                "bg-violet-500"
+                                role === "Spark"
+                                  ? "bg-amber-500"
+                                  : role === "Amplifier"
+                                    ? "bg-cyan-500"
+                                    : role === "Filter"
+                                      ? "bg-rose-500"
+                                      : role === "Ground"
+                                        ? "bg-emerald-500"
+                                        : "bg-violet-500"
                               }`}
                               initial={{ width: 0 }}
                               animate={{ width: `${calibPct}%` }}
@@ -495,10 +588,10 @@ export default function DeepCalibrationClient() {
                     })}
                   </div>
                   <p className="text-xs text-muted-foreground pt-2 border-t border-border/50">
-                    Faded bars show your original Likert scores.
-                    Solid bars show your forced-rank calibrated scores.
-                    The gap reveals where social desirability
-                    bias was inflating or deflating your profile.
+                    Faded bars show your original Likert scores. Solid bars show
+                    your forced-rank calibrated scores. The gap reveals where
+                    social desirability bias was inflating or deflating your
+                    profile.
                   </p>
                 </CardContent>
               </Card>
@@ -516,7 +609,7 @@ export default function DeepCalibrationClient() {
                   onClick={() => router.push("/flow/share-card")}
                   className="gap-2"
                 >
-                  Share Your Verified Card
+                  Share Your Calibrated Card
                 </Button>
                 <Button
                   variant="outline"

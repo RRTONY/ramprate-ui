@@ -39,7 +39,7 @@ export default function ThreeSixtyLinkGenerator({
   // Check if session already exists
   const existingSession = trpc.threeSixty.getByAssessment.useQuery(
     { assessmentId },
-    { enabled: showGenerator }
+    { enabled: showGenerator },
   );
 
   const createSession = trpc.threeSixty.createSession.useMutation();
@@ -84,8 +84,8 @@ export default function ThreeSixtyLinkGenerator({
 
   const defaultMessage = useMemo(
     () =>
-      `Hey — I just took a 2-minute energy assessment and I'd love your honest perspective on how I show up.\n\nIt takes 30 seconds. Just drag-rank 5 energy types from "most like me" to "least like me":\n\n${reviewLink}\n\nNo login needed. Totally anonymous. Thanks!`,
-    [reviewLink]
+      `Hey - I just took a 2-minute energy assessment and I'd love your honest perspective on how I show up.\n\nIt takes 30 seconds. Just drag-rank 5 energy types from "most like me" to "least like me":\n\n${reviewLink}\n\nNo login needed. Totally anonymous. Thanks!`,
+    [reviewLink],
   );
 
   const [inviteMessage, setInviteMessage] = useState("");
@@ -131,9 +131,9 @@ export default function ThreeSixtyLinkGenerator({
                   Discover Your Blind Spots
                 </h3>
                 <p className="text-muted-foreground text-sm mt-2 leading-relaxed max-w-md">
-                  Get 3+ people who know you to rank your energy in
-                  30 seconds. You'll receive a gap report showing
-                  where self-perception diverges from reality.
+                  Get 3+ people who know you to rank your energy in 30 seconds.
+                  You'll receive a gap report showing where self-perception
+                  diverges from reality.
                 </p>
               </div>
 
@@ -193,7 +193,7 @@ export default function ThreeSixtyLinkGenerator({
                     {session.responseCount !== 1 ? "s" : ""} received
                     {session.responseCount >= 3 && (
                       <span className="text-emerald-600 ml-1">
-                        — Gap report ready
+                        - Gap report ready
                       </span>
                     )}
                   </p>
@@ -270,7 +270,7 @@ export default function ThreeSixtyLinkGenerator({
                   style={{
                     width: `${Math.min(
                       (session.responseCount / 3) * 100,
-                      100
+                      100,
                     )}%`,
                   }}
                 />
@@ -304,7 +304,7 @@ export default function ThreeSixtyLinkGenerator({
                   Invite message
                 </label>
                 <span className="text-xs text-muted-foreground">
-                  Editable — make it yours
+                  Editable - make it yours
                 </span>
               </div>
               <Textarea
@@ -348,9 +348,9 @@ export default function ThreeSixtyLinkGenerator({
 
             {/* Footer tip */}
             <p className="text-xs text-center text-muted-foreground leading-relaxed pt-1">
-              Share this link with 3+ people who know you well.
-              They rank your energy types in 30 seconds — completely
-              anonymous. You get a gap report revealing blind spots.
+              Share this link with 3+ people who know you well. They rank your
+              energy types in 30 seconds - completely anonymous. You get a gap
+              report revealing blind spots.
             </p>
           </>
         )}

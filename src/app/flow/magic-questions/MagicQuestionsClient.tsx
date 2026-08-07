@@ -3,7 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, ExternalLink, Wand2, CheckCircle2, Circle, ChevronDown, ChevronUp, Zap, Users, Target } from "lucide-react";
+import {
+  ArrowRight,
+  ExternalLink,
+  Wand2,
+  CheckCircle2,
+  Circle,
+  ChevronDown,
+  ChevronUp,
+  Zap,
+  Users,
+  Target,
+} from "lucide-react";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 interface Question {
@@ -18,83 +29,104 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    question: "What is the single most important outcome this project must achieve?",
-    why: "If you can't answer this in one sentence, you don't have a project — you have a wish list. This question forces the Spark to crystallize the vision into something the relay can actually carry.",
-    flowCircuitConnection: "This is the Spark's moment. The answer to this question IS the baton. If the Spark can't define it, the Amplifier has nothing to amplify.",
+    question:
+      "What is the single most important outcome this project must achieve?",
+    why: "If you can't answer this in one sentence, you don't have a project - you have a wish list. This question forces the Spark to crystallize the vision into something the relay can actually carry.",
+    flowCircuitConnection:
+      "This is the Spark's moment. The answer to this question IS the baton. If the Spark can't define it, the Amplifier has nothing to amplify.",
     role: "Spark",
-    followUp: "Can you say it in 10 words or fewer? If not, you're not ready to start.",
+    followUp:
+      "Can you say it in 10 words or fewer? If not, you're not ready to start.",
   },
   {
     id: 2,
-    question: "Who needs to hear about this — and who needs to believe it?",
+    question: "Who needs to hear about this - and who needs to believe it?",
     why: "Ideas don't die because they're bad. They die because they never reach the right ears. This question identifies the Amplifier's target audience and the resistance they'll face.",
-    flowCircuitConnection: "The Amplifier's job isn't just to spread the word — it's to make the right people believe. This question maps the amplification strategy.",
+    flowCircuitConnection:
+      "The Amplifier's job isn't just to spread the word - it's to make the right people believe. This question maps the amplification strategy.",
     role: "Amplifier",
-    followUp: "List three people who must be convinced. Now list what each one is afraid of.",
+    followUp:
+      "List three people who must be convinced. Now list what each one is afraid of.",
   },
   {
     id: 3,
     question: "What assumptions are we making that could kill this project?",
-    why: "Every project is built on assumptions. Most of them are invisible. This question is the Filter's superpower — surfacing the hidden assumptions before they become hidden failures.",
-    flowCircuitConnection: "The Filter doesn't just check quality — they check assumptions. This is the question that separates 'refinement' from 'rubber stamping.'",
+    why: "Every project is built on assumptions. Most of them are invisible. This question is the Filter's superpower - surfacing the hidden assumptions before they become hidden failures.",
+    flowCircuitConnection:
+      "The Filter doesn't just check quality - they check assumptions. This is the question that separates 'refinement' from 'rubber stamping.'",
     role: "Filter",
-    followUp: "For each assumption, ask: 'What would we do differently if this assumption were wrong?'",
+    followUp:
+      "For each assumption, ask: 'What would we do differently if this assumption were wrong?'",
   },
   {
     id: 4,
-    question: "What does 'done' look like — specifically?",
+    question: "What does 'done' look like - specifically?",
     why: "If the team can't agree on what 'done' looks like, they'll never agree on whether they got there. This question gives the Ground a clear finish line.",
-    flowCircuitConnection: "The Ground can't execute without a definition of done. This question is the contract between the Spark's vision and the Ground's reality.",
+    flowCircuitConnection:
+      "The Ground can't execute without a definition of done. This question is the contract between the Spark's vision and the Ground's reality.",
     role: "Ground",
-    followUp: "Write the 'done' criteria as a checklist. If you can't check it off, it's not a criterion — it's a feeling.",
+    followUp:
+      "Write the 'done' criteria as a checklist. If you can't check it off, it's not a criterion - it's a feeling.",
   },
   {
     id: 5,
     question: "Who is responsible for each handoff in this project?",
-    why: "Projects don't fail in the middle of a task. They fail in the gaps between tasks — the handoffs. This question maps the relay and identifies where batons will be dropped.",
-    flowCircuitConnection: "This is the Conductor's question. Every unnamed handoff is a dropped baton waiting to happen. The Conductor's job is to name every one of them.",
+    why: "Projects don't fail in the middle of a task. They fail in the gaps between tasks - the handoffs. This question maps the relay and identifies where batons will be dropped.",
+    flowCircuitConnection:
+      "This is the Conductor's question. Every unnamed handoff is a dropped baton waiting to happen. The Conductor's job is to name every one of them.",
     role: "Conductor",
-    followUp: "For each handoff, name the person giving the baton AND the person catching it. If either is 'TBD,' you have a gap.",
+    followUp:
+      "For each handoff, name the person giving the baton AND the person catching it. If either is 'TBD,' you have a gap.",
   },
   {
     id: 6,
     question: "What will we say no to?",
     why: "Scope creep kills more projects than bad ideas. This question forces the team to define boundaries before the pressure to expand begins.",
-    flowCircuitConnection: "The Filter's second superpower: saying no. A project without boundaries is a project without a Filter. And a project without a Filter ships garbage.",
+    flowCircuitConnection:
+      "The Filter's second superpower: saying no. A project without boundaries is a project without a Filter. And a project without a Filter ships garbage.",
     role: "Filter",
-    followUp: "Write down three things that are explicitly OUT of scope. Post them where everyone can see them.",
+    followUp:
+      "Write down three things that are explicitly OUT of scope. Post them where everyone can see them.",
   },
   {
     id: 7,
     question: "What's the fastest way to prove this won't work?",
-    why: "Most teams spend months building something before testing the core assumption. This question inverts the process — kill the bad idea fast so you can find the good one.",
-    flowCircuitConnection: "This is the 'Getting to No Faster' principle. The Conductor's job is to accelerate disqualification so the team's energy flows to what actually works.",
+    why: "Most teams spend months building something before testing the core assumption. This question inverts the process - kill the bad idea fast so you can find the good one.",
+    flowCircuitConnection:
+      "This is the 'Getting to No Faster' principle. The Conductor's job is to accelerate disqualification so the team's energy flows to what actually works.",
     role: "Conductor",
-    followUp: "Design a 48-hour test that would disprove your core assumption. If you can't, your assumption might be untestable — which is its own problem.",
+    followUp:
+      "Design a 48-hour test that would disprove your core assumption. If you can't, your assumption might be untestable - which is its own problem.",
   },
   {
     id: 8,
     question: "Who on this team has done something like this before?",
-    why: "Experience isn't just about skill — it's about pattern recognition. Someone who's been through a similar relay before can spot the dropped batons before they hit the floor.",
-    flowCircuitConnection: "The Ground's experience is the team's insurance policy. If nobody has done this before, you need more Filter time and more Conductor oversight.",
+    why: "Experience isn't just about skill - it's about pattern recognition. Someone who's been through a similar relay before can spot the dropped batons before they hit the floor.",
+    flowCircuitConnection:
+      "The Ground's experience is the team's insurance policy. If nobody has done this before, you need more Filter time and more Conductor oversight.",
     role: "Ground",
-    followUp: "If the answer is 'nobody,' that's not a disqualifier — but it means you need to budget for learning curves and build in more checkpoints.",
+    followUp:
+      "If the answer is 'nobody,' that's not a disqualifier - but it means you need to budget for learning curves and build in more checkpoints.",
   },
   {
     id: 9,
     question: "What does this project need that we don't have?",
     why: "Honesty about gaps is more valuable than optimism about strengths. This question surfaces the missing pieces before they become missing deadlines.",
-    flowCircuitConnection: "This is the circuit health check. Missing a role? Missing a skill? Missing a resource? Name it now or discover it at the worst possible moment.",
+    flowCircuitConnection:
+      "This is the circuit health check. Missing a role? Missing a skill? Missing a resource? Name it now or discover it at the worst possible moment.",
     role: "Spark",
-    followUp: "For each gap, decide: do we build it, buy it, or borrow it? And who's responsible for closing the gap?",
+    followUp:
+      "For each gap, decide: do we build it, buy it, or borrow it? And who's responsible for closing the gap?",
   },
   {
     id: 10,
-    question: "If this project succeeds, what changes — and for whom?",
+    question: "If this project succeeds, what changes - and for whom?",
     why: "The ultimate question. If you can't articulate the impact, you can't justify the effort. This question connects the project back to the 'why' that started it.",
-    flowCircuitConnection: "This is where the relay comes full circle. The Spark ignited it, the Amplifier spread it, the Filter refined it, the Ground built it — and now the Conductor asks: did it matter?",
+    flowCircuitConnection:
+      "This is where the relay comes full circle. The Spark ignited it, the Amplifier spread it, the Filter refined it, the Ground built it - and now the Conductor asks: did it matter?",
     role: "Conductor",
-    followUp: "Write the success story as if it already happened. If it doesn't excite you, the project isn't worth the relay.",
+    followUp:
+      "Write the success story as if it already happened. If it doesn't excite you, the project isn't worth the relay.",
   },
 ];
 
@@ -141,7 +173,9 @@ export default function MagicQuestions() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8">
             <Wand2 className="w-4 h-4 text-amber-400" />
-            <span className="text-sm font-mono text-amber-400">Project Diagnostic</span>
+            <span className="text-sm font-mono text-amber-400">
+              Project Diagnostic
+            </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
             10 Magic Questions
@@ -151,9 +185,9 @@ export default function MagicQuestions() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Based on Tony Greenberg's original framework for kicking
-            assumptions before they kick you. Each question maps to a Flow
-            Circuit role — because every project failure is a relay failure.
+            Based on Tony Greenberg's original framework for kicking assumptions
+            before they kick you. Each question maps to a Flow Circuit role -
+            because every project failure is a relay failure.
           </p>
           <a
             href="https://tonygreenberg.com/10-magic-questions-to-make-your-project-go-right-how-to-kick-ass-by-kicking-assumptions/"
@@ -231,11 +265,15 @@ export default function MagicQuestions() {
                       <span className="text-xs font-mono text-muted-foreground">
                         Q{q.id}
                       </span>
-                      <span className={`text-xs font-mono px-2 py-0.5 rounded-full border ${colorClass}`}>
+                      <span
+                        className={`text-xs font-mono px-2 py-0.5 rounded-full border ${colorClass}`}
+                      >
                         {roleEmoji[q.role]} {q.role}
                       </span>
                     </div>
-                    <h3 className={`text-lg font-display font-bold ${isAnswered ? "text-primary" : "text-foreground"}`}>
+                    <h3
+                      className={`text-lg font-display font-bold ${isAnswered ? "text-primary" : "text-foreground"}`}
+                    >
                       {q.question}
                     </h3>
                   </div>
