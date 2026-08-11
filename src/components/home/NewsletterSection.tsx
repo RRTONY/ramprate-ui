@@ -32,44 +32,19 @@ export default function NewsletterSection() {
   return (
     <section className="section-light py-20 sm:py-24">
       <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
-        <div
-          className="inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5"
-          style={{
-            background: "rgba(100,60,30,0.08)",
-            color: "oklch(0.55 0.15 30)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <div className="font-body inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5 bg-[rgba(100,60,30,0.08)] text-[oklch(0.55_0.15_30)]">
           Intelligence Brief
         </div>
-        <h2
-          className="text-3xl sm:text-4xl font-bold mb-4"
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "oklch(0.18 0.03 50)",
-          }}
-        >
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-[oklch(0.18_0.03_50)]">
           Join 13,000+ IT Leaders
         </h2>
-        <p
-          className="text-base leading-relaxed mb-8 max-w-lg mx-auto"
-          style={{
-            fontFamily: "var(--font-body)",
-            color: "oklch(0.45 0.02 50)",
-          }}
-        >
+        <p className="font-body text-base leading-relaxed mb-8 max-w-lg mx-auto text-[oklch(0.45_0.02_50)]">
           Get RampRate&apos;s take on enterprise tech, sourcing, and market
           shifts - straight from principals. No fluff.
         </p>
 
         {status === "done" ? (
-          <p
-            className="text-base font-semibold"
-            style={{
-              color: "oklch(0.55 0.15 30)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="font-body text-base font-semibold text-[oklch(0.55_0.15_30)]">
             You&apos;re in. Welcome to the list.
           </p>
         ) : (
@@ -84,20 +59,12 @@ export default function NewsletterSection() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
-              className="flex-1 px-4 py-3 rounded-md border text-sm focus:outline-none focus:ring-2"
-              style={{
-                borderColor: "oklch(0.82 0.05 80)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="font-body flex-1 px-4 py-3 rounded-md border text-sm focus:outline-none focus:ring-2 border-[oklch(0.82_0.05_80)]"
             />
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="px-6 py-3 rounded-md text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap"
-              style={{
-                background: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="font-body px-6 py-3 rounded-md text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap bg-[oklch(0.55_0.15_30)]"
             >
               {status === "submitting" ? "Subscribing…" : "Subscribe"}
             </button>
@@ -105,24 +72,12 @@ export default function NewsletterSection() {
         )}
 
         {status === "error" && (
-          <p
-            className="mt-3 text-xs"
-            style={{
-              color: "oklch(0.5 0.2 20)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="font-body mt-3 text-xs text-[oklch(0.5_0.2_20)]">
             Something went wrong. Try again or email us directly.
           </p>
         )}
 
-        <p
-          className="mt-4 text-xs"
-          style={{
-            color: "oklch(0.6 0.01 50)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <p className="font-body mt-4 text-xs text-[oklch(0.6_0.01_50)]">
           No spam. Unsubscribe anytime.
         </p>
       </div>

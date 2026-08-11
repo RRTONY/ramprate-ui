@@ -34,11 +34,6 @@ const companyLinks = [
   { label: "Thinking", href: "/thinking" },
   { label: "Careers", href: "/careers" },
   { label: "Engage", href: "/contact" },
-  {
-    label: "Legacy Site ↗",
-    href: "https://legacy.ramprate.com",
-    external: true,
-  },
 ];
 
 export default function Footer({
@@ -55,10 +50,7 @@ export default function Footer({
     "https://twitter.com/ramprate";
 
   return (
-    <footer
-      style={{ background: "oklch(0.14 0.01 250)" }}
-      className="text-white/60 py-16"
-    >
+    <footer className="text-white/60 py-16 bg-[oklch(0.14_0.01_250)]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Column 1 - Brand */}
@@ -66,37 +58,24 @@ export default function Footer({
             <Link href="/" className="block mb-4">
               <Logo variant="light" size="md" />
             </Link>
-            <p
-              className="text-xs text-white/30 mb-5 leading-relaxed"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="font-body text-xs text-white/30 mb-5 leading-relaxed">
               Since 2000. A fractional team of superstars creating
               trajectory-changing connections.
             </p>
-            <span
-              className="text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/40"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
+            <span className="font-mono text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/40">
               B Corp Certified
             </span>
           </div>
 
           {/* Column 2 - Brands */}
           <div>
-            <h4
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Brands
             </h4>
             <ul className="space-y-3">
               {brandLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group block"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <Link href={link.href} className="font-body group block">
                     <span className="text-sm text-white/70 group-hover:text-white transition-colors block">
                       {link.label}
                     </span>
@@ -109,34 +88,18 @@ export default function Footer({
 
           {/* Column 3 - Company */}
           <div>
-            <h4
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Company
             </h4>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
-                  {"external" in link && link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-white/50 hover:text-white transition-colors"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/50 hover:text-white transition-colors"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      {link.label}
-                    </Link>
-                  )}
+                  <Link
+                    href={link.href}
+                    className="font-body text-sm text-white/50 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -144,24 +107,19 @@ export default function Footer({
 
           {/* Column 4 - Engage */}
           <div>
-            <h4
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Engage
             </h4>
             <div className="space-y-2 mb-6">
               <a
                 href={`mailto:${email || "hello@ramprate.com"}`}
-                className="text-sm text-white/50 hover:text-white transition-colors block"
-                style={{ fontFamily: "var(--font-body)" }}
+                className="font-body text-sm text-white/50 hover:text-white transition-colors block"
               >
                 {email || "hello@ramprate.com"}
               </a>
               <a
                 href={`tel:${toTelHref(phone || "+19092359945")}`}
-                className="text-sm text-white/50 hover:text-white transition-colors block"
-                style={{ fontFamily: "var(--font-body)" }}
+                className="font-body text-sm text-white/50 hover:text-white transition-colors block"
               >
                 {phone || "+1(909)235-9945"}
               </a>
@@ -205,25 +163,20 @@ export default function Footer({
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p
-            className="text-xs text-white/30"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="font-body text-xs text-white/30">
             &copy; {new Date().getFullYear()} {companyName || "RampRate"}. All
             rights reserved.
           </p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
-              className="text-xs text-white/30 hover:text-white/50 transition-colors"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="font-body text-xs text-white/30 hover:text-white/50 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="text-xs text-white/30 hover:text-white/50 transition-colors"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="font-body text-xs text-white/30 hover:text-white/50 transition-colors"
             >
               Terms of Service
             </Link>

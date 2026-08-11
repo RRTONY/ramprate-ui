@@ -22,13 +22,8 @@ export default function Logo({ variant = 'light', className = '', size = 'md' }:
         alt="RampRate"
         width={width}
         height={height}
-        style={{
-          height: 'auto',
-          width: width,
-          maxHeight: height,
-          objectFit: 'contain',
-          filter: variant === 'light' ? 'brightness(0) invert(1)' : 'none',
-        }}
+        className={`h-auto object-contain ${variant === 'light' ? 'brightness-0 invert' : ''}`}
+        style={{width, maxHeight: height}}
         priority
       />
     </span>

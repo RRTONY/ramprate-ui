@@ -29,24 +29,9 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
 
   const btnBase =
     'flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all'
-  const ghost: React.CSSProperties = {
-    background: 'rgba(255,255,255,0.05)',
-    color: 'rgba(255,255,255,0.65)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    fontFamily: 'var(--font-body)',
-  }
-  const goldStyle: React.CSSProperties = {
-    background: 'var(--gold)',
-    color: 'var(--dark)',
-    fontFamily: 'var(--font-mono)',
-    fontWeight: 700,
-  }
-  const numInactive: React.CSSProperties = {
-    background: 'rgba(255,255,255,0.04)',
-    color: 'rgba(255,255,255,0.45)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    fontFamily: 'var(--font-mono)',
-  }
+  const ghostClass = 'font-body bg-white/5 text-white/65 border border-white/8'
+  const goldClass = 'font-mono font-bold bg-gold text-dark'
+  const numInactiveClass = 'font-mono bg-white/4 text-white/45 border border-white/8'
 
   const prevUrl = buildUrl(currentPage - 1, activeCategory)
   const nextUrl = buildUrl(currentPage + 1, activeCategory)
@@ -57,7 +42,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
       {/* ── Mobile: icon buttons + page numbers ── */}
       <div className="flex sm:hidden items-center justify-center gap-1.5">
         {currentPage > 1 && (
-          <Link href={prevUrl} className={`${btnBase} w-10 h-10 hover:opacity-80`} style={ghost}>
+          <Link href={prevUrl} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -68,8 +53,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
           p === 'ellipsis' ? (
             <span
               key={`e${i}`}
-              className="w-8 text-center text-sm select-none"
-              style={{color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)'}}
+              className="font-mono w-8 text-center text-sm select-none text-white/20"
             >
               ···
             </span>
@@ -77,8 +61,9 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
             <Link
               key={p}
               href={buildUrl(p, activeCategory)}
-              className={`${btnBase} w-10 h-10`}
-              style={p === currentPage ? goldStyle : numInactive}
+              className={`${btnBase} w-10 h-10 ${
+                p === currentPage ? goldClass : numInactiveClass
+              }`}
               aria-current={p === currentPage ? 'page' : undefined}
             >
               {p}
@@ -87,7 +72,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
         )}
 
         {currentPage < totalPages && (
-          <Link href={nextUrl} className={`${btnBase} w-10 h-10 hover:opacity-80`} style={ghost}>
+          <Link href={nextUrl} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -98,7 +83,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
       {/* ── Desktop: full page list ── */}
       <div className="hidden sm:flex items-center justify-center gap-1.5">
         {currentPage > 1 && (
-          <Link href={prevUrl} className={`${btnBase} w-10 h-10 hover:opacity-80`} style={ghost}>
+          <Link href={prevUrl} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -109,8 +94,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
           p === 'ellipsis' ? (
             <span
               key={`e${i}`}
-              className="w-10 text-center text-sm select-none"
-              style={{color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)'}}
+              className="font-mono w-10 text-center text-sm select-none text-white/20"
             >
               ···
             </span>
@@ -118,8 +102,9 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
             <Link
               key={p}
               href={buildUrl(p, activeCategory)}
-              className={`${btnBase} w-10 h-10`}
-              style={p === currentPage ? goldStyle : numInactive}
+              className={`${btnBase} w-10 h-10 ${
+                p === currentPage ? goldClass : numInactiveClass
+              }`}
               aria-current={p === currentPage ? 'page' : undefined}
             >
               {p}
@@ -128,7 +113,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
         )}
 
         {currentPage < totalPages && (
-          <Link href={nextUrl} className={`${btnBase} w-10 h-10 hover:opacity-80`} style={ghost}>
+          <Link href={nextUrl} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>

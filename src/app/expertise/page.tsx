@@ -89,55 +89,24 @@ export default function ExpertisePage() {
         ])}
       />
       {/* Hero */}
-      <section
-        className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.14 0.01 250) 0%, oklch(0.18 0.02 260) 50%, oklch(0.14 0.01 250) 100%)",
-        }}
-      >
+      <section className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden bg-[linear-gradient(135deg,oklch(0.14_0.01_250)_0%,oklch(0.18_0.02_260)_50%,oklch(0.14_0.01_250)_100%)]">
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           {/* Label */}
           <div className="mb-6">
-            <span
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full"
-              style={{
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.05)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "oklch(0.6 0.2 280)" }}
-              />
-              <span
-                className="text-[11px] font-medium uppercase"
-                style={{
-                  letterSpacing: "0.2em",
-                  color: "rgba(255,255,255,0.5)",
-                }}
-              >
+            <span className="font-body inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.6_0.2_280)]" />
+              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
                 Our Practices
               </span>
             </span>
           </div>
 
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl">
             Five Brands.{" "}
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>One Mission.</span>
+            <span className="text-amber">One Mission.</span>
           </h1>
 
-          <p
-            className="mt-6 text-base sm:text-lg leading-relaxed max-w-2xl"
-            style={{
-              color: "rgba(255,255,255,0.5)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="font-body mt-6 text-base sm:text-lg leading-relaxed max-w-2xl text-white/50">
             Each practice serves a different market with the same values:
             transparency, skin in the game, and principals who execute.
           </p>
@@ -145,16 +114,12 @@ export default function ExpertisePage() {
       </section>
 
       {/* Practice Cards */}
-      <section className="py-24" style={{ background: "#0d1117" }}>
+      <section className="py-24 bg-[#0d1117]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-12">
           {practices.map((p) => (
             <div
               key={p.name}
-              className="relative rounded-2xl overflow-hidden"
-              style={{
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.02)",
-              }}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/2"
             >
               {/* Colored left border accent */}
               <div
@@ -165,32 +130,19 @@ export default function ExpertisePage() {
               <div className="p-8 sm:p-10">
                 {/* Tagline */}
                 <p
-                  className="text-xs uppercase mb-2"
-                  style={{
-                    color: p.color,
-                    letterSpacing: "0.2em",
-                    fontFamily: "var(--font-mono)",
-                  }}
+                  className="font-mono text-xs uppercase mb-2 tracking-[0.2em]"
+                  style={{ color: p.color }}
                 >
                   {p.tagline}
                 </p>
 
                 {/* Name */}
-                <h2
-                  className="text-3xl sm:text-4xl font-bold text-white mb-4"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
                   {p.name}
                 </h2>
 
                 {/* Description */}
-                <p
-                  className="leading-relaxed max-w-2xl mb-6"
-                  style={{
-                    color: "rgba(255,255,255,0.6)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="font-body leading-relaxed max-w-2xl mb-6 text-white/60">
                   {p.desc}
                 </p>
 
@@ -199,12 +151,11 @@ export default function ExpertisePage() {
                   {p.stats.map((s) => (
                     <span
                       key={s}
-                      className="px-3 py-1.5 rounded-full text-xs font-medium"
+                      className="font-mono px-3 py-1.5 rounded-full text-xs font-medium"
                       style={{
                         border: `1px solid color-mix(in oklch, ${p.color} 30%, transparent)`,
                         color: p.color,
                         backgroundColor: `color-mix(in oklch, ${p.color} 8%, transparent)`,
-                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       {s}
@@ -215,12 +166,8 @@ export default function ExpertisePage() {
                 {/* CTA */}
                 <Link
                   href={p.href}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110"
-                  style={{
-                    backgroundColor: p.color,
-                    color: "oklch(0.15 0.02 75)",
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="font-body inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 text-[oklch(0.15_0.02_75)]"
+                  style={{ backgroundColor: p.color }}
                 >
                   Learn More
                   <svg
@@ -243,33 +190,20 @@ export default function ExpertisePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24" style={{ background: "#0a0f1a" }}>
+      <section className="py-24 bg-[#0a0f1a]">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-6"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-6">
             Not Sure Which Practice Fits?
           </h2>
-          <p
-            className="mb-10 max-w-xl mx-auto"
-            style={{
-              color: "rgba(255,255,255,0.6)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="font-body mb-10 max-w-xl mx-auto text-white/60">
             Tell us what&apos;s broken. We&apos;ll figure out which team - or
             combination - gets it done.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:brightness-110"
+            className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:brightness-110 bg-amber text-[oklch(0.15_0.02_75)]"
             style={{
-              background: "oklch(0.82 0.15 75)",
-              color: "oklch(0.15 0.02 75)",
-              boxShadow:
-                "0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)",
-              fontFamily: "var(--font-body)",
+              boxShadow: "0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)",
             }}
           >
             Tell Us What&apos;s Broken

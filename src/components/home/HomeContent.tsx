@@ -205,10 +205,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section
-        className="relative min-h-screen flex flex-col overflow-hidden"
-        style={{ background: "#0a0f1a" }}
-      >
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#0a0f1a]">
         {/* Hero background image */}
         <div className="absolute inset-0">
           <Image
@@ -254,49 +251,25 @@ export default function HomeContent() {
             <div className="max-w-2xl">
               <div className="mb-8">
                 <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: "var(--gold)" }}
-                  />
-                  <span
-                    className="text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
                     B Corp Certified · Since 2000
                   </span>
                 </span>
               </div>
 
-              <h1
-                className="font-bold text-white leading-[1.05] tracking-tight"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2.75rem, 7vw, 4.5rem)",
-                }}
-              >
+              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
                 Where Relationships
                 <br />
-                Become <span style={{ color: "var(--gold)" }}>Revenue.</span>
+                Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p
-                className="mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  color: "rgba(255,255,255,0.4)",
-                }}
-              >
+              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/40">
                 25 Years · $10B+ in Enterprise Decisions · 250+ Global Brands ·
                 Skin in the Game
               </p>
 
-              <p
-                className="mt-6 text-lg sm:text-xl leading-relaxed max-w-xl"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  color: "rgba(255,255,255,0.65)",
-                }}
-              >
+              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
                 Fix the signal. Close the deal. We don&apos;t advise from the
                 sidelines - we execute.
               </p>
@@ -304,20 +277,13 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90"
-                  style={{
-                    background: "var(--gold)",
-                    color: "var(--dark)",
-                    fontFamily: "var(--font-body)",
-                    boxShadow: "0 8px 30px rgba(212,168,67,0.2)",
-                  }}
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
                 >
                   Tell Us What&apos;s Broken <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
-                  style={{ fontFamily: "var(--font-body)" }}
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
                 >
                   See Case Results
                 </Link>
@@ -328,10 +294,7 @@ export default function HomeContent() {
 
         <div className="relative z-10 pb-8 flex justify-center">
           <div className="flex flex-col items-center gap-2 text-white/30">
-            <span
-              className="text-[10px] tracking-[0.3em] uppercase block"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
             <ArrowDown size={16} className="animate-bounce" />
@@ -346,16 +309,10 @@ export default function HomeContent() {
       <section className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{ fontFamily: "var(--font-body)", color: "var(--gold)" }}
-            >
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
               Selected Engagements
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl font-bold text-white"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white">
               Results, Not Promises.
             </h2>
           </div>
@@ -364,38 +321,19 @@ export default function HomeContent() {
             {engagements.map((eng) => (
               <div
                 key={eng.label}
-                className="rounded-xl p-8 transition-all duration-300"
-                style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
+                className="rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
               >
                 <div
                   className="w-1 h-10 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
-                <p
-                  className="text-xs uppercase tracking-[0.15em] mb-3"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.4)",
-                  }}
-                >
+                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/40">
                   {eng.label}
                 </p>
-                <h3
-                  className="text-xl sm:text-2xl font-bold text-white mb-4"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
                   {eng.stats}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.5)",
-                  }}
-                >
+                <p className="font-body text-sm leading-relaxed text-white/50">
                   {eng.detail}
                 </p>
               </div>
@@ -408,30 +346,15 @@ export default function HomeContent() {
       <section id="brands" className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span
-              className="text-xs tracking-[0.3em] uppercase block mb-4"
-              style={{
-                fontFamily: "var(--font-body)",
-                color: "rgba(255,255,255,0.4)",
-              }}
-            >
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/40">
               01 - Our Practices
             </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
               Six practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
-            <p
-              className="mt-5 text-base sm:text-lg max-w-2xl mx-auto"
-              style={{
-                fontFamily: "var(--font-body)",
-                color: "rgba(255,255,255,0.5)",
-              }}
-            >
+            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/50">
               Each practice is purpose-built for a distinct audience - but they
               share the same team of superstars behind the scenes.
             </p>
@@ -445,13 +368,7 @@ export default function HomeContent() {
                 className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span
-                  className="absolute top-7 right-7 text-[11px] tracking-[0.2em]"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    color: "rgba(255,255,255,0.22)",
-                  }}
-                >
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/22">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -470,35 +387,20 @@ export default function HomeContent() {
                   </div>
                 </div>
                 <p
-                  className="text-xs font-semibold uppercase tracking-wider mb-2"
-                  style={{
-                    color: brand.accentColor,
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
+                  style={{ color: brand.accentColor }}
                 >
                   {brand.tag}
                 </p>
-                <h3
-                  className="text-xl font-bold text-white mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="font-display text-xl font-bold text-white mb-3">
                   {brand.name}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed mb-6"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.6)",
-                  }}
-                >
+                <p className="font-body text-sm leading-relaxed mb-6 text-white/60">
                   {brand.description}
                 </p>
                 <span
-                  className="inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
-                  style={{
-                    color: brand.accentColor,
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="font-body inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
+                  style={{ color: brand.accentColor }}
                 >
                   Explore {brand.name}
                   <ArrowRight size={14} />
@@ -513,19 +415,10 @@ export default function HomeContent() {
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{ fontFamily: "var(--font-body)", color: "var(--rust)" }}
-            >
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Why We&apos;re Different
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{
-                fontFamily: "var(--font-display)",
-                color: "var(--text-dark)",
-              }}
-            >
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
               An Objective Transaction Agency.
             </h2>
           </div>
@@ -534,32 +427,13 @@ export default function HomeContent() {
             <table className="w-full text-left border-collapse min-w-[560px]">
               <thead>
                 <tr>
-                  <th
-                    className="pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "var(--text-mid)",
-                    }}
-                  >
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
                     Traditional Consulting
                   </th>
-                  <th
-                    className="pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "var(--text-mid)",
-                    }}
-                  >
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
                     Traditional Middleman
                   </th>
-                  <th
-                    className="pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "var(--gold)",
-                      borderColor: "var(--gold)",
-                    }}
-                  >
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-gold border-b-gold">
                     RampRate
                   </th>
                 </tr>
@@ -567,31 +441,13 @@ export default function HomeContent() {
               <tbody>
                 {diffRows.map((row, i) => (
                   <tr key={i} className="border-b border-black/5">
-                    <td
-                      className="py-4 pr-6 text-sm"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-mid)",
-                      }}
-                    >
+                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
                       {row.trad}
                     </td>
-                    <td
-                      className="py-4 pr-6 text-sm"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-mid)",
-                      }}
-                    >
+                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
                       {row.broker}
                     </td>
-                    <td
-                      className="py-4 text-sm font-semibold"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-dark)",
-                      }}
-                    >
+                    <td className="font-body py-4 text-sm font-semibold text-ink">
                       {row.ramp}
                     </td>
                   </tr>
@@ -600,13 +456,7 @@ export default function HomeContent() {
             </table>
           </div>
 
-          <p
-            className="mt-10 text-base sm:text-lg font-bold text-center leading-relaxed"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "var(--text-dark)",
-            }}
-          >
+          <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-ink">
             You work with principals. No junior layering. No staffing pyramid.
             <br className="hidden sm:block" />
             The people on the testimonials are the people who serve you.
@@ -615,12 +465,7 @@ export default function HomeContent() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/process"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110"
-              style={{
-                background: "var(--gold)",
-                color: "var(--dark)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-gold text-dark"
             >
               Take the Flow Circuit Assessment
               <svg
@@ -638,12 +483,7 @@ export default function HomeContent() {
             </Link>
             <Link
               href="/process"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border"
-              style={{
-                borderColor: "rgba(10,15,26,0.3)",
-                color: "var(--dark)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-[rgba(10,15,26,0.3)] text-dark"
             >
               Find Your Me / Way / Our
               <svg
@@ -667,47 +507,23 @@ export default function HomeContent() {
       <section className="section-dark py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
               25 Years.{" "}
-              <span style={{ color: "var(--gold)" }}>One Standard.</span>
+              <span className="text-gold">One Standard.</span>
             </h2>
           </div>
 
           {/* Desktop: horizontal */}
-          <div
-            className="hidden md:flex gap-0 overflow-x-auto pb-4"
-            style={{ scrollbarWidth: "thin" }}
-          >
+          <div className="hidden md:flex gap-0 overflow-x-auto pb-4 [scrollbar-width:thin]">
             {timeline.map((item) => (
               <div key={item.year} className="flex-shrink-0 w-[200px] relative">
                 <div className="flex flex-col items-center">
-                  <div
-                    className="w-3 h-3 rounded-full relative z-10 mb-3"
-                    style={{ background: "var(--gold)" }}
-                  />
-                  <div
-                    className="absolute top-1.5 left-1/2 w-full h-px"
-                    style={{ background: "rgba(255,255,255,0.1)" }}
-                  />
-                  <span
-                    className="text-lg font-bold mb-2"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: "var(--gold)",
-                    }}
-                  >
+                  <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
+                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
+                  <span className="font-mono text-lg font-bold mb-2 text-gold">
                     {item.year}
                   </span>
-                  <p
-                    className="text-xs text-center leading-relaxed px-3"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.5)",
-                    }}
-                  >
+                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
                     {item.event}
                   </p>
                 </div>
@@ -720,34 +536,16 @@ export default function HomeContent() {
             {timeline.map((item, i) => (
               <div key={item.year} className="flex gap-5 relative">
                 <div className="flex flex-col items-center">
-                  <div
-                    className="w-3 h-3 rounded-full shrink-0 relative z-10"
-                    style={{ background: "var(--gold)" }}
-                  />
+                  <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
                   {i < timeline.length - 1 && (
-                    <div
-                      className="w-px flex-1 mt-1"
-                      style={{ background: "rgba(255,255,255,0.1)" }}
-                    />
+                    <div className="w-px flex-1 mt-1 bg-white/10" />
                   )}
                 </div>
                 <div className="pb-8">
-                  <span
-                    className="text-sm font-bold"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: "var(--gold)",
-                    }}
-                  >
+                  <span className="font-mono text-sm font-bold text-gold">
                     {item.year}
                   </span>
-                  <p
-                    className="text-sm mt-1 leading-relaxed"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      color: "rgba(255,255,255,0.5)",
-                    }}
-                  >
+                  <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
                     {item.event}
                   </p>
                 </div>
@@ -764,21 +562,12 @@ export default function HomeContent() {
       <section className="section-warm py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{ fontFamily: "var(--font-body)", color: "var(--rust)" }}
-            >
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Our Approach
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{
-                fontFamily: "var(--font-display)",
-                color: "var(--text-dark)",
-              }}
-            >
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
               Research. Blueprint.{" "}
-              <span style={{ color: "var(--rust)" }}>Activate.</span>
+              <span className="text-rust">Activate.</span>
             </h2>
           </div>
 
@@ -786,54 +575,25 @@ export default function HomeContent() {
             {operateSteps.map((step) => (
               <div
                 key={step.num}
-                className="rounded-xl p-8"
-                style={{
-                  background: "rgba(255,255,255,0.6)",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                }}
+                className="rounded-xl p-8 bg-white/60 border border-black/6"
               >
                 <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center"
-                    style={{ background: "rgba(139,69,19,0.1)" }}
-                  >
-                    <step.Icon size={22} style={{ color: "var(--rust)" }} />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-rust/10">
+                    <step.Icon size={22} className="text-rust" />
                   </div>
-                  <span
-                    className="text-3xl font-bold"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: "rgba(139,69,19,0.2)",
-                    }}
-                  >
+                  <span className="font-mono text-3xl font-bold text-rust/20">
                     {step.num}
                   </span>
                 </div>
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    color: "var(--text-dark)",
-                  }}
-                >
+                <h3 className="font-display text-xl font-bold mb-3 text-ink">
                   {step.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed mb-4"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "var(--text-mid)",
-                  }}
-                >
+                <p className="font-body text-sm leading-relaxed mb-4 text-ink-mid">
                   {step.desc}
                 </p>
                 <Link
                   href={step.link.href}
-                  className="text-xs font-semibold transition-colors hover:opacity-70"
-                  style={{
-                    color: "var(--rust)",
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-rust"
                 >
                   {step.link.label}
                 </Link>
@@ -848,137 +608,60 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span
-                className="text-xs font-semibold tracking-[0.2em] uppercase"
-                style={{ fontFamily: "var(--font-body)", color: "var(--rust)" }}
-              >
+              <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
                 Compensation
               </span>
-              <h2
-                className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--text-dark)",
-                }}
-              >
+              <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
                 We Align Compensation{" "}
-                <span style={{ color: "var(--rust)" }}>
+                <span className="text-rust">
                   With Value Created.
                 </span>
               </h2>
-              <p
-                className="mt-5 leading-relaxed"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  color: "var(--text-mid)",
-                  fontSize: "1rem",
-                }}
-              >
+              <p className="font-body mt-5 leading-relaxed text-ink-mid text-base">
                 No retainers held hostage. No billable hours divorced from
                 results. We eat what we hunt - and we have a 25-year track
                 record to prove it.
               </p>
             </div>
 
-            <div
-              className="rounded-xl p-8"
-              style={{
-                background: "rgba(255,255,255,0.6)",
-                border: "1px solid rgba(0,0,0,0.06)",
-              }}
-            >
+            <div className="rounded-xl p-8 bg-white/60 border border-black/6">
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
-                  <DollarSign
-                    size={20}
-                    className="shrink-0 mt-0.5"
-                    style={{ color: "var(--rust)" }}
-                  />
+                  <DollarSign size={20} className="shrink-0 mt-0.5 text-rust" />
                   <div>
-                    <div
-                      className="text-base font-bold mb-1"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        color: "var(--text-dark)",
-                      }}
-                    >
+                    <div className="font-display text-base font-bold mb-1 text-ink">
                       $15K–$50K/month
                     </div>
-                    <p
-                      className="text-sm"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-mid)",
-                      }}
-                    >
+                    <p className="font-body text-sm text-ink-mid">
                       Depending on scope. Equity-forward available.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <Shield
-                    size={20}
-                    className="shrink-0 mt-0.5"
-                    style={{ color: "var(--rust)" }}
-                  />
+                  <Shield size={20} className="shrink-0 mt-0.5 text-rust" />
                   <div>
-                    <div
-                      className="text-base font-bold mb-1"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        color: "var(--text-dark)",
-                      }}
-                    >
+                    <div className="font-display text-base font-bold mb-1 text-ink">
                       Performance Accountability
                     </div>
-                    <p
-                      className="text-sm"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-mid)",
-                      }}
-                    >
+                    <p className="font-body text-sm text-ink-mid">
                       Clawbacks where appropriate. Historical multiplier: 20X.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <Target
-                    size={20}
-                    className="shrink-0 mt-0.5"
-                    style={{ color: "var(--rust)" }}
-                  />
+                  <Target size={20} className="shrink-0 mt-0.5 text-rust" />
                   <div>
-                    <div
-                      className="text-base font-bold mb-1"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        color: "var(--text-dark)",
-                      }}
-                    >
+                    <div className="font-display text-base font-bold mb-1 text-ink">
                       Every Engagement Is Custom
                     </div>
-                    <p
-                      className="text-sm"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "var(--text-mid)",
-                      }}
-                    >
+                    <p className="font-body text-sm text-ink-mid">
                       The only way to know the number is to tell us what&apos;s
                       broken.
                     </p>
                   </div>
                 </div>
               </div>
-              <p
-                className="mt-8 pt-6 text-sm font-semibold italic"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  color: "var(--text-dark)",
-                  borderTop: "1px solid rgba(0,0,0,0.05)",
-                }}
-              >
+              <p className="font-body mt-8 pt-6 text-sm font-semibold italic text-ink border-t border-black/5">
                 We have never invoiced and disappeared. In 25 years.
               </p>
             </div>
@@ -990,50 +673,22 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section
-        className="py-16 sm:py-20"
-        style={{
-          background: "var(--rust)",
-          color: "#fff",
-          textAlign: "center",
-        }}
-      >
+      <section className="font-body py-16 sm:py-20 text-center text-white bg-rust">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tell Us What&apos;s Broken.
           </h2>
-          <p
-            className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto"
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "rgba(255,255,255,0.7)",
-            }}
-          >
+          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/70">
             Principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p
-            className="text-sm leading-relaxed mb-10 max-w-xl mx-auto"
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "rgba(255,255,255,0.5)",
-            }}
-          >
+          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/50">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90"
-            style={{
-              background: "#fff",
-              color: "var(--rust)",
-              fontFamily: "var(--font-body)",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-            }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>

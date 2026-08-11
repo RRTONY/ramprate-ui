@@ -10,7 +10,7 @@ import PhoneInput from "@/components/shared/PhoneInput";
 export const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 export const ta = `${inp} resize-y min-h-[110px]`;
 export const sel = `${inp} appearance-none cursor-pointer`;
-export const lbl = `block text-[11px] font-semibold tracking-[0.16em] uppercase mb-2`;
+export const lbl = `block text-[11px] font-semibold tracking-[0.16em] uppercase mb-2 text-[oklch(0.52_0.12_70)]`;
 export const fw = `flex flex-col`;
 export const req = <span className="text-[var(--gold)] ml-0.5">*</span>;
 
@@ -125,7 +125,7 @@ export function FieldError({
   const message = formik.touched[name] && formik.errors[name];
   if (!message) return null;
   return (
-    <p className="mt-1 text-[11px] font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+    <p className="mt-1 text-[11px] font-medium text-[oklch(0.55_0.2_25)]">
       {String(message)}
     </p>
   );
@@ -145,22 +145,16 @@ export function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-black/5 overflow-hidden shadow-sm" style={{ background: "white" }}>
-      <div
-        className="px-7 py-5 border-b border-black/5 flex items-center gap-3"
-        style={{ background: "oklch(0.98 0.015 75)" }}
-      >
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "oklch(0.72 0.15 75 / 0.15)" }}>
+    <div className="rounded-2xl border border-black/5 overflow-hidden shadow-sm bg-white">
+      <div className="px-7 py-5 border-b border-black/5 flex items-center gap-3 bg-[oklch(0.98_0.015_75)]">
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[oklch(0.72_0.15_75/0.15)]">
           <Icon size={16} style={{ color: "var(--gold)" }} />
         </div>
         <div>
-          <p
-            className="text-[10px] font-semibold tracking-[0.18em] uppercase"
-            style={{ color: "oklch(0.55 0.08 70)", fontFamily: "var(--font-body)" }}
-          >
+          <p className="font-body text-[10px] font-semibold tracking-[0.18em] uppercase text-[oklch(0.55_0.08_70)]">
             Step {stepNumber} of {totalSteps}
           </p>
-          <h3 className="text-base font-bold" style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}>
+          <h3 className="font-display text-base font-bold text-[oklch(0.2_0.02_50)]">
             {title}
           </h3>
         </div>
@@ -188,30 +182,33 @@ export function StepBar({
           <div key={tab.label} className="flex items-center flex-1 last:flex-none">
             <button type="button" onClick={() => onStepClick(i)} className="flex flex-col items-center gap-1.5">
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center font-bold transition-all duration-300 border-2"
-                style={{
-                  background: done ? "var(--gold)" : "white",
-                  borderColor: done || isActive ? "var(--gold)" : "oklch(0.85 0.01 80)",
-                  color: done ? "white" : isActive ? "var(--gold)" : "oklch(0.65 0.01 80)",
-                  boxShadow: isActive ? "0 0 0 4px rgba(212,168,67,0.15)" : "none",
-                }}
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-bold transition-all duration-300 border-2 ${
+                  done
+                    ? "bg-gold border-gold text-white"
+                    : isActive
+                      ? "bg-white border-gold text-gold shadow-[0_0_0_4px_rgba(212,168,67,0.15)]"
+                      : "bg-white border-[oklch(0.85_0.01_80)] text-[oklch(0.65_0.01_80)]"
+                }`}
               >
                 {done ? <Check size={14} strokeWidth={3} /> : <span className="text-xs">{i + 1}</span>}
               </div>
               <span
-                className="hidden sm:block text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap"
-                style={{
-                  color: isActive ? "var(--gold)" : done ? "oklch(0.52 0.12 70)" : "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className={`font-body hidden sm:block text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap ${
+                  isActive
+                    ? "text-gold"
+                    : done
+                      ? "text-[oklch(0.52_0.12_70)]"
+                      : "text-[oklch(0.45_0.02_50)]"
+                }`}
               >
                 {tab.label}
               </span>
             </button>
             {i < tabs.length - 1 && (
               <div
-                className="flex-1 h-0.5 mx-2 rounded-full transition-all duration-500"
-                style={{ background: i < active ? "var(--gold)" : "oklch(0.88 0.01 80)" }}
+                className={`flex-1 h-0.5 mx-2 rounded-full transition-all duration-500 ${
+                  i < active ? "bg-gold" : "bg-[oklch(0.88_0.01_80)]"
+                }`}
               />
             )}
           </div>
@@ -240,11 +237,11 @@ export function FieldRenderer({
     const rows = pricingRows ?? 1;
     return (
       <div className={`${fw} sm:col-span-2`}>
-        <label className={lbl} style={{ color: "oklch(0.52 0.12 70)" }}>
+        <label className={lbl}>
           {field.label} {field.required && req}
         </label>
         {field.helpText && (
-          <p className="text-xs mb-3 leading-relaxed" style={{ color: "oklch(0.55 0.02 50)" }}>
+          <p className="text-xs mb-3 leading-relaxed text-[oklch(0.55_0.02_50)]">
             {field.helpText}
           </p>
         )}
@@ -261,8 +258,7 @@ export function FieldRenderer({
                   <button
                     type="button"
                     onClick={() => setPricingRows((p) => Math.max(1, p - 1))}
-                    className="flex items-center justify-center w-11 h-11 rounded-xl border transition-colors hover:bg-[oklch(0.97_0.02_75)]"
-                    style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)" }}
+                    className="flex items-center justify-center w-11 h-11 rounded-xl border transition-colors hover:bg-[oklch(0.97_0.02_75)] border-[oklch(0.85_0.04_70)] text-[oklch(0.45_0.08_60)]"
                     aria-label="Remove row"
                   >
                     <X size={14} />
@@ -277,8 +273,7 @@ export function FieldRenderer({
           <button
             type="button"
             onClick={() => setPricingRows((p) => Math.min(5, p + 1))}
-            className="mt-3 inline-flex items-center gap-2 text-xs font-semibold"
-            style={{ color: "var(--gold)" }}
+            className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-gold"
           >
             + Add another compound
           </button>
@@ -291,11 +286,11 @@ export function FieldRenderer({
     const existingFiles = field.multiple ? ((v[field.key] as File[] | undefined) ?? []) : undefined;
     return (
       <div className={fw}>
-        <label className={lbl} style={{ color: "oklch(0.52 0.12 70)" }}>
+        <label className={lbl}>
           {field.label} {field.required && req}
         </label>
         {field.helpText && (
-          <p className="text-xs mb-2 leading-relaxed" style={{ color: "oklch(0.55 0.02 50)" }}>
+          <p className="text-xs mb-2 leading-relaxed text-[oklch(0.55_0.02_50)]">
             {field.helpText}
           </p>
         )}
@@ -320,7 +315,7 @@ export function FieldRenderer({
         {field.multiple
           ? (v[field.key] as File[] | undefined)?.map((f, i) => (
               <div key={`${f.name}-${i}`} className="mt-1 flex items-center gap-2">
-                <p className="text-[10px] font-medium" style={{ color: "oklch(0.52 0.12 70)" }}>
+                <p className="text-[10px] font-medium text-[oklch(0.52_0.12_70)]">
                   {f.name}
                 </p>
                 <button
@@ -338,7 +333,7 @@ export function FieldRenderer({
               </div>
             ))
           : v[field.key] instanceof File && (
-              <p className="mt-1 text-[10px] font-medium" style={{ color: "oklch(0.52 0.12 70)" }}>
+              <p className="mt-1 text-[10px] font-medium text-[oklch(0.52_0.12_70)]">
                 {(v[field.key] as File).name}
               </p>
             )}
@@ -349,11 +344,11 @@ export function FieldRenderer({
 
   return (
     <div className={`${fw} ${span ? "sm:col-span-2" : ""}`}>
-      <label className={lbl} style={{ color: "oklch(0.52 0.12 70)" }}>
+      <label className={lbl}>
         {field.label} {field.required && req}
       </label>
       {field.helpText && (
-        <p className="text-xs mb-2 leading-relaxed" style={{ color: "oklch(0.55 0.02 50)" }}>
+        <p className="text-xs mb-2 leading-relaxed text-[oklch(0.55_0.02_50)]">
           {field.helpText}
         </p>
       )}

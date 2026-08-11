@@ -77,7 +77,7 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
     : null
 
   return (
-    <div style={{background: 'var(--dark)', minHeight: '100vh'}}>
+    <div className="bg-dark min-h-screen">
       <JsonLd
         data={blogPostJsonLd({
           title: post.title,
@@ -98,16 +98,12 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
       />
 
       {/* Post header */}
-      <div
-        className="pt-32 pb-12 px-5 sm:px-8"
-        style={{background: 'var(--dark-mid)'}}
-      >
+      <div className="pt-32 pb-12 px-5 sm:px-8 bg-dark-mid">
         <div className="max-w-4xl mx-auto">
           <Link
             href="/thinking"
             aria-label="Back to Thinking"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full border mb-8 transition-all hover:opacity-70 hover:border-(--gold)"
-            style={{color: 'var(--gold)', borderColor: 'rgba(212,168,67,0.3)', fontFamily: 'var(--font-body)'}}
+            className="font-body inline-flex items-center justify-center w-10 h-10 rounded-full border mb-8 transition-all hover:opacity-70 hover:border-(--gold) text-gold border-gold/30"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -120,12 +116,7 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
                 <Link
                   key={cat.slug.current}
                   href={`/blog/category/${cat.slug.current}`}
-                  className="text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full"
-                  style={{
-                    background: 'rgba(212,168,67,0.12)',
-                    color: 'var(--gold)',
-                    fontFamily: 'var(--font-body)',
-                  }}
+                  className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full bg-gold/12 text-gold"
                 >
                   {cat.title}
                 </Link>
@@ -133,14 +124,11 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
             </div>
           )}
 
-          <h1
-            className="font-bold text-white mb-5 leading-tight"
-            style={{fontFamily: 'var(--font-display)', fontSize: 'clamp(1.75rem, 4vw, 3rem)'}}
-          >
+          <h1 className="font-display font-bold text-white mb-5 leading-tight text-[clamp(1.75rem,4vw,3rem)]">
             {post.title}
           </h1>
 
-          <div className="flex items-center gap-5 text-sm" style={{color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)'}}>
+          <div className="font-mono flex items-center gap-5 text-sm text-white/35">
             {post.author?.name && <span>By {post.author.name}</span>}
             {date && <time>{date}</time>}
           </div>
@@ -168,11 +156,8 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
         )}
 
         {relatedPosts.length > 0 && (
-          <section className="mt-16 pt-12 border-t" style={{borderColor: 'rgba(255,255,255,0.1)'}}>
-            <h2
-              className="text-xs font-semibold uppercase tracking-[0.2em] mb-6"
-              style={{color: 'var(--gold)', fontFamily: 'var(--font-body)'}}
-            >
+          <section className="mt-16 pt-12 border-t border-white/10">
+            <h2 className="font-body text-xs font-semibold uppercase tracking-[0.2em] mb-6 text-gold">
               Continue Reading
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -189,10 +174,7 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
                       />
                     </div>
                   )}
-                  <h3
-                    className="font-semibold text-white leading-snug transition-colors group-hover:text-(--gold)"
-                    style={{fontFamily: 'var(--font-display)'}}
-                  >
+                  <h3 className="font-display font-semibold text-white leading-snug transition-colors group-hover:text-(--gold)">
                     {rp.title}
                   </h3>
                 </Link>

@@ -11,10 +11,7 @@ interface HeroProps {
 
 export default function Hero({headline, subheadline, backgroundImage, ctaText, ctaLink}: HeroProps) {
   return (
-    <section
-      className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{background: 'var(--dark)'}}
-    >
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
       {/* Background image */}
       <div className="absolute inset-0">
         {backgroundImage ? (
@@ -58,11 +55,8 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
             <span
               className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
             >
-              <span className="w-1.5 h-1.5 rounded-full" style={{background: 'var(--gold)'}} />
-              <span
-                className="text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60"
-                style={{fontFamily: 'var(--font-body)'}}
-              >
+              <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+              <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
                 Enterprise Decisions Collective
               </span>
             </span>
@@ -70,45 +64,27 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
 
           {/* Headline */}
           {headline ? (
-            <h1
-              className="font-bold leading-[1.08] tracking-[-0.02em] text-white"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.5rem, 6vw, 4.25rem)',
-              }}
-            >
+            <h1 className="font-display font-bold leading-[1.08] tracking-[-0.02em] text-white text-[clamp(2.5rem,6vw,4.25rem)]">
               {headline}
             </h1>
           ) : (
-            <h1
-              className="font-bold leading-[1.08] tracking-[-0.02em] text-white"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.5rem, 6vw, 4.25rem)',
-              }}
-            >
+            <h1 className="font-display font-bold leading-[1.08] tracking-[-0.02em] text-white text-[clamp(2.5rem,6vw,4.25rem)]">
               The right person.
               <br />
               The right room.
               <br />
-              <span style={{color: 'var(--gold)'}}>The right time.</span>
+              <span className="text-gold">The right time.</span>
             </h1>
           )}
 
           {/* Sub-copy */}
           {subheadline && (
-            <p
-              className="mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg"
-              style={{fontFamily: 'var(--font-body)'}}
-            >
+            <p className="font-body mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg">
               {subheadline}
             </p>
           )}
           {!subheadline && (
-            <p
-              className="mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg"
-              style={{fontFamily: 'var(--font-body)'}}
-            >
+            <p className="font-body mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg">
               Since 2000, we&apos;ve transacted $10B+ in trajectory-changing connections across 50+ countries. We clean up intractable messes, speed up &amp; de-risk innovation, and align profit with purpose.
             </p>
           )}
@@ -118,12 +94,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
             {ctaText && ctaLink ? (
               <Link
                 href={ctaLink}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90"
-                style={{
-                  background: 'var(--gold)',
-                  color: 'var(--dark)',
-                  fontFamily: 'var(--font-body)',
-                }}
+                className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90 bg-gold text-dark"
               >
                 {ctaText}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -133,12 +104,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
             ) : (
               <Link
                 href="/expertise"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90"
-                style={{
-                  background: 'var(--gold)',
-                  color: 'var(--dark)',
-                  fontFamily: 'var(--font-body)',
-                }}
+                className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90 bg-gold text-dark"
               >
                 Explore Our Work
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -148,8 +114,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
             )}
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-300"
-              style={{fontFamily: 'var(--font-body)'}}
+              className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-300"
             >
               Start a Conversation
             </Link>
@@ -163,16 +128,10 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
               {value: '24', label: 'Years Deep'},
             ].map((stat) => (
               <div key={stat.label}>
-                <div
-                  className="text-xl sm:text-2xl font-bold text-white/90 tracking-tight"
-                  style={{fontFamily: 'var(--font-mono)'}}
-                >
+                <div className="font-mono text-xl sm:text-2xl font-bold text-white/90 tracking-tight">
                   {stat.value}
                 </div>
-                <div
-                  className="mt-0.5 text-[10px] sm:text-xs text-white/35 tracking-wide uppercase"
-                  style={{fontFamily: 'var(--font-body)'}}
-                >
+                <div className="font-body mt-0.5 text-[10px] sm:text-xs text-white/35 tracking-wide uppercase">
                   {stat.label}
                 </div>
               </div>
@@ -183,7 +142,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/30">
-        <span className="text-[10px] tracking-[0.3em] uppercase" style={{fontFamily: 'var(--font-body)'}}>
+        <span className="font-body text-[10px] tracking-[0.3em] uppercase">
           Scroll
         </span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

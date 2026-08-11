@@ -159,10 +159,11 @@ When adding a new practice page, always:
 - **No new dependencies** without discussing with the user first.
 - **Prefer editing existing files** over creating new ones.
 - **SVG icons inline** - no icon library imports.
-- **All text styling via `style={{ fontFamily: 'var(--font-body)' }}`** - do not use Tailwind font classes.
+- **Use Tailwind utility classes, not inline `style={{...}}`** (changed 2026-08-10). The design tokens are registered in `src/app/globals.css`'s `@theme inline` block, so they're real Tailwind classes: `bg-gold` / `text-gold` / `border-gold`, `bg-dark` / `bg-dark-mid` / `bg-dark-card`, `bg-warm-bg` / `bg-warm-light`, `text-rust` / `border-rust`, `text-ink` / `text-ink-mid` (maps to `--text-dark`/`--text-mid`), and `font-display` / `font-body` / `font-mono`. For a one-off color/size not in the token list, use Tailwind's arbitrary-value syntax (`text-[clamp(1.5rem,4vw,2.5rem)]`, `bg-white/6`) rather than inventing a new inline style. Migration off the old inline-style convention is in progress across the codebase - not every file has been converted yet; when you touch a file, convert what you touch.
 - **oklch colors everywhere** - match the existing design system. No raw hex except for the CSS variable definitions.
 - **No `framer-motion`** - it is a dead dependency (~140KB), do not import it.
 - **Images: use `<Image>` from `next/image`**, not `<img>`, for anything user-visible.
+- **`global-error.tsx` is the one exception** to the Tailwind rule - it renders its own document outside the root layout, so `globals.css` never loads there. It must stay hardcoded inline styles.
 
 ---
 

@@ -177,8 +177,8 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
   if (phase === "loading") {
     return (
       <div className="max-w-xl mx-auto text-center py-24 px-5">
-        <Loader2 className="animate-spin mx-auto mb-4" size={28} style={{ color: "var(--gold)" }} />
-        <p style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>Loading your application…</p>
+        <Loader2 className="animate-spin mx-auto mb-4 text-gold" size={28} />
+        <p className="font-body text-[oklch(0.45_0.02_50)]">Loading your application…</p>
       </div>
     );
   }
@@ -186,10 +186,10 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
   if (phase === "invalid" || phase === "used") {
     return (
       <div className="max-w-xl mx-auto text-center py-24 px-5">
-        <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+        <h2 className="font-display text-2xl font-bold mb-4">
           {phase === "used" ? "This application has already been submitted" : "We couldn't find your application"}
         </h2>
-        <p style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <p className="font-body text-[oklch(0.45_0.02_50)]">
           {phase === "used"
             ? "Thanks again for the detail - our team is reviewing it and will be in touch."
             : "This link may be mistyped or expired. Please check the link we sent, or contact us directly."}
@@ -201,16 +201,13 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
   if (phase === "submitted") {
     return (
       <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-          style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))" }}
-        >
+        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg bg-[linear-gradient(135deg,var(--gold),oklch(0.62_0.18_75))]">
           <Check size={32} stroke="white" strokeWidth={2.5} />
         </div>
-        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+        <h2 className="font-display text-3xl font-bold mb-4">
           Application Complete
         </h2>
-        <p className="text-base leading-relaxed" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <p className="font-body text-base leading-relaxed text-[oklch(0.45_0.02_50)]">
           Thank you for the detail. Our team will review it against active buyer mandates and be in
           touch if there&apos;s a fit.
         </p>
@@ -221,7 +218,7 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
   const stepFields = STAGE2_STEPS[active];
 
   return (
-    <form name="supplier-intake-long" onSubmit={formik.handleSubmit} style={{ fontFamily: "var(--font-body)" }}>
+    <form name="supplier-intake-long" onSubmit={formik.handleSubmit} className="font-body">
       <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
 
       <StepBar tabs={TABS} active={active} onStepClick={goToStep} />
@@ -236,21 +233,20 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
         {active === TABS.length - 1 && (
           <>
             {error && (
-              <p className="mt-6 text-xs font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+              <p className="mt-6 text-xs font-medium text-[oklch(0.55_0.2_25)]">
                 {error}
               </p>
             )}
             <button
               type="submit"
               disabled={submitting}
-              className="mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-              style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.58 0.18 68))", fontFamily: "var(--font-body)" }}
+              className="font-body mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 bg-[linear-gradient(135deg,var(--gold),oklch(0.58_0.18_68))]"
             >
               {submitting ? "Submitting…" : "Submit Application"}
               {!submitting && <ArrowRight size={16} />}
             </button>
-            <p className="mt-3 text-[11px]" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
-              <span style={{ color: "var(--gold)" }}>*</span> {STAGE2_REQUIRED_FIELD_COUNT} required fields · your progress is saved automatically as you go
+            <p className="font-body mt-3 text-[11px] text-[oklch(0.6_0.02_50)]">
+              <span className="text-gold">*</span> {STAGE2_REQUIRED_FIELD_COUNT} required fields · your progress is saved automatically as you go
             </p>
           </>
         )}
@@ -261,14 +257,13 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
           type="button"
           onClick={() => setActive((p) => Math.max(0, p - 1))}
           disabled={active === 0}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
-          style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)", fontFamily: "var(--font-body)" }}
+          className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)] border-[oklch(0.85_0.04_70)] text-[oklch(0.45_0.08_60)]"
         >
           <ArrowLeft size={14} />
           Previous
         </button>
 
-        <span className="text-xs" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <span className="font-body text-xs text-[oklch(0.6_0.02_50)]">
           {active + 1} / {TABS.length}
         </span>
 
@@ -276,8 +271,7 @@ export default function SupplierIntakeStage2Form({ token, project }: { token: st
           <button
             type="button"
             onClick={() => goToStep(Math.min(TABS.length - 1, active + 1))}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+            className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01] bg-gold"
           >
             Next
             <ArrowRight size={14} />

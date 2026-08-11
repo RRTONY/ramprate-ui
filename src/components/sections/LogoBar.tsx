@@ -15,13 +15,10 @@ export default function LogoBar({heading, logos}: LogoBarProps) {
   if (!logos?.length) return null
 
   return (
-    <section className="py-14" style={{background: 'var(--dark-card)'}}>
+    <section className="py-14 bg-dark-card">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {heading && (
-          <p
-            className="text-xs font-semibold uppercase tracking-[0.2em] text-center mb-10"
-            style={{color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-body)'}}
-          >
+          <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-center mb-10 text-white/30">
             {heading}
           </p>
         )}

@@ -57,9 +57,10 @@ export default function Header() {
   const dark = scrolled || isLightPage;
   const isBiochainPage = pathname.startsWith("/biochain");
 
-  const navTextColor = dark ? "oklch(0.35 0.03 50)" : "rgba(255,255,255,0.8)";
-  const navHoverColor = dark ? "oklch(0.18 0.03 50)" : "#ffffff";
-  const mobileIconColor = dark ? "oklch(0.18 0.03 50)" : "#ffffff";
+  const navLinkClass = dark
+    ? "text-[oklch(0.35_0.03_50)] hover:text-[oklch(0.18_0.03_50)]"
+    : "text-white/80 hover:text-white";
+  const mobileIconClass = dark ? "text-[oklch(0.18_0.03_50)]" : "text-white";
 
   return (
     <nav
@@ -84,12 +85,7 @@ export default function Header() {
             onMouseLeave={() => setPracticesOpen(false)}
           >
             <button
-              className="text-sm font-medium tracking-wide uppercase transition-colors duration-300"
-              style={{ color: navTextColor, fontFamily: "var(--font-body)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = navHoverColor)
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.color = navTextColor)}
+              className={`font-body text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${navLinkClass}`}
             >
               Practices
             </button>
@@ -100,27 +96,13 @@ export default function Header() {
                     <Link
                       key={p.href}
                       href={p.href}
-                      className="flex items-center justify-between gap-4 px-3 py-2.5 rounded-md transition-colors group"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="font-body flex items-center justify-between gap-4 px-3 py-2.5 rounded-md transition-colors group hover:bg-[oklch(0.94_0.03_80)]"
                       onClick={() => setPracticesOpen(false)}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.background =
-                          "oklch(0.94 0.03 80)")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.background = "transparent")
-                      }
                     >
-                      <span
-                        className="text-sm font-medium transition-colors"
-                        style={{ color: "oklch(0.18 0.03 50)" }}
-                      >
+                      <span className="text-sm font-medium transition-colors text-[oklch(0.18_0.03_50)]">
                         {p.label}
                       </span>
-                      <span
-                        className="text-xs shrink-0"
-                        style={{ color: "oklch(0.5 0.02 50)" }}
-                      >
+                      <span className="text-xs shrink-0 text-[oklch(0.5_0.02_50)]">
                         {p.desc}
                       </span>
                     </Link>
@@ -134,10 +116,7 @@ export default function Header() {
           {isBiochainPage && (
             <Link
               href="/biochain/catalogue"
-              className="text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-colors duration-300"
-              style={{ color: navTextColor, fontFamily: "var(--font-body)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = navHoverColor)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = navTextColor)}
+              className={`font-body text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-colors duration-300 ${navLinkClass}`}
             >
               Browse Catalogue
             </Link>
@@ -148,12 +127,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium tracking-wide uppercase transition-colors duration-300"
-              style={{ color: navTextColor, fontFamily: "var(--font-body)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = navHoverColor)
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.color = navTextColor)}
+              className={`font-body text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${navLinkClass}`}
             >
               {item.label}
             </Link>
@@ -168,8 +142,7 @@ export default function Header() {
           <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
           <button
-            className="p-3 transition-colors"
-            style={{ color: mobileIconColor }}
+            className={`p-3 transition-colors ${mobileIconClass}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -211,39 +184,20 @@ export default function Header() {
         <div className="lg:hidden bg-white border-t border-black/5 shadow-lg">
           <div className="px-5 py-6 space-y-1">
             {/* Practices in mobile */}
-            <p
-              className="px-3 py-1 text-xs uppercase tracking-widest mb-1"
-              style={{
-                color: "oklch(0.5 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="font-body px-3 py-1 text-xs uppercase tracking-widest mb-1 text-[oklch(0.5_0.02_50)]">
               Practices
             </p>
             {practices.map((p) => (
               <Link
                 key={p.href}
                 href={p.href}
-                className="flex items-center justify-between px-3 py-2.5 rounded-md transition-colors"
-                style={{ fontFamily: "var(--font-body)" }}
+                className="font-body flex items-center justify-between px-3 py-2.5 rounded-md transition-colors hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "oklch(0.94 0.03 80)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "transparent")
-                }
               >
-                <span
-                  className="text-sm font-medium"
-                  style={{ color: "oklch(0.18 0.03 50)" }}
-                >
+                <span className="text-sm font-medium text-[oklch(0.18_0.03_50)]">
                   {p.label}
                 </span>
-                <span
-                  className="text-xs"
-                  style={{ color: "oklch(0.5 0.02 50)" }}
-                >
+                <span className="text-xs text-[oklch(0.5_0.02_50)]">
                   {p.desc}
                 </span>
               </Link>
@@ -252,11 +206,8 @@ export default function Header() {
             {isBiochainPage && (
               <Link
                 href="/biochain/catalogue"
-                className="block px-3 py-3 text-sm font-medium rounded-md transition-colors"
-                style={{ color: "oklch(0.18 0.03 50)", fontFamily: "var(--font-body)" }}
+                className="font-body block px-3 py-3 text-sm font-medium rounded-md transition-colors text-[oklch(0.18_0.03_50)] hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "oklch(0.94 0.03 80)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
                 Browse Catalogue
               </Link>
@@ -265,18 +216,8 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="block px-3 py-3 text-sm font-medium rounded-md transition-colors"
-                style={{
-                  color: "oklch(0.18 0.03 50)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="font-body block px-3 py-3 text-sm font-medium rounded-md transition-colors text-[oklch(0.18_0.03_50)] hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "oklch(0.94 0.03 80)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "transparent")
-                }
               >
                 {item.label}
               </Link>

@@ -15,16 +15,10 @@ export default function TextSection({heading, body, alignment = 'left'}: TextSec
   }[alignment]
 
   return (
-    <section className="py-16 md:py-24" style={{background: 'var(--dark-mid)'}}>
+    <section className="py-16 md:py-24 bg-dark-mid">
       <div className={`mx-auto max-w-4xl px-5 sm:px-8 ${alignClass}`}>
         {heading && (
-          <h2
-            className="font-bold text-white mb-8"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
-            }}
-          >
+          <h2 className="font-display font-bold text-white mb-8 text-[clamp(1.75rem,4vw,2.75rem)]">
             {heading}
           </h2>
         )}

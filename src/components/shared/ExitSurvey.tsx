@@ -44,13 +44,7 @@ export default function ExitSurvey() {
         <button
           data-hide-on-ai
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold shadow-lg hover:scale-105 transition-transform"
-          style={{
-            background: "oklch(0.82 0.15 75)",
-            color: "oklch(0.15 0.02 75)",
-            boxShadow: "0 8px 24px oklch(0.82 0.15 75 / 0.25)",
-            fontFamily: "var(--font-body)",
-          }}
+          className="font-body fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold hover:scale-105 transition-transform bg-amber text-[oklch(0.15_0.02_75)] shadow-[0_8px_24px_oklch(0.82_0.15_75/0.25)]"
           aria-label="Quick survey"
         >
           <MessageSquare size={16} />
@@ -61,19 +55,10 @@ export default function ExitSurvey() {
       {/* modal overlay */}
       {open && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div
-            className="relative w-full max-w-lg rounded-xl overflow-hidden shadow-2xl"
-            style={{
-              background: "#0d1117",
-              border: "1px solid rgba(255,255,255,0.1)",
-            }}
-          >
+          <div className="relative w-full max-w-lg rounded-xl overflow-hidden shadow-2xl bg-[#0d1117] border border-white/10">
             {/* header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
-              <p
-                className="text-white/90 text-sm font-semibold"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <p className="font-body text-white/90 text-sm font-semibold">
                 30-Second Exit Survey
               </p>
               <button

@@ -85,25 +85,19 @@ export default function SupplierIntakeStage1Form() {
   if (submitted)
     return (
       <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-          style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))" }}
-        >
+        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg bg-[linear-gradient(135deg,var(--gold),oklch(0.62_0.18_75))]">
           <Check size={32} stroke="white" strokeWidth={2.5} />
         </div>
-        <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+        <h2 className="font-display text-3xl font-bold mb-4">
           Application Received
         </h2>
-        <p className="text-base leading-relaxed mb-8" style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <p className="font-body text-base leading-relaxed mb-8 text-[oklch(0.45_0.02_50)]">
           Thank you for submitting your supplier profile. We will review it against active buyer
           mandates. If there is a fit, we will follow up with a longer application to confirm the
           details. No response means no current match - not a rejection.
         </p>
-        <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
-          style={{ background: "oklch(0.72 0.15 75 / 0.12)", color: "oklch(0.45 0.12 70)" }}
-        >
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--gold)" }} />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[oklch(0.72_0.15_75/0.12)] text-[oklch(0.45_0.12_70)]">
+          <div className="w-1.5 h-1.5 rounded-full bg-gold" />
           Submitted to RampRate Supplier Fit Index
         </div>
       </div>
@@ -112,7 +106,7 @@ export default function SupplierIntakeStage1Form() {
   const stepFields = STAGE1_STEPS[active];
 
   return (
-    <form name="supplier-intake" onSubmit={formik.handleSubmit} style={{ fontFamily: "var(--font-body)" }}>
+    <form name="supplier-intake" onSubmit={formik.handleSubmit} className="font-body">
       <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
 
       <StepBar tabs={TABS} active={active} onStepClick={goToStep} />
@@ -127,21 +121,20 @@ export default function SupplierIntakeStage1Form() {
         {active === TABS.length - 1 && (
           <>
             {error && (
-              <p className="mt-6 text-xs font-medium" style={{ color: "oklch(0.55 0.2 25)" }}>
+              <p className="mt-6 text-xs font-medium text-[oklch(0.55_0.2_25)]">
                 {error}
               </p>
             )}
             <button
               type="submit"
               disabled={submitting}
-              className="mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-              style={{ background: "linear-gradient(135deg, var(--gold), oklch(0.58 0.18 68))", fontFamily: "var(--font-body)" }}
+              className="font-body mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 bg-[linear-gradient(135deg,var(--gold),oklch(0.58_0.18_68))]"
             >
               {submitting ? "Submitting…" : "Submit Application"}
               {!submitting && <ArrowRight size={16} />}
             </button>
-            <p className="mt-3 text-[11px]" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
-              <span style={{ color: "var(--gold)" }}>*</span> {STAGE1_REQUIRED_FIELD_COUNT} required fields
+            <p className="font-body mt-3 text-[11px] text-[oklch(0.6_0.02_50)]">
+              <span className="text-gold">*</span> {STAGE1_REQUIRED_FIELD_COUNT} required fields
             </p>
           </>
         )}
@@ -152,14 +145,13 @@ export default function SupplierIntakeStage1Form() {
           type="button"
           onClick={() => setActive((p) => Math.max(0, p - 1))}
           disabled={active === 0}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
-          style={{ borderColor: "oklch(0.85 0.04 70)", color: "oklch(0.45 0.08 60)", fontFamily: "var(--font-body)" }}
+          className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)] border-[oklch(0.85_0.04_70)] text-[oklch(0.45_0.08_60)]"
         >
           <ArrowLeft size={14} />
           Previous
         </button>
 
-        <span className="text-xs" style={{ color: "oklch(0.6 0.02 50)", fontFamily: "var(--font-body)" }}>
+        <span className="font-body text-xs text-[oklch(0.6_0.02_50)]">
           {active + 1} / {TABS.length}
         </span>
 
@@ -167,8 +159,7 @@ export default function SupplierIntakeStage1Form() {
           <button
             type="button"
             onClick={() => goToStep(Math.min(TABS.length - 1, active + 1))}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{ background: "var(--gold)", fontFamily: "var(--font-body)" }}
+            className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01] bg-gold"
           >
             Next
             <ArrowRight size={14} />

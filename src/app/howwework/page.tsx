@@ -43,7 +43,7 @@ const badges = ['Buyer Exclusive', 'One-Party Fee', 'Apples-to-Apples', 'B Corp 
 
 export default function HowWeWorkPage() {
   return (
-    <div style={{background: 'var(--dark)'}}>
+    <div className="bg-dark">
       <JsonLd
         data={breadcrumbJsonLd([
           {name: 'Home', url: 'https://ramprate.com'},
@@ -53,45 +53,25 @@ export default function HowWeWorkPage() {
 
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28 px-5 sm:px-8">
-        <div
-          className="absolute top-0 right-0 w-125 h-125 rounded-full opacity-20 pointer-events-none"
-          style={{background: 'oklch(0.82 0.15 75)', filter: 'blur(100px)'}}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-87.5 h-87.5 rounded-full opacity-10 pointer-events-none"
-          style={{background: 'oklch(0.55 0.22 260)', filter: 'blur(80px)'}}
-        />
+        <div className="absolute top-0 right-0 w-125 h-125 rounded-full opacity-20 pointer-events-none bg-amber blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-87.5 h-87.5 rounded-full opacity-10 pointer-events-none bg-[oklch(0.55_0.22_260)] blur-[80px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto">
           {/* Label */}
           <div className="mb-5">
-            <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.2em]"
-              style={{
-                border: '1px solid rgba(255,255,255,0.1)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'rgba(255,255,255,0.5)',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
+            <span className="font-body inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.2em] border border-white/10 bg-white/5 text-white/50">
               The RampRate Model
             </span>
           </div>
 
           {/* Heading */}
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl mb-6"
-            style={{fontFamily: 'var(--font-display)'}}
-          >
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl mb-6">
             How We{' '}
-            <span style={{color: 'oklch(0.82 0.15 75)'}}>Work.</span>
+            <span className="text-amber">Work.</span>
           </h1>
 
           {/* Body */}
-          <p
-            className="text-base sm:text-lg leading-relaxed max-w-2xl mb-8"
-            style={{color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)'}}
-          >
+          <p className="font-body text-base sm:text-lg leading-relaxed max-w-2xl mb-8 text-white/50">
             25 years. $10B+ in decisions structured. 250+ enterprise clients.
             One model built on exclusivity, transparency, and win-win outcomes.
             Prepared for attorney review.
@@ -102,13 +82,7 @@ export default function HowWeWorkPage() {
             {badges.map(badge => (
               <span
                 key={badge}
-                className="text-[11px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full"
-                style={{
-                  border: '1px solid rgba(212,168,67,0.3)',
-                  background: 'rgba(212,168,67,0.08)',
-                  color: 'oklch(0.82 0.15 75)',
-                  fontFamily: 'var(--font-mono)',
-                }}
+                className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/30 bg-gold/8 text-amber"
               >
                 {badge}
               </span>
@@ -119,16 +93,10 @@ export default function HowWeWorkPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-2xl mb-10">
             {heroStats.map(stat => (
               <div key={stat.label}>
-                <div
-                  className="text-2xl sm:text-3xl font-bold"
-                  style={{color: 'oklch(0.82 0.15 75)', fontFamily: 'var(--font-mono)'}}
-                >
+                <div className="font-mono text-2xl sm:text-3xl font-bold text-amber">
                   {stat.value}
                 </div>
-                <div
-                  className="mt-1 text-[10px] uppercase tracking-wider"
-                  style={{color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-body)'}}
-                >
+                <div className="font-body mt-1 text-[10px] uppercase tracking-wider text-white/40">
                   {stat.label}
                 </div>
               </div>
@@ -139,12 +107,7 @@ export default function HowWeWorkPage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-all hover:opacity-90"
-              style={{
-                background: 'oklch(0.82 0.15 75)',
-                color: 'oklch(0.18 0.03 50)',
-                fontFamily: 'var(--font-body)',
-              }}
+              className="font-body inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-all hover:opacity-90 bg-amber text-[oklch(0.18_0.03_50)]"
             >
               Start a Conversation
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -153,12 +116,7 @@ export default function HowWeWorkPage() {
             </Link>
             <Link
               href="/proof"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border transition-colors hover:bg-white/5"
-              style={{
-                borderColor: 'rgba(255,255,255,0.15)',
-                color: 'rgba(255,255,255,0.7)',
-                fontFamily: 'var(--font-body)',
-              }}
+              className="font-body inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border transition-colors hover:bg-white/5 border-white/15 text-white/70"
             >
               See Client Proof
             </Link>

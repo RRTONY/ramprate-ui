@@ -136,6 +136,10 @@ export const categoriesQuery = groq`
   } | order(postCount desc, title asc)
 `;
 
+export const categoryBySlugQuery = groq`
+  *[_type == "category" && slug.current == $slug][0]{_id}
+`;
+
 export const postsByCategoryQuery = groq`
   *[_type == "post" && section != "thinking" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) [$start...$end]{
     _id,

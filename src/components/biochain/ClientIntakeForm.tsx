@@ -28,9 +28,10 @@ import PhoneInput from "@/components/shared/PhoneInput";
 const inp = `w-full px-4 py-3 rounded-xl border border-black/8 bg-white/80 text-sm text-[oklch(0.2_0.02_50)] placeholder:text-black/30 outline-none transition-all duration-200 focus:border-[var(--gold)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(212,168,67,0.12)]`;
 const ta = `${inp} resize-y min-h-[100px]`;
 const sel = `${inp} appearance-none cursor-pointer`;
-const lbl = `block text-[11px] font-semibold tracking-[0.16em] uppercase mb-2`;
+const lbl = `block text-[11px] font-semibold tracking-[0.16em] uppercase mb-2 text-[oklch(0.52_0.12_70)]`;
 const fw = `flex flex-col`;
-const req = <span style={{ color: "var(--gold)" }}> *</span>;
+const req = <span className="text-gold"> *</span>;
+const labelClass = "text-[oklch(0.52_0.12_70)]";
 const labelColor = "oklch(0.52 0.12 70)";
 
 type FormValues = Record<string, string | string[] | File | undefined>;
@@ -625,15 +626,8 @@ const STEP_FIELDS: string[][] = [
 function Tooltip({ text }: { text: string }) {
   return (
     <span className="relative inline-flex group ml-1.5 align-middle normal-case tracking-normal">
-      <Info size={13} style={{ color: "oklch(0.6 0.05 60)" }} />
-      <span
-        className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-60 px-3 py-2 rounded-lg text-[11px] font-normal leading-relaxed opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity z-20"
-        style={{
-          background: "oklch(0.2 0.02 50)",
-          color: "white",
-          fontFamily: "var(--font-body)",
-        }}
-      >
+      <Info size={13} className="text-[oklch(0.6_0.05_60)]" />
+      <span className="font-body absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-60 px-3 py-2 rounded-lg text-[11px] font-normal leading-relaxed opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity z-20 bg-[oklch(0.2_0.02_50)] text-white">
         {text}
       </span>
     </span>
@@ -650,10 +644,7 @@ function FieldError({
   const message = formik.touched[name] && formik.errors[name];
   if (!message) return null;
   return (
-    <p
-      className="mt-1 text-[11px] font-medium"
-      style={{ color: "oklch(0.55 0.2 25)" }}
-    >
+    <p className="mt-1 text-[11px] font-medium text-[oklch(0.55_0.2_25)]">
       {String(message)}
     </p>
   );
@@ -679,7 +670,7 @@ function TextField({
   if (type === "tel") {
     return (
       <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-        <label className={lbl} style={{ color: labelColor }}>
+        <label className={lbl}>
           {label}
           {required && req}
         </label>
@@ -696,7 +687,7 @@ function TextField({
   }
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label className={lbl}>
         {label}
         {required && req}
       </label>
@@ -726,14 +717,11 @@ function CurrencyField({
 }) {
   return (
     <div className={fw}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label className={lbl}>
         {label}
       </label>
       <div className="relative">
-        <span
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-sm select-none"
-          style={{ color: "oklch(0.5 0.02 50)" }}
-        >
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm select-none text-[oklch(0.5_0.02_50)]">
           $
         </span>
         <input
@@ -770,7 +758,7 @@ function SelectField({
 }) {
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label className={lbl}>
         {label}
         {required && req}
       </label>
@@ -807,7 +795,7 @@ function TextAreaField({
 }) {
   return (
     <div className={`${fw} sm:col-span-2`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label className={lbl}>
         {label}
         {required && req}
       </label>
@@ -865,7 +853,7 @@ function CheckboxGroup({
   return (
     <div className="sm:col-span-2">
       {label && (
-        <label className={lbl} style={{ color: labelColor }}>
+        <label className={lbl}>
           {label}
           {required && req}
           {tooltip && <Tooltip text={tooltip} />}
@@ -879,20 +867,17 @@ function CheckboxGroup({
           return (
             <label
               key={opt}
-              className="flex items-start gap-2.5 px-3.5 py-3 rounded-lg border cursor-pointer transition-all text-sm"
-              style={{
-                borderColor: checked ? "var(--gold)" : "oklch(0.88 0.02 70)",
-                background: checked ? "oklch(0.97 0.03 75)" : "white",
-                color: "oklch(0.25 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
+              className={`font-body flex items-start gap-2.5 px-3.5 py-3 rounded-lg border cursor-pointer transition-all text-sm text-[oklch(0.25_0.02_50)] ${
+                checked
+                  ? "border-gold bg-[oklch(0.97_0.03_75)]"
+                  : "border-[oklch(0.88_0.02_70)] bg-white"
+              }`}
             >
               <input
                 type="checkbox"
                 checked={checked}
                 onChange={() => toggle(opt)}
-                className="mt-0.5 shrink-0"
-                style={{ accentColor: "var(--gold)" }}
+                className="mt-0.5 shrink-0 accent-gold"
               />
               <span>{opt}</span>
             </label>
@@ -934,7 +919,7 @@ function TagInput({
 
   return (
     <div className={`${fw} sm:col-span-2`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label className={lbl}>
         {label}
         {required && req}
       </label>
@@ -942,11 +927,7 @@ function TagInput({
         {tags.map((t) => (
           <span
             key={t}
-            className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-medium"
-            style={{
-              background: "oklch(0.72 0.15 75 / 0.15)",
-              color: "oklch(0.45 0.12 70)",
-            }}
+            className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-medium bg-[oklch(0.72_0.15_75/0.15)] text-[oklch(0.45_0.12_70)]"
           >
             {t}
             <button
@@ -982,30 +963,18 @@ function TagInput({
 function Divider({ label }: { label: string }) {
   return (
     <div className="sm:col-span-2 flex items-center gap-4 mt-1">
-      <div
-        className="flex-1 h-px"
-        style={{ background: "oklch(0.85 0.02 70)" }}
-      />
-      <span
-        className="text-[10px] font-semibold tracking-[0.2em] uppercase shrink-0 text-center"
-        style={{ color: "oklch(0.5 0.05 60)", fontFamily: "var(--font-body)" }}
-      >
+      <div className="flex-1 h-px bg-[oklch(0.85_0.02_70)]" />
+      <span className="font-body text-[10px] font-semibold tracking-[0.2em] uppercase shrink-0 text-center text-[oklch(0.5_0.05_60)]">
         {label}
       </span>
-      <div
-        className="flex-1 h-px"
-        style={{ background: "oklch(0.85 0.02 70)" }}
-      />
+      <div className="flex-1 h-px bg-[oklch(0.85_0.02_70)]" />
     </div>
   );
 }
 
 function SectionIntro({ children }: { children: React.ReactNode }) {
   return (
-    <p
-      className="sm:col-span-2 -mt-2 text-sm leading-relaxed"
-      style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
-    >
+    <p className="font-body sm:col-span-2 -mt-2 text-sm leading-relaxed text-[oklch(0.45_0.02_50)]">
       {children}
     </p>
   );
@@ -1013,15 +982,7 @@ function SectionIntro({ children }: { children: React.ReactNode }) {
 
 function Callout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className="sm:col-span-2 rounded-lg px-5 py-4 text-sm leading-relaxed border-l-4"
-      style={{
-        background: "oklch(0.97 0.02 75)",
-        borderColor: "var(--gold)",
-        color: "oklch(0.4 0.03 55)",
-        fontFamily: "var(--font-body)",
-      }}
-    >
+    <div className="font-body sm:col-span-2 rounded-lg px-5 py-4 text-sm leading-relaxed border-l-4 bg-[oklch(0.97_0.02_75)] border-gold text-[oklch(0.4_0.03_55)]">
       {children}
     </div>
   );
@@ -1161,22 +1122,13 @@ function CatalogCard({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className="sm:col-span-2 rounded-xl border p-5"
-      style={{
-        borderColor: "oklch(0.88 0.02 70)",
-        background: "oklch(0.98 0.01 75)",
-      }}
-    >
+    <div className="sm:col-span-2 rounded-xl border p-5 border-[oklch(0.88_0.02_70)] bg-[oklch(0.98_0.01_75)]">
       <div className="flex items-center gap-3">
-        <div
-          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-          style={{ background: "oklch(0.72 0.15 75 / 0.18)" }}
-        >
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-[oklch(0.72_0.15_75/0.18)]">
           <Icon size={17} style={{ color: labelColor }} />
         </div>
-        <p className={lbl} style={{ color: labelColor, marginBottom: 0 }}>
-          <span style={{ opacity: 0.55, fontWeight: 400 }}>{step} - </span>
+        <p className={`${lbl} mb-0`}>
+          <span className="opacity-55 font-normal">{step} - </span>
           {title}
         </p>
       </div>
@@ -1197,42 +1149,24 @@ function CategoryAccordion({
   const selected = (formik.values[fieldName] as string[]) ?? [];
 
   return (
-    <div
-      className="sm:col-span-2 rounded-lg border overflow-hidden"
-      style={{ borderColor: "oklch(0.88 0.02 70)", background: "white" }}
-    >
+    <div className="sm:col-span-2 rounded-lg border overflow-hidden border-[oklch(0.88_0.02_70)] bg-white">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between px-4 py-3.5 text-left"
       >
-        <span
-          className="text-sm font-semibold"
-          style={{
-            fontFamily: "var(--font-body)",
-            color: "oklch(0.25 0.02 50)",
-          }}
-        >
+        <span className="font-body text-sm font-semibold text-[oklch(0.25_0.02_50)]">
           {category.name}
         </span>
         <span className="flex items-center gap-3 shrink-0">
           {selected.length > 0 && (
-            <span
-              className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
-              style={{
-                background: "oklch(0.72 0.15 75 / 0.15)",
-                color: "oklch(0.45 0.12 70)",
-              }}
-            >
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[oklch(0.72_0.15_75/0.15)] text-[oklch(0.45_0.12_70)]">
               {selected.length} selected
             </span>
           )}
           <ChevronDown
             size={16}
-            style={{
-              transform: open ? "rotate(180deg)" : undefined,
-              transition: "transform 0.2s",
-            }}
+            className={`transition-transform duration-200 ${open ? "rotate-180" : "rotate-0"}`}
           />
         </span>
       </button>
@@ -1255,10 +1189,7 @@ function Step3({ formik }: StepProps) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       {productsError && (
-        <p
-          className="sm:col-span-2 text-[11px] font-medium"
-          style={{ color: "oklch(0.55 0.2 25)" }}
-        >
+        <p className="sm:col-span-2 text-[11px] font-medium text-[oklch(0.55_0.2_25)]">
           {String(productsError)}
         </p>
       )}
@@ -1609,25 +1540,16 @@ function ReviewSummary({
         return (
           <div
             key={meta.title}
-            className="rounded-xl border p-5 sm:p-6"
-            style={{ borderColor: "oklch(0.88 0.02 70)" }}
+            className="rounded-xl border p-5 sm:p-6 border-[oklch(0.88_0.02_70)]"
           >
             <div className="flex items-center justify-between mb-5">
-              <span
-                className="text-xs font-semibold tracking-[0.16em] uppercase"
-                style={{ color: labelColor, fontFamily: "var(--font-body)" }}
-              >
+              <span className={`font-body text-xs font-semibold tracking-[0.16em] uppercase ${labelClass}`}>
                 {i + 1}. {meta.title}
               </span>
               <button
                 type="button"
                 onClick={() => onEdit(i)}
-                className="text-xs font-semibold px-3 py-1.5 rounded-md border transition-colors hover:bg-[oklch(0.97_0.02_75)]"
-                style={{
-                  borderColor: "var(--gold)",
-                  color: "var(--gold)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="font-body text-xs font-semibold px-3 py-1.5 rounded-md border transition-colors hover:bg-[oklch(0.97_0.02_75)] border-gold text-gold"
               >
                 Edit
               </button>
@@ -1655,42 +1577,24 @@ function ProgressBar({ active }: { active: number }) {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-3 gap-4">
-        <p
-          className="text-xs font-semibold tracking-[0.14em] uppercase"
-          style={{
-            color: "oklch(0.5 0.06 60)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <p className="font-body text-xs font-semibold tracking-[0.14em] uppercase text-[oklch(0.5_0.06_60)]">
           Step {active + 1} of {STEP_META.length} - {meta.section}
         </p>
-        <p
-          className="text-xs font-semibold shrink-0"
-          style={{
-            color: "oklch(0.52 0.15 50)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <p className="font-body text-xs font-semibold shrink-0 text-[oklch(0.52_0.15_50)]">
           Est. {minutesRemaining} min remaining
         </p>
       </div>
-      <div
-        className="h-1 rounded-full overflow-hidden mb-3"
-        style={{ background: "oklch(0.88 0.02 70)" }}
-      >
+      <div className="h-1 rounded-full overflow-hidden mb-3 bg-[oklch(0.88_0.02_70)]">
         <div
-          className="h-full rounded-full transition-all duration-300"
-          style={{ width: `${pct}%`, background: "var(--gold)" }}
+          className="h-full rounded-full transition-all duration-300 bg-gold"
+          style={{ width: `${pct}%` }}
         />
       </div>
       <div className="flex justify-between">
         {STEP_META.map((s, i) => (
           <div
             key={s.section}
-            className="w-2 h-2 rounded-full"
-            style={{
-              background: i <= active ? "var(--gold)" : "oklch(0.85 0.02 70)",
-            }}
+            className={`w-2 h-2 rounded-full ${i <= active ? "bg-gold" : "bg-[oklch(0.85_0.02_70)]"}`}
           />
         ))}
       </div>
@@ -1811,43 +1715,19 @@ export default function ClientIntakeForm() {
   if (submitted) {
     return (
       <div className="max-w-xl mx-auto text-center py-20 px-5">
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
-          style={{
-            background:
-              "linear-gradient(135deg, var(--gold), oklch(0.62 0.18 75))",
-          }}
-        >
+        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg bg-[linear-gradient(135deg,var(--gold),oklch(0.62_0.18_75))]">
           <Check size={32} stroke="white" strokeWidth={2.5} />
         </div>
-        <h2
-          className="text-3xl font-bold mb-4"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <h2 className="font-display text-3xl font-bold mb-4">
           Application Received
         </h2>
-        <p
-          className="text-base leading-relaxed mb-8"
-          style={{
-            color: "oklch(0.45 0.02 50)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <p className="font-body text-base leading-relaxed mb-8 text-[oklch(0.45_0.02_50)]">
           Thank you for completing the BioChain Sourcing client intake. We will
           review your organization and product needs and reach out to schedule
           your sourcing audit.
         </p>
-        <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
-          style={{
-            background: "oklch(0.72 0.15 75 / 0.12)",
-            color: "oklch(0.45 0.12 70)",
-          }}
-        >
-          <div
-            className="w-1.5 h-1.5 rounded-full"
-            style={{ background: "var(--gold)" }}
-          />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[oklch(0.72_0.15_75/0.12)] text-[oklch(0.45_0.12_70)]">
+          <div className="w-1.5 h-1.5 rounded-full bg-gold" />
           Submitted to RampRate BioChain Sourcing
         </div>
       </div>
@@ -1859,11 +1739,7 @@ export default function ClientIntakeForm() {
   const isLastFormStep = active === STEP_META.length - 1;
 
   return (
-    <form
-      name="client-intake"
-      onSubmit={formik.handleSubmit}
-      style={{ fontFamily: "var(--font-body)" }}
-    >
+    <form name="client-intake" onSubmit={formik.handleSubmit} className="font-body">
       <input
         ref={honeypotRef}
         type="text"
@@ -1875,22 +1751,10 @@ export default function ClientIntakeForm() {
 
       {reviewing ? (
         <>
-          <h2
-            className="text-2xl sm:text-3xl font-bold mb-3"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "oklch(0.2 0.02 50)",
-            }}
-          >
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-[oklch(0.2_0.02_50)]">
             Review Your Application
           </h2>
-          <p
-            className="text-sm leading-relaxed mb-6"
-            style={{
-              color: "oklch(0.45 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="font-body text-sm leading-relaxed mb-6 text-[oklch(0.45_0.02_50)]">
             Check everything below before submitting. Click Edit on any section
             to make changes.
           </p>
@@ -1906,13 +1770,7 @@ export default function ClientIntakeForm() {
       ) : (
         <>
           <ProgressBar active={active} />
-          <h2
-            className="text-2xl sm:text-3xl font-bold mb-3"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "oklch(0.2 0.02 50)",
-            }}
-          >
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-[oklch(0.2_0.02_50)]">
             {meta.title}
           </h2>
           <Step formik={formik} />
@@ -1920,10 +1778,7 @@ export default function ClientIntakeForm() {
       )}
 
       {error && (
-        <p
-          className="mt-6 text-sm font-medium"
-          style={{ color: "oklch(0.55 0.2 25)" }}
-        >
+        <p className="mt-6 text-sm font-medium text-[oklch(0.55_0.2_25)]">
           {error}
         </p>
       )}
@@ -1935,24 +1790,13 @@ export default function ClientIntakeForm() {
             reviewing ? setReviewing(false) : goToStep(Math.max(0, active - 1))
           }
           disabled={!reviewing && active === 0}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)]"
-          style={{
-            borderColor: "oklch(0.85 0.04 70)",
-            color: "oklch(0.45 0.08 60)",
-            fontFamily: "var(--font-body)",
-          }}
+          className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-25 disabled:cursor-not-allowed hover:bg-[oklch(0.97_0.02_75)] border-[oklch(0.85_0.04_70)] text-[oklch(0.45_0.08_60)]"
         >
           <ArrowLeft size={14} />
           Back
         </button>
 
-        <span
-          className="text-xs"
-          style={{
-            color: "oklch(0.6 0.02 50)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
+        <span className="font-body text-xs text-[oklch(0.6_0.02_50)]">
           {reviewing ? "Review" : `${active + 1} / ${STEP_META.length}`}
         </span>
 
@@ -1963,11 +1807,7 @@ export default function ClientIntakeForm() {
               intentionalSubmitRef.current = true;
             }}
             disabled={submitting}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{
-              background: "oklch(0.4 0.1 60)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="font-body inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 bg-[oklch(0.4_0.1_60)]"
           >
             {submitting ? "Submitting…" : "Submit Application"}
           </button>
@@ -1975,11 +1815,7 @@ export default function ClientIntakeForm() {
           <button
             type="button"
             onClick={proceedToReview}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{
-              background: "var(--gold)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01] bg-gold"
           >
             Review Application
             <ArrowRight size={14} />
@@ -1988,11 +1824,7 @@ export default function ClientIntakeForm() {
           <button
             type="button"
             onClick={() => goToStep(Math.min(STEP_META.length - 1, active + 1))}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{
-              background: "var(--gold)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="font-body inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.01] bg-gold"
           >
             Continue
             <ArrowRight size={14} />

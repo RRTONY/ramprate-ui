@@ -41,13 +41,11 @@ export default function SearchInput({ initialQuery = '' }: { initialQuery?: stri
   return (
     <form onSubmit={submit} className="relative w-full max-w-2xl">
       <div
-        className="flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all"
-        style={{
-          background: 'rgba(255,255,255,0.06)',
-          border: `1px solid ${focused ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)'}`,
-        }}
+        className={`flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all bg-white/6 border ${
+          focused ? "border-white/25" : "border-white/12"
+        }`}
       >
-        <Search size={18} className="shrink-0" style={{ color: 'rgba(255,255,255,0.3)' }} />
+        <Search size={18} className="shrink-0 text-white/30" />
         <input
           ref={inputRef}
           type="text"
@@ -57,27 +55,17 @@ export default function SearchInput({ initialQuery = '' }: { initialQuery?: stri
           onBlur={() => setFocused(false)}
           placeholder="Search articles, blog posts, insights..."
           autoFocus
-          className="flex-1 bg-transparent outline-none"
-          style={{
-            color: 'rgba(255,255,255,0.9)',
-            fontFamily: 'var(--font-body)',
-            fontSize: '1rem',
-            caretColor: 'oklch(0.82 0.15 75)',
-          }}
+          className="font-body flex-1 bg-transparent outline-none text-white/90 text-base caret-[oklch(0.82_0.15_75)]"
         />
         {/* Pulsing dot while debounce is running */}
         {focused && query.trim().length >= 2 && (
-          <span
-            className="shrink-0 w-1.5 h-1.5 rounded-full animate-pulse"
-            style={{ background: 'oklch(0.82 0.15 75)' }}
-          />
+          <span className="shrink-0 w-1.5 h-1.5 rounded-full animate-pulse bg-amber" />
         )}
         {query && (
           <button
             type="button"
             onClick={clear}
-            className="shrink-0 p-1 transition-opacity hover:opacity-60"
-            style={{ color: 'rgba(255,255,255,0.35)' }}
+            className="shrink-0 p-1 transition-opacity hover:opacity-60 text-white/35"
             aria-label="Clear search"
           >
             <X size={16} />

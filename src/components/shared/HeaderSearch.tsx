@@ -57,7 +57,6 @@ export default function HeaderSearch({ scrolled = false }: Props) {
     router.push(`/search?q=${encodeURIComponent(q)}`);
   };
 
-  const iconColor = scrolled ? "oklch(0.35 0.03 50)" : "rgba(255,255,255,0.8)";
   const { pages, posts } = useSearchSuggestions(open ? query : "");
 
   return (
@@ -65,9 +64,10 @@ export default function HeaderSearch({ scrolled = false }: Props) {
       {/* Search icon trigger */}
       <button
         onClick={() => setOpen(true)}
-        className="p-2 rounded-lg transition-all hover:opacity-65"
+        className={`p-2 rounded-lg transition-all hover:opacity-65 ${
+          scrolled ? "text-[oklch(0.35_0.03_50)]" : "text-white/80"
+        }`}
         aria-label="Search site"
-        style={{ color: iconColor }}
       >
         <Search size={18} />
       </button>
@@ -81,39 +81,24 @@ export default function HeaderSearch({ scrolled = false }: Props) {
           />
 
           {/* Search bar - full-width, exact header height, above backdrop */}
-          <div
-            className="fixed inset-x-0 top-0 z-60 h-16 sm:h-20 flex items-center px-4 sm:px-8 shadow-xl"
-            style={{
-              background: "rgba(255,255,255,0.99)",
-              borderBottom: "1px solid rgba(0,0,0,0.08)",
-            }}
-          >
+          <div className="fixed inset-x-0 top-0 z-60 h-16 sm:h-20 flex items-center px-4 sm:px-8 shadow-xl bg-[rgba(255,255,255,0.99)] border-b border-black/8">
             <form
               onSubmit={submit}
               className="relative flex items-center gap-3 w-full max-w-7xl mx-auto"
             >
-              <Search
-                size={18}
-                className="shrink-0"
-                style={{ color: "oklch(0.55 0.03 50)" }}
-              />
+              <Search size={18} className="shrink-0 text-[oklch(0.55_0.03_50)]" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search articles, blog posts, insights..."
-                className="flex-1 bg-transparent outline-none text-sm sm:text-base"
-                style={{
-                  color: "oklch(0.18 0.03 50)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="font-body flex-1 bg-transparent outline-none text-sm sm:text-base text-[oklch(0.18_0.03_50)]"
               />
               {query.trim().length >= 2 ? (
                 <button
                   type="submit"
-                  className="p-1.5 rounded-lg transition-all shrink-0 hover:opacity-70"
-                  style={{ color: "var(--gold)" }}
+                  className="p-1.5 rounded-lg transition-all shrink-0 hover:opacity-70 text-gold"
                   aria-label="Go to search results"
                 >
                   <ArrowRight size={18} />
@@ -122,8 +107,7 @@ export default function HeaderSearch({ scrolled = false }: Props) {
                 <button
                   type="button"
                   onClick={close}
-                  className="p-1.5 rounded-lg transition-all shrink-0 hover:opacity-60"
-                  style={{ color: "oklch(0.5 0.03 50)" }}
+                  className="p-1.5 rounded-lg transition-all shrink-0 hover:opacity-60 text-[oklch(0.5_0.03_50)]"
                   aria-label="Close search"
                 >
                   <X size={18} />
@@ -138,15 +122,9 @@ export default function HeaderSearch({ scrolled = false }: Props) {
                   variant="light"
                 />
               ) : (
-                <div
-                  className="absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50"
-                  style={{ background: "white", border: "1px solid rgba(0,0,0,0.08)" }}
-                >
+                <div className="absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50 bg-white border border-black/8">
                   <div className="px-2 py-2">
-                    <p
-                      className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
-                      style={{ color: "oklch(0.55 0.02 50)", fontFamily: "var(--font-body)" }}
-                    >
+                    <p className="font-body px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[oklch(0.55_0.02_50)]">
                       Popular
                     </p>
                     {DEFAULT_SUGGESTIONS.map((p) => (
@@ -154,12 +132,12 @@ export default function HeaderSearch({ scrolled = false }: Props) {
                         key={p.path}
                         href={p.path}
                         onClick={close}
-                        className="block px-3 py-2 rounded-lg transition-colors hover:bg-[rgba(212,168,67,0.08)]"
+                        className="block px-3 py-2 rounded-lg transition-colors hover:bg-gold/8"
                       >
-                        <p className="text-sm font-semibold" style={{ color: "oklch(0.2 0.02 50)", fontFamily: "var(--font-body)" }}>
+                        <p className="font-body text-sm font-semibold text-[oklch(0.2_0.02_50)]">
                           {p.title}
                         </p>
-                        <p className="text-xs line-clamp-1" style={{ color: "oklch(0.5 0.02 50)", fontFamily: "var(--font-body)" }}>
+                        <p className="font-body text-xs line-clamp-1 text-[oklch(0.5_0.02_50)]">
                           {p.description}
                         </p>
                       </Link>

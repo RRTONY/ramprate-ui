@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 // ── Shared style tokens ───────────────────────────────────────────────────────
-const sectionLabel = "text-[11px] font-semibold uppercase tracking-[0.2em]";
-const h2Class = "text-3xl sm:text-4xl font-bold leading-tight text-white";
-const bodyText = "text-sm sm:text-base leading-relaxed";
-const monoLabel = "text-[10px] font-semibold uppercase tracking-widest";
+const sectionLabel = "font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber";
+const h2Class = "font-display text-3xl sm:text-4xl font-bold leading-tight text-white";
+const bodyText = "font-body text-sm sm:text-base leading-relaxed";
+const monoLabel = "font-mono text-[10px] font-semibold uppercase tracking-widest";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const steps = [
@@ -188,29 +188,17 @@ export default function HowWeWorkTabs() {
   return (
     <div>
       {/* ── Sticky Tab Nav ── */}
-      <div
-        className="sticky top-16 sm:top-20 z-40 border-b"
-        style={{
-          background: "var(--dark)",
-          borderColor: "rgba(255,255,255,0.07)",
-        }}
-      >
+      <div className="sticky top-16 sm:top-20 z-40 border-b bg-dark border-white/7">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex overflow-x-auto">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className="shrink-0 px-5 sm:px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors border-b-2"
-              style={{
-                fontFamily: "var(--font-mono)",
-                color:
-                  activeTab === tab.id
-                    ? "oklch(0.82 0.15 75)"
-                    : "rgba(255,255,255,0.35)",
-                borderBottomColor:
-                  activeTab === tab.id ? "oklch(0.82 0.15 75)" : "transparent",
-                background: "transparent",
-              }}
+              className={`font-mono shrink-0 px-5 sm:px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors border-b-2 bg-transparent ${
+                activeTab === tab.id
+                  ? "text-amber border-b-amber"
+                  : "text-white/35 border-b-transparent"
+              }`}
             >
               {tab.label}
             </button>
@@ -220,10 +208,7 @@ export default function HowWeWorkTabs() {
 
       {/* ── Process Tab ── */}
       {activeTab === "process" && (
-        <section
-          className="py-16 sm:py-20 px-5 sm:px-8"
-          style={{ background: "var(--dark)" }}
-        >
+        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
               {steps.map((step, i) => {
@@ -231,51 +216,28 @@ export default function HowWeWorkTabs() {
                 return (
                   <div
                     key={i}
-                    className="border-b rounded-lg mb-1 transition-colors"
-                    style={{
-                      borderColor: "rgba(255,255,255,0.07)",
-                      background: isOpen
-                        ? "rgba(212,168,67,0.06)"
-                        : "rgba(255,255,255,0.02)",
-                    }}
+                    className={`border-b rounded-lg mb-1 transition-colors border-white/7 ${
+                      isOpen ? "bg-gold/6" : "bg-white/2"
+                    }`}
                   >
                     <button
                       onClick={() => setOpenStep(isOpen ? null : i)}
                       className="w-full text-left py-5 sm:py-6 px-4 flex items-center gap-5 group"
                     >
-                      <span
-                        className={`${monoLabel} shrink-0`}
-                        style={{
-                          color: "oklch(0.82 0.15 75)",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
+                      <span className={`${monoLabel} shrink-0 text-amber`}>
                         {step.num}
                       </span>
                       <div className="flex-1 flex items-center justify-between gap-4">
-                        <h3
-                          className="text-base sm:text-lg font-semibold text-white group-hover:text-[oklch(0.82_0.15_75)] transition-colors"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
+                        <h3 className="font-display text-base sm:text-lg font-semibold text-white group-hover:text-amber transition-colors">
                           {step.title}
                         </h3>
                         {/* Prominent expand indicator */}
                         <span
-                          className="shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200"
-                          style={{
-                            borderColor: isOpen
-                              ? "oklch(0.82 0.15 75)"
-                              : "rgba(255,255,255,0.25)",
-                            background: isOpen
-                              ? "rgba(212,168,67,0.15)"
-                              : "rgba(255,255,255,0.05)",
-                            color: isOpen
-                              ? "oklch(0.82 0.15 75)"
-                              : "rgba(255,255,255,0.6)",
-                            transform: isOpen
-                              ? "rotate(45deg)"
-                              : "rotate(0deg)",
-                          }}
+                          className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200 ${
+                            isOpen
+                              ? "border-amber bg-gold/15 text-amber rotate-45"
+                              : "border-white/25 bg-white/5 text-white/60 rotate-0"
+                          }`}
                         >
                           <svg
                             width="12"
@@ -295,13 +257,7 @@ export default function HowWeWorkTabs() {
                     </button>
 
                     {isOpen && (
-                      <p
-                        className={`${bodyText} pb-6 px-4 pl-14`}
-                        style={{
-                          color: "rgba(255,255,255,0.5)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <p className={`${bodyText} pb-6 px-4 pl-14 text-white/50`}>
                         {step.body}
                       </p>
                     )}
@@ -310,27 +266,12 @@ export default function HowWeWorkTabs() {
               })}
 
               {/* Pull quote */}
-              <div
-                className="mt-10 p-6 sm:p-8 rounded-lg border-l-4"
-                style={{
-                  background: "rgba(212,168,67,0.06)",
-                  borderLeftColor: "oklch(0.82 0.15 75)",
-                }}
-              >
-                <p
-                  className="text-lg sm:text-xl font-bold text-white leading-snug mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+              <div className="mt-10 p-6 sm:p-8 rounded-lg border-l-4 bg-gold/6 border-l-amber">
+                <p className="font-display text-lg sm:text-xl font-bold text-white leading-snug mb-3">
                   &ldquo;We don&apos;t charge upfront. We eat what we
                   hunt.&rdquo;
                 </p>
-                <p
-                  className={bodyText}
-                  style={{
-                    color: "rgba(255,255,255,0.45)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className={`${bodyText} text-white/45`}>
                   Our fee is tied to your deal closing. In 25 years we have
                   never invoiced and disappeared. That alignment is the whole
                   model.
@@ -343,34 +284,16 @@ export default function HowWeWorkTabs() {
 
       {/* ── Fee Model Tab ── */}
       {activeTab === "model" && (
-        <section
-          className="py-16 sm:py-20 px-5 sm:px-8"
-          style={{ background: "var(--dark)" }}
-        >
+        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
-              <p
-                className={`${sectionLabel} mb-3`}
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
+              <p className={`${sectionLabel} mb-3`}>
                 Fee Structure
               </p>
-              <h2
-                className={`${h2Class} mb-3`}
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className={`${h2Class} mb-3`}>
                 Full Transparency. By Design.
               </h2>
-              <p
-                className={`${bodyText} mb-10`}
-                style={{
-                  color: "rgba(255,255,255,0.4)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className={`${bodyText} mb-10 text-white/40`}>
                 Prepared for attorney review. Every party in every deal knows
                 exactly who pays us, how much, and how it flows.
               </p>
@@ -379,49 +302,24 @@ export default function HowWeWorkTabs() {
                 {feeItems.map((item, i) => (
                   <div
                     key={i}
-                    className="rounded-lg p-6 sm:p-7 flex flex-col gap-4 border"
-                    style={{
-                      background: item.primary
-                        ? "rgba(212,168,67,0.06)"
-                        : "rgba(255,255,255,0.03)",
-                      borderColor: item.primary
-                        ? "rgba(212,168,67,0.25)"
-                        : "rgba(255,255,255,0.07)",
-                    }}
+                    className={`rounded-lg p-6 sm:p-7 flex flex-col gap-4 border ${
+                      item.primary
+                        ? "bg-gold/6 border-gold/25"
+                        : "bg-white/3 border-white/7"
+                    }`}
                   >
                     <div className="flex items-baseline gap-2">
-                      <span
-                        className="text-5xl sm:text-6xl font-bold leading-none"
-                        style={{
-                          color: "oklch(0.82 0.15 75)",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
+                      <span className="font-mono text-5xl sm:text-6xl font-bold leading-none text-amber">
                         {item.pct}
                       </span>
-                      <span
-                        className={monoLabel}
-                        style={{
-                          color: "rgba(255,255,255,0.3)",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
+                      <span className={`${monoLabel} text-white/30`}>
                         of engagements
                       </span>
                     </div>
-                    <h3
-                      className="text-base sm:text-lg font-semibold text-white"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
+                    <h3 className="font-display text-base sm:text-lg font-semibold text-white">
                       {item.title}
                     </h3>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{
-                        color: "rgba(255,255,255,0.45)",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
+                    <p className="font-body text-sm leading-relaxed text-white/45">
                       {item.body}
                     </p>
                   </div>
@@ -429,26 +327,11 @@ export default function HowWeWorkTabs() {
               </div>
 
               {/* Constant note */}
-              <div
-                className="rounded-lg p-5 sm:p-6 border mb-5"
-                style={{
-                  background: "rgba(212,168,67,0.05)",
-                  borderColor: "rgba(212,168,67,0.2)",
-                }}
-              >
-                <p
-                  className="text-sm font-semibold text-white mb-2"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+              <div className="rounded-lg p-5 sm:p-6 border mb-5 bg-gold/5 border-gold/20">
+                <p className="font-display text-sm font-semibold text-white mb-2">
                   The Constant in Both Models
                 </p>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "rgba(255,255,255,0.45)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="font-body text-sm leading-relaxed text-white/45">
                   Regardless of structure, every party in every deal - including
                   brokers and channel partners - knows exactly who is paying
                   RampRate, how much, and how it flows into the margin. Verified
@@ -457,38 +340,17 @@ export default function HowWeWorkTabs() {
               </div>
 
               {/* B Corp badge */}
-              <div
-                className="flex items-center gap-4 p-5 rounded-lg border"
-                style={{ borderColor: "rgba(255,255,255,0.07)" }}
-              >
-                <div
-                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center shrink-0"
-                  style={{ borderColor: "oklch(0.82 0.15 75)" }}
-                >
-                  <span
-                    className="text-base font-bold"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+              <div className="flex items-center gap-4 p-5 rounded-lg border border-white/7">
+                <div className="w-11 h-11 rounded-full border-2 flex items-center justify-center shrink-0 border-amber">
+                  <span className="font-display text-base font-bold text-amber">
                     B
                   </span>
                 </div>
                 <div>
-                  <p
-                    className={`${monoLabel} text-white mb-0.5`}
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
+                  <p className={`${monoLabel} text-white mb-0.5`}>
                     Certified B Corporation
                   </p>
-                  <p
-                    className="text-xs leading-relaxed"
-                    style={{
-                      color: "rgba(255,255,255,0.35)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="font-body text-xs leading-relaxed text-white/35">
                     Top 4,000 globally out of 100,000+ applicants. Verified
                     social and environmental standards.
                   </p>
@@ -501,34 +363,16 @@ export default function HowWeWorkTabs() {
 
       {/* ── Clients Tab ── */}
       {activeTab === "clients" && (
-        <section
-          className="py-16 sm:py-20 px-5 sm:px-8"
-          style={{ background: "var(--dark)" }}
-        >
+        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
-              <p
-                className={`${sectionLabel} mb-3`}
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
+              <p className={`${sectionLabel} mb-3`}>
                 Client Sectors
               </p>
-              <h2
-                className={`${h2Class} mb-3`}
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className={`${h2Class} mb-3`}>
                 250+ Enterprise Clients
               </h2>
-              <p
-                className={`${bodyText} mb-10`}
-                style={{
-                  color: "rgba(255,255,255,0.4)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className={`${bodyText} mb-10 text-white/40`}>
                 $10B+ in enterprise decisions structured across 50+ countries
                 over 25 years.
               </p>
@@ -537,41 +381,19 @@ export default function HowWeWorkTabs() {
                 {clients.map((c, i) => (
                   <div
                     key={i}
-                    className="rounded-lg p-5 border border-l-4"
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      borderColor: "rgba(255,255,255,0.07)",
-                      borderLeftColor: "oklch(0.82 0.15 75)",
-                    }}
+                    className="rounded-lg p-5 border border-l-4 bg-white/3 border-white/7 border-l-amber"
                   >
-                    <p
-                      className={`${monoLabel} mb-1.5`}
-                      style={{
-                        color: "oklch(0.82 0.15 75)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
+                    <p className={`${monoLabel} mb-1.5`}>
                       {c.sector}
                     </p>
-                    <p
-                      className="text-sm font-medium text-white leading-relaxed"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
+                    <p className="font-body text-sm font-medium text-white leading-relaxed">
                       {c.names}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div
-                className="mt-5 rounded-lg p-5 text-sm leading-relaxed border"
-                style={{
-                  background: "rgba(212,168,67,0.05)",
-                  borderColor: "rgba(212,168,67,0.15)",
-                  color: "rgba(255,255,255,0.45)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <div className="font-body mt-5 rounded-lg p-5 text-sm leading-relaxed border bg-gold/5 border-gold/15 text-white/45">
                 Health and wellness is not new territory for RampRate. Our
                 dedicated Health and Wellness practice covers health tech,
                 psychedelics, natural wellness, and healthcare infrastructure -
@@ -580,8 +402,7 @@ export default function HowWeWorkTabs() {
                   href="https://wavemakerhealthandwellness.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="font-semibold hover:opacity-80 transition-opacity"
-                  style={{ color: "oklch(0.82 0.15 75)" }}
+                  className="font-semibold hover:opacity-80 transition-opacity text-amber"
                 >
                   Wavemaker Three-Sixty Health
                 </a>
@@ -590,12 +411,7 @@ export default function HowWeWorkTabs() {
 
               <Link
                 href="/proof"
-                className="mt-5 flex items-center justify-center gap-2 py-4 rounded-md text-sm font-semibold transition-opacity hover:opacity-90"
-                style={{
-                  background: "oklch(0.82 0.15 75)",
-                  color: "oklch(0.18 0.03 50)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="font-body mt-5 flex items-center justify-center gap-2 py-4 rounded-md text-sm font-semibold transition-opacity hover:opacity-90 bg-amber text-[oklch(0.18_0.03_50)]"
               >
                 Full Client List + Case Studies
                 <ArrowRight />
@@ -607,34 +423,16 @@ export default function HowWeWorkTabs() {
 
       {/* ── Links Tab ── */}
       {activeTab === "links" && (
-        <section
-          className="py-16 sm:py-20 px-5 sm:px-8"
-          style={{ background: "var(--dark)" }}
-        >
+        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
-              <p
-                className={`${sectionLabel} mb-3`}
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
+              <p className={`${sectionLabel} mb-3`}>
                 Reference Links
               </p>
-              <h2
-                className={`${h2Class} mb-3`}
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className={`${h2Class} mb-3`}>
                 Source Material
               </h2>
-              <p
-                className={`${bodyText} mb-10`}
-                style={{
-                  color: "rgba(255,255,255,0.4)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className={`${bodyText} mb-10 text-white/40`}>
                 All source material for attorney review. Each link is a live
                 public URL.
               </p>
@@ -644,37 +442,21 @@ export default function HowWeWorkTabs() {
                   const inner = (
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p
-                          className="text-sm font-semibold text-white mb-1 group-hover:text-[oklch(0.82_0.15_75)] transition-colors"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
+                        <p className="font-display text-sm font-semibold text-white mb-1 group-hover:text-amber transition-colors">
                           {link.label}
                         </p>
-                        <p
-                          className="text-xs leading-relaxed"
-                          style={{
-                            color: "rgba(255,255,255,0.35)",
-                            fontFamily: "var(--font-body)",
-                          }}
-                        >
+                        <p className="font-body text-xs leading-relaxed text-white/35">
                           {link.desc}
                         </p>
                       </div>
-                      <span
-                        className="shrink-0 mt-0.5"
-                        style={{ color: "rgba(255,255,255,0.2)" }}
-                      >
+                      <span className="shrink-0 mt-0.5 text-white/20">
                         {link.external ? <ExternalIcon /> : <ArrowRight />}
                       </span>
                     </div>
                   );
 
                   const cardClass =
-                    "rounded-lg p-5 border block group transition-colors hover:border-[rgba(212,168,67,0.3)]";
-                  const cardStyle = {
-                    background: "rgba(255,255,255,0.03)",
-                    borderColor: "rgba(255,255,255,0.07)",
-                  };
+                    "rounded-lg p-5 border block group transition-colors hover:border-gold/30 bg-white/3 border-white/7";
 
                   return link.external ? (
                     <a
@@ -683,38 +465,24 @@ export default function HowWeWorkTabs() {
                       target="_blank"
                       rel="noreferrer"
                       className={cardClass}
-                      style={cardStyle}
                     >
                       {inner}
                     </a>
                   ) : (
-                    <Link
-                      key={i}
-                      href={link.href}
-                      className={cardClass}
-                      style={cardStyle}
-                    >
+                    <Link key={i} href={link.href} className={cardClass}>
                       {inner}
                     </Link>
                   );
                 })}
               </div>
 
-              <div
-                className="mt-5 rounded-lg p-5 border text-xs leading-relaxed"
-                style={{
-                  borderColor: "rgba(255,255,255,0.07)",
-                  color: "rgba(255,255,255,0.35)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <div className="font-body mt-5 rounded-lg p-5 border text-xs leading-relaxed border-white/7 text-white/35">
                 This document was prepared by RampRate for the purpose of
                 explaining our engagement model, fee structure, and client track
                 record. For legal questions contact:{" "}
                 <a
                   href="mailto:josh@ramprate.com"
-                  className="font-semibold hover:opacity-80 transition-opacity"
-                  style={{ color: "oklch(0.82 0.15 75)" }}
+                  className="font-semibold hover:opacity-80 transition-opacity text-amber"
                 >
                   josh@ramprate.com
                 </a>

@@ -39,12 +39,8 @@ function TypingDots() {
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="w-2 h-2 rounded-full animate-bounce inline-block"
-          style={{
-            background: "oklch(0.82 0.15 75)",
-            animationDelay: `${i * 0.18}s`,
-            animationDuration: "0.9s",
-          }}
+          className="w-2 h-2 rounded-full animate-bounce inline-block bg-amber"
+          style={{ animationDelay: `${i * 0.18}s`, animationDuration: "0.9s" }}
         />
       ))}
     </div>
@@ -61,19 +57,9 @@ function parseInline(text: string, depth = 0): React.ReactNode {
   let k = 0;
   let m: RegExpExecArray | null;
 
-  const linkStyle = {
-    color: "oklch(0.82 0.15 75)",
-    textDecoration: "underline",
-    textUnderlineOffset: "2px",
-  } as const;
-  const codeStyle = {
-    background: "rgba(255,255,255,0.1)",
-    padding: "1px 5px",
-    borderRadius: "3px",
-    fontSize: "0.85em",
-    fontFamily: "monospace",
-    color: "oklch(0.85 0.12 75)",
-  } as const;
+  const linkClass = "text-amber underline underline-offset-2";
+  const codeClass =
+    "bg-white/10 px-[5px] py-px rounded-[3px] text-[0.85em] font-mono text-[oklch(0.85_0.12_75)]";
 
   while ((m = regex.exec(text)) !== null) {
     if (m.index > lastIndex) parts.push(text.slice(lastIndex, m.index));
@@ -86,7 +72,7 @@ function parseInline(text: string, depth = 0): React.ReactNode {
           href={m[3]}
           target="_blank"
           rel="noopener noreferrer"
-          style={linkStyle}
+          className={linkClass}
         >
           {parseInline(m[2], depth + 1)}
         </a>,
@@ -94,10 +80,7 @@ function parseInline(text: string, depth = 0): React.ReactNode {
     } else if (m[4] !== undefined) {
       // **bold** - recurse so links inside bold still render
       parts.push(
-        <strong
-          key={k++}
-          style={{ color: "rgba(255,255,255,0.95)", fontWeight: 600 }}
-        >
+        <strong key={k++} className="text-white/95 font-semibold">
           {parseInline(m[4], depth + 1)}
         </strong>,
       );
@@ -107,7 +90,7 @@ function parseInline(text: string, depth = 0): React.ReactNode {
     } else if (m[6] !== undefined) {
       // `code`
       parts.push(
-        <code key={k++} style={codeStyle}>
+        <code key={k++} className={codeClass}>
           {m[6]}
         </code>,
       );
@@ -119,7 +102,7 @@ function parseInline(text: string, depth = 0): React.ReactNode {
           href={m[0]}
           target="_blank"
           rel="noopener noreferrer"
-          style={linkStyle}
+          className={linkClass}
         >
           {m[0]}
         </a>,
@@ -154,18 +137,7 @@ function MessageContent({ content }: { content: string }) {
       blocks.push(
         <pre
           key={k++}
-          style={{
-            background: "rgba(0,0,0,0.3)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "0.5rem",
-            padding: "0.6rem 0.875rem",
-            overflowX: "auto",
-            fontSize: "0.775rem",
-            fontFamily: "monospace",
-            color: "rgba(255,255,255,0.75)",
-            margin: "0.2rem 0",
-            lineHeight: 1.6,
-          }}
+          className="bg-black/30 border border-white/8 rounded-lg px-3.5 py-2.5 overflow-x-auto text-[0.775rem] font-mono text-white/75 my-[0.2rem] leading-[1.6]"
         >
           <code>{codeLines.join("\n")}</code>
         </pre>,
@@ -178,15 +150,7 @@ function MessageContent({ content }: { content: string }) {
     const h1m = line.match(/^# (.+)/);
     if (h1m) {
       blocks.push(
-        <p
-          key={k++}
-          style={{
-            fontWeight: 700,
-            fontSize: "0.95rem",
-            color: "white",
-            margin: "0.15rem 0",
-          }}
-        >
+        <p key={k++} className="font-bold text-[0.95rem] text-white my-[0.15rem]">
           {parseInline(h1m[1])}
         </p>,
       );
@@ -196,15 +160,7 @@ function MessageContent({ content }: { content: string }) {
     const h2m = line.match(/^## (.+)/);
     if (h2m) {
       blocks.push(
-        <p
-          key={k++}
-          style={{
-            fontWeight: 700,
-            fontSize: "0.9rem",
-            color: "rgba(255,255,255,0.95)",
-            margin: "0.15rem 0",
-          }}
-        >
+        <p key={k++} className="font-bold text-[0.9rem] text-white/95 my-[0.15rem]">
           {parseInline(h2m[1])}
         </p>,
       );
@@ -214,15 +170,7 @@ function MessageContent({ content }: { content: string }) {
     const h3m = line.match(/^### (.+)/);
     if (h3m) {
       blocks.push(
-        <p
-          key={k++}
-          style={{
-            fontWeight: 600,
-            fontSize: "0.85rem",
-            color: "oklch(0.82 0.15 75)",
-            margin: "0.1rem 0",
-          }}
-        >
+        <p key={k++} className="font-semibold text-[0.85rem] text-amber my-[0.1rem]">
           {parseInline(h3m[1])}
         </p>,
       );
@@ -238,34 +186,10 @@ function MessageContent({ content }: { content: string }) {
         i++;
       }
       blocks.push(
-        <ul
-          key={k++}
-          style={{
-            margin: "0.1rem 0",
-            padding: 0,
-            listStyle: "none",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.2rem",
-          }}
-        >
+        <ul key={k++} className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]">
           {items.map((item, j) => (
-            <li
-              key={j}
-              style={{
-                display: "flex",
-                gap: "0.4rem",
-                alignItems: "flex-start",
-              }}
-            >
-              <span
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  flexShrink: 0,
-                  marginTop: "0.15rem",
-                  fontSize: "0.7rem",
-                }}
-              >
+            <li key={j} className="flex gap-[0.4rem] items-start">
+              <span className="text-amber shrink-0 mt-[0.15rem] text-[0.7rem]">
                 ▸
               </span>
               <span>{parseInline(item)}</span>
@@ -284,35 +208,10 @@ function MessageContent({ content }: { content: string }) {
         i++;
       }
       blocks.push(
-        <ol
-          key={k++}
-          style={{
-            margin: "0.1rem 0",
-            padding: 0,
-            listStyle: "none",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.2rem",
-          }}
-        >
+        <ol key={k++} className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]">
           {items.map((item, j) => (
-            <li
-              key={j}
-              style={{
-                display: "flex",
-                gap: "0.4rem",
-                alignItems: "flex-start",
-              }}
-            >
-              <span
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  flexShrink: 0,
-                  fontWeight: 600,
-                  minWidth: "1rem",
-                  fontSize: "0.75rem",
-                }}
-              >
+            <li key={j} className="flex gap-[0.4rem] items-start">
+              <span className="text-amber shrink-0 font-semibold min-w-[1rem] text-xs">
                 {j + 1}.
               </span>
               <span>{parseInline(item)}</span>
@@ -326,14 +225,7 @@ function MessageContent({ content }: { content: string }) {
     // Horizontal rule
     if (line.match(/^-{3,}$/) || line.match(/^\*{3,}$/)) {
       blocks.push(
-        <hr
-          key={k++}
-          style={{
-            border: "none",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            margin: "0.3rem 0",
-          }}
-        />,
+        <hr key={k++} className="border-none border-t border-white/8 my-[0.3rem]" />,
       );
       i++;
       continue;
@@ -342,25 +234,21 @@ function MessageContent({ content }: { content: string }) {
     // Blank line
     if (!line.trim()) {
       if (blocks.length > 0)
-        blocks.push(<div key={k++} style={{ height: "0.3rem" }} />);
+        blocks.push(<div key={k++} className="h-[0.3rem]" />);
       i++;
       continue;
     }
 
     // Paragraph
     blocks.push(
-      <p key={k++} style={{ margin: 0, lineHeight: 1.65 }}>
+      <p key={k++} className="m-0 leading-[1.65]">
         {parseInline(line)}
       </p>,
     );
     i++;
   }
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "0.18rem" }}>
-      {blocks}
-    </div>
-  );
+  return <div className="flex flex-col gap-[0.18rem]">{blocks}</div>;
 }
 
 export default function SiteSearch({
@@ -481,36 +369,23 @@ export default function SiteSearch({
       {/* Trigger button */}
       <button
         onClick={openSearch}
-        className="ai-btn-glow flex items-center gap-2 px-3.5 py-2 rounded-full border transition-all duration-300 text-sm group"
-        style={{
-          borderColor: scrolled
-            ? "rgba(212,168,67,0.25)"
-            : "rgba(212,168,67,0.2)",
-          background: scrolled
-            ? "linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))"
-            : "linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))",
-          color: scrolled ? "oklch(0.35 0.03 50)" : "rgba(255,255,255,0.75)",
-          fontFamily: "var(--font-body)",
-        }}
+        className={`font-body ai-btn-glow flex items-center gap-2 px-3.5 py-2 rounded-full border transition-all duration-300 text-sm group ${
+          scrolled
+            ? "border-gold/25 bg-[linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))] text-[oklch(0.35_0.03_50)]"
+            : "border-gold/20 bg-[linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))] text-white/75"
+        }`}
         aria-label="Ask RampRate AI"
       >
         <span className="ai-btn-sparkle">
-          <Sparkles size={14} style={{ color: "oklch(0.82 0.15 75)" }} />
+          <Sparkles size={14} className="text-amber" />
         </span>
-        <span
-          className="hidden sm:inline text-xs font-semibold tracking-wide"
-          style={{ letterSpacing: "0.02em" }}
-        >
+        <span className="hidden sm:inline text-xs font-semibold tracking-wide [letter-spacing:0.02em]">
           Ask RampRate
         </span>
         <kbd
-          className="hidden lg:inline text-[10px] px-1.5 py-0.5 rounded font-mono"
-          style={{
-            background: scrolled
-              ? "rgba(0,0,0,0.05)"
-              : "rgba(255,255,255,0.10)",
-            color: scrolled ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.25)",
-          }}
+          className={`hidden lg:inline text-[10px] px-1.5 py-0.5 rounded font-mono ${
+            scrolled ? "bg-black/5 text-black/25" : "bg-white/10 text-white/25"
+          }`}
         >
           ⌘K
         </kbd>
@@ -529,47 +404,24 @@ export default function SiteSearch({
             className="fixed z-101 flex flex-col
               inset-0
               sm:inset-auto sm:top-[8vh] sm:left-1/2 sm:-translate-x-1/2
-              sm:w-[90%] sm:max-w-2xl sm:max-h-[80vh] sm:rounded-2xl"
-            style={{
-              background: "rgba(8,12,22,0.98)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              boxShadow:
-                "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03)",
-            }}
+              sm:w-[90%] sm:max-w-2xl sm:max-h-[80vh] sm:rounded-2xl
+              bg-[rgba(8,12,22,0.98)] border border-white/9 shadow-[0_32px_80px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.03)]"
             role="dialog"
             aria-modal="true"
             aria-label="RampRate AI Assistant"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div
-              className="px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between shrink-0"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
-            >
+            <div className="px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between shrink-0 border-b border-white/7">
               <div className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.82 0.15 75), oklch(0.6 0.22 50))",
-                  }}
-                >
-                  <Sparkles size={17} style={{ color: "#050a15" }} />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 bg-[linear-gradient(135deg,oklch(0.82_0.15_75),oklch(0.6_0.22_50))]">
+                  <Sparkles size={17} className="text-[#050a15]" />
                 </div>
                 <div>
-                  <p
-                    className="text-white font-semibold text-sm leading-tight"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <p className="font-display text-white font-semibold text-sm leading-tight">
                     RampRate AI
                   </p>
-                  <p
-                    className="text-[10px] leading-tight mt-0.5"
-                    style={{
-                      color: "rgba(255,255,255,0.3)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <p className="font-mono text-[10px] leading-tight mt-0.5 text-white/30">
                     25 years of enterprise intelligence
                   </p>
                 </div>
@@ -579,22 +431,7 @@ export default function SiteSearch({
                 {chat.length > 0 && (
                   <button
                     onClick={clearChat}
-                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all"
-                    style={{
-                      color: "rgba(255,255,255,0.35)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "rgba(255,255,255,0.7)";
-                      e.currentTarget.style.borderColor =
-                        "rgba(255,255,255,0.16)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "rgba(255,255,255,0.35)";
-                      e.currentTarget.style.borderColor =
-                        "rgba(255,255,255,0.08)";
-                    }}
+                    className="font-mono flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all text-white/35 border border-white/8 hover:text-white/70 hover:border-white/16"
                   >
                     <RotateCcw size={11} />
                     <span className="hidden sm:inline">New chat</span>
@@ -602,16 +439,7 @@ export default function SiteSearch({
                 )}
                 <button
                   onClick={closeSearch}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg transition-all"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.8)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.3)";
-                  }}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg transition-all text-white/30 hover:bg-white/6 hover:text-white/80"
                 >
                   <X size={17} />
                 </button>
@@ -623,13 +451,7 @@ export default function SiteSearch({
               {/* Empty state - suggested questions */}
               {chat.length === 0 && !showQuickNav && (
                 <div className="py-1">
-                  <p
-                    className="text-center text-sm leading-relaxed mb-5"
-                    style={{
-                      color: "rgba(255,255,255,0.35)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="font-body text-center text-sm leading-relaxed mb-5 text-white/35">
                     Ask anything about RampRate - sourcing, Web3, case results,
                     or enterprise strategy.
                   </p>
@@ -641,29 +463,7 @@ export default function SiteSearch({
                           setQuery(q);
                           setTimeout(() => inputRef.current?.focus(), 50);
                         }}
-                        className="text-left px-4 py-3 rounded-xl text-sm transition-all leading-snug"
-                        style={{
-                          border: "1px solid rgba(255,255,255,0.07)",
-                          color: "rgba(255,255,255,0.55)",
-                          fontFamily: "var(--font-body)",
-                          background: "rgba(255,255,255,0.02)",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background =
-                            "rgba(255,255,255,0.05)";
-                          e.currentTarget.style.borderColor =
-                            "rgba(255,255,255,0.14)";
-                          e.currentTarget.style.color =
-                            "rgba(255,255,255,0.85)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background =
-                            "rgba(255,255,255,0.02)";
-                          e.currentTarget.style.borderColor =
-                            "rgba(255,255,255,0.07)";
-                          e.currentTarget.style.color =
-                            "rgba(255,255,255,0.55)";
-                        }}
+                        className="font-body text-left px-4 py-3 rounded-xl text-sm transition-all leading-snug border border-white/7 text-white/55 bg-white/2 hover:bg-white/5 hover:border-white/14 hover:text-white/85"
                       >
                         {q}
                       </button>
@@ -675,13 +475,7 @@ export default function SiteSearch({
               {/* Quick nav results */}
               {showQuickNav && (
                 <div>
-                  <p
-                    className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-3"
-                    style={{
-                      color: "oklch(0.82 0.15 75 / 0.5)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] font-semibold mb-3 text-amber/50">
                     Quick Navigate
                   </p>
                   <div className="space-y-1">
@@ -694,50 +488,18 @@ export default function SiteSearch({
                             router.push(item.path);
                             closeSearch();
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all text-left"
-                          style={{ border: "1px solid transparent" }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background =
-                              "rgba(255,255,255,0.04)";
-                            e.currentTarget.style.borderColor =
-                              "rgba(255,255,255,0.08)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "transparent";
-                            e.currentTarget.style.borderColor = "transparent";
-                          }}
+                          className="w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all text-left border border-transparent hover:bg-white/4 hover:border-white/8"
                         >
-                          <Icon
-                            size={14}
-                            className="shrink-0"
-                            style={{ color: "oklch(0.82 0.15 75)" }}
-                          />
-                          <span
-                            className="flex-1 text-sm"
-                            style={{
-                              color: "rgba(255,255,255,0.8)",
-                              fontFamily: "var(--font-body)",
-                            }}
-                          >
+                          <Icon size={14} className="shrink-0 text-amber" />
+                          <span className="font-body flex-1 text-sm text-white/80">
                             {item.title}
                           </span>
-                          <ArrowRight
-                            size={12}
-                            className="shrink-0"
-                            style={{ color: "rgba(255,255,255,0.2)" }}
-                          />
+                          <ArrowRight size={12} className="shrink-0 text-white/20" />
                         </button>
                       );
                     })}
                   </div>
-                  <p
-                    className="text-[10px] text-center mt-3 pt-3"
-                    style={{
-                      color: "rgba(255,255,255,0.18)",
-                      borderTop: "1px solid rgba(255,255,255,0.05)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <p className="font-mono text-[10px] text-center mt-3 pt-3 text-white/18 border-t border-white/5">
                     Press Enter to ask AI instead
                   </p>
                 </div>
@@ -750,31 +512,16 @@ export default function SiteSearch({
                   className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div
-                      className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, oklch(0.82 0.15 75), oklch(0.6 0.22 50))",
-                      }}
-                    >
-                      <Sparkles size={12} style={{ color: "#050a15" }} />
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-[linear-gradient(135deg,oklch(0.82_0.15_75),oklch(0.6_0.22_50))]">
+                      <Sparkles size={12} className="text-[#050a15]" />
                     </div>
                   )}
                   <div
-                    className="max-w-[82%] sm:max-w-[75%] px-4 py-3 text-sm leading-relaxed"
-                    style={{
-                      background:
-                        msg.role === "user"
-                          ? "linear-gradient(135deg, oklch(0.82 0.15 75 / 0.18), oklch(0.6 0.22 50 / 0.12))"
-                          : "rgba(255,255,255,0.04)",
-                      color: "rgba(255,255,255,0.88)",
-                      borderRadius:
-                        msg.role === "user"
-                          ? "1rem 1rem 0.2rem 1rem"
-                          : "0.2rem 1rem 1rem 1rem",
-                      border: `1px solid ${msg.role === "user" ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.06)"}`,
-                      fontFamily: "var(--font-body)",
-                    }}
+                    className={`font-body max-w-[82%] sm:max-w-[75%] px-4 py-3 text-sm leading-relaxed text-white/88 border ${
+                      msg.role === "user"
+                        ? "bg-[linear-gradient(135deg,oklch(0.82_0.15_75/0.18),oklch(0.6_0.22_50/0.12))] rounded-[1rem_1rem_0.2rem_1rem] border-white/10"
+                        : "bg-white/4 rounded-[0.2rem_1rem_1rem_1rem] border-white/6"
+                    }`}
                   >
                     {msg.role === "assistant" ? (
                       <MessageContent content={msg.content} />
@@ -788,23 +535,10 @@ export default function SiteSearch({
               {/* Typing indicator */}
               {loading && (
                 <div className="flex gap-3 justify-start">
-                  <div
-                    className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, oklch(0.82 0.15 75), oklch(0.6 0.22 50))",
-                    }}
-                  >
-                    <Sparkles size={12} style={{ color: "#050a15" }} />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-[linear-gradient(135deg,oklch(0.82_0.15_75),oklch(0.6_0.22_50))]">
+                    <Sparkles size={12} className="text-[#050a15]" />
                   </div>
-                  <div
-                    className="px-4 py-3"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: "0.2rem 1rem 1rem 1rem",
-                    }}
-                  >
+                  <div className="px-4 py-3 bg-white/4 border border-white/6 rounded-[0.2rem_1rem_1rem_1rem]">
                     <TypingDots />
                   </div>
                 </div>
@@ -814,28 +548,9 @@ export default function SiteSearch({
             </div>
 
             {/* Input area */}
-            <div
-              className="px-4 sm:px-5 py-3 sm:py-4 shrink-0"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
-            >
-              <div
-                className="flex items-center gap-3 rounded-xl px-4 py-3 transition-all"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                }}
-                onFocusCapture={(e) =>
-                  (e.currentTarget.style.borderColor = "rgba(255,255,255,0.20)")
-                }
-                onBlurCapture={(e) =>
-                  (e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)")
-                }
-              >
-                <Search
-                  size={15}
-                  className="shrink-0"
-                  style={{ color: "rgba(255,255,255,0.2)" }}
-                />
+            <div className="px-4 sm:px-5 py-3 sm:py-4 shrink-0 border-t border-white/7">
+              <div className="flex items-center gap-3 rounded-xl px-4 py-3 transition-all bg-white/4 border border-white/10 focus-within:border-white/20">
+                <Search size={15} className="shrink-0 text-white/20" />
                 <input
                   ref={inputRef}
                   type="text"
@@ -847,77 +562,28 @@ export default function SiteSearch({
                       ? "Follow up..."
                       : "Ask about sourcing, Web3, case results, strategy..."
                   }
-                  className="flex-1 bg-transparent text-sm outline-none placeholder:text-white/20"
-                  style={{
-                    color: "rgba(255,255,255,0.9)",
-                    fontFamily: "var(--font-body)",
-                    caretColor: "oklch(0.82 0.15 75)",
-                  }}
+                  className="font-body flex-1 bg-transparent text-sm outline-none placeholder:text-white/20 text-white/90 caret-[oklch(0.82_0.15_75)]"
                   disabled={loading}
                 />
                 <button
                   onClick={handleSubmit}
                   disabled={!query.trim() || loading}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-all shrink-0 disabled:opacity-25"
-                  style={{ background: "oklch(0.82 0.15 75)" }}
-                  onMouseEnter={(e) => {
-                    if (!e.currentTarget.disabled)
-                      e.currentTarget.style.background = "oklch(0.78 0.17 75)";
-                  }}
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "oklch(0.82 0.15 75)")
-                  }
+                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-all shrink-0 disabled:opacity-25 bg-amber hover:not-disabled:bg-[oklch(0.78_0.17_75)]"
                 >
-                  <Send size={13} style={{ color: "#050a15" }} />
+                  <Send size={13} className="text-[#050a15]" />
                 </button>
               </div>
 
               <div className="flex items-center justify-between mt-2 px-1">
-                <span
-                  className="hidden sm:flex items-center gap-1 text-[10px]"
-                  style={{
-                    color: "rgba(255,255,255,0.13)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
-                  <kbd
-                    className="px-1 rounded"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
-                  >
-                    ⌘K
-                  </kbd>{" "}
-                  open ·{" "}
-                  <kbd
-                    className="px-1 rounded"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
-                  >
-                    esc
-                  </kbd>{" "}
-                  close ·{" "}
-                  <kbd
-                    className="px-1 rounded"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
-                  >
-                    ↵
-                  </kbd>{" "}
-                  send
+                <span className="font-mono hidden sm:flex items-center gap-1 text-[10px] text-white/13">
+                  <kbd className="px-1 rounded bg-white/5">⌘K</kbd> open ·{" "}
+                  <kbd className="px-1 rounded bg-white/5">esc</kbd> close ·{" "}
+                  <kbd className="px-1 rounded bg-white/5">↵</kbd> send
                 </span>
-                <span
-                  className="text-[10px] sm:hidden"
-                  style={{
-                    color: "rgba(255,255,255,0.13)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <span className="font-mono text-[10px] sm:hidden text-white/13">
                   Tap send or press enter
                 </span>
-                <span
-                  className="text-[10px]"
-                  style={{
-                    color: "rgba(255,255,255,0.1)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <span className="font-mono text-[10px] text-white/10">
                   RampRate · $10B intel
                 </span>
               </div>

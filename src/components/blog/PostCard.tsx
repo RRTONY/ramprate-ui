@@ -28,13 +28,7 @@ export default function PostCard({post}: PostCardProps) {
     : null
 
   return (
-    <article
-      className="rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px]"
-      style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.06)',
-      }}
-    >
+    <article className="rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px] bg-white/3 border border-white/6">
       {post.mainImage ? (
         <Link href={`/blog/${post.slug?.current}`} className="block overflow-hidden">
           <SanityImage
@@ -46,19 +40,16 @@ export default function PostCard({post}: PostCardProps) {
           />
         </Link>
       ) : (
-        <Link href={`/blog/${post.slug?.current}`} className="block h-40 sm:h-48 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, oklch(0.14 0.03 260) 0%, oklch(0.18 0.04 280) 50%, oklch(0.14 0.02 240) 100%)' }}>
+        <Link href={`/blog/${post.slug?.current}`} className="block h-40 sm:h-48 relative overflow-hidden bg-[linear-gradient(135deg,oklch(0.14_0.03_260)_0%,oklch(0.18_0.04_280)_50%,oklch(0.14_0.02_240)_100%)]">
           {/* Decorative rings */}
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full opacity-10" style={{ border: '1px solid oklch(0.82 0.15 75)', background: 'transparent' }} />
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full opacity-15" style={{ border: '1px solid oklch(0.82 0.15 75)', background: 'transparent' }} />
-          <div className="absolute top-4 -left-6 w-20 h-20 rounded-full opacity-8" style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'transparent' }} />
+          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full opacity-10 border border-amber bg-transparent" />
+          <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full opacity-15 border border-amber bg-transparent" />
+          <div className="absolute top-4 -left-6 w-20 h-20 rounded-full opacity-8 border border-white/15 bg-transparent" />
           {/* Amber glow */}
-          <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full opacity-10" style={{ background: 'oklch(0.82 0.15 75)', filter: 'blur(24px)' }} />
+          <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full opacity-10 bg-amber blur-[24px]" />
           {/* Category label */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className="text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full"
-              style={{ background: 'rgba(212,168,67,0.12)', color: 'oklch(0.82 0.15 75)', border: '1px solid rgba(212,168,67,0.2)', fontFamily: 'var(--font-mono)' }}
-            >
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full bg-gold/12 text-amber border border-gold/20">
               {post.categories?.[0]?.title ?? 'RampRate'}
             </span>
           </div>
@@ -71,42 +62,25 @@ export default function PostCard({post}: PostCardProps) {
               <Link
                 key={cat.slug?.current}
                 href={`/blog?category=${cat.slug?.current}`}
-                className="text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full transition-opacity hover:opacity-70"
-                style={{
-                  background: 'rgba(212,168,67,0.12)',
-                  color: 'var(--gold)',
-                  fontFamily: 'var(--font-body)',
-                }}
+                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full transition-opacity hover:opacity-70 bg-gold/12 text-gold"
               >
                 {cat.title}
               </Link>
             ))}
           </div>
         )}
-        <h3
-          className="text-base font-bold text-white mb-2 leading-snug"
-          style={{fontFamily: 'var(--font-display)'}}
-        >
+        <h3 className="font-display text-base font-bold text-white mb-2 leading-snug">
           <Link href={`/blog/${post.slug?.current}`} className="hover:opacity-80 transition-opacity">
             {post.title}
           </Link>
         </h3>
         {post.excerpt && (
-          <p
-            className="text-sm mb-4 line-clamp-3 leading-relaxed"
-            style={{color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-body)'}}
-          >
+          <p className="font-body text-sm mb-4 line-clamp-3 leading-relaxed text-white/45">
             {post.excerpt}
           </p>
         )}
         {date && (
-          <p
-            className="text-xs font-medium"
-            style={{
-              color: 'rgba(255,255,255,0.25)',
-              fontFamily: 'var(--font-mono)',
-            }}
-          >
+          <p className="font-mono text-xs font-medium text-white/25">
             {date}
           </p>
         )}

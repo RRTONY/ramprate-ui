@@ -70,25 +70,22 @@ export function SearchSuggestionsDropdown({
   if (pages.length === 0 && posts.length === 0) return null;
 
   const isDark = variant === "dark";
-  const mutedColor = isDark ? "rgba(255,255,255,0.4)" : "oklch(0.5 0.02 50)";
-  const labelColor = isDark ? "rgba(255,255,255,0.35)" : "oklch(0.55 0.02 50)";
-  const titleColor = isDark ? "white" : "oklch(0.2 0.02 50)";
+  const mutedClass = isDark ? "text-white/40" : "text-[oklch(0.5_0.02_50)]";
+  const labelClass = isDark ? "text-white/35" : "text-[oklch(0.55_0.02_50)]";
+  const titleClass = isDark ? "text-white" : "text-[oklch(0.2_0.02_50)]";
 
   return (
     <div
-      className="absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50"
-      style={{
-        background: isDark ? "oklch(0.16 0.02 260)" : "white",
-        border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.08)",
-      }}
+      className={`absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50 border ${
+        isDark
+          ? "bg-[oklch(0.16_0.02_260)] border-white/10"
+          : "bg-white border-black/8"
+      }`}
     >
       <div className="max-h-[60vh] overflow-y-auto py-2">
         {pages.length > 0 && (
           <div className="px-2 mb-1">
-            <p
-              className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
-              style={{ color: labelColor, fontFamily: "var(--font-body)" }}
-            >
+            <p className={`font-body px-3 py-1 text-[10px] font-semibold uppercase tracking-wider ${labelClass}`}>
               Pages
             </p>
             {pages.map((p) => (
@@ -96,12 +93,12 @@ export function SearchSuggestionsDropdown({
                 key={p.path}
                 href={p.path}
                 onClick={onNavigate}
-                className="block px-3 py-2 rounded-lg transition-colors hover:bg-[rgba(212,168,67,0.08)]"
+                className="block px-3 py-2 rounded-lg transition-colors hover:bg-gold/8"
               >
-                <p className="text-sm font-semibold" style={{ color: titleColor, fontFamily: "var(--font-body)" }}>
+                <p className={`font-body text-sm font-semibold ${titleClass}`}>
                   {p.title}
                 </p>
-                <p className="text-xs line-clamp-1" style={{ color: mutedColor, fontFamily: "var(--font-body)" }}>
+                <p className={`font-body text-xs line-clamp-1 ${mutedClass}`}>
                   {p.description}
                 </p>
               </Link>
@@ -110,10 +107,7 @@ export function SearchSuggestionsDropdown({
         )}
         {posts.length > 0 && (
           <div className="px-2">
-            <p
-              className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider"
-              style={{ color: labelColor, fontFamily: "var(--font-body)" }}
-            >
+            <p className={`font-body px-3 py-1 text-[10px] font-semibold uppercase tracking-wider ${labelClass}`}>
               Blog &amp; Thinking
             </p>
             {posts.map((post) => (
@@ -121,13 +115,13 @@ export function SearchSuggestionsDropdown({
                 key={post.slug}
                 href={`/${post.section === "thinking" ? "thinking" : "blog"}/${post.slug}`}
                 onClick={onNavigate}
-                className="block px-3 py-2 rounded-lg transition-colors hover:bg-[rgba(212,168,67,0.08)]"
+                className="block px-3 py-2 rounded-lg transition-colors hover:bg-gold/8"
               >
-                <p className="text-sm font-semibold line-clamp-1" style={{ color: titleColor, fontFamily: "var(--font-body)" }}>
+                <p className={`font-body text-sm font-semibold line-clamp-1 ${titleClass}`}>
                   {post.title}
                 </p>
                 {post.excerpt && (
-                  <p className="text-xs line-clamp-1" style={{ color: mutedColor, fontFamily: "var(--font-body)" }}>
+                  <p className={`font-body text-xs line-clamp-1 ${mutedClass}`}>
                     {post.excerpt}
                   </p>
                 )}
@@ -139,12 +133,9 @@ export function SearchSuggestionsDropdown({
       <Link
         href={`/search?q=${encodeURIComponent(query)}`}
         onClick={onNavigate}
-        className="block px-4 py-2.5 text-xs font-semibold text-center border-t transition-opacity hover:opacity-75"
-        style={{
-          color: "var(--gold)",
-          borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
-          fontFamily: "var(--font-body)",
-        }}
+        className={`font-body block px-4 py-2.5 text-xs font-semibold text-center border-t transition-opacity hover:opacity-75 text-gold ${
+          isDark ? "border-white/8" : "border-black/6"
+        }`}
       >
         See all results for &ldquo;{query}&rdquo; →
       </Link>

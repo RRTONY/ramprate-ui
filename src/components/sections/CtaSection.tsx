@@ -10,10 +10,7 @@ interface CtaSectionProps {
 
 export default function CtaSection({heading, body, buttonText, buttonLink, backgroundImage}: CtaSectionProps) {
   return (
-    <section
-      className="relative py-24 text-center"
-      style={{background: 'var(--rust)', color: '#fff'}}
-    >
+    <section className="relative py-24 text-center text-white bg-rust">
       {backgroundImage ? (
         <div className="absolute inset-0 overflow-hidden">
           <SanityImage
@@ -28,29 +25,19 @@ export default function CtaSection({heading, body, buttonText, buttonLink, backg
       ) : null}
       <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
         {heading && (
-          <h2
-            className="font-bold text-white mb-6"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.75rem, 4vw, 3rem)',
-            }}
-          >
+          <h2 className="font-display font-bold text-white mb-6 text-[clamp(1.75rem,4vw,3rem)]">
             {heading}
           </h2>
         )}
         {body && (
-          <p
-            className="max-w-2xl mx-auto mb-10"
-            style={{color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-body)', fontSize: '1rem'}}
-          >
+          <p className="font-body max-w-2xl mx-auto mb-10 text-white/70 text-base">
             {body}
           </p>
         )}
         {buttonText && buttonLink ? (
           <a
             href={buttonLink}
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90"
-            style={{background: '#fff', color: 'var(--rust)', fontFamily: 'var(--font-body)'}}
+            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
           >
             {buttonText}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -60,8 +47,7 @@ export default function CtaSection({heading, body, buttonText, buttonLink, backg
         ) : (
           <a
             href="/contact"
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90"
-            style={{background: '#fff', color: 'var(--rust)', fontFamily: 'var(--font-body)'}}
+            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
           >
             Start a Conversation
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

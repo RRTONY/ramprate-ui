@@ -45,22 +45,10 @@ const tier2Clients = [
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
     <div className="text-center px-2 py-4">
-      <h3
-        className="text-xs sm:text-sm font-bold tracking-[0.15em] uppercase"
-        style={{
-          fontFamily: "var(--font-display)",
-          color: "rgba(255,255,255,0.6)",
-        }}
-      >
+      <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white/60">
         {name}
       </h3>
-      <p
-        className="text-[11px] sm:text-xs mt-1 leading-snug"
-        style={{
-          fontFamily: "var(--font-body)",
-          color: "rgba(255,255,255,0.3)",
-        }}
-      >
+      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-white/30">
         {context}
       </p>
     </div>
@@ -74,35 +62,20 @@ export default function ClientWall() {
     <section className="section-dark py-12 sm:py-16">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-10">
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
             25 Years Inside the World&apos;s Most
             <br className="hidden sm:block" />
-            <span style={{ color: "var(--gold)" }}> Complex Enterprises</span>
+            <span className="text-gold"> Complex Enterprises</span>
           </h2>
-          <p
-            className="mt-3 text-sm"
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "rgba(255,255,255,0.4)",
-            }}
-          >
+          <p className="font-body mt-3 text-sm text-white/40">
             100+ engagements. $10B+ in decisions transacted. Names you know.
           </p>
         </div>
 
         {/* Tier 1 */}
-        <div
-          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden"
-          style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden bg-white/4 border border-white/6">
           {tier1Clients.map((c) => (
-            <div key={c.name} style={{ background: "oklch(0.18 0.01 250)" }}>
+            <div key={c.name} className="bg-[oklch(0.18_0.01_250)]">
               <ClientCard name={c.name} context={c.context} />
             </div>
           ))}
@@ -110,15 +83,9 @@ export default function ClientWall() {
 
         {/* Tier 2 */}
         {showAllClients && (
-          <div
-            className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3"
-            style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3 bg-white/4 border border-white/6">
             {tier2Clients.map((c) => (
-              <div key={c.name} style={{ background: "oklch(0.18 0.01 250)" }}>
+              <div key={c.name} className="bg-[oklch(0.18_0.01_250)]">
                 <ClientCard name={c.name} context={c.context} />
               </div>
             ))}
@@ -128,8 +95,7 @@ export default function ClientWall() {
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setShowAllClients(!showAllClients)}
-            className="text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/40"
-            style={{ fontFamily: "var(--font-body)" }}
+            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/40"
           >
             {showAllClients ? "- Show Less" : "+ View All Clients"}
           </button>
