@@ -131,7 +131,7 @@ const HARDCODED_CASE_STUDIES: SanityCaseStudy[] = [
     _id: "cs-5",
     title: "The $800M Decision That Took 72 Hours",
     result: "$800M supplier decision compressed from 6 months to 72 hours",
-    desc: "The board wanted a decision by Friday. The procurement team had been circling for six months. We walked in with 150,000+ data points, benchmarked the three finalists against real-world contracts, and delivered a recommendation with 5-10% forecast accuracy. The board signed Monday.",
+    desc: "The board wanted a decision by Friday. The procurement team had been circling for six months. We walked in with 150,000+ data points, evaluated the three finalists against real-world contracts, and delivered a recommendation with 5-10% forecast accuracy. The board signed Monday.",
     metrics: [
       "$800M decision",
       "72-hour turnaround",

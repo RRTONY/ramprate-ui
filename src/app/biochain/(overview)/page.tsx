@@ -178,7 +178,7 @@ const exampleClient = {
   problem:
     "Purchasing through two distributors and one direct manufacturer. No unified COA standard. Exosome particle counts unverified. NMN sourced at retail pricing with no volume commitment.",
   outcome:
-    "41% average reduction across benchmarked categories. Supplier consolidation from 3 to 1 primary. First-time exclusivity window on top peptide SKU. Elimination of 2 documentation gaps carrying regulatory exposure.",
+    "41% average reduction across evaluated categories. Supplier consolidation from 3 to 1 primary. First-time exclusivity window on top peptide SKU. Elimination of 2 documentation gaps carrying regulatory exposure.",
 };
 
 const supplierStrengthVariables = [
@@ -396,7 +396,7 @@ export default function BioChainSourcingPage() {
             >
               Peptides. Exosomes. Stem cells. NAD+. RampRate&apos;s 24-year
               procurement intelligence engine now serves the healing economy -
-              verified provenance, benchmarked quality, and disclosed pricing on
+              verified provenance, assessed quality, and disclosed pricing on
               every transaction.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
@@ -448,7 +448,7 @@ export default function BioChainSourcingPage() {
             for Fortune 500 buyers who cared more about quality, timeliness,
             and fit to their specific needs than about the lowest price.
             There was no way to verify who could actually deliver on those
-            things, so we built it: benchmarked pricing, verified track
+            things, so we built it: validated pricing, verified track
             records, and a reputational layer the industry didn&apos;t have.
             That&apos;s the business we&apos;re still in.
           </p>
@@ -969,7 +969,7 @@ export default function BioChainSourcingPage() {
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Every Category - Benchmarked, Verified, and Ready to Source
+            Every Category - Vetted, Verified, and Ready to Source
           </h2>
           <p
             className="mt-6 text-base leading-relaxed max-w-3xl"

@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import ExitSurvey from "@/components/shared/ExitSurvey";
 
 export function ConditionalChrome({
   header,
@@ -20,7 +19,6 @@ export function ConditionalChrome({
       {!isFlow && header}
       <main className="min-h-screen">{children}</main>
       {!isFlow && footer}
-      {!isFlow && <ExitSurvey />}
     </>
   );
 }
