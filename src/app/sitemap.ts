@@ -83,7 +83,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {url: `${BASE_URL}/flow/manager-guidebook`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/my-journey`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/origin-story`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/peer-assessment`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/pricing`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/flow/protocol`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/relationship-calculator`, changeFrequency: 'monthly', priority: 0.5},

@@ -15,6 +15,7 @@ const disallow = [
   '/flow/360-results/',
   '/flow/consciousness/',
   '/flow/family-360/',
+  '/flow/peer-assessment/',
   '/flow/peer-review/',
   '/flow/soulprint/report/',
   '/flow/team/',
