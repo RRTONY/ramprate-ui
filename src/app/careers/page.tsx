@@ -18,6 +18,14 @@ const FALLBACK_METADATA: Metadata = {
     type: "website",
     url: "https://ramprate.com/careers",
     siteName: "RampRate",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Careers | RampRate - Work With Principals, Not Layers",
+    description:
+      "No junior layers. No account managers. You work directly with 25-year veterans and Fortune 100 principals.",
+    images: ["/og.png"],
   },
 };
 

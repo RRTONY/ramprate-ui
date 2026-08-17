@@ -25,6 +25,15 @@ const FALLBACK_METADATA: Metadata = {
     description:
       "Benchmark pricing, negotiate SLAs, and cut technology spend with independent sourcing advisory.",
     url: "https://ramprate.com/sourcing",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IT & Data Center Sourcing Advisory | RampRate",
+    description:
+      "Benchmark pricing, negotiate SLAs, and cut technology spend with independent sourcing advisory.",
+    images: ["/og.png"],
   },
 };
 

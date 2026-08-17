@@ -28,6 +28,21 @@ const FALLBACK_METADATA: Metadata = {
     "Fortune 500 case studies",
   ],
   alternates: { canonical: "/proof" },
+  openGraph: {
+    title: "Proof - Real Clients, Real Results",
+    description:
+      "24 years of trajectory-changing results. Fortune 500 case studies, client testimonials, and the data behind our 300%+ ROI guarantee.",
+    url: "https://ramprate.com/proof",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Proof - Real Clients, Real Results",
+    description:
+      "24 years of trajectory-changing results. Fortune 500 case studies, client testimonials, and the data behind our 300%+ ROI guarantee.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

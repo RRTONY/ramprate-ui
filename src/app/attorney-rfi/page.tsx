@@ -341,6 +341,7 @@ export default function AttorneyRFIPage() {
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label
+                          htmlFor="rfi-name"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -351,6 +352,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="text"
+                          id="rfi-name"
                           name="name"
                           required
                           placeholder="Jane Smith"
@@ -364,6 +366,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-email"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -374,6 +377,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="email"
+                          id="rfi-email"
                           name="email"
                           required
                           placeholder="jane@firm.com"
@@ -387,6 +391,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-phone"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -397,6 +402,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="tel"
+                          id="rfi-phone"
                           name="phone"
                           placeholder="+1 (555) 000-0000"
                           className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
@@ -409,6 +415,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-bar-number"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -419,6 +426,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="text"
+                          id="rfi-bar-number"
                           name="bar-number"
                           required
                           placeholder="State + Bar #"
@@ -432,6 +440,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div className="sm:col-span-2">
                         <label
+                          htmlFor="rfi-states"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -442,6 +451,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="text"
+                          id="rfi-states"
                           name="states"
                           required
                           placeholder="e.g. CA, NY, TX"
@@ -471,6 +481,7 @@ export default function AttorneyRFIPage() {
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label
+                          htmlFor="rfi-firm-name"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -481,6 +492,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="text"
+                          id="rfi-firm-name"
                           name="firm-name"
                           required
                           placeholder="Smith & Associates"
@@ -494,6 +506,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-years-practice"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -504,6 +517,7 @@ export default function AttorneyRFIPage() {
                         </label>
                         <input
                           type="number"
+                          id="rfi-years-practice"
                           name="years-practice"
                           required
                           min="0"
@@ -518,6 +532,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div className="sm:col-span-2">
                         <label
+                          htmlFor="rfi-firm-size"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -527,6 +542,7 @@ export default function AttorneyRFIPage() {
                           Firm Size
                         </label>
                         <select
+                          id="rfi-firm-size"
                           name="firm-size"
                           className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
                           style={{
@@ -600,6 +616,7 @@ export default function AttorneyRFIPage() {
                     <div className="space-y-5">
                       <div>
                         <label
+                          htmlFor="rfi-entrepreneur-experience"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -609,6 +626,7 @@ export default function AttorneyRFIPage() {
                           Experience with entrepreneurs / startups
                         </label>
                         <textarea
+                          id="rfi-entrepreneur-experience"
                           name="entrepreneur-experience"
                           rows={3}
                           placeholder="Describe your experience working with founders, startups, or growth-stage companies..."
@@ -621,7 +639,7 @@ export default function AttorneyRFIPage() {
                         />
                       </div>
                       <div>
-                        <label
+                        <span
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -630,7 +648,7 @@ export default function AttorneyRFIPage() {
                         >
                           Interests in the RampRate Network (select all that
                           apply)
-                        </label>
+                        </span>
                         <div className="flex flex-wrap gap-2">
                           {interestAreas.map((interest) => {
                             const checked =
@@ -662,6 +680,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-hear-about"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -671,6 +690,7 @@ export default function AttorneyRFIPage() {
                           How did you hear about RampRate?
                         </label>
                         <select
+                          id="rfi-hear-about"
                           name="hear-about"
                           className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
                           style={{
@@ -689,6 +709,7 @@ export default function AttorneyRFIPage() {
                       </div>
                       <div>
                         <label
+                          htmlFor="rfi-notes"
                           className="block text-xs font-medium uppercase tracking-wider mb-2"
                           style={{
                             color: "oklch(0.4 0.02 50)",
@@ -698,6 +719,7 @@ export default function AttorneyRFIPage() {
                           Additional Notes
                         </label>
                         <textarea
+                          id="rfi-notes"
                           name="notes"
                           rows={4}
                           placeholder="Anything else you'd like us to know about your practice or interest in the network..."

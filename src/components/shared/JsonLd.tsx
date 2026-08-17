@@ -3,10 +3,14 @@ interface JsonLdProps {
 }
 
 export default function JsonLd({data}: JsonLdProps) {
+  // JSON.stringify doesn't escape "<", so a CMS-sourced string containing
+  // "</script>" would prematurely close this tag and inject the rest of the
+  // page as script content.
+  const json = JSON.stringify(data).replace(/</g, '\\u003c')
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{__html: JSON.stringify(data)}}
+      dangerouslySetInnerHTML={{__html: json}}
     />
   )
 }
@@ -25,7 +29,10 @@ export function organizationJsonLd({
   url?: string
   logo?: string
   description?: string
-  address?: {street?: string; city?: string; state?: string; zip?: string}
+  // Sanity's `address` field is a plain text field, not structured
+  // street/city/state/zip - emit it as-is rather than building a
+  // PostalAddress out of fields that don't exist.
+  address?: string
   phone?: string
   email?: string
   socialLinks?: {url: string}[]
@@ -37,16 +44,7 @@ export function organizationJsonLd({
     url,
     ...(logo && {logo}),
     ...(description && {description}),
-    ...(address && {
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: address.street,
-        addressLocality: address.city,
-        addressRegion: address.state,
-        postalCode: address.zip,
-        addressCountry: 'US',
-      },
-    }),
+    ...(address && {address}),
     ...(phone && {telephone: phone.replace(/[‎‏‪-‮⁦-⁩]/g, '')}),
     ...(email && {email}),
     ...(socialLinks?.length && {sameAs: socialLinks.map((l) => l.url)}),

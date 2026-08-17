@@ -397,6 +397,8 @@ export default function SiteSearch({
           <div
             className="fixed inset-0 z-100 bg-black/70 backdrop-blur-sm"
             onClick={closeSearch}
+            aria-hidden="true"
+            tabIndex={-1}
           />
 
           {/* Panel - full screen on mobile, centered modal on sm+ */}
@@ -431,6 +433,7 @@ export default function SiteSearch({
                 {chat.length > 0 && (
                   <button
                     onClick={clearChat}
+                    aria-label="New chat"
                     className="font-mono flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all text-white/35 border border-white/8 hover:text-white/70 hover:border-white/16"
                   >
                     <RotateCcw size={11} />
@@ -439,6 +442,7 @@ export default function SiteSearch({
                 )}
                 <button
                   onClick={closeSearch}
+                  aria-label="Close"
                   className="w-8 h-8 flex items-center justify-center rounded-lg transition-all text-white/30 hover:bg-white/6 hover:text-white/80"
                 >
                   <X size={17} />
@@ -568,6 +572,7 @@ export default function SiteSearch({
                 <button
                   onClick={handleSubmit}
                   disabled={!query.trim() || loading}
+                  aria-label="Send message"
                   className="w-8 h-8 rounded-lg flex items-center justify-center transition-all shrink-0 disabled:opacity-25 bg-amber hover:not-disabled:bg-[oklch(0.78_0.17_75)]"
                 >
                   <Send size={13} className="text-[#050a15]" />

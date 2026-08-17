@@ -16,6 +16,19 @@ const FALLBACK_METADATA: Metadata = {
     'enterprise advisory engagement',
   ],
   alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact',
+    description: 'Start a conversation with RampRate. The first conversation is always free.',
+    url: 'https://ramprate.com/contact',
+    type: 'website',
+    images: ['/og.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact',
+    description: 'Start a conversation with RampRate. The first conversation is always free.',
+    images: ['/og.png'],
+  },
 }
 
 export async function generateMetadata(): Promise<Metadata> {

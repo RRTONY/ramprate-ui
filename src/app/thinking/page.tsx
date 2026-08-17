@@ -22,6 +22,21 @@ const FALLBACK_METADATA: Metadata = {
     "blockchain analysis",
   ],
   alternates: { canonical: "/thinking" },
+  openGraph: {
+    title: "Thinking - 25 Years of Perspectives",
+    description:
+      "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on technology, blockchain, and enterprise strategy.",
+    url: "https://ramprate.com/thinking",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thinking - 25 Years of Perspectives",
+    description:
+      "Evergreen analysis and thought leadership from RampRate - frameworks, perspectives, and deep dives on technology, blockchain, and enterprise strategy.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

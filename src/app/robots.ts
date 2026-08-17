@@ -9,13 +9,19 @@ const disallow = [
   '/henry-jannol',
   '/josh-bykowski',
   '/legal-master',
+  '/supplier-intake-long',
+  // Internal tool, not public content.
+  '/flow/admin',
+  // Tokenless duplicate of /flow/peer-review/[token] - no trailing slash since
+  // Next serves this route without one (no trailingSlash config), and a
+  // trailing-slash disallow entry only prefix-matches paths that have one.
+  '/flow/peer-assessment',
   // Per-user/per-token result links - no stable public content to index,
   // and there's no list of valid tokens to enumerate in a sitemap anyway.
   '/flow/360/',
   '/flow/360-results/',
   '/flow/consciousness/',
   '/flow/family-360/',
-  '/flow/peer-assessment/',
   '/flow/peer-review/',
   '/flow/soulprint/report/',
   '/flow/team/',

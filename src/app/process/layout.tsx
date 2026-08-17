@@ -17,6 +17,15 @@ const FALLBACK_METADATA: Metadata = {
     description:
       "How RampRate aligns roles, removes friction, and turns strategy into execution.",
     url: "https://ramprate.com/process",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Process - How RampRate Delivers",
+    description:
+      "How RampRate aligns roles, removes friction, and turns strategy into execution.",
+    images: ["/og.png"],
   },
 };
 

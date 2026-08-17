@@ -64,34 +64,34 @@ export default function ContactForm() {
 
       <div className="grid sm:grid-cols-2 gap-5 mb-5">
         <div>
-          <label className={labelClass}>Name *</label>
-          <input type="text" name="name" required placeholder="Your name" className={inputClass} />
+          <label htmlFor="contact-name" className={labelClass}>Name *</label>
+          <input type="text" id="contact-name" name="name" required placeholder="Your name" className={inputClass} />
         </div>
         <div>
-          <label className={labelClass}>Email *</label>
-          <input type="email" name="email" required placeholder="you@company.com" className={inputClass} />
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-5 mb-5">
-        <div>
-          <label className={labelClass}>Company</label>
-          <input type="text" name="company" placeholder="Your company" className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Title</label>
-          <input type="text" name="title" placeholder="Your title" className={inputClass} />
+          <label htmlFor="contact-email" className={labelClass}>Email *</label>
+          <input type="email" id="contact-email" name="email" required placeholder="you@company.com" className={inputClass} />
         </div>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-5 mb-5">
         <div>
-          <label className={labelClass}>Phone</label>
-          <input type="tel" name="phone" placeholder="+1 (555) 000-0000" className={inputClass} />
+          <label htmlFor="contact-company" className={labelClass}>Company</label>
+          <input type="text" id="contact-company" name="company" placeholder="Your company" className={inputClass} />
         </div>
         <div>
-          <label className={labelClass}>I&apos;m interested in</label>
-          <select name="practice" className={inputClass}>
+          <label htmlFor="contact-title" className={labelClass}>Title</label>
+          <input type="text" id="contact-title" name="title" placeholder="Your title" className={inputClass} />
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-5 mb-5">
+        <div>
+          <label htmlFor="contact-phone" className={labelClass}>Phone</label>
+          <input type="tel" id="contact-phone" name="phone" placeholder="+1 (555) 000-0000" className={inputClass} />
+        </div>
+        <div>
+          <label htmlFor="contact-practice" className={labelClass}>I&apos;m interested in</label>
+          <select id="contact-practice" name="practice" className={inputClass}>
             <option value="">Select a topic</option>
             {inquiryTypes.map((t) => (
               <option key={t.value} value={t.value}>{t.label}</option>
@@ -101,8 +101,9 @@ export default function ContactForm() {
       </div>
 
       <div className="mb-6">
-        <label className={labelClass}>Message</label>
+        <label htmlFor="contact-message" className={labelClass}>Message</label>
         <textarea
+          id="contact-message"
           name="message"
           rows={5}
           placeholder="Tell us about your challenge..."

@@ -20,6 +20,23 @@ const FALLBACK_METADATA: Metadata = {
     "litigation support coordination",
   ],
   alternates: { canonical: "/private-advisory" },
+  openGraph: {
+    title:
+      "Private Advisory - Because Some Challenges Require More Than an Advisor",
+    description:
+      "RampRate Private Advisory sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation. 25 years, $10B+ in enterprise decisions, B Corp certified.",
+    url: "https://ramprate.com/private-advisory",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Private Advisory - Because Some Challenges Require More Than an Advisor",
+    description:
+      "RampRate Private Advisory sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation. 25 years, $10B+ in enterprise decisions, B Corp certified.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

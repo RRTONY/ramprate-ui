@@ -50,10 +50,10 @@
 - [Blog](https://ramprate.com/blog): Articles on IT infrastructure, sourcing, AI compute, and enterprise strategy
 - [Thinking](https://ramprate.com/thinking): Evergreen analysis and frameworks from 25 years of advisory
 
-## Legal
+## Optional
 - [Privacy Policy](https://ramprate.com/privacy)
 - [Terms of Service](https://ramprate.com/terms)
+- [Sitemap](https://ramprate.com/sitemap.xml)
 
 ## Notes
-- Sitemap: https://ramprate.com/sitemap.xml
 - Contact: admin@ramprate.com

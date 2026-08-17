@@ -78,6 +78,8 @@ export default function HeaderSearch({ scrolled = false }: Props) {
           <div
             className="fixed inset-0 z-55 bg-black/30 backdrop-blur-sm"
             onClick={close}
+            aria-hidden="true"
+            tabIndex={-1}
           />
 
           {/* Search bar - full-width, exact header height, above backdrop */}

@@ -670,11 +670,12 @@ function TextField({
   if (type === "tel") {
     return (
       <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-        <label className={lbl}>
+        <label htmlFor={name} className={lbl}>
           {label}
           {required && req}
         </label>
         <PhoneInput
+          id={name}
           name={name}
           value={(formik.values[name] as string) ?? ""}
           onChange={(next) => formik.setFieldValue(name, next)}
@@ -687,12 +688,13 @@ function TextField({
   }
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl}>
+      <label htmlFor={name} className={lbl}>
         {label}
         {required && req}
       </label>
       <input
         type={type}
+        id={name}
         name={name}
         value={(formik.values[name] as string) ?? ""}
         onChange={formik.handleChange}
@@ -717,7 +719,7 @@ function CurrencyField({
 }) {
   return (
     <div className={fw}>
-      <label className={lbl}>
+      <label htmlFor={name} className={lbl}>
         {label}
       </label>
       <div className="relative">
@@ -727,6 +729,7 @@ function CurrencyField({
         <input
           type="text"
           inputMode="decimal"
+          id={name}
           name={name}
           value={(formik.values[name] as string) ?? ""}
           onChange={formik.handleChange}
@@ -758,11 +761,12 @@ function SelectField({
 }) {
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl}>
+      <label htmlFor={name} className={lbl}>
         {label}
         {required && req}
       </label>
       <select
+        id={name}
         name={name}
         value={(formik.values[name] as string) ?? ""}
         onChange={formik.handleChange}
@@ -795,11 +799,12 @@ function TextAreaField({
 }) {
   return (
     <div className={`${fw} sm:col-span-2`}>
-      <label className={lbl}>
+      <label htmlFor={name} className={lbl}>
         {label}
         {required && req}
       </label>
       <textarea
+        id={name}
         name={name}
         value={(formik.values[name] as string) ?? ""}
         onChange={formik.handleChange}
@@ -853,11 +858,11 @@ function CheckboxGroup({
   return (
     <div className="sm:col-span-2">
       {label && (
-        <label className={lbl}>
+        <span className={lbl}>
           {label}
           {required && req}
           {tooltip && <Tooltip text={tooltip} />}
-        </label>
+        </span>
       )}
       <div
         className={`grid grid-cols-1 ${GRID_COLS[columns] ?? GRID_COLS[3]} gap-2.5`}
@@ -919,7 +924,7 @@ function TagInput({
 
   return (
     <div className={`${fw} sm:col-span-2`}>
-      <label className={lbl}>
+      <label htmlFor={name} className={lbl}>
         {label}
         {required && req}
       </label>
@@ -942,6 +947,7 @@ function TagInput({
         ))}
         <input
           type="text"
+          id={name}
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => {

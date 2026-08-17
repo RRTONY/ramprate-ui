@@ -1,6 +1,29 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { sanityFetch } from "@/lib/sanity/client";
@@ -9,6 +32,7 @@ import JsonLd, {
   organizationJsonLd,
   webSiteJsonLd,
 } from "@/components/shared/JsonLd";
+import { urlFor } from "@/lib/sanity/image";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import { ConditionalChrome } from "@/components/shared/ConditionalChrome";
 
@@ -64,7 +88,8 @@ export default async function RootLayout({
 }) {
   const settings = await sanityFetch<{
     companyName?: string;
-    address?: { street?: string; city?: string; state?: string; zip?: string };
+    logo?: Parameters<typeof urlFor>[0];
+    address?: string;
     phone?: string;
     email?: string;
     socialLinks?: { platform: string; url: string }[];
@@ -76,7 +101,12 @@ export default async function RootLayout({
   const gaId =
     settings?.googleAnalyticsId?.trim() || process.env.NEXT_PUBLIC_GA_ID;
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
         {/* Google Analytics - only render when an ID exists (avoids id=undefined) */}
         {gaId && (
@@ -119,6 +149,9 @@ export default async function RootLayout({
         <JsonLd
           data={organizationJsonLd({
             name: settings?.companyName,
+            logo: settings?.logo
+              ? urlFor(settings.logo).width(512).url()
+              : undefined,
             description:
               "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
             address: settings?.address,

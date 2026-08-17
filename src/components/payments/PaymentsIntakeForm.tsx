@@ -432,7 +432,7 @@ function TextField({
 }) {
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label htmlFor={name} className={lbl} style={{ color: labelColor }}>
         {label}
         {required && req}
       </label>
@@ -440,6 +440,7 @@ function TextField({
       {advisory && <Advisory>{advisory}</Advisory>}
       {type === "tel" ? (
         <PhoneInput
+          id={name}
           name={name}
           value={(formik.values[name] as string) ?? ""}
           onChange={(next) => formik.setFieldValue(name, next)}
@@ -449,6 +450,7 @@ function TextField({
       ) : (
         <input
           type={type}
+          id={name}
           name={name}
           value={formik.values[name] ?? ""}
           onChange={formik.handleChange}
@@ -480,13 +482,14 @@ function SelectField({
 }) {
   return (
     <div className={`${fw} ${full ? "sm:col-span-2" : ""}`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label htmlFor={name} className={lbl} style={{ color: labelColor }}>
         {label}
         {required && req}
       </label>
       {hint && <Hint>{hint}</Hint>}
       {advisory && <Advisory>{advisory}</Advisory>}
       <select
+        id={name}
         name={name}
         value={formik.values[name] ?? ""}
         onChange={formik.handleChange}
@@ -520,13 +523,14 @@ function TextAreaField({
 }) {
   return (
     <div className={`${fw} sm:col-span-2`}>
-      <label className={lbl} style={{ color: labelColor }}>
+      <label htmlFor={name} className={lbl} style={{ color: labelColor }}>
         {label}
         {required && req}
       </label>
       {hint && <Hint>{hint}</Hint>}
       {advisory && <Advisory>{advisory}</Advisory>}
       <textarea
+        id={name}
         name={name}
         value={formik.values[name] ?? ""}
         onChange={formik.handleChange}

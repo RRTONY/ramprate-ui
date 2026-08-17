@@ -55,7 +55,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // result links (360, 360-results, consciousness/[id], family-360,
     // peer-review, soulprint/report, team/[domain]) - see robots.ts.
     {url: `${BASE_URL}/flow`, changeFrequency: 'weekly', priority: 0.8},
-    {url: `${BASE_URL}/flow/admin`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/alpha`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/assessment`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/flow/bio`, changeFrequency: 'monthly', priority: 0.5},

@@ -27,6 +27,7 @@ export default function PhoneInput({
   onChange,
   onBlur,
   name,
+  id,
   placeholder = "(555) 000-0000",
   inputClassName = defaultInputClass,
   selectClassName = defaultSelectClass,
@@ -35,6 +36,7 @@ export default function PhoneInput({
   onChange: (value: string) => void;
   onBlur?: () => void;
   name?: string;
+  id?: string;
   placeholder?: string;
   inputClassName?: string;
   selectClassName?: string;
@@ -92,6 +94,7 @@ export default function PhoneInput({
           type="tel"
           inputMode="tel"
           name={name}
+          id={id}
           value={number}
           onChange={(e) => onChange(joinPhoneValue(selectedDial, e.target.value))}
           onBlur={onBlur}

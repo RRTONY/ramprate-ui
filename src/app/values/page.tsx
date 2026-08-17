@@ -17,6 +17,21 @@ export const metadata: Metadata = {
     "B Corp",
   ],
   alternates: { canonical: "/values" },
+  openGraph: {
+    title: "Values - Powering Purpose-driven Innovation",
+    description:
+      "We build an ecosystem of impact-preneurs and trailblazers powered by opportunities, resources, innovation and human spirit.",
+    url: "https://ramprate.com/values",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Values - Powering Purpose-driven Innovation",
+    description:
+      "We build an ecosystem of impact-preneurs and trailblazers powered by opportunities, resources, innovation and human spirit.",
+    images: ["/og.png"],
+  },
 };
 
 const principles = [

@@ -59,12 +59,14 @@ const FALLBACK_METADATA: Metadata = {
     type: "website",
     url: "https://ramprate.com/blog",
     siteName: "RampRate",
+    images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog | RampRate",
     description:
       "Expert insights on enterprise IT sourcing, cloud optimization, and emerging technology from RampRate.",
+    images: ["/og.png"],
   },
 };
 

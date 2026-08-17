@@ -104,6 +104,7 @@ export default function TestimonialsCarousel() {
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={prev}
+              aria-label="Previous testimonial"
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
             >
               <ChevronLeft size={18} />
@@ -113,6 +114,7 @@ export default function TestimonialsCarousel() {
                 <button
                   key={i}
                   onClick={() => setActive(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
                   className={`h-2 rounded-full transition-all ${
                     i === active ? "w-6 bg-gold" : "w-2 bg-white/20"
                   }`}
@@ -121,6 +123,7 @@ export default function TestimonialsCarousel() {
             </div>
             <button
               onClick={next}
+              aria-label="Next testimonial"
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
             >
               <ChevronRight size={18} />
@@ -150,6 +153,7 @@ export default function TestimonialsCarousel() {
           <div className="flex justify-center gap-3 mt-6">
             <button
               onClick={prev}
+              aria-label="Previous testimonial"
               className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
             >
               <ChevronLeft size={18} />
@@ -159,6 +163,7 @@ export default function TestimonialsCarousel() {
                 <button
                   key={i}
                   onClick={() => setActive(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
                   className={`h-2 rounded-full transition-all ${
                     i === active ? "w-5 bg-gold" : "w-2 bg-white/20"
                   }`}
@@ -167,6 +172,7 @@ export default function TestimonialsCarousel() {
             </div>
             <button
               onClick={next}
+              aria-label="Next testimonial"
               className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
             >
               <ChevronRight size={18} />

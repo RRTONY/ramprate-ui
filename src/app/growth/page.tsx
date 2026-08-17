@@ -15,6 +15,21 @@ const FALLBACK_METADATA: Metadata = {
     "anchor client introductions",
   ],
   alternates: { canonical: "/growth" },
+  openGraph: {
+    title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
+    description:
+      "Anchor clients, advisors, capital, impact, strategy, and dispute resolution - all aligned to your vision. For Founders & Impactpreneurs.",
+    url: "https://ramprate.com/growth",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
+    description:
+      "Anchor clients, advisors, capital, impact, strategy, and dispute resolution - all aligned to your vision. For Founders & Impactpreneurs.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

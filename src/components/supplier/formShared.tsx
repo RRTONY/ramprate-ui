@@ -237,7 +237,7 @@ export function FieldRenderer({
     const rows = pricingRows ?? 1;
     return (
       <div className={`${fw} sm:col-span-2`}>
-        <label className={lbl}>
+        <label htmlFor="pricing_compound_1" className={lbl}>
           {field.label} {field.required && req}
         </label>
         {field.helpText && (
@@ -250,7 +250,7 @@ export function FieldRenderer({
             const n = i + 1;
             return (
               <div key={i} className="grid grid-cols-2 sm:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 items-start">
-                <input type="text" name={`pricing_compound_${n}`} value={(v[`pricing_compound_${n}`] as string) ?? ""} onChange={formik.handleChange} placeholder="Compound" className={inp} />
+                <input type="text" id={i === 0 ? "pricing_compound_1" : undefined} name={`pricing_compound_${n}`} value={(v[`pricing_compound_${n}`] as string) ?? ""} onChange={formik.handleChange} placeholder="Compound" className={inp} />
                 <input type="text" name={`pricing_unit_size_${n}`} value={(v[`pricing_unit_size_${n}`] as string) ?? ""} onChange={formik.handleChange} placeholder="Unit size" className={inp} />
                 <input type="text" name={`pricing_price_${n}`} value={(v[`pricing_price_${n}`] as string) ?? ""} onChange={formik.handleChange} placeholder="Price / unit" className={inp} />
                 <input type="text" name={`pricing_moq_tier_${n}`} value={(v[`pricing_moq_tier_${n}`] as string) ?? ""} onChange={formik.handleChange} placeholder="MOQ tier" className={inp} />
@@ -286,7 +286,7 @@ export function FieldRenderer({
     const existingFiles = field.multiple ? ((v[field.key] as File[] | undefined) ?? []) : undefined;
     return (
       <div className={fw}>
-        <label className={lbl}>
+        <label htmlFor={field.key} className={lbl}>
           {field.label} {field.required && req}
         </label>
         {field.helpText && (
@@ -296,6 +296,7 @@ export function FieldRenderer({
         )}
         <input
           type="file"
+          id={field.key}
           name={field.key}
           multiple={field.multiple}
           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx,.csv"
@@ -344,7 +345,7 @@ export function FieldRenderer({
 
   return (
     <div className={`${fw} ${span ? "sm:col-span-2" : ""}`}>
-      <label className={lbl}>
+      <label htmlFor={field.key} className={lbl}>
         {field.label} {field.required && req}
       </label>
       {field.helpText && (
@@ -353,25 +354,26 @@ export function FieldRenderer({
         </p>
       )}
       {field.type === "textarea" ? (
-        <textarea name={field.key} value={value} onChange={formik.handleChange} placeholder={field.placeholder} className={ta} />
+        <textarea id={field.key} name={field.key} value={value} onChange={formik.handleChange} placeholder={field.placeholder} className={ta} />
       ) : field.type === "select" ? (
-        <select name={field.key} value={value} onChange={formik.handleChange} className={sel}>
+        <select id={field.key} name={field.key} value={value} onChange={formik.handleChange} className={sel}>
           <option value="">Select option</option>
           {field.options?.map((o) => (
             <option key={o}>{o}</option>
           ))}
         </select>
       ) : field.type === "year-select" ? (
-        <select name={field.key} value={value} onChange={formik.handleChange} className={sel}>
+        <select id={field.key} name={field.key} value={value} onChange={formik.handleChange} className={sel}>
           <option value="">Select year</option>
           {yearOptions().map((y) => (
             <option key={y}>{y}</option>
           ))}
         </select>
       ) : field.type === "date" ? (
-        <input type="date" name={field.key} value={value} onChange={formik.handleChange} className={inp} />
+        <input type="date" id={field.key} name={field.key} value={value} onChange={formik.handleChange} className={inp} />
       ) : field.type === "tel" ? (
         <PhoneInput
+          id={field.key}
           name={field.key}
           value={value}
           onChange={(next) => formik.setFieldValue(field.key, next)}
@@ -381,6 +383,7 @@ export function FieldRenderer({
       ) : (
         <input
           type={field.type === "email" ? "email" : "text"}
+          id={field.key}
           name={field.key}
           value={value}
           onChange={formik.handleChange}

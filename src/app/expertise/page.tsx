@@ -20,6 +20,21 @@ const FALLBACK_METADATA: Metadata = {
     "dispute resolution advisory",
   ],
   alternates: { canonical: "/expertise" },
+  openGraph: {
+    title: "Expertise",
+    description:
+      "Five practices. One mission: transparency, skin in the game, and principals who execute.",
+    url: "https://ramprate.com/expertise",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Expertise",
+    description:
+      "Five practices. One mission: transparency, skin in the game, and principals who execute.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

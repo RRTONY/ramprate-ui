@@ -22,6 +22,21 @@ const FALLBACK_METADATA: Metadata = {
     "enterprise advisory firm history",
   ],
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About",
+    description:
+      "RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.",
+    url: "https://ramprate.com/about",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About",
+    description:
+      "RampRate is a global advisory firm founded in 2000. Impact and technology-focused advisor for enterprise and startups.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

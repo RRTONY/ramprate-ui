@@ -16,6 +16,21 @@ const FALLBACK_METADATA: Metadata = {
     "regenerative consulting",
   ],
   alternates: { canonical: "/impactsoul" },
+  openGraph: {
+    title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
+    description:
+      "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
+    url: "https://ramprate.com/impactsoul",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
+    description:
+      "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

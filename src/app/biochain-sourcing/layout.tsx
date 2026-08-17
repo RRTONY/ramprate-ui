@@ -32,7 +32,12 @@ export const metadata: Metadata = {
     "Certificate of Analysis (COA) verified",
     "cGMP certified peptide manufacturer",
   ],
-  alternates: { canonical: "/biochain-sourcing" },
+  // Same page body as /biochain (see page.tsx's re-export) - canonical points
+  // at /biochain rather than itself so Google consolidates ranking signal
+  // there instead of treating these as two competing duplicate pages. This
+  // URL stays live (old links/bookmarks keep working), it just won't be
+  // indexed as its own separate result.
+  alternates: { canonical: "/biochain" },
   openGraph: {
     title: "BioChain Sourcing | RampRate",
     description:

@@ -15,6 +15,21 @@ const FALLBACK_METADATA: Metadata = {
     "enterprise blockchain consulting",
   ],
   alternates: { canonical: "/web3" },
+  openGraph: {
+    title: "Stratum - Web3 & Enterprise Blockchain Advisory",
+    description:
+      "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
+    url: "https://ramprate.com/web3",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stratum - Web3 & Enterprise Blockchain Advisory",
+    description:
+      "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
+    images: ["/og.png"],
+  },
 };
 
 export async function generateMetadata(): Promise<Metadata> {

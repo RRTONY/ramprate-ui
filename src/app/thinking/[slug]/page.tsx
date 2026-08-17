@@ -31,9 +31,20 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   const post = await client.fetch(postBySlugQuery, {slug})
   if (!post) return {}
   const ogImage = post.seo?.ogImage || post.mainImage
+  const title = post.seo?.metaTitle || post.title
+  const description = post.seo?.metaDescription || post.excerpt
+  const openGraph = {
+    title,
+    description,
+    type: 'article' as const,
+    url: `https://ramprate.com/thinking/${slug}`,
+    publishedTime: post.publishedAt,
+    modifiedTime: post._updatedAt,
+    ...(ogImage && {images: [urlFor(ogImage).width(1200).height(630).url()]}),
+  }
   return {
-    title: post.seo?.metaTitle || post.title,
-    description: post.seo?.metaDescription || post.excerpt,
+    title,
+    description,
     keywords: post.seo?.keywords?.length
       ? post.seo.keywords
       : [
@@ -42,14 +53,12 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
           'enterprise advisory insights',
         ],
     alternates: {canonical: `/thinking/${slug}`},
-    openGraph: {
-      title: post.seo?.metaTitle || post.title,
-      description: post.seo?.metaDescription || post.excerpt,
-      type: 'article',
-      url: `https://ramprate.com/thinking/${slug}`,
-      publishedTime: post.publishedAt,
-      modifiedTime: post._updatedAt,
-      ...(ogImage && {images: [urlFor(ogImage).width(1200).height(630).url()]}),
+    openGraph,
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: openGraph.images,
     },
   }
 }
