@@ -1,5 +1,5 @@
 import {client} from '@/lib/sanity/client'
-import {allPostSlugsQuery, allCategorySlugsQuery} from '@/lib/sanity/queries'
+import {allPostSlugsQuery} from '@/lib/sanity/queries'
 import {urlFor} from '@/lib/sanity/image'
 import type {MetadataRoute} from 'next'
 
@@ -14,10 +14,7 @@ function escapeXml(value: string): string {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, categories] = await Promise.all([
-    client.fetch(allPostSlugsQuery),
-    client.fetch(allCategorySlugsQuery),
-  ])
+  const posts = await client.fetch(allPostSlugsQuery)
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {url: BASE_URL, changeFrequency: 'weekly', priority: 1},
@@ -117,12 +114,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   )
 
-  const categoryRoutes: MetadataRoute.Sitemap = categories.map((c: {slug: {current: string}; _updatedAt?: string}) => ({
-    url: `${BASE_URL}/blog/category/${c.slug.current}`,
-    ...(c._updatedAt && {lastModified: new Date(c._updatedAt)}),
-    changeFrequency: 'weekly' as const,
-    priority: 0.5,
-  }))
+  // /blog/category/[slug] is a permanentRedirect() to /blog?category=X, not a
+  // real rendered page - it never returns 200, so listing these URLs here
+  // told Google to index pages that immediately redirect away. No category
+  // routes belong in the sitemap unless that page starts rendering content.
 
-  return [...staticRoutes, ...postRoutes, ...categoryRoutes]
+  return [...staticRoutes, ...postRoutes]
 }

@@ -97,25 +97,12 @@ const blockchainServices = [
 
 const publishedInsights = [
   {
-    title: "From Supply Chain to the Blockchain",
-    url: "https://ramprate.com/from-supply-chain-to-the-blockchain/",
-  },
-  {
-    title:
-      "Enterprise Blockchain: Can Big Business Co-opt an Existential Threat?",
-    url: "https://ramprate.com/enterprise-blockchain-can-big-business-co-opt-an-existential-threat/",
-  },
-  {
-    title: "Historical Perspective on Blockchain",
-    url: "https://ramprate.com/historical-perspective-on-blockchain/",
+    title: "The Tollbooth and the Alternative",
+    url: "https://ramprate.com/blog/the-tollbooth-and-the-alternative",
   },
   {
     title: "What Solutions Are Best Built with Blockchain - Or NOT",
-    url: "https://ramprate.com/what-solutions-are-best-built-with-blockchain-or-not/",
-  },
-  {
-    title: "The Ball and Blockchain: Obstacles to a World-Changing Trajectory",
-    url: "https://ramprate.com/the-ball-and-blockchain-obstacles-to-a-world-changing-trajectory/",
+    url: "https://ramprate.com/thinking/blockchain-use-cases",
   },
 ];
 

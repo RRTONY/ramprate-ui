@@ -369,7 +369,7 @@ export default function SiteSearch({
       {/* Trigger button */}
       <button
         onClick={openSearch}
-        className={`font-body ai-btn-glow flex items-center gap-2 px-3.5 py-2 min-h-11 rounded-full border transition-all duration-300 text-sm group ${
+        className={`font-body ai-btn-glow flex items-center gap-2 px-3.5 py-2 min-h-12 rounded-full border transition-all duration-300 text-sm group ${
           scrolled
             ? "border-gold/25 bg-[linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))] text-[oklch(0.35_0.03_50)]"
             : "border-gold/20 bg-[linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))] text-white/75"
