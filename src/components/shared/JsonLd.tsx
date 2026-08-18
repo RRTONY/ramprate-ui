@@ -108,6 +108,31 @@ export function serviceJsonLd({
   }
 }
 
+export function personJsonLd({
+  name,
+  jobTitle,
+  description,
+  image,
+  url,
+}: {
+  name: string
+  jobTitle?: string
+  description?: string
+  image?: string
+  url?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name,
+    ...(jobTitle && {jobTitle}),
+    ...(description && {description}),
+    ...(image && {image}),
+    ...(url && {url}),
+    worksFor: {'@type': 'Organization', name: 'RampRate', url: 'https://ramprate.com'},
+  }
+}
+
 export function breadcrumbJsonLd(items: {name: string; url: string}[]) {
   return {
     '@context': 'https://schema.org',

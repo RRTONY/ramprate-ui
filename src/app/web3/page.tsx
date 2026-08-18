@@ -6,7 +6,7 @@ import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/Jso
 const FALLBACK_METADATA: Metadata = {
   title: "Stratum - Web3 & Enterprise Blockchain Advisory",
   description:
-    "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
+    "Enterprise blockchain and stablecoin advisory: transparent reserve structures, tokenization strategy, DAO governance design, and regulatory navigation for Fortune 500 teams entering Web3.",
   keywords: [
     "Web3 advisory",
     "blockchain advisory",
@@ -18,7 +18,7 @@ const FALLBACK_METADATA: Metadata = {
   openGraph: {
     title: "Stratum - Web3 & Enterprise Blockchain Advisory",
     description:
-      "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
+      "Enterprise blockchain and stablecoin advisory: transparent reserve structures, tokenization strategy, DAO governance design, and regulatory navigation for Fortune 500 teams entering Web3.",
     url: "https://ramprate.com/web3",
     type: "website",
     images: ["/og.png"],
@@ -27,7 +27,7 @@ const FALLBACK_METADATA: Metadata = {
     card: "summary_large_image",
     title: "Stratum - Web3 & Enterprise Blockchain Advisory",
     description:
-      "Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms. Non-dilutive funding and zero-cost transformative tech.",
+      "Enterprise blockchain and stablecoin advisory: transparent reserve structures, tokenization strategy, DAO governance design, and regulatory navigation for Fortune 500 teams entering Web3.",
     images: ["/og.png"],
   },
 };
@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const services = [
   {
     title: "Enterprise Blockchain Bridge",
-    desc: "Connecting Fortune 500 to Web3. Deep links to blockchain ecosystem: top ICO advisors, large mining pools, enterprise distributed app platforms.",
+    desc: "Connecting Fortune 500 teams to Web3 - deep links to stablecoin issuers, SSID platforms, inclusion tech, and enterprise distributed app platforms.",
   },
   {
     title: "Non-Dilutive Funding",
@@ -64,34 +64,26 @@ const services = [
   },
 ];
 
-const blockchainServices = [
+const buildingToward = [
   {
-    title: "Low-Cost Power for Mining",
-    desc: "Megawatts of low-cost power for proof of work and mining pools.",
+    title: "Transparent, Compliant Stablecoins",
+    desc: "Reserve structures you can audit, yield mechanics you can see, and compliance built into the architecture from the start - not bolted on after a regulator asks a hard question.",
   },
   {
-    title: "Turnkey Mining Solutions",
-    desc: "Turnkey mining solutions for investors looking to enter the space.",
+    title: "SSID & Onramp Platforms",
+    desc: "KYC and onboarding infrastructure that compensates the function across the customer's financial lifecycle, without leaving users with no stake in the value their own participation created.",
   },
   {
-    title: "Enterprise Hosting for Trusted Nodes",
-    desc: "Enterprise partners for hosting trusted nodes on major networks.",
+    title: "Financial Inclusion Technology",
+    desc: "Stablecoin wallets, bank accounts, and investment platforms built for people the traditional system has never served well - without the high-commission products that tend to fill that gap.",
   },
   {
-    title: "Blockchain Orientation & Roadmapping",
-    desc: "Custom consulting for blockchain orientation and strategic roadmapping.",
+    title: "Philanthropic Value Chains That Don't Leak",
+    desc: "Yield generated along the donor-to-cause path goes to the mission, not to the custodians and intermediaries sitting in between.",
   },
   {
-    title: "Enterprise Blockchain Bridge",
-    desc: "Connecting Fortune 500 to Web3 - bridging the gap between enterprise and decentralized technology.",
-  },
-  {
-    title: "Non-Dilutive Funding",
-    desc: "Non-dilutive funding through tokenized models and DAO grant programs.",
-  },
-  {
-    title: "DAO Governance Design",
-    desc: "DAO governance design for multi-stakeholder consortia and community-driven organizations.",
+    title: "User-Configured Social Offsets",
+    desc: "A live mechanism for directing part of a transaction fee toward the externality it's connected to - a real design choice, not a white paper concept.",
   },
 ];
 
@@ -325,9 +317,9 @@ export default function Web3Page() {
               className="text-white/70 text-lg leading-relaxed mb-10"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Deep links to blockchain ecosystem: top ICO advisors, large mining
-              pools, enterprise distributed app platforms. Non-dilutive funding
-              and zero-cost transformative tech.
+              Enterprise blockchain and stablecoin advisory: transparent
+              reserve structures, tokenization strategy, and regulatory
+              navigation for Fortune 500 teams entering Web3.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
@@ -449,7 +441,7 @@ export default function Web3Page() {
         </div>
       </section>
 
-      {/* 7 Blockchain Advisory Services */}
+      {/* What We're Building Toward */}
       <section className="relative section-warm overflow-hidden py-20 sm:py-28">
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
@@ -461,17 +453,17 @@ export default function Web3Page() {
               fontFamily: "var(--font-body)",
             }}
           >
-            Blockchain Advisory
+            The Regenerative Stack
           </span>
           <h2
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight mb-10"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Full-Spectrum{" "}
-            <span style={{ color: "oklch(0.55 0.15 30)" }}>Services</span>
+            What We&rsquo;re Building{" "}
+            <span style={{ color: "oklch(0.55 0.15 30)" }}>Toward</span>
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
-            {blockchainServices.map((s) => (
+            {buildingToward.map((s) => (
               <div
                 key={s.title}
                 className="bg-white rounded-lg p-5 border border-black/5 flex gap-4 items-start"

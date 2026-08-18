@@ -9,7 +9,7 @@ import {
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, { breadcrumbJsonLd, personJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "About",
@@ -129,6 +129,20 @@ export default async function AboutPage() {
           { name: "About", url: "https://ramprate.com/about" },
         ])}
       />
+      {displayTeam.map((m: {name: string; slug: string | null; role: string; bio: string; img: string | null}) =>
+        m.slug ? (
+          <JsonLd
+            key={m.slug}
+            data={personJsonLd({
+              name: m.name,
+              jobTitle: m.role,
+              description: m.bio,
+              image: m.img ?? undefined,
+              url: `https://ramprate.com/about#${m.slug}`,
+            })}
+          />
+        ) : null,
+      )}
       {/* ═══ HERO ═══ */}
       <section
         className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"

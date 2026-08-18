@@ -4,6 +4,7 @@ import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 import JsonLd, {
   serviceJsonLd,
   breadcrumbJsonLd,
+  personJsonLd,
 } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
@@ -310,9 +311,9 @@ const boundaries = [
 ];
 
 const team = [
-  { name: "Anthony Greenberg", role: "CEO" },
-  { name: "Alex Veytsel", role: "CSO" },
-  { name: "Josh Bykowski", role: "General Counsel" },
+  { name: "Anthony Greenberg", role: "CEO", slug: "tony-greenberg" },
+  { name: "Alex Veytsel", role: "CSO", slug: "alex-veytsel" },
+  { name: "Josh Bykowski", role: "General Counsel", slug: "josh-bykowski" },
 ];
 
 export default function PrivateAdvisoryPage() {
@@ -337,6 +338,16 @@ export default function PrivateAdvisoryPage() {
           },
         ])}
       />
+      {team.map((t) => (
+        <JsonLd
+          key={t.slug}
+          data={personJsonLd({
+            name: t.name,
+            jobTitle: t.role,
+            url: `https://ramprate.com/about#${t.slug}`,
+          })}
+        />
+      ))}
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"
@@ -911,9 +922,9 @@ export default function PrivateAdvisoryPage() {
           </div>
           <div className="mt-14 pt-10 border-t border-white/10 flex flex-wrap gap-x-14 gap-y-6">
             {team.map((t) => (
-              <div key={t.name}>
+              <Link key={t.name} href={`/about#${t.slug}`} className="group">
                 <div
-                  className="text-sm font-bold text-white"
+                  className="text-sm font-bold text-white group-hover:text-(--gold) transition-colors"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {t.name}
@@ -927,7 +938,7 @@ export default function PrivateAdvisoryPage() {
                 >
                   {t.role}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
