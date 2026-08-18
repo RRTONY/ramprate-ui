@@ -433,7 +433,7 @@ export default function HomeContent() {
                   <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
                     Traditional Middleman
                   </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-gold border-b-gold">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-[#8a5f0e] border-b-gold">
                     RampRate
                   </th>
                 </tr>
