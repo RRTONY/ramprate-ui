@@ -64,7 +64,7 @@ export default function HeaderSearch({ scrolled = false }: Props) {
       {/* Search icon trigger */}
       <button
         onClick={() => setOpen(true)}
-        className={`p-2 rounded-lg transition-all hover:opacity-65 ${
+        className={`min-w-11 min-h-11 flex items-center justify-center rounded-lg transition-all hover:opacity-65 ${
           scrolled ? "text-[oklch(0.35_0.03_50)]" : "text-white/80"
         }`}
         aria-label="Search site"
