@@ -62,7 +62,7 @@ export default function Footer({
               Since 2000. A fractional team of superstars creating
               trajectory-changing connections.
             </p>
-            <span className="font-mono text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/40">
+            <span className="font-mono text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/50">
               B Corp Certified
             </span>
           </div>

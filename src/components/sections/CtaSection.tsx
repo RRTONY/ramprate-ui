@@ -30,7 +30,7 @@ export default function CtaSection({heading, body, buttonText, buttonLink, backg
           </h2>
         )}
         {body && (
-          <p className="font-body max-w-2xl mx-auto mb-10 text-white/70 text-base">
+          <p className="font-body max-w-2xl mx-auto mb-10 text-white/80 text-base">
             {body}
           </p>
         )}

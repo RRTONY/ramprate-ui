@@ -170,7 +170,7 @@ const brands = [
       "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure.",
     href: "/web3",
     iconKind: "stratum" as const,
-    accentColor: "oklch(0.6 0.2 280)",
+    accentColor: "oklch(0.65 0.2 280)",
   },
   {
     name: "BioChain",
@@ -197,7 +197,7 @@ const brands = [
       "Confidential, executive-level advisory for leaders who need a trusted outside perspective in the room.",
     href: "/private-advisory",
     iconKind: "advisory" as const,
-    accentColor: "oklch(0.52 0.12 70)",
+    accentColor: "oklch(0.65 0.12 70)",
   },
 ];
 
@@ -581,7 +581,7 @@ export default function HomeContent() {
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-rust/10">
                     <step.Icon size={22} className="text-rust" />
                   </div>
-                  <span className="font-mono text-3xl font-bold text-rust/20">
+                  <span className="font-mono text-3xl font-bold text-rust/90">
                     {step.num}
                   </span>
                 </div>
@@ -678,11 +678,11 @@ export default function HomeContent() {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tell Us What&apos;s Broken.
           </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/70">
+          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
             Principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/50">
+          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/80">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
