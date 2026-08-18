@@ -58,7 +58,7 @@ export default function Footer({
             <Link href="/" className="block mb-4">
               <Logo variant="light" size="md" />
             </Link>
-            <p className="font-body text-xs text-white/30 mb-5 leading-relaxed">
+            <p className="font-body text-xs text-white/50 mb-5 leading-relaxed">
               Since 2000. A fractional team of superstars creating
               trajectory-changing connections.
             </p>
@@ -69,7 +69,7 @@ export default function Footer({
 
           {/* Column 2 - Brands */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/50 mb-4">
               Brands
             </p>
             <ul className="space-y-3">
@@ -79,7 +79,7 @@ export default function Footer({
                     <span className="text-sm text-white/70 group-hover:text-white transition-colors block">
                       {link.label}
                     </span>
-                    <span className="text-xs text-white/30">{link.desc}</span>
+                    <span className="text-xs text-white/50">{link.desc}</span>
                   </Link>
                 </li>
               ))}
@@ -88,7 +88,7 @@ export default function Footer({
 
           {/* Column 3 - Company */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/50 mb-4">
               Company
             </p>
             <ul className="space-y-2.5">
@@ -107,7 +107,7 @@ export default function Footer({
 
           {/* Column 4 - Engage */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/50 mb-4">
               Engage
             </p>
             <div className="space-y-2 mb-6">
@@ -163,20 +163,20 @@ export default function Footer({
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-white/30">
+          <p className="font-body text-xs text-white/50">
             &copy; {new Date().getFullYear()} {companyName || "RampRate"}. All
             rights reserved.
           </p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
-              className="font-body text-xs text-white/30 hover:text-white/50 transition-colors"
+              className="font-body text-xs text-white/50 hover:text-white/70 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="font-body text-xs text-white/30 hover:text-white/50 transition-colors"
+              className="font-body text-xs text-white/50 hover:text-white/70 transition-colors"
             >
               Terms of Service
             </Link>

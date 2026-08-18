@@ -77,7 +77,7 @@ export default function NewsletterSection() {
           </p>
         )}
 
-        <p className="font-body mt-4 text-xs text-[oklch(0.6_0.01_50)]">
+        <p className="font-body mt-4 text-xs text-[oklch(0.5_0.01_50)]">
           No spam. Unsubscribe anytime.
         </p>
       </div>

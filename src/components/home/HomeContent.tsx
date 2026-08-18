@@ -264,7 +264,7 @@ export default function HomeContent() {
                 Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/40">
+              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
                 25 Years · $10B+ in Enterprise Decisions · 250+ Global Brands ·
                 Skin in the Game
               </p>
@@ -293,7 +293,7 @@ export default function HomeContent() {
         </div>
 
         <div className="relative z-10 pb-8 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-white/30">
+          <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
@@ -327,7 +327,7 @@ export default function HomeContent() {
                   className="w-1 h-10 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
-                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/40">
+                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
                   {eng.label}
                 </p>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
@@ -346,7 +346,7 @@ export default function HomeContent() {
       <section id="brands" className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/40">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
               01 - Our Practices
             </span>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
@@ -368,7 +368,7 @@ export default function HomeContent() {
                 className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/22">
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 

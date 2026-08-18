@@ -92,7 +92,7 @@ export default function TestimonialsCarousel() {
                     <p className="font-display text-sm font-bold text-white">
                       {t.name}
                     </p>
-                    <p className="font-body text-xs mt-0.5 text-white/40">
+                    <p className="font-body text-xs mt-0.5 text-white/50">
                       {t.title}
                     </p>
                   </div>
@@ -115,10 +115,14 @@ export default function TestimonialsCarousel() {
                   key={i}
                   onClick={() => setActive(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    i === active ? "w-6 bg-gold" : "w-2 bg-white/20"
-                  }`}
-                />
+                  className="p-2.5 -m-2.5 flex items-center justify-center"
+                >
+                  <span
+                    className={`block h-2 rounded-full transition-all ${
+                      i === active ? "w-6 bg-gold" : "w-2 bg-white/20"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
             <button
@@ -144,7 +148,7 @@ export default function TestimonialsCarousel() {
               <p className="font-display text-sm font-bold text-white">
                 {testimonials[active].name}
               </p>
-              <p className="font-body text-xs mt-0.5 text-white/40">
+              <p className="font-body text-xs mt-0.5 text-white/50">
                 {testimonials[active].title}
               </p>
             </div>
@@ -164,10 +168,14 @@ export default function TestimonialsCarousel() {
                   key={i}
                   onClick={() => setActive(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    i === active ? "w-5 bg-gold" : "w-2 bg-white/20"
-                  }`}
-                />
+                  className="p-2.5 -m-2.5 flex items-center justify-center"
+                >
+                  <span
+                    className={`block h-2 rounded-full transition-all ${
+                      i === active ? "w-5 bg-gold" : "w-2 bg-white/20"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
             <button

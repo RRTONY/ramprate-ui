@@ -48,7 +48,7 @@ function ClientCard({ name, context }: { name: string; context: string }) {
       <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white/60">
         {name}
       </h3>
-      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-white/30">
+      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-white/50">
         {context}
       </p>
     </div>
@@ -67,7 +67,7 @@ export default function ClientWall() {
             <br className="hidden sm:block" />
             <span className="text-gold"> Complex Enterprises</span>
           </h2>
-          <p className="font-body mt-3 text-sm text-white/40">
+          <p className="font-body mt-3 text-sm text-white/50">
             100+ engagements. $10B+ in decisions transacted. Names you know.
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function ClientWall() {
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setShowAllClients(!showAllClients)}
-            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/40"
+            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/50"
           >
             {showAllClients ? "- Show Less" : "+ View All Clients"}
           </button>
