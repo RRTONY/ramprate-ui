@@ -77,7 +77,7 @@ export const postBySlugQuery = groq`
     excerpt,
     mainImage{..., asset->},
     body,
-    author->{name, slug, role, photo},
+    authors[]->{name, slug, role, photo},
     categories[]->{title, slug},
     seo
   }

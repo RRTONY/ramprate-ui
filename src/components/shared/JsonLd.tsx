@@ -19,6 +19,8 @@ export function organizationJsonLd({
   name = 'RampRate',
   url = 'https://ramprate.com',
   logo,
+  logoWidth,
+  logoHeight,
   description,
   address,
   phone,
@@ -28,6 +30,8 @@ export function organizationJsonLd({
   name?: string
   url?: string
   logo?: string
+  logoWidth?: number
+  logoHeight?: number
   description?: string
   // Sanity's `address` field is a plain text field, not structured
   // street/city/state/zip - emit it as-is rather than building a
@@ -39,10 +43,15 @@ export function organizationJsonLd({
 }) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     name,
     url,
-    ...(logo && {logo}),
+    ...(logo && {
+      logo:
+        logoWidth && logoHeight
+          ? {'@type': 'ImageObject', url: logo, width: logoWidth, height: logoHeight}
+          : logo,
+    }),
     ...(description && {description}),
     ...(address && {address}),
     ...(phone && {telephone: phone.replace(/[‎‏‪-‮⁦-⁩]/g, '')}),
@@ -130,7 +139,7 @@ export function blogPostJsonLd({
   url,
   datePublished,
   dateModified,
-  authorName,
+  authorNames,
   image,
 }: {
   title: string
@@ -138,7 +147,7 @@ export function blogPostJsonLd({
   url: string
   datePublished?: string
   dateModified?: string
-  authorName?: string
+  authorNames?: string[]
   image?: string
 }) {
   return {
@@ -151,8 +160,11 @@ export function blogPostJsonLd({
     ...(datePublished && {datePublished}),
     // Fall back to publish date so dateModified is always present (Google prefers both)
     ...((dateModified || datePublished) && {dateModified: dateModified || datePublished}),
-    ...(authorName && {
-      author: {'@type': 'Person', name: authorName},
+    ...(authorNames?.length && {
+      author:
+        authorNames.length === 1
+          ? {'@type': 'Person', name: authorNames[0]}
+          : authorNames.map((name) => ({'@type': 'Person', name})),
     }),
     ...(image && {image: [image]}),
     publisher: {

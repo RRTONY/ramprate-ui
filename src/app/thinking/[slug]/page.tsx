@@ -94,7 +94,7 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
           url: `https://ramprate.com/thinking/${slug}`,
           datePublished: post.publishedAt,
           dateModified: post._updatedAt,
-          authorName: post.author?.name,
+          authorNames: post.authors?.map((a: {name: string}) => a.name),
           image: post.mainImage ? urlFor(post.mainImage).width(1200).url() : undefined,
         })}
       />
@@ -138,7 +138,23 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
           </h1>
 
           <div className="font-mono flex items-center gap-5 text-sm text-white/35">
-            {post.author?.name && <span>By {post.author.name}</span>}
+            {post.authors?.length > 0 && (
+              <span>
+                By{' '}
+                {post.authors.map((a: {name: string; slug?: {current: string}}, i: number) => (
+                  <span key={a.name}>
+                    {i > 0 && (i === post.authors.length - 1 ? ' & ' : ', ')}
+                    {a.slug?.current ? (
+                      <Link href={`/about#${a.slug.current}`} className="hover:text-gold underline-offset-2 hover:underline">
+                        {a.name}
+                      </Link>
+                    ) : (
+                      a.name
+                    )}
+                  </span>
+                ))}
+              </span>
+            )}
             {date && <time>{date}</time>}
           </div>
         </div>

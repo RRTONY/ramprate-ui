@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Log In | The Flow Circuit",
   description: "Log in to your Flow Circuit account.",
   alternates: { canonical: "https://ramprate.com/flow/login" },
+  robots: { index: false, follow: false },
 };
 
 export default function LoginLayout({ children }: { children: React.ReactNode }) {

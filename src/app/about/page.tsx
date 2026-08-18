@@ -66,6 +66,7 @@ export default async function AboutPage() {
   const displayTeam = (sanityTeam ?? []).map(
     (m: {
       name: string;
+      slug?: { current: string } | null;
       role: string;
       bio: string;
       photo: { asset: { _ref: string } } | null;
@@ -73,6 +74,7 @@ export default async function AboutPage() {
       twitter: string | null;
     }) => ({
       name: m.name,
+      slug: m.slug?.current ?? null,
       role: m.role,
       bio: m.bio,
       img: m.photo
@@ -510,6 +512,7 @@ export default async function AboutPage() {
             {(
               displayTeam as {
                 name: string;
+                slug: string | null;
                 role: string;
                 bio: string;
                 img: string | null;
@@ -519,7 +522,8 @@ export default async function AboutPage() {
             ).map((m) => (
               <div
                 key={m.name}
-                className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col"
+                id={m.slug ?? undefined}
+                className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col scroll-mt-24"
               >
                 {m.img ? (
                   <div

@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ])
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    {url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1},
+    {url: BASE_URL, changeFrequency: 'weekly', priority: 1},
     {url: `${BASE_URL}/about`, changeFrequency: 'monthly', priority: 0.8},
     {url: `${BASE_URL}/expertise`, changeFrequency: 'monthly', priority: 0.8},
     {url: `${BASE_URL}/proof`, changeFrequency: 'monthly', priority: 0.8},
@@ -51,59 +51,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {url: `${BASE_URL}/terms`, changeFrequency: 'yearly', priority: 0.3},
     {url: `${BASE_URL}/search`, changeFrequency: 'monthly', priority: 0.5},
 
-    // Flow Circuit - static/public routes only. Excludes per-user/per-token
-    // result links (360, 360-results, consciousness/[id], family-360,
-    // peer-review, soulprint/report, team/[domain]) - see robots.ts.
+    // Flow Circuit - static/public routes only, AND only the ones whose own
+    // `alternates.canonical` self-references ramprate.com. ~26 other /flow/*
+    // pages (pricing, assessment, testimonials, coaching, etc.) deliberately
+    // set their canonical to https://flow.tonygreenberg.com/... - listing
+    // those same URLs here would contradict that canonical (telling Google to
+    // index a page under this domain that the page itself says isn't the
+    // authoritative copy), so they're excluded. See also robots.ts, which
+    // excludes per-user/per-token result links (360, 360-results,
+    // consciousness/[id], family-360, peer-review, soulprint/report,
+    // team/[domain]) and /flow/admin + /flow/peer-assessment.
     {url: `${BASE_URL}/flow`, changeFrequency: 'weekly', priority: 0.8},
-    {url: `${BASE_URL}/flow/alpha`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/assessment`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/flow/bio`, changeFrequency: 'monthly', priority: 0.5},
-    {url: `${BASE_URL}/flow/coaching`, changeFrequency: 'monthly', priority: 0.5},
     {url: `${BASE_URL}/flow/combined-report`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/compute-core`, changeFrequency: 'monthly', priority: 0.5},
     {url: `${BASE_URL}/flow/conductor-playbook`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/consciousness`, changeFrequency: 'monthly', priority: 0.5},
     {url: `${BASE_URL}/flow/credibility-timeline`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/deep-calibration`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/efficacy`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/enterprise-dashboard`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/family`, changeFrequency: 'monthly', priority: 0.5},
-    {url: `${BASE_URL}/flow/feedback`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/find-your-path`, changeFrequency: 'monthly', priority: 0.5},
-    {url: `${BASE_URL}/flow/forgot-password`, changeFrequency: 'yearly', priority: 0.2},
     {url: `${BASE_URL}/flow/inspirations`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/integrations`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/intel`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/investor-metrics`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/journey`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/login`, changeFrequency: 'yearly', priority: 0.2},
     {url: `${BASE_URL}/flow/ma-playbook`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/magic-questions`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/manager-guidebook`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/my-journey`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/origin-story`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/pricing`, changeFrequency: 'monthly', priority: 0.6},
     {url: `${BASE_URL}/flow/protocol`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/relationship-calculator`, changeFrequency: 'monthly', priority: 0.5},
-    {url: `${BASE_URL}/flow/reports`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/research`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/reset-password`, changeFrequency: 'yearly', priority: 0.2},
-    {url: `${BASE_URL}/flow/results`, changeFrequency: 'monthly', priority: 0.3},
     {url: `${BASE_URL}/flow/sample-reports`, changeFrequency: 'monthly', priority: 0.5},
     {url: `${BASE_URL}/flow/science`, changeFrequency: 'monthly', priority: 0.5},
-    {url: `${BASE_URL}/flow/share`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/share-card`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/signup`, changeFrequency: 'yearly', priority: 0.5},
-    {url: `${BASE_URL}/flow/soulprint`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/team-builder`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/team-comparison`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/team-dashboard`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/team-map`, changeFrequency: 'monthly', priority: 0.3},
-    {url: `${BASE_URL}/flow/team-settings`, changeFrequency: 'monthly', priority: 0.2},
-    {url: `${BASE_URL}/flow/testimonials`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/tribe-trial`, changeFrequency: 'monthly', priority: 0.4},
-    {url: `${BASE_URL}/flow/white-label`, changeFrequency: 'monthly', priority: 0.4},
     {url: `${BASE_URL}/flow/why-teams-fail`, changeFrequency: 'monthly', priority: 0.4},
+
+    // login/signup/forgot-password/reset-password are also excluded: they're
+    // zero-content auth forms with no unique metadata (now noindex - see
+    // their page.tsx files) and have no SEO value in a public sitemap.
   ]
 
   // Note: intentionally not iterating Sanity's generic "page" documents here.

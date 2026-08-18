@@ -88,13 +88,22 @@ export default async function RootLayout({
 }) {
   const settings = await sanityFetch<{
     companyName?: string;
-    logo?: Parameters<typeof urlFor>[0];
+    logo?: (Parameters<typeof urlFor>[0] & { asset?: { _ref?: string } }) | undefined;
     address?: string;
     phone?: string;
     email?: string;
     socialLinks?: { platform: string; url: string }[];
     googleAnalyticsId?: string;
   }>({ query: siteSettingsQuery, tags: ["siteSettings"], revalidate: 60 });
+
+  // Sanity asset refs encode intrinsic dimensions as `image-<id>-<w>x<h>-<ext>`,
+  // letting us give the Organization JSON-LD logo a real ImageObject width/height
+  // (Google's Knowledge Panel guidance) without an extra query.
+  const logoRefDims = settings?.logo?.asset?._ref?.match(/-(\d+)x(\d+)-/);
+  const logoWidth = logoRefDims ? 512 : undefined;
+  const logoHeight = logoRefDims
+    ? Math.round(512 * (Number(logoRefDims[2]) / Number(logoRefDims[1])))
+    : undefined;
 
   // Resolve GA ID: Sanity value wins, but treat an empty/whitespace value as
   // unset so it falls back to the env var (?? would keep an empty string).
@@ -152,6 +161,8 @@ export default async function RootLayout({
             logo: settings?.logo
               ? urlFor(settings.logo).width(512).url()
               : undefined,
+            logoWidth,
+            logoHeight,
             description:
               "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
             address: settings?.address,

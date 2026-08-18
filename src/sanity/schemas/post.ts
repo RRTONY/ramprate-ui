@@ -11,7 +11,7 @@ export default defineType({
     defineField({name: 'publishedAt', title: 'Published At', type: 'datetime'}),
     defineField({name: 'excerpt', title: 'Excerpt', type: 'text'}),
     defineField({name: 'mainImage', title: 'Main Image', type: 'image', options: {hotspot: true}}),
-    defineField({name: 'author', title: 'Author', type: 'reference', to: [{type: 'teamMember'}]}),
+    defineField({name: 'authors', title: 'Authors', type: 'array', of: [{type: 'reference', to: [{type: 'teamMember'}]}]}),
     defineField({name: 'categories', title: 'Categories', type: 'array', of: [{type: 'reference', to: [{type: 'category'}]}]}),
     defineField({name: 'body', title: 'Body', type: 'array', of: [{type: 'block'}, {type: 'image'}]}),
     defineField({name: 'seo', title: 'SEO', type: 'seo'}),

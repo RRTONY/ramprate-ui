@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Reset Password | The Flow Circuit",
   description: "Reset the password for your Flow Circuit account.",
   alternates: { canonical: "https://ramprate.com/flow/reset-password" },
+  robots: { index: false, follow: false },
 };
 
 export default function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
