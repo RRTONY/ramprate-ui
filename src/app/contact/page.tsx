@@ -91,6 +91,7 @@ export default async function ContactPage() {
         <div className="absolute top-10 -left-20 w-45 h-45 rounded-full opacity-15 pointer-events-none bg-amber blur-[80px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+          <h2 className="sr-only">Contact Options</h2>
           <div className="grid lg:grid-cols-5 gap-12">
 
             {/* Form (client component) */}

@@ -207,8 +207,7 @@ export default function HowWeWorkTabs() {
       </div>
 
       {/* ── Process Tab ── */}
-      {activeTab === "process" && (
-        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
+      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "process" ? "" : "hidden"}`}>
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
               {steps.map((step, i) => {
@@ -280,11 +279,9 @@ export default function HowWeWorkTabs() {
             </div>
           </div>
         </section>
-      )}
 
       {/* ── Fee Model Tab ── */}
-      {activeTab === "model" && (
-        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
+      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "model" ? "" : "hidden"}`}>
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
               <p className={`${sectionLabel} mb-3`}>
@@ -359,11 +356,9 @@ export default function HowWeWorkTabs() {
             </div>
           </div>
         </section>
-      )}
 
       {/* ── Clients Tab ── */}
-      {activeTab === "clients" && (
-        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
+      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "clients" ? "" : "hidden"}`}>
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
               <p className={`${sectionLabel} mb-3`}>
@@ -419,11 +414,9 @@ export default function HowWeWorkTabs() {
             </div>
           </div>
         </section>
-      )}
 
       {/* ── Links Tab ── */}
-      {activeTab === "links" && (
-        <section className="py-16 sm:py-20 px-5 sm:px-8 bg-dark">
+      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "links" ? "" : "hidden"}`}>
           <div className="max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto">
               <p className={`${sectionLabel} mb-3`}>
@@ -490,7 +483,6 @@ export default function HowWeWorkTabs() {
             </div>
           </div>
         </section>
-      )}
     </div>
   );
 }

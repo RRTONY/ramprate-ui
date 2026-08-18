@@ -69,9 +69,9 @@ export default function Footer({
 
           {/* Column 2 - Brands */}
           <div>
-            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Brands
-            </h4>
+            </p>
             <ul className="space-y-3">
               {brandLinks.map((link) => (
                 <li key={link.href}>
@@ -88,9 +88,9 @@ export default function Footer({
 
           {/* Column 3 - Company */}
           <div>
-            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Company
-            </h4>
+            </p>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
@@ -107,9 +107,9 @@ export default function Footer({
 
           {/* Column 4 - Engage */}
           <div>
-            <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">
               Engage
-            </h4>
+            </p>
             <div className="space-y-2 mb-6">
               <a
                 href={`mailto:${email || "hello@ramprate.com"}`}
