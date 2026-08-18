@@ -105,17 +105,17 @@ export default function TestimonialsCarousel() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
             >
               <ChevronLeft size={18} />
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className="p-2.5 -m-2.5 flex items-center justify-center"
+                  className="w-7 h-7 shrink-0 flex items-center justify-center"
                 >
                   <span
                     className={`block h-2 rounded-full transition-all ${
@@ -128,7 +128,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
             >
               <ChevronRight size={18} />
             </button>
@@ -158,17 +158,17 @@ export default function TestimonialsCarousel() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
             >
               <ChevronLeft size={18} />
             </button>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className="p-2.5 -m-2.5 flex items-center justify-center"
+                  className="w-7 h-7 shrink-0 flex items-center justify-center"
                 >
                   <span
                     className={`block h-2 rounded-full transition-all ${
@@ -181,7 +181,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
             >
               <ChevronRight size={18} />
             </button>
