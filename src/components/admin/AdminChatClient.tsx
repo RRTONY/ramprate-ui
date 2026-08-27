@@ -68,6 +68,35 @@ async function fetchPendingChanges(): Promise<PendingChanges | null> {
   return res.json();
 }
 
+// Chat history is per-browser only (localStorage), not shared across devices
+// or persisted server-side — good enough for a single-admin tool, and avoids
+// needing a database just to remember a conversation. Downloads (base64
+// payloads) are deliberately not persisted, to keep storage small.
+const CHAT_STORAGE_KEY = "ramprate_admin_chat_history";
+const MAX_STORED_MESSAGES = 50;
+
+function loadStoredMessages(): ChatMsg[] {
+  try {
+    const raw = localStorage.getItem(CHAT_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMessages(messages: ChatMsg[]) {
+  try {
+    const toStore = messages
+      .slice(-MAX_STORED_MESSAGES)
+      .map(({ role, content }) => ({ role, content }));
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(toStore));
+  } catch {
+    // Storage full or unavailable (private mode, etc.) — not fatal, history just won't persist.
+  }
+}
+
 // Small hand-rolled renderer for **bold**, `code`, and "- " bullet lists —
 // enough to make Claude's replies readable without pulling in a markdown
 // dependency for one chat panel.
@@ -156,8 +185,22 @@ export default function AdminChatClient() {
   const [publishResult, setPublishResult] = useState<string | null>(null);
 
   useEffect(() => {
+    setMessages(loadStoredMessages());
     fetchPendingChanges().then(setPending);
   }, []);
+
+  useEffect(() => {
+    saveMessages(messages);
+  }, [messages]);
+
+  const clearChat = () => {
+    setMessages([]);
+    try {
+      localStorage.removeItem(CHAT_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  };
 
   const addFiles = async (fileList: FileList | null) => {
     if (!fileList) return;
@@ -226,7 +269,13 @@ export default function AdminChatClient() {
     setPublishing(true);
     setPublishResult(null);
     try {
-      const res = await fetch("/api/admin/publish", { method: "POST" });
+      // keepalive so the browser finishes sending this request even if the
+      // tab is closed right after clicking Publish — without it, closing the
+      // window mid-request can abort the merge before it ever reaches the server.
+      const res = await fetch("/api/admin/publish", {
+        method: "POST",
+        keepalive: true,
+      });
       const data = await res.json();
       if (res.ok) {
         setPublishResult(
@@ -257,9 +306,19 @@ export default function AdminChatClient() {
   return (
     <div className="min-h-screen bg-dark text-white flex flex-col lg:flex-row">
       <section className="flex-1 flex flex-col p-6 gap-4 max-w-3xl">
-        <h1 className="font-display text-2xl font-bold text-gold">
-          RampRate Admin
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="font-display text-2xl font-bold text-gold">
+            RampRate Admin
+          </h1>
+          {messages.length > 0 && (
+            <button
+              onClick={clearChat}
+              className="text-xs font-body text-white/40 hover:text-white/70"
+            >
+              Clear chat
+            </button>
+          )}
+        </div>
         <div className="flex-1 overflow-y-auto flex flex-col gap-3 min-h-[50vh]">
           {messages.length === 0 && (
             <p className="text-white/50 font-body text-sm">
