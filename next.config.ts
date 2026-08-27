@@ -1,6 +1,12 @@
 import type {NextConfig} from 'next'
 
 const nextConfig: NextConfig = {
+  // Fixes Lighthouse's "Missing source maps for large first-party JavaScript"
+  // Best Practices check. Trade-off is more readable client source in devtools
+  // for anyone who looks - acceptable for a public marketing site with no
+  // server secrets in client code, in exchange for real stack traces in any
+  // error-tracking tool.
+  productionBrowserSourceMaps: true,
   images: {
     remotePatterns: [
       {

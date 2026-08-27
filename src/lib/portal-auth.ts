@@ -6,6 +6,7 @@ export const PORTAL_IDS = [
   "henry-jannol",
   "josh-bykowski",
   "legal-master",
+  "admin",
 ] as const;
 
 export type PortalId = (typeof PORTAL_IDS)[number];
@@ -15,7 +16,15 @@ const PASSWORD_ENV_VAR: Record<PortalId, string> = {
   "henry-jannol": "PORTAL_PASSWORD_HENRY_JANNOL",
   "josh-bykowski": "PORTAL_PASSWORD_JOSH_BYKOWSKI",
   "legal-master": "PORTAL_PASSWORD_LEGAL_MASTER",
+  admin: "PORTAL_PASSWORD_ADMIN",
 };
+
+// The admin portal grants write access (code + content), not just document
+// viewing, so its unlock cookie is kept short-lived instead of the 30-day
+// default the read-only portals use — see cookieMaxAgeFor().
+export function cookieMaxAgeFor(portalId: PortalId): number {
+  return portalId === "admin" ? 60 * 60 * 4 : 60 * 60 * 24 * 30;
+}
 
 function getAuthSecret(): string {
   const secret = process.env.PORTAL_AUTH_SECRET;
@@ -35,7 +44,10 @@ export function cookieNameFor(portalId: PortalId): string {
 
 // Constant-time comparison so a failed attempt can't be used to learn the
 // password one byte at a time via response-timing differences.
-export function verifyPortalPassword(portalId: PortalId, attempt: string): boolean {
+export function verifyPortalPassword(
+  portalId: PortalId,
+  attempt: string,
+): boolean {
   const expected = process.env[PASSWORD_ENV_VAR[portalId]];
   if (!expected) return false;
 

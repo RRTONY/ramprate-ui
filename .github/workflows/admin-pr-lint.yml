@@ -1,0 +1,60 @@
+name: Admin PR Checks
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint-changed-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      # Only check files this PR actually touches — the repo has pre-existing
+      # lint/formatting debt elsewhere (prettier didn't exist before this) that
+      # isn't this check's job to fix, and a repo-wide gate would fail
+      # permanently regardless of the PR.
+      - name: Lint changed files
+        run: |
+          git fetch origin "${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' | tr '\n' ' ')
+          if [ -z "$CHANGED" ]; then
+            echo "No .ts/.tsx files changed in this PR."
+            exit 0
+          fi
+          echo "Linting: $CHANGED"
+          npx eslint $CHANGED
+
+      - name: Prettier format check on changed files
+        run: |
+          git fetch origin "${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' '*.css' | tr '\n' ' ')
+          if [ -z "$CHANGED" ]; then
+            echo "No .ts/.tsx/.css files changed in this PR."
+            exit 0
+          fi
+          echo "Checking format: $CHANGED"
+          npx prettier --check $CHANGED
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      # Repo-wide is fine here (unlike lint) — the test suite is new and
+      # everything in it currently passes, so this won't be permanently red.
+      - run: npm run test

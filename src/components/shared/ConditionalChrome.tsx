@@ -12,13 +12,14 @@ export function ConditionalChrome({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isFlow = pathname?.startsWith("/flow");
+  const hideChrome =
+    pathname?.startsWith("/flow") || pathname?.startsWith("/admin");
 
   return (
     <>
-      {!isFlow && header}
+      {!hideChrome && header}
       <main className="min-h-screen">{children}</main>
-      {!isFlow && footer}
+      {!hideChrome && footer}
     </>
   );
 }

@@ -161,9 +161,38 @@ When adding a new practice page, always:
 - **SVG icons inline** - no icon library imports.
 - **Use Tailwind utility classes, not inline `style={{...}}`** (changed 2026-08-10). The design tokens are registered in `src/app/globals.css`'s `@theme inline` block, so they're real Tailwind classes: `bg-gold` / `text-gold` / `border-gold`, `bg-dark` / `bg-dark-mid` / `bg-dark-card`, `bg-warm-bg` / `bg-warm-light`, `text-rust` / `border-rust`, `text-ink` / `text-ink-mid` (maps to `--text-dark`/`--text-mid`), and `font-display` / `font-body` / `font-mono`. For a one-off color/size not in the token list, use Tailwind's arbitrary-value syntax (`text-[clamp(1.5rem,4vw,2.5rem)]`, `bg-white/6`) rather than inventing a new inline style. Migration off the old inline-style convention is in progress across the codebase - not every file has been converted yet; when you touch a file, convert what you touch.
 - **oklch colors everywhere** - match the existing design system. No raw hex except for the CSS variable definitions.
-- **No `framer-motion`** - it is a dead dependency (~140KB), do not import it.
+- **No `framer-motion` on the main marketing site** (practice pages, `src/components/sections`, homepage, etc.) - it's a heavy dependency (~140KB), don't add new usage there. **It IS used extensively by the separate `/flow` product** (~38 files under `src/app/flow/` and `src/components/flow/`) - that's a real, active dependency for that product, not dead code; don't remove those imports.
 - **Images: use `<Image>` from `next/image`**, not `<img>`, for anything user-visible.
 - **`global-error.tsx` is the one exception** to the Tailwind rule - it renders its own document outside the root layout, so `globals.css` never loads there. It must stay hardcoded inline styles.
+
+---
+
+## Audit Methodology (a11y / performance / bundle size)
+
+When asked to fix a specific Lighthouse/PageSpeed/axe finding, or to "check accessibility" or
+"check performance" generally, don't stop at the one flagged page — sweep every route and fix the
+shared component causing it, not just the reported instance. A violation on `/` from a shared
+`Header`/`Carousel`/form component is usually reproduced on every other page that renders it.
+
+Two specific Next.js App Router pitfalls to check for, since they're easy to introduce silently:
+
+- **A shared metadata/layout helper calling `headers()` or `cookies()` forces the *entire site*
+  dynamic**, even pages with zero personalization — killing static rendering, CDN caching, and
+  bfcache. First-pass check: run `next build` and look at the route table — if most/all routes
+  show `ƒ (Dynamic)` instead of `○ (Static)`, look for a Dynamic API call in whatever
+  `generateMetadata`/canonical-URL helper every page shares.
+- **A barrel `index.ts` re-export can leak a heavy dependency (formik, a crypto polyfill, etc.)
+  into every page's initial JS**, even pages that never use the feature that needs it, if
+  `layout.tsx` or another root-level import pulls a component through that barrel instead of
+  importing it directly. If bundle size looks off, check what a shared barrel pulls in
+  transitively before assuming the size is legitimate.
+- **Never trust a single local Lighthouse run's Performance score** — CPU contention on a dev
+  machine can swing the same unchanged build's score by 10-15 points across back-to-back runs.
+  Test against a real production build (`next build && next start`, never `next dev` — dev mode is
+  always heavier and produces misleading "unused JavaScript"/bundle-size warnings) or, better,
+  against the deployed site. The admin chat's `lighthouse_check_page` tool already does this
+  correctly — it calls Google's PageSpeed Insights API against the live `ramprate.com`, not a local
+  run.
 
 ---
 
@@ -185,6 +214,46 @@ When adding a new practice page, always:
 | `/contact`          | Engage / Contact                       |
 | `/careers`          | Careers                                |
 | `/expertise`        | Expertise                              |
+| `/admin`            | Admin vibecoding panel (noindex, password-gated) |
+
+---
+
+## Admin Vibecoding Platform
+
+`/admin` is a password-gated internal tool (not a marketing page) where the site owner chats with
+Claude to edit real code files and Sanity content, then ships changes with a single Publish button.
+
+**How it works:**
+- Auth reuses the existing multi-portal password system (`src/lib/portal-auth.ts`), just with
+  `"admin"` as another portal id — same HMAC-cookie mechanism as `/attorney` etc., no separate auth
+  system.
+- Code edits go through GitHub's REST API (`src/lib/admin/github-client.ts`, plain `fetch`, no
+  `@octokit/rest`) to a per-session branch (`admin/vibe-<date>-<random>`), never committed straight
+  to the default branch.
+- Content edits go through a dedicated Sanity write client (`src/lib/sanity/write-client.ts`) and
+  are always saved as `drafts.<id>` — never touch the published document directly.
+- **Publish = merge the PR + publish the matching Sanity drafts.** Nothing goes live any other way.
+  The Publish button stays disabled until the PR's GitHub build-check status (Netlify's own deploy
+  preview) reports success — never on `eslint`, since this repo has pre-existing lint debt that
+  would keep an eslint-based gate permanently red.
+- The admin agent's system prompt (`src/lib/admin/system-prompt.ts`) reads this **actual CLAUDE.md
+  file at request time** — so the rules in this document apply to its edits too, automatically, with
+  no separate copy to keep in sync.
+
+**Required env vars — must be set in Netlify's dashboard (Site settings → Environment variables),
+not just locally, or `/admin` will 500 in production:**
+
+| Var | Purpose |
+| --- | --- |
+| `PORTAL_PASSWORD_ADMIN` | Password to unlock `/admin` |
+| `GITHUB_TOKEN` | Fine-grained PAT scoped to only this repo, Contents + Pull requests = Read and write. Not the token in the git remote URL. |
+| `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
+
+**This repo's default branch is `master`, not `main`** — anything touching the GitHub API must
+resolve `default_branch` dynamically rather than assuming `main`.
+
+See `~/.claude/projects/-Users-dharmketsavani-Desktop-ramprate-ui/memory/project_admin_vibecoding.md`
+for the full build history, gotchas found during testing, and flagged security follow-ups.
 
 ---
 
