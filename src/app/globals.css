@@ -142,3 +142,12 @@ body.ai-modal-open [data-hide-on-ai] {
 .practice-ripple { opacity: 0; }
 .group:hover .practice-ripple { animation: practice-ripple 900ms ease-out forwards; }
 .group:hover .practice-ripple-delay { animation-delay: 150ms; }
+
+/* ── ADMIN: INDETERMINATE PROGRESS BAR ── */
+/* Duration of the Publish request isn't known up front, so this slides a
+   fixed-width segment back and forth rather than filling to a real percent. */
+@keyframes progress-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+.progress-slide { animation: progress-slide 1.2s ease-in-out infinite; }

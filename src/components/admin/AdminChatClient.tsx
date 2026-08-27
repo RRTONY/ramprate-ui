@@ -208,17 +208,21 @@ function Spinner({ className = "" }: { className?: string }) {
 }
 
 export default function AdminChatClient() {
-  const [messages, setMessages] = useState<ChatMsg[]>([]);
+  const [messages, setMessages] = useState<ChatMsg[]>(() =>
+    loadStoredMessages(),
+  );
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<PendingAttachment[]>([]);
   const [attachError, setAttachError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [pending, setPending] = useState<PendingChanges | null>(null);
   const [publishing, setPublishing] = useState(false);
-  const [publishResult, setPublishResult] = useState<string | null>(null);
+  const [publishResult, setPublishResult] = useState<{
+    ok: boolean;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
-    setMessages(loadStoredMessages());
     fetchPendingChanges().then(setPending);
   }, []);
 
@@ -311,19 +315,27 @@ export default function AdminChatClient() {
       });
       const data = await res.json();
       if (res.ok) {
-        setPublishResult(
-          `Published.${data.mergeSha ? ` Merge commit ${String(data.mergeSha).slice(0, 7)}.` : ""}${
+        setPublishResult({
+          ok: true,
+          message: `Published successfully.${data.mergeSha ? ` Merge commit ${String(data.mergeSha).slice(0, 7)}.` : ""}${
             data.publishedIds?.length
               ? ` ${data.publishedIds.length} content change(s) live.`
               : ""
           }`,
-        );
+        });
       } else {
-        setPublishResult(data.error || "Publish failed.");
+        setPublishResult({
+          ok: false,
+          message: data.error || "Publish failed.",
+        });
       }
       fetchPendingChanges().then(setPending);
     } catch {
-      setPublishResult("Publish request failed.");
+      setPublishResult({
+        ok: false,
+        message:
+          "Publish request failed — check your connection and try again.",
+      });
     } finally {
       setPublishing(false);
     }
@@ -337,8 +349,8 @@ export default function AdminChatClient() {
   };
 
   return (
-    <div className="min-h-screen bg-dark text-white flex flex-col lg:flex-row">
-      <section className="flex-1 flex flex-col p-6 gap-4 max-w-3xl">
+    <div className="min-h-screen bg-dark text-white flex flex-col md:flex-row">
+      <section className="flex-1 flex flex-col p-4 sm:p-6 gap-4 min-w-0 md:max-w-3xl">
         <div className="flex items-center justify-between">
           <h1 className="font-display text-2xl font-bold text-gold">
             RampRate Admin
@@ -424,8 +436,8 @@ export default function AdminChatClient() {
             onKeyDown={(e) => {
               if (e.key === "Enter") send();
             }}
-            placeholder="e.g. Update the hero headline on /growth, or attach a mockup"
-            className="flex-1 rounded-lg px-4 py-3 bg-white/6 border border-white/10 text-sm font-body focus:outline-none focus:border-gold"
+            placeholder="Update the hero headline on /growth…"
+            className="flex-1 min-w-0 rounded-lg px-4 py-3 bg-white/6 border border-white/10 text-sm font-body focus:outline-none focus:border-gold"
           />
           <button
             onClick={send}
@@ -437,7 +449,7 @@ export default function AdminChatClient() {
         </div>
       </section>
 
-      <aside className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 p-6 flex flex-col gap-4 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+      <aside className="w-full md:w-72 lg:w-96 shrink-0 border-t md:border-t-0 md:border-l border-white/10 p-4 sm:p-6 flex flex-col gap-4 md:sticky md:top-0 md:h-screen md:overflow-y-auto">
         <h2 className="font-display text-lg font-bold">Pending changes</h2>
 
         <div className="flex flex-col gap-1">
@@ -495,7 +507,7 @@ export default function AdminChatClient() {
           {pending?.files.map((f) => (
             <div
               key={f.path}
-              className="text-xs font-mono bg-white/6 rounded px-3 py-2"
+              className="text-xs font-mono bg-white/6 rounded px-3 py-2 break-all"
             >
               {f.path}
               <span className="text-white/40">
@@ -507,7 +519,7 @@ export default function AdminChatClient() {
           {pending?.drafts.map((d) => (
             <div
               key={d.id}
-              className="text-xs font-mono bg-white/6 rounded px-3 py-2"
+              className="text-xs font-mono bg-white/6 rounded px-3 py-2 wrap-break-word"
             >
               {d.type}: {d.title}
             </div>
@@ -521,15 +533,32 @@ export default function AdminChatClient() {
             )}
         </div>
 
-        <button
-          onClick={publish}
-          disabled={!pending?.canPublish || publishing}
-          className="w-full py-3 rounded-lg bg-gold text-dark font-body font-semibold text-sm disabled:opacity-30"
-        >
-          {publishing ? "Publishing…" : "Publish"}
-        </button>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={publish}
+            disabled={!pending?.canPublish || publishing}
+            className="w-full py-3 rounded-lg bg-gold text-dark font-body font-semibold text-sm disabled:opacity-30 flex items-center justify-center gap-2"
+          >
+            {publishing && <Spinner className="w-4 h-4" />}
+            {publishing ? "Publishing…" : "Publish"}
+          </button>
+          {publishing && (
+            <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden">
+              <div className="progress-slide h-full w-1/3 rounded-full bg-gold" />
+            </div>
+          )}
+        </div>
         {publishResult && (
-          <p className="text-xs font-body text-white/70">{publishResult}</p>
+          <div
+            className={`rounded-lg p-3 text-xs font-body ${
+              publishResult.ok
+                ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-300"
+                : "bg-red-500/10 border border-red-500/30 text-red-300"
+            }`}
+          >
+            {publishResult.ok ? "✅ " : "⚠️ "}
+            {publishResult.message}
+          </div>
         )}
       </aside>
     </div>
