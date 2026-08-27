@@ -52,11 +52,18 @@ interface PendingDraft {
   title: string;
 }
 
+interface FailingCheck {
+  name: string;
+  url: string | null;
+}
+
 interface PendingChanges {
   branch: string | null;
   prNumber: number | null;
   prUrl: string | null;
+  previewUrl: string | null;
   checkStatus: "success" | "pending" | "failure" | "unknown";
+  failingChecks: FailingCheck[];
   files: PendingFile[];
   drafts: PendingDraft[];
   canPublish: boolean;
@@ -171,6 +178,32 @@ function TypingIndicator() {
       <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.15s]" />
       <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce" />
     </div>
+  );
+}
+
+function Spinner({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={`animate-spin ${className}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle
+        className="opacity-20"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="3"
+      />
+      <path
+        d="M22 12a10 10 0 0 0-10-10"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
 
@@ -404,24 +437,58 @@ export default function AdminChatClient() {
         </div>
       </section>
 
-      <aside className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 p-6 flex flex-col gap-4">
+      <aside className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-white/10 p-6 flex flex-col gap-4 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
         <h2 className="font-display text-lg font-bold">Pending changes</h2>
 
-        {pending?.prUrl && (
-          <a
-            href={pending.prUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs text-gold underline font-body"
-          >
-            View pull request #{pending.prNumber}
-          </a>
-        )}
+        <div className="flex flex-col gap-1">
+          {pending?.prUrl && (
+            <a
+              href={pending.prUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-gold underline font-body"
+            >
+              View pull request #{pending.prNumber}
+            </a>
+          )}
+          {pending?.previewUrl && (
+            <a
+              href={pending.previewUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-gold underline font-body"
+            >
+              Open preview & test it
+            </a>
+          )}
+        </div>
 
         {pending && (
-          <p className="text-xs font-body text-white/60">
-            {checkStatusLabel[pending.checkStatus]}
-          </p>
+          <div className="flex items-center gap-2 text-xs font-body text-white/60">
+            {pending.checkStatus === "pending" && (
+              <Spinner className="w-3.5 h-3.5 text-white/50" />
+            )}
+            <span>{checkStatusLabel[pending.checkStatus]}</span>
+          </div>
+        )}
+
+        {pending && pending.failingChecks.length > 0 && (
+          <div className="flex flex-col gap-1 rounded-lg bg-red-500/10 border border-red-500/20 p-3">
+            {pending.failingChecks.map((c) => (
+              <a
+                key={c.name}
+                href={c.url ?? undefined}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-body text-red-300 underline"
+              >
+                {c.name} failed
+              </a>
+            ))}
+            <p className="text-xs font-body text-white/50">
+              Tell the chat to fix this.
+            </p>
+          </div>
         )}
 
         <div className="flex-1 overflow-y-auto flex flex-col gap-2">

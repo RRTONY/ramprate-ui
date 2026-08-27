@@ -18,28 +18,32 @@ export async function GET() {
       branch: null,
       prNumber: null,
       prUrl: null,
+      previewUrl: null,
       checkStatus: "unknown",
+      failingChecks: [],
       files: [],
       drafts,
       canPublish: drafts.length > 0,
     });
   }
 
-  const [compare, checkStatus] = await Promise.all([
+  const [compare, checks] = await Promise.all([
     gh.compareToDefaultBranch(branch),
-    gh.getPRCombinedStatus(prNumber),
+    gh.getPRChecksDetail(prNumber),
   ]);
 
   return NextResponse.json({
     branch,
     prNumber,
     prUrl: `https://github.com/RRTONY/ramprate-ui/pull/${prNumber}`,
-    checkStatus,
+    previewUrl: checks.previewUrl,
+    checkStatus: checks.status,
+    failingChecks: checks.failingChecks,
     files: compare.files,
     drafts,
     canPublish:
       (compare.files.length > 0 || drafts.length > 0) &&
-      checkStatus !== "failure" &&
-      checkStatus !== "pending",
+      checks.status !== "failure" &&
+      checks.status !== "pending",
   });
 }

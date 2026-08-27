@@ -315,6 +315,95 @@ export async function getPRCombinedStatus(
   }
 }
 
+export interface FailingCheck {
+  name: string;
+  url: string | null;
+}
+
+export interface PRChecksDetail {
+  status: PRCheckState;
+  previewUrl: string | null;
+  failingChecks: FailingCheck[];
+}
+
+// Richer version of getPRCombinedStatus for the UI: also surfaces the
+// Netlify deploy-preview URL (scraped from Netlify's own bot comment — GitHub
+// doesn't expose it as structured data, only the dashboard's internal deploy
+// page URL) and which specific checks are failing, so the admin (or the next
+// chat message) has something concrete to act on instead of just "failing."
+export async function getPRChecksDetail(
+  prNumber: number,
+): Promise<PRChecksDetail> {
+  const pr = await gh<{ head: { sha: string } }>(
+    `/repos/${OWNER}/${REPO}/pulls/${prNumber}`,
+  );
+  if (!pr) return { status: "unknown", previewUrl: null, failingChecks: [] };
+
+  const [statusResult, checkRunsResult, comments] = await Promise.all([
+    gh<{ state: string }>(
+      `/repos/${OWNER}/${REPO}/commits/${pr.head.sha}/status`,
+    ).catch(() => null),
+    gh<{
+      check_runs: Array<{
+        name: string;
+        status: string;
+        conclusion: string | null;
+        html_url: string;
+      }>;
+    }>(`/repos/${OWNER}/${REPO}/commits/${pr.head.sha}/check-runs`).catch(
+      () => null,
+    ),
+    gh<Array<{ body: string }>>(
+      `/repos/${OWNER}/${REPO}/issues/${prNumber}/comments`,
+    ).catch(() => null),
+  ]);
+
+  const states: PRCheckState[] = [];
+  const failingChecks: FailingCheck[] = [];
+
+  if (
+    statusResult?.state === "success" ||
+    statusResult?.state === "failure" ||
+    statusResult?.state === "pending"
+  ) {
+    states.push(statusResult.state);
+  }
+  for (const run of checkRunsResult?.check_runs || []) {
+    if (run.status !== "completed") {
+      states.push("pending");
+    } else if (
+      run.conclusion === "success" ||
+      run.conclusion === "neutral" ||
+      run.conclusion === "skipped"
+    ) {
+      states.push("success");
+    } else {
+      states.push("failure");
+      failingChecks.push({ name: run.name, url: run.html_url });
+    }
+  }
+
+  let previewUrl: string | null = null;
+  for (const comment of comments || []) {
+    const match = comment.body.match(
+      /https:\/\/deploy-preview-\d+--[\w-]+\.netlify\.app/,
+    );
+    if (match) {
+      previewUrl = match[0];
+      break;
+    }
+  }
+
+  let status: PRCheckState = "unknown";
+  if (states.length > 0) {
+    if (states.includes("failure")) status = "failure";
+    else if (states.includes("pending")) status = "pending";
+    else status = "success";
+  }
+
+  return { status, previewUrl, failingChecks };
+}
+
 export async function mergePR(
   prNumber: number,
 ): Promise<{ merged: boolean; sha: string }> {
