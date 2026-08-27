@@ -16,7 +16,11 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci
+      # This project builds with Yarn (see netlify.toml: `command = "yarn
+      # build"`), not npm — neither lockfile is committed (both are
+      # gitignored), so this is a plain resolve, matching what Netlify's own
+      # build does.
+      - run: yarn install
 
       # Only check files this PR actually touches — the repo has pre-existing
       # lint/formatting debt elsewhere (prettier didn't exist before this) that
@@ -53,8 +57,8 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci
+      - run: yarn install
 
       # Repo-wide is fine here (unlike lint) — the test suite is new and
       # everything in it currently passes, so this won't be permanently red.
-      - run: npm run test
+      - run: yarn test
