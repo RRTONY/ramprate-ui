@@ -20,7 +20,12 @@ jobs:
       # build"`), not npm — neither lockfile is committed (both are
       # gitignored), so this is a plain resolve, matching what Netlify's own
       # build does.
-      - run: yarn install
+      # --ignore-engines: several deps (e.g. @sanity/types) declare a newer
+      # Node engine requirement than the Node 20 this workflow (and Netlify's
+      # own netlify.toml) pin — Yarn classic hard-fails on that by default,
+      # unlike npm which only warns. Netlify's own `yarn build` must be doing
+      # the equivalent, since it demonstrably builds fine on the same pin.
+      - run: yarn install --ignore-engines
 
       # Only check files this PR actually touches — the repo has pre-existing
       # lint/formatting debt elsewhere (prettier didn't exist before this) that
@@ -57,7 +62,12 @@ jobs:
         with:
           node-version: 20
 
-      - run: yarn install
+      # --ignore-engines: several deps (e.g. @sanity/types) declare a newer
+      # Node engine requirement than the Node 20 this workflow (and Netlify's
+      # own netlify.toml) pin — Yarn classic hard-fails on that by default,
+      # unlike npm which only warns. Netlify's own `yarn build` must be doing
+      # the equivalent, since it demonstrably builds fine on the same pin.
+      - run: yarn install --ignore-engines
 
       # Repo-wide is fine here (unlike lint) — the test suite is new and
       # everything in it currently passes, so this won't be permanently red.
