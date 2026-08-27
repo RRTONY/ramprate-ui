@@ -9,7 +9,7 @@ const FALLBACK_METADATA: Metadata = {
   // ("RampRate - Investment & Advisory") verbatim, with no "| RampRate"
   // suffix appended (that suffix only applies to child-route titles).
   description:
-    "RampRate is a B-Corp certified advisory firm helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact - plus verified peptide supplier sourcing through RampRate BioChain. 24+ years of independent advisory.",
+    "RampRate is a B-Corp certified advisory firm helping enterprises cut technology costs and drive measurable impact. 24+ years of independent advisory.",
   keywords: [
     "technology advisory",
     "enterprise IT sourcing",
@@ -27,6 +27,15 @@ const FALLBACK_METADATA: Metadata = {
     description:
       "Independent advisory helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact.",
     url: "https://ramprate.com",
+    type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RampRate - Investment & Advisory",
+    description:
+      "Independent advisory helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact.",
+    images: ["/og.png"],
   },
 };
 
