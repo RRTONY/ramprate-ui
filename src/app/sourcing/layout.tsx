@@ -5,6 +5,7 @@ import JsonLd, {
   faqJsonLd,
 } from "@/components/shared/JsonLd";
 import { pressingQuestions } from "./pressing-questions";
+import { testimonials } from "./testimonials";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 const FALLBACK_METADATA: Metadata = {
@@ -56,6 +57,10 @@ export default function SourcingLayout({
             "Independent IT infrastructure consulting for data center, cloud, GPU compute, and network - benchmarking pricing, negotiating SLAs, and reducing enterprise technology spend.",
           url: "https://ramprate.com/sourcing",
           serviceType: "IT infrastructure consulting services",
+          reviews: testimonials.map((t) => ({
+            author: t.name,
+            reviewBody: t.quote,
+          })),
         })}
       />
       <JsonLd
