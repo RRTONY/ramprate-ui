@@ -268,6 +268,18 @@ export default function AdminChatClient() {
     setAttachments((prev) => prev.filter((a) => a.name !== name));
   };
 
+  // Netlify's free-plan synchronous function timeout is a hard 10 seconds,
+  // which the old single-request design (a whole tool-use loop server-side)
+  // could easily exceed on anything beyond a trivial one-tool edit. Instead,
+  // the server now does exactly one Claude call (+ any tools it asks for)
+  // per request and hands back an opaque `turnState` if it isn't done yet.
+  // This loop keeps calling the endpoint with that turnState until the turn
+  // finishes — from the admin's point of view it's still just "send one
+  // message," but under the hood it's several short, fast requests chained
+  // automatically instead of one long request that risks getting killed
+  // mid-flight.
+  const MAX_CLIENT_STEPS = 30;
+
   const send = async () => {
     if (!input.trim() || sending) return;
     const userMsg: ChatMsg = {
@@ -278,42 +290,93 @@ export default function AdminChatClient() {
     };
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
+    const outgoingMessage = input.trim();
+    const outgoingHistory = messages;
     const outgoingAttachments = attachments;
     setInput("");
     setAttachments([]);
     setSending(true);
     setPublishResult(null);
+
+    let turnState: unknown = undefined;
+    let step = 0;
+
     try {
-      const res = await fetch("/api/admin/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: input.trim(),
-          history: messages,
-          attachments: outgoingAttachments,
-        }),
-      });
-      let data: { answer?: string; error?: string; downloads?: ChatDownload[] };
-      try {
-        data = await res.json();
-      } catch {
-        // Netlify (or an intermediary) rejected the request before it reached
-        // our handler — e.g. payload too large — so the body isn't JSON.
-        throw new Error(
-          res.status === 413
-            ? "Request rejected — payload too large (try removing an attachment)."
-            : `Server returned an unreadable response (status ${res.status}).`,
-        );
+      while (true) {
+        step++;
+        if (step > MAX_CLIENT_STEPS) {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content:
+                "Stopped after too many steps — send another message to continue.",
+            },
+          ]);
+          break;
+        }
+
+        const res = await fetch("/api/admin/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(
+            turnState
+              ? { attachments: outgoingAttachments, turnState }
+              : {
+                  message: outgoingMessage,
+                  history: outgoingHistory,
+                  attachments: outgoingAttachments,
+                },
+          ),
+        });
+
+        let data: {
+          done?: boolean;
+          turnState?: unknown;
+          answer?: string;
+          error?: string;
+          downloads?: ChatDownload[];
+        };
+        try {
+          data = await res.json();
+        } catch {
+          // Netlify (or an intermediary) rejected the request before it
+          // reached our handler — e.g. payload too large — so the body
+          // isn't JSON.
+          throw new Error(
+            res.status === 413
+              ? "Request rejected — payload too large (try removing an attachment)."
+              : `Server returned an unreadable response (status ${res.status}).`,
+          );
+        }
+
+        if (!res.ok) {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content: data.error || "Something went wrong.",
+            },
+          ]);
+          break;
+        }
+
+        fetchPendingChanges().then(setPending);
+
+        if (data.done) {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content: data.answer!,
+              downloads: data.downloads,
+            },
+          ]);
+          break;
+        }
+
+        turnState = data.turnState;
       }
-      setMessages([
-        ...nextMessages,
-        {
-          role: "assistant",
-          content: res.ok ? data.answer! : data.error || "Something went wrong.",
-          downloads: res.ok ? data.downloads : undefined,
-        },
-      ]);
-      fetchPendingChanges().then(setPending);
     } catch (err) {
       setMessages([
         ...nextMessages,
