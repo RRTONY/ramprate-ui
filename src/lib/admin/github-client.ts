@@ -49,7 +49,7 @@ async function gh<T = unknown>(
   return (await res.json()) as T;
 }
 
-function isNotFound(err: unknown): boolean {
+export function isNotFound(err: unknown): boolean {
   return err instanceof GitHubApiError && err.status === 404;
 }
 

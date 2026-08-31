@@ -9,7 +9,11 @@ import {
 } from "@/lib/admin/tools";
 import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import * as gh from "@/lib/admin/github-client";
-import { getAdminSession, setAdminSessionCookies } from "@/lib/admin/session";
+import {
+  getAdminSession,
+  setAdminSessionCookies,
+  clearAdminSessionCookies,
+} from "@/lib/admin/session";
 
 interface ChatMsg {
   role: "user" | "assistant";
@@ -207,6 +211,22 @@ export async function POST(req: NextRequest) {
   let branch = session.branch;
   let prNumber = session.prNumber;
   const defaultBranch = await gh.getDefaultBranch();
+
+  // The session cookie can outlive the branch it points at — its PR may
+  // have been merged/closed outside this app's own Publish flow (which
+  // would have cleared the cookie itself), or the branch deleted directly.
+  // Every GitHub call keyed on a dead branch 404s, which used to crash the
+  // whole request. Check once up front and reset to a fresh session instead
+  // of failing on it.
+  let sessionWasStale = false;
+  if (branch) {
+    const exists = await gh.branchExists(branch);
+    if (!exists) {
+      sessionWasStale = true;
+      branch = null;
+      prNumber = null;
+    }
+  }
 
   // Fresh turn: build the initial message from scratch, inlining images/PDFs
   // so Claude can actually see/read them. Continuation: pick up exactly
@@ -434,6 +454,10 @@ export async function POST(req: NextRequest) {
 
   if (branch) {
     setAdminSessionCookies(res, { branch, prNumber: prNumber ?? undefined });
+  } else if (sessionWasStale) {
+    // No new branch was created this step (e.g. a read-only turn) — still
+    // clear the dead cookie so the browser stops sending it.
+    clearAdminSessionCookies(res);
   }
 
   return res;
