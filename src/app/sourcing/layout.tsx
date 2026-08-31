@@ -8,31 +8,34 @@ import { pressingQuestions } from "./pressing-questions";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 const FALLBACK_METADATA: Metadata = {
-  title: "IT & Data Center Sourcing Advisory",
+  title: "Enterprise IT Infrastructure Consulting Services",
   description:
-    "Independent sourcing advisory for data center, cloud, GPU compute, and network. RampRate benchmarks pricing, negotiates SLAs, and helps enterprises stop overpaying suppliers.",
+    "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
   keywords: [
-    "IT sourcing advisory",
-    "data center procurement",
+    "IT infrastructure consulting services",
+    "IT infrastructure consulting",
+    "digital infrastructure advisory",
+    "infrastructure advisory services",
+    "data center consultant",
+    "strategic sourcing consulting",
     "cloud cost optimization",
     "GPU compute sourcing",
     "supplier SLA negotiation",
-    "network infrastructure sourcing",
   ],
   alternates: { canonical: "/sourcing" },
   openGraph: {
-    title: "IT & Data Center Sourcing Advisory | RampRate",
+    title: "Enterprise IT Infrastructure Consulting Services | RampRate",
     description:
-      "Benchmark pricing, negotiate SLAs, and cut technology spend with independent sourcing advisory.",
+      "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
     url: "https://ramprate.com/sourcing",
     type: "website",
     images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "IT & Data Center Sourcing Advisory | RampRate",
+    title: "Enterprise IT Infrastructure Consulting Services | RampRate",
     description:
-      "Benchmark pricing, negotiate SLAs, and cut technology spend with independent sourcing advisory.",
+      "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
     images: ["/og.png"],
   },
 };
@@ -51,11 +54,11 @@ export default function SourcingLayout({
     <>
       <JsonLd
         data={serviceJsonLd({
-          name: "IT & Data Center Sourcing Advisory",
+          name: "Enterprise IT Infrastructure Consulting Services",
           description:
-            "Independent sourcing advisory for data center, cloud, GPU compute, and network - benchmarking pricing, negotiating SLAs, and reducing enterprise technology spend.",
+            "Independent IT infrastructure consulting and digital infrastructure advisory for data center, cloud, GPU compute, and network - benchmarking pricing, negotiating SLAs, and reducing enterprise technology spend.",
           url: "https://ramprate.com/sourcing",
-          serviceType: "IT infrastructure sourcing advisory",
+          serviceType: "IT infrastructure consulting services",
         })}
       />
       <JsonLd
