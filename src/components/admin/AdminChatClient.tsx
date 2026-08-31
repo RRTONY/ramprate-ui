@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 interface ChatDownload {
   name: string;
@@ -97,11 +97,39 @@ function loadStoredMessages(): ChatMsg[] {
   }
 }
 
+// Cached so useSyncExternalStore's getSnapshot returns a referentially
+// stable value across repeated calls (it requires this — a fresh array on
+// every call would look like a change on every render). Read once per page
+// load; there's no cross-tab live sync here (matches this feature's existing
+// design: chat history is per-browser only), so a static cache is correct,
+// not just an optimization.
+let cachedStoredMessages: ChatMsg[] | null = null;
+function getStoredMessagesSnapshot(): ChatMsg[] {
+  if (cachedStoredMessages === null) {
+    cachedStoredMessages = loadStoredMessages();
+  }
+  return cachedStoredMessages;
+}
+// Must also be a stable reference across calls, same reason as the cache
+// above — a fresh [] literal on every call trips React's "getServerSnapshot
+// should be cached" warning (confirmed via a real hydration test).
+const EMPTY_MESSAGES: ChatMsg[] = [];
+function getServerMessagesSnapshot(): ChatMsg[] {
+  return EMPTY_MESSAGES;
+}
+function noopSubscribe() {
+  return () => {};
+}
+
 function saveMessages(messages: ChatMsg[]) {
+  const toStore = messages
+    .slice(-MAX_STORED_MESSAGES)
+    .map(({ role, content }) => ({ role, content }));
+  // Keep the useSyncExternalStore cache in sync with what's actually
+  // stored, so a remount within the same session (SPA nav away and back)
+  // can't see a stale pre-write snapshot.
+  cachedStoredMessages = toStore;
   try {
-    const toStore = messages
-      .slice(-MAX_STORED_MESSAGES)
-      .map(({ role, content }) => ({ role, content }));
     localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(toStore));
   } catch {
     // Storage full or unavailable (private mode, etc.) — not fatal, history just won't persist.
@@ -219,9 +247,26 @@ function Spinner({ className = "" }: { className?: string }) {
 }
 
 export default function AdminChatClient() {
-  const [messages, setMessages] = useState<ChatMsg[]>(() =>
-    loadStoredMessages(),
+  // localStorage doesn't exist during SSR. useSyncExternalStore renders the
+  // safe empty snapshot on the server AND on the client's first hydration
+  // pass (so they match), then swaps in the real stored value right after —
+  // React's built-in mechanism for bridging browser-only storage into SSR'd
+  // state, rather than a manual mount-effect + setState (which would tear:
+  // server renders "no history", client hydrates with real history from a
+  // previous session, and React flags the mismatch).
+  const storedHistory = useSyncExternalStore(
+    noopSubscribe,
+    getStoredMessagesSnapshot,
+    getServerMessagesSnapshot,
   );
+  // Once the admin sends a message or clears the chat, session state takes
+  // over from the stored snapshot — this is a local editing session, not a
+  // live view of localStorage.
+  const [sessionMessages, setSessionMessages] = useState<ChatMsg[] | null>(
+    null,
+  );
+  const messages = sessionMessages ?? storedHistory;
+  const setMessages = setSessionMessages;
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<PendingAttachment[]>([]);
   const [attachError, setAttachError] = useState<string | null>(null);
@@ -239,8 +284,13 @@ export default function AdminChatClient() {
   }, []);
 
   useEffect(() => {
-    saveMessages(messages);
-  }, [messages]);
+    // No-op until the admin does something (sessionMessages still null, so
+    // `messages` above is just mirroring storedHistory) — otherwise this
+    // would re-save the exact value it just read right back to storage on
+    // mount, which is harmless but pointless.
+    if (sessionMessages === null) return;
+    saveMessages(sessionMessages);
+  }, [sessionMessages]);
 
   const clearChat = () => {
     setMessages([]);
