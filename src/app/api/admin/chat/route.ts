@@ -161,16 +161,21 @@ export async function POST(req: NextRequest) {
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-  // Images are inlined directly so Claude can see them (e.g. "match this
-  // mockup"); every attachment, image or not, is also fetchable via the
-  // get_attachment tool so it can be committed to the repo as-is.
+  // Images and PDFs are inlined directly so Claude can actually see/read them
+  // (a mockup to match, a doc full of copy to use) via the API's native
+  // vision/document support. get_attachment still exists for every
+  // attachment regardless of type, but it hands back raw base64 as plain
+  // text — useless for Claude to "read" a PDF from, since it can't parse PDF
+  // structure out of a base64 blob. It's only meant for the *write* path:
+  // pulling an attachment's bytes back out to commit via
+  // github_write_binary_file (e.g. saving an uploaded logo into the repo).
   const userContent: Anthropic.ContentBlockParam[] = [
     {
       type: "text",
       text:
         message.trim() +
         (attachments.length
-          ? `\n\n[Attached: ${attachments.map((a) => a.name).join(", ")} — use get_attachment to retrieve one if you need its raw content.]`
+          ? `\n\n[Attached: ${attachments.map((a) => a.name).join(", ")} — images and PDFs above are already visible/readable inline. Only use get_attachment if you need to commit one of these into the repo as a file via github_write_binary_file.]`
           : ""),
     },
   ];
@@ -183,6 +188,16 @@ export async function POST(req: NextRequest) {
           media_type: att.mediaType as "image/jpeg",
           data: att.base64,
         },
+      });
+    } else if (att.mediaType === "application/pdf") {
+      userContent.push({
+        type: "document",
+        source: {
+          type: "base64",
+          media_type: "application/pdf",
+          data: att.base64,
+        },
+        title: att.name,
       });
     }
   }
