@@ -28,7 +28,12 @@ const INLINE_IMAGE_TYPES = new Set([
   "image/gif",
   "image/webp",
 ]);
-const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+// Netlify Functions (this route's runtime, via @netlify/plugin-nextjs) hard-cap
+// request payloads at 6MB. Base64 inflates raw bytes by ~4/3, so files must stay
+// well under that once encoded and wrapped in JSON — 8MB raw (~10.9MB encoded)
+// was silently rejected by Netlify before ever reaching this handler.
+const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
+const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 
 // Sonnet + agentic tool use costs far more per call than the visitor chatbot's
 // single-shot Haiku turns, so the daily cap here is much lower.
@@ -98,7 +103,20 @@ export async function POST(req: NextRequest) {
   );
   if (oversized) {
     return NextResponse.json(
-      { error: `"${oversized.name}" is too large (max 8MB per file)` },
+      { error: `"${oversized.name}" is too large (max 3MB per file)` },
+      { status: 400 },
+    );
+  }
+  const totalAttachmentBytes = attachments.reduce(
+    (sum, a) => sum + Buffer.byteLength(a.base64, "base64"),
+    0,
+  );
+  if (totalAttachmentBytes > MAX_TOTAL_ATTACHMENT_BYTES) {
+    return NextResponse.json(
+      {
+        error:
+          "Attachments are too large combined (max 4MB total) — attach fewer or smaller files at once.",
+      },
       { status: 400 },
     );
   }

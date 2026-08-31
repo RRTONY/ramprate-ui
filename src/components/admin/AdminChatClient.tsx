@@ -20,7 +20,11 @@ interface PendingAttachment {
   base64: string;
 }
 
-const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+// Must match src/app/api/admin/chat/route.ts — Netlify Functions (this app's
+// API route runtime) hard-cap request payloads at 6MB, and base64 inflates
+// raw file bytes by ~4/3, so the limits here are deliberately conservative.
+const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
+const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 
 function fileToAttachment(file: File): Promise<PendingAttachment> {
   return new Promise((resolve, reject) => {
@@ -245,7 +249,15 @@ export default function AdminChatClient() {
     const files = Array.from(fileList);
     const tooBig = files.find((f) => f.size > MAX_ATTACHMENT_BYTES);
     if (tooBig) {
-      setAttachError(`"${tooBig.name}" is over 8MB — attach a smaller file.`);
+      setAttachError(`"${tooBig.name}" is over 3MB — attach a smaller file.`);
+      return;
+    }
+    const existingTotal = attachments.reduce((sum, a) => sum + a.base64.length * 0.75, 0);
+    const newTotal = files.reduce((sum, f) => sum + f.size, 0);
+    if (existingTotal + newTotal > MAX_TOTAL_ATTACHMENT_BYTES) {
+      setAttachError(
+        "Attachments are too large combined (max 4MB total) — remove one first.",
+      );
       return;
     }
     const converted = await Promise.all(files.map(fileToAttachment));
@@ -281,20 +293,37 @@ export default function AdminChatClient() {
           attachments: outgoingAttachments,
         }),
       });
-      const data = await res.json();
+      let data: { answer?: string; error?: string; downloads?: ChatDownload[] };
+      try {
+        data = await res.json();
+      } catch {
+        // Netlify (or an intermediary) rejected the request before it reached
+        // our handler — e.g. payload too large — so the body isn't JSON.
+        throw new Error(
+          res.status === 413
+            ? "Request rejected — payload too large (try removing an attachment)."
+            : `Server returned an unreadable response (status ${res.status}).`,
+        );
+      }
       setMessages([
         ...nextMessages,
         {
           role: "assistant",
-          content: res.ok ? data.answer : data.error || "Something went wrong.",
+          content: res.ok ? data.answer! : data.error || "Something went wrong.",
           downloads: res.ok ? data.downloads : undefined,
         },
       ]);
       fetchPendingChanges().then(setPending);
-    } catch {
+    } catch (err) {
       setMessages([
         ...nextMessages,
-        { role: "assistant", content: "Request failed — try again." },
+        {
+          role: "assistant",
+          content:
+            err instanceof Error
+              ? err.message
+              : "Request failed — check your connection and try again.",
+        },
       ]);
     } finally {
       setSending(false);
