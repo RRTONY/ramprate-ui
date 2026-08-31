@@ -785,9 +785,9 @@ export default function SourcingPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                The first platform built for IT sourcing decisions and
-                planning. Forecasts within 5–10% of final outcome. 99%+ of our
-                deals make it to contract.
+                The first platform built for IT sourcing decisions and planning.
+                Forecasts within 5–10% of final outcome. 99%+ of our deals make
+                it to contract.
               </p>
               <p
                 className="mt-4 text-base leading-relaxed"
