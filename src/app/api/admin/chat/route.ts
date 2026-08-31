@@ -303,7 +303,18 @@ export async function POST(req: NextRequest) {
   try {
     response = await client.messages.create({
       model: "claude-sonnet-5",
-      max_tokens: 8192,
+      // Verified against a real page in this repo (src/app/sourcing/page.tsx,
+      // ~39K chars / ~1057 lines): 8192 was NOT enough headroom for
+      // github_write_file to emit a full-file rewrite of a page this size in
+      // one tool call — the response hit stop_reason "max_tokens" mid-write,
+      // the tool_use came back truncated/incomplete, and the write silently
+      // never happened (the loop's stop_reason check treats anything but
+      // "tool_use" as "done", so a truncated response looked like a normal
+      // finish with no error surfaced). This cap only bounds the ceiling, not
+      // actual spend — a trivial step (list a directory) costs the same
+      // either way — so there's no real downside to leaving headroom for the
+      // largest files in the repo.
+      max_tokens: 16000,
       system: [
         {
           type: "text",
@@ -336,6 +347,21 @@ export async function POST(req: NextRequest) {
   );
   const stepText = textBlock?.text ?? "";
   const stepLabel = describeStep(toolUses);
+
+  // A response cut off mid-generation (e.g. a huge file rewrite that
+  // outgrows max_tokens) is NOT a normal finish — stop_reason just won't be
+  // "tool_use" either, so without this check it would silently fall through
+  // to "done" below with a truncated/empty answer and no indication
+  // anything went wrong, even though the intended edit never happened.
+  if (response.stop_reason === "max_tokens") {
+    return NextResponse.json(
+      {
+        error:
+          "Claude's response was cut off mid-generation (likely writing a very large file in one go). Try asking for a smaller, more targeted change instead of a full-file rewrite.",
+      },
+      { status: 502 },
+    );
+  }
 
   let done = response.stop_reason !== "tool_use" || toolUses.length === 0;
 
