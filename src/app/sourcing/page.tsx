@@ -276,9 +276,9 @@ export default function SourcingPage() {
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            AI Studies the Process.{" "}
+            Enterprise IT Infrastructure{" "}
             <span style={{ color: "oklch(0.82 0.15 75)" }}>
-              We Get the Deal Done.
+              Consulting Services
             </span>
           </h1>
 
@@ -393,7 +393,7 @@ export default function SourcingPage() {
               className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              10 Questions Every Organization{" "}
+              The Questions Every Enterprise IT Team{" "}
               <span style={{ color: "oklch(0.82 0.15 75)" }}>
                 Is Asking Right Now
               </span>
@@ -405,10 +405,10 @@ export default function SourcingPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              These aren&apos;t hypothetical. They&apos;re the questions we hear
-              every week from Fortune 500 CTOs, infrastructure VPs, and
-              procurement leads. Each one is validated by people who&apos;ve
-              gone through that exact transaction in the last 90 days.
+              These aren&apos;t hypothetical &mdash; they&apos;re the questions
+              we hear every week from Fortune 500 CTOs, infrastructure VPs, and
+              procurement leads. Each one validated by someone who&apos;s gone
+              through that exact transaction in the last 90 days.
             </p>
           </div>
 
@@ -776,7 +776,7 @@ export default function SourcingPage() {
                 className="mt-4 text-3xl sm:text-4xl font-bold text-white leading-tight"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                The SPY Index
+                The SPY Index &mdash; 24 Years of IT Sourcing Benchmark Data
               </h2>
               <p
                 className="mt-4 text-base leading-relaxed"
@@ -785,9 +785,9 @@ export default function SourcingPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                The first platform for IT sourcing decisions and planning. 24
-                years of proprietary transaction data. Forecasts within 5–10% of
-                final outcome. 99%+ of our deals make it to contract.
+                The first platform built for IT sourcing decisions and
+                planning. Forecasts within 5–10% of final outcome. 99%+ of our
+                deals make it to contract.
               </p>
               <p
                 className="mt-4 text-base leading-relaxed"
