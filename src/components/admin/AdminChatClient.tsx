@@ -175,12 +175,19 @@ function renderMessageContent(content: string): React.ReactNode {
   return <div className="space-y-1.5">{blocks}</div>;
 }
 
-function TypingIndicator() {
+function TypingIndicator({ status }: { status: string | null }) {
   return (
-    <div className="self-start bg-white/6 rounded-lg px-4 py-3 flex items-center gap-1.5">
-      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.3s]" />
-      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.15s]" />
-      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce" />
+    <div className="self-start bg-white/6 rounded-lg px-4 py-3 flex items-center gap-2.5 max-w-[85%]">
+      <span className="flex items-center gap-1.5 shrink-0">
+        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.3s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.15s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce" />
+      </span>
+      {status && (
+        <span className="text-xs font-body text-white/40 truncate">
+          {status}
+        </span>
+      )}
     </div>
   );
 }
@@ -219,6 +226,7 @@ export default function AdminChatClient() {
   const [attachments, setAttachments] = useState<PendingAttachment[]>([]);
   const [attachError, setAttachError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
+  const [stepStatus, setStepStatus] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingChanges | null>(null);
   const [publishing, setPublishing] = useState(false);
   const [publishResult, setPublishResult] = useState<{
@@ -296,6 +304,7 @@ export default function AdminChatClient() {
     setInput("");
     setAttachments([]);
     setSending(true);
+    setStepStatus(null);
     setPublishResult(null);
 
     let turnState: unknown = undefined;
@@ -333,6 +342,8 @@ export default function AdminChatClient() {
         let data: {
           done?: boolean;
           turnState?: unknown;
+          stepLabel?: string;
+          step?: number;
           answer?: string;
           error?: string;
           downloads?: ChatDownload[];
@@ -376,6 +387,11 @@ export default function AdminChatClient() {
         }
 
         turnState = data.turnState;
+        setStepStatus(
+          data.stepLabel
+            ? `Step ${data.step ?? step}: ${data.stepLabel}`
+            : `Step ${data.step ?? step}…`,
+        );
       }
     } catch (err) {
       setMessages([
@@ -390,6 +406,7 @@ export default function AdminChatClient() {
       ]);
     } finally {
       setSending(false);
+      setStepStatus(null);
     }
   };
 
@@ -485,7 +502,7 @@ export default function AdminChatClient() {
               ))}
             </div>
           ))}
-          {sending && <TypingIndicator />}
+          {sending && <TypingIndicator status={stepStatus} />}
         </div>
         {attachments.length > 0 && (
           <div className="flex flex-wrap gap-2">

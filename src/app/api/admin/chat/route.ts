@@ -79,6 +79,55 @@ function newBranchName(): string {
   return `${ADMIN_BRANCH_PREFIX}${stamp}-${suffix}`;
 }
 
+// Human-readable label for what's happening right now, so the admin chat UI
+// can show real progress ("Writing src/app/sourcing/page.tsx…") across a
+// multi-step turn instead of a generic spinner with no idea how far along
+// it is.
+function describeToolCall(call: Anthropic.ToolUseBlock): string {
+  const input = call.input as Record<string, unknown>;
+  const path = typeof input.path === "string" ? input.path : "";
+  switch (call.name) {
+    case "github_list_dir":
+      return `Looking at ${path || "the repo root"}`;
+    case "github_read_file":
+      return `Reading ${path}`;
+    case "github_write_file":
+      return `Writing ${path}`;
+    case "github_delete_file":
+      return `Deleting ${path}`;
+    case "github_write_binary_file":
+      return `Saving ${path}`;
+    case "get_attachment":
+      return `Retrieving ${String(input.name ?? "attachment")}`;
+    case "seo_check_page":
+      return `Checking SEO on ${String(input.path ?? "")}`;
+    case "lighthouse_check_page":
+      return `Running a Lighthouse check on ${String(input.path ?? "")}`;
+    case "check_code_quality":
+      return `Checking code quality for ${path}`;
+    case "create_download":
+      return `Preparing ${String(input.name ?? "a file")} for download`;
+    case "sanity_query":
+      return "Querying Sanity content";
+    case "sanity_get_document":
+      return `Reading Sanity document ${String(input.id ?? "")}`;
+    case "sanity_patch_document":
+      return `Updating Sanity document ${String(input.id ?? "")}`;
+    case "sanity_create_document":
+      return `Creating a new Sanity ${String(input.docType ?? "document")}`;
+    default:
+      return `Running ${call.name}`;
+  }
+}
+
+function describeStep(toolUses: Anthropic.ToolUseBlock[]): string {
+  if (toolUses.length === 0) return "Thinking…";
+  const label = describeToolCall(toolUses[0]);
+  return toolUses.length > 1
+    ? `${label} (+${toolUses.length - 1} more)`
+    : label;
+}
+
 export async function POST(req: NextRequest) {
   const unlocked = await isPortalUnlocked("admin");
   if (!unlocked) {
@@ -286,6 +335,7 @@ export async function POST(req: NextRequest) {
     (b): b is Anthropic.TextBlock => b.type === "text",
   );
   const stepText = textBlock?.text ?? "";
+  const stepLabel = describeStep(toolUses);
 
   let done = response.stop_reason !== "tool_use" || toolUses.length === 0;
 
@@ -348,6 +398,8 @@ export async function POST(req: NextRequest) {
       : {
           done: false,
           turnState: state,
+          stepLabel,
+          step: state.iteration,
           branch,
           prNumber,
           prUrl,
