@@ -34,6 +34,15 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/bio',
+        destination: '/biochain',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
