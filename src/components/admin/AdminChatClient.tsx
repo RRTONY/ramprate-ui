@@ -79,6 +79,45 @@ async function fetchPendingChanges(): Promise<PendingChanges | null> {
   return res.json();
 }
 
+// `/api/admin/chat` streams its reply, so it can't set the signed session
+// cookie once a branch is created mid-stream. This persists (or clears, when
+// branch is null) that cookie so the Pending changes panel and Publish keep
+// working. Fire-and-forget: a failed persist just means the panel refreshes a
+// turn late.
+function persistSession(
+  branch: string | null | undefined,
+  prNumber: number | null | undefined,
+): Promise<unknown> {
+  return fetch("/api/admin/session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      branch: branch ?? null,
+      prNumber: prNumber ?? null,
+    }),
+  }).catch(() => undefined);
+}
+
+type ChatEvent =
+  | { type: "text"; delta: string }
+  | { type: "status"; stepLabel?: string; step?: number }
+  | {
+      type: "step";
+      turnState: unknown;
+      stepLabel?: string;
+      step?: number;
+      branch?: string | null;
+      prNumber?: number | null;
+    }
+  | {
+      type: "done";
+      answer: string;
+      downloads?: ChatDownload[];
+      branch?: string | null;
+      prNumber?: number | null;
+    }
+  | { type: "error"; error: string };
+
 // Chat history is per-browser only (localStorage), not shared across devices
 // or persisted server-side — good enough for a single-admin tool, and avoids
 // needing a database just to remember a conversation. Downloads (base64
@@ -310,7 +349,10 @@ export default function AdminChatClient() {
       setAttachError(`"${tooBig.name}" is over 3MB — attach a smaller file.`);
       return;
     }
-    const existingTotal = attachments.reduce((sum, a) => sum + a.base64.length * 0.75, 0);
+    const existingTotal = attachments.reduce(
+      (sum, a) => sum + a.base64.length * 0.75,
+      0,
+    );
     const newTotal = files.reduce((sum, f) => sum + f.size, 0);
     if (existingTotal + newTotal > MAX_TOTAL_ATTACHMENT_BYTES) {
       setAttachError(
@@ -326,16 +368,13 @@ export default function AdminChatClient() {
     setAttachments((prev) => prev.filter((a) => a.name !== name));
   };
 
-  // Netlify's free-plan synchronous function timeout is a hard 10 seconds,
-  // which the old single-request design (a whole tool-use loop server-side)
-  // could easily exceed on anything beyond a trivial one-tool edit. Instead,
-  // the server now does exactly one Claude call (+ any tools it asks for)
-  // per request and hands back an opaque `turnState` if it isn't done yet.
-  // This loop keeps calling the endpoint with that turnState until the turn
-  // finishes — from the admin's point of view it's still just "send one
-  // message," but under the hood it's several short, fast requests chained
-  // automatically instead of one long request that risks getting killed
-  // mid-flight.
+  // The chat endpoint streams Server-Sent Events: `text` deltas render the
+  // reply live, then one terminal `done` / `step` / `error` event. Netlify's
+  // free plan caps a *synchronous* function at ~10s but a *streaming* one at
+  // ~60s — a non-trivial edit used to blow the 10s budget and come back as a
+  // raw 504. The turn is still chopped into one-Claude-call steps: on a
+  // `step` event the client immediately re-POSTs the returned turnState, so
+  // from the admin's side it's still "send one message."
   const MAX_CLIENT_STEPS = 30;
 
   const send = async () => {
@@ -389,59 +428,111 @@ export default function AdminChatClient() {
           ),
         });
 
-        let data: {
-          done?: boolean;
-          turnState?: unknown;
-          stepLabel?: string;
-          step?: number;
-          answer?: string;
-          error?: string;
-          downloads?: ChatDownload[];
-        };
-        try {
-          data = await res.json();
-        } catch {
-          // Netlify (or an intermediary) rejected the request before it
-          // reached our handler — e.g. payload too large — so the body
-          // isn't JSON.
-          throw new Error(
-            res.status === 413
-              ? "Request rejected — payload too large (try removing an attachment)."
-              : `Server returned an unreadable response (status ${res.status}).`,
-          );
+        if (!res.ok || !res.body) {
+          // A non-2xx or bodyless response never reaches the SSE stream —
+          // e.g. auth/limit JSON errors from our handler, or Netlify
+          // rejecting the request (413) before it got there.
+          let errMsg: string;
+          try {
+            const data = await res.json();
+            errMsg = data.error || "Something went wrong.";
+          } catch {
+            errMsg =
+              res.status === 413
+                ? "Request rejected — payload too large (try removing an attachment)."
+                : `Server returned an unreadable response (status ${res.status}).`;
+          }
+          setMessages([
+            ...nextMessages,
+            { role: "assistant", content: errMsg },
+          ]);
+          break;
         }
 
-        if (!res.ok) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let streamedText = "";
+        let terminal: ChatEvent | null = null;
+
+        while (true) {
+          const { done: streamDone, value } = await reader.read();
+          if (streamDone) break;
+          buffer += decoder.decode(value, { stream: true });
+          const frames = buffer.split("\n\n");
+          buffer = frames.pop() ?? "";
+          for (const frame of frames) {
+            const dataLine = frame
+              .split("\n")
+              .find((l) => l.startsWith("data:"));
+            if (!dataLine) continue;
+            let evt: ChatEvent;
+            try {
+              evt = JSON.parse(dataLine.slice(5).trim());
+            } catch {
+              continue;
+            }
+            if (evt.type === "text") {
+              streamedText += evt.delta;
+              setMessages([
+                ...nextMessages,
+                { role: "assistant", content: streamedText },
+              ]);
+            } else if (evt.type === "status") {
+              setStepStatus(
+                `Step ${evt.step ?? step}: ${evt.stepLabel ?? "Working…"}`,
+              );
+            } else {
+              terminal = evt;
+            }
+          }
+        }
+
+        if (!terminal) {
+          // Stream ended with no terminal event — Netlify most likely killed
+          // the function at its streaming time limit, and there's no
+          // turnState to resume from.
           setMessages([
             ...nextMessages,
             {
               role: "assistant",
-              content: data.error || "Something went wrong.",
+              content:
+                (streamedText ? `${streamedText}\n\n` : "") +
+                "The response was cut off (server time limit). Try a smaller, more targeted request.",
             },
           ]);
           break;
         }
 
-        fetchPendingChanges().then(setPending);
-
-        if (data.done) {
+        if (terminal.type === "error") {
           setMessages([
             ...nextMessages,
-            {
-              role: "assistant",
-              content: data.answer!,
-              downloads: data.downloads,
-            },
+            { role: "assistant", content: terminal.error },
           ]);
           break;
         }
 
-        turnState = data.turnState;
+        if (terminal.type === "done") {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content: terminal.answer,
+              downloads: terminal.downloads,
+            },
+          ]);
+          await persistSession(terminal.branch, terminal.prNumber);
+          fetchPendingChanges().then(setPending);
+          break;
+        }
+
+        // terminal.type === "step" — another Claude call still to run.
+        turnState = terminal.turnState;
         setStepStatus(
-          data.stepLabel
-            ? `Step ${data.step ?? step}: ${data.stepLabel}`
-            : `Step ${data.step ?? step}…`,
+          `Step ${terminal.step ?? step}: ${terminal.stepLabel ?? "Working…"}`,
         );
+        if (terminal.branch) persistSession(terminal.branch, terminal.prNumber);
+        fetchPendingChanges().then(setPending);
       }
     } catch (err) {
       setMessages([

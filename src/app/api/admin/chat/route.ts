@@ -9,11 +9,16 @@ import {
 } from "@/lib/admin/tools";
 import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import * as gh from "@/lib/admin/github-client";
-import {
-  getAdminSession,
-  setAdminSessionCookies,
-  clearAdminSessionCookies,
-} from "@/lib/admin/session";
+import { getAdminSession } from "@/lib/admin/session";
+
+// This route streams its response (Server-Sent Events). Netlify's free plan
+// hard-caps a *synchronous* function at ~10s but gives a *streaming* response
+// ~60s — a single Sonnet call with a large system prompt + a big pasted brief
+// routinely needs more than 10s just to produce its first tool call, which is
+// what was returning a raw 504 to the browser. Streaming keeps time-to-first-
+// byte near-instant (Netlify sees the function respond immediately) and raises
+// the per-step budget to something a real edit can finish inside.
+export const dynamic = "force-dynamic";
 
 interface ChatMsg {
   role: "user" | "assistant";
@@ -33,14 +38,19 @@ interface Download {
 }
 
 // The full state of an in-progress turn, round-tripped opaquely between
-// client and server (see below for why — Netlify's free-plan 10s
-// synchronous function timeout means we can no longer run the whole
-// tool-use loop server-side in one request).
+// client and server. Still one Claude call per HTTP request (see the step
+// comment below); `branch`/`prNumber` are threaded through here too so a
+// multi-step turn no longer depends on a Set-Cookie landing between steps —
+// a streamed response has already flushed its headers by the time a branch
+// gets created mid-stream, so cookie persistence moved to POST
+// /api/admin/session, which the client calls once the turn settles.
 interface TurnState {
   messages: Anthropic.MessageParam[];
   auditLog: string[];
   downloads: Download[];
   iteration: number;
+  branch?: string | null;
+  prNumber?: number | null;
 }
 
 const INLINE_IMAGE_TYPES = new Set([
@@ -197,268 +207,302 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
-  // Rebuilt fresh every step, since nothing persists server-side between
-  // requests — the client re-sends the same attachments on every step of a
-  // turn so get_attachment keeps working no matter which step calls it.
-  const attachmentMap = new Map(
-    attachments.map((a) => [
-      a.name,
-      { mediaType: a.mediaType, base64: a.base64 },
-    ]),
-  );
 
   const session = await getAdminSession();
-  let branch = session.branch;
-  let prNumber = session.prNumber;
-  const defaultBranch = await gh.getDefaultBranch();
 
-  // The session cookie can outlive the branch it points at — its PR may
-  // have been merged/closed outside this app's own Publish flow (which
-  // would have cleared the cookie itself), or the branch deleted directly.
-  // Every GitHub call keyed on a dead branch 404s, which used to crash the
-  // whole request. Check once up front and reset to a fresh session instead
-  // of failing on it.
-  let sessionWasStale = false;
-  if (branch) {
-    const exists = await gh.branchExists(branch);
-    if (!exists) {
-      sessionWasStale = true;
-      branch = null;
-      prNumber = null;
-    }
-  }
+  // Everything below happens *inside* the stream so the very first byte goes
+  // out immediately — no GitHub round-trip or Claude latency between the
+  // client's fetch() and Netlify seeing the function respond.
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let closed = false;
+      const emit = (obj: unknown) => {
+        if (closed) return;
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`));
+      };
+      const finish = () => {
+        if (closed) return;
+        closed = true;
+        controller.close();
+      };
 
-  // Fresh turn: build the initial message from scratch, inlining images/PDFs
-  // so Claude can actually see/read them. Continuation: pick up exactly
-  // where the previous step's response left off.
-  const state: TurnState = incomingTurnState ?? {
-    messages: (() => {
-      const userContent: Anthropic.ContentBlockParam[] = [
-        {
-          type: "text",
-          text:
-            (message ?? "").trim() +
-            (attachments.length
-              ? `\n\n[Attached: ${attachments.map((a) => a.name).join(", ")} — images and PDFs above are already visible/readable inline. Only use get_attachment if you need to commit one of these into the repo as a file via github_write_binary_file.]`
-              : ""),
-        },
-      ];
-      for (const att of attachments) {
-        if (INLINE_IMAGE_TYPES.has(att.mediaType)) {
-          userContent.push({
-            type: "image",
-            source: {
-              type: "base64",
-              media_type: att.mediaType as "image/jpeg",
-              data: att.base64,
-            },
-          });
-        } else if (att.mediaType === "application/pdf") {
-          userContent.push({
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: att.base64,
-            },
-            title: att.name,
-          });
+      // Opening comment frame: forces headers to flush now, before any
+      // upstream latency, so Netlify never treats this as a slow synchronous
+      // response.
+      controller.enqueue(encoder.encode(": open\n\n"));
+
+      try {
+        let branch = incomingTurnState?.branch ?? session.branch;
+        let prNumber = incomingTurnState?.prNumber ?? session.prNumber;
+        const defaultBranch = await gh.getDefaultBranch();
+
+        // The session cookie / threaded branch can outlive the branch it
+        // points at — its PR may have been merged/closed outside this app's
+        // own Publish flow, or the branch deleted directly. Every GitHub call
+        // keyed on a dead branch 404s. Check once up front and reset to a
+        // fresh session instead of failing on it.
+        if (branch) {
+          const exists = await gh.branchExists(branch);
+          if (!exists) {
+            branch = null;
+            prNumber = null;
+          }
         }
-      }
-      return [
-        ...history
-          .slice(-20)
-          .map(
-            (m) =>
-              ({ role: m.role, content: m.content }) as Anthropic.MessageParam,
-          ),
-        { role: "user", content: userContent } as Anthropic.MessageParam,
-      ];
-    })(),
-    auditLog: [],
-    downloads: [],
-    iteration: 0,
-  };
 
-  const ctx: AdminToolContext = {
-    getReadBranch: () => branch ?? defaultBranch,
-    ensureWriteBranch: async () => {
-      if (branch) return branch;
-      // Single-admin assumption: if another tab already has a session in
-      // flight, adopt it instead of forking a second, conflicting branch.
-      const existingPR = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
-      if (existingPR) {
-        branch = existingPR.branch;
-        prNumber = existingPR.number;
-        state.auditLog.push(
-          `Resumed existing session: PR #${existingPR.number} (${existingPR.branch})`,
+        // Rebuilt fresh every step, since nothing persists server-side between
+        // requests — the client re-sends the same attachments on every step of
+        // a turn so get_attachment keeps working no matter which step calls it.
+        const attachmentMap = new Map(
+          attachments.map((a) => [
+            a.name,
+            { mediaType: a.mediaType, base64: a.base64 },
+          ]),
         );
-        return branch;
-      }
-      branch = newBranchName();
-      await gh.createBranch(branch);
-      state.auditLog.push(`Created branch ${branch}`);
-      return branch;
-    },
-    getAttachment: (name) => attachmentMap.get(name) ?? null,
-    recordDownload: (file) => state.downloads.push(file),
-    log: (entry) => state.auditLog.push(entry),
-  };
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+        // Fresh turn: build the initial message from scratch, inlining
+        // images/PDFs so Claude can actually see/read them. Continuation: pick
+        // up exactly where the previous step's response left off.
+        const state: TurnState = incomingTurnState ?? {
+          messages: (() => {
+            const userContent: Anthropic.ContentBlockParam[] = [
+              {
+                type: "text",
+                text:
+                  (message ?? "").trim() +
+                  (attachments.length
+                    ? `\n\n[Attached: ${attachments.map((a) => a.name).join(", ")} — images and PDFs above are already visible/readable inline. Only use get_attachment if you need to commit one of these into the repo as a file via github_write_binary_file.]`
+                    : ""),
+              },
+            ];
+            for (const att of attachments) {
+              if (INLINE_IMAGE_TYPES.has(att.mediaType)) {
+                userContent.push({
+                  type: "image",
+                  source: {
+                    type: "base64",
+                    media_type: att.mediaType as "image/jpeg",
+                    data: att.base64,
+                  },
+                });
+              } else if (att.mediaType === "application/pdf") {
+                userContent.push({
+                  type: "document",
+                  source: {
+                    type: "base64",
+                    media_type: "application/pdf",
+                    data: att.base64,
+                  },
+                  title: att.name,
+                });
+              }
+            }
+            return [
+              ...history.slice(-20).map(
+                (m) =>
+                  ({
+                    role: m.role,
+                    content: m.content,
+                  }) as Anthropic.MessageParam,
+              ),
+              { role: "user", content: userContent } as Anthropic.MessageParam,
+            ];
+          })(),
+          auditLog: [],
+          downloads: [],
+          iteration: 0,
+        };
 
-  // One step = one real Claude call (+ any tools it asks for), then return
-  // control to the client. This is the whole reason for the turnState
-  // round-trip: Netlify's free-plan synchronous function timeout is a hard
-  // 10 seconds, and the old design ran up to MAX_TOOL_ITERATIONS Claude+
-  // GitHub round trips inside a single request — trivially long enough to
-  // get killed mid-flight on anything but the simplest one-tool edit. Doing
-  // exactly one step per request keeps each individual request fast; the
-  // client automatically calls back-to-back until the turn is done, so it
-  // still looks like one message to the admin.
-  state.iteration++;
-  callsToday++;
+        const ctx: AdminToolContext = {
+          getReadBranch: () => branch ?? defaultBranch,
+          ensureWriteBranch: async () => {
+            if (branch) return branch;
+            // Single-admin assumption: if another tab already has a session in
+            // flight, adopt it instead of forking a second, conflicting branch.
+            const existingPR = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
+            if (existingPR) {
+              branch = existingPR.branch;
+              prNumber = existingPR.number;
+              state.auditLog.push(
+                `Resumed existing session: PR #${existingPR.number} (${existingPR.branch})`,
+              );
+              return branch;
+            }
+            branch = newBranchName();
+            await gh.createBranch(branch);
+            state.auditLog.push(`Created branch ${branch}`);
+            return branch;
+          },
+          getAttachment: (name) => attachmentMap.get(name) ?? null,
+          recordDownload: (file) => state.downloads.push(file),
+          log: (entry) => state.auditLog.push(entry),
+        };
 
-  let response: Anthropic.Message;
-  try {
-    response = await client.messages.create({
-      model: "claude-sonnet-5",
-      // Verified against a real page in this repo (src/app/sourcing/page.tsx,
-      // ~39K chars / ~1057 lines): 8192 was NOT enough headroom for
-      // github_write_file to emit a full-file rewrite of a page this size in
-      // one tool call — the response hit stop_reason "max_tokens" mid-write,
-      // the tool_use came back truncated/incomplete, and the write silently
-      // never happened (the loop's stop_reason check treats anything but
-      // "tool_use" as "done", so a truncated response looked like a normal
-      // finish with no error surfaced). This cap only bounds the ceiling, not
-      // actual spend — a trivial step (list a directory) costs the same
-      // either way — so there's no real downside to leaving headroom for the
-      // largest files in the repo.
-      max_tokens: 16000,
-      system: [
-        {
-          type: "text",
-          text: ADMIN_SYSTEM_PROMPT,
-          cache_control: { type: "ephemeral" },
-        },
-      ],
-      tools: ADMIN_TOOLS as Anthropic.Tool[],
-      messages: state.messages,
-    });
-  } catch (err) {
-    return NextResponse.json(
-      {
-        error:
-          err instanceof Error
-            ? `Claude API call failed: ${err.message}`
-            : "Claude API call failed",
-      },
-      { status: 502 },
-    );
-  }
+        const client = new Anthropic({
+          apiKey: process.env.ANTHROPIC_API_KEY,
+        });
 
-  state.messages.push({ role: "assistant", content: response.content });
+        // One step = one real Claude call (+ any tools it asks for), then
+        // return control to the client. The client automatically calls
+        // back-to-back with the returned turnState until the turn is done, so
+        // it still looks like one message to the admin. Streaming the call
+        // itself (below) is what keeps each step inside Netlify's response
+        // budget and lets the reply render token-by-token.
+        state.iteration++;
+        callsToday++;
 
-  const toolUses = response.content.filter(
-    (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
-  );
-  const textBlock = response.content.find(
-    (b): b is Anthropic.TextBlock => b.type === "text",
-  );
-  const stepText = textBlock?.text ?? "";
-  const stepLabel = describeStep(toolUses);
-
-  // A response cut off mid-generation (e.g. a huge file rewrite that
-  // outgrows max_tokens) is NOT a normal finish — stop_reason just won't be
-  // "tool_use" either, so without this check it would silently fall through
-  // to "done" below with a truncated/empty answer and no indication
-  // anything went wrong, even though the intended edit never happened.
-  if (response.stop_reason === "max_tokens") {
-    return NextResponse.json(
-      {
-        error:
-          "Claude's response was cut off mid-generation (likely writing a very large file in one go). Try asking for a smaller, more targeted change instead of a full-file rewrite.",
-      },
-      { status: 502 },
-    );
-  }
-
-  let done = response.stop_reason !== "tool_use" || toolUses.length === 0;
-
-  if (!done) {
-    const toolResults: Anthropic.ToolResultBlockParam[] = [];
-    for (const call of toolUses) {
-      const result = await runAdminTool(
-        call.name,
-        call.input as Record<string, unknown>,
-        ctx,
-      );
-      toolResults.push({
-        type: "tool_result",
-        tool_use_id: call.id,
-        content: JSON.stringify(result.output),
-        is_error: result.isError,
-      });
-    }
-    state.messages.push({ role: "user", content: toolResults });
-  }
-
-  let stepLimitReached = false;
-  if (!done && state.iteration >= MAX_TOOL_ITERATIONS) {
-    done = true;
-    stepLimitReached = true;
-  }
-
-  // Open (or confirm) the PR as soon as this turn has produced a commit —
-  // cheap and idempotent, so it's fine to check on every step rather than
-  // only at the very end.
-  let prUrl: string | null = null;
-  if (branch) {
-    if (!prNumber) {
-      const pr = await gh.openPR(
-        branch,
-        "Admin chat: site edits",
-        "Opened automatically by the admin chat. Review the diff before publishing.",
-      );
-      prNumber = pr.number;
-      prUrl = pr.url;
-      state.auditLog.push(`Opened PR #${pr.number}`);
-    } else {
-      prUrl = `https://github.com/RRTONY/ramprate-ui/pull/${prNumber}`;
-    }
-  }
-
-  const res = NextResponse.json(
-    done
-      ? {
-          done: true,
-          answer: stepLimitReached
-            ? `${stepText}\n\n(Stopped after ${MAX_TOOL_ITERATIONS} tool steps — send another message to continue.)`
-            : stepText || "Done.",
-          branch,
-          prNumber,
-          prUrl,
-          auditLog: state.auditLog,
-          downloads: state.downloads,
+        let response: Anthropic.Message;
+        try {
+          const mstream = client.messages.stream({
+            model: "claude-sonnet-5",
+            // Verified against a real page in this repo
+            // (src/app/sourcing/page.tsx, ~39K chars / ~1057 lines): 8192 was
+            // NOT enough headroom for github_write_file to emit a full-file
+            // rewrite of a page this size in one tool call. 16000 completed
+            // cleanly. This cap only bounds the ceiling, not actual spend.
+            max_tokens: 16000,
+            system: [
+              {
+                type: "text",
+                text: ADMIN_SYSTEM_PROMPT,
+                cache_control: { type: "ephemeral" },
+              },
+            ],
+            tools: ADMIN_TOOLS as Anthropic.Tool[],
+            messages: state.messages,
+          });
+          mstream.on("text", (delta) => emit({ type: "text", delta }));
+          response = await mstream.finalMessage();
+        } catch (err) {
+          emit({
+            type: "error",
+            error:
+              err instanceof Error
+                ? `Claude API call failed: ${err.message}`
+                : "Claude API call failed",
+          });
+          finish();
+          return;
         }
-      : {
-          done: false,
-          turnState: state,
-          stepLabel,
-          step: state.iteration,
-          branch,
-          prNumber,
-          prUrl,
-        },
-  );
 
-  if (branch) {
-    setAdminSessionCookies(res, { branch, prNumber: prNumber ?? undefined });
-  } else if (sessionWasStale) {
-    // No new branch was created this step (e.g. a read-only turn) — still
-    // clear the dead cookie so the browser stops sending it.
-    clearAdminSessionCookies(res);
-  }
+        state.messages.push({ role: "assistant", content: response.content });
 
-  return res;
+        const toolUses = response.content.filter(
+          (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
+        );
+        const textBlock = response.content.find(
+          (b): b is Anthropic.TextBlock => b.type === "text",
+        );
+        const stepText = textBlock?.text ?? "";
+        const stepLabel = describeStep(toolUses);
+
+        // A response cut off mid-generation (e.g. a huge file rewrite that
+        // outgrows max_tokens) is NOT a normal finish — stop_reason just won't
+        // be "tool_use" either, so without this check it would silently fall
+        // through to "done" below with a truncated answer and no indication
+        // anything went wrong, even though the intended edit never happened.
+        if (response.stop_reason === "max_tokens") {
+          emit({
+            type: "error",
+            error:
+              "Claude's response was cut off mid-generation (likely writing a very large file in one go). Try asking for a smaller, more targeted change instead of a full-file rewrite.",
+          });
+          finish();
+          return;
+        }
+
+        let done = response.stop_reason !== "tool_use" || toolUses.length === 0;
+
+        if (!done) {
+          emit({ type: "status", stepLabel, step: state.iteration });
+          const toolResults: Anthropic.ToolResultBlockParam[] = [];
+          for (const call of toolUses) {
+            const result = await runAdminTool(
+              call.name,
+              call.input as Record<string, unknown>,
+              ctx,
+            );
+            toolResults.push({
+              type: "tool_result",
+              tool_use_id: call.id,
+              content: JSON.stringify(result.output),
+              is_error: result.isError,
+            });
+          }
+          state.messages.push({ role: "user", content: toolResults });
+        }
+
+        let stepLimitReached = false;
+        if (!done && state.iteration >= MAX_TOOL_ITERATIONS) {
+          done = true;
+          stepLimitReached = true;
+        }
+
+        // Open (or confirm) the PR as soon as this turn has produced a commit —
+        // cheap and idempotent, so it's fine to check on every step rather than
+        // only at the very end.
+        let prUrl: string | null = null;
+        if (branch) {
+          if (!prNumber) {
+            const pr = await gh.openPR(
+              branch,
+              "Admin chat: site edits",
+              "Opened automatically by the admin chat. Review the diff before publishing.",
+            );
+            prNumber = pr.number;
+            prUrl = pr.url;
+            state.auditLog.push(`Opened PR #${pr.number}`);
+          } else {
+            prUrl = `https://github.com/RRTONY/ramprate-ui/pull/${prNumber}`;
+          }
+        }
+
+        state.branch = branch;
+        state.prNumber = prNumber;
+
+        if (done) {
+          emit({
+            type: "done",
+            answer: stepLimitReached
+              ? `${stepText}\n\n(Stopped after ${MAX_TOOL_ITERATIONS} tool steps — send another message to continue.)`
+              : stepText || "Done.",
+            branch,
+            prNumber,
+            prUrl,
+            auditLog: state.auditLog,
+            downloads: state.downloads,
+          });
+        } else {
+          emit({
+            type: "step",
+            turnState: state,
+            stepLabel,
+            step: state.iteration,
+            branch,
+            prNumber,
+            prUrl,
+          });
+        }
+        finish();
+      } catch (err) {
+        emit({
+          type: "error",
+          error:
+            err instanceof Error
+              ? err.message
+              : "Something went wrong handling this step.",
+        });
+        finish();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/event-stream; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+      Connection: "keep-alive",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }
