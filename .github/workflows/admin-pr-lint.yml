@@ -34,18 +34,21 @@ jobs:
       - name: Lint changed files
         run: |
           git fetch origin "${{ github.base_ref }}"
-          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' | tr '\n' ' ')
+          # --diff-filter=d excludes files this PR deleted — otherwise a PR
+          # that removes a .ts/.tsx file passes a now-nonexistent path to
+          # eslint, which hard-errors ("No files matching the pattern").
+          CHANGED=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' | tr '\n' ' ')
           if [ -z "$CHANGED" ]; then
             echo "No .ts/.tsx files changed in this PR."
             exit 0
           fi
           echo "Linting: $CHANGED"
-          npx eslint $CHANGED
+          npx eslint --no-error-on-unmatched-pattern $CHANGED
 
       - name: Prettier format check on changed files
         run: |
           git fetch origin "${{ github.base_ref }}"
-          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' '*.css' | tr '\n' ' ')
+          CHANGED=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}...HEAD" -- '*.ts' '*.tsx' '*.css' | tr '\n' ' ')
           if [ -z "$CHANGED" ]; then
             echo "No .ts/.tsx/.css files changed in this PR."
             exit 0
