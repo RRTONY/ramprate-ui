@@ -21,7 +21,11 @@ export const ADMIN_TOOLS = [
     input_schema: {
       type: "object" as const,
       properties: {
-        path: { type: "string", description: "e.g. src/app/about" },
+        path: {
+          type: "string",
+          description:
+            'e.g. "src/app/about". Use "" (empty string) for the repo root — do not pass quotes, "." or "/".',
+        },
       },
       required: ["path"],
     },
@@ -239,6 +243,32 @@ function denied(path: string): ToolCallResult {
   };
 }
 
+// The model sometimes hands us a path that's been JSON-quoted (`""`,
+// `"src/app"`), prefixed (`./`, `/`), or given a placeholder (`.`, `root`)
+// for the repo root. Normalize all of it to a clean repo-relative path
+// (`""` === root) before it reaches the GitHub API — a literal `""` was
+// getting URL-encoded to `%22%22` and 404ing.
+function normalizeRepoPath(raw: unknown): string {
+  let p = String(raw ?? "").trim();
+  while (
+    p.length >= 2 &&
+    ((p.startsWith('"') && p.endsWith('"')) ||
+      (p.startsWith("'") && p.endsWith("'")))
+  ) {
+    p = p.slice(1, -1).trim();
+  }
+  p = p.replace(/^\.?\/+/, "").replace(/\/+$/, "");
+  if (p === "." || p === "/" || p.toLowerCase() === "root") return "";
+  return p;
+}
+
+function pathRequired(): ToolCallResult {
+  return {
+    output: { error: "A repo-relative file path is required." },
+    isError: true,
+  };
+}
+
 export async function runAdminTool(
   name: string,
   input: Record<string, unknown>,
@@ -246,13 +276,14 @@ export async function runAdminTool(
 ): Promise<ToolCallResult> {
   switch (name) {
     case "github_list_dir": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
       const entries = await gh.listDir(path, ctx.getReadBranch());
       return { output: entries };
     }
 
     case "github_read_file": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
+      if (!path) return pathRequired();
       if (isPathDenied(path)) return denied(path);
       const file = await gh.getFile(path, ctx.getReadBranch());
       if (!file)
@@ -261,9 +292,10 @@ export async function runAdminTool(
     }
 
     case "github_write_file": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
       const content = String(input.content ?? "");
       const message = String(input.message ?? "Admin chat edit");
+      if (!path) return pathRequired();
       if (isPathDenied(path)) return denied(path);
       const branch = await ctx.ensureWriteBranch();
       await gh.putFile(path, content, message, branch);
@@ -272,8 +304,9 @@ export async function runAdminTool(
     }
 
     case "github_delete_file": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
       const message = String(input.message ?? "Admin chat delete");
+      if (!path) return pathRequired();
       if (isPathDenied(path)) return denied(path);
       const branch = await ctx.ensureWriteBranch();
       await gh.deleteFile(path, message, branch);
@@ -293,9 +326,10 @@ export async function runAdminTool(
     }
 
     case "github_write_binary_file": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
       const base64Content = String(input.base64Content ?? "");
       const message = String(input.message ?? "Admin chat binary upload");
+      if (!path) return pathRequired();
       if (isPathDenied(path)) return denied(path);
       const branch = await ctx.ensureWriteBranch();
       await gh.putFileBase64(path, base64Content, message, branch);
@@ -336,7 +370,7 @@ export async function runAdminTool(
     }
 
     case "check_code_quality": {
-      const path = String(input.path ?? "");
+      const path = normalizeRepoPath(input.path);
       const content = String(input.content ?? "");
       try {
         const result = await checkCode(path, content);

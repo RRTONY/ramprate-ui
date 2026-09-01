@@ -84,11 +84,14 @@ export interface DirEntry {
 }
 
 export async function listDir(path: string, ref: string): Promise<DirEntry[]> {
+  // An empty path is the repo root: GitHub wants `/contents` with no trailing
+  // segment, not `/contents/`.
+  const segment = path ? `/${encodeURI(path)}` : "";
   const data = await gh<
     | Array<{ path: string; type: string; size: number }>
     | { path: string; type: string; size: number }
   >(
-    `/repos/${OWNER}/${REPO}/contents/${encodeURI(path)}?ref=${encodeURIComponent(ref)}`,
+    `/repos/${OWNER}/${REPO}/contents${segment}?ref=${encodeURIComponent(ref)}`,
   );
   const arr = Array.isArray(data) ? data : data ? [data] : [];
   return arr.map((e) => ({
