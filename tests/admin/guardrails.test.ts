@@ -7,7 +7,11 @@ describe("isPathDenied", () => {
     expect(isPathDenied(".env.local")).toBe(true);
     expect(isPathDenied("package.json")).toBe(true);
     expect(isPathDenied("netlify.toml")).toBe(true);
-    expect(isPathDenied("next.config.ts")).toBe(true);
+  });
+
+  it("allows next.config.ts (needed for redirect rules)", () => {
+    expect(isPathDenied("next.config.ts")).toBe(false);
+    expect(isPathDenied("next.config.js")).toBe(false);
   });
 
   it("blocks the admin tool's own code", () => {

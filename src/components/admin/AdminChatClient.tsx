@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 interface ChatDownload {
   name: string;
@@ -25,6 +25,13 @@ interface PendingAttachment {
 // raw file bytes by ~4/3, so the limits here are deliberately conservative.
 const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
 const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
+
+const EXAMPLE_PROMPTS = [
+  "Change the headline on the Growth page",
+  "Send visitors from /bio to the BioChain page",
+  "Check the homepage for SEO problems and fix them",
+  "Make the homepage load faster",
+];
 
 function fileToAttachment(file: File): Promise<PendingAttachment> {
   return new Promise((resolve, reject) => {
@@ -211,6 +218,7 @@ function renderMessageContent(content: string): React.ReactNode {
   const lines = content.split("\n");
   const blocks: React.ReactNode[] = [];
   let listBuffer: string[] = [];
+  let codeBuffer: string[] | null = null;
   let blockIndex = 0;
 
   const flushList = () => {
@@ -226,7 +234,34 @@ function renderMessageContent(content: string): React.ReactNode {
     listBuffer = [];
   };
 
+  const flushCode = () => {
+    if (codeBuffer === null) return;
+    const code = codeBuffer.join("\n");
+    blocks.push(
+      <pre
+        key={`pre-${blockIndex++}`}
+        className="overflow-x-auto rounded-lg bg-black/40 border border-white/10 p-3 text-xs font-mono text-white/80"
+      >
+        <code>{code}</code>
+      </pre>,
+    );
+    codeBuffer = null;
+  };
+
   for (const rawLine of lines) {
+    if (rawLine.trimStart().startsWith("```")) {
+      if (codeBuffer === null) {
+        flushList();
+        codeBuffer = [];
+      } else {
+        flushCode();
+      }
+      continue;
+    }
+    if (codeBuffer !== null) {
+      codeBuffer.push(rawLine);
+      continue;
+    }
     const line = rawLine.trim();
     if (line.startsWith("- ") || line.startsWith("* ")) {
       listBuffer.push(line.slice(2));
@@ -239,22 +274,64 @@ function renderMessageContent(content: string): React.ReactNode {
     );
   }
   flushList();
-  return <div className="space-y-1.5">{blocks}</div>;
+  flushCode();
+  return <div className="space-y-2">{blocks}</div>;
 }
 
-function TypingIndicator({ status }: { status: string | null }) {
+// The admin agent can offer the site owner a set of choices by putting a
+// fenced ```options block in its reply, one choice per line. We strip the
+// block out of the rendered text and show the lines as buttons; clicking one
+// sends that exact line back as the next message, so the owner never has to
+// retype "option 1".
+const OPTIONS_BLOCK = /```options\s*\n([\s\S]*?)```/i;
+
+function extractOptions(content: string): {
+  text: string;
+  options: string[];
+} {
+  const match = content.match(OPTIONS_BLOCK);
+  if (!match) return { text: content, options: [] };
+  const options = match[1]
+    .split("\n")
+    .map((l) => l.replace(/^\s*(?:[-*]|\d+[.)])\s*/, "").trim())
+    .filter(Boolean);
+  return { text: content.replace(OPTIONS_BLOCK, "").trim(), options };
+}
+
+function Dots() {
   return (
-    <div className="self-start bg-white/6 rounded-lg px-4 py-3 flex items-center gap-2.5 max-w-[85%]">
-      <span className="flex items-center gap-1.5 shrink-0">
-        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.3s]" />
-        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:-0.15s]" />
-        <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce" />
+    <span className="flex items-center gap-1 shrink-0">
+      <span className="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce [animation-delay:-0.3s]" />
+      <span className="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce [animation-delay:-0.15s]" />
+      <span className="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce" />
+    </span>
+  );
+}
+
+// The "RampRate" name label that sits above every assistant message, the
+// same way Manus prints "manus" above each of its replies — no chat bubble,
+// just the wordmark and then the text flowing full-width below it.
+function Wordmark() {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="grid h-5 w-5 place-items-center rounded-md bg-gold/15 font-display text-[9px] font-bold text-gold">
+        RR
       </span>
-      {status && (
-        <span className="text-xs font-body text-white/40 truncate">
-          {status}
-        </span>
-      )}
+      <span className="font-display text-sm font-semibold text-white/80">
+        RampRate
+      </span>
+    </div>
+  );
+}
+
+function ThinkingRow({ status }: { status: string | null }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <Wordmark />
+      <div className="flex items-center gap-2.5 font-body text-sm text-white/40">
+        <Dots />
+        <span className="truncate">{status ?? "Working…"}</span>
+      </div>
     </div>
   );
 }
@@ -313,14 +390,40 @@ export default function AdminChatClient() {
   const [stepStatus, setStepStatus] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingChanges | null>(null);
   const [publishing, setPublishing] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [publishResult, setPublishResult] = useState<{
     ok: boolean;
     message: string;
   } | null>(null);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const taRef = useRef<HTMLTextAreaElement>(null);
+
   useEffect(() => {
     fetchPendingChanges().then(setPending);
   }, []);
+
+  // Keep the newest message in view as it streams in.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [messages, sending, stepStatus]);
+
+  const autoGrow = () => {
+    const el = taRef.current;
+    if (!el) return;
+    el.style.height = "0px";
+    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
+  };
+
+  const fillPrompt = (text: string) => {
+    setInput(text);
+    requestAnimationFrame(() => {
+      taRef.current?.focus();
+      autoGrow();
+    });
+  };
 
   useEffect(() => {
     // No-op until the admin does something (sessionMessages still null, so
@@ -377,21 +480,27 @@ export default function AdminChatClient() {
   // from the admin's side it's still "send one message."
   const MAX_CLIENT_STEPS = 30;
 
-  const send = async () => {
-    if (!input.trim() || sending) return;
+  // `override` is set when the admin clicks one of the agent's option
+  // buttons — that choice is sent as the next message instead of whatever's
+  // in the input box, and the input/attachments are left untouched.
+  const send = async (override?: string) => {
+    const text = (override ?? input).trim();
+    if (!text || sending) return;
+    const outgoingAttachments = override === undefined ? attachments : [];
     const userMsg: ChatMsg = {
       role: "user",
-      content: attachments.length
-        ? `${input.trim()} [${attachments.map((a) => a.name).join(", ")}]`
-        : input.trim(),
+      content: outgoingAttachments.length
+        ? `${text} [${outgoingAttachments.map((a) => a.name).join(", ")}]`
+        : text,
     };
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
-    const outgoingMessage = input.trim();
+    const outgoingMessage = text;
     const outgoingHistory = messages;
-    const outgoingAttachments = attachments;
-    setInput("");
-    setAttachments([]);
+    if (override === undefined) {
+      setInput("");
+      setAttachments([]);
+    }
     setSending(true);
     setStepStatus(null);
     setPublishResult(null);
@@ -592,218 +701,396 @@ export default function AdminChatClient() {
   };
 
   const checkStatusLabel: Record<PendingChanges["checkStatus"], string> = {
-    success: "Build passing",
-    pending: "Build running…",
-    failure: "Build failing",
-    unknown: "No build status yet",
+    success: "Ready to publish",
+    pending: "Checking the changes…",
+    failure: "Something needs fixing",
+    unknown: "No changes yet",
   };
 
+  const lastRole = messages[messages.length - 1]?.role;
+
   return (
-    <div className="min-h-screen bg-dark text-white flex flex-col md:flex-row">
-      <section className="flex-1 flex flex-col p-4 sm:p-6 gap-4 min-w-0 md:max-w-3xl">
-        <div className="flex items-center justify-between">
-          <h1 className="font-display text-2xl font-bold text-gold">
-            RampRate Admin
-          </h1>
+    <div className="flex h-screen bg-dark text-white flex-col md:flex-row overflow-hidden">
+      <section className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-white/10 bg-dark/80 px-4 py-3 backdrop-blur sm:px-6">
+          <div className="flex items-center gap-2.5">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-gold/15 font-display text-[11px] font-bold text-gold">
+              RR
+            </span>
+            <div className="leading-tight">
+              <h1 className="font-display text-base font-bold text-white">
+                RampRate Admin
+              </h1>
+              <p className="font-body text-[11px] text-white/40">
+                Nothing goes live until you press Publish
+              </p>
+            </div>
+          </div>
           {messages.length > 0 && (
             <button
               onClick={clearChat}
-              className="text-xs font-body text-white/40 hover:text-white/70"
+              className="rounded-md px-2 py-1 font-body text-xs text-white/40 hover:bg-white/5 hover:text-white/70"
             >
               Clear chat
             </button>
           )}
-        </div>
-        <div className="flex-1 overflow-y-auto flex flex-col gap-3 min-h-[50vh]">
-          {messages.length === 0 && (
-            <p className="text-white/50 font-body text-sm">
-              Describe what you want changed on the site or in Sanity content.
-              Nothing goes live until you click Publish.
-            </p>
-          )}
-          {messages.map((m, i) => (
-            <div
-              key={i}
-              className={`font-body text-sm rounded-lg px-4 py-3 max-w-[85%] ${
-                m.role === "user"
-                  ? "self-end bg-gold/20 text-white"
-                  : "self-start bg-white/6 text-white/90"
-              }`}
-            >
-              {renderMessageContent(m.content)}
-              {m.downloads?.map((d) => (
-                <a
-                  key={d.name}
-                  href={`data:${d.mediaType};base64,${d.base64}`}
-                  download={d.name}
-                  className="mt-2 flex items-center gap-2 text-xs text-gold underline"
-                >
-                  ⬇ {d.name}
-                </a>
-              ))}
-            </div>
-          ))}
-          {sending && <TypingIndicator status={stepStatus} />}
-        </div>
-        {attachments.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {attachments.map((a) => (
-              <span
-                key={a.name}
-                className="text-xs font-body bg-white/10 rounded-full pl-3 pr-1 py-1 flex items-center gap-2"
-              >
-                {a.name}
-                <button
-                  onClick={() => removeAttachment(a.name)}
-                  aria-label={`Remove ${a.name}`}
-                  className="w-4 h-4 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center"
-                >
-                  ×
-                </button>
-              </span>
-            ))}
+        </header>
+
+        <div ref={scrollRef} className="flex-1 overflow-y-auto">
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6">
+            {messages.length === 0 && (
+              <div className="flex flex-col items-center gap-4 py-16 text-center">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gold/10 font-display text-lg font-bold text-gold">
+                  RR
+                </span>
+                <div>
+                  <p className="font-display text-lg text-white">
+                    What should we change?
+                  </p>
+                  <p className="mx-auto mt-1 max-w-sm font-body text-sm text-white/45">
+                    Tell me the change you want in your own words. You review
+                    it, and nothing goes live until you press Publish.
+                  </p>
+                </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {EXAMPLE_PROMPTS.map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => fillPrompt(p)}
+                      className="rounded-full border border-white/10 bg-white/3 px-3 py-1.5 font-body text-xs text-white/60 hover:border-gold/40 hover:text-white"
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {messages.map((m, i) => {
+              const isUser = m.role === "user";
+              const { text, options } = isUser
+                ? { text: m.content, options: [] as string[] }
+                : extractOptions(m.content);
+              const isLast = i === messages.length - 1;
+              const optionsLive = options.length > 0 && isLast && !sending;
+              const streamingThis = !isUser && isLast && sending;
+
+              if (isUser) {
+                return (
+                  <div key={i} className="flex justify-end">
+                    <div className="max-w-[80%] whitespace-pre-wrap rounded-2xl bg-white/6 px-4 py-2.5 font-body text-sm leading-relaxed text-white">
+                      {m.content}
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={i} className="flex flex-col gap-2">
+                  <Wordmark />
+                  <div className="font-body text-[15px] leading-7 text-white/90">
+                    {renderMessageContent(text)}
+                    {streamingThis && (
+                      <span className="ml-0.5 inline-block h-4 w-0.5 translate-y-0.5 animate-blink bg-gold align-middle" />
+                    )}
+                  </div>
+                  {m.downloads?.map((d) => (
+                    <a
+                      key={d.name}
+                      href={`data:${d.mediaType};base64,${d.base64}`}
+                      download={d.name}
+                      className="flex w-fit items-center gap-2 rounded-lg border border-white/10 bg-white/3 px-3 py-2 text-xs text-gold hover:border-gold/40"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {d.name}
+                    </a>
+                  ))}
+                  {options.length > 0 && (
+                    <div className="mt-1 flex flex-col gap-2">
+                      {options.map((opt, oi) => (
+                        <button
+                          key={opt}
+                          onClick={() => optionsLive && send(opt)}
+                          disabled={!optionsLive}
+                          className="group flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/3 px-3.5 py-2.5 text-left font-body text-sm text-white/90 transition hover:border-gold/50 hover:bg-gold/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/10 disabled:hover:bg-white/3"
+                        >
+                          <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/10 text-[11px] font-bold text-white/60 group-hover:bg-gold/20 group-hover:text-gold">
+                            {oi + 1}
+                          </span>
+                          <span className="min-w-0 flex-1">{opt}</span>
+                          <svg
+                            viewBox="0 0 24 24"
+                            className="h-4 w-4 shrink-0 text-white/30 transition group-hover:translate-x-0.5 group-hover:text-gold/70"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              d="m9 6 6 6-6 6"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {sending && lastRole === "user" && (
+              <ThinkingRow status={stepStatus} />
+            )}
+            {sending && lastRole === "assistant" && stepStatus && (
+              <div className="flex items-center gap-2 font-body text-xs text-white/40">
+                <Dots />
+                <span className="truncate">{stepStatus}</span>
+              </div>
+            )}
           </div>
-        )}
-        {attachError && (
-          <p className="text-xs font-body text-red-400">{attachError}</p>
-        )}
-        <div className="flex gap-2">
-          <label className="px-4 py-3 rounded-lg bg-white/6 border border-white/10 text-sm font-body cursor-pointer hover:bg-white/10">
-            📎
-            <input
-              type="file"
-              multiple
-              className="hidden"
-              onChange={(e) => {
-                addFiles(e.target.files);
-                e.target.value = "";
-              }}
-            />
-          </label>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") send();
-            }}
-            placeholder="Update the hero headline on /growth…"
-            className="flex-1 min-w-0 rounded-lg px-4 py-3 bg-white/6 border border-white/10 text-sm font-body focus:outline-none focus:border-gold"
-          />
-          <button
-            onClick={send}
-            disabled={sending}
-            className="px-5 py-3 rounded-lg bg-gold text-dark font-body font-semibold text-sm disabled:opacity-50"
-          >
-            Send
-          </button>
+        </div>
+
+        <div className="sticky bottom-0 border-t border-white/10 bg-dark/85 px-4 py-3 backdrop-blur sm:px-6">
+          <div className="mx-auto w-full max-w-3xl">
+            {attachError && (
+              <p className="mb-2 font-body text-xs text-red-400">
+                {attachError}
+              </p>
+            )}
+            <div className="rounded-2xl border border-white/10 bg-dark-card focus-within:border-gold/50">
+              {attachments.length > 0 && (
+                <div className="flex flex-wrap gap-2 border-b border-white/5 p-2.5">
+                  {attachments.map((a) => (
+                    <span
+                      key={a.name}
+                      className="flex items-center gap-1.5 rounded-lg bg-white/10 py-1 pl-2.5 pr-1 font-body text-xs"
+                    >
+                      {a.name}
+                      <button
+                        onClick={() => removeAttachment(a.name)}
+                        aria-label={`Remove ${a.name}`}
+                        className="grid h-4 w-4 place-items-center rounded-full bg-white/15 hover:bg-white/25"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div className="flex items-end gap-2 p-2">
+                <label
+                  className="grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full border border-white/10 text-white/50 hover:bg-white/10 hover:text-white/80"
+                  title="Attach files"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      d="M12 5v14M5 12h14"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <input
+                    type="file"
+                    multiple
+                    className="hidden"
+                    onChange={(e) => {
+                      addFiles(e.target.files);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+                <textarea
+                  ref={taRef}
+                  rows={1}
+                  value={input}
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                    autoGrow();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      send();
+                    }
+                  }}
+                  placeholder="Message RampRate Admin…"
+                  className="max-h-[200px] min-h-[36px] flex-1 resize-none bg-transparent py-2 font-body text-sm text-white placeholder:text-white/35 focus:outline-none"
+                />
+                <button
+                  onClick={() => send()}
+                  disabled={sending || !input.trim()}
+                  aria-label="Send"
+                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gold text-dark transition hover:bg-gold-light disabled:bg-white/10 disabled:text-white/30"
+                >
+                  {sending ? (
+                    <Spinner className="h-4 w-4" />
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <path
+                        d="M12 20V5m0 0-6 6m6-6 6 6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <aside className="w-full md:w-72 lg:w-96 shrink-0 border-t md:border-t-0 md:border-l border-white/10 p-4 sm:p-6 flex flex-col gap-4 md:sticky md:top-0 md:h-screen md:overflow-y-auto">
-        <h2 className="font-display text-lg font-bold">Pending changes</h2>
+      <aside className="flex w-full shrink-0 flex-col gap-4 overflow-y-auto border-t border-white/10 p-4 sm:p-6 md:w-80 md:border-l md:border-t-0 lg:w-96">
+        <h2 className="font-display text-sm font-bold uppercase tracking-wider text-white/60">
+          Changes waiting
+        </h2>
 
-        <div className="flex flex-col gap-1">
-          {pending?.prUrl && (
-            <a
-              href={pending.prUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-gold underline font-body"
-            >
-              View pull request #{pending.prNumber}
-            </a>
-          )}
-          {pending?.previewUrl && (
-            <a
-              href={pending.previewUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-gold underline font-body"
-            >
-              Open preview & test it
-            </a>
-          )}
-        </div>
+        {(() => {
+          const fileCount = pending?.files.length ?? 0;
+          const draftCount = pending?.drafts.length ?? 0;
+          const total = fileCount + draftCount;
+          return (
+            <p className="font-body text-sm text-white/70">
+              {total === 0
+                ? "No changes are waiting yet. Ask the assistant to make one."
+                : `${total} change${total === 1 ? "" : "s"} ready for your review.`}
+            </p>
+          );
+        })()}
 
         {pending && (
-          <div className="flex items-center gap-2 text-xs font-body text-white/60">
+          <span
+            className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-xs ${
+              pending.checkStatus === "success"
+                ? "bg-emerald-500/10 text-emerald-300"
+                : pending.checkStatus === "failure"
+                  ? "bg-red-500/10 text-red-300"
+                  : pending.checkStatus === "pending"
+                    ? "bg-amber-500/10 text-amber-300"
+                    : "bg-white/5 text-white/50"
+            }`}
+          >
             {pending.checkStatus === "pending" && (
-              <Spinner className="w-3.5 h-3.5 text-white/50" />
+              <Spinner className="h-3 w-3" />
             )}
-            <span>{checkStatusLabel[pending.checkStatus]}</span>
-          </div>
+            {checkStatusLabel[pending.checkStatus]}
+          </span>
         )}
 
         {pending && pending.failingChecks.length > 0 && (
-          <div className="flex flex-col gap-1 rounded-lg bg-red-500/10 border border-red-500/20 p-3">
-            {pending.failingChecks.map((c) => (
-              <a
-                key={c.name}
-                href={c.url ?? undefined}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-body text-red-300 underline"
-              >
-                {c.name} failed
-              </a>
-            ))}
-            <p className="text-xs font-body text-white/50">
-              Tell the chat to fix this.
+          <div className="flex flex-col gap-1 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
+            <p className="font-body text-xs text-red-200">
+              Something in these changes needs fixing.
+            </p>
+            <p className="font-body text-xs text-white/50">
+              Ask the assistant to fix it, then check back here.
             </p>
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto flex flex-col gap-2">
-          {pending?.files.map((f) => (
-            <div
-              key={f.path}
-              className="text-xs font-mono bg-white/6 rounded px-3 py-2 break-all"
-            >
-              {f.path}
-              <span className="text-white/40">
-                {" "}
-                (+{f.additions}/-{f.deletions})
-              </span>
-            </div>
-          ))}
-          {pending?.drafts.map((d) => (
-            <div
-              key={d.id}
-              className="text-xs font-mono bg-white/6 rounded px-3 py-2 wrap-break-word"
-            >
-              {d.type}: {d.title}
-            </div>
-          ))}
-          {pending &&
-            pending.files.length === 0 &&
-            pending.drafts.length === 0 && (
-              <p className="text-xs font-body text-white/40">
-                Nothing pending.
-              </p>
-            )}
-        </div>
+        {pending?.previewUrl && (
+          <a
+            href={pending.previewUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="font-body text-xs text-gold underline"
+          >
+            Preview the site before publishing
+          </a>
+        )}
 
-        <div className="flex flex-col gap-2">
+        {pending && (pending.files.length > 0 || pending.drafts.length > 0) && (
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={() => setShowDetails((v) => !v)}
+              className="w-fit font-body text-xs text-white/40 underline hover:text-white/70"
+            >
+              {showDetails ? "Hide the details" : "Show the details"}
+            </button>
+            {showDetails && (
+              <div className="flex flex-col gap-2">
+                {pending.files.map((f) => (
+                  <div
+                    key={f.path}
+                    className="break-all rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
+                  >
+                    {f.path}{" "}
+                    <span className="text-emerald-400">+{f.additions}</span>{" "}
+                    <span className="text-red-400">-{f.deletions}</span>
+                  </div>
+                ))}
+                {pending.drafts.map((d) => (
+                  <div
+                    key={d.id}
+                    className="wrap-break-word rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
+                  >
+                    {d.type}: {d.title}
+                  </div>
+                ))}
+                {pending.prUrl && (
+                  <a
+                    href={pending.prUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-body text-xs text-gold underline"
+                  >
+                    Open the technical view on GitHub
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="mt-auto flex flex-col gap-2">
           <button
             onClick={publish}
             disabled={!pending?.canPublish || publishing}
-            className="w-full py-3 rounded-lg bg-gold text-dark font-body font-semibold text-sm disabled:opacity-30 flex items-center justify-center gap-2"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3 font-body text-sm font-semibold text-dark hover:bg-gold-light disabled:opacity-30 disabled:hover:bg-gold"
           >
-            {publishing && <Spinner className="w-4 h-4" />}
+            {publishing && <Spinner className="h-4 w-4" />}
             {publishing ? "Publishing…" : "Publish"}
           </button>
+          <p className="font-body text-[11px] text-white/40">
+            Publishing puts these changes on the live website.
+          </p>
           {publishing && (
-            <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden">
+            <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
               <div className="progress-slide h-full w-1/3 rounded-full bg-gold" />
             </div>
           )}
         </div>
         {publishResult && (
           <div
-            className={`rounded-lg p-3 text-xs font-body ${
+            className={`rounded-lg p-3 font-body text-xs ${
               publishResult.ok
-                ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-300"
-                : "bg-red-500/10 border border-red-500/30 text-red-300"
+                ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                : "border border-red-500/30 bg-red-500/10 text-red-300"
             }`}
           >
             {publishResult.ok ? "✅ " : "⚠️ "}

@@ -3,7 +3,9 @@
 // secrets, or build config. Checked on every read/write/delete tool call.
 const DENYLIST_PATTERNS: RegExp[] = [
   /^\.env(\..*)?$/i,
-  /^next\.config\.(js|ts|mjs)$/i,
+  // next.config.ts is intentionally NOT blocked — the admin needs it for
+  // redirect rules (e.g. /bio -> /biochain). netlify.toml, .env*, and the
+  // rest below stay blocked.
   /^package(-lock)?\.json$/i,
   /^yarn\.lock$/i,
   /^netlify\.toml$/i,
