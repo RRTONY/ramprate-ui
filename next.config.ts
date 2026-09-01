@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
         destination: '/biochain',
         permanent: true,
       },
+      {
+        source: '/nda',
+        destination: 'https://ramprate.s.gy/nda-sign',
+        permanent: true,
+      },
     ]
   },
 }
