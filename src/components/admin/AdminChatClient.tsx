@@ -285,17 +285,63 @@ function renderMessageContent(content: string): React.ReactNode {
 // retype "option 1".
 const OPTIONS_BLOCK = /```options\s*\n([\s\S]*?)```/i;
 
+// Fallback: the model doesn't always use the block — it often writes choices
+// as a plain trailing "1. … 2. …" list. If a reply reads like it's asking the
+// reader to pick AND contains a short numbered list, show those as buttons
+// too, so the owner still gets one-click answers.
+const ASKS_TO_CHOOSE =
+  /\b(option|options|want me to|which one|which option|would you like|do you want|pick one|choose|let me know which)\b/i;
+
+function stripMarker(line: string): string {
+  return line.replace(/^\s*(?:[-*]|\d+[.)])\s*/, "").trim();
+}
+
+function parseTrailingNumberedList(
+  content: string,
+): { text: string; options: string[] } | null {
+  const lines = content.split("\n");
+  const startIdx: number[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (/^\s*\d+[.)]\s+\S/.test(lines[i])) startIdx.push(i);
+  }
+  if (startIdx.length < 2 || startIdx.length > 4) return null;
+  for (let k = 0; k < startIdx.length; k++) {
+    if (Number(lines[startIdx[k]].match(/^\s*(\d+)/)![1]) !== k + 1)
+      return null;
+  }
+  const options: string[] = [];
+  let listEnd = startIdx[startIdx.length - 1] + 1;
+  for (let k = 0; k < startIdx.length; k++) {
+    const from = startIdx[k];
+    const hardStop = k + 1 < startIdx.length ? startIdx[k + 1] : lines.length;
+    let to = from + 1;
+    while (to < hardStop && lines[to].trim() !== "") to++;
+    if (k === startIdx.length - 1) listEnd = to;
+    const chunk = stripMarker(
+      lines.slice(from, to).join(" ").replace(/\s+/g, " "),
+    );
+    if (!chunk || chunk.length > 240) return null;
+    options.push(chunk);
+  }
+  const before = lines.slice(0, startIdx[0]).join("\n").trim();
+  const after = lines.slice(listEnd).join("\n").trim();
+  return { text: [before, after].filter(Boolean).join("\n\n"), options };
+}
+
 function extractOptions(content: string): {
   text: string;
   options: string[];
 } {
   const match = content.match(OPTIONS_BLOCK);
-  if (!match) return { text: content, options: [] };
-  const options = match[1]
-    .split("\n")
-    .map((l) => l.replace(/^\s*(?:[-*]|\d+[.)])\s*/, "").trim())
-    .filter(Boolean);
-  return { text: content.replace(OPTIONS_BLOCK, "").trim(), options };
+  if (match) {
+    const options = match[1].split("\n").map(stripMarker).filter(Boolean);
+    return { text: content.replace(OPTIONS_BLOCK, "").trim(), options };
+  }
+  if (ASKS_TO_CHOOSE.test(content)) {
+    const parsed = parseTrailingNumberedList(content);
+    if (parsed) return parsed;
+  }
+  return { text: content, options: [] };
 }
 
 function Dots() {
