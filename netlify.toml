@@ -9,6 +9,14 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Hand-written Netlify Functions, separate from the Next.js app's own
+# src/app/api routes (which @netlify/plugin-nextjs turns into functions on
+# its own). Currently just admin-job-runner.mts, a Scheduled Function that
+# drives the /admin chat's background jobs forward one step at a time - see
+# that file for why it can't be a normal App Router route handler.
+[functions]
+  directory = "netlify/functions"
+
 # CSP is deliberately not set here: the app loads inline analytics-init scripts
 # (GA/Plausible in src/app/layout.tsx) that a correct CSP would need nonces or
 # hashes for, and getting that wrong breaks the whole site rather than just
