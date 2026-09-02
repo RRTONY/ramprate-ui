@@ -139,6 +139,13 @@ async function fetchJobStatus(
 const CHAT_STORAGE_KEY = "ramprate_admin_chat_history";
 const MAX_STORED_MESSAGES = 50;
 
+// Set while a background job is in flight, cleared once it reaches
+// done/error — lets a fresh page load notice an unfinished job (from a
+// closed tab, a refresh, or the poll loop's own watch window ending) and
+// resume watching it, instead of the admin having no way to find out
+// whether it ever finished.
+const ACTIVE_JOB_KEY = "ramprate_admin_active_job";
+
 function loadStoredMessages(): ChatMsg[] {
   try {
     const raw = localStorage.getItem(CHAT_STORAGE_KEY);
@@ -634,7 +641,104 @@ export default function AdminChatClient() {
   // queued for the runner's next tick to retry — nothing is lost, and this
   // loop keeps polling right through it.
   const POLL_INTERVAL_MS = 3000;
+  // A ceiling on how long THIS tab keeps actively watching — not on how long
+  // the job itself is allowed to run. The job keeps ticking server-side
+  // regardless; giving up here only means this browser stops asking about
+  // it, which is why ACTIVE_JOB_KEY (below) is deliberately NOT cleared when
+  // this fires — a reload picks the watch back up instead of losing it.
   const MAX_POLL_MS = 10 * 60 * 1000;
+
+  // Watches one job to completion, updating messages/step status as it
+  // goes. Called both right after starting a fresh job and, on mount, to
+  // resume one that outlived a previous page load (tab closed, refreshed, or
+  // this same loop's own MAX_POLL_MS was hit) — the job runs server-side via
+  // the Netlify Scheduled Function regardless of whether anything is
+  // watching, so this is about not losing track of it, not about bounding
+  // the work itself.
+  const pollActiveJob = async (jobId: string, nextMessages: ChatMsg[]) => {
+    try {
+      localStorage.setItem(ACTIVE_JOB_KEY, jobId);
+    } catch {
+      // Storage full or unavailable — resuming after a reload just won't
+      // work; the live poll below still will.
+    }
+    setSending(true);
+    setStepStatus(null);
+    const startedAt = Date.now();
+    try {
+      while (true) {
+        if (Date.now() - startedAt > MAX_POLL_MS) {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content:
+                "This is taking longer than expected, but it's still running in the background. Reopen this page any time and I'll pick up right where it left off, or send another message.",
+            },
+          ]);
+          break;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        const job = await fetchJobStatus(jobId);
+        if (!job) continue; // transient fetch failure — just try again next tick
+
+        if (job.branch) persistSession(job.branch, job.prNumber);
+        fetchPendingChanges().then(applyPending);
+
+        if (job.status === "queued" || job.status === "running") {
+          setStepStatus(
+            job.status === "queued"
+              ? "Waiting for the next check…"
+              : `Step ${job.iteration}: ${job.stepLabel ?? "Working…"}`,
+          );
+          continue;
+        }
+
+        try {
+          localStorage.removeItem(ACTIVE_JOB_KEY);
+        } catch {
+          // ignore
+        }
+
+        if (job.status === "error") {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content: job.error ?? "Something went wrong.",
+            },
+          ]);
+          break;
+        }
+
+        // job.status === "done"
+        setMessages([
+          ...nextMessages,
+          {
+            role: "assistant",
+            content: job.answer ?? "Done.",
+            downloads: job.downloads,
+          },
+        ]);
+        break;
+      }
+    } catch (err) {
+      setMessages([
+        ...nextMessages,
+        {
+          role: "assistant",
+          content:
+            err instanceof Error
+              ? err.message
+              : "Request failed — check your connection and try again.",
+        },
+      ]);
+    } finally {
+      setSending(false);
+      setStepStatus(null);
+    }
+  };
 
   // `override` is set when the admin clicks one of the agent's option
   // buttons — that choice is sent as the next message instead of whatever's
@@ -708,63 +812,12 @@ export default function AdminChatClient() {
               : `Server returned an unreadable response (status ${startRes.status}).`;
         }
         setMessages([...nextMessages, { role: "assistant", content: errMsg }]);
+        setSending(false);
         return;
       }
 
       const { jobId } = (await startRes.json()) as { jobId: string };
-      const startedAt = Date.now();
-
-      while (true) {
-        if (Date.now() - startedAt > MAX_POLL_MS) {
-          setMessages([
-            ...nextMessages,
-            {
-              role: "assistant",
-              content:
-                "This is taking longer than expected. It's still running in the background — check back in a few minutes, or send another message.",
-            },
-          ]);
-          break;
-        }
-
-        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-        const job = await fetchJobStatus(jobId);
-        if (!job) continue; // transient fetch failure — just try again next tick
-
-        if (job.branch) persistSession(job.branch, job.prNumber);
-        fetchPendingChanges().then(applyPending);
-
-        if (job.status === "queued" || job.status === "running") {
-          setStepStatus(
-            job.status === "queued"
-              ? "Waiting for the next check…"
-              : `Step ${job.iteration}: ${job.stepLabel ?? "Working…"}`,
-          );
-          continue;
-        }
-
-        if (job.status === "error") {
-          setMessages([
-            ...nextMessages,
-            {
-              role: "assistant",
-              content: job.error ?? "Something went wrong.",
-            },
-          ]);
-          break;
-        }
-
-        // job.status === "done"
-        setMessages([
-          ...nextMessages,
-          {
-            role: "assistant",
-            content: job.answer ?? "Done.",
-            downloads: job.downloads,
-          },
-        ]);
-        break;
-      }
+      await pollActiveJob(jobId, nextMessages);
     } catch (err) {
       setMessages([
         ...nextMessages,
@@ -776,11 +829,38 @@ export default function AdminChatClient() {
               : "Request failed — check your connection and try again.",
         },
       ]);
-    } finally {
       setSending(false);
       setStepStatus(null);
     }
   };
+
+  // Resume watching a job left running from a previous page load — the job
+  // itself never stopped (it runs on the Scheduled Function's own tick,
+  // independent of any browser being open), so on a fresh load this is the
+  // only way the admin ever finds out it finished, rather than the result
+  // being silently lost the moment this tab closed or the last watch's
+  // MAX_POLL_MS ran out.
+  useEffect(() => {
+    let activeJobId: string | null = null;
+    try {
+      activeJobId = localStorage.getItem(ACTIVE_JOB_KEY);
+    } catch {
+      activeJobId = null;
+    }
+    if (!activeJobId) return;
+    // Deferred a tick so this reads as "schedule an async watch" rather than
+    // a synchronous setState-in-effect — pollActiveJob's first act is
+    // setSending(true).
+    queueMicrotask(() => {
+      pollActiveJob(activeJobId, messages);
+    });
+    // Deliberately once, on mount only — `messages` here is just the seed
+    // list this resumed job's eventual reply gets appended to (already
+    // includes the pending user turn from before the reload, since chat
+    // history persists independently), not something this effect should
+    // re-run for.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const publish = async () => {
     if (publishing || !pending?.canPublish) return;
