@@ -113,25 +113,24 @@ function persistSession(
   }).catch(() => undefined);
 }
 
-type ChatEvent =
-  | { type: "text"; delta: string }
-  | { type: "status"; stepLabel?: string; step?: number }
-  | {
-      type: "step";
-      turnState: unknown;
-      stepLabel?: string;
-      step?: number;
-      branch?: string | null;
-      prNumber?: number | null;
-    }
-  | {
-      type: "done";
-      answer: string;
-      downloads?: ChatDownload[];
-      branch?: string | null;
-      prNumber?: number | null;
-    }
-  | { type: "error"; error: string };
+interface JobStatusResponse {
+  status: "queued" | "running" | "done" | "error";
+  stepLabel: string | null;
+  answer: string | null;
+  error: string | null;
+  branch: string | null;
+  prNumber: number | null;
+  downloads: ChatDownload[];
+  iteration: number;
+}
+
+async function fetchJobStatus(
+  jobId: string,
+): Promise<JobStatusResponse | null> {
+  const res = await fetch(`/api/admin/job/${jobId}`);
+  if (!res.ok) return null;
+  return res.json();
+}
 
 // Chat history is per-browser only (localStorage), not shared across devices
 // or persisted server-side — good enough for a single-admin tool, and avoids
@@ -621,14 +620,21 @@ export default function AdminChatClient() {
     setAttachments((prev) => prev.filter((a) => a.name !== name));
   };
 
-  // The chat endpoint streams Server-Sent Events: `text` deltas render the
-  // reply live, then one terminal `done` / `step` / `error` event. Netlify's
-  // free plan caps a *synchronous* function at ~10s but a *streaming* one at
-  // ~60s — a non-trivial edit used to blow the 10s budget and come back as a
-  // raw 504. The turn is still chopped into one-Claude-call steps: on a
-  // `step` event the client immediately re-POSTs the returned turnState, so
-  // from the admin's side it's still "send one message."
-  const MAX_CLIENT_STEPS = 30;
+  // The turn runs as a background job, not a live request the browser has to
+  // hold open: POST /api/admin/job starts it and returns a jobId right away,
+  // a Netlify Scheduled Function (netlify/functions/admin-job-runner.mts)
+  // drives it forward one bounded step at a time on its own ~1-minute tick,
+  // and this just polls GET /api/admin/job/[jobId] for progress. Replaces an
+  // earlier SSE-streaming design that held one HTTP connection open for the
+  // whole turn — reliable for a single quick step, but a request doing
+  // several tool calls or a slow Claude response could run past Netlify's
+  // real free-tier execution ceiling and die with no detail at all
+  // ("response was cut off"), losing whatever progress that step made. This
+  // way, a step failing (its own timeout included) just leaves the job
+  // queued for the runner's next tick to retry — nothing is lost, and this
+  // loop keeps polling right through it.
+  const POLL_INTERVAL_MS = 3000;
+  const MAX_POLL_MS = 10 * 60 * 1000;
 
   // `override` is set when the admin clicks one of the agent's option
   // buttons — that choice is sent as the next message instead of whatever's
@@ -655,7 +661,17 @@ export default function AdminChatClient() {
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
     const outgoingMessage = text;
-    const outgoingHistory = messages;
+    // The job-runner has no concept of an "auto" turn — those are a client-
+    // only UI notice, and their display text ("Automatically checking…")
+    // isn't the real instruction the assistant saw, so it can't stand in for
+    // that turn in history either. Excluding them just means the assistant
+    // sees the conversation as it actually happened: the real instruction
+    // and its real reply, both still present as their own turns.
+    const outgoingHistory = messages
+      .filter(
+        (m): m is ChatMsg & { role: "user" | "assistant" } => m.role !== "auto",
+      )
+      .map(({ role, content }) => ({ role, content }));
     if (override === undefined) {
       setInput("");
       setAttachments([]);
@@ -669,143 +685,85 @@ export default function AdminChatClient() {
     setStepStatus(null);
     setPublishResult(null);
 
-    let turnState: unknown = undefined;
-    let step = 0;
-
     try {
+      const startRes = await fetch("/api/admin/job", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: outgoingMessage,
+          history: outgoingHistory,
+          attachments: outgoingAttachments,
+        }),
+      });
+
+      if (!startRes.ok) {
+        let errMsg: string;
+        try {
+          const data = await startRes.json();
+          errMsg = data.error || "Something went wrong.";
+        } catch {
+          errMsg =
+            startRes.status === 413
+              ? "Request rejected — payload too large (try removing an attachment)."
+              : `Server returned an unreadable response (status ${startRes.status}).`;
+        }
+        setMessages([...nextMessages, { role: "assistant", content: errMsg }]);
+        return;
+      }
+
+      const { jobId } = (await startRes.json()) as { jobId: string };
+      const startedAt = Date.now();
+
       while (true) {
-        step++;
-        if (step > MAX_CLIENT_STEPS) {
+        if (Date.now() - startedAt > MAX_POLL_MS) {
           setMessages([
             ...nextMessages,
             {
               role: "assistant",
               content:
-                "Stopped after too many steps — send another message to continue.",
+                "This is taking longer than expected. It's still running in the background — check back in a few minutes, or send another message.",
             },
           ]);
           break;
         }
 
-        const res = await fetch("/api/admin/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(
-            turnState
-              ? { attachments: outgoingAttachments, turnState }
-              : {
-                  message: outgoingMessage,
-                  history: outgoingHistory,
-                  attachments: outgoingAttachments,
-                },
-          ),
-        });
+        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        const job = await fetchJobStatus(jobId);
+        if (!job) continue; // transient fetch failure — just try again next tick
 
-        if (!res.ok || !res.body) {
-          // A non-2xx or bodyless response never reaches the SSE stream —
-          // e.g. auth/limit JSON errors from our handler, or Netlify
-          // rejecting the request (413) before it got there.
-          let errMsg: string;
-          try {
-            const data = await res.json();
-            errMsg = data.error || "Something went wrong.";
-          } catch {
-            errMsg =
-              res.status === 413
-                ? "Request rejected — payload too large (try removing an attachment)."
-                : `Server returned an unreadable response (status ${res.status}).`;
-          }
-          setMessages([
-            ...nextMessages,
-            { role: "assistant", content: errMsg },
-          ]);
-          break;
-        }
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let streamedText = "";
-        let terminal: ChatEvent | null = null;
-
-        while (true) {
-          const { done: streamDone, value } = await reader.read();
-          if (streamDone) break;
-          buffer += decoder.decode(value, { stream: true });
-          const frames = buffer.split("\n\n");
-          buffer = frames.pop() ?? "";
-          for (const frame of frames) {
-            const dataLine = frame
-              .split("\n")
-              .find((l) => l.startsWith("data:"));
-            if (!dataLine) continue;
-            let evt: ChatEvent;
-            try {
-              evt = JSON.parse(dataLine.slice(5).trim());
-            } catch {
-              continue;
-            }
-            if (evt.type === "text") {
-              streamedText += evt.delta;
-              setMessages([
-                ...nextMessages,
-                { role: "assistant", content: streamedText },
-              ]);
-            } else if (evt.type === "status") {
-              setStepStatus(
-                `Step ${evt.step ?? step}: ${evt.stepLabel ?? "Working…"}`,
-              );
-            } else {
-              terminal = evt;
-            }
-          }
-        }
-
-        if (!terminal) {
-          // Stream ended with no terminal event — Netlify most likely killed
-          // the function at its streaming time limit, and there's no
-          // turnState to resume from.
-          setMessages([
-            ...nextMessages,
-            {
-              role: "assistant",
-              content:
-                (streamedText ? `${streamedText}\n\n` : "") +
-                "The response was cut off (server time limit). Try a smaller, more targeted request.",
-            },
-          ]);
-          break;
-        }
-
-        if (terminal.type === "error") {
-          setMessages([
-            ...nextMessages,
-            { role: "assistant", content: terminal.error },
-          ]);
-          break;
-        }
-
-        if (terminal.type === "done") {
-          setMessages([
-            ...nextMessages,
-            {
-              role: "assistant",
-              content: terminal.answer,
-              downloads: terminal.downloads,
-            },
-          ]);
-          await persistSession(terminal.branch, terminal.prNumber);
-          fetchPendingChanges().then(applyPending);
-          break;
-        }
-
-        // terminal.type === "step" — another Claude call still to run.
-        turnState = terminal.turnState;
-        setStepStatus(
-          `Step ${terminal.step ?? step}: ${terminal.stepLabel ?? "Working…"}`,
-        );
-        if (terminal.branch) persistSession(terminal.branch, terminal.prNumber);
+        if (job.branch) persistSession(job.branch, job.prNumber);
         fetchPendingChanges().then(applyPending);
+
+        if (job.status === "queued" || job.status === "running") {
+          setStepStatus(
+            job.status === "queued"
+              ? "Waiting for the next check…"
+              : `Step ${job.iteration}: ${job.stepLabel ?? "Working…"}`,
+          );
+          continue;
+        }
+
+        if (job.status === "error") {
+          setMessages([
+            ...nextMessages,
+            {
+              role: "assistant",
+              content: job.error ?? "Something went wrong.",
+            },
+          ]);
+          break;
+        }
+
+        // job.status === "done"
+        setMessages([
+          ...nextMessages,
+          {
+            role: "assistant",
+            content: job.answer ?? "Done.",
+            downloads: job.downloads,
+          },
+        ]);
+        break;
       }
     } catch (err) {
       setMessages([
