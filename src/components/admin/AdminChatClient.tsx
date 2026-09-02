@@ -13,7 +13,11 @@ interface ChatDownload {
 }
 
 interface ChatMsg {
-  role: "user" | "assistant";
+  // "auto" is a self-triggered fix turn (the panel noticed a failing check
+  // and asked the assistant to fix it, with no admin action) — rendered as a
+  // small centered notice instead of a chat bubble, so a non-technical
+  // company member never has to see or understand the raw instruction.
+  role: "user" | "assistant" | "auto";
   content: string;
   downloads?: ChatDownload[];
 }
@@ -515,6 +519,7 @@ export default function AdminChatClient() {
   const [publishing, setPublishing] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [progressOpen, setProgressOpen] = useState(true);
+  const [autoFixAttempts, setAutoFixAttempts] = useState(0);
   const [publishResult, setPublishResult] = useState<{
     ok: boolean;
     message: string;
@@ -523,8 +528,17 @@ export default function AdminChatClient() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const taRef = useRef<HTMLTextAreaElement>(null);
 
+  // Every place that refetches pending-changes status should go through
+  // this, not setPending directly — a fresh, non-failing result means the
+  // automatic-fix budget (see the effect below) should reset, so a later,
+  // unrelated failure gets its own fair set of attempts.
+  const applyPending = (result: PendingChanges | null) => {
+    setPending(result);
+    if (result?.checkStatus !== "failure") setAutoFixAttempts(0);
+  };
+
   useEffect(() => {
-    fetchPendingChanges().then(setPending);
+    fetchPendingChanges().then(applyPending);
   }, []);
 
   // GitHub Actions/Netlify checks can take a while to finish. Poll while
@@ -534,7 +548,7 @@ export default function AdminChatClient() {
   useEffect(() => {
     if (pending?.checkStatus !== "pending") return;
     const id = setInterval(() => {
-      fetchPendingChanges().then(setPending);
+      fetchPendingChanges().then(applyPending);
     }, 15000);
     return () => clearInterval(id);
   }, [pending?.checkStatus]);
@@ -619,15 +633,24 @@ export default function AdminChatClient() {
   // `override` is set when the admin clicks one of the agent's option
   // buttons — that choice is sent as the next message instead of whatever's
   // in the input box, and the input/attachments are left untouched.
-  const send = async (override?: string) => {
+  // `opts.auto` marks a self-triggered fix turn (the panel noticed a failing
+  // check on its own): it renders as a small centered notice instead of a
+  // chat bubble, using opts.displayText, while the real instruction in
+  // `override` still goes to the assistant underneath.
+  const send = async (
+    override?: string,
+    opts?: { auto?: boolean; displayText?: string },
+  ) => {
     const text = (override ?? input).trim();
     if (!text || sending) return;
     const outgoingAttachments = override === undefined ? attachments : [];
     const userMsg: ChatMsg = {
-      role: "user",
-      content: outgoingAttachments.length
-        ? `${text} [${outgoingAttachments.map((a) => a.name).join(", ")}]`
-        : text,
+      role: opts?.auto ? "auto" : "user",
+      content: opts?.auto
+        ? (opts.displayText ?? "Automatically checking a failing check…")
+        : outgoingAttachments.length
+          ? `${text} [${outgoingAttachments.map((a) => a.name).join(", ")}]`
+          : text,
     };
     const nextMessages = [...messages, userMsg];
     setMessages(nextMessages);
@@ -636,6 +659,11 @@ export default function AdminChatClient() {
     if (override === undefined) {
       setInput("");
       setAttachments([]);
+    }
+    if (opts?.auto) {
+      setAutoFixAttempts((n) => n + 1);
+    } else {
+      setAutoFixAttempts(0);
     }
     setSending(true);
     setStepStatus(null);
@@ -767,7 +795,7 @@ export default function AdminChatClient() {
             },
           ]);
           await persistSession(terminal.branch, terminal.prNumber);
-          fetchPendingChanges().then(setPending);
+          fetchPendingChanges().then(applyPending);
           break;
         }
 
@@ -777,7 +805,7 @@ export default function AdminChatClient() {
           `Step ${terminal.step ?? step}: ${terminal.stepLabel ?? "Working…"}`,
         );
         if (terminal.branch) persistSession(terminal.branch, terminal.prNumber);
-        fetchPendingChanges().then(setPending);
+        fetchPendingChanges().then(applyPending);
       }
     } catch (err) {
       setMessages([
@@ -824,7 +852,7 @@ export default function AdminChatClient() {
           message: data.error || "Publish failed.",
         });
       }
-      fetchPendingChanges().then(setPending);
+      fetchPendingChanges().then(applyPending);
     } catch {
       setPublishResult({
         ok: false,
@@ -835,6 +863,41 @@ export default function AdminChatClient() {
       setPublishing(false);
     }
   };
+
+  const MAX_AUTO_FIX_ATTEMPTS = 3;
+  // Derived, not stored: once the attempt budget is used up, this flips on
+  // its own and a banner shows in the progress card (below) — nothing writes
+  // it directly, so there's no separate state to keep in sync.
+  const autoFixExhausted = autoFixAttempts >= MAX_AUTO_FIX_ATTEMPTS;
+
+  // The admin never has to know what a "failing check" or "workflow" is: if
+  // one shows up, automatically ask the assistant to find and fix it, up to
+  // a few tries, before anything technical ever reaches the chat. The
+  // attempt count only resets from a real admin action (a new message in
+  // `send`, or fetchPendingChanges resolving clean — see applyPending), so a
+  // later, unrelated failure still gets its own fair set of tries instead of
+  // inheriting an old exhausted count.
+  useEffect(() => {
+    if (sending) return;
+    if (pending?.checkStatus !== "failure") return;
+    if (autoFixExhausted) return;
+    // Deferred a tick so this reads as "schedule an async action" rather
+    // than a synchronous setState-in-effect — `send` updates several bits of
+    // state (messages, sending, the attempt count) the instant it's called.
+    queueMicrotask(() => {
+      send(
+        "One of the automatic checks on the pending change failed. Use check_pr_status and get_check_log_excerpt to find the real cause, fix the file(s) responsible, and confirm once it's fixed.",
+        {
+          auto: true,
+          displayText: "Automatically checking and fixing an issue…",
+        },
+      );
+    });
+    // `send` is redefined every render but always reflects current state;
+    // adding it here would just re-run this effect on every render for no
+    // benefit, since the guards above already make it a no-op most of the time.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pending?.checkStatus, sending, autoFixExhausted]);
 
   const lastRole = messages[messages.length - 1]?.role;
 
@@ -909,12 +972,37 @@ export default function AdminChatClient() {
 
             {messages.map((m, i) => {
               const isUser = m.role === "user";
-              const { text, options } = isUser
-                ? { text: m.content, options: [] as string[] }
-                : extractOptions(m.content);
+              const isAuto = m.role === "auto";
+              const { text, options } =
+                isUser || isAuto
+                  ? { text: m.content, options: [] as string[] }
+                  : extractOptions(m.content);
               const isLast = i === messages.length - 1;
               const optionsLive = options.length > 0 && isLast && !sending;
-              const streamingThis = !isUser && isLast && sending;
+              const streamingThis = !isUser && !isAuto && isLast && sending;
+
+              if (isAuto) {
+                return (
+                  <div key={i} className="flex justify-center">
+                    <span className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 font-body text-xs text-white/40">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3 w-3"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5Z"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {m.content}
+                    </span>
+                  </div>
+                );
+              }
 
               if (isUser) {
                 return (
@@ -988,11 +1076,24 @@ export default function AdminChatClient() {
                       ))}
                     </div>
                   )}
+                  {isLast &&
+                    !optionsLive &&
+                    !sending &&
+                    pending?.canPublish && (
+                      <button
+                        onClick={publish}
+                        disabled={publishing}
+                        className="mt-1 flex w-fit items-center gap-2 rounded-lg bg-gold px-4 py-2.5 font-body text-sm font-semibold text-dark hover:bg-gold-light disabled:opacity-50"
+                      >
+                        {publishing && <Spinner className="h-4 w-4" />}
+                        {publishing ? "Publishing…" : "Publish"}
+                      </button>
+                    )}
                 </div>
               );
             })}
 
-            {sending && lastRole === "user" && (
+            {sending && (lastRole === "user" || lastRole === "auto") && (
               <ThinkingRow status={stepStatus} />
             )}
             {sending && lastRole === "assistant" && stepStatus && (
@@ -1071,7 +1172,9 @@ export default function AdminChatClient() {
                           )}
                         </div>
                         <p className="font-body text-xs text-white/50">
-                          Ask the assistant to fix it, then check back here.
+                          {autoFixExhausted
+                            ? "I tried a few times but couldn't fix this on my own — tell me what you're seeing and I'll keep working on it."
+                            : "Fixing this automatically — no action needed."}
                         </p>
                       </div>
                     )}

@@ -319,6 +319,7 @@ export async function getPRCombinedStatus(
 }
 
 export interface FailingCheck {
+  id: number;
   name: string;
   url: string | null;
 }
@@ -348,6 +349,7 @@ export async function getPRChecksDetail(
     ).catch(() => null),
     gh<{
       check_runs: Array<{
+        id: number;
         name: string;
         status: string;
         conclusion: string | null;
@@ -382,7 +384,7 @@ export async function getPRChecksDetail(
       states.push("success");
     } else {
       states.push("failure");
-      failingChecks.push({ name: run.name, url: run.html_url });
+      failingChecks.push({ id: run.id, name: run.name, url: run.html_url });
     }
   }
 
@@ -405,6 +407,47 @@ export async function getPRChecksDetail(
   }
 
   return { status, previewUrl, failingChecks };
+}
+
+// GitHub Actions job logs run to hundreds of KB, but the actual failing
+// command's error is almost always in the last screenful of output — keep
+// only the tail, and cap it well under a size that's still readable in a
+// tool result instead of flooding the model's context.
+const LOG_TAIL_LINES = 200;
+const LOG_TAIL_MAX_CHARS = 8000;
+
+export function truncateLogTail(text: string): string {
+  const tail = text.split("\n").slice(-LOG_TAIL_LINES).join("\n");
+  return tail.length > LOG_TAIL_MAX_CHARS
+    ? tail.slice(-LOG_TAIL_MAX_CHARS)
+    : tail;
+}
+
+// Raw log text for one failed GitHub Actions check run — a check run's `id`
+// doubles as its Actions job id, so this is the same id getPRChecksDetail's
+// failingChecks already return. Unlike every other call in this file, the
+// response here is plain text (GitHub redirects to a signed log URL), not
+// JSON, so it can't go through the gh() helper above.
+export async function getFailingCheckLogExcerpt(
+  checkRunId: number,
+): Promise<string> {
+  const res = await fetch(
+    `${API}/repos/${OWNER}/${REPO}/actions/jobs/${checkRunId}/logs`,
+    {
+      headers: {
+        Authorization: `Bearer ${token()}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+  if (!res.ok) {
+    throw new GitHubApiError(
+      res.status,
+      `Failed to fetch log for check run ${checkRunId} (${res.status})`,
+    );
+  }
+  return truncateLogTail(await res.text());
 }
 
 export async function mergePR(

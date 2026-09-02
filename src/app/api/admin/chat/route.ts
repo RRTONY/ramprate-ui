@@ -119,6 +119,10 @@ function describeToolCall(call: Anthropic.ToolUseBlock): string {
       return `Running a Lighthouse check on ${String(input.path ?? "")}`;
     case "check_code_quality":
       return `Checking code quality for ${path}`;
+    case "check_pr_status":
+      return "Checking the pending change's automatic checks";
+    case "get_check_log_excerpt":
+      return "Reading the details of a failed check";
     case "create_download":
       return `Preparing ${String(input.name ?? "a file")} for download`;
     case "sanity_query":
@@ -333,6 +337,7 @@ export async function POST(req: NextRequest) {
             state.auditLog.push(`Created branch ${branch}`);
             return branch;
           },
+          getPRNumber: () => prNumber ?? null,
           getAttachment: (name) => attachmentMap.get(name) ?? null,
           recordDownload: (file) => state.downloads.push(file),
           log: (entry) => state.auditLog.push(entry),

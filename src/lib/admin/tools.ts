@@ -140,6 +140,31 @@ export const ADMIN_TOOLS = [
     },
   },
   {
+    name: "check_pr_status",
+    description:
+      "Check the real, current status of every automatic check on the pending change (code style, formatting, the test suite, and the site-preview build) — call this any time the admin asks about a failing check, mentions an error or the workflow, or before telling them something is ready to publish. Returns each check's name and whether it's passing, still running, or failed, with a failed check's id (for get_check_log_excerpt) and a link. ALL of these checks block Publish equally — none of them are cosmetic-only.",
+    input_schema: {
+      type: "object" as const,
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: "get_check_log_excerpt",
+    description:
+      "Get the tail of the real log output for one failed check, by its id from check_pr_status's failingChecks. Use this to see the actual error (a specific ESLint rule, a Prettier diff, or a failing test's assertion) instead of guessing — then fix the real file(s) that caused it.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        checkRunId: {
+          type: "number",
+          description: "The id field from a failingChecks entry.",
+        },
+      },
+      required: ["checkRunId"],
+    },
+  },
+  {
     name: "create_download",
     description:
       "Hand the admin a generated file (PDF, CSV, report, image, etc.) to download from the chat — for something the admin should have as a file, not something committed to the repo. Base64-encode the content.",
@@ -224,6 +249,7 @@ export interface Download {
 export interface AdminToolContext {
   getReadBranch: () => string;
   ensureWriteBranch: () => Promise<string>;
+  getPRNumber: () => number | null;
   getAttachment: (name: string) => Attachment | null;
   recordDownload: (file: Download) => void;
   log: (entry: string) => void;
@@ -379,6 +405,51 @@ export async function runAdminTool(
         return {
           output: {
             error: err instanceof Error ? err.message : "Code check failed",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "check_pr_status": {
+      const prNumber = ctx.getPRNumber();
+      if (!prNumber) {
+        return {
+          output: {
+            status: "no_pending_change",
+            message: "There's no pending change with checks running yet.",
+          },
+        };
+      }
+      try {
+        const detail = await gh.getPRChecksDetail(prNumber);
+        return { output: detail };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error ? err.message : "Failed to check status",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "get_check_log_excerpt": {
+      const checkRunId = Number(input.checkRunId);
+      if (!Number.isFinite(checkRunId)) {
+        return {
+          output: { error: "A numeric checkRunId is required." },
+          isError: true,
+        };
+      }
+      try {
+        const log = await gh.getFailingCheckLogExcerpt(checkRunId);
+        return { output: { log } };
+      } catch (err) {
+        return {
+          output: {
+            error: err instanceof Error ? err.message : "Failed to fetch log",
           },
           isError: true,
         };
