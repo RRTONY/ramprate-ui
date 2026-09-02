@@ -146,7 +146,19 @@ function describeStep(toolUses: Anthropic.ToolUseBlock[]): string {
     : label;
 }
 
+// A single step can carry MULTIPLE tool_use blocks from one Claude response
+// (e.g. read a file, check its code quality, write it back, check the PR
+// status), and each one runs here in sequence before the client ever gets
+// control back. On Netlify's free plan, nothing stops that chain from
+// quietly running past the platform's own hard timeout, which kills the
+// function outright — no error, no turnState, the browser just sees the
+// stream die (the "response was cut off" message). This budget makes the
+// route yield control back to the client (a normal `step` event, which the
+// client already auto-resumes) BEFORE that wall, instead of after it.
+const TOOL_TIME_BUDGET_MS = 45_000;
+
 export async function POST(req: NextRequest) {
+  const requestStartedAt = Date.now();
   const unlocked = await isPortalUnlocked("admin");
   if (!unlocked) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -421,7 +433,23 @@ export async function POST(req: NextRequest) {
         if (!done) {
           emit({ type: "status", stepLabel, step: state.iteration });
           const toolResults: Anthropic.ToolResultBlockParam[] = [];
+          let outOfTime = false;
           for (const call of toolUses) {
+            if (Date.now() - requestStartedAt > TOOL_TIME_BUDGET_MS) {
+              outOfTime = true;
+            }
+            if (outOfTime) {
+              toolResults.push({
+                type: "tool_result",
+                tool_use_id: call.id,
+                content: JSON.stringify({
+                  error:
+                    "Not run yet — this step ran out of time. It will run on the next step, right after this one.",
+                }),
+                is_error: true,
+              });
+              continue;
+            }
             const result = await runAdminTool(
               call.name,
               call.input as Record<string, unknown>,
