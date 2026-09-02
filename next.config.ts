@@ -1,4 +1,4 @@
-import type {NextConfig} from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Fixes Lighthouse's "Missing source maps for large first-party JavaScript"
@@ -10,11 +10,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
+        protocol: "https",
+        hostname: "cdn.sanity.io",
       },
     ],
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
   },
   // Netlify's netlify.toml [[headers]] block only applies to files served
   // directly from the publish directory - Next-rendered routes go through
@@ -25,29 +25,32 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
-          {key: 'X-Frame-Options', value: 'SAMEORIGIN'},
-          {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
-          {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
         ],
       },
-    ]
+    ];
   },
   async redirects() {
     return [
       {
-        source: '/bio',
-        destination: '/biochain',
+        source: "/bio",
+        destination: "/biochain",
         permanent: true,
       },
       {
-        source: '/nda',
-        destination: 'https://ramprate.s.gy/nda-sign',
+        source: "/nda",
+        destination: "https://ramprate.s.gy/nda-sign",
         permanent: true,
       },
-    ]
+    ];
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
