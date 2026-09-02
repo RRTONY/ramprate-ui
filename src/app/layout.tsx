@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
-    "B Corp advisory",
+    "B Lab certified advisory",
     "RampRate",
   ],
   alternates: {
@@ -88,7 +88,9 @@ export default async function RootLayout({
 }) {
   const settings = await sanityFetch<{
     companyName?: string;
-    logo?: (Parameters<typeof urlFor>[0] & { asset?: { _ref?: string } }) | undefined;
+    logo?:
+      | (Parameters<typeof urlFor>[0] & { asset?: { _ref?: string } })
+      | undefined;
     address?: string;
     phone?: string;
     email?: string;
@@ -164,7 +166,7 @@ export default async function RootLayout({
             logoWidth,
             logoHeight,
             description:
-              "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+              "RampRate is a B Lab certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
             address: settings?.address,
             phone: settings?.phone,
             email: settings?.email,

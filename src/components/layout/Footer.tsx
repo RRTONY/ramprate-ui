@@ -62,9 +62,14 @@ export default function Footer({
               Since 2000. A fractional team of superstars creating
               trajectory-changing connections.
             </p>
-            <span className="font-mono text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/50">
-              B Corp Certified
-            </span>
+            <a
+              href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block font-mono text-[10px] font-medium border border-white/20 rounded px-2 py-0.5 tracking-wider uppercase text-white/50 hover:border-gold/40 hover:text-white/70 transition-colors"
+            >
+              B Lab Certified
+            </a>
           </div>
 
           {/* Column 2 - Brands */}

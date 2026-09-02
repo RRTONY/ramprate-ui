@@ -4,18 +4,19 @@ import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 export const revalidate = 60;
 
+const HOME_TITLE = "RampRate | Data Center, Telecom & Cloud Advisory";
+const HOME_DESCRIPTION =
+  "RampRate: B Lab-certified advisory turning relationships into revenue via technology sourcing and product strategy — $10B+ managed since 2000.";
+
 const FALLBACK_METADATA: Metadata = {
-  // No title override - inherits the root layout's default
-  // ("RampRate - Investment & Advisory") verbatim, with no "| RampRate"
-  // suffix appended (that suffix only applies to child-route titles).
-  description:
-    "RampRate is a B-Corp certified advisory firm helping enterprises cut technology costs and drive measurable impact. 24+ years of independent advisory.",
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   keywords: [
     "technology advisory",
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
-    "B Corp advisory",
+    "B Lab certified advisory",
     "RampRate",
     "peptide supplier network",
     "verified peptide suppliers",
@@ -23,18 +24,16 @@ const FALLBACK_METADATA: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "RampRate - Investment & Advisory",
-    description:
-      "Independent advisory helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     url: "https://ramprate.com",
     type: "website",
     images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RampRate - Investment & Advisory",
-    description:
-      "Independent advisory helping enterprises optimize technology sourcing, cut technology costs, and drive measurable impact.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     images: ["/og.png"],
   },
 };

@@ -9,7 +9,10 @@ import {
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { breadcrumbJsonLd, personJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, {
+  breadcrumbJsonLd,
+  personJsonLd,
+} from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "About",
@@ -18,7 +21,7 @@ const FALLBACK_METADATA: Metadata = {
   keywords: [
     "RampRate team",
     "board of advisors",
-    "B Corp certified advisory",
+    "B Lab certified advisory",
     "enterprise advisory firm history",
   ],
   alternates: { canonical: "/about" },
@@ -129,19 +132,26 @@ export default async function AboutPage() {
           { name: "About", url: "https://ramprate.com/about" },
         ])}
       />
-      {displayTeam.map((m: {name: string; slug: string | null; role: string; bio: string; img: string | null}) =>
-        m.slug ? (
-          <JsonLd
-            key={m.slug}
-            data={personJsonLd({
-              name: m.name,
-              jobTitle: m.role,
-              description: m.bio,
-              image: m.img ?? undefined,
-              url: `https://ramprate.com/about#${m.slug}`,
-            })}
-          />
-        ) : null,
+      {displayTeam.map(
+        (m: {
+          name: string;
+          slug: string | null;
+          role: string;
+          bio: string;
+          img: string | null;
+        }) =>
+          m.slug ? (
+            <JsonLd
+              key={m.slug}
+              data={personJsonLd({
+                name: m.name,
+                jobTitle: m.role,
+                description: m.bio,
+                image: m.img ?? undefined,
+                url: `https://ramprate.com/about#${m.slug}`,
+              })}
+            />
+          ) : null,
       )}
       {/* ═══ HERO ═══ */}
       <section
@@ -202,29 +212,48 @@ export default async function AboutPage() {
               { value: "2000", label: "Founded" },
               { value: "$10B+", label: "Decisions Transacted" },
               { value: "50+", label: "Countries" },
-              { value: "B Corp", label: "Certified" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div
-                  className="text-2xl sm:text-3xl font-bold"
-                  style={{
-                    color: "oklch(0.82 0.15 75)",
-                    fontFamily: "var(--font-mono)",
-                  }}
+              {
+                value: "B Lab",
+                label: "Certified",
+                href: "https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/",
+              },
+            ].map((s) => {
+              const content = (
+                <>
+                  <div
+                    className="text-2xl sm:text-3xl font-bold"
+                    style={{
+                      color: "oklch(0.82 0.15 75)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    {s.value}
+                  </div>
+                  <div
+                    className="mt-1 text-[10px] uppercase tracking-wider"
+                    style={{
+                      color: "rgba(255,255,255,0.4)",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </>
+              );
+              return s.href ? (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block hover:opacity-80 transition-opacity"
                 >
-                  {s.value}
-                </div>
-                <div
-                  className="mt-1 text-[10px] uppercase tracking-wider"
-                  style={{
-                    color: "rgba(255,255,255,0.4)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {s.label}
-                </div>
-              </div>
-            ))}
+                  {content}
+                </a>
+              ) : (
+                <div key={s.label}>{content}</div>
+              );
+            })}
           </div>
         </div>
       </section>

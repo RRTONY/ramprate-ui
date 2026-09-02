@@ -94,7 +94,7 @@ const timeline = [
     event:
       "Peak crypto advisory demand. Guided 12+ token launches through regulatory minefields.",
   },
-  { year: "2018", event: "B Corp Certified. Syzygy Impact division launched." },
+  { year: "2018", event: "B Lab Certified. Syzygy Impact division launched." },
   {
     year: "2019",
     event:
@@ -257,7 +257,15 @@ export default function HomeContent() {
                 <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
                   <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
-                    B Corp Certified · Since 2000
+                    <a
+                      href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-white transition-colors"
+                    >
+                      B Lab Certified
+                    </a>{" "}
+                    · Since 2000
                   </span>
                 </span>
               </div>
@@ -269,8 +277,8 @@ export default function HomeContent() {
               </h1>
 
               <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
-                25 Years · $10B+ in Enterprise Decisions · 250+ Global Brands ·
-                Skin in the Game
+                Technology sourcing, product strategy, data centers, telecom,
+                managed services &amp; cloud — $10B+ managed since 2000.
               </p>
 
               <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
@@ -353,6 +361,10 @@ export default function HomeContent() {
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
               01 - Our Practices
             </span>
+            <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
+              One discipline — turning relationships into revenue — applied
+              across six practices:
+            </p>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
               Six practices. One coalition.
               <br />
