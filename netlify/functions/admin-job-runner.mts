@@ -29,9 +29,15 @@ import {
   recordAdminChatCall,
 } from "../../src/lib/admin/rate-limit";
 
-// Deliberately conservative, mirroring the streaming route's own budget —
-// see the comment there for why the exact real ceiling isn't verified.
-const TOOL_TIME_BUDGET_MS = 45_000;
+// Deliberately tight, mirroring the streaming route's own budget after it
+// was proven too generous in production (src/app/api/admin/chat/route.ts:
+// even a simple request silently hit Netlify's real kill before that
+// route's own timeout could fire). A Scheduled Function's real execution
+// ceiling is a separate, equally unverified number — same fix applies: fail
+// fast and leave the job "queued" for the next tick rather than gamble on a
+// bigger number and risk this run getting killed mid-step with nothing
+// saved.
+const TOOL_TIME_BUDGET_MS = 8_000;
 
 async function handler() {
   const jobIds = await listActiveJobIds();

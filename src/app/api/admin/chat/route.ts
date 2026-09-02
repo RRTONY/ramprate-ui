@@ -16,14 +16,21 @@ import { dailyLimitReached, recordAdminChatCall } from "@/lib/admin/rate-limit";
 // let a single Sonnet call (which routinely needs more than 10s just to
 // produce its first tool call) avoid an immediate 504, by getting Netlify to
 // see the function respond right away instead of waiting on it silently.
-// EXACTLY how much wall-clock time a streaming function gets past that,
-// though, isn't verified against this plan's real, current limit — treat
-// TOOL_TIME_BUDGET_MS below as a conservative guess, not a documented fact.
-// When a request still comes back "cut off" with no detail, check
-// agent-step.ts's console.log timing checkpoints in Netlify's function logs
-// for the request to see whether the Claude call itself or the tool-call
-// chain after it is what's running long, rather than re-guessing the budget
-// blind.
+// CONFIRMED IN PRODUCTION (2026-09-03): even a simple single-topic request
+// ("make the homepage load faster") still came back as the old silent
+// "response was cut off" with no detail — meaning Netlify killed the
+// function before this route's own 45s internal timeout ever got a chance
+// to fire and answer gracefully. That 45s assumption was wrong; the real
+// free-tier ceiling is evidently much lower. TOOL_TIME_BUDGET_MS below is
+// now deliberately aggressive (a few seconds) so this route's own timeout
+// wins that race far more often — the tradeoff is more turns get split into
+// more `step` continuations (still invisible to the admin; the client
+// already auto-resumes them), rather than trying to fit more work into one
+// request and losing the race. If "cut off with no detail" still happens
+// even at this tighter budget, that's real evidence the fix needs to be
+// structural (moving step execution off the request/response cycle
+// entirely — see src/lib/admin/job-store.ts, agent-step.ts's use by
+// netlify/functions/admin-job-runner.mts), not a smaller number here.
 export const dynamic = "force-dynamic";
 
 interface ChatAttachment {
@@ -63,8 +70,9 @@ const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 // outright — no error, no turnState, the browser just sees the stream die
 // (the "response was cut off" message). This budget makes the route yield
 // control back to the client (a normal `step` event, which the client
-// already auto-resumes) BEFORE that wall, instead of after it.
-const TOOL_TIME_BUDGET_MS = 45_000;
+// already auto-resumes) BEFORE that wall, instead of after it. Deliberately
+// tight — see the comment above `dynamic` for why 45s was proven wrong.
+const TOOL_TIME_BUDGET_MS = 8_000;
 
 export async function POST(req: NextRequest) {
   const requestStartedAt = Date.now();
