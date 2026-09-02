@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import {
   ArrowRight,
   ArrowDown,
@@ -10,10 +11,13 @@ import {
   DollarSign,
 } from "lucide-react";
 import type { CSSProperties } from "react";
-import ClientWall from "./ClientWall";
-import TestimonialsCarousel from "./TestimonialsCarousel";
-import NewsletterSection from "./NewsletterSection";
 import PracticeIcon from "./PracticeIcon";
+
+// Below-the-fold, interactive-only sections - split into their own JS chunks
+// so the hero above the fold doesn't have to wait on their code to hydrate.
+const ClientWall = dynamic(() => import("./ClientWall"));
+const TestimonialsCarousel = dynamic(() => import("./TestimonialsCarousel"));
+const NewsletterSection = dynamic(() => import("./NewsletterSection"));
 
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
@@ -205,7 +209,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#0a0f1a]">
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
         {/* Hero background image */}
         <div className="absolute inset-0">
           <Image
@@ -383,7 +387,10 @@ export default function HomeContent() {
                       background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
                     }}
                   >
-                    <PracticeIcon kind={brand.iconKind} color={brand.accentColor} />
+                    <PracticeIcon
+                      kind={brand.iconKind}
+                      color={brand.accentColor}
+                    />
                   </div>
                 </div>
                 <p
@@ -508,8 +515,7 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-              25 Years.{" "}
-              <span className="text-gold">One Standard.</span>
+              25 Years. <span className="text-gold">One Standard.</span>
             </h2>
           </div>
 
@@ -566,8 +572,7 @@ export default function HomeContent() {
               Our Approach
             </span>
             <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
-              Research. Blueprint.{" "}
-              <span className="text-rust">Activate.</span>
+              Research. Blueprint. <span className="text-rust">Activate.</span>
             </h2>
           </div>
 
@@ -613,9 +618,7 @@ export default function HomeContent() {
               </span>
               <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
                 We Align Compensation{" "}
-                <span className="text-rust">
-                  With Value Created.
-                </span>
+                <span className="text-rust">With Value Created.</span>
               </h2>
               <p className="font-body mt-5 leading-relaxed text-ink-mid text-base">
                 No retainers held hostage. No billable hours divorced from
