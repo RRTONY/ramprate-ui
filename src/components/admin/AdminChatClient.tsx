@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import {
+  computeWorkflowSteps,
+  type WorkflowStep,
+} from "@/lib/admin/workflow-steps";
 
 interface ChatDownload {
   name: string;
@@ -408,6 +412,79 @@ function Spinner({ className = "" }: { className?: string }) {
   );
 }
 
+function StepIcon({ status }: { status: WorkflowStep["status"] }) {
+  if (status === "done") {
+    return (
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">
+        <svg
+          viewBox="0 0 24 24"
+          className="h-3 w-3"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+        >
+          <path
+            d="m5 13 4 4 10-10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+    );
+  }
+  if (status === "error") {
+    return (
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-red-500/15 text-red-400 font-bold text-[11px]">
+        !
+      </span>
+    );
+  }
+  if (status === "active") {
+    return (
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/15 text-gold">
+        <Spinner className="h-3 w-3" />
+      </span>
+    );
+  }
+  return (
+    <span className="h-5 w-5 shrink-0 rounded-full border border-white/15" />
+  );
+}
+
+// The Manus-style step checklist: shown docked above the composer, one row
+// per pipeline stage (write -> test -> checks -> publish), each locked until
+// the one before it is done — same "first task, then move to the next" rule
+// the site owner asked for, computed by computeWorkflowSteps.
+function WorkflowChecklist({ steps }: { steps: WorkflowStep[] }) {
+  return (
+    <div className="flex flex-col gap-2">
+      {steps.map((step) => (
+        <div key={step.id} className="flex items-start gap-2.5">
+          <StepIcon status={step.status} />
+          <div className="flex min-w-0 flex-col">
+            <span
+              className={`font-body text-sm ${
+                step.status === "pending"
+                  ? "text-white/40"
+                  : step.status === "error"
+                    ? "text-red-300"
+                    : "text-white/85"
+              }`}
+            >
+              {step.label}
+            </span>
+            {step.detail && (
+              <span className="font-body text-xs text-amber-300/80">
+                {step.detail}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminChatClient() {
   // localStorage doesn't exist during SSR. useSyncExternalStore renders the
   // safe empty snapshot on the server AND on the client's first hydration
@@ -437,6 +514,7 @@ export default function AdminChatClient() {
   const [pending, setPending] = useState<PendingChanges | null>(null);
   const [publishing, setPublishing] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [progressOpen, setProgressOpen] = useState(true);
   const [publishResult, setPublishResult] = useState<{
     ok: boolean;
     message: string;
@@ -448,6 +526,18 @@ export default function AdminChatClient() {
   useEffect(() => {
     fetchPendingChanges().then(setPending);
   }, []);
+
+  // GitHub Actions/Netlify checks can take a while to finish. Poll while
+  // they're still running so a workflow failure shows up in the sidebar on
+  // its own, instead of staying stuck on "Checking..." until the next chat
+  // message happens to refetch it.
+  useEffect(() => {
+    if (pending?.checkStatus !== "pending") return;
+    const id = setInterval(() => {
+      fetchPendingChanges().then(setPending);
+    }, 15000);
+    return () => clearInterval(id);
+  }, [pending?.checkStatus]);
 
   // Keep the newest message in view as it streams in.
   useEffect(() => {
@@ -746,17 +836,22 @@ export default function AdminChatClient() {
     }
   };
 
-  const checkStatusLabel: Record<PendingChanges["checkStatus"], string> = {
-    success: "Ready to publish",
-    pending: "Checking the changes…",
-    failure: "Something needs fixing",
-    unknown: "No changes yet",
-  };
-
   const lastRole = messages[messages.length - 1]?.role;
 
+  const workflowSteps = computeWorkflowSteps({
+    filePaths: pending?.files.map((f) => f.path) ?? [],
+    draftCount: pending?.drafts.length ?? 0,
+    checkStatus: pending?.checkStatus ?? "unknown",
+    canPublish: pending?.canPublish ?? false,
+    published: publishResult?.ok ?? false,
+  });
+  const totalSteps = workflowSteps.length;
+  const doneSteps = workflowSteps.filter((s) => s.status === "done").length;
+  const hasAnyChange =
+    (pending?.files.length ?? 0) > 0 || (pending?.drafts.length ?? 0) > 0;
+
   return (
-    <div className="flex h-screen bg-dark text-white flex-col md:flex-row overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden bg-dark text-white">
       <section className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-white/10 bg-dark/80 px-4 py-3 backdrop-blur sm:px-6">
           <div className="flex items-center gap-2.5">
@@ -909,8 +1004,171 @@ export default function AdminChatClient() {
           </div>
         </div>
 
-        <div className="sticky bottom-0 border-t border-white/10 bg-dark/85 px-4 py-3 backdrop-blur sm:px-6">
-          <div className="mx-auto w-full max-w-3xl">
+        <div className="sticky bottom-0 border-t border-white/10 bg-dark/85 backdrop-blur">
+          {hasAnyChange && (
+            <div className="mx-auto w-full max-w-3xl px-4 pt-3 sm:px-6">
+              <div className="rounded-2xl border border-white/10 bg-dark-card">
+                <button
+                  onClick={() => setProgressOpen((v) => !v)}
+                  className="flex w-full items-center justify-between gap-3 px-4 py-3"
+                >
+                  <span className="font-body text-sm font-semibold text-white/80">
+                    {pending?.checkStatus === "failure"
+                      ? "Something needs fixing"
+                      : publishResult?.ok
+                        ? "Published"
+                        : "Task progress"}
+                  </span>
+                  <span className="flex items-center gap-2 font-body text-xs text-white/40">
+                    {doneSteps}/{totalSteps}
+                    <svg
+                      viewBox="0 0 24 24"
+                      className={`h-3.5 w-3.5 transition ${progressOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <path
+                        d="m6 9 6 6 6-6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                {progressOpen && (
+                  <div className="flex flex-col gap-3 border-t border-white/5 px-4 py-3">
+                    <WorkflowChecklist steps={workflowSteps} />
+
+                    {pending && pending.failingChecks.length > 0 && (
+                      <div className="flex flex-col gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
+                        <p className="font-body text-xs text-red-200">
+                          {pending.failingChecks.length === 1
+                            ? "This check failed:"
+                            : `${pending.failingChecks.length} checks failed:`}
+                        </p>
+                        <div className="flex flex-col gap-1">
+                          {pending.failingChecks.map((check) =>
+                            check.url ? (
+                              <a
+                                key={check.name}
+                                href={check.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-mono text-xs text-red-300 underline"
+                              >
+                                {check.name}
+                              </a>
+                            ) : (
+                              <span
+                                key={check.name}
+                                className="font-mono text-xs text-red-300"
+                              >
+                                {check.name}
+                              </span>
+                            ),
+                          )}
+                        </div>
+                        <p className="font-body text-xs text-white/50">
+                          Ask the assistant to fix it, then check back here.
+                        </p>
+                      </div>
+                    )}
+
+                    {pending?.previewUrl && (
+                      <a
+                        href={pending.previewUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex w-fit items-center gap-1.5 font-body text-xs text-gold underline"
+                      >
+                        Preview the site before publishing (opens in a new tab —
+                        it can&rsquo;t be shown inline here)
+                      </a>
+                    )}
+
+                    {(pending?.files.length ?? 0) > 0 ||
+                    (pending?.drafts.length ?? 0) > 0 ? (
+                      <div className="flex flex-col gap-2">
+                        <button
+                          onClick={() => setShowDetails((v) => !v)}
+                          className="w-fit font-body text-xs text-white/40 underline hover:text-white/70"
+                        >
+                          {showDetails
+                            ? "Hide the details"
+                            : "Show the details"}
+                        </button>
+                        {showDetails && (
+                          <div className="flex flex-col gap-2">
+                            {pending?.files.map((f) => (
+                              <div
+                                key={f.path}
+                                className="break-all rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
+                              >
+                                {f.path}{" "}
+                                <span className="text-emerald-400">
+                                  +{f.additions}
+                                </span>{" "}
+                                <span className="text-red-400">
+                                  -{f.deletions}
+                                </span>
+                              </div>
+                            ))}
+                            {pending?.drafts.map((d) => (
+                              <div
+                                key={d.id}
+                                className="wrap-break-word rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
+                              >
+                                {d.type}: {d.title}
+                              </div>
+                            ))}
+                            {pending?.prUrl && (
+                              <a
+                                href={pending.prUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-body text-xs text-gold underline"
+                              >
+                                Open the technical view on GitHub
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : null}
+
+                    <button
+                      onClick={publish}
+                      disabled={!pending?.canPublish || publishing}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3 font-body text-sm font-semibold text-dark hover:bg-gold-light disabled:opacity-30 disabled:hover:bg-gold"
+                    >
+                      {publishing && <Spinner className="h-4 w-4" />}
+                      {publishing ? "Publishing…" : "Publish"}
+                    </button>
+                    {publishing && (
+                      <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+                        <div className="progress-slide h-full w-1/3 rounded-full bg-gold" />
+                      </div>
+                    )}
+                    {publishResult && (
+                      <div
+                        className={`rounded-lg p-3 font-body text-xs ${
+                          publishResult.ok
+                            ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                            : "border border-red-500/30 bg-red-500/10 text-red-300"
+                        }`}
+                      >
+                        {publishResult.ok ? "✅ " : "⚠️ "}
+                        {publishResult.message}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="mx-auto w-full max-w-3xl px-4 py-3 sm:px-6">
             {attachError && (
               <p className="mb-2 font-body text-xs text-red-400">
                 {attachError}
@@ -1010,140 +1268,6 @@ export default function AdminChatClient() {
           </div>
         </div>
       </section>
-
-      <aside className="flex w-full shrink-0 flex-col gap-4 overflow-y-auto border-t border-white/10 p-4 sm:p-6 md:w-80 md:border-l md:border-t-0 lg:w-96">
-        <h2 className="font-display text-sm font-bold uppercase tracking-wider text-white/60">
-          Changes waiting
-        </h2>
-
-        {(() => {
-          const fileCount = pending?.files.length ?? 0;
-          const draftCount = pending?.drafts.length ?? 0;
-          const total = fileCount + draftCount;
-          return (
-            <p className="font-body text-sm text-white/70">
-              {total === 0
-                ? "No changes are waiting yet. Ask the assistant to make one."
-                : `${total} change${total === 1 ? "" : "s"} ready for your review.`}
-            </p>
-          );
-        })()}
-
-        {pending && (
-          <span
-            className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 font-body text-xs ${
-              pending.checkStatus === "success"
-                ? "bg-emerald-500/10 text-emerald-300"
-                : pending.checkStatus === "failure"
-                  ? "bg-red-500/10 text-red-300"
-                  : pending.checkStatus === "pending"
-                    ? "bg-amber-500/10 text-amber-300"
-                    : "bg-white/5 text-white/50"
-            }`}
-          >
-            {pending.checkStatus === "pending" && (
-              <Spinner className="h-3 w-3" />
-            )}
-            {checkStatusLabel[pending.checkStatus]}
-          </span>
-        )}
-
-        {pending && pending.failingChecks.length > 0 && (
-          <div className="flex flex-col gap-1 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
-            <p className="font-body text-xs text-red-200">
-              Something in these changes needs fixing.
-            </p>
-            <p className="font-body text-xs text-white/50">
-              Ask the assistant to fix it, then check back here.
-            </p>
-          </div>
-        )}
-
-        {pending?.previewUrl && (
-          <a
-            href={pending.previewUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="font-body text-xs text-gold underline"
-          >
-            Preview the site before publishing
-          </a>
-        )}
-
-        {pending && (pending.files.length > 0 || pending.drafts.length > 0) && (
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={() => setShowDetails((v) => !v)}
-              className="w-fit font-body text-xs text-white/40 underline hover:text-white/70"
-            >
-              {showDetails ? "Hide the details" : "Show the details"}
-            </button>
-            {showDetails && (
-              <div className="flex flex-col gap-2">
-                {pending.files.map((f) => (
-                  <div
-                    key={f.path}
-                    className="break-all rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
-                  >
-                    {f.path}{" "}
-                    <span className="text-emerald-400">+{f.additions}</span>{" "}
-                    <span className="text-red-400">-{f.deletions}</span>
-                  </div>
-                ))}
-                {pending.drafts.map((d) => (
-                  <div
-                    key={d.id}
-                    className="wrap-break-word rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-mono text-xs text-white/70"
-                  >
-                    {d.type}: {d.title}
-                  </div>
-                ))}
-                {pending.prUrl && (
-                  <a
-                    href={pending.prUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-body text-xs text-gold underline"
-                  >
-                    Open the technical view on GitHub
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        <div className="mt-auto flex flex-col gap-2">
-          <button
-            onClick={publish}
-            disabled={!pending?.canPublish || publishing}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold py-3 font-body text-sm font-semibold text-dark hover:bg-gold-light disabled:opacity-30 disabled:hover:bg-gold"
-          >
-            {publishing && <Spinner className="h-4 w-4" />}
-            {publishing ? "Publishing…" : "Publish"}
-          </button>
-          <p className="font-body text-[11px] text-white/40">
-            Publishing puts these changes on the live website.
-          </p>
-          {publishing && (
-            <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
-              <div className="progress-slide h-full w-1/3 rounded-full bg-gold" />
-            </div>
-          )}
-        </div>
-        {publishResult && (
-          <div
-            className={`rounded-lg p-3 font-body text-xs ${
-              publishResult.ok
-                ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                : "border border-red-500/30 bg-red-500/10 text-red-300"
-            }`}
-          >
-            {publishResult.ok ? "✅ " : "⚠️ "}
-            {publishResult.message}
-          </div>
-        )}
-      </aside>
     </div>
   );
 }
