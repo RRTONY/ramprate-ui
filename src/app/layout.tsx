@@ -39,11 +39,11 @@ import { ConditionalChrome } from "@/components/shared/ConditionalChrome";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ramprate.com"),
   title: {
-    default: "RampRate - Investment & Advisory",
+    default: "RampRate | Data Center, Telecom & Cloud Advisory",
     template: "%s | RampRate",
   },
   description:
-    "RampRate is a B-Corp certified technology advisory firm helping enterprises optimize technology sourcing, reduce costs, and drive impact.",
+    "RampRate: B Lab-certified advisory turning relationships into revenue via technology sourcing and product strategy — $10B+ managed since 2000.",
   keywords: [
     "technology advisory",
     "enterprise IT sourcing",

@@ -1,6 +1,6 @@
 # RampRate
 
-> RampRate is a B-Corp certified IT infrastructure and sourcing advisory firm (founded 2000) that helps enterprises optimize technology sourcing, cut costs, negotiate supplier contracts and SLAs, and drive measurable impact. 24+ years of independent advisory, $10B+ in enterprise decisions transacted across 350+ suppliers and 80 countries.
+> RampRate is a B Lab certified IT infrastructure and sourcing advisory firm (founded 2000) that helps enterprises optimize technology sourcing, cut costs, negotiate supplier contracts and SLAs, and drive measurable impact. 24+ years of independent advisory, $10B+ in enterprise decisions transacted across 350+ suppliers and 80 countries.
 
 ## What RampRate does
 - Independent IT and data center sourcing advisory - benchmarking pricing against 150K+ real transaction data points
@@ -15,13 +15,13 @@
 - [Expertise](https://ramprate.com/expertise): The five advisory practices (RampRate, Syzygy, Stratum, ImpactSoul, Private Advisory)
 - [Syzygy / Growth](https://ramprate.com/growth): Growth strategy advisory for founders - anchor clients, capital, GTM
 - [Stratum / Web3](https://ramprate.com/web3): Web3 & blockchain advisory - token design, DAO governance
-- [ImpactSoul](https://ramprate.com/impactsoul): Impact & regenerative consulting - ESG, B Corp, asset tokenization
+- [ImpactSoul](https://ramprate.com/impactsoul): Impact & regenerative consulting - ESG, B Lab certification, asset tokenization
 - [Private Advisory](https://ramprate.com/private-advisory): Executive advisory - crisis management, reputation, board advisory
 - [Proof](https://ramprate.com/proof): Client results and case outcomes
 - [About](https://ramprate.com/about): Firm history, team, and board of advisors
 - [Process](https://ramprate.com/process): How RampRate delivers engagements
 - [How We Work](https://ramprate.com/howwework): RampRate's engagement model
-- [Values](https://ramprate.com/values): Mission, purpose, and B Corp culture
+- [Values](https://ramprate.com/values): Mission, purpose, and B Lab certified culture
 - [Service Provider Intelligence Index](https://ramprate.com/service-provider-intelligence-index): Supplier-neutral IT sourcing benchmarking platform (SPY Index)
 - [Contact](https://ramprate.com/contact): How to start an engagement
 - [Careers](https://ramprate.com/careers): Open roles at RampRate
@@ -57,3 +57,4 @@
 
 ## Notes
 - Contact: admin@ramprate.com
+- [B Lab Certification](https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/): Verified B Lab listing for RampRate A Team, Inc.
