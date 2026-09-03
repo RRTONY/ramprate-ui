@@ -163,7 +163,7 @@ export const ADMIN_TOOLS = [
   {
     name: "check_pr_status",
     description:
-      "Check the real, current status of every automatic check on the pending change (code style, formatting, the test suite, and the site-preview build) — call this any time the admin asks about a failing check, mentions an error or the workflow, or before telling them something is ready to publish. Returns each check's name and whether it's passing, still running, or failed, with a failed check's id (for get_check_log_excerpt) and a link. ALL of these checks block Publish equally — none of them are cosmetic-only.",
+      "Check the real, current status of every automatic check on the pending change (code style, formatting, the test suite, and the site-preview build) — call this any time the admin asks about a failing check, mentions an error or the workflow, or before telling them something is ready to publish. If checks are still running, this call itself waits up to ~20s for them to finish before returning — you do not need to (and cannot) wait on your own between calls. If the result still comes back with status \"pending\" and a `note` field, that means it's still running even after that wait — just call this tool again rather than telling the admin you'll 'wait' or 'check back'; there's no real timer on your side to do that with. Returns each check's name and whether it's passing, still running, or failed, with a failed check's id (for get_check_log_excerpt) and a link. ALL of these checks block Publish equally — none of them are cosmetic-only.",
     input_schema: {
       type: "object" as const,
       properties: {},
@@ -316,6 +316,44 @@ function pathRequired(): ToolCallResult {
   };
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// A plain chat client (Claude.ai, ChatGPT) has no way to "wait 60s and check
+// again" on its own - it only acts on conversation turns, so asking it to
+// wait produces either a stall or a claimed wait that never really
+// happened. Doing the waiting here instead means a single call gives an
+// honest, current answer: either it resolved within this window, or the
+// result says so explicitly and the caller should call again - a real
+// instruction instead of asking the model to fake a timer it doesn't have.
+// Bounded well under Netlify's synchronous function timeout (worst case,
+// free-tier: 10s; this repo's actual plan has handled longer single calls
+// already, but there's no reason to push that margin for a status check).
+const CHECK_WAIT_BUDGET_MS = 20_000;
+const CHECK_POLL_INTERVAL_MS = 3_000;
+
+export async function waitForChecks(
+  prNumber: number,
+): Promise<gh.PRChecksDetail & { note?: string }> {
+  const start = Date.now();
+  let detail = await gh.getPRChecksDetail(prNumber);
+  while (
+    detail.status === "pending" &&
+    Date.now() - start < CHECK_WAIT_BUDGET_MS
+  ) {
+    await sleep(CHECK_POLL_INTERVAL_MS);
+    detail = await gh.getPRChecksDetail(prNumber);
+  }
+  if (detail.status === "pending") {
+    return {
+      ...detail,
+      note: `Still pending after waiting ~${Math.round((Date.now() - start) / 1000)}s. Call check_pr_status again.`,
+    };
+  }
+  return detail;
+}
+
 export async function runAdminTool(
   name: string,
   input: Record<string, unknown>,
@@ -444,7 +482,7 @@ export async function runAdminTool(
         };
       }
       try {
-        const detail = await gh.getPRChecksDetail(prNumber);
+        const detail = await waitForChecks(prNumber);
         return { output: detail };
       } catch (err) {
         return {

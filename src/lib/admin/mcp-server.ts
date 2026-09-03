@@ -8,7 +8,7 @@ import {
 import * as gh from "@/lib/admin/github-client";
 import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
-import { ADMIN_TOOLS, runAdminTool } from "@/lib/admin/tools";
+import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
 import {
   PENDING_CHANGES_HTML,
@@ -31,7 +31,7 @@ const SESSION_TOOLS = [
   {
     name: "list_pending_changes",
     description:
-      "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes.",
+      "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes. If checks are still running, this call itself waits up to ~20s for them before returning — if the result still comes back with checkStatus \"pending\" and a `note` field, just call this again rather than telling the human you'll wait or check back later; there's no real timer on your side to do that with.",
     input_schema: { type: "object" as const, properties: {}, required: [] },
     // Hosts that support MCP Apps render this alongside the plain-text
     // result as a status card with a real Publish button (see
@@ -75,7 +75,7 @@ async function listPendingChanges() {
 
   const [compare, checks] = await Promise.all([
     gh.compareToDefaultBranch(existing.branch),
-    gh.getPRChecksDetail(existing.number),
+    waitForChecks(existing.number),
   ]);
 
   return {
@@ -84,6 +84,7 @@ async function listPendingChanges() {
     prUrl: `https://github.com/${gh.GITHUB_REPO.owner}/${gh.GITHUB_REPO.repo}/pull/${existing.number}`,
     previewUrl: checks.previewUrl,
     checkStatus: checks.status,
+    ...(checks.note ? { note: checks.note } : {}),
     failingChecks: checks.failingChecks,
     files: compare.files,
     drafts,
