@@ -306,11 +306,27 @@ infrastructure to maintain.
   history than headers), so prefer the header route (`/api/mcp`) for any client that supports it —
   this one exists only because ChatGPT currently leaves no other option short of standing up a full
   OAuth server.
+- **Interactive widget (MCP Apps):** `list_pending_changes` declares `_meta.ui.resourceUri` pointing
+  at a small HTML status card (`src/lib/admin/mcp-ui-widgets.ts`) — hosts that support the MCP Apps
+  extension (Claude, ChatGPT; launched as an open standard 2026-01-26, see mcpui.dev) render it
+  instead of/alongside the plain-text result: check status, changed files, preview link, and a real
+  **Publish** button. The button calls `publish_changes` via the widget runtime's `callServerTool`
+  bridge (`@modelcontextprotocol/ext-apps`, loaded from `esm.sh` at render time inside the
+  sandboxed iframe — **no new dependency needed server-side**, since the low-level `Server` class
+  already installed already supports arbitrary `resources/list` + `resources/read` handlers, and
+  tool visibility to both "model" and "app" is the MCP Apps spec's default with no extra metadata).
+  Hosts that don't understand `_meta.ui` simply never request the resource and fall back to plain
+  text — this is additive, not a hard requirement. Two-step confirm (Publish → Confirm publish)
+  in the widget instead of `window.confirm()`, since modal dialogs aren't reliably available inside
+  a sandboxed iframe. Verified against the real deployed server with a real MCP client before AND
+  after adding the button (base rendering first, then the interactive piece on top), not just by
+  inspection.
 - Files: `src/app/api/mcp/route.ts`, `src/app/api/mcp/[token]/route.ts`,
   `src/lib/admin/mcp-server.ts`, `src/lib/admin/mcp-auth.ts`, `src/lib/admin/mcp-handler.ts`
   (the shared stateless-server-per-request logic both routes call into),
-  `src/lib/admin/mcp-tool-context.ts`. Denylist in `src/lib/admin/guardrails.ts` blocks the agent
-  from editing `src/app/api/mcp/` itself (as well as `src/lib/admin/`, already covered).
+  `src/lib/admin/mcp-tool-context.ts`, `src/lib/admin/mcp-ui-widgets.ts`. Denylist in
+  `src/lib/admin/guardrails.ts` blocks the agent from editing `src/app/api/mcp/` itself (as well as
+  `src/lib/admin/`, already covered).
 
 See `~/.claude/projects/-Users-dharmketsavani-Desktop-ramprate-ui/memory/project_admin_vibecoding.md`
 for the full build history, gotchas found during testing, and flagged security follow-ups.

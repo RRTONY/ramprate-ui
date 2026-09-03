@@ -111,8 +111,19 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
         parts.push('<div class="muted">' + data.drafts.length + ' unpublished content draft' + (data.drafts.length === 1 ? "" : "s") + '</div>');
       }
 
+      // Netlify's own preview build can finish (and previewUrl show up)
+      // while other checks (lint, tests) are still running or have failed -
+      // showing "Open preview" as if everything's settled would be
+      // misleading in either case, so gate it on the overall status instead
+      // of just previewUrl being present.
+      if (data.branch && data.checkStatus === "pending") {
+        parts.push('<div class="muted">Checks are still running — please wait, then ask again to see the preview link.</div>');
+      } else if (data.branch && data.checkStatus === "failure") {
+        parts.push('<div class="error">A check is failing — this needs a fix before it can be previewed or published.</div>');
+      }
+
       const actions = [];
-      if (data.previewUrl) {
+      if (data.previewUrl && data.checkStatus === "success") {
         actions.push('<a class="btn ghost" href="' + data.previewUrl + '" target="_blank" rel="noopener">Open preview →</a>');
       }
       if (data.canPublish) {
