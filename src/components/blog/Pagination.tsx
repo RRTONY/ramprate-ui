@@ -47,8 +47,7 @@ export default function Pagination({
 
   const btnBase =
     "flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all";
-  const ghostClass =
-    "font-body bg-white/5 text-white/65 border border-white/8";
+  const ghostClass = "font-body bg-white/5 text-white/65 border border-white/8";
   const goldClass = "font-mono font-bold bg-gold text-dark";
   const numInactiveClass =
     "font-mono bg-white/4 text-white/45 border border-white/8";
