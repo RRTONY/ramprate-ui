@@ -12,6 +12,28 @@
   --text-dark: #2a1f14;
   --text-mid: #6b5e52;
 
+  /* ── CHAMPION PROGRAM SUB-BRAND ──
+     /champions is a partner recruitment page, not a practice page. It runs on
+     its own purple palette so it reads as a distinct offer rather than another
+     RampRate service page. Defined here rather than inline so the page
+     components stay free of raw hex and the palette can be reused if the
+     program gets more surfaces later. Do not use these outside /champions. */
+  --champion: #7728cc;
+  --champion-dark: #5c1da1;
+  --champion-light: #a96fea;
+  --champion-faint: #f4edfc;
+  --champion-tint: #f9f7fd;
+  --champion-paper: #ffffff;
+  --champion-night: #14101f;
+  --champion-night-2: #241b38;
+  --champion-line: #e6e0ef;
+  --champion-line-strong: #cfc5df;
+  --champion-ink: #14101f;
+  --champion-body: #4a4456;
+  --champion-muted: #6e6779;
+  --champion-hero-text: #cbc2dc;
+  --champion-hero-label: #9c92b0;
+
   /* --font-display / --font-body / --font-mono come from next/font
      variable classes applied to <html> in layout.tsx, not defined here. */
 
@@ -34,6 +56,10 @@
   --color-ink: var(--text-dark);
   --color-ink-mid: var(--text-mid);
   --color-amber: oklch(0.82 0.15 75);
+
+  --color-champion: var(--champion);
+  --color-champion-dark: var(--champion-dark);
+  --color-champion-light: var(--champion-light);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -185,6 +211,57 @@
 .section-blue {
   background-color: oklch(0.45 0.22 260);
   color: oklch(0.98 0 0);
+}
+
+/* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
+/* The connecting rail between step markers is a real border on the list item,
+   so the counter badge has to sit on top of it with a negative offset. That is
+   not expressible with utility classes alone. */
+.champion-steps {
+  counter-reset: champion-step;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.champion-step {
+  counter-increment: champion-step;
+  position: relative;
+  padding: 0 0 34px 60px;
+  border-left: 2px solid var(--champion-line);
+  margin-left: 19px;
+}
+.champion-step:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+.champion-step::before {
+  content: counter(champion-step);
+  position: absolute;
+  left: -20px;
+  top: -6px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--champion);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 640px) {
+  .champion-step {
+    padding-left: 74px;
+    margin-left: 22px;
+  }
+  .champion-step::before {
+    left: -23px;
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
 }
 
 /* ── GLASSMORPHIC DESIGN SYSTEM ── */
