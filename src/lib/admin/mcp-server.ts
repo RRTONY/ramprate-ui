@@ -157,16 +157,22 @@ export function createAdminMcpServer(): Server {
     const result = await runAdminTool(name, input, ctx);
     const session = await finalize();
 
-    // Only append session/audit info when this call actually touched a
-    // branch or logged something — keeps a plain read (github_read_file,
-    // sanity_query, ...) from being cluttered with null branch/PR noise.
+    // Only append session/audit info when THIS call actually did something
+    // (ensureWriteBranch/log calls push into auditLog) — not just because a
+    // branch happens to already be open from an earlier call, which is true
+    // for most calls once any change is pending. Also: never name this field
+    // "log" — get_check_log_excerpt's own output already has a `log` string,
+    // and spreading a same-named field after it silently clobbers it (this
+    // is exactly the bug that shipped: get_check_log_excerpt started
+    // returning `log: []` instead of the real log text, on any call made
+    // while a PR was open).
     const isPlainObject =
       result.output &&
       typeof result.output === "object" &&
       !Array.isArray(result.output);
     const output =
-      isPlainObject && (session.branch || auditLog.length > 0)
-        ? { ...(result.output as object), ...session, log: auditLog }
+      isPlainObject && auditLog.length > 0
+        ? { ...(result.output as object), ...session, mcpAuditLog: auditLog }
         : result.output;
 
     return toResult(output, result.isError);
