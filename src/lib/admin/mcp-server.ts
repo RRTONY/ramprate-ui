@@ -1,13 +1,24 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import {
   CallToolRequestSchema,
+  ListResourcesRequestSchema,
   ListToolsRequestSchema,
+  ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import * as gh from "@/lib/admin/github-client";
 import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { ADMIN_TOOLS, runAdminTool } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
+import {
+  PENDING_CHANGES_HTML,
+  PENDING_CHANGES_UI_URI,
+} from "@/lib/admin/mcp-ui-widgets";
+
+// MIME type the MCP Apps extension (https://mcpui.dev) expects for an
+// interactive UI resource. Hosts that don't support MCP Apps simply never
+// request this resource and show the tool's plain-text result instead.
+const MCP_APP_MIME_TYPE = "text/html;profile=mcp-app";
 
 // get_attachment / create_download are chat-UI-only concepts (a chat
 // message's attachments, a file handed back through the chat) that don't
@@ -22,6 +33,10 @@ const SESSION_TOOLS = [
     description:
       "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes.",
     input_schema: { type: "object" as const, properties: {}, required: [] },
+    // Hosts that support MCP Apps render this alongside the plain-text
+    // result as a small status card (see mcp-ui-widgets.ts) — read-only for
+    // now, not a publish button. Ignored by hosts that don't support it.
+    _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
   },
   {
     name: "publish_changes",
@@ -128,7 +143,7 @@ async function publishChanges() {
 export function createAdminMcpServer(): Server {
   const server = new Server(
     { name: "ramprate-admin", version: "1.0.0" },
-    { capabilities: { tools: {} } },
+    { capabilities: { tools: {}, resources: {} } },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -136,8 +151,35 @@ export function createAdminMcpServer(): Server {
       name: t.name,
       description: t.description,
       inputSchema: t.input_schema,
+      ...("_meta" in t ? { _meta: t._meta } : {}),
     })),
   }));
+
+  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+    resources: [
+      {
+        uri: PENDING_CHANGES_UI_URI,
+        name: "Pending changes",
+        mimeType: MCP_APP_MIME_TYPE,
+      },
+    ],
+  }));
+
+  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+    if (request.params.uri !== PENDING_CHANGES_UI_URI) {
+      throw new Error(`Unknown resource "${request.params.uri}"`);
+    }
+    return {
+      contents: [
+        {
+          uri: PENDING_CHANGES_UI_URI,
+          mimeType: MCP_APP_MIME_TYPE,
+          text: PENDING_CHANGES_HTML,
+          _meta: { ui: { csp: { resourceDomains: ["https://esm.sh"] } } },
+        },
+      ],
+    };
+  });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: rawArgs } = request.params;
