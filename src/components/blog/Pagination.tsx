@@ -1,66 +1,88 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
+import Link from "next/link";
 
 interface PaginationProps {
-  currentPage: number
-  totalPages: number
-  activeCategory: string | null
+  currentPage: number;
+  totalPages: number;
+  activeCategory: string | null;
 }
 
 function buildUrl(page: number, activeCategory: string | null): string {
-  const params = new URLSearchParams()
-  if (activeCategory) params.set('category', activeCategory)
-  if (page > 1) params.set('page', String(page))
-  const qs = params.toString()
-  return `/blog${qs ? `?${qs}` : ''}`
+  const params = new URLSearchParams();
+  if (activeCategory) params.set("category", activeCategory);
+  if (page > 1) params.set("page", String(page));
+  const qs = params.toString();
+  return `/blog${qs ? `?${qs}` : ""}`;
 }
 
 // Navigating between pages only changes the query string, so Next.js doesn't
 // always reset scroll position - the new posts load in below the fold and it
 // looks like nothing happened. Scroll the list back into view on click.
 function scrollToResults() {
-  if (typeof window === 'undefined') return
-  window.scrollTo({top: 0, behavior: 'smooth'})
+  if (typeof window === "undefined") return;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-export default function Pagination({currentPage, totalPages, activeCategory}: PaginationProps) {
-  if (totalPages <= 1) return null
+export default function Pagination({
+  currentPage,
+  totalPages,
+  activeCategory,
+}: PaginationProps) {
+  if (totalPages <= 1) return null;
 
   /* Build visible pages: first, last, current ±1, ellipsis gaps */
-  const pages: (number | 'ellipsis')[] = []
+  const pages: (number | "ellipsis")[] = [];
   for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-      pages.push(i)
-    } else if (pages[pages.length - 1] !== 'ellipsis') {
-      pages.push('ellipsis')
+    if (
+      i === 1 ||
+      i === totalPages ||
+      (i >= currentPage - 1 && i <= currentPage + 1)
+    ) {
+      pages.push(i);
+    } else if (pages[pages.length - 1] !== "ellipsis") {
+      pages.push("ellipsis");
     }
   }
 
   const btnBase =
-    'flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all'
-  const ghostClass = 'font-body bg-white/5 text-white/65 border border-white/8'
-  const goldClass = 'font-mono font-bold bg-gold text-dark'
-  const numInactiveClass = 'font-mono bg-white/4 text-white/45 border border-white/8'
+    "flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all";
+  const ghostClass =
+    "font-body bg-white/5 text-white/65 border border-white/8";
+  const goldClass = "font-mono font-bold bg-gold text-dark";
+  const numInactiveClass =
+    "font-mono bg-white/4 text-white/45 border border-white/8";
 
-  const prevUrl = buildUrl(currentPage - 1, activeCategory)
-  const nextUrl = buildUrl(currentPage + 1, activeCategory)
+  const prevUrl = buildUrl(currentPage - 1, activeCategory);
+  const nextUrl = buildUrl(currentPage + 1, activeCategory);
 
   return (
     <nav className="mt-16 sm:mt-20" aria-label="Pagination">
-
       {/* ── Mobile: icon buttons + page numbers ── */}
       <div className="flex sm:hidden items-center justify-center gap-1.5">
         {currentPage > 1 && (
-          <Link href={prevUrl} onClick={scrollToResults} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
+          <Link
+            href={prevUrl}
+            onClick={scrollToResults}
+            className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </Link>
         )}
 
         {pages.map((p, i) =>
-          p === 'ellipsis' ? (
+          p === "ellipsis" ? (
             <span
               key={`e${i}`}
               className="font-mono w-8 text-center text-sm select-none text-white/20"
@@ -75,7 +97,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
               className={`${btnBase} w-10 h-10 ${
                 p === currentPage ? goldClass : numInactiveClass
               }`}
-              aria-current={p === currentPage ? 'page' : undefined}
+              aria-current={p === currentPage ? "page" : undefined}
             >
               {p}
             </Link>
@@ -83,9 +105,22 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
         )}
 
         {currentPage < totalPages && (
-          <Link href={nextUrl} onClick={scrollToResults} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+          <Link
+            href={nextUrl}
+            onClick={scrollToResults}
+            className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         )}
@@ -94,15 +129,28 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
       {/* ── Desktop: full page list ── */}
       <div className="hidden sm:flex items-center justify-center gap-1.5">
         {currentPage > 1 && (
-          <Link href={prevUrl} onClick={scrollToResults} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
+          <Link
+            href={prevUrl}
+            onClick={scrollToResults}
+            className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </Link>
         )}
 
         {pages.map((p, i) =>
-          p === 'ellipsis' ? (
+          p === "ellipsis" ? (
             <span
               key={`e${i}`}
               className="font-mono w-10 text-center text-sm select-none text-white/20"
@@ -117,7 +165,7 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
               className={`${btnBase} w-10 h-10 ${
                 p === currentPage ? goldClass : numInactiveClass
               }`}
-              aria-current={p === currentPage ? 'page' : undefined}
+              aria-current={p === currentPage ? "page" : undefined}
             >
               {p}
             </Link>
@@ -125,14 +173,26 @@ export default function Pagination({currentPage, totalPages, activeCategory}: Pa
         )}
 
         {currentPage < totalPages && (
-          <Link href={nextUrl} onClick={scrollToResults} className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+          <Link
+            href={nextUrl}
+            onClick={scrollToResults}
+            className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         )}
       </div>
-
     </nav>
-  )
+  );
 }
