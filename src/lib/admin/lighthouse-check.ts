@@ -1,8 +1,9 @@
 // Runs a real Lighthouse audit via Google's free PageSpeed Insights API v5 —
 // this actually executes Lighthouse on Google's infrastructure, so there's no
 // need to bundle headless Chrome into a serverless function (which wouldn't
-// fit anyway). An optional PAGESPEED_API_KEY raises the modest anonymous rate
-// limit but isn't required for occasional single-page checks.
+// fit anyway). GOOGLE_API_KEY is required, not just a rate-limit nicety —
+// confirmed live (2026-09-04) that Google's anonymous quota for this API is
+// actually 0 ("quota_limit_value": "0" in the 429 body), not just "low."
 export interface LighthouseIssue {
   id: string;
   title: string;
@@ -112,8 +113,7 @@ export async function checkLighthouse(
   ]) {
     params.append("category", category);
   }
-  if (process.env.PAGESPEED_API_KEY)
-    params.set("key", process.env.PAGESPEED_API_KEY);
+  if (process.env.GOOGLE_API_KEY) params.set("key", process.env.GOOGLE_API_KEY);
 
   const res = await fetch(
     `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params.toString()}`,
