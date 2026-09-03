@@ -16,8 +16,9 @@ describe("isPathDenied", () => {
 
   it("blocks the admin tool's own code", () => {
     expect(isPathDenied("src/lib/admin/guardrails.ts")).toBe(true);
-    expect(isPathDenied("src/app/api/admin/chat/route.ts")).toBe(true);
+    expect(isPathDenied("src/app/api/mcp/route.ts")).toBe(true);
     expect(isPathDenied("src/lib/portal-auth.ts")).toBe(true);
+    expect(isPathDenied(".mcp.json")).toBe(true);
   });
 
   it("allows ordinary site content files", () => {

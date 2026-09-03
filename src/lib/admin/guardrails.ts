@@ -1,6 +1,6 @@
-// Files the admin chat agent may never read or write, regardless of what the
-// admin asks for in the chat — closes off the agent editing its own gate,
-// secrets, or build config. Checked on every read/write/delete tool call.
+// Files the admin agent (MCP tool calls) may never read or write, regardless
+// of what's asked — closes off the agent editing its own gate, secrets, or
+// build config. Checked on every read/write/delete tool call.
 const DENYLIST_PATTERNS: RegExp[] = [
   /^\.env(\..*)?$/i,
   // next.config.ts is intentionally NOT blocked — the admin needs it for
@@ -9,6 +9,7 @@ const DENYLIST_PATTERNS: RegExp[] = [
   /^package(-lock)?\.json$/i,
   /^yarn\.lock$/i,
   /^netlify\.toml$/i,
+  /^\.mcp\.json$/i,
   /^\.github\//i,
   /^\.git\//i,
   /^middleware\.ts$/i,
@@ -16,7 +17,7 @@ const DENYLIST_PATTERNS: RegExp[] = [
   /^src\/lib\/portal-auth\.ts$/i,
   /^src\/lib\/admin\//i,
   /^src\/lib\/sanity\/write-client\.ts$/i,
-  /^src\/app\/api\/admin\//i,
+  /^src\/app\/api\/mcp\//i,
 ];
 
 export function isPathDenied(path: string): boolean {

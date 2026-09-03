@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   PORTAL_IDS,
-  cookieMaxAgeFor,
   cookieNameFor,
   portalCookieValue,
   verifyPortalPassword,
   type PortalId,
 } from "@/lib/portal-auth";
+
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 function isPortalId(value: unknown): value is PortalId {
   return (
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     secure: true,
     sameSite: "strict",
     path: "/",
-    maxAge: cookieMaxAgeFor(portalId),
+    maxAge: COOKIE_MAX_AGE,
   });
   return res;
 }

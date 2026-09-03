@@ -214,43 +214,103 @@ Two specific Next.js App Router pitfalls to check for, since they're easy to int
 | `/contact`          | Engage / Contact                       |
 | `/careers`          | Careers                                |
 | `/expertise`        | Expertise                              |
-| `/admin`            | Admin vibecoding panel (noindex, password-gated) |
 
 ---
 
 ## Admin Vibecoding Platform
 
-`/admin` is a password-gated internal tool (not a marketing page) where the site owner chats with
-Claude to edit real code files and Sanity content, then ships changes with a single Publish button.
+The site owner edits real code files and Sanity content by connecting Claude Code, Claude Desktop,
+Claude.ai (Team/Enterprise), or ChatGPT to this repo's own **MCP server** (`/api/mcp`) — there is no
+in-house chat UI or admin page; the connecting app's own agent loop drives the tool calls.
+
+> **Superseded design, 2026-08-27 through 2026-09-03:** a password-gated `/admin` chat page used to
+> do this via an in-house Claude-powered chat loop (its own streaming/job-polling infrastructure to
+> work around Netlify's function timeouts). Removed 2026-09-04 in favor of the MCP server below,
+> once verified working end-to-end — Claude Desktop/Code/ChatGPT already have their own robust
+> agent loops, so none of that in-house orchestration (and its recurring timeout/truncation bugs)
+> needed to exist at all. See `project_admin_vibecoding.md` in memory for the full history if
+> anything here looks unfamiliar from an older session.
 
 **How it works:**
-- Auth reuses the existing multi-portal password system (`src/lib/portal-auth.ts`), just with
-  `"admin"` as another portal id — same HMAC-cookie mechanism as `/attorney` etc., no separate auth
-  system.
 - Code edits go through GitHub's REST API (`src/lib/admin/github-client.ts`, plain `fetch`, no
   `@octokit/rest`) to a per-session branch (`admin/vibe-<date>-<random>`), never committed straight
   to the default branch.
 - Content edits go through a dedicated Sanity write client (`src/lib/sanity/write-client.ts`) and
   are always saved as `drafts.<id>` — never touch the published document directly.
-- **Publish = merge the PR + publish the matching Sanity drafts.** Nothing goes live any other way.
-  The Publish button stays disabled until the PR's GitHub build-check status (Netlify's own deploy
-  preview) reports success — never on `eslint`, since this repo has pre-existing lint debt that
-  would keep an eslint-based gate permanently red.
-- The admin agent's system prompt (`src/lib/admin/system-prompt.ts`) reads this **actual CLAUDE.md
-  file at request time** — so the rules in this document apply to its edits too, automatically, with
-  no separate copy to keep in sync.
+- **Publishing = merging the PR + publishing the matching Sanity drafts**, done via the
+  `publish_changes` MCP tool. Nothing goes live any other way. It refuses to merge while the PR's
+  GitHub build-check status (Netlify's own deploy preview) is pending or failing — never gated on
+  `eslint`, since this repo has pre-existing lint debt that would keep an eslint-based gate
+  permanently red.
+- **No system prompt on this server's side** — unlike the old chat UI (which embedded this
+  CLAUDE.md file into every request), the MCP server is just tool definitions; the connecting
+  Claude/ChatGPT session supplies its own reasoning and whatever project context it already has.
+  Claude Code operating inside this repo sees this file naturally; a Claude.ai Team connector or
+  ChatGPT session with no repo context does not — keep each MCP tool's `description` in
+  `src/lib/admin/tools.ts`/`mcp-server.ts` self-sufficient rather than assuming house-rule context
+  from this file will reach the model automatically.
 
 **Required env vars — must be set in Netlify's dashboard (Site settings → Environment variables),
-not just locally, or `/admin` will 500 in production:**
+not just locally, or `/api/mcp` will 500 in production:**
 
 | Var | Purpose |
 | --- | --- |
-| `PORTAL_PASSWORD_ADMIN` | Password to unlock `/admin` |
 | `GITHUB_TOKEN` | Fine-grained PAT scoped to only this repo, Contents + Pull requests = Read and write. Not the token in the git remote URL. |
 | `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
+| `MCP_ADMIN_TOKEN` | Bearer token for `/api/mcp` — a long random secret (not a memorable password; see below) |
 
 **This repo's default branch is `master`, not `main`** — anything touching the GitHub API must
 resolve `default_branch` dynamically rather than assuming `main`.
+
+### MCP server (`/api/mcp`)
+
+The edit tools (`src/lib/admin/tools.ts`'s `runAdminTool`, minus `get_attachment`/
+`create_download`, which were chat-UI-only concepts that no longer apply) plus
+`list_pending_changes`/`publish_changes` are exposed as a remote MCP server at `/api/mcp`, so
+Claude Desktop, Claude Code, Claude.ai Team/Enterprise, or ChatGPT can drive the GitHub-PR +
+Sanity-draft workflow directly, with no in-house chat loop, streaming, or job-polling
+infrastructure to maintain.
+
+- **Auth:** `Authorization: Bearer <MCP_ADMIN_TOKEN>` header — checked in
+  `src/lib/admin/mcp-auth.ts`. Not the portal password; a separate secret.
+- **Stateless by design:** built with the SDK's `WebStandardStreamableHTTPServerTransport` in
+  stateless mode (`sessionIdGenerator: undefined`) — a fresh `Server` per HTTP request, matching
+  Netlify Functions' actual no-memory-between-invocations behavior. Instead of a session cookie,
+  every tool call resolves "the pending change" by asking GitHub whether an admin branch/PR is
+  already open (`gh.findOpenAdminPR`, same single-operator assumption as the chat UI). See
+  `src/lib/admin/mcp-tool-context.ts` — its `finalize()` opens the PR the instant a branch gets its
+  first commit; skipping that step means a later independent tool call can never find the branch
+  again (GitHub only lets you query *open PRs* by branch prefix, not branches with no PR), and would
+  silently fork a new orphan branch per call. Verified against a real GitHub PR during this build,
+  not just by inspection.
+- **Connecting Claude Code (per-repo, team-wide):** `.mcp.json` at the repo root already declares
+  this server (`type: "http"`, url + `Authorization: Bearer ${MCP_ADMIN_TOKEN}`) — the token is NOT
+  in that file, only the `${MCP_ADMIN_TOKEN}` reference, so it's safe to commit. Anyone who opens
+  this repo in Claude Code is prompted to approve the server on first use, and it reads the token
+  from their own local `MCP_ADMIN_TOKEN` env var — share the actual token value with teammates out
+  of band (not by putting it in this file or in chat/commit history).
+- **Connecting Claude.ai Team/Enterprise (org-wide, no per-person setup):** an org admin can add
+  this as a custom connector once — Admin settings → Connectors → Add → Custom — with the same URL
+  and an `Authorization: Bearer <token>` request header (Anthropic's header-based auth for custom
+  connectors, currently in beta on some orgs; no OAuth needed). Once added, it shows up for every
+  workspace member automatically (they just connect it under Customize → Connectors). Requires Team
+  or Enterprise — not available on Pro/Free.
+- **Connecting ChatGPT:** ChatGPT's connector UI (Settings → Connectors → Advanced → Developer
+  Mode → Create connector, Plus/Pro/Team+ only, not Free) only offers OAuth or "No Authentication"
+  for a custom remote MCP server — no static-bearer-header option like Claude's. So there's a
+  second route, `src/app/api/mcp/[token]/route.ts`, that takes the same `MCP_ADMIN_TOKEN` as a URL
+  path segment instead of a header (`https://ramprate.com/api/mcp/<token>`) — paste that full URL
+  as the server URL and pick "No Authentication" in ChatGPT's setup. Same secret, same
+  `isValidMcpToken()` check either way (`src/lib/admin/mcp-auth.ts`); only the transport differs.
+  Slightly weaker than a header (URLs are more likely to land in a proxy/access log or browser
+  history than headers), so prefer the header route (`/api/mcp`) for any client that supports it —
+  this one exists only because ChatGPT currently leaves no other option short of standing up a full
+  OAuth server.
+- Files: `src/app/api/mcp/route.ts`, `src/app/api/mcp/[token]/route.ts`,
+  `src/lib/admin/mcp-server.ts`, `src/lib/admin/mcp-auth.ts`, `src/lib/admin/mcp-handler.ts`
+  (the shared stateless-server-per-request logic both routes call into),
+  `src/lib/admin/mcp-tool-context.ts`. Denylist in `src/lib/admin/guardrails.ts` blocks the agent
+  from editing `src/app/api/mcp/` itself (as well as `src/lib/admin/`, already covered).
 
 See `~/.claude/projects/-Users-dharmketsavani-Desktop-ramprate-ui/memory/project_admin_vibecoding.md`
 for the full build history, gotchas found during testing, and flagged security follow-ups.
