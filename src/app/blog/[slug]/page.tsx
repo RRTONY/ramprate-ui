@@ -4,6 +4,7 @@ import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
 import SanityImage from '@/components/shared/SanityImage'
 import JsonLd, {blogPostJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
 import {urlFor} from '@/lib/sanity/image'
+import {stripSiteNameSuffix} from '@/lib/sanity/seo'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import type {Metadata} from 'next'
@@ -29,7 +30,10 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   const post = await client.fetch(postBySlugQuery, {slug})
   if (!post) return {}
   const ogImage = post.seo?.ogImage || post.mainImage
-  const title = post.seo?.metaTitle || post.title
+  // The root layout appends " | RampRate" to every title via its template.
+  // Sanity-authored metaTitles sometimes already end in "| RampRate", which
+  // would otherwise double up (e.g. "Post Title | RampRate | RampRate").
+  const title = stripSiteNameSuffix(post.seo?.metaTitle) || post.title
   const description = post.seo?.metaDescription || post.excerpt
   const openGraph = {
     title,
