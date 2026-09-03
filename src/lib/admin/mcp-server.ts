@@ -141,12 +141,48 @@ async function publishChanges() {
   return { ok: true, mergeSha, publishedIds };
 }
 
+// Sent to every connecting client during the MCP handshake and meant to act
+// like a system-prompt hint (per the MCP spec) — the one place a quality bar
+// reaches EVERY client equally, including a Claude.ai/ChatGPT session with
+// no access to this repo's actual CLAUDE.md. Deliberately does not restate
+// CLAUDE.md's project-specific rules (design tokens, page patterns, accent
+// colors, etc.) here — those live in exactly one place and change over
+// time; duplicating them risks drifting out of sync. Read the real file
+// instead. This is the general engineering bar that applies regardless.
+const ADMIN_SERVER_INSTRUCTIONS = `This server lets you edit the RampRate marketing site's code and Sanity content.
+
+Before writing or changing anything, read CLAUDE.md (github_read_file "CLAUDE.md") if you
+haven't already this session — it's the authoritative source for this project's actual design
+system, coding rules, and page patterns. Don't assume generic web defaults where CLAUDE.md is
+specific: e.g. this site's "theme" is per-section fixed backgrounds (.section-dark / .section-warm
+/ .section-light per CLAUDE.md), not a user-toggleable light/dark mode — match the existing
+section pattern rather than inventing a toggle.
+
+General bar for any change, beyond just making the requested thing appear to work:
+- Responsive at every breakpoint (mobile-first): no horizontal scroll, no overflow or cropped
+  content, touch-friendly targets, readable type sizes.
+- Visual consistency: reuse existing components/classes/tokens before introducing new ones.
+- Accessibility: semantic HTML, correct heading order, meaningful alt text, real keyboard/focus
+  support, sufficient contrast, never color alone to convey information.
+- Performance: no new dependency without asking first, next/image for anything user-visible,
+  avoid layout shift, don't ship unused code.
+- SEO (public pages): unique title/meta description via this repo's existing seo/pageSeo pattern,
+  canonical URL, OG/Twitter tags, real H1/heading structure, noindex when a page shouldn't be
+  indexed.
+- Security: never write secrets/tokens into site code or commit messages; validate real user input.
+- Cover loading, empty, error, and success states for anything dynamic — not just the happy path.
+- Before calling this done: run check_code_quality on changed files, then check_pr_status, and
+  remove dead code/unused imports you introduced along the way.`;
+
 // One fresh Server per request (see api/mcp/route.ts) — cheap to construct,
 // and keeps this stateless like everything else the admin tools touch.
 export function createAdminMcpServer(): Server {
   const server = new Server(
     { name: "ramprate-admin", version: "1.0.0" },
-    { capabilities: { tools: {}, resources: {} } },
+    {
+      capabilities: { tools: {}, resources: {} },
+      instructions: ADMIN_SERVER_INSTRUCTIONS,
+    },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
