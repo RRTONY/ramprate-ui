@@ -1,3 +1,4 @@
+import prettier from "prettier";
 import * as gh from "@/lib/admin/github-client";
 import { isPathDenied, isSanityTypeAllowed } from "@/lib/admin/guardrails";
 import { client as sanityReadClient } from "@/lib/sanity/client";
@@ -9,6 +10,26 @@ import {
 import { checkPageSeo } from "@/lib/admin/seo-check";
 import { checkLighthouse } from "@/lib/admin/lighthouse-check";
 import { checkCode } from "@/lib/admin/code-check";
+
+// Every connected MCP client writes code in whatever style it happens to
+// produce, and this repo's CI treats a Prettier mismatch as a hard failure
+// (lint-changed-files) - relying on the model to remember to call
+// check_code_quality and manually reformat is exactly what didn't happen on
+// a real PR, blocking it on pure formatting with zero logic changes. Format
+// unconditionally here instead, so a write is correct by construction
+// regardless of which client made it. Falls back to the original content
+// for file types Prettier has no parser for (rare for what this tool
+// writes) rather than blocking the write.
+async function formatIfPossible(
+  filePath: string,
+  content: string,
+): Promise<string> {
+  try {
+    return await prettier.format(content, { filepath: filePath });
+  } catch {
+    return content;
+  }
+}
 
 // Anthropic tool schemas. Kept as plain objects (not the SDK's Tool type)
 // since the SDK's messages.create() accepts this shape directly and it keeps
@@ -319,10 +340,11 @@ export async function runAdminTool(
 
     case "github_write_file": {
       const path = normalizeRepoPath(input.path);
-      const content = String(input.content ?? "");
+      const rawContent = String(input.content ?? "");
       const message = String(input.message ?? "Admin chat edit");
       if (!path) return pathRequired();
       if (isPathDenied(path)) return denied(path);
+      const content = await formatIfPossible(path, rawContent);
       const branch = await ctx.ensureWriteBranch();
       await gh.putFile(path, content, message, branch);
       ctx.log(`Wrote ${path} on ${branch}: ${message}`);
