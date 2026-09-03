@@ -34,8 +34,10 @@ const SESSION_TOOLS = [
       "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes.",
     input_schema: { type: "object" as const, properties: {}, required: [] },
     // Hosts that support MCP Apps render this alongside the plain-text
-    // result as a small status card (see mcp-ui-widgets.ts) — read-only for
-    // now, not a publish button. Ignored by hosts that don't support it.
+    // result as a status card with a real Publish button (see
+    // mcp-ui-widgets.ts, which calls publish_changes via the widget
+    // runtime's callServerTool bridge). Ignored by hosts that don't support
+    // MCP Apps — they just see the plain-text result.
     _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
   },
   {

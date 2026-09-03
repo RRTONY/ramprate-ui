@@ -1,15 +1,15 @@
-// MCP Apps resource for list_pending_changes — a read-only status card
-// (branch/PR check status, changed files, preview link, Sanity drafts)
-// rendered by hosts that support the MCP Apps extension (Claude, ChatGPT;
-// see https://mcpui.dev). Hosts that don't just show the tool's plain text
+// MCP Apps resource for list_pending_changes — a status card (branch/PR
+// check status, changed files, preview link, Sanity drafts) rendered by
+// hosts that support the MCP Apps extension (Claude, ChatGPT; see
+// https://mcpui.dev). Hosts that don't just show the tool's plain text
 // result instead — this is additive, not a replacement.
 //
-// Deliberately display-only for now: no button here calls publish_changes
-// directly. That needs the full bidirectional app<->host tool-invocation
-// protocol (@modelcontextprotocol/ext-apps' request/response bridge, CSP
-// wiring for the call to reach back to this server), which is real
-// additional scope beyond this first pass. Publishing still happens by
-// asking in chat, same as before.
+// Includes a real Publish button: it calls app.callServerTool({name:
+// "publish_changes"}) directly (the App runtime's built-in bridge back to
+// this MCP server — see @modelcontextprotocol/ext-apps' `callServerTool`),
+// the same publish_changes tool the chat path already uses. Tool visibility
+// defaults to both "model" and "app" per the MCP Apps spec, so no server
+// metadata change was needed for the button to be allowed to call it.
 //
 // The widget loads its host-communication runtime from esm.sh at render
 // time inside the sandboxed iframe — not bundled into this server, so it
@@ -43,17 +43,30 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
   .files { display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
   .file { display: flex; gap: 8px; }
   .file .status { font-family: monospace; opacity: 0.7; width: 4.5em; flex: none; }
-  a.btn {
+  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  a.btn, button.btn {
     display: inline-block;
     padding: 8px 14px;
     border-radius: 8px;
+    border: none;
     background: #d4a843;
     color: #0a0f1a;
     text-decoration: none;
     font-weight: 600;
     font-size: 13px;
     width: fit-content;
+    cursor: pointer;
+    font-family: inherit;
   }
+  button.btn.danger { background: #f87171; }
+  button.btn:disabled { opacity: 0.5; cursor: default; }
+  button.btn.ghost {
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.25);
+    color: #f5f0e8;
+  }
+  .error { color: #f87171; font-size: 13px; }
+  .success { color: #4ade80; font-size: 13px; }
   .empty { color: rgba(245,240,232,0.55); font-size: 13px; }
 </style>
 </head>
@@ -63,6 +76,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     import { App } from "https://esm.sh/@modelcontextprotocol/ext-apps@1.7.5";
 
     const root = document.getElementById("root");
+    let confirming = false;
 
     function statusDot(status) {
       const cls = status === "success" ? "success"
@@ -72,7 +86,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       return '<span class="dot ' + cls + '"></span>';
     }
 
-    function render(data) {
+    function render(data, note) {
       if (!data || (!data.branch && (!data.drafts || data.drafts.length === 0))) {
         root.innerHTML = '<span class="empty">Nothing pending right now.</span>';
         return;
@@ -91,22 +105,69 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
             return '<div class="file"><span class="status">' + f.status + '</span><span>' + f.path + '</span></div>';
           }).join("") + '</div>');
         }
-        if (data.previewUrl) {
-          parts.push('<a class="btn" href="' + data.previewUrl + '" target="_blank" rel="noopener">Open preview →</a>');
-        }
       }
 
       if (data.drafts && data.drafts.length) {
         parts.push('<div class="muted">' + data.drafts.length + ' unpublished content draft' + (data.drafts.length === 1 ? "" : "s") + '</div>');
       }
 
-      parts.push(
-        '<div class="muted">' +
-        (data.canPublish ? "Ready to publish — say so in chat to go live." : "Not ready to publish yet.") +
-        "</div>"
-      );
+      const actions = [];
+      if (data.previewUrl) {
+        actions.push('<a class="btn ghost" href="' + data.previewUrl + '" target="_blank" rel="noopener">Open preview →</a>');
+      }
+      if (data.canPublish) {
+        actions.push(
+          confirming
+            ? '<button class="btn danger" id="confirm-publish">Confirm publish</button><button class="btn ghost" id="cancel-publish">Cancel</button>'
+            : '<button class="btn" id="publish">Publish</button>'
+        );
+      }
+      if (actions.length) parts.push('<div class="actions">' + actions.join("") + '</div>');
+
+      if (!data.canPublish) {
+        parts.push('<div class="muted">Not ready to publish yet.</div>');
+      }
+
+      if (note) parts.push(note);
 
       root.innerHTML = parts.join("");
+
+      const publishBtn = document.getElementById("publish");
+      if (publishBtn) {
+        publishBtn.onclick = function () {
+          confirming = true;
+          render(data);
+        };
+      }
+      const cancelBtn = document.getElementById("cancel-publish");
+      if (cancelBtn) {
+        cancelBtn.onclick = function () {
+          confirming = false;
+          render(data);
+        };
+      }
+      const confirmBtn = document.getElementById("confirm-publish");
+      if (confirmBtn) {
+        confirmBtn.onclick = async function () {
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = "Publishing…";
+          try {
+            const result = await app.callServerTool({ name: "publish_changes", arguments: {} });
+            const text = result.content && result.content[0] && result.content[0].text;
+            const parsed = text ? JSON.parse(text) : null;
+            confirming = false;
+            if (result.isError || (parsed && parsed.error)) {
+              render(data, '<div class="error">' + ((parsed && parsed.error) || "Publish failed.") + '</div>');
+            } else {
+              render(null);
+              root.innerHTML = '<span class="success">Published.</span>' + root.innerHTML;
+            }
+          } catch (e) {
+            confirming = false;
+            render(data, '<div class="error">Publish failed: ' + (e && e.message ? e.message : "unknown error") + '</div>');
+          }
+        };
+      }
     }
 
     const app = new App({ name: "ramprate-admin-ui", version: "1.0.0" });
@@ -114,6 +175,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       try {
         var block = params.content && params.content[0];
         var data = block && block.text ? JSON.parse(block.text) : null;
+        confirming = false;
         render(data);
       } catch (e) {
         root.innerHTML = '<span class="empty">Could not read the result.</span>';
