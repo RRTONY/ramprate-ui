@@ -27,7 +27,10 @@ export async function getPageSeo(route: string) {
 // Strip a trailing site-name suffix from Sanity-authored titles so the
 // template only ever adds it once.
 const SITE_NAME = "RampRate";
-const SITE_NAME_SUFFIX_RE = new RegExp(`\\s*[|\\-–—]\\s*${SITE_NAME}\\s*$`, "i");
+const SITE_NAME_SUFFIX_RE = new RegExp(
+  `\\s*[|\\-–—]\\s*${SITE_NAME}\\s*$`,
+  "i",
+);
 
 export function stripSiteNameSuffix(title?: string): string | undefined {
   if (!title) return title;
