@@ -1,46 +1,42 @@
 const RESEND_API_BASE = "https://api.resend.com";
+const DEFAULT_FROM = "RampRate <reports@ramprate.com>";
 
-// No verified sending domain confirmed for this account yet, so default to
-// Resend's own sandbox sender - it works with zero setup but only delivers
-// to the address that owns the Resend account. Once a domain is verified in
-// the Resend dashboard, pass `from` explicitly (e.g. "RampRate <admin@ramprate.com>").
-const DEFAULT_FROM = "RampRate <onboarding@resend.dev>";
-
-function authHeader(): string {
-  const token = process.env.RESEND_API_KEY;
-  if (!token) throw new Error("RESEND_API_KEY is not configured");
-  return `Bearer ${token}`;
+export interface EmailAttachment {
+  filename: string;
+  content: string; // base64
 }
 
-export interface SendEmailFields {
-  to: string;
+export interface SendEmailInput {
+  to: string | string[];
   subject: string;
   text: string;
   html?: string;
   from?: string;
-}
-
-export interface SendEmailResult {
-  id: string;
+  attachments?: EmailAttachment[];
 }
 
 export async function sendEmail(
-  fields: SendEmailFields,
-): Promise<SendEmailResult> {
+  input: SendEmailInput,
+): Promise<{ id: string }> {
+  const token = process.env.RESEND_API_KEY;
+  if (!token) throw new Error("RESEND_API_KEY is not configured");
+
   const res = await fetch(`${RESEND_API_BASE}/emails`, {
     method: "POST",
     headers: {
-      Authorization: authHeader(),
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: fields.from ?? DEFAULT_FROM,
-      to: [fields.to],
-      subject: fields.subject,
-      text: fields.text,
-      ...(fields.html ? { html: fields.html } : {}),
+      from: input.from ?? DEFAULT_FROM,
+      to: input.to,
+      subject: input.subject,
+      text: input.text,
+      ...(input.html ? { html: input.html } : {}),
+      ...(input.attachments ? { attachments: input.attachments } : {}),
     }),
   });
+
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     throw new Error(

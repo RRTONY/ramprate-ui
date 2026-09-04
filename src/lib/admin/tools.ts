@@ -16,6 +16,7 @@ import {
   deleteClickupTask,
   type ClickupTaskFields,
 } from "@/lib/admin/clickup-client";
+import { generateReportPdf, type ReportSection } from "@/lib/admin/report-pdf";
 import { getAnalyticsSummary } from "@/lib/admin/ga4-client";
 import { sendEmail } from "@/lib/admin/resend-client";
 
@@ -342,7 +343,7 @@ export const ADMIN_TOOLS = [
   {
     name: "send_email",
     description:
-      "Send a real email via Resend. This is a live send, not a draft — confirm the recipient and content with the admin before calling this, unless they've explicitly asked for a test send. No verified sending domain is configured yet, so mail can currently only be delivered to the address that owns the Resend account (Resend's sandbox-sender restriction) — pass a verified `from` address once one exists in the Resend dashboard.",
+      "Send a real email via Resend, from a verified @ramprate.com sender. This is a live send, not a draft — confirm the recipient and content with the admin before calling this, unless they've explicitly asked for a test send.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -356,10 +357,66 @@ export const ADMIN_TOOLS = [
         from: {
           type: "string",
           description:
-            'Optional sender, e.g. "RampRate <admin@ramprate.com>". Defaults to Resend\'s sandbox sender.',
+            'Optional sender, e.g. "RampRate <admin@ramprate.com>". Defaults to a standard RampRate sender address.',
         },
       },
       required: ["to", "subject", "text"],
+    },
+  },
+  {
+    name: "create_report",
+    description:
+      "Generate a branded RampRate PDF report (dark cover with logo, gold accents, callouts, tables) and email it as an attachment via Resend. Always fixed to the site's own gold/dark-navy/warm-cream palette — never use other colors. Give it structured sections (heading + paragraphs/callout/table), not raw HTML.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        title: {
+          type: "string",
+          description: 'Report title, e.g. "Weekly Traffic Summary".',
+        },
+        subtitle: { type: "string" },
+        date: {
+          type: "string",
+          description: 'Display date, e.g. "September 5, 2026".',
+        },
+        sections: {
+          type: "array",
+          description: "Ordered list of report sections.",
+          items: {
+            type: "object",
+            properties: {
+              heading: { type: "string" },
+              paragraphs: { type: "array", items: { type: "string" } },
+              callout: { type: "string" },
+              table: {
+                type: "object",
+                properties: {
+                  headers: { type: "array", items: { type: "string" } },
+                  rows: {
+                    type: "array",
+                    items: { type: "array", items: { type: "string" } },
+                  },
+                },
+              },
+            },
+            required: ["heading"],
+          },
+        },
+        recipients: {
+          type: "array",
+          items: { type: "string" },
+          description: "Email addresses to send the report to.",
+        },
+        emailSubject: { type: "string" },
+      },
+      required: [
+        "title",
+        "subtitle",
+        "date",
+        "sections",
+        "recipients",
+        "emailSubject",
+      ],
     },
   },
 ];
@@ -817,6 +874,56 @@ export async function runAdminTool(
         return {
           output: {
             error: err instanceof Error ? err.message : "Failed to send email",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "create_report": {
+      const title = String(input.title ?? "").trim();
+      const subtitle = String(input.subtitle ?? "");
+      const date = String(input.date ?? "");
+      const sections = (input.sections ?? []) as ReportSection[];
+      const recipients = (input.recipients ?? []) as string[];
+      const emailSubject = String(input.emailSubject ?? "").trim();
+      if (
+        !title ||
+        sections.length === 0 ||
+        recipients.length === 0 ||
+        !emailSubject
+      ) {
+        return {
+          output: {
+            error:
+              "title, sections, recipients, and emailSubject are all required.",
+          },
+          isError: true,
+        };
+      }
+      try {
+        const pdfBuffer = await generateReportPdf({
+          title,
+          subtitle,
+          date,
+          sections,
+        });
+        const filename = `${title.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "")}.pdf`;
+        const result = await sendEmail({
+          to: recipients,
+          subject: emailSubject,
+          text: `Attached: ${title}`,
+          attachments: [{ filename, content: pdfBuffer.toString("base64") }],
+        });
+        ctx.log(
+          `Created and emailed report "${title}" to ${recipients.join(", ")}`,
+        );
+        return { output: { ok: true, filename, recipients, ...result } };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error ? err.message : "Failed to create report",
           },
           isError: true,
         };

@@ -196,6 +196,45 @@ Two specific Next.js App Router pitfalls to check for, since they're easy to int
 
 ---
 
+## PDF Report Template
+
+`scripts/report-template/` holds a reusable, brand-locked template for any PDF report requested
+in this project (analytics summaries, guides, audits, etc.) — use it instead of hand-building a
+one-off styled HTML page each time (that drifted in color/layout across past reports since nothing
+was saved).
+
+- `report-template.html` — dark-navy (`#0a0f1a`) full-bleed cover with the white RampRate + B Corp
+  logo (site logo re-used via the same `brightness(0) invert(1)` trick `Logo.tsx` uses for dark
+  backgrounds) and a gold (`#d4a843`) eyebrow/title, then white content pages with gold accent
+  rules, a warm (`#f5f0e8`) callout style, and a footer carrying the natural-color logo. Colors are
+  fixed to the site's own palette — never substitute purple, blue, or any other color here.
+- **Page-size/margin rules are load-bearing, don't simplify them away**: `@page { size: A4; margin:
+  20mm 18mm; }` reserves real margin on every page; `@page :first { margin: 0; }` only exists so the
+  cover can bleed full-page. A `.content` div's own padding is NOT a substitute for the `@page`
+  margin — padding only renders at the very top/bottom of a flowed element, not at each page break,
+  which is exactly the bug a past version of this template shipped with (every page except the
+  first/last had no margin). `section`/`.callout`/`table` all carry `page-break-inside: avoid` so
+  they never get sliced across a page boundary.
+- `generate-report.sh "<title>" "<subtitle>" "<date>" <body-html-file> <output.pdf>` fills the
+  template and renders it via local Google Chrome's headless print-to-pdf
+  (`--print-to-pdf`, with `--no-pdf-header-footer` — not `--print-to-pdf-no-header`, which is a
+  silently-ignored no-op that leaves Chrome's own date/title/URL/page-number header and footer on
+  every page). Requires Chrome installed locally; only works from a session with real filesystem +
+  browser access (this is not wired into the live `/api/mcp` server — see below).
+- **Always verify a new/changed report with real tooling before calling it done**: `pdfinfo
+  output.pdf` (must read `Page size: ... A4`) and `pdftoppm -png -r 100 -f 2 -l 2 output.pdf page`
+  to visually check a *middle* page (not just the first/last, which is what the old margin bug
+  would hide) for actual top/bottom margin and no overlapping content.
+- **Not available as a live MCP tool yet.** A `create_report`/similar tool on the deployed
+  `/api/mcp` server (so Claude Desktop/ChatGPT could generate a report PDF directly) would need a
+  PDF engine that works inside a Netlify serverless function — this script's local-Chrome approach
+  can't run there. Three options were surfaced to the user (`@react-pdf/renderer`, an external
+  HTML-to-PDF API service, or `puppeteer-core` + `@sparticuz/chromium`) and not yet decided; each
+  has a different dependency-size/cost/fidelity tradeoff, so don't add one unilaterally — confirm
+  with the user first, per the "no new dependencies without discussion" rule above.
+
+---
+
 ## Registered Pages / Routes
 
 | Route               | Purpose                                |

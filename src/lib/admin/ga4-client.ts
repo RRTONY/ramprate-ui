@@ -116,9 +116,7 @@ export interface AnalyticsSummary {
   topPages: Array<{ path: string; views: number }>;
 }
 
-export async function getAnalyticsSummary(
-  days = 7,
-): Promise<AnalyticsSummary> {
+export async function getAnalyticsSummary(days = 7): Promise<AnalyticsSummary> {
   const propertyId = process.env.GA4_PROPERTY_ID_RAMPRATE;
   if (!propertyId) {
     throw new Error("GA4_PROPERTY_ID_RAMPRATE is not configured");
@@ -138,9 +136,7 @@ export async function getAnalyticsSummary(
       dateRanges,
       dimensions: [{ name: "pagePath" }],
       metrics: [{ name: "screenPageViews" }],
-      orderBys: [
-        { metric: { metricName: "screenPageViews" }, desc: true },
-      ],
+      orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
       limit: "10",
     }),
   ]);
