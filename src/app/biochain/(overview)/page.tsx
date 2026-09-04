@@ -1004,8 +1004,8 @@ export default function BioChainSourcingPage() {
           >
             We benchmark every category against closed transactions from the
             last 90 days - documented, auditable, and negotiated on your behalf.
-            We're a sourcing partner, not a price list: exact figures are shared
-            once we understand your fit, not before.
+            We&apos;re a sourcing partner, not a price list: exact figures are
+            shared once we understand your fit, not before.
           </p>
         </div>
       </section>
@@ -1240,8 +1240,8 @@ export default function BioChainSourcingPage() {
             Based on BioChain SPY Index closed transaction data from the last 90
             days. Quality-adjusted only - if the cheaper option has inferior
             documentation, it is not the benchmark. Exact figures are shared
-            once we understand your fit - we're a sourcing partner, not a price
-            list.
+            once we understand your fit - we&apos;re a sourcing partner, not a
+            price list.
           </p>
           <Reveal>
             <div
