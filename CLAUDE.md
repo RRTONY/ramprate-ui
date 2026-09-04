@@ -259,6 +259,7 @@ not just locally, or `/api/mcp` will 500 in production:**
 | `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
 | `MCP_ADMIN_TOKEN` | Bearer token for `/api/mcp` — a long random secret (not a memorable password; see below) |
 | `GOOGLE_API_KEY` | Used by `lighthouse_check_page` (`src/lib/admin/lighthouse-check.ts`) for Google's PageSpeed Insights API. Required, not optional — the anonymous quota for this API is 0, confirmed via a real 429 response, not just "low." Restrict this key to the PageSpeed Insights API only in Google Cloud Console (Credentials → the key → API restrictions) — don't widen it "just in case" for other Google APIs without deciding that deliberately. |
+| `CLICKUP_API_TOKEN` | Personal ClickUp API token, used by `create_clickup_task`/`update_clickup_task`/`delete_clickup_task` (`src/lib/admin/clickup-client.ts`). A personal token authenticates as whoever generated it — currently Darryl Dsouza — not a app-level integration; ClickUp task writes show up as created/edited by that person. |
 
 **This repo's default branch is `master`, not `main`** — anything touching the GitHub API must
 resolve `default_branch` dynamically rather than assuming `main`.

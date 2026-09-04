@@ -10,6 +10,14 @@ import {
 import { checkPageSeo } from "@/lib/admin/seo-check";
 import { checkLighthouse } from "@/lib/admin/lighthouse-check";
 import { checkCode } from "@/lib/admin/code-check";
+import {
+  createClickupTask,
+  updateClickupTask,
+  deleteClickupTask,
+  type ClickupTaskFields,
+} from "@/lib/admin/clickup-client";
+import { getAnalyticsSummary } from "@/lib/admin/ga4-client";
+import { sendEmail } from "@/lib/admin/resend-client";
 
 // Every connected MCP client writes code in whatever style it happens to
 // produce, and this repo's CI treats a Prettier mismatch as a hard failure
@@ -252,6 +260,106 @@ export const ADMIN_TOOLS = [
         fields: { type: "object" },
       },
       required: ["docType", "fields"],
+    },
+  },
+  {
+    name: "create_clickup_task",
+    description:
+      'Create a task in ClickUp. This is a REAL, immediately-visible task on the live board — not a draft — so confirm the details with the admin before calling it. Defaults to the "Requests & Tickets" list in the Technology & Web space; pass listId as either a known alias ("ramprate.com", "requests", "tonygreenberg.com") or a raw ClickUp list ID to target a different list.',
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        name: { type: "string", description: "Task title." },
+        description: { type: "string" },
+        priority: {
+          type: "string",
+          enum: ["urgent", "high", "normal", "low"],
+        },
+        dueDate: {
+          type: "string",
+          description: "ISO date, e.g. 2026-09-10.",
+        },
+        listId: {
+          type: "string",
+          description:
+            'Alias ("ramprate.com", "requests", "tonygreenberg.com") or a raw ClickUp list ID. Defaults to "requests".',
+        },
+      },
+      required: ["name"],
+    },
+  },
+  {
+    name: "update_clickup_task",
+    description:
+      "Update an existing ClickUp task's name, description, priority, due date, or status. This changes the REAL, live task immediately — confirm with the admin first.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        taskId: { type: "string", description: "ClickUp task ID." },
+        name: { type: "string" },
+        description: { type: "string" },
+        priority: {
+          type: "string",
+          enum: ["urgent", "high", "normal", "low"],
+        },
+        dueDate: { type: "string", description: "ISO date, e.g. 2026-09-10." },
+        status: {
+          type: "string",
+          description:
+            'The list\'s exact status name (e.g. "to do", "in progress", "complete") — these vary per list, so check the task or list first if unsure.',
+        },
+      },
+      required: ["taskId"],
+    },
+  },
+  {
+    name: "delete_clickup_task",
+    description:
+      "Permanently delete a ClickUp task. This is irreversible on the real, live board — always confirm with the admin before calling this.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        taskId: { type: "string", description: "ClickUp task ID." },
+      },
+      required: ["taskId"],
+    },
+  },
+  {
+    name: "check_analytics",
+    description:
+      "Pull real Google Analytics 4 traffic for ramprate.com over the last N days: total sessions, active users, and pageviews, plus the top 10 pages by views. Read-only.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        days: {
+          type: "number",
+          description: "Lookback window in days. Defaults to 7.",
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: "send_email",
+    description:
+      "Send a real email via Resend. This is a live send, not a draft — confirm the recipient and content with the admin before calling this, unless they've explicitly asked for a test send. No verified sending domain is configured yet, so mail can currently only be delivered to the address that owns the Resend account (Resend's sandbox-sender restriction) — pass a verified `from` address once one exists in the Resend dashboard.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        to: { type: "string", description: "Recipient email address." },
+        subject: { type: "string" },
+        text: { type: "string", description: "Plain-text body." },
+        html: {
+          type: "string",
+          description: "Optional HTML body. Falls back to text if omitted.",
+        },
+        from: {
+          type: "string",
+          description:
+            'Optional sender, e.g. "RampRate <admin@ramprate.com>". Defaults to Resend\'s sandbox sender.',
+        },
+      },
+      required: ["to", "subject", "text"],
     },
   },
 ];
@@ -579,6 +687,140 @@ export async function runAdminTool(
       const created = await createDraft(docType, fields);
       ctx.log(`Created Sanity draft ${created._id} (${docType})`);
       return { output: { ok: true, id: created._id } };
+    }
+
+    case "create_clickup_task": {
+      const taskName = String(input.name ?? "").trim();
+      if (!taskName) {
+        return { output: { error: "A task name is required." }, isError: true };
+      }
+      try {
+        const task = await createClickupTask({
+          name: taskName,
+          description:
+            input.description !== undefined
+              ? String(input.description)
+              : undefined,
+          priority: input.priority as ClickupTaskFields["priority"] | undefined,
+          dueDate:
+            input.dueDate !== undefined ? String(input.dueDate) : undefined,
+          listId: input.listId !== undefined ? String(input.listId) : undefined,
+        });
+        ctx.log(`Created ClickUp task "${task.name}" (${task.id})`);
+        return { output: { ok: true, ...task } };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error
+                ? err.message
+                : "Failed to create ClickUp task",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "update_clickup_task": {
+      const taskId = String(input.taskId ?? "").trim();
+      if (!taskId) {
+        return { output: { error: "A taskId is required." }, isError: true };
+      }
+      try {
+        const task = await updateClickupTask(taskId, {
+          name: input.name !== undefined ? String(input.name) : undefined,
+          description:
+            input.description !== undefined
+              ? String(input.description)
+              : undefined,
+          priority: input.priority as ClickupTaskFields["priority"] | undefined,
+          dueDate:
+            input.dueDate !== undefined ? String(input.dueDate) : undefined,
+          status: input.status !== undefined ? String(input.status) : undefined,
+        });
+        ctx.log(`Updated ClickUp task "${task.name}" (${task.id})`);
+        return { output: { ok: true, ...task } };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error
+                ? err.message
+                : "Failed to update ClickUp task",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "delete_clickup_task": {
+      const taskId = String(input.taskId ?? "").trim();
+      if (!taskId) {
+        return { output: { error: "A taskId is required." }, isError: true };
+      }
+      try {
+        await deleteClickupTask(taskId);
+        ctx.log(`Deleted ClickUp task ${taskId}`);
+        return { output: { ok: true, taskId } };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error
+                ? err.message
+                : "Failed to delete ClickUp task",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "check_analytics": {
+      const days = Number(input.days ?? 7);
+      try {
+        const summary = await getAnalyticsSummary(
+          Number.isFinite(days) && days > 0 ? days : 7,
+        );
+        return { output: summary };
+      } catch (err) {
+        return {
+          output: {
+            error:
+              err instanceof Error ? err.message : "Analytics check failed",
+          },
+          isError: true,
+        };
+      }
+    }
+
+    case "send_email": {
+      const to = String(input.to ?? "").trim();
+      const subject = String(input.subject ?? "").trim();
+      const text = String(input.text ?? "");
+      if (!to || !subject || !text) {
+        return {
+          output: { error: "to, subject, and text are all required." },
+          isError: true,
+        };
+      }
+      try {
+        const result = await sendEmail({
+          to,
+          subject,
+          text,
+          html: input.html !== undefined ? String(input.html) : undefined,
+          from: input.from !== undefined ? String(input.from) : undefined,
+        });
+        ctx.log(`Sent email to ${to}: "${subject}"`);
+        return { output: { ok: true, ...result } };
+      } catch (err) {
+        return {
+          output: {
+            error: err instanceof Error ? err.message : "Failed to send email",
+          },
+          isError: true,
+        };
+      }
     }
 
     default:
