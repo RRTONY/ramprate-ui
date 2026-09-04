@@ -442,34 +442,43 @@ export default function BioChainSourcingPage() {
           </span>
           <p
             className="mt-6 text-lg leading-relaxed"
-            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.35 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Twenty-five years ago, RampRate started managing IT supply chains
-            for Fortune 500 buyers who cared more about quality, timeliness,
-            and fit to their specific needs than about the lowest price.
-            There was no way to verify who could actually deliver on those
-            things, so we built it: validated pricing, verified track
-            records, and a reputational layer the industry didn&apos;t have.
-            That&apos;s the business we&apos;re still in.
+            for Fortune 500 buyers who cared more about quality, timeliness, and
+            fit to their specific needs than about the lowest price. There was
+            no way to verify who could actually deliver on those things, so we
+            built it: validated pricing, verified track records, and a
+            reputational layer the industry didn&apos;t have. That&apos;s the
+            business we&apos;re still in.
           </p>
           <p
             className="mt-5 text-lg leading-relaxed"
-            style={{ color: "oklch(0.35 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.35 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             The biologics and regenerative health market has the same problem
-            today, plus a fraud problem the IT industry never had at this
-            scale. Peptides, exosomes, stem cells: real product moving
-            through supply chains nobody has independently verified, priced
-            however the seller feels like pricing it. We&apos;re bringing the
-            same discipline here that we built in tech. There are no bad
-            suppliers in biochain, only bad fits, and our job is to find the
-            right one for every transaction, fast enough and cheap enough
-            that doing it right stays the more profitable choice, with the
-            savings passed to everyone in the deal.
+            today, plus a fraud problem the IT industry never had at this scale.
+            Peptides, exosomes, stem cells: real product moving through supply
+            chains nobody has independently verified, priced however the seller
+            feels like pricing it. We&apos;re bringing the same discipline here
+            that we built in tech. There are no bad suppliers in biochain, only
+            bad fits, and our job is to find the right one for every
+            transaction, fast enough and cheap enough that doing it right stays
+            the more profitable choice, with the savings passed to everyone in
+            the deal.
           </p>
           <p
             className="mt-5 text-lg font-semibold leading-relaxed"
-            style={{ color: "oklch(0.22 0.02 50)", fontFamily: "var(--font-display)" }}
+            style={{
+              color: "oklch(0.22 0.02 50)",
+              fontFamily: "var(--font-display)",
+            }}
           >
             That&apos;s why we created BioChain.
           </p>
@@ -490,7 +499,10 @@ export default function BioChainSourcingPage() {
                 </div>
                 <div
                   className="mt-1 text-xs uppercase tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}
+                  style={{
+                    color: "rgba(255,255,255,0.5)",
+                    fontFamily: "var(--font-body)",
+                  }}
                 >
                   {s.label}
                 </div>
@@ -517,7 +529,10 @@ export default function BioChainSourcingPage() {
           </h2>
           <p
             className="mt-6 text-base leading-relaxed"
-            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.4 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             BioChain is RampRate&apos;s trusted sourcing and supplier
             intelligence platform, built to bring transparency, confidence, and
@@ -527,16 +542,21 @@ export default function BioChainSourcingPage() {
           </p>
           <p
             className="mt-5 text-base leading-relaxed"
-            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.4 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             We believe there are no bad vendors - only bad fits. Our role is to
             help organizations identify the right partners through structured
-            evaluation, verified sourcing, and decades of procurement
-            expertise.
+            evaluation, verified sourcing, and decades of procurement expertise.
           </p>
           <p
             className="mt-5 text-base leading-relaxed"
-            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.4 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             By combining supplier validation, procurement intelligence, and
             marketplace transparency, BioChain is building a cleaner, more
@@ -545,7 +565,10 @@ export default function BioChainSourcingPage() {
           </p>
           <p
             className="mt-5 text-base leading-relaxed"
-            style={{ color: "oklch(0.4 0.02 50)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.4 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Whether you&apos;re looking for a manufacturing partner, laboratory
             services, ingredients, packaging, logistics, technology, or other
@@ -582,13 +605,14 @@ export default function BioChainSourcingPage() {
             }}
           >
             At BioChain, we do not simply find you a cheaper supplier. We
-            evaluate every supplier against a 12-variable qualification matrix and
-            score them on Supplier Strength - a composite measure of how much
-            leverage, reliability, and documentation they can deliver to your
-            account. The stronger the supplier&apos;s profile relative to your
-            account size and specification, the better your outcome. And the
-            better the fit between your account and the supplier&apos;s growth
-            objectives, the more likely you are to land below-wholesale terms.
+            evaluate every supplier against a 12-variable qualification matrix
+            and score them on Supplier Strength - a composite measure of how
+            much leverage, reliability, and documentation they can deliver to
+            your account. The stronger the supplier&apos;s profile relative to
+            your account size and specification, the better your outcome. And
+            the better the fit between your account and the supplier&apos;s
+            growth objectives, the more likely you are to land below-wholesale
+            terms.
           </p>
 
           <Reveal className="mt-10">
@@ -980,8 +1004,8 @@ export default function BioChainSourcingPage() {
           >
             We benchmark every category against closed transactions from the
             last 90 days - documented, auditable, and negotiated on your behalf.
-            We're a sourcing partner, not a price list: exact figures are shared
-            once we understand your fit, not before.
+            We&apos;re a sourcing partner, not a price list: exact figures are
+            shared once we understand your fit, not before.
           </p>
         </div>
       </section>
@@ -1216,8 +1240,8 @@ export default function BioChainSourcingPage() {
             Based on BioChain SPY Index closed transaction data from the last 90
             days. Quality-adjusted only - if the cheaper option has inferior
             documentation, it is not the benchmark. Exact figures are shared
-            once we understand your fit - we're a sourcing partner, not a price
-            list.
+            once we understand your fit - we&apos;re a sourcing partner, not a
+            price list.
           </p>
           <Reveal>
             <div
@@ -1305,7 +1329,7 @@ export default function BioChainSourcingPage() {
                     {
                       product: "Full BioChain Advisory · ongoing",
                       street: "Standard retainer",
-                      save: "300%+ ROI",
+                      save: "2X return",
                       extra:
                         "SPY Index access, supplier negotiation, contract architecture",
                     },
@@ -1367,11 +1391,12 @@ export default function BioChainSourcingPage() {
             Savings percentages reflect BioChain SPY Index closed transaction
             data. Street prices verified from current retail and direct-channel
             sources as of Q2 2026. The + on every saving reflects that
-            RampRate&apos;s supplier partnerships frequently produce pricing below
-            published wholesale depending on account fit, volume commitment, and
-            supplier strategic alignment. All accounts require a minimum of
-            $50,000 in annual biologics spend. RampRate does not publish target
-            prices - the sourcing audit produces your actual benchmark.
+            RampRate&apos;s supplier partnerships frequently produce pricing
+            below published wholesale depending on account fit, volume
+            commitment, and supplier strategic alignment. All accounts require a
+            minimum of $50,000 in annual biologics spend. RampRate does not
+            publish target prices - the sourcing audit produces your actual
+            benchmark.
           </p>
 
           <Reveal className="mt-14">
@@ -2027,14 +2052,14 @@ export default function BioChainSourcingPage() {
             className="text-3xl sm:text-4xl font-bold text-white mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            300%+ ROI or You Don&apos;t Pay
+            2X Return or You Don&apos;t Pay
           </h2>
           <p
             className="text-white/85 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            The sourcing audit is always free. If we don&apos;t deliver 300%+
-            ROI on our BioChain sourcing engagements, you don&apos;t pay.
+            The sourcing audit is always free. If we don&apos;t deliver a 2X
+            return on our BioChain sourcing engagements, you don&apos;t pay.
           </p>
           <Link
             href="/contact"
