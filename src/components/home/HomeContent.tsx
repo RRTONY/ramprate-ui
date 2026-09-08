@@ -220,21 +220,18 @@ export default function HomeContent() {
             sizes="100vw"
             className="object-cover object-right"
           />
-          {/* Color-graded sunset scrim: deep indigo dusk behind the text,
-              through magenta and vivid orange, dissolving into the photo's
-              own warm highlights on the right - not a flat opaque wash. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to right, rgba(59,34,96,0.88) 0%, rgba(177,49,111,0.72) 38%, rgba(255,111,60,0.4) 68%, transparent 100%)",
+                "linear-gradient(to right, rgba(59,34,96,0.9) 40%, rgba(177,49,111,0.75) 65%, transparent 100%)",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, rgba(59,34,96,0.55) 0%, transparent 45%, rgba(255,200,75,0.25) 100%)",
+                "linear-gradient(to top, rgba(59,34,96,0.55) 0%, transparent 40%, rgba(255,200,75,0.25) 100%)",
             }}
           />
         </div>
@@ -255,20 +252,16 @@ export default function HomeContent() {
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
-            {/* Frosted glass panel guarantees contrast regardless of which
-                part of the gradient/photo sits behind it - the site's own
-                glassmorphic system, just applied to hero copy instead of
-                only to cards. */}
-            <div className="glass-card max-w-2xl p-8 sm:p-10">
+            <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-gold/40 bg-white/70">
+                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-sunset-ink/80">
+                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
                     <a
                       href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:text-sunset-ink transition-colors"
+                      className="hover:text-white transition-colors"
                     >
                       B Lab Certified
                     </a>{" "}
@@ -277,18 +270,18 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-sunset-ink leading-[1.05] tracking-tight text-[clamp(2.5rem,6vw,4rem)]">
+              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
                 Where Relationships
                 <br />
-                Become <span className="text-rust">Revenue.</span>
+                Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-sunset-ink-mid">
+              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
                 Technology sourcing, product strategy, data centers, telecom,
                 managed services &amp; cloud — $10B+ managed since 2000.
               </p>
 
-              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-sunset-ink-mid">
+              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
                 Fix the signal. Close the deal. We don&apos;t advise from the
                 sidelines - we execute.
               </p>
@@ -296,13 +289,13 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-ink shadow-[0_8px_30px_rgba(212,168,67,0.35)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-ink shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
                 >
                   Tell Us What&apos;s Broken <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-sunset-ink/30 text-sunset-ink hover:bg-white/40 transition-all"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
                 >
                   See Case Results
                 </Link>
@@ -312,7 +305,7 @@ export default function HomeContent() {
         </div>
 
         <div className="relative z-10 pb-8 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-white/80">
+          <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
@@ -328,10 +321,10 @@ export default function HomeContent() {
       <section className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-white/90 drop-shadow-sm">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
               Selected Engagements
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white drop-shadow-sm">
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white">
               Results, Not Promises.
             </h2>
           </div>
@@ -340,19 +333,19 @@ export default function HomeContent() {
             {engagements.map((eng) => (
               <div
                 key={eng.label}
-                className="glass-card p-8 transition-transform duration-300 hover:-translate-y-1"
+                className="rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
               >
                 <div
                   className="w-1 h-10 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
-                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-sunset-ink/60">
+                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
                   {eng.label}
                 </p>
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-sunset-ink mb-4">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
                   {eng.stats}
                 </h3>
-                <p className="font-body text-sm leading-relaxed text-sunset-ink-mid">
+                <p className="font-body text-sm leading-relaxed text-white/50">
                   {eng.detail}
                 </p>
               </div>
@@ -365,19 +358,19 @@ export default function HomeContent() {
       <section id="brands" className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/80 drop-shadow-sm">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
               01 - Our Practices
             </span>
-            <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-white drop-shadow-sm">
+            <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
               One discipline — turning relationships into revenue — applied
               across six practices:
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight drop-shadow-sm">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
               Six practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
-            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/85 drop-shadow-sm">
+            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/50">
               Each practice is purpose-built for a distinct audience - but they
               share the same team of superstars behind the scenes.
             </p>
@@ -388,10 +381,10 @@ export default function HomeContent() {
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="glass-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 p-7 transition-all duration-400 ease-out hover:-translate-y-2 hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-sunset-ink/50">
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -403,7 +396,7 @@ export default function HomeContent() {
                   <div
                     className="relative w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-400 group-hover:scale-110 group-hover:rounded-xl"
                     style={{
-                      background: `color-mix(in oklch, ${brand.accentColor} 18%, transparent)`,
+                      background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
                     }}
                   >
                     <PracticeIcon
@@ -418,10 +411,10 @@ export default function HomeContent() {
                 >
                   {brand.tag}
                 </p>
-                <h3 className="font-display text-xl font-bold text-sunset-ink mb-3">
+                <h3 className="font-display text-xl font-bold text-white mb-3">
                   {brand.name}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-sunset-ink-mid">
+                <p className="font-body text-sm leading-relaxed mb-6 text-white/60">
                   {brand.description}
                 </p>
                 <span
@@ -533,8 +526,8 @@ export default function HomeContent() {
       <section className="section-dark py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-sm">
-              25 Years. <span className="text-[#ffe9a8]">One Standard.</span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+              25 Years. <span className="text-gold">One Standard.</span>
             </h2>
           </div>
 
@@ -543,12 +536,12 @@ export default function HomeContent() {
             {timeline.map((item) => (
               <div key={item.year} className="flex-shrink-0 w-[200px] relative">
                 <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-white" />
-                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/25" />
-                  <span className="font-mono text-lg font-bold mb-2 text-white drop-shadow-sm">
+                  <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
+                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
+                  <span className="font-mono text-lg font-bold mb-2 text-gold">
                     {item.year}
                   </span>
-                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/80">
+                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
                     {item.event}
                   </p>
                 </div>
@@ -561,16 +554,16 @@ export default function HomeContent() {
             {timeline.map((item, i) => (
               <div key={item.year} className="flex gap-5 relative">
                 <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-white" />
+                  <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
                   {i < timeline.length - 1 && (
-                    <div className="w-px flex-1 mt-1 bg-white/25" />
+                    <div className="w-px flex-1 mt-1 bg-white/10" />
                   )}
                 </div>
                 <div className="pb-8">
-                  <span className="font-mono text-sm font-bold text-white drop-shadow-sm">
+                  <span className="font-mono text-sm font-bold text-gold">
                     {item.year}
                   </span>
-                  <p className="font-body text-sm mt-1 leading-relaxed text-white/80">
+                  <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
                     {item.event}
                   </p>
                 </div>
