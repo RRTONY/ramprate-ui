@@ -10,13 +10,18 @@ const PRIORITY_MAP: Record<string, number> = {
 // Aliases for the lists seen in the "Technology & Web" space so callers
 // don't have to remember raw ClickUp list IDs. A raw ID still works as-is
 // since it won't match any of these keys.
+// "requests" used to point at a "Requests & Tickets" list (901114763564)
+// that was deleted in ClickUp as of 2026-09-05 (confirmed via a live
+// create_clickup_task call returning "List deleted") - repointed at
+// ramprate.com's list instead of removing it, since callers/tool
+// descriptions already reference "requests" as the default alias.
 export const CLICKUP_LIST_ALIASES: Record<string, string> = {
   "ramprate.com": "901114763476",
-  requests: "901114763564",
+  requests: "901114763476",
   "tonygreenberg.com": "901114763560",
 };
 
-const DEFAULT_LIST_ID = CLICKUP_LIST_ALIASES.requests;
+const DEFAULT_LIST_ID = CLICKUP_LIST_ALIASES["ramprate.com"];
 
 function resolveListId(listId?: string): string {
   if (!listId) return DEFAULT_LIST_ID;

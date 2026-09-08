@@ -69,6 +69,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/champion",
+        destination: "/champions",
+        permanent: true,
+      },
+      {
         source: "/nda",
         destination: "https://ramprate.s.gy/nda-sign",
         permanent: true,
