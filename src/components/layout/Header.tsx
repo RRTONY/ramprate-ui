@@ -57,10 +57,13 @@ export default function Header() {
   const dark = scrolled || isLightPage;
   const isBiochainPage = pathname.startsWith("/biochain");
 
-  const navLinkClass = dark
-    ? "text-[oklch(0.35_0.03_50)] hover:text-[oklch(0.18_0.03_50)]"
-    : "text-white/80 hover:text-white";
-  const mobileIconClass = dark ? "text-[oklch(0.18_0.03_50)]" : "text-white";
+  // Every background sitewide is now bright (sunset hero/sections replaced the
+  // old near-black theme), so nav text and the logo stay dark-ink in both the
+  // scrolled and un-scrolled states - only the container's own frosted bg
+  // still depends on `dark`/`scrolled`.
+  const navLinkClass =
+    "text-[oklch(0.35_0.03_50)] hover:text-[oklch(0.18_0.03_50)]";
+  const mobileIconClass = "text-[oklch(0.18_0.03_50)]";
 
   return (
     <nav
@@ -73,7 +76,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 sm:h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <Logo variant={dark ? "dark" : "light"} size="md" />
+          <Logo variant="dark" size="md" />
         </Link>
 
         {/* Desktop nav */}
@@ -133,14 +136,14 @@ export default function Header() {
             </Link>
           ))}
 
-          <HeaderSearch scrolled={dark} />
-          <SiteSearch scrolled={dark} />
+          <HeaderSearch scrolled={true} />
+          <SiteSearch scrolled={true} />
         </div>
 
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-2">
-          <HeaderSearch scrolled={dark} />
-          <SiteSearch scrolled={dark} />
+          <HeaderSearch scrolled={true} />
+          <SiteSearch scrolled={true} />
           <button
             className={`p-3 transition-colors ${mobileIconClass}`}
             onClick={() => setMobileOpen(!mobileOpen)}
