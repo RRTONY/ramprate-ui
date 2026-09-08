@@ -1,27 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --gold: #d4a843;
-  --gold-light: #e8c96a;
+  /* ── OFFICIAL BRAND COLORS (Brand_Guidelines.pdf, May 2020) ──
+     --gold/--gold-light keep their names (still power every bg-gold/text-gold/
+     border-gold usage sitewide - CTAs, accent text, the RampRate word in
+     "Revenue.", timeline dots, etc.) but now hold the actual brand purple
+     instead of the old invented gold, so every existing usage is correct
+     on-brand purple with zero component edits needed. */
+  --gold: #7e32d4;
+  --gold-light: #a454ff;
 
-  /* ── SUNSET SYSTEM (v2) ──
-     v1 was a flat mid-tone coral wash - low contrast, no depth, read as a
-     cheap filter rather than a cinematic sunset. v2 grades across real
-     photographic sunset stops (deep indigo dusk -> magenta -> vivid orange ->
-     warm gold) so there's actual richness and dynamic range, and text is
-     guaranteed legible via glass-card panels rather than by fighting
-     whatever gradient tone happens to sit behind it. */
-  --dark: #ff6f3c;
-  --dark-mid: #b1316f;
-  --dark-card: #ffc84b;
+  /* ── SUNSET SYSTEM (v3 - built from official brand colors) ──
+     --dark/--dark-mid/--dark-card keep their names (still power bg-dark /
+     bg-dark-mid / bg-dark-card and every .section-dark usage sitewide) but
+     now hold the official orange/purple/light-purple instead of near-black
+     navy. The 5-stop --sunset-1..5 scale is a straight linear blend between
+     the two official anchor colors (purple #7e32d4 and orange #ff6e12) -
+     no invented hues, just the brand's own two colors graded across a
+     gradient the way an actual dusk-to-sunset sky would read. Teal
+     (#00d2d4) is the guide's "5%" rare accent, so it's reserved for a single
+     decorative orb and .section-blue rather than the main gradient. */
+  --dark: #ff6e12;
+  --dark-mid: #7e32d4;
+  --dark-card: #a454ff;
 
-  --sunset-1: #ffc84b;
-  --sunset-2: #ff6f3c;
-  --sunset-3: #b1316f;
-  --sunset-4: #7a2f6b;
-  --sunset-5: #3b2260;
-  --sunset-ink: #2a1710;
-  --sunset-ink-mid: #5c3826;
+  --sunset-1: #ff6e12;
+  --sunset-2: #df5f43;
+  --sunset-3: #bf5073;
+  --sunset-4: #9e41a4;
+  --sunset-5: #7e32d4;
+  --sunset-ink: #242424;
+  --sunset-ink-mid: #5c5c5c;
 
   --warm-bg: #f5f0e8;
   --warm-light: #faf7f2;
@@ -162,10 +171,10 @@
   color: var(--sunset-ink);
 }
 .prose a {
-  color: var(--rust);
+  color: var(--gold);
 }
 .prose a:hover {
-  color: var(--gold);
+  color: var(--gold-light);
 }
 .prose strong {
   color: var(--sunset-ink);
@@ -181,7 +190,7 @@
 }
 .prose code {
   font-family: var(--font-mono);
-  background: rgba(42, 23, 16, 0.06);
+  background: rgba(36, 36, 36, 0.06);
   padding: 0.125em 0.375em;
   border-radius: 0.25rem;
   font-size: 0.875em;
@@ -213,11 +222,11 @@
   background: var(--dark-mid);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(42, 23, 16, 0.2);
+  background: rgba(36, 36, 36, 0.2);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(42, 23, 16, 0.35);
+  background: rgba(36, 36, 36, 0.35);
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -246,8 +255,10 @@
   color: oklch(0.18 0.03 50);
 }
 .section-blue {
-  background: linear-gradient(135deg, var(--sunset-5) 0%, var(--sunset-3) 100%);
-  color: #fdf3ff;
+  /* Teal is the guide's rare (5%) accent - reserved for this one distinct
+     section identity rather than the main sunset gradient. */
+  background: linear-gradient(135deg, #00d2d4 0%, var(--sunset-5) 100%);
+  color: #f5fdfd;
 }
 
 /* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
@@ -302,20 +313,13 @@
 }
 
 /* ── GLASSMORPHIC DESIGN SYSTEM ── */
-/* .glass-card / .glass-card-dark originally sat on near-black hero backgrounds
-   with light text. Hero/dark sections are now vivid sunset gradients, so both
-   are redefined as high-opacity frosted-white panels with dark ink text and a
-   real drop shadow for lift - this is the primary way content stays legible
-   over a busy multi-stop gradient, rather than relying on the gradient itself
-   to be a flat, low-contrast mid-tone. Components that reference these
-   classnames don't need to change, only what the class resolves to. */
 .glass-card {
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 16px;
-  box-shadow: 0 20px 60px -20px rgba(42, 15, 40, 0.45);
+  box-shadow: 0 20px 60px -20px rgba(36, 36, 36, 0.45);
   color: var(--sunset-ink);
 }
 .glass-card-warm {
@@ -332,7 +336,7 @@
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 16px;
-  box-shadow: 0 20px 60px -20px rgba(42, 15, 40, 0.45);
+  box-shadow: 0 20px 60px -20px rgba(36, 36, 36, 0.45);
   color: var(--sunset-ink);
 }
 .glass-orb {
@@ -343,13 +347,14 @@
   pointer-events: none;
 }
 .glass-orb-amber {
-  background: oklch(0.85 0.16 80);
+  background: var(--sunset-1);
 }
 .glass-orb-blue {
-  background: oklch(0.62 0.22 330);
+  /* the rare teal accent */
+  background: #00d2d4;
 }
 .glass-orb-rust {
-  background: oklch(0.62 0.22 20);
+  background: var(--gold);
 }
 
 /* Hide floating elements while the AI modal is open */
@@ -386,13 +391,13 @@ body.ai-modal-open [data-hide-on-ai] {
   0%,
   100% {
     box-shadow:
-      0 0 0 0 rgba(212, 168, 67, 0),
-      0 0 0 0 rgba(212, 168, 67, 0);
+      0 0 0 0 rgba(126, 50, 212, 0),
+      0 0 0 0 rgba(126, 50, 212, 0);
   }
   50% {
     box-shadow:
-      0 0 10px 2px rgba(212, 168, 67, 0.22),
-      0 0 0 1px rgba(212, 168, 67, 0.1);
+      0 0 10px 2px rgba(126, 50, 212, 0.22),
+      0 0 0 1px rgba(126, 50, 212, 0.1);
   }
 }
 .ai-btn-sparkle {
