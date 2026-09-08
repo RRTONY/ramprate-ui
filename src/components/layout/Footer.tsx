@@ -50,15 +50,15 @@ export default function Footer({
     "https://twitter.com/ramprate";
 
   return (
-    <footer className="text-sunset-ink-mid py-16 section-dark">
+    <footer className="text-white/80 py-16 section-dark">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Column 1 - Brand */}
           <div>
             <Link href="/" className="block mb-4">
-              <Logo variant="dark" size="md" />
+              <Logo variant="light" size="md" />
             </Link>
-            <p className="font-body text-xs text-sunset-ink/60 mb-5 leading-relaxed">
+            <p className="font-body text-xs text-white/75 mb-5 leading-relaxed">
               Since 2000. A fractional team of superstars creating
               trajectory-changing connections.
             </p>
@@ -66,7 +66,7 @@ export default function Footer({
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
               rel="noreferrer"
-              className="inline-block font-mono text-[10px] font-medium border border-sunset-ink/25 rounded px-2 py-0.5 tracking-wider uppercase text-sunset-ink/60 hover:border-gold/60 hover:text-sunset-ink transition-colors"
+              className="inline-block font-mono text-[10px] font-medium border border-white/30 rounded px-2 py-0.5 tracking-wider uppercase text-white/75 hover:border-white/60 hover:text-white transition-colors"
             >
               B Lab Certified
             </a>
@@ -74,19 +74,17 @@ export default function Footer({
 
           {/* Column 2 - Brands */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-sunset-ink/60 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/75 mb-4">
               Brands
             </p>
             <ul className="space-y-3">
               {brandLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="font-body group block">
-                    <span className="text-sm text-sunset-ink/80 group-hover:text-sunset-ink transition-colors block">
+                    <span className="text-sm text-white/90 group-hover:text-white transition-colors block">
                       {link.label}
                     </span>
-                    <span className="text-xs text-sunset-ink/60">
-                      {link.desc}
-                    </span>
+                    <span className="text-xs text-white/70">{link.desc}</span>
                   </Link>
                 </li>
               ))}
@@ -95,7 +93,7 @@ export default function Footer({
 
           {/* Column 3 - Company */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-sunset-ink/60 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/75 mb-4">
               Company
             </p>
             <ul className="space-y-2.5">
@@ -103,7 +101,7 @@ export default function Footer({
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-sm text-sunset-ink/60 hover:text-sunset-ink transition-colors"
+                    className="font-body text-sm text-white/75 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -114,19 +112,19 @@ export default function Footer({
 
           {/* Column 4 - Engage */}
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-sunset-ink/60 mb-4">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/75 mb-4">
               Engage
             </p>
             <div className="space-y-2 mb-6">
               <a
                 href={`mailto:${email || "hello@ramprate.com"}`}
-                className="font-body text-sm text-sunset-ink/60 hover:text-sunset-ink transition-colors block"
+                className="font-body text-sm text-white/75 hover:text-white transition-colors block"
               >
                 {email || "hello@ramprate.com"}
               </a>
               <a
                 href={`tel:${toTelHref(phone || "+19092359945")}`}
-                className="font-body text-sm text-sunset-ink/60 hover:text-sunset-ink transition-colors block"
+                className="font-body text-sm text-white/75 hover:text-white transition-colors block"
               >
                 {phone || "+1(909)235-9945"}
               </a>
@@ -136,7 +134,7 @@ export default function Footer({
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sunset-ink/45 hover:text-sunset-ink transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg
@@ -152,7 +150,7 @@ export default function Footer({
                 href={twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sunset-ink/45 hover:text-sunset-ink transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
                 aria-label="X / Twitter"
               >
                 <svg
@@ -169,21 +167,21 @@ export default function Footer({
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-sunset-ink/15 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-sunset-ink/60">
+        <div className="border-t border-white/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="font-body text-xs text-white/75">
             &copy; {new Date().getFullYear()} {companyName || "RampRate"}. All
             rights reserved.
           </p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
-              className="font-body text-xs text-sunset-ink/60 hover:text-sunset-ink transition-colors"
+              className="font-body text-xs text-white/75 hover:text-white transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="font-body text-xs text-sunset-ink/60 hover:text-sunset-ink transition-colors"
+              className="font-body text-xs text-white/75 hover:text-white transition-colors"
             >
               Terms of Service
             </Link>
