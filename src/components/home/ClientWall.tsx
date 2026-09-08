@@ -45,10 +45,10 @@ const tier2Clients = [
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
     <div className="text-center px-2 py-4">
-      <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white/60">
+      <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-sunset-ink/70">
         {name}
       </h3>
-      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-white/50">
+      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-sunset-ink/60">
         {context}
       </p>
     </div>
@@ -62,20 +62,20 @@ export default function ClientWall() {
     <section className="section-dark py-12 sm:py-16">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-10">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-sunset-ink leading-tight">
             25 Years Inside the World&apos;s Most
             <br className="hidden sm:block" />
             <span className="text-gold"> Complex Enterprises</span>
           </h2>
-          <p className="font-body mt-3 text-sm text-white/50">
+          <p className="font-body mt-3 text-sm text-sunset-ink/60">
             100+ engagements. $10B+ in decisions transacted. Names you know.
           </p>
         </div>
 
         {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden bg-white/4 border border-white/6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden bg-white/30 border border-white/50">
           {tier1Clients.map((c) => (
-            <div key={c.name} className="bg-[oklch(0.18_0.01_250)]">
+            <div key={c.name} className="bg-white/35">
               <ClientCard name={c.name} context={c.context} />
             </div>
           ))}
@@ -83,9 +83,9 @@ export default function ClientWall() {
 
         {/* Tier 2 */}
         {showAllClients && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3 bg-white/4 border border-white/6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3 bg-white/30 border border-white/50">
             {tier2Clients.map((c) => (
-              <div key={c.name} className="bg-[oklch(0.18_0.01_250)]">
+              <div key={c.name} className="bg-white/35">
                 <ClientCard name={c.name} context={c.context} />
               </div>
             ))}
@@ -95,7 +95,7 @@ export default function ClientWall() {
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setShowAllClients(!showAllClients)}
-            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/50"
+            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-sunset-ink text-sunset-ink/60"
           >
             {showAllClients ? "- Show Less" : "+ View All Clients"}
           </button>
