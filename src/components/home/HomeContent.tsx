@@ -224,14 +224,14 @@ export default function HomeContent() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to right, #0a0f1a 40%, rgba(10,15,26,0.85) 65%, transparent 100%)",
+                "linear-gradient(to right, #ff9466 40%, rgba(255,148,102,0.85) 65%, transparent 100%)",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, rgba(10,15,26,0.9) 0%, transparent 40%, rgba(10,15,26,0.4) 100%)",
+                "linear-gradient(to top, rgba(255,127,92,0.9) 0%, transparent 40%, rgba(255,95,143,0.35) 100%)",
             }}
           />
         </div>
@@ -254,14 +254,14 @@ export default function HomeContent() {
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
             <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
+                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-sunset-ink/15 bg-white/40">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
+                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-sunset-ink/70">
                     <a
                       href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:text-white transition-colors"
+                      className="hover:text-sunset-ink transition-colors"
                     >
                       B Lab Certified
                     </a>{" "}
@@ -270,18 +270,18 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
+              <h1 className="font-display font-bold text-sunset-ink leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
                 Where Relationships
                 <br />
                 Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
+              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-sunset-ink/60">
                 Technology sourcing, product strategy, data centers, telecom,
                 managed services &amp; cloud — $10B+ managed since 2000.
               </p>
 
-              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
+              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-sunset-ink-mid">
                 Fix the signal. Close the deal. We don&apos;t advise from the
                 sidelines - we execute.
               </p>
@@ -289,13 +289,13 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-ink shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
                 >
                   Tell Us What&apos;s Broken <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-sunset-ink/25 text-sunset-ink/80 hover:bg-white/30 transition-all"
                 >
                   See Case Results
                 </Link>
@@ -305,7 +305,7 @@ export default function HomeContent() {
         </div>
 
         <div className="relative z-10 pb-8 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-white/50">
+          <div className="flex flex-col items-center gap-2 text-sunset-ink/60">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
@@ -324,7 +324,7 @@ export default function HomeContent() {
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
               Selected Engagements
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white">
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-sunset-ink">
               Results, Not Promises.
             </h2>
           </div>
@@ -333,19 +333,19 @@ export default function HomeContent() {
             {engagements.map((eng) => (
               <div
                 key={eng.label}
-                className="rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
+                className="rounded-xl p-8 transition-all duration-300 bg-white/35 border border-white/50"
               >
                 <div
                   className="w-1 h-10 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
-                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
+                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-sunset-ink/60">
                   {eng.label}
                 </p>
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-sunset-ink mb-4">
                   {eng.stats}
                 </h3>
-                <p className="font-body text-sm leading-relaxed text-white/50">
+                <p className="font-body text-sm leading-relaxed text-sunset-ink-mid">
                   {eng.detail}
                 </p>
               </div>
@@ -358,19 +358,19 @@ export default function HomeContent() {
       <section id="brands" className="section-dark py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-sunset-ink/60">
               01 - Our Practices
             </span>
             <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
               One discipline — turning relationships into revenue — applied
               across six practices:
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-sunset-ink leading-tight">
               Six practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
-            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/50">
+            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-sunset-ink-mid">
               Each practice is purpose-built for a distinct audience - but they
               share the same team of superstars behind the scenes.
             </p>
@@ -381,10 +381,10 @@ export default function HomeContent() {
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.4)] border-[rgba(255,255,255,0.55)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_10%,rgba(255,255,255,0.4))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-sunset-ink/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -411,10 +411,10 @@ export default function HomeContent() {
                 >
                   {brand.tag}
                 </p>
-                <h3 className="font-display text-xl font-bold text-white mb-3">
+                <h3 className="font-display text-xl font-bold text-sunset-ink mb-3">
                   {brand.name}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-white/60">
+                <p className="font-body text-sm leading-relaxed mb-6 text-sunset-ink/70">
                   {brand.description}
                 </p>
                 <span
@@ -484,7 +484,7 @@ export default function HomeContent() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/process"
-              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-gold text-dark"
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-gold text-ink"
             >
               Take the Flow Circuit Assessment
               <svg
@@ -502,7 +502,7 @@ export default function HomeContent() {
             </Link>
             <Link
               href="/process"
-              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-[rgba(10,15,26,0.3)] text-dark"
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-[rgba(10,15,26,0.3)] text-ink"
             >
               Find Your Me / Way / Our
               <svg
@@ -526,7 +526,7 @@ export default function HomeContent() {
       <section className="section-dark py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-sunset-ink">
               25 Years. <span className="text-gold">One Standard.</span>
             </h2>
           </div>
@@ -537,11 +537,11 @@ export default function HomeContent() {
               <div key={item.year} className="flex-shrink-0 w-[200px] relative">
                 <div className="flex flex-col items-center">
                   <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
-                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
+                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-sunset-ink/15" />
                   <span className="font-mono text-lg font-bold mb-2 text-gold">
                     {item.year}
                   </span>
-                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
+                  <p className="font-body text-xs text-center leading-relaxed px-3 text-sunset-ink/60">
                     {item.event}
                   </p>
                 </div>
@@ -556,14 +556,14 @@ export default function HomeContent() {
                 <div className="flex flex-col items-center">
                   <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
                   {i < timeline.length - 1 && (
-                    <div className="w-px flex-1 mt-1 bg-white/10" />
+                    <div className="w-px flex-1 mt-1 bg-sunset-ink/15" />
                   )}
                 </div>
                 <div className="pb-8">
                   <span className="font-mono text-sm font-bold text-gold">
                     {item.year}
                   </span>
-                  <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
+                  <p className="font-body text-sm mt-1 leading-relaxed text-sunset-ink/60">
                     {item.event}
                   </p>
                 </div>
