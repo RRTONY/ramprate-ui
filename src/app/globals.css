@@ -10,16 +10,21 @@
   --gold: #7e32d4;
   --gold-light: #a454ff;
 
-  /* ── SUNSET SYSTEM (v3 - built from official brand colors) ──
+  /* ── SUNSET SYSTEM (v4 - rebalanced to match the guide's own Color Balance
+     slide: white dominant, purple ~10%, teal/orange each only ~5%. v3's
+     gradient let orange cover roughly half of every section, inverting that
+     balance and reading as "an orange theme" instead of purple-branded. v4
+     keeps purple as the overwhelming majority of every gradient and confines
+     orange to a small glow at one edge - closer to a purple dusk sky with a
+     sliver of sunset at the horizon than an even orange/purple split. ──
      --dark/--dark-mid/--dark-card keep their names (still power bg-dark /
      bg-dark-mid / bg-dark-card and every .section-dark usage sitewide) but
      now hold the official orange/purple/light-purple instead of near-black
      navy. The 5-stop --sunset-1..5 scale is a straight linear blend between
      the two official anchor colors (purple #7e32d4 and orange #ff6e12) -
      no invented hues, just the brand's own two colors graded across a
-     gradient the way an actual dusk-to-sunset sky would read. Teal
-     (#00d2d4) is the guide's "5%" rare accent, so it's reserved for a single
-     decorative orb and .section-blue rather than the main gradient. */
+     gradient. Teal (#00d2d4) is the guide's other 5% rare accent, reserved
+     for a single decorative orb and .section-blue. */
   --dark: #ff6e12;
   --dark-mid: #7e32d4;
   --dark-card: #a454ff;
@@ -127,9 +132,9 @@
     background: linear-gradient(
       160deg,
       var(--sunset-5) 0%,
-      var(--sunset-4) 22%,
-      var(--sunset-3) 45%,
-      var(--sunset-2) 70%,
+      var(--sunset-5) 55%,
+      var(--sunset-4) 78%,
+      var(--sunset-2) 93%,
       var(--sunset-1) 100%
     );
     color: var(--foreground);
@@ -238,13 +243,19 @@
 
 /* ── SECTION BACKGROUNDS ── */
 .section-dark {
+  /* Purple holds the first ~65% of the section outright; orange only
+     appears as a small glow in the final corner - matches the brand guide's
+     own balance (purple primary, orange a rare 5% accent) instead of an
+     even split that reads as "an orange theme." */
   background: linear-gradient(
     120deg,
-    var(--sunset-3) 0%,
-    var(--sunset-2) 55%,
+    var(--sunset-5) 0%,
+    var(--sunset-5) 65%,
+    var(--sunset-4) 85%,
+    var(--sunset-2) 96%,
     var(--sunset-1) 100%
   );
-  color: var(--sunset-ink);
+  color: #fdfaff;
 }
 .section-warm {
   background-color: oklch(0.94 0.03 80);
@@ -255,10 +266,16 @@
   color: oklch(0.18 0.03 50);
 }
 .section-blue {
-  /* Teal is the guide's rare (5%) accent - reserved for this one distinct
-     section identity rather than the main sunset gradient. */
-  background: linear-gradient(135deg, #00d2d4 0%, var(--sunset-5) 100%);
-  color: #f5fdfd;
+  /* Teal is the guide's other rare (5%) accent - reserved for this one
+     distinct section identity, kept as a small accent against dominant
+     purple rather than an even split. */
+  background: linear-gradient(
+    135deg,
+    var(--sunset-5) 0%,
+    var(--sunset-5) 70%,
+    #00d2d4 100%
+  );
+  color: #fdfaff;
 }
 
 /* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
