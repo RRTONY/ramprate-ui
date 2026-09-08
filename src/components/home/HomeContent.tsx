@@ -224,14 +224,14 @@ export default function HomeContent() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to right, rgba(59,34,96,0.9) 40%, rgba(177,49,111,0.75) 65%, transparent 100%)",
+                "linear-gradient(to right, rgba(126,50,212,0.9) 40%, rgba(191,80,115,0.72) 65%, transparent 100%)",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, rgba(59,34,96,0.55) 0%, transparent 40%, rgba(255,200,75,0.25) 100%)",
+                "linear-gradient(to top, rgba(255,110,18,0.35) 0%, transparent 40%, rgba(126,50,212,0.45) 100%)",
             }}
           />
         </div>
