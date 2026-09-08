@@ -3,9 +3,24 @@
 :root {
   --gold: #d4a843;
   --gold-light: #e8c96a;
-  --dark: #0a0f1a;
-  --dark-mid: #0d1117;
-  --dark-card: #0f1419;
+
+  /* ── SUNSET SYSTEM ──
+     Replaces the old near-black navy "dark" system. --dark/--dark-mid/--dark-card
+     keep their names (still power bg-dark / bg-dark-mid / bg-dark-card and every
+     .section-dark usage sitewide) but now hold bright, warm sunset tones instead
+     of near-black, so every former "dark section" across the site renders bright. */
+  --dark: #ff9466;
+  --dark-mid: #ff7a5c;
+  --dark-card: #ffc38a;
+
+  --sunset-1: #ffb347;
+  --sunset-2: #ff7a5c;
+  --sunset-3: #ff5f8f;
+  --sunset-4: #c2417a;
+  --sunset-5: #6d3b8f;
+  --sunset-ink: #3a1a10;
+  --sunset-ink-mid: #6b3f2e;
+
   --warm-bg: #f5f0e8;
   --warm-light: #faf7f2;
   --rust: #8b4513;
@@ -38,7 +53,7 @@
      variable classes applied to <html> in layout.tsx, not defined here. */
 
   --background: var(--dark);
-  --foreground: #ffffff;
+  --foreground: var(--sunset-ink);
 }
 
 @theme inline {
@@ -56,6 +71,14 @@
   --color-ink: var(--text-dark);
   --color-ink-mid: var(--text-mid);
   --color-amber: oklch(0.82 0.15 75);
+
+  --color-sunset-1: var(--sunset-1);
+  --color-sunset-2: var(--sunset-2);
+  --color-sunset-3: var(--sunset-3);
+  --color-sunset-4: var(--sunset-4);
+  --color-sunset-5: var(--sunset-5);
+  --color-sunset-ink: var(--sunset-ink);
+  --color-sunset-ink-mid: var(--sunset-ink-mid);
 
   --color-champion: var(--champion);
   --color-champion-dark: var(--champion-dark);
@@ -90,7 +113,13 @@
 
   body {
     font-family: var(--font-body);
-    background: var(--dark);
+    background: linear-gradient(
+      160deg,
+      var(--sunset-1) 0%,
+      var(--sunset-2) 35%,
+      var(--sunset-3) 70%,
+      var(--sunset-5) 100%
+    );
     color: var(--foreground);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
@@ -119,24 +148,26 @@
 }
 
 /* ── PROSE ── */
+/* Was written for white-on-near-black; now sits on bright sunset backgrounds,
+   so it takes the same dark-ink treatment as .prose-warm below. */
 .prose {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--sunset-ink-mid);
 }
 .prose h1,
 .prose h2,
 .prose h3,
 .prose h4 {
   font-family: var(--font-display);
-  color: #ffffff;
+  color: var(--sunset-ink);
 }
 .prose a {
-  color: var(--gold);
+  color: var(--rust);
 }
 .prose a:hover {
-  color: var(--gold-light);
+  color: var(--gold);
 }
 .prose strong {
-  color: #ffffff;
+  color: var(--sunset-ink);
 }
 .prose ul > li::marker,
 .prose ol > li::marker {
@@ -144,16 +175,16 @@
 }
 .prose blockquote {
   border-left-color: var(--gold);
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--sunset-ink-mid);
   font-style: italic;
 }
 .prose code {
   font-family: var(--font-mono);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(58, 26, 16, 0.06);
   padding: 0.125em 0.375em;
   border-radius: 0.25rem;
   font-size: 0.875em;
-  color: var(--gold-light);
+  color: var(--sunset-4);
 }
 
 /* Warm prose for light sections */
@@ -181,11 +212,11 @@
   background: var(--dark-mid);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(58, 26, 16, 0.15);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(58, 26, 16, 0.3);
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -197,8 +228,13 @@
 
 /* ── SECTION BACKGROUNDS ── */
 .section-dark {
-  background-color: oklch(0.18 0.01 250);
-  color: oklch(0.92 0.01 80);
+  background: linear-gradient(
+    135deg,
+    var(--sunset-1) 0%,
+    var(--sunset-2) 45%,
+    var(--sunset-3) 100%
+  );
+  color: var(--sunset-ink);
 }
 .section-warm {
   background-color: oklch(0.94 0.03 80);
@@ -209,8 +245,8 @@
   color: oklch(0.18 0.03 50);
 }
 .section-blue {
-  background-color: oklch(0.45 0.22 260);
-  color: oklch(0.98 0 0);
+  background: linear-gradient(135deg, var(--sunset-3) 0%, var(--sunset-5) 100%);
+  color: #fff7f0;
 }
 
 /* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
@@ -265,12 +301,18 @@
 }
 
 /* ── GLASSMORPHIC DESIGN SYSTEM ── */
+/* .glass-card / .glass-card-dark originally sat on near-black hero backgrounds
+   with light text. Hero/dark sections are now bright sunset gradients, so both
+   are redefined as light frosted cards with dark ink text - components that
+   reference these classnames don't need to change, only what the class
+   resolves to. */
 .glass-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 16px;
+  color: var(--sunset-ink);
 }
 .glass-card-warm {
   background: rgba(255, 255, 255, 0.7);
@@ -281,28 +323,29 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 .glass-card-dark {
-  background: rgba(10, 15, 26, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(58, 26, 16, 0.12);
+  color: var(--sunset-ink);
 }
 .glass-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.3;
+  opacity: 0.35;
   pointer-events: none;
 }
 .glass-orb-amber {
   background: oklch(0.82 0.15 75);
 }
 .glass-orb-blue {
-  background: oklch(0.55 0.22 260);
+  background: oklch(0.7 0.2 340);
 }
 .glass-orb-rust {
-  background: oklch(0.55 0.15 30);
+  background: oklch(0.68 0.2 25);
 }
 
 /* Hide floating elements while the AI modal is open */
