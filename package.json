@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "NODE_ENV=production next build --webpack",
-    "postbuild": "mkdir -p dist/public",
+    "postbuild": "mkdir -p dist/public && printf 'Managed deployment static staging file.\\n' > dist/public/deployment-placeholder.txt",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
