@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   invalidate: vi.fn(),
+  navigateToFlow: vi.fn(),
   register: vi.fn(),
   routerPush: vi.fn(),
   signIn: vi.fn(),
@@ -48,6 +49,10 @@ vi.mock("@/lib/flow/trpc", () => ({
       },
     },
   },
+}));
+
+vi.mock("@/lib/flow/navigation", () => ({
+  navigateToFlow: mocks.navigateToFlow,
 }));
 
 import LoginPage from "../../src/app/flow/login/page";
@@ -148,5 +153,29 @@ describe("Flow credential entry pages", () => {
       await screen.findByText("An account already exists for this email."),
     ).toBeTruthy();
     expect(mocks.signIn).not.toHaveBeenCalled();
+  });
+
+  it("registers, signs in, and redirects after a successful account creation", async () => {
+    const user = userEvent.setup();
+    render(createElement(SignupPage));
+
+    await user.type(screen.getByLabelText("Name"), "Avery Client");
+    await user.type(screen.getByLabelText("Email"), "avery@example.com");
+    await user.type(screen.getByLabelText("Password"), "secure-password");
+    await user.click(screen.getByRole("button", { name: "Sign up" }));
+
+    await waitFor(() =>
+      expect(mocks.register).toHaveBeenCalledWith({
+        name: "Avery Client",
+        email: "avery@example.com",
+        password: "secure-password",
+      }),
+    );
+    expect(mocks.signIn).toHaveBeenCalledWith("credentials", {
+      email: "avery@example.com",
+      password: "secure-password",
+      redirect: false,
+    });
+    expect(mocks.navigateToFlow).toHaveBeenCalledWith("/flow");
   });
 });

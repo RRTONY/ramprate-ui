@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { Loader2 } from "lucide-react";
 import { trpc } from "@/lib/flow/trpc";
 import { signUpSchema } from "@/lib/flow/auth-form-schemas";
+import { navigateToFlow } from "@/lib/flow/navigation";
 import FlowAuthShell from "@/components/flow/FlowAuthShell";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
@@ -41,7 +42,7 @@ export default function SignupPage() {
           router.push("/flow/login");
           return;
         }
-        window.location.href = "/flow";
+        navigateToFlow("/flow");
       } catch (caughtError: unknown) {
         setError(
           caughtError instanceof Error

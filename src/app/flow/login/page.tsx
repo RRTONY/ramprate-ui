@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { Loader2 } from "lucide-react";
 import { trpc } from "@/lib/flow/trpc";
 import { signInSchema } from "@/lib/flow/auth-form-schemas";
+import { navigateToFlow } from "@/lib/flow/navigation";
 import FlowAuthShell from "@/components/flow/FlowAuthShell";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
@@ -46,7 +47,7 @@ function LoginForm() {
       // since the hard reload already guarantees fresh auth state on its own.
       utils.auth.me.invalidate().catch(() => {});
       window.setTimeout(() => {
-        window.location.href = redirect;
+        navigateToFlow(redirect);
       }, 600);
     },
   });
