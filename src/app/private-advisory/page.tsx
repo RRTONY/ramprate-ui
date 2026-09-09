@@ -350,7 +350,7 @@ export default function PrivateAdvisoryPage() {
       ))}
       {/* Hero */}
       <section
-        className="relative pt-32 pb-20 overflow-hidden"
+        className="relative pt-36 pb-20 overflow-hidden"
         style={{ background: "var(--dark)" }}
       >
         <div className="glass-orb glass-orb-amber w-[420px] h-[420px] -top-40 -right-40" />
