@@ -59,8 +59,12 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="section-dark py-12 sm:py-16">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+    <section className="section-sunset py-12 sm:py-16 relative overflow-hidden">
+      <div
+        className="glass-orb glass-orb-amber w-[420px] h-[420px] -top-48 -right-24"
+        style={{ animationDuration: "9s" }}
+      />
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
         <div className="text-center mb-10">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
             25 Years Inside the World&apos;s Most
@@ -75,7 +79,7 @@ export default function ClientWall() {
         {/* Tier 1 */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden bg-white/4 border border-white/6">
           {tier1Clients.map((c) => (
-            <div key={c.name} className="bg-black/10">
+            <div key={c.name} className="bg-[oklch(0.21_0.06_320)]">
               <ClientCard name={c.name} context={c.context} />
             </div>
           ))}
@@ -85,7 +89,7 @@ export default function ClientWall() {
         {showAllClients && (
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3 bg-white/4 border border-white/6">
             {tier2Clients.map((c) => (
-              <div key={c.name} className="bg-black/10">
+              <div key={c.name} className="bg-[oklch(0.21_0.06_320)]">
                 <ClientCard name={c.name} context={c.context} />
               </div>
             ))}
