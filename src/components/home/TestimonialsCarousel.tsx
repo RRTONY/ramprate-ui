@@ -71,8 +71,16 @@ export default function TestimonialsCarousel() {
     setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="section-dark py-28 sm:py-36 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+    <section className="section-sunset py-28 sm:py-36 overflow-hidden relative">
+      <div
+        className="glass-orb glass-orb-amber w-[380px] h-[380px] -top-40 left-1/4"
+        style={{ animationDuration: "11s" }}
+      />
+      <div
+        className="glass-orb glass-orb-pink w-[260px] h-[260px] bottom-0 -right-20"
+        style={{ animationDuration: "9s" }}
+      />
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
         <div className="text-center mb-14">
           <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
             What Executives Say
