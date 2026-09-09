@@ -57,9 +57,14 @@ export default function Header() {
   const dark = scrolled || isLightPage;
   const isBiochainPage = pathname.startsWith("/biochain");
 
+  // Un-scrolled state sits over the hero, which still carries a genuinely
+  // deep indigo/magenta scrim on its left side (where the logo/nav live) even
+  // after the bright-sunset rebrand, so nav text there stays white - same
+  // logic as before, just no longer assuming every background is uniformly
+  // bright. Only the scrolled/opaque-white-bar state uses dark ink.
   const navLinkClass = dark
     ? "text-[oklch(0.35_0.03_50)] hover:text-[oklch(0.18_0.03_50)]"
-    : "text-white/80 hover:text-white";
+    : "text-white/85 hover:text-white";
   const mobileIconClass = dark ? "text-[oklch(0.18_0.03_50)]" : "text-white";
 
   return (

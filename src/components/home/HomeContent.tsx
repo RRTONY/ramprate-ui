@@ -209,8 +209,9 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
-        {/* Hero background image */}
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[oklch(0.2_0.05_30)]">
+        {/* Hero background image - warmed and lifted so the scene (and any
+            people in it) reads as sunset-lit rather than dimmed dark. */}
         <div className="absolute inset-0">
           <Image
             src="/hero.webp"
@@ -218,25 +219,37 @@ export default function HomeContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right"
+            className="object-cover object-right brightness-110 saturate-125"
           />
+          {/* Left-side scrim for text legibility - warm rust/plum instead of navy */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to right, #0a0f1a 40%, rgba(10,15,26,0.85) 65%, transparent 100%)",
+                "linear-gradient(to right, oklch(0.2 0.05 30) 40%, oklch(0.2 0.05 30 / 0.85) 65%, transparent 100%)",
             }}
           />
+          {/* Top/bottom vignette - fades into a warm amber horizon glow at the base */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, rgba(10,15,26,0.9) 0%, transparent 40%, rgba(10,15,26,0.4) 100%)",
+                "linear-gradient(to top, oklch(0.2 0.05 30 / 0.9) 0%, transparent 40%, oklch(0.4 0.14 50 / 0.5) 100%)",
+            }}
+          />
+          {/* Cinematic sunset light wash - soft-light blended so it illuminates
+              the photo itself (and any people in it) rather than sitting on top
+              of it like a flat filter. */}
+          <div
+            className="absolute inset-0 mix-blend-soft-light"
+            style={{
+              background:
+                "radial-gradient(circle at 78% 28%, oklch(0.88 0.16 75 / 0.95) 0%, oklch(0.68 0.19 40 / 0.55) 35%, transparent 70%)",
             }}
           />
         </div>
 
-        {/* Glassmorphic orbs */}
+        {/* Glassmorphic orbs - full sunset palette (plum, rust, amber, rose) */}
         <div
           className="glass-orb glass-orb-amber w-[500px] h-[500px] -top-40 -right-40 z-[1]"
           style={{ animationDuration: "8s" }}
@@ -246,7 +259,7 @@ export default function HomeContent() {
           style={{ animationDuration: "12s" }}
         />
         <div
-          className="glass-orb glass-orb-blue w-[200px] h-[200px] z-[1]"
+          className="glass-orb glass-orb-pink w-[200px] h-[200px] z-[1]"
           style={{ top: "33%", right: "25%", animationDuration: "10s" }}
         />
 
@@ -318,7 +331,7 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="section-dark py-16 sm:py-20">
+      <section className="section-sunset py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -355,7 +368,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="section-dark py-16 sm:py-20">
+      <section id="brands" className="section-sunset py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
@@ -523,7 +536,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="section-dark py-16 sm:py-20 overflow-hidden">
+      <section className="section-sunset py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
