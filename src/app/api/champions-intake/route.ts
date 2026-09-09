@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 const NOTIFY_TO = ["admin@ramprate.com"];
 const NOTIFY_FROM = "RampRate <admin@ramprate.com>";
 
+// The applicant is waiting on this request before the agreement opens, so the
+// notification gets a short leash rather than the function's full timeout.
+const NOTIFY_TIMEOUT_MS = 4000;
+
 type ChampionFormData = {
   name?: string;
   email?: string;
@@ -63,6 +67,7 @@ async function notifyAdmins(text: string) {
       subject: "New Champion application - ramprate.com/champions",
       text,
     }),
+    signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
   });
 
   if (!res.ok) {
@@ -110,8 +115,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // The applicant's details are already recorded by this point, so a failed
-  // notification must not fail their submission and send them back to the form.
+  // The applicant's details are already recorded by this point, so neither a
+  // failed nor a slow notification may block them from reaching the agreement.
   try {
     await notifyAdmins(
       buildNotificationText(body.formData || {}, receivedAt, sourceUrl),
