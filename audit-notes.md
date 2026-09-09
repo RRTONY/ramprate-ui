@@ -25,3 +25,15 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 | Default production build | `pnpm build` failed before application compilation with a Next.js Turbopack filesystem panic while tracing an ESLint package directory.                                       | The build command requires a fallback or configuration correction before deployment readiness can be claimed. The failure is not a TypeScript error.               |
 | Flow backend boundary    | `/flow/api/auth/*` and `/flow/api/trpc/*` proxy to `https://flow.tonygreenberg.com`; no local Flow tRPC router was found.                                                     | Authentication and application data remain owned by the external Flow backend. No Supabase migration is in scope for this repository.                              |
 | Auth provider discovery  | The local Flow provider endpoint returns only `credentials`.                                                                                                                  | Google sign-in is not currently enabled by the upstream backend and must be implemented as a direct Supabase flow rather than merely adding a visual button.       |
+
+## Database Content Migration Verification
+
+- The managed content migration imported 1,181 records, including 97 posts, 14 pages, one site-settings record, and 646 image-asset metadata records.
+- Representative public routes render from the managed database with HTTP 200 responses, including marketing pages, blog and Thinking detail pages, Proof, search, and the XML sitemap.
+- A Portable Text component regression test confirms database-expanded image metadata produces a public image URL. The migrated article `/blog/the-tollbooth-and-the-alternative` emitted its stored external image URL in rendered markup.
+- Sanity runtime packages, Studio, schemas, write client, CLI, and webhook route were removed. Image files continue to use their already-published external URLs as references only; no file bytes were written to the database.
+
+## Visual Reference Verification
+
+- The public RampRate home and shared marketing header remain the reference treatment: a dark, warm red-to-gold hero surface, high-contrast editorial typography, and an understated white/gold navigation hierarchy.
+- The Flow sign-in and sign-up account-entry screens were aligned to this reference with a dark warm surface, gold CTA emphasis, and responsive navigation while retaining their existing content and interaction model.

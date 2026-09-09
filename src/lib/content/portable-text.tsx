@@ -346,7 +346,8 @@ export const portableTextComponents: PortableTextComponents = {
 
     // ── Image ─────────────────────────────────────────────────────────────────
     image: ({ value }) => {
-      if (!value?.asset?._ref) return null;
+      const assetReference = value?.asset?._ref || value?.asset?._id;
+      if (!assetReference) return null;
       const align = value.alignment || value.className || "";
       const isLeft = align.includes("alignleft");
       const isRight = align.includes("alignright");
@@ -367,7 +368,7 @@ export const portableTextComponents: PortableTextComponents = {
           !isCenter && { display: "block", margin: "20px 0" }),
       };
 
-      const { width: refW, height: refH } = dimsFromRef(value.asset._ref);
+      const { width: refW, height: refH } = dimsFromRef(assetReference);
 
       return (
         <figure style={{ margin: 0 }}>

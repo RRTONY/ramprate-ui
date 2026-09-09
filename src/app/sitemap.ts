@@ -223,20 +223,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       publishedAt?: string;
       _updatedAt?: string;
       mainImage?: Parameters<typeof urlFor>[0];
-    }) => ({
-      url:
-        p.section === "thinking"
-          ? `${BASE_URL}/thinking/${p.slug.current}`
-          : `${BASE_URL}/blog/${p.slug.current}`,
-      ...((p._updatedAt || p.publishedAt) && {
-        lastModified: new Date(p._updatedAt || p.publishedAt!),
-      }),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-      ...(p.mainImage && {
-        images: [escapeXml(urlFor(p.mainImage).width(1200).url())],
-      }),
-    }),
+    }) => {
+      const imageUrl = p.mainImage ? urlFor(p.mainImage).width(1200).url() : "";
+      return {
+        url:
+          p.section === "thinking"
+            ? `${BASE_URL}/thinking/${p.slug.current}`
+            : `${BASE_URL}/blog/${p.slug.current}`,
+        ...((p._updatedAt || p.publishedAt) && {
+          lastModified: new Date(p._updatedAt || p.publishedAt!),
+        }),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+        ...(imageUrl ? { images: [escapeXml(imageUrl)] } : {}),
+      };
+    },
   );
 
   // /blog/category/[slug] is a permanentRedirect() to /blog?category=X, not a

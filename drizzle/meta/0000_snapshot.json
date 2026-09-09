@@ -1,0 +1,146 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "3d6b5a8c-cb98-477e-b43e-20377f7c290b",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "content_documents": {
+      "name": "content_documents",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content_type": {
+          "name": "content_type",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "route": {
+          "name": "route",
+          "type": "varchar(512)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "section": {
+          "name": "section",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(512)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_updated_at": {
+          "name": "source_updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "data": {
+          "name": "data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "content_documents_source_id_unique": {
+          "name": "content_documents_source_id_unique",
+          "columns": ["source_id"],
+          "isUnique": true
+        },
+        "content_documents_type_slug_idx": {
+          "name": "content_documents_type_slug_idx",
+          "columns": ["content_type", "slug"],
+          "isUnique": false
+        },
+        "content_documents_route_idx": {
+          "name": "content_documents_route_idx",
+          "columns": ["route"],
+          "isUnique": false
+        },
+        "content_documents_type_section_idx": {
+          "name": "content_documents_type_section_idx",
+          "columns": ["content_type", "section"],
+          "isUnique": false
+        },
+        "content_documents_published_at_idx": {
+          "name": "content_documents_published_at_idx",
+          "columns": ["published_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "content_documents_id": {
+          "name": "content_documents_id",
+          "columns": ["id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}

@@ -29,13 +29,6 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [practicesOpen, setPracticesOpen] = useState(false);
   const pathname = usePathname();
-  const [lastPathname, setLastPathname] = useState(pathname);
-
-  if (pathname !== lastPathname) {
-    setLastPathname(pathname);
-    setMobileOpen(false);
-    setPracticesOpen(false);
-  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -132,6 +125,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setPracticesOpen(false)}
               className={`font-body text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${navLinkClass}`}
             >
               {item.label}

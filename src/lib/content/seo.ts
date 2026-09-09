@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "./client";
+import { contentFetch } from "./client";
 import { pageSeoQuery } from "./queries";
 import { urlFor } from "./image";
 
@@ -12,7 +12,7 @@ export type SeoFields = {
 };
 
 export async function getPageSeo(route: string) {
-  return sanityFetch<{ seo?: SeoFields } | null>({
+  return contentFetch<{ seo?: SeoFields } | null>({
     query: pageSeoQuery,
     params: { route },
     tags: ["pageSeo"],

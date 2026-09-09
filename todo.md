@@ -1,0 +1,37 @@
+# Project TODO
+
+- [x] Inspect the selected GitHub branch, source layout, coding conventions, routes, assets, and existing test coverage.
+- [x] Compare the repository with the public Ramprate experience and record missing, broken, or incomplete product flows.
+- [x] Audit environment-variable usage without committing supplied secrets, and document required Sanity, Supabase, Google OAuth, and third-party configuration.
+- [x] Create a dedicated GitHub implementation branch that preserves the selected baseline branch.
+- [ ] Complete missing user-facing pages, content, assets, responsive behaviour, and route interactions in line with existing conventions.
+- [x] Connect data journeys to Supabase and preserve Sanity-managed content patterns where used by the existing project. Superseded by the confirmed existing external Flow backend architecture.
+- [x] Implement secure Google sign-in with clear signed-in, loading, error, and logged-out states. Deferred to the external Flow backend because it currently exposes only credential authentication.
+- [x] Add or revise automated tests for all changed core journeys and configuration validation.
+- [ ] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
+- [ ] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
+- [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
+- [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
+- [x] Replace credential-form textual loading indicators with the required accessible Lucide spinner treatment.
+- [x] Replace the remote Flow authentication proxy with a direct Supabase cookie-session implementation after explicit dependency approval and secure runtime credentials are available. Superseded by the later decision to preserve the existing backend.
+- [x] Preserve the existing external Flow authentication and data proxy architecture; do not add Supabase dependencies, secrets, or code.
+- [x] Resolve the Next.js production-build failure affecting Sanity Portable Text rendering on static blog pages.
+- [x] Add regression coverage for Flow credential-form validation and spinner-based pending-state conventions.
+- [x] Refine Flow authentication screens with a responsive, distinctive Flow Circuit composition that removes excessive mobile whitespace while preserving existing brand tokens and components.
+- [x] Add UI-level regression tests for Flow sign-in and sign-up validation, spinner state, auth failure messaging, and successful redirect handling using mocked authentication and tRPC clients.
+- [x] Add automated regression checks for the production build command and the preserved external credential-provider boundary.
+- [x] Add a successful Flow sign-up regression test covering external registration, credential sign-in, and the `/flow` redirect.
+- [ ] Assess and remediate the repository-wide ESLint backlog without suppressing code-quality rules or introducing unrelated regressions.
+- [x] Remove render-phase state updates from the shared marketing header navigation.
+- [x] Inventory all Sanity schemas, queries, webhooks, Studio routes, and public pages that depend on managed content.
+- [x] Design relational database tables and content types that replace the active Sanity document model without altering public URLs.
+- [x] Implement managed-database storage, server-side content access, and route-level replacements for Sanity queries.
+- [x] Migrate existing public content and media references to the managed database without committing secrets or storing file bytes in tables.
+- [x] Remove Sanity packages, Studio routes, and environment dependencies once all public content routes render from the database.
+- [x] Add migration, content-access, and route regression tests; then validate builds, data, and responsive pages.
+- [ ] Restore managed deployment compatibility by aligning the package-manager version and install configuration with the build image.
+- [x] Compare the previous home-page and header treatment against the current implementation and restore the stronger approved visual direction without regressing responsiveness or accessibility.
+- [x] Update Portable Text media rendering to recognize database-expanded image asset metadata and retain embedded public content images.
+- [x] Validate the approved public home and shared marketing header at desktop and mobile breakpoints, keeping them as the design reference for the updated Flow entry surfaces.
+- [x] Add rendered-markup regression coverage for a migrated Portable Text image block and verify an article containing embedded media renders the stored external asset URL.
+- [x] Extend Vitest discovery to include TSX component regression tests.

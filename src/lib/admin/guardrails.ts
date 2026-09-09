@@ -16,7 +16,7 @@ const DENYLIST_PATTERNS: RegExp[] = [
   /^src\/middleware\.ts$/i,
   /^src\/lib\/portal-auth\.ts$/i,
   /^src\/lib\/admin\//i,
-  /^src\/lib\/sanity\/write-client\.ts$/i,
+  /^src\/lib\/content\//i,
   /^src\/app\/api\/mcp\//i,
 ];
 
@@ -25,10 +25,10 @@ export function isPathDenied(path: string): boolean {
   return DENYLIST_PATTERNS.some((pattern) => pattern.test(normalized));
 }
 
-// Sanity document types the admin chat is allowed to create/patch. Excludes
+// Content document types the admin chat is allowed to create/patch. Excludes
 // `seo`, which is an embedded object type used inside other documents, not a
 // standalone document the agent should create on its own.
-export const SANITY_EDITABLE_TYPES = [
+export const CONTENT_EDITABLE_TYPES = [
   "siteSettings",
   "page",
   "pageSeo",
@@ -42,11 +42,16 @@ export const SANITY_EDITABLE_TYPES = [
   "confidentialTestimonial",
 ] as const;
 
-export type SanityEditableType = (typeof SANITY_EDITABLE_TYPES)[number];
+export type ContentEditableType = (typeof CONTENT_EDITABLE_TYPES)[number];
 
-export function isSanityTypeAllowed(type: string): type is SanityEditableType {
-  return (SANITY_EDITABLE_TYPES as readonly string[]).includes(type);
+export function isContentTypeAllowed(
+  type: string,
+): type is ContentEditableType {
+  return (CONTENT_EDITABLE_TYPES as readonly string[]).includes(type);
 }
+
+/** @deprecated Use isContentTypeAllowed while legacy admin tool names are migrated. */
+export const isSanityTypeAllowed = isContentTypeAllowed;
 
 export const ADMIN_BRANCH_PREFIX = "admin/vibe-";
 

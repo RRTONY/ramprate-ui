@@ -1,71 +1,49 @@
-# Ramprate Implementation and Validation Report
-
-**Prepared by:** Manus AI
+# Ramprate Database Migration and Validation Report
 
 **Repository baseline:** [`master`](https://github.com/RRTONY/ramprate-ui/tree/master)
 
 **Implementation branch:** [`feat/ramprate-product-completion`](https://github.com/RRTONY/ramprate-ui/tree/feat/ramprate-product-completion)
-**Reviewed public product:** [ramprate.com](https://ramprate.com/)
+**Reviewed public experience:** [ramprate.com](https://ramprate.com/)
 
-## Executive Summary
+## Summary
 
-The Ramprate implementation branch now contains a more reliable production build workflow, focused improvements to the Flow Circuit account-entry journey, structured regression coverage for its credential flows, and documented boundaries for its existing external authentication architecture. The work intentionally preserves the repository’s existing design conventions, Sanity-managed content model, and external Flow backend. No supplied environment value was committed.
+The implementation branch replaces the active Sanity CMS integration with the managed project database while retaining Ramprate’s public routes, published content, and external Flow backend. It also aligns the Flow account-entry pages with the approved warm, dark visual language of the Ramprate home page and header. Sanity runtime packages, Studio, schemas, write client, webhook route, and environment configuration have been removed. No supplied secret was added to version control.
 
-The most important remediation was the build workflow. The original development environment supplied a non-production `NODE_ENV`, which caused React context prerender failures across static pages. The branch now invokes the production webpack build deterministically, and the final production build successfully generated all **223** static routes.
+## Managed Content Architecture
 
-## Completed Changes
+| Component              | Implemented design                                                                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Storage                | The `content_documents` table stores each migrated authored document as structured JSON plus indexed type, slug, route, section, title, and publication metadata.                                            |
+| Content volume         | The migration imported **1,181** records: 97 posts, 14 pages, one site-settings record, and 646 image-asset metadata records.                                                                                |
+| Public access          | Server-only query descriptors and a database client replace former CMS query calls while preserving current public route contracts.                                                                          |
+| Image handling         | Content rows retain external image URLs and metadata only. No file bytes are stored in database fields. Embedded Portable Text media accepts both source references and database-expanded asset identifiers. |
+| Administration         | Restricted administrative document operations now target the managed database. Direct content updates become available to the public content layer without an external revalidation webhook.                 |
+| Retired infrastructure | `sanity`, `next-sanity`, `@sanity/client`, `@sanity/image-url`, and `@sanity/vision` have been removed together with the Studio, schemas, CLI, write client, and webhook route.                              |
 
-| Area                   | Completed work                                                                                                                                                                 | Result                                                                                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Branch safety          | Created a dedicated implementation branch from `master`.                                                                                                                       | The `master` branch remains unchanged.                                                                          |
-| Production build       | Added `typecheck` and `check` commands and changed the build command to `NODE_ENV=production next build --webpack`.                                                            | Builds are repeatable in the managed runtime and complete successfully.                                         |
-| Sanity rendering       | Established a client boundary for the Portable Text renderer.                                                                                                                  | Dynamic Sanity blog pages no longer block static generation during the production build.                        |
-| Flow account entry     | Reworked sign-in and sign-up into a shared Flow Circuit composition with a responsive signal-grid treatment, purposeful copy, stronger hierarchy, and existing product tokens. | The form experience is more distinctive while remaining accessible and responsive.                              |
-| Credential-form states | Extracted shared Yup schemas and replaced textual pending indicators with accessible Lucide spinners.                                                                          | Sign-in and sign-up errors, pending states, and validation are consistent.                                      |
-| Navigation testability | Isolated Flow navigation behind a small client helper.                                                                                                                         | Redirect outcomes can be tested without browser-only navigation side effects.                                   |
-| Automated coverage     | Added UI-level tests for validation, pending state, auth failures, successful registration, sign-in, and redirects; added tests for the auth proxy and validation scripts.     | The final suite has **29 passing tests** across **9 test files**.                                               |
-| Configuration audit    | Added a value-free environment template and configuration requirements document.                                                                                               | Sanity, analytics, secret handling, and the external Flow boundary are documented without exposing credentials. |
+## Product and Flow Improvements
 
-## Authentication Architecture
+The build command now uses deterministic production webpack configuration and a package-manager release compatible with the managed build environment. This resolves the prior React-prerender and installer-flag deployment blockers.
 
-The Flow Circuit routes in this repository forward authentication and tRPC application-data requests to `https://flow.tonygreenberg.com`. The provider discovery endpoint currently returns **credentials** only, and an unauthenticated session correctly resolves to `null`.
-
-> Google sign-in is an external-backend capability, not a page-level change in this repository. The Flow backend must first be configured with the Google provider and its server-side credentials. Once its provider endpoint announces `google`, this frontend can expose the corresponding entry point without moving to Supabase.
-
-The exact runtime setup and secret-handling expectations are recorded in [`CONFIGURATION-REQUIREMENTS.md`](./CONFIGURATION-REQUIREMENTS.md). Supabase code, packages, and secrets were deliberately not added after the architecture decision was clarified.
+The Flow sign-in and sign-up routes now use a responsive shared account-entry shell with the public RampRate home page’s warmer dark red, black, gold, and white hierarchy. The Flow navigation now uses a matching dark surface and gold CTA emphasis, and its mobile menu closes through navigation events instead of a route-reset effect. Form validation, pending spinners, errors, successful registration, sign-in, and redirects all have regression coverage.
 
 ## Validation Evidence
 
-| Check                        | Status      | Evidence                                                                                                                                                                                    |
-| ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Type safety                  | Passed      | `pnpm check` completed successfully.                                                                                                                                                        |
-| Unit and UI regression suite | Passed      | `pnpm test` completed with 29 tests passing.                                                                                                                                                |
-| Changed-file linting         | Passed      | ESLint passed for all modified Flow, Sanity, navigation, and test files.                                                                                                                    |
-| Production build             | Passed      | `pnpm build` compiled successfully and generated 223 static pages.                                                                                                                          |
-| Authentication boundary      | Passed      | Provider discovery returned HTTP 200 with `credentials`; unauthenticated session returned `null`; unauthenticated tRPC transport returned HTTP 200 with the expected typed result envelope. |
-| Responsive visual review     | Passed      | Desktop and mobile previews were inspected for `/`, `/flow/login`, and `/flow/signup`.                                                                                                      |
-| Repository-wide lint         | Outstanding | `pnpm lint` still reports 575 pre-existing errors and 139 warnings in legacy code outside this focused change set.                                                                          |
+| Check                       | Status      | Evidence                                                                                                                                                                   |
+| --------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Managed content migration   | Passed      | Read-only tests confirmed the expected database record totals and removal of the retired runtime packages.                                                                 |
+| Public content routes       | Passed      | `/`, `/about`, `/blog`, blog and Thinking detail routes, `/proof`, `/search`, and `/sitemap.xml` returned HTTP 200 from the database-backed content layer.                 |
+| Portable Text media         | Passed      | A TSX component regression test and rendered article-markup check confirmed database-expanded asset URLs are preserved in embedded image blocks.                           |
+| Type safety                 | Passed      | `pnpm typecheck` completed with no errors.                                                                                                                                 |
+| Full automated suite        | Passed      | `pnpm test` completed successfully, including Flow UI, external-auth boundary, build-script, content migration, and migrated image coverage.                               |
+| Changed-file lint           | Passed      | ESLint passed for all new and modified migration, administration, and Flow-design files.                                                                                   |
+| Production build            | Passed      | `pnpm build` completed successfully and generated **222** static pages.                                                                                                    |
+| Design reference            | Passed      | Desktop and mobile review confirmed that the existing Ramprate home/header remains the reference and that revised Flow entry screens now use the matching visual language. |
+| Repository-wide legacy lint | Outstanding | Unrelated pre-existing lint debt remains; no lint rules were suppressed.                                                                                                   |
 
-## Remaining Follow-Up
+## Operational Notes
 
-The full lint backlog should be remediated in a dedicated quality pass rather than suppressed. It includes existing React effect-pattern, unused-variable, and TypeScript `any` errors across unrelated files. This branch does not claim a repository-wide clean lint run.
+The managed database connection is server-only and injected as `DATABASE_URL`; it must never be committed or exposed to browser code. The value-free environment template documents only public analytics configuration and the existing Flow backend boundary.
 
-To enable Google sign-in, update the external Flow backend to configure Google OAuth, set its server-only client credentials, and register the callback URL used by that backend. The frontend must not receive or store the Google client secret. A real credentialed account is also required to execute a live end-to-end signed-in session test; the branch’s tests safely cover the frontend success and failure logic with mocked upstream responses.
+Flow authentication remains delegated to `https://flow.tonygreenberg.com`. Its current provider discovery response advertises credentials authentication only. Google sign-in remains an external-backend configuration task, and no Supabase code, package, or secret was added.
 
-## Files of Note
-
-| File                                       | Purpose                                                               |
-| ------------------------------------------ | --------------------------------------------------------------------- |
-| `src/components/flow/FlowAuthShell.tsx`    | Shared responsive, branded shell for account-entry pages.             |
-| `src/lib/flow/auth-form-schemas.ts`        | Shared Flow credential validation contracts.                          |
-| `src/lib/flow/navigation.ts`               | Browser navigation helper, isolated for predictable tests.            |
-| `tests/flow/auth-pages.test.ts`            | UI-level sign-in and sign-up journey coverage.                        |
-| `tests/flow/external-auth-proxy.test.ts`   | External authentication proxy regression coverage.                    |
-| `tests/project/validation-scripts.test.ts` | Build and typecheck command regression coverage.                      |
-| `CONFIGURATION-REQUIREMENTS.md`            | Runtime, secret, Sanity, and external Google-auth setup requirements. |
-
-## References
-
-[1]: https://github.com/RRTONY/ramprate-ui/tree/master "Ramprate UI master branch"
-[2]: https://github.com/RRTONY/ramprate-ui/tree/feat/ramprate-product-completion "Ramprate implementation branch"
-[3]: https://ramprate.com/ "Ramprate public site"
+The migrated image files remain referenced by their existing public external URLs. A future asset-hosting migration can copy approved assets to managed storage and update the stored URLs without changing the document schema or public route contracts.

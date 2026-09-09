@@ -7,7 +7,6 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import * as gh from "@/lib/admin/github-client";
 import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
-import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
 import {
@@ -31,7 +30,7 @@ const SESSION_TOOLS = [
   {
     name: "list_pending_changes",
     description:
-      "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes. If checks are still running, this call itself waits up to ~20s for them before returning — if the result still comes back with checkStatus \"pending\" and a `note` field, just call this again rather than telling the human you'll wait or check back later; there's no real timer on your side to do that with.",
+      "Show the current pending code change, if any, including files that differ from the live site and pull request check status. Managed-database content updates apply directly and are not held as drafts. Call this before publish_changes. If checks are still running, this call itself waits up to ~20s for them before returning — if the result still comes back with checkStatus \"pending\" and a `note` field, just call this again rather than telling the human you'll wait or check back later; there's no real timer on your side to do that with.",
     input_schema: { type: "object" as const, properties: {}, required: [] },
     // Hosts that support MCP Apps render this alongside the plain-text
     // result as a status card with a real Publish button (see
@@ -43,7 +42,7 @@ const SESSION_TOOLS = [
   {
     name: "publish_changes",
     description:
-      "Go live: merge the pending pull request (only if its automatic checks are passing) and publish any pending Sanity drafts. This is the ONLY way anything reaches the real site. Always call list_pending_changes first and confirm with the human what's about to go live before calling this.",
+      "Go live: merge the pending pull request only if its automatic checks are passing. Managed-database content updates are already live to the content layer. Always call list_pending_changes first and confirm with the human what's about to go live before calling this.",
     input_schema: { type: "object" as const, properties: {}, required: [] },
   },
 ];
@@ -58,7 +57,6 @@ function toResult(output: unknown, isError = false) {
 }
 
 async function listPendingChanges() {
-  const drafts = await listPendingDrafts();
   const existing = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
   if (!existing) {
     return {
@@ -68,8 +66,8 @@ async function listPendingChanges() {
       checkStatus: "unknown",
       failingChecks: [],
       files: [],
-      drafts,
-      canPublish: drafts.length > 0,
+      contentUpdates: "Managed-database content updates are applied directly.",
+      canPublish: false,
     };
   }
 
@@ -87,9 +85,9 @@ async function listPendingChanges() {
     ...(checks.note ? { note: checks.note } : {}),
     failingChecks: checks.failingChecks,
     files: compare.files,
-    drafts,
+    contentUpdates: "Managed-database content updates are applied directly.",
     canPublish:
-      (compare.files.length > 0 || drafts.length > 0) &&
+      compare.files.length > 0 &&
       checks.status !== "failure" &&
       checks.status !== "pending",
   };
@@ -97,9 +95,8 @@ async function listPendingChanges() {
 
 async function publishChanges() {
   const existing = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
-  const drafts = await listPendingDrafts();
 
-  if (!existing && drafts.length === 0) {
+  if (!existing) {
     return { error: "Nothing pending to publish" };
   }
 
@@ -132,13 +129,7 @@ async function publishChanges() {
     }
   }
 
-  const publishedIds: string[] = [];
-  for (const draft of drafts) {
-    await publishDraft(draft.id);
-    publishedIds.push(draft.publishedId);
-  }
-
-  return { ok: true, mergeSha, publishedIds };
+  return { ok: true, mergeSha };
 }
 
 // Sent to every connecting client during the MCP handshake and meant to act
@@ -149,7 +140,7 @@ async function publishChanges() {
 // colors, etc.) here — those live in exactly one place and change over
 // time; duplicating them risks drifting out of sync. Read the real file
 // instead. This is the general engineering bar that applies regardless.
-const ADMIN_SERVER_INSTRUCTIONS = `This server lets you edit the RampRate marketing site's code and Sanity content.
+const ADMIN_SERVER_INSTRUCTIONS = `This server lets you edit the RampRate marketing site's code and managed database content.
 
 Before writing or changing anything, read CLAUDE.md (github_read_file "CLAUDE.md") if you
 haven't already this session — it's the authoritative source for this project's actual design

@@ -1,12 +1,12 @@
 import prettier from "prettier";
 import * as gh from "@/lib/admin/github-client";
-import { isPathDenied, isSanityTypeAllowed } from "@/lib/admin/guardrails";
-import { client as sanityReadClient } from "@/lib/sanity/client";
+import { isContentTypeAllowed, isPathDenied } from "@/lib/admin/guardrails";
 import {
-  createDraft,
-  getDocumentForEditing,
-  patchDraft,
-} from "@/lib/admin/sanity-content";
+  createContentDocument,
+  getContentDocument,
+  listContentDocuments,
+  patchContentDocument,
+} from "@/lib/admin/content-documents";
 import { checkPageSeo } from "@/lib/admin/seo-check";
 import { checkLighthouse } from "@/lib/admin/lighthouse-check";
 import { checkCode } from "@/lib/admin/code-check";
@@ -215,19 +215,14 @@ export const ADMIN_TOOLS = [
     },
   },
   {
-    name: "sanity_query",
+    name: "content_list_documents",
     description:
-      "Run a read-only GROQ query against the live Sanity dataset to look up current content.",
-    input_schema: {
-      type: "object" as const,
-      properties: { groq: { type: "string" } },
-      required: ["groq"],
-    },
+      "List the managed-database content documents available for public-site editing.",
+    input_schema: { type: "object" as const, properties: {}, required: [] },
   },
   {
-    name: "sanity_get_document",
-    description:
-      "Get a Sanity document by its published id. Resolves to the in-progress draft if one exists.",
+    name: "content_get_document",
+    description: "Get a managed-database content document by its id.",
     input_schema: {
       type: "object" as const,
       properties: { id: { type: "string" } },
@@ -235,9 +230,9 @@ export const ADMIN_TOOLS = [
     },
   },
   {
-    name: "sanity_patch_document",
+    name: "content_patch_document",
     description:
-      "Patch fields on an existing Sanity document. Writes to a DRAFT only — the live document is untouched until the admin publishes.",
+      "Patch fields on an existing managed-database document. Changes are immediately available to the public content layer.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -251,16 +246,19 @@ export const ADMIN_TOOLS = [
     },
   },
   {
-    name: "sanity_create_document",
+    name: "content_create_document",
     description:
-      "Create a new Sanity document as a DRAFT — not live until the admin publishes.",
+      "Create a new managed-database content document. It is immediately available to the public content layer.",
     input_schema: {
       type: "object" as const,
       properties: {
-        docType: { type: "string", description: "Sanity document _type." },
+        contentType: {
+          type: "string",
+          description: "Managed content document type.",
+        },
         fields: { type: "object" },
       },
-      required: ["docType", "fields"],
+      required: ["contentType", "fields"],
     },
   },
   {
@@ -690,34 +688,33 @@ export async function runAdminTool(
       return { output: { ok: true, name } };
     }
 
-    case "sanity_query": {
-      const groq = String(input.groq ?? "");
-      const result = await sanityReadClient.fetch(groq);
+    case "content_list_documents": {
+      const result = await listContentDocuments();
       return { output: result };
     }
 
-    case "sanity_get_document": {
+    case "content_get_document": {
       const id = String(input.id ?? "");
-      const doc = await getDocumentForEditing(id);
+      const doc = await getContentDocument(id);
       if (!doc)
         return {
-          output: { error: `No document found for ${id}` },
+          output: { error: `No managed content document found for ${id}` },
           isError: true,
         };
       return { output: doc };
     }
 
-    case "sanity_patch_document": {
+    case "content_patch_document": {
       const id = String(input.id ?? "");
       const patch = (input.patch ?? {}) as Record<string, unknown>;
-      const current = await getDocumentForEditing(id);
+      const current = await getContentDocument(id);
       if (!current)
         return {
-          output: { error: `No document found for ${id}` },
+          output: { error: `No managed content document found for ${id}` },
           isError: true,
         };
       const currentType = (current as { _type?: string })._type ?? "";
-      if (!isSanityTypeAllowed(currentType)) {
+      if (!isContentTypeAllowed(currentType)) {
         return {
           output: {
             error: `"${currentType}" documents are not editable by the admin agent`,
@@ -725,25 +722,27 @@ export async function runAdminTool(
           isError: true,
         };
       }
-      await patchDraft(id, patch);
-      ctx.log(`Patched Sanity draft for ${id}`);
+      await patchContentDocument(id, patch);
+      ctx.log(`Patched managed content document ${id}`);
       return { output: { ok: true, id } };
     }
 
-    case "sanity_create_document": {
-      const docType = String(input.docType ?? "");
+    case "content_create_document": {
+      const contentType = String(input.contentType ?? "");
       const fields = (input.fields ?? {}) as Record<string, unknown>;
-      if (!isSanityTypeAllowed(docType)) {
+      if (!isContentTypeAllowed(contentType)) {
         return {
           output: {
-            error: `"${docType}" is not in the admin-editable type allowlist`,
+            error: `"${contentType}" is not in the admin-editable type allowlist`,
           },
           isError: true,
         };
       }
-      const created = await createDraft(docType, fields);
-      ctx.log(`Created Sanity draft ${created._id} (${docType})`);
-      return { output: { ok: true, id: created._id } };
+      const created = await createContentDocument(contentType, fields);
+      ctx.log(
+        `Created managed content document ${created?._id ?? ""} (${contentType})`,
+      );
+      return { output: { ok: true, id: created?._id } };
     }
 
     case "create_clickup_task": {
