@@ -70,6 +70,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The Flow SoulPrint dashboard now uses typed stored-section, content-block, icon, synthesis, and profile-data contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 73 errors and 102 warnings without suppressing rules.
 - The Flow Team Comparison dashboard now uses typed team-selection, comparison result, and role-breakdown contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 66 errors and 100 warnings without suppressing rules.
 - The Flow Research dashboard now uses typed score, chart, icon, and live-metric contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 59 errors and 93 warnings without suppressing rules.
+- The Flow Inspirations page now uses standards-based Tailwind typography utilities in place of every legacy text-wrap cast. Its focused lint pass is clean, and the global lint backlog is reduced to 52 errors and 93 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 

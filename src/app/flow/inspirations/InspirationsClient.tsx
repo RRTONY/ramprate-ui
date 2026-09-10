@@ -447,8 +447,7 @@ export default function Inspirations() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
-            style={{ textWrap: "pretty" as any }}
+            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty"
           >
             The Flow Circuit didn&#39;t emerge from thin air. It was forged in
             the crucible of decades of research by people who dared to ask the
@@ -511,10 +510,7 @@ export default function Inspirations() {
                       </div>
 
                       {/* Contribution */}
-                      <p
-                        className="text-base text-muted-foreground leading-relaxed mb-4"
-                        style={{ textWrap: "pretty" as any }}
-                      >
+                      <p className="text-base text-muted-foreground leading-relaxed mb-4 text-pretty">
                         {thinker.contribution}
                       </p>
 
@@ -523,10 +519,7 @@ export default function Inspirations() {
                         <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-1.5">
                           Connection to The Flow Circuit
                         </p>
-                        <p
-                          className="text-sm text-foreground/90 leading-relaxed"
-                          style={{ textWrap: "pretty" as any }}
-                        >
+                        <p className="text-sm text-foreground/90 leading-relaxed text-pretty">
                           {thinker.connectionToFlowCircuit}
                         </p>
                       </div>
@@ -610,17 +603,11 @@ export default function Inspirations() {
               <br />
               <span className="text-primary">CHANGED THE GAME</span>
             </h2>
-            <p
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
-              style={{ textWrap: "pretty" as any }}
-            >
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
               The Flow Circuit&#39;s design draws on decades of established
               research from some of the most rigorous institutions in the world.
             </p>
-            <p
-              className="text-sm text-amber-700 max-w-2xl mx-auto mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3"
-              style={{ textWrap: "pretty" as any }}
-            >
+            <p className="text-sm text-amber-700 max-w-2xl mx-auto mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 text-pretty">
               These are general findings that inspired the framework&#39;s
               design - not studies of The Flow Circuit itself. See our{" "}
               <Link
@@ -670,10 +657,7 @@ export default function Inspirations() {
                             </>
                           )}
                         </p>
-                        <p
-                          className="text-sm text-muted-foreground leading-relaxed mb-2"
-                          style={{ textWrap: "pretty" as any }}
-                        >
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-2 text-pretty">
                           {citation.finding}
                         </p>
                         <p className="text-xs font-medium text-primary/80 flex items-center gap-1.5">
@@ -705,10 +689,7 @@ export default function Inspirations() {
                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">
                   Built on Open Source
                 </h3>
-                <p
-                  className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6 text-pretty">
                   The Flow Circuit is built with React, TypeScript, Tailwind
                   CSS, Framer Motion, Recharts, and dozens of other open source
                   projects maintained by developers who share their work freely
