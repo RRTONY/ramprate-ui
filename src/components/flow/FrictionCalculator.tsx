@@ -70,7 +70,7 @@ export default function FrictionCalculator() {
             className="py-4"
           />
           <p className="text-xs text-gray-500">
-            *Based on typical "Circuit Breaks" (e.g., Spark ideas dying in Filter review, Ground waiting for clear specs).
+            *Based on typical &quot;Circuit Breaks&quot; (e.g., Spark ideas dying in Filter review, Ground waiting for clear specs).
           </p>
         </div>
 
@@ -87,7 +87,7 @@ export default function FrictionCalculator() {
           </motion.div>
           <div className="flex items-center justify-center gap-2 text-red-300 text-sm mt-2">
             <TrendingDown className="w-4 h-4" />
-            <span>That's {Math.round((annualFrictionCost / totalPayroll) * 100)}% of your total payroll burned.</span>
+            <span>That&#39;s {Math.round((annualFrictionCost / totalPayroll) * 100)}% of your total payroll burned.</span>
           </div>
         </div>
 

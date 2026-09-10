@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { storeFormSubmission } from "@/lib/submissions/store";
 
 const BRAND_NAMES: Record<string, string> = {
   "ramprate.com": "RampRate",
@@ -38,6 +39,13 @@ export async function POST(req: NextRequest) {
     // needs (see scripts/supplier-intake-apps-script.gs).
     formStage: "client-intake",
   };
+
+  await storeFormSubmission({
+    formType: "client-intake",
+    sourceUrl,
+    payload: body.formData,
+    attachments: body.files,
+  });
 
   const res = await fetch(scriptUrl, {
     method: "POST",

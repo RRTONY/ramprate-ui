@@ -207,66 +207,37 @@ const brands = [
 
 export default function HomeContent() {
   return (
-    <div className="min-h-screen">
+    <div className="home-blue min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[oklch(0.2_0.05_30)]">
-        {/* Hero background image - warmed and lifted so the scene (and any
-            people in it) reads as sunset-lit rather than dimmed dark. */}
+      <section className="home-blue-hero relative min-h-screen flex flex-col overflow-hidden">
+        {/* The office photo remains contextual; the violet-and-amber editorial atmosphere carries the primary brand experience. */}
         <div className="absolute inset-0">
           <Image
             src="/hero.webp"
-            alt=""
+            alt="Technology advisory team collaborating in a modern office"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-110 saturate-125"
+            className="home-blue-hero-image object-cover object-right"
           />
-          {/* Left-side scrim for text legibility - warm rust/plum instead of navy */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to right, oklch(0.2 0.05 30) 40%, oklch(0.2 0.05 30 / 0.85) 65%, transparent 100%)",
-            }}
-          />
-          {/* Top/bottom vignette - fades into a warm amber horizon glow at the base */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, oklch(0.2 0.05 30 / 0.9) 0%, transparent 40%, oklch(0.4 0.14 50 / 0.5) 100%)",
-            }}
-          />
-          {/* Cinematic sunset light wash - soft-light blended so it illuminates
-              the photo itself (and any people in it) rather than sitting on top
-              of it like a flat filter. */}
-          <div
-            className="absolute inset-0 mix-blend-soft-light"
-            style={{
-              background:
-                "radial-gradient(circle at 78% 28%, oklch(0.88 0.16 75 / 0.95) 0%, oklch(0.68 0.19 40 / 0.55) 35%, transparent 70%)",
-            }}
-          />
+          {/* Left-side scrim protects the reading column over the contextual image. */}
+          <div className="home-blue-scrim absolute inset-0" />
+          {/* The warm-violet vignette grounds the hero in the wider content system. */}
+          <div className="home-blue-vignette absolute inset-0" />
+          {/* The amber wash adds depth without sacrificing title contrast. */}
+          <div className="home-blue-light-wash absolute inset-0 mix-blend-soft-light" />
         </div>
+        <div className="home-blue-hero-grid absolute inset-0 z-[1]" />
 
-        {/* Glassmorphic orbs - full sunset palette (plum, rust, amber, rose) */}
-        <div
-          className="glass-orb glass-orb-amber w-[500px] h-[500px] -top-40 -right-40 z-[1]"
-          style={{ animationDuration: "8s" }}
-        />
-        <div
-          className="glass-orb glass-orb-rust w-[300px] h-[300px] bottom-20 left-10 z-[1]"
-          style={{ animationDuration: "12s" }}
-        />
-        <div
-          className="glass-orb glass-orb-pink w-[200px] h-[200px] z-[1]"
-          style={{ top: "33%", right: "25%", animationDuration: "10s" }}
-        />
+        {/* Ambient color fields keep the hero alive without distracting from the copy. */}
+        <div className="home-blue-orb-large glass-orb glass-orb-amber w-[500px] h-[500px] -top-40 -right-40 z-[1]" />
+        <div className="home-blue-orb-medium glass-orb glass-orb-rust w-[300px] h-[300px] bottom-20 left-10 z-[1]" />
+        <div className="home-blue-orb-small glass-orb glass-orb-pink w-[200px] h-[200px] z-[1]" />
 
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
+          <div className="home-blue-hero-copy max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
             <div className="max-w-2xl">
-              <div className="mb-8">
+              <div className="home-blue-eyebrow mb-8">
                 <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
                   <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
@@ -283,26 +254,26 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
+              <h1 className="home-blue-title font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
                 Where Relationships
                 <br />
                 Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
+              <p className="home-blue-summary font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/70">
                 Technology sourcing, product strategy, data centers, telecom,
                 managed services &amp; cloud — $10B+ managed since 2000.
               </p>
 
-              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
+              <p className="home-blue-summary font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/75">
                 Fix the signal. Close the deal. We don&apos;t advise from the
                 sidelines - we execute.
               </p>
 
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(56,189,248,0.28)]"
                 >
                   Tell Us What&apos;s Broken <ArrowRight size={16} />
                 </Link>
@@ -317,7 +288,7 @@ export default function HomeContent() {
           </div>
         </div>
 
-        <div className="relative z-10 pb-8 flex justify-center">
+        <div className="home-blue-scroll relative z-10 pb-8 flex justify-center">
           <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll

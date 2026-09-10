@@ -22,6 +22,7 @@
 - [x] Add automated regression checks for the production build command and the preserved external credential-provider boundary.
 - [x] Add a successful Flow sign-up regression test covering external registration, credential sign-in, and the `/flow` redirect.
 - [ ] Assess and remediate the repository-wide ESLint backlog without suppressing code-quality rules or introducing unrelated regressions.
+- [x] Resolve repository-wide `react/no-unescaped-entities` findings through rule-guided JSX text replacements.
 - [x] Remove render-phase state updates from the shared marketing header navigation.
 - [x] Inventory all Sanity schemas, queries, webhooks, Studio routes, and public pages that depend on managed content.
 - [x] Design relational database tables and content types that replace the active Sanity document model without altering public URLs.
@@ -29,9 +30,68 @@
 - [x] Migrate existing public content and media references to the managed database without committing secrets or storing file bytes in tables.
 - [x] Remove Sanity packages, Studio routes, and environment dependencies once all public content routes render from the database.
 - [x] Add migration, content-access, and route regression tests; then validate builds, data, and responsive pages.
-- [ ] Restore managed deployment compatibility by aligning the package-manager version and install configuration with the build image.
+- [x] Restore managed deployment compatibility by aligning the package-manager version and install configuration with the build image.
+- [x] Generate the `dist/index.js` production launcher expected by the managed runtime so it starts the Next.js server on the platform-provided port.
+- [x] Generate the `dist/index.js` production launcher expected by the managed runtime so it starts the Next.js server on the platform-provided port.
 - [x] Compare the previous home-page and header treatment against the current implementation and restore the stronger approved visual direction without regressing responsiveness or accessibility.
 - [x] Update Portable Text media rendering to recognize database-expanded image asset metadata and retain embedded public content images.
 - [x] Validate the approved public home and shared marketing header at desktop and mobile breakpoints, keeping them as the design reference for the updated Flow entry surfaces.
 - [x] Add rendered-markup regression coverage for a migrated Portable Text image block and verify an article containing embedded media renders the stored external asset URL.
 - [x] Extend Vitest discovery to include TSX component regression tests.
+- [x] Audit and restore the published favicon, touch icons, web manifest, and browser icon metadata.
+- [x] Audit and complete technical SEO: canonical URLs, titles, descriptions, Open Graph and X cards, robots directives, sitemap hygiene, and structured data.
+- [x] Add regression tests for site metadata and public SEO routes, then verify the deployed head tags and crawler endpoints.
+- [x] Design and create explicit relational tables for posts, categories, post-category mappings, pages, media assets, site settings, and navigation content.
+- [x] Migrate the generic `content_documents` records into the relational tables without losing public slugs, content blocks, metadata, or external media URLs.
+- [x] Replace generic content-document query paths with typed relational data access for posts, categories, pages, media, settings, navigation, sitemap, and SEO metadata.
+- [x] Add relational-data integrity and public-route regression tests, then retain the generic table only as a temporary rollback archive until parity is confirmed.
+- [x] Audit existing administrative authentication, role checks, editor routes, and all submitted public form endpoints.
+- [x] Add role-protected admin workflows to create, edit, publish, and manage posts, categories, pages, page content, media references, and site settings.
+- [x] Expose managed site settings and post main-image source references in the authorized admin console so all documented content fields can be edited without direct database access.
+- [x] Render administrator-created relational content pages at their configured public routes without conflicting with existing static application pages.
+- [x] Resolve relational post main-image asset identifiers to public image metadata so administrator-selected media references render correctly.
+- [x] Replace indefinite Flow admin session loading with a graceful restricted-access fallback when external session discovery is unavailable.
+- [x] Audit the supplied environment configuration against current application references and securely add required runtime values without committing or exposing secrets.
+- [x] Remove the optional Google PageSpeed integration and `GOOGLE_API_KEY` requirement from the active runtime and configuration validation path.
+- [x] Validate the retained server-side runtime integrations and access-control values without testing or requiring the retired Google PageSpeed key.
+- [x] Separate intermittent external service availability checks from deterministic unit and integration coverage so the release suite does not fail on upstream latency.
+- [x] Inspect the existing Ask RampRate interface and its current AI or placeholder behavior, then define a secure server-side AI-assisted advisory workflow.
+- [x] Replace the Ask RampRate placeholder with a user-facing AI assistant featuring clear input, streaming or pending feedback, errors, and safe advisory boundaries.
+- [x] Audit and improve the current results experiences so they present actionable, coherent outputs from the available data and AI workflow.
+- [x] Identify and remove unintended cloud-related configuration, copy, routes, assets, or dependencies without disrupting intentional data-center and cloud advisory content.
+- [x] Replace the direct Anthropic Ask RampRate implementation with the configured built-in server-side AI runtime, removing the external provider key requirement and retaining request validation and safe failure behavior.
+- [x] Replace the remaining direct Anthropic payment-RFP analysis route with the configured built-in server-side AI runtime and retire the external provider key dependency.
+- [x] Add automated tests for AI authorization, validation, loading and failure paths, plus the revised results flow; validate all changed public routes.
+- [x] Add a guarded Ask RampRate guidance entry point to the assessment results experience so users can turn an existing result into a focused follow-up question.
+- [x] Remove direct Framer Motion usage from the updated primary and 360-degree Flow results routes, replacing result animations with reduced-motion-safe CSS transitions.
+- [x] Reassess and redesign the current home-page color, composition, and hierarchy to address the reported visual shortcomings rather than retaining the prior blue overlay treatment.
+- [x] Add purposeful, reduced-motion-safe CSS animation to the redesigned home page, limiting motion to transform and opacity and preserving responsive readability.
+- [x] Capture and review desktop and mobile home-page screenshots after the redesigned visual and motion system is implemented.
+- [x] Persist submissions from every supported public intake and contact form in normalized managed-database records.
+- [x] Add an authorized admin inbox for form submissions with status, search, and detail views, without exposing submitted data publicly.
+- [x] Add automated tests for admin authorization, content mutations, form persistence, and admin-only form-data access.
+- [ ] Compare the live Ramprate blog sitemap and article inventory against migrated database posts and reconcile any missing published content or categories.
+- [x] Correct the migrated blog query so posts with null sections are included rather than being excluded by SQL null comparison semantics.
+- [x] Preserve existing Google Sheet submission delivery while additionally persisting every supported form payload and attachment metadata in the managed database.
+- [x] Audit supplied environment-variable names against current runtime requirements and document any missing, retired, or external-only configuration without committing secrets.
+- [x] Audit the current home and blog screens and replace the inconsistent visual treatment with a cohesive, accessible blue brand system.
+- [x] Apply the blue design system to home, blog archive, and article presentation while retaining content readability, hierarchy, responsive navigation, and existing calls to action.
+- [x] Add or update visual and route regression coverage for the redesigned home and blog experiences across desktop and mobile breakpoints.
+- [x] Reduce the home-page meta keyword list to 3–8 focused, highly relevant terms, with no more than 8 keywords.
+- [x] Identify and add descriptive alternative text to the missing home-page image without changing the remaining already-described images.
+- [x] Add a regression test that enforces the home-page keyword-count limit and confirms all rendered home-page images expose non-empty alternative text.
+- [x] Add rendered-home image coverage that verifies all images on `/` expose non-empty alternative text, including the reported three-image set.
+- [x] Apply the blue visual system to blog article pages and verify representative article presentation, readability, and navigation on desktop and mobile.
+- [x] Add automated regression tests for `/`, `/blog`, and a representative `/blog/[slug]` covering route availability and core metadata or visual contracts after the redesign.
+- [x] Validate all new administrative content and submission API inputs with the existing Yup convention; do not add or rely on Zod.
+- [x] Complete a documented audit of cloud-related copy, routes, assets, and dependencies, removing only unintended implementation while retaining intentional data-center advisory content.
+- [x] Remove the obsolete Netlify-specific package and package-name reference now that the project uses the managed container deployment, while retaining intentional cloud-advisory copy.
+- [x] Add explicit Ask RampRate and results-guidance loading-state regression coverage, document the public AI authorization boundary, and validate every changed public route.
+- [x] Run and record the final end-to-end release validation, including retained runtime-service checks and the complete deterministic application suite.
+- [x] Remove newly introduced unused-variable warnings from the shared Flow reveal wrapper.
+- [x] Resolve the remaining legacy explicit-`any` errors in the primary Flow results route before claiming a focused lint pass for that route.
+- [x] Compare the referenced Ramprate home page with the current home experience and adapt its approved visual language, layout rhythm, and responsive hierarchy without copying unrelated application logic.
+- [x] Validate the adapted home page at desktop and mobile breakpoints for visual parity, readable contrast, accessible motion, and working navigation.
+- [x] Ensure the shared marketing header transitions to an unambiguous white background after scrolling, with readable navigation, search, logo, and CTA contrast.
+- [x] Validate the transparent top-of-hero and white scrolled-header states at desktop and mobile breakpoints.
+- [x] Compare `master` with `feat/ramprate-product-completion` and selectively integrate the user-confirmed home-color and header fixes without overwriting database, admin, AI, results, SEO, or deployment work.

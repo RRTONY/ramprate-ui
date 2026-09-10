@@ -26,18 +26,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { sanityFetch } from "@/lib/sanity/client";
-import { siteSettingsQuery } from "@/lib/sanity/queries";
+import { contentFetch } from "@/lib/content/client";
+import { siteSettingsQuery } from "@/lib/content/queries";
 import JsonLd, {
   organizationJsonLd,
   webSiteJsonLd,
 } from "@/components/shared/JsonLd";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor } from "@/lib/content/image";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import { ConditionalChrome } from "@/components/shared/ConditionalChrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ramprate.com"),
+  applicationName: "RampRate",
   title: {
     default: "RampRate | Data Center, Telecom & Cloud Advisory",
     template: "%s | RampRate",
@@ -45,28 +46,37 @@ export const metadata: Metadata = {
   description:
     "RampRate: B Lab-certified advisory turning relationships into revenue via technology sourcing and product strategy — $10B+ managed since 2000.",
   keywords: [
-    "technology advisory",
+    "IT infrastructure advisory",
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
-    "B Lab certified advisory",
+    "technology sourcing strategy",
     "RampRate",
   ],
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon.ico",
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: ["/icon.svg"],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
   },
   openGraph: {
     type: "website",
     siteName: "RampRate",
     url: "https://ramprate.com",
-    images: ["/og.png"],
+    title: "RampRate | Data Center, Telecom & Cloud Advisory",
+    description:
+      "Technology sourcing and product strategy that turns relationships into revenue.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "RampRate" }],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og.png"],
+    title: "RampRate | Data Center, Telecom & Cloud Advisory",
+    description:
+      "Technology sourcing and product strategy that turns relationships into revenue.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -86,7 +96,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const settings = await sanityFetch<{
+  const settings = await contentFetch<{
     companyName?: string;
     logo?:
       | (Parameters<typeof urlFor>[0] & { asset?: { _ref?: string } })

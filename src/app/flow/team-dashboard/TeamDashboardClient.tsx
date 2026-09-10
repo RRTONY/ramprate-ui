@@ -116,7 +116,7 @@ export default function TeamDashboardClient() {
             Circuit Command
           </h1>
           <p className="text-gray-400 text-xl max-w-xl">
-            Create your first team to start mapping your organization's operational physics.
+            Create your first team to start mapping your organization&#39;s operational physics.
           </p>
         </div>
         <div className="bg-white/5 border border-white/10 p-8 rounded-2xl max-w-md w-full space-y-4">
@@ -217,7 +217,7 @@ export default function TeamDashboardClient() {
             <Users className="w-16 h-16 mx-auto text-gray-600" />
             <h2 className="text-2xl font-bold text-gray-400">No Team Members Yet</h2>
             <p className="text-gray-500 max-w-md mx-auto">
-              Use the "Invite Team" button to generate a link. Share it with your staff so they can take the assessment and appear here automatically.
+              Use the &quot;Invite Team&quot; button to generate a link. Share it with your staff so they can take the assessment and appear here automatically.
             </p>
             <Button
               className="bg-white text-black hover:bg-gray-200 font-bold"

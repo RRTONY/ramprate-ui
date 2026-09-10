@@ -152,7 +152,7 @@ export default function FindYourPathClient() {
             className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
           >
             Five portals into the same truth: you already know who you are. You
-            just haven't had the language for it yet.
+            just haven&#39;t had the language for it yet.
           </motion.p>
 
           <motion.div
@@ -192,7 +192,7 @@ export default function FindYourPathClient() {
               >
                 <div className="flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all">
                   <span className="text-white/80 group-hover:text-white transition-colors">
-                    "{sq.q}"
+                    &quot;{sq.q}&quot;
                   </span>
                   <div className="flex items-center gap-2">
                     <AnimatePresence>
@@ -276,7 +276,7 @@ export default function FindYourPathClient() {
                         {portal.subtitle}
                       </p>
                       <p className="text-base text-white/50 italic mb-4">
-                        "{portal.question}"
+                        &quot;{portal.question}&quot;
                       </p>
 
                       <AnimatePresence>
@@ -338,12 +338,12 @@ export default function FindYourPathClient() {
           <p className="text-lg text-white/50 leading-relaxed">
             When you take the Flow Circuit Assessment AND add your SoulPrint
             data, something extraordinary happens. Your energy DNA meets your
-            soul blueprint. The report doesn't just tell you what you do - it
-            tells you <em>why you can't stop doing it</em>.
+            soul blueprint. The report doesn&#39;t just tell you what you do - it
+            tells you <em>why you can&#39;t stop doing it</em>.
           </p>
           <p className="text-sm text-white/30">
             Your Flow Circuit role is the WHAT. Your SoulPrint is the WHY.
-            Together, they're the closest thing to a user manual for your soul.
+            Together, they&#39;re the closest thing to a user manual for your soul.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Link href="/flow/assessment">

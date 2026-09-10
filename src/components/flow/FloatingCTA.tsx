@@ -52,7 +52,7 @@ export default function FloatingCTA() {
                   <div className="flex items-center gap-3 text-white">
                     <Zap className="h-5 w-5 text-yellow-400 animate-pulse shrink-0" />
                     <span className="text-sm sm:text-base font-bold">
-                      <span className="text-yellow-400">Don't guess your role.</span>{" "}
+                      <span className="text-yellow-400">Don&#39;t guess your role.</span>{" "}
                       The assessment reveals it in 5 minutes.
                     </span>
                   </div>

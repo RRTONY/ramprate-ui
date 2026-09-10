@@ -132,11 +132,11 @@ export default function ConductorPlaybook() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-8">
             <Target className="w-4 h-4 text-purple-400" />
             <span className="text-sm font-mono text-purple-400">
-              The Conductor's Manual
+              The Conductor&#39;s Manual
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
-            The Conductor's
+            The Conductor&#39;s
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
               Playbook
@@ -144,7 +144,7 @@ export default function ConductorPlaybook() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             The Conductor is the least understood and most valuable role in The
-            Flow Circuit. Most people think it's networking. It's not. It's
+            Flow Circuit. Most people think it&#39;s networking. It&#39;s not. It&#39;s
             orchestration - and it has rules.
           </p>
         </div>
@@ -257,9 +257,9 @@ export default function ConductorPlaybook() {
               Playbook Complete
             </h3>
             <p className="text-muted-foreground mb-6">
-              You've internalized the Conductor's operating system. Now go
+              You&#39;ve internalized the Conductor&#39;s operating system. Now go
               orchestrate something that matters. Remember: the Conductor
-              doesn't seek credit - they seek multiplication.
+              doesn&#39;t seek credit - they seek multiplication.
             </p>
           </div>
         </section>
@@ -273,7 +273,7 @@ export default function ConductorPlaybook() {
           </h2>
           <p className="text-muted-foreground mb-8">
             Take the assessment to find out if Conductor is your dominant role -
-            or if you've been playing Conductor when you're actually wired as
+            or if you&#39;ve been playing Conductor when you&#39;re actually wired as
             something else.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

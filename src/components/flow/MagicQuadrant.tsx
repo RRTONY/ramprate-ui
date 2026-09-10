@@ -380,7 +380,7 @@ export default function MagicQuadrant() {
 
                 <div className="p-4 bg-muted/30 rounded-xl border border-black/5">
                   <p className="text-lg font-medium leading-relaxed">
-                    "{selectedItem.narrative}"
+                    &quot;{selectedItem.narrative}&quot;
                   </p>
                 </div>
 
@@ -397,9 +397,9 @@ export default function MagicQuadrant() {
                   </div>
                 </div>
                 <p className="text-[11px] text-muted-foreground">
-                  Research Standing is our general, qualitative characterization of each tool's published
+                  Research Standing is our general, qualitative characterization of each tool&#39;s published
                   literature - not a precise validity coefficient. See <span className="font-medium">/flow/science</span> for
-                  The Flow Circuit's own current validation status.
+                  The Flow Circuit&#39;s own current validation status.
                 </p>
 
                 <p className="text-sm text-muted-foreground">

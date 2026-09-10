@@ -190,7 +190,7 @@ export default function CredibilityTimeline() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            The Flow Circuit wasn't invented in a lab. It was forged in the
+            The Flow Circuit wasn&#39;t invented in a lab. It was forged in the
             field - across $40 billion in technology transactions, stages from
             Harvard to Davos, and 25 years of watching teams succeed and fail
             for the same preventable reasons.

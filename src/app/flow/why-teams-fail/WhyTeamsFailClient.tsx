@@ -133,7 +133,7 @@ export default function WhyTeamsFail() {
             Why Teams Fail
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            It's never about talent. It's never about tools. It's about the
+            It&#39;s never about talent. It&#39;s never about tools. It&#39;s about the
             wiring. Here are the four circuit failures we see in every
             organization - and the fix for each one.
           </p>
@@ -253,7 +253,7 @@ export default function WhyTeamsFail() {
         <div className="max-w-2xl mx-auto text-center">
           <Users className="w-10 h-10 text-primary mx-auto mb-6" />
           <h2 className="text-3xl font-display font-bold mb-4">
-            Diagnose Your Team's Circuit
+            Diagnose Your Team&#39;s Circuit
           </h2>
           <p className="text-muted-foreground mb-8">
             Which failure pattern does your team match? Take the assessment to

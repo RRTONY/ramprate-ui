@@ -198,7 +198,7 @@ export default function ValuesPage() {
             }}
           >
             There is a new model for doing business shaped and organized by a
-            company's purpose, values and societal impact. Organizations
+            company&#39;s purpose, values and societal impact. Organizations
             understand that behavior, aligned with collective intention, is the
             path to success.
           </p>
@@ -226,7 +226,7 @@ export default function ValuesPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                Founder's Story
+                Founder&#39;s Story
               </span>
               <h2
                 className="text-3xl sm:text-4xl font-bold leading-tight"
@@ -267,7 +267,7 @@ export default function ValuesPage() {
               }}
             >
               <p>
-                Hi, we're Tony and Alex - we founded RampRate in 2000 on the
+                Hi, we&#39;re Tony and Alex - we founded RampRate in 2000 on the
                 premise of elevating the way business does business. We could
                 take the same connections that allowed us to cut 24% of each IT
                 budget we touched and use them to kick down the barriers for
@@ -277,13 +277,13 @@ export default function ValuesPage() {
                 reach their potential.
               </p>
               <p>
-                So that's what we're doing today - we find the next unicorns and
+                So that&#39;s what we&#39;re doing today - we find the next unicorns and
                 gatekeepers to impact that will not just earn millions yet
                 better millions of lives. We grok their vision while putting
                 them through bootcamp to be ready for life-changing
                 opportunities. And then we kick down the barriers to their
                 success by connecting them with our ecosystem and leveraging the
-                trust we've built in the Fortune 1000 over 20-plus years to
+                trust we&#39;ve built in the Fortune 1000 over 20-plus years to
                 create opportunities few others can access.
               </p>
               <p>
@@ -311,9 +311,9 @@ export default function ValuesPage() {
             className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-snug"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            "We build an Ecosystem of impact-preneurs and trailblazers powered
+            &quot;We build an Ecosystem of impact-preneurs and trailblazers powered
             by opportunities, resources, innovation and{" "}
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>human spirit.</span>"
+            <span style={{ color: "oklch(0.82 0.15 75)" }}>human spirit.</span>&quot;
           </blockquote>
         </div>
       </section>
@@ -842,13 +842,13 @@ export default function ValuesPage() {
             className="text-3xl sm:text-4xl font-bold text-white mb-5"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Let's Build Something Different
+            Let&#39;s Build Something Different
           </h2>
           <p
             className="text-white/75 text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Ready to align capital with purpose? Tell us what you're trying to
+            Ready to align capital with purpose? Tell us what you&#39;re trying to
             change.
           </p>
           <Link

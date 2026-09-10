@@ -140,7 +140,7 @@ export default function IntelClient() {
               Assessments in the News
             </h2>
             <p className="text-muted-foreground">
-              Why the market is waking up to the "Human OS" problem.
+              Why the market is waking up to the &quot;Human OS&quot; problem.
             </p>
           </div>
           <div className="grid gap-8 max-w-5xl mx-auto">
@@ -181,7 +181,7 @@ export default function IntelClient() {
                     </p>
 
                     <blockquote className="border-l-2 border-secondary/30 pl-4 italic text-foreground/80 my-4">
-                      "{article.quote}"
+                      &quot;{article.quote}&quot;
                     </blockquote>
 
                     <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
@@ -258,7 +258,7 @@ export default function IntelClient() {
                   </p>
 
                   <blockquote className="border-l-2 border-primary/30 pl-4 italic text-foreground/80 my-4">
-                    "{article.quote}"
+                    &quot;{article.quote}&quot;
                   </blockquote>
 
                   <div className="flex flex-wrap items-center justify-between gap-4 pt-4">

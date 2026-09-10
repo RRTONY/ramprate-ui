@@ -21,6 +21,7 @@ import {
   TrendingUp,
   Zap,
   Activity,
+  FileText,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
@@ -110,6 +111,12 @@ export default function AdminDashboard() {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Site
+          </Button>
+          <Button
+            onClick={() => router.push("/flow/admin/content")}
+            className="gap-2"
+          >
+            <FileText className="h-4 w-4" /> Content & Submissions
           </Button>
         </div>
 

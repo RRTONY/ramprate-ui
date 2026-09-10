@@ -133,7 +133,7 @@ export default function TestimonialsClient() {
             transition={{ delay: 0.5 }}
             className="text-xl md:text-3xl text-white/70 font-light max-w-4xl mx-auto leading-relaxed"
           >
-            We don't just talk about innovation. We engineer the outcomes that
+            We don&#39;t just talk about innovation. We engineer the outcomes that
             define industries.
           </motion.p>
         </section>
@@ -162,7 +162,7 @@ export default function TestimonialsClient() {
               >
                 <div className="flex flex-col h-full justify-between space-y-6">
                   <p className="text-lg text-zinc-300 leading-relaxed">
-                    "{item.quote}"
+                    &quot;{item.quote}&quot;
                   </p>
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white">
@@ -241,7 +241,7 @@ function CommunityTestimonials() {
           >
             <Quote className="w-5 h-5 text-primary/40 mb-3" />
             <p className="text-white/80 leading-relaxed mb-4">
-              "{t.testimonialQuote}"
+              &quot;{t.testimonialQuote}&quot;
             </p>
             <div className="flex items-center gap-3 pt-3 border-t border-white/10">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-bold text-primary">

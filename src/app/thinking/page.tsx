@@ -255,8 +255,8 @@ export default async function ThinkingPage() {
             className="text-white/60 leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            You've read the thinking. Now let's put it to work. Tell us what's
-            broken and we'll tell you what it's worth to fix.
+            You&#39;ve read the thinking. Now let&#39;s put it to work. Tell us what&#39;s
+            broken and we&#39;ll tell you what it&#39;s worth to fix.
           </p>
           <Link
             href="/contact"
@@ -268,7 +268,7 @@ export default async function ThinkingPage() {
               boxShadow: "0 10px 30px oklch(0.82 0.15 75 / 0.25)",
             }}
           >
-            Tell Us What's Broken
+            Tell Us What&#39;s Broken
             <svg
               width="16"
               height="16"

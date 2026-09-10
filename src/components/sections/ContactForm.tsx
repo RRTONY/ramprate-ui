@@ -19,17 +19,24 @@ const labelClass =
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    fetch('/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(data as any).toString(),
-    })
-      .then(() => setSubmitted(true))
-      .catch(() => setSubmitted(true))
+    setError(null)
+
+    try {
+      const response = await fetch('/api/contact-intake', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(data.entries())),
+      })
+      if (!response.ok) throw new Error('Contact intake failed')
+      setSubmitted(true)
+    } catch {
+      setError('We could not save your message. Please try again or contact us directly.')
+    }
   }
 
   if (submitted) {
@@ -110,6 +117,12 @@ export default function ContactForm() {
           className={`${inputClass} resize-none`}
                  />
       </div>
+
+      {error && (
+        <p className="font-body mb-4 text-sm text-red-700" role="alert">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"

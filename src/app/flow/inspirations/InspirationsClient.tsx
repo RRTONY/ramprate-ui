@@ -447,12 +447,12 @@ export default function Inspirations() {
             className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
             style={{ textWrap: "pretty" as any }}
           >
-            The Flow Circuit didn't emerge from thin air. It was forged in the
+            The Flow Circuit didn&#39;t emerge from thin air. It was forged in the
             crucible of decades of research by people who dared to ask the
             uncomfortable question:
             <span className="text-foreground font-semibold">
               {" "}
-              what if we've been building teams wrong this entire time?
+              what if we&#39;ve been building teams wrong this entire time?
             </span>
           </motion.p>
 
@@ -531,7 +531,7 @@ export default function Inspirations() {
                       {/* Quote */}
                       {thinker.quote && (
                         <blockquote className="text-sm italic text-muted-foreground/80 border-l-2 border-muted-foreground/20 pl-4 mb-5">
-                          "{thinker.quote}"
+                          &quot;{thinker.quote}&quot;
                         </blockquote>
                       )}
 
@@ -611,14 +611,14 @@ export default function Inspirations() {
               className="text-lg text-muted-foreground max-w-2xl mx-auto"
               style={{ textWrap: "pretty" as any }}
             >
-              The Flow Circuit's design draws on decades of established research from
+              The Flow Circuit&#39;s design draws on decades of established research from
               some of the most rigorous institutions in the world.
             </p>
             <p
               className="text-sm text-amber-700 max-w-2xl mx-auto mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3"
               style={{ textWrap: "pretty" as any }}
             >
-              These are general findings that inspired the framework's design - not studies
+              These are general findings that inspired the framework&#39;s design - not studies
               of The Flow Circuit itself. See our{" "}
               <a href="/flow/science#validation-status" className="underline hover:text-amber-900">current validation status</a>.
             </p>
@@ -714,7 +714,7 @@ export default function Inspirations() {
 
                 <div className="border-t border-border/30 pt-8 mt-2">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Know someone whose work should be on this page? We're always
+                    Know someone whose work should be on this page? We&#39;re always
                     learning.
                   </p>
                   <Link href="/flow/feedback">
@@ -749,7 +749,7 @@ export default function Inspirations() {
               in the Circuit?
             </h2>
             <p className="text-lg text-muted-foreground">
-              These thinkers built the science. Now it's your turn to live it.
+              These thinkers built the science. Now it&#39;s your turn to live it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/flow/assessment">

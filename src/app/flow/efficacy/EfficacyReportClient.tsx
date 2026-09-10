@@ -289,7 +289,7 @@ export default function EfficacyReportClient() {
                     <p className="text-muted-foreground leading-relaxed">
                       In our Monte Carlo simulation, the forced-ranking Deep
                       Calibration method correctly identifies a synthetic
-                      respondent's dominant role{" "}
+                      respondent&#39;s dominant role{" "}
                       <strong className="text-foreground">
                         90% of the time
                       </strong>
@@ -320,7 +320,7 @@ export default function EfficacyReportClient() {
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We generated 10,000 synthetic respondents, each with a known
-              "true" dominant role. Then we ran each respondent through both
+              &quot;true&quot; dominant role. Then we ran each respondent through both
               assessment methods and measured how often each method correctly
               identified the true dominant role.
             </p>
@@ -356,7 +356,7 @@ export default function EfficacyReportClient() {
                   />
                   <p className="text-xs text-muted-foreground mt-2">
                     The Likert method has high spread (42pp) but low accuracy
-                    because social desirability bias inflates "attractive"
+                    because social desirability bias inflates &quot;attractive&quot;
                     roles. The spread is noise, not signal.
                   </p>
                 </CardContent>
@@ -410,9 +410,9 @@ export default function EfficacyReportClient() {
                     </p>
                     <p className="text-muted-foreground text-sm leading-relaxed mt-1">
                       A 42-point spread sounds like strong differentiation, but
-                      it's driven by bias, not truth. When everyone inflates
+                      it&#39;s driven by bias, not truth. When everyone inflates
                       their Spark score, the spread between Spark and Ground
-                      widens artificially. The forced-rank method's 21.5-point
+                      widens artificially. The forced-rank method&#39;s 21.5-point
                       spread is smaller but represents genuine behavioral
                       differences - the signal-to-noise ratio is dramatically
                       higher.
@@ -434,8 +434,8 @@ export default function EfficacyReportClient() {
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We simulated 2,000 people taking each assessment twice. The
               correlation between their first and second results measures
-              reliability. In psychometrics, r &gt; 0.80 is considered "good"
-              and r &gt; 0.90 is "excellent."
+              reliability. In psychometrics, r &gt; 0.80 is considered &quot;good&quot;
+              and r &gt; 0.90 is &quot;excellent.&quot;
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -576,7 +576,7 @@ export default function EfficacyReportClient() {
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We simulated 2,000 people who are truly Grounds but are
-              deliberately trying to appear as Sparks (the most "attractive"
+              deliberately trying to appear as Sparks (the most &quot;attractive&quot;
               role). This tests whether the assessment can be gamed.
             </p>
 
@@ -595,7 +595,7 @@ export default function EfficacyReportClient() {
                   <p className="text-xs text-muted-foreground">
                     Nearly every faker successfully disguised themselves as a
                     Spark. The Likert format makes it trivially easy to select
-                    the "visionary" answer every time.
+                    the &quot;visionary&quot; answer every time.
                   </p>
                 </CardContent>
               </Card>
@@ -702,9 +702,9 @@ export default function EfficacyReportClient() {
                       In the Likert method, 37% of respondents are classified as
                       Sparks - nearly double the expected 20%. Meanwhile,
                       Filters (4.7%) and Grounds (6.9%) are dramatically
-                      underrepresented. This isn't because most people are
-                      Sparks. It's because "I generate innovative ideas" sounds
-                      better than "I identify flaws in other people's work." The
+                      underrepresented. This isn&#39;t because most people are
+                      Sparks. It&#39;s because &quot;I generate innovative ideas&quot; sounds
+                      better than &quot;I identify flaws in other people&#39;s work.&quot; The
                       forced-rank method produces a distribution within 2% of
                       the ideal for every role.
                     </p>

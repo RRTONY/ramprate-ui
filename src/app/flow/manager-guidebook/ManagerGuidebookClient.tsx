@@ -115,7 +115,7 @@ Let's decode our flow.
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
         <div className="text-center space-y-6">
           <h1 className="text-4xl font-black uppercase tracking-tighter">
-            Team Captain's Protocol
+            Team Captain&#39;s Protocol
           </h1>
           <p className="text-gray-400 text-lg">
             Sign in to create your team and get your invite link.
@@ -222,7 +222,7 @@ Let's decode our flow.
             <Users className="w-4 h-4" /> Alpha Program
           </div>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
-            Team Captain's <span className="text-yellow-400">Protocol</span>
+            Team Captain&#39;s <span className="text-yellow-400">Protocol</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">
             Send one link. Get individual reports and a group dynamic matrix. Up
@@ -244,7 +244,7 @@ Let's decode our flow.
             <CardContent className="space-y-4">
               <p className="text-gray-300">
                 This link is tied to your team{" "}
-                <strong className="text-white">"{selectedTeam.name}"</strong>.
+                <strong className="text-white">&quot;{selectedTeam.name}&quot;</strong>.
                 Anyone who completes the assessment via this URL will
                 automatically appear in your team matrix.
               </p>

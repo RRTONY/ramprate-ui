@@ -539,7 +539,7 @@ function CrossReferenceCard({
                 <AlertTriangle className="w-3 h-3 inline mr-1" />
                 Your Flow Circuit role ({flowRole}) differs from the Enneagram
                 prediction ({mapping.primaryRole}). This tension can be a source
-                of creative power - you operate in a space most people don't.
+                of creative power - you operate in a space most people don&#39;t.
               </p>
             </div>
           )}

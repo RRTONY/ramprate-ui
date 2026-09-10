@@ -148,7 +148,7 @@ export default function OnboardingWizard({
                         <RoleIcon className="w-10 h-10" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black">You're a {role}</h2>
+                        <h2 className="text-2xl font-black">You&#39;re a {role}</h2>
                         <p className="text-muted-foreground mt-1">
                           Score: {score}% alignment with your natural operating
                           energy
@@ -156,7 +156,7 @@ export default function OnboardingWizard({
                       </div>
                       <div className="p-4 bg-gray-50 rounded-xl text-sm leading-relaxed">
                         <p>
-                          This isn't a personality label - it's your{" "}
+                          This isn&#39;t a personality label - it&#39;s your{" "}
                           <strong>operational energy signature</strong>. It
                           reveals how you naturally process information, make
                           decisions, and contribute to teams.
@@ -174,7 +174,7 @@ export default function OnboardingWizard({
                           Individual results are only 30% of the picture.
                         </strong>{" "}
                         The real insight comes from seeing how your energy
-                        interacts with your team's energy.
+                        interacts with your team&#39;s energy.
                       </p>
                     </div>
                   </>
@@ -283,7 +283,7 @@ export default function OnboardingWizard({
                     </div>
 
                     <p className="text-xs text-center text-muted-foreground italic">
-                      "Don't just merge balance sheets; merge nervous systems."
+                      &quot;Don&#39;t just merge balance sheets; merge nervous systems.&quot;
                     </p>
                   </>
                 )}

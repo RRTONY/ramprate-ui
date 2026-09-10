@@ -69,7 +69,7 @@ export default function TeamMap() {
       <div className="text-center space-y-4">
         <h2 className="text-3xl md:text-4xl font-bold">The Team Map</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          See how your team actually moves. Click "Fix This Team" or <span className="font-bold text-primary">Swipe Right</span> to see the Flow Circuit organize the chaos.
+          See how your team actually moves. Click &quot;Fix This Team&quot; or <span className="font-bold text-primary">Swipe Right</span> to see the Flow Circuit organize the chaos.
         </p>
       </div>
 
@@ -196,7 +196,7 @@ export default function TeamMap() {
       <Card className="bg-white/80 backdrop-blur-md border-black/5 shadow-xl overflow-hidden">
         <CardContent className="p-8 md:p-12 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold">Get Your Team's Flow Report</h3>
+            <h3 className="text-3xl font-bold">Get Your Team&#39;s Flow Report</h3>
             <p className="text-muted-foreground text-lg">
               Stop guessing why your team is stuck. Get a custom analysis of your friction points and a step-by-step playbook to fix it.
             </p>
@@ -221,7 +221,7 @@ export default function TeamMap() {
                       <SelectItem value="Amplifier">Amplifier (I scale things)</SelectItem>
                       <SelectItem value="Filter">Filter (I refine things)</SelectItem>
                       <SelectItem value="Anchor">Anchor (I stabilize things)</SelectItem>
-                      <SelectItem value="Unsure">I'm not sure yet</SelectItem>
+                      <SelectItem value="Unsure">I&#39;m not sure yet</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -255,9 +255,9 @@ export default function TeamMap() {
                   <CheckCircle2 className="h-10 w-10" />
                 </div>
                 <div>
-                  <h4 className="text-2xl font-bold mb-2">You're on the list!</h4>
+                  <h4 className="text-2xl font-bold mb-2">You&#39;re on the list!</h4>
                   <p className="text-muted-foreground">
-                    We're preparing a report specifically for a <strong>{role}</strong> like you. Check your inbox in 5 minutes.
+                    We&#39;re preparing a report specifically for a <strong>{role}</strong> like you. Check your inbox in 5 minutes.
                   </p>
                 </div>
                 <Button variant="outline" onClick={() => setSubmitted(false)} className="w-full">

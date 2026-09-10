@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import { FlowMotionDiv, FlowMotionSection } from "@/components/flow/FlowReveal";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import {
@@ -22,15 +22,13 @@ import {
   getCombinationProfile,
   getStressZones,
   getBestSelfInsight,
-  CombinationProfile,
-  StressZone,
   roleInsights,
   getActionSteps,
+  type RankingAnswer,
 } from "@/lib/flow/surveyData";
 import {
   ArrowRight,
   Download,
-  Users,
   Zap,
   Activity,
   Shield,
@@ -52,6 +50,7 @@ import {
   ExternalLink,
   Eye,
   Loader2,
+  type LucideIcon,
 } from "lucide-react";
 import ShareableCard from "@/components/flow/ShareableCard";
 import { trpc } from "@/lib/flow/trpc";
@@ -61,9 +60,16 @@ import OnboardingWizard from "@/components/flow/OnboardingWizard";
 import BlogBridge from "@/components/flow/BlogBridge";
 import ResearchOptIn from "@/components/flow/ResearchOptIn";
 import ThreeSixtyLinkGenerator from "@/components/flow/ThreeSixtyLinkGenerator";
+import ResultGuidancePanel from "@/components/flow/ResultGuidancePanel";
 import { useRouter } from "next/navigation";
 
-const roleIcons: Record<Role, any> = {
+type ResultsState = {
+  answers: Record<number, string | RankingAnswer> | null;
+  scores: Record<Role, number>;
+  dominant: ReturnType<typeof getDominantRole>;
+};
+
+const roleIcons: Record<Role, LucideIcon> = {
   Spark: Zap,
   Amplifier: Activity,
   Filter: Shield,
@@ -130,7 +136,7 @@ function StressGauge({ level, label }: { level: number; label: string }) {
         <span className="font-mono font-bold text-gray-700">{level}%</span>
       </div>
       <div className="h-2.5 bg-gray-200 rounded-full overflow-hidden">
-        <motion.div
+        <FlowMotionDiv
           initial={{ width: 0 }}
           animate={{ width: `${level}%` }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -142,7 +148,7 @@ function StressGauge({ level, label }: { level: number; label: string }) {
 }
 
 export default function AlignmentResults() {
-  const [selfData, setSelfData] = useState<any>(null);
+  const [selfData, setSelfData] = useState<ResultsState | null>(null);
   const [guestName, setGuestName] = useState("");
   const router = useRouter();
   const [copiedInvite, setCopiedInvite] = useState(false);
@@ -166,66 +172,85 @@ export default function AlignmentResults() {
   }, [user]);
 
   // Server fallback: fetch assessment by email if localStorage is empty
-  const { data: serverAssessment } = trpc.assessment.getByEmail.useQuery(
-    { email: storedEmail! },
-    { enabled: !!storedEmail && !selfData && !loadingFromServer },
-  );
+  const { data: serverAssessment, isFetched: hasFetchedServerAssessment } =
+    trpc.assessment.getByEmail.useQuery(
+      { email: storedEmail! },
+      { enabled: !!storedEmail && !selfData && !loadingFromServer },
+    );
 
   useEffect(() => {
-    // Step 1: Try localStorage first (fastest)
-    const storedSelf = localStorage.getItem("assessment_results");
-    const storedName =
-      localStorage.getItem("assessment_guest_name") ||
-      localStorage.getItem("assessment_name");
+    const frame = window.requestAnimationFrame(() => {
+      // Step 1: Try localStorage first (fastest)
+      const storedSelf = localStorage.getItem("assessment_results");
+      const storedName =
+        localStorage.getItem("assessment_guest_name") ||
+        localStorage.getItem("assessment_name");
 
-    if (storedSelf) {
-      const answers = JSON.parse(storedSelf);
-      const scores = calculateRoleScores(answers);
-      const dominant = getDominantRole(scores);
-      setSelfData({ answers, scores, dominant });
+      if (storedSelf) {
+        const answers = JSON.parse(storedSelf) as Record<
+          number,
+          string | RankingAnswer
+        >;
+        const scores = calculateRoleScores(answers);
+        const dominant = getDominantRole(scores);
+        setSelfData({ answers, scores, dominant });
+        if (storedName) setGuestName(storedName);
+        return;
+      }
+
+      // Step 2: Try persisted assessment history (cross-session localStorage)
+      const persisted = getLatestAssessment();
+      if (persisted?.scores) {
+        const scores = persisted.scores as Record<Role, number>;
+        const dominant = getDominantRole(scores);
+        setSelfData({ answers: null, scores, dominant });
+        setGuestName(persisted.name || "");
+        // Restore localStorage so the page works fully
+        localStorage.setItem("assessment_dominant_role", persisted.role);
+        localStorage.setItem("assessment_role_scores", JSON.stringify(scores));
+        localStorage.setItem("assessment_name", persisted.name);
+        if (persisted.assessmentId)
+          localStorage.setItem("assessment_id", String(persisted.assessmentId));
+        if (persisted.domain)
+          localStorage.setItem("assessment_domain", persisted.domain);
+        if (persisted.shareToken)
+          localStorage.setItem("assessment_share_token", persisted.shareToken);
+        if (persisted.teamCode)
+          localStorage.setItem("assessment_team_code", persisted.teamCode);
+        if (persisted.teamId)
+          localStorage.setItem("assessment_team_id", persisted.teamId);
+        return;
+      }
+
+      // Step 3: Will try server (handled by the trpc query above)
+      if (storedEmail) setLoadingFromServer(true);
       if (storedName) setGuestName(storedName);
-      return;
-    }
+    });
 
-    // Step 2: Try persisted assessment history (cross-session localStorage)
-    const persisted = getLatestAssessment();
-    if (persisted?.scores) {
-      const scores = persisted.scores as Record<string, number>;
-      const dominant = getDominantRole(scores);
-      setSelfData({ answers: null, scores, dominant });
-      setGuestName(persisted.name || "");
-      // Restore localStorage so the page works fully
-      localStorage.setItem("assessment_dominant_role", persisted.role);
-      localStorage.setItem("assessment_role_scores", JSON.stringify(scores));
-      localStorage.setItem("assessment_name", persisted.name);
-      if (persisted.assessmentId)
-        localStorage.setItem("assessment_id", String(persisted.assessmentId));
-      if (persisted.domain)
-        localStorage.setItem("assessment_domain", persisted.domain);
-      if (persisted.shareToken)
-        localStorage.setItem("assessment_share_token", persisted.shareToken);
-      if (persisted.teamCode)
-        localStorage.setItem("assessment_team_code", persisted.teamCode);
-      if (persisted.teamId)
-        localStorage.setItem("assessment_team_id", persisted.teamId);
-      return;
-    }
-
-    // Step 3: Will try server (handled by the trpc query above)
-    if (storedEmail) {
-      setLoadingFromServer(true);
-    }
-
-    if (storedName) setGuestName(storedName);
-  }, []);
+    return () => window.cancelAnimationFrame(frame);
+  }, [storedEmail]);
 
   // Handle server response
   useEffect(() => {
-    if (serverAssessment && !selfData) {
-      const scores = (serverAssessment.scores as Record<string, number>) || {};
+    if (!hasFetchedServerAssessment || selfData) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      if (!serverAssessment) {
+        setLoadingFromServer(false);
+        return;
+      }
+
+      const scores = (serverAssessment.scores as Record<Role, number>) || {};
       if (Object.keys(scores).length > 0) {
         const dominant = getDominantRole(scores);
-        setSelfData({ answers: serverAssessment.answers, scores, dominant });
+        setSelfData({
+          answers: serverAssessment.answers as Record<
+            number,
+            string | RankingAnswer
+          >,
+          scores,
+          dominant,
+        });
         setGuestName(serverAssessment.guestName || "");
         // Restore localStorage for future visits
         if (serverAssessment.answers)
@@ -261,8 +286,10 @@ export default function AlignmentResults() {
           );
       }
       setLoadingFromServer(false);
-    }
-  }, [serverAssessment, selfData]);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [hasFetchedServerAssessment, selfData, serverAssessment]);
 
   const rolePercentages = useMemo(() => {
     if (!selfData) return [];
@@ -337,7 +364,7 @@ export default function AlignmentResults() {
           </h1>
           <p
             className="text-gray-600 mb-6 text-lg"
-            style={{ textWrap: "balance" as any }}
+            style={{ textWrap: "balance" }}
           >
             Complete the 12-question assessment to unlock your Flow Circuit
             report.
@@ -386,7 +413,7 @@ export default function AlignmentResults() {
       <section className="relative overflow-hidden">
         <div className={`absolute inset-0 ${colors.bg} opacity-5`} />
         <div className="max-w-5xl mx-auto px-4 md:px-8 pt-12 pb-12 md:pt-20 md:pb-16">
-          <motion.div
+          <FlowMotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-6"
@@ -414,7 +441,7 @@ export default function AlignmentResults() {
                 </h1>
                 <p
                   className="text-lg md:text-2xl text-gray-600 max-w-2xl leading-relaxed"
-                  style={{ textWrap: "balance" as any }}
+                  style={{ textWrap: "balance" }}
                 >
                   {insights.tagline}
                 </p>
@@ -445,13 +472,13 @@ export default function AlignmentResults() {
                 </span>
               )}
             </div>
-          </motion.div>
+          </FlowMotionDiv>
         </div>
       </section>
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 pb-20 space-y-12 md:space-y-16">
         {/* ── How to Read This Report - newcomer orientation ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.02 }}
@@ -462,22 +489,22 @@ export default function AlignmentResults() {
             </p>
             <p
               className="text-sm md:text-base text-gray-600 leading-relaxed"
-              style={{ textWrap: "pretty" as any }}
+              style={{ textWrap: "pretty" }}
             >
               Your <strong>role</strong> ({dominant}) is where your energy
               naturally goes. <strong>Purity Score</strong> shows how
               concentrated that energy is in one role versus spread across
               several. <strong>Stress Radiation Map</strong> is an estimate of
-              how much friction you'd likely feel doing each of the other roles.
-              Start with your 3 action steps below - the deep-dive sections
-              further down are optional reading.
+              how much friction you&#39;d likely feel doing each of the other
+              roles. Start with your 3 action steps below - the deep-dive
+              sections further down are optional reading.
             </p>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── YOUR 3 ACTION STEPS - the useful stuff, up front ── */}
         {actionSteps.length > 0 && (
-          <motion.section
+          <FlowMotionSection
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.04 }}
@@ -505,18 +532,24 @@ export default function AlignmentResults() {
                   </h3>
                   <p
                     className="text-sm text-gray-700 leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
+                    style={{ textWrap: "pretty" }}
                   >
                     {step.body}
                   </p>
                 </div>
               ))}
             </div>
-          </motion.section>
+          </FlowMotionSection>
         )}
 
+        <ResultGuidancePanel
+          dominantRole={dominant}
+          profileLabel={comboProfile ? comboProfile.label : description.title}
+          actionSteps={actionSteps}
+        />
+
         {/* ── THE CORE THESIS: Who You ARE > What You KNOW ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
@@ -531,18 +564,18 @@ export default function AlignmentResults() {
                 </span>
               </div>
               <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
-                It's more important{" "}
+                It&#39;s more important{" "}
                 <span className="text-amber-400">who you are</span> than what
                 you know.
               </h2>
               <p
                 className="text-gray-300 text-lg leading-relaxed max-w-3xl"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
-                Meredith Belbin's team-role research at Henley Management
-                College found that teams stacked with the "smartest" individuals
-                consistently underperformed teams with balanced role diversity -
-                a result now widely known as the Apollo Syndrome (
+                Meredith Belbin&#39;s team-role research at Henley Management
+                College found that teams stacked with the &quot;smartest&quot;
+                individuals consistently underperformed teams with balanced role
+                diversity - a result now widely known as the Apollo Syndrome (
                 <a
                   href="https://www.belbin.com/resources/articles-directory/belbin-apollo-teams"
                   target="_blank"
@@ -552,18 +585,18 @@ export default function AlignmentResults() {
                   source
                 </a>
                 ). The neuroscience is clear: when you operate in your natural
-                mode, you enter flow state; when you're forced out of it,
+                mode, you enter flow state; when you&#39;re forced out of it,
                 cortisol spikes, cognitive load increases, and performance
-                degrades. Your Flow Circuit role isn't a skill you learned -
-                it's the operating system you were born with.
+                degrades. Your Flow Circuit role isn&#39;t a skill you learned -
+                it&#39;s the operating system you were born with.
               </p>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Combination Profile ── */}
         {comboProfile && (
-          <motion.section
+          <FlowMotionSection
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -586,16 +619,16 @@ export default function AlignmentResults() {
             >
               <p
                 className="text-lg md:text-xl leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {comboProfile.description}
               </p>
             </div>
-          </motion.section>
+          </FlowMotionSection>
         )}
 
         {/* ── Energy Distribution with Percentages ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
@@ -649,7 +682,7 @@ export default function AlignmentResults() {
                 const itemColors = roleColors[item.role];
                 const ItemIcon = roleIcons[item.role];
                 return (
-                  <motion.div
+                  <FlowMotionDiv
                     key={item.role}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -680,23 +713,23 @@ export default function AlignmentResults() {
                       </span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
-                      <motion.div
+                      <FlowMotionDiv
                         initial={{ width: 0 }}
                         animate={{ width: `${item.percentage}%` }}
                         transition={{ duration: 0.8, delay: 0.3 + idx * 0.1 }}
                         className={`h-full ${itemColors.bg} rounded-full`}
                       />
                     </div>
-                  </motion.div>
+                  </FlowMotionDiv>
                 );
               })}
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── STRESS RADIATION MAP ── */}
         {stressZones.length > 0 && (
-          <motion.section
+          <FlowMotionSection
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -706,13 +739,13 @@ export default function AlignmentResults() {
             </h2>
             <p className="text-gray-500 mb-2">
               <strong>What this is:</strong> an estimate of how much friction
-              you'd likely feel operating as each of the other four roles, based
-              on how far they sit from your natural energy. Every hour spent
-              fighting your wiring is an hour stolen from your best self.
+              you&#39;d likely feel operating as each of the other four roles,
+              based on how far they sit from your natural energy. Every hour
+              spent fighting your wiring is an hour stolen from your best self.
             </p>
             <p className="text-xs text-gray-400 mb-6">
               This is a modeled estimate derived from your energy distribution -
-              not a separately measured stress score. We're working on
+              not a separately measured stress score. We&#39;re working on
               incorporating real feedback (self-reported stress, manager input)
               to turn this into a direct measurement over time.
             </p>
@@ -725,7 +758,7 @@ export default function AlignmentResults() {
                 const isDanger = zone.stressLevel > 55;
 
                 return (
-                  <motion.div
+                  <FlowMotionDiv
                     key={zone.targetRole}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -775,7 +808,7 @@ export default function AlignmentResults() {
 
                         <p
                           className="text-sm text-gray-600 leading-relaxed"
-                          style={{ textWrap: "pretty" as any }}
+                          style={{ textWrap: "pretty" }}
                         >
                           {zone.description}
                         </p>
@@ -796,16 +829,16 @@ export default function AlignmentResults() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </FlowMotionDiv>
                 );
               })}
             </div>
-          </motion.section>
+          </FlowMotionSection>
         )}
 
         {/* ── BEST SELF INSIGHT ── */}
         {bestSelfInsight && (
-          <motion.section
+          <FlowMotionSection
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
@@ -819,16 +852,16 @@ export default function AlignmentResults() {
               </div>
               <p
                 className="text-lg md:text-xl leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {bestSelfInsight}
               </p>
             </div>
-          </motion.section>
+          </FlowMotionSection>
         )}
 
         {/* ── Deep Analysis ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -847,7 +880,7 @@ export default function AlignmentResults() {
               </h3>
               <p
                 className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {insights.superpower}
               </p>
@@ -859,7 +892,7 @@ export default function AlignmentResults() {
               </h3>
               <p
                 className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {insights.blindSpot}
               </p>
@@ -867,17 +900,17 @@ export default function AlignmentResults() {
 
             <div className="p-6 md:p-8 rounded-2xl bg-orange-50 border-2 border-orange-200">
               <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-orange-600 mb-3">
-                Under Stress - What Happens When You're Forced Out
+                Under Stress - What Happens When You&#39;re Forced Out
               </h3>
               <p
                 className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {insights.underStress}{" "}
                 <strong>
-                  This is the cost of operating outside your nature - it doesn't
-                  just reduce performance, it reduces your possibility as a
-                  human being.
+                  This is the cost of operating outside your nature - it
+                  doesn&#39;t just reduce performance, it reduces your
+                  possibility as a human being.
                 </strong>
               </p>
             </div>
@@ -888,16 +921,16 @@ export default function AlignmentResults() {
               </h3>
               <p
                 className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {insights.growthEdge}
               </p>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Team Dynamics ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
@@ -913,7 +946,7 @@ export default function AlignmentResults() {
               </h3>
               <p
                 className="text-lg md:text-xl leading-relaxed text-gray-200"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {insights.teamValue}
               </p>
@@ -976,16 +1009,16 @@ export default function AlignmentResults() {
               </p>
               <div
                 className="text-gray-200 text-base leading-relaxed whitespace-pre-line"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 {description.communicationGuide.trim()}
               </div>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Your Mantra ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -996,14 +1029,14 @@ export default function AlignmentResults() {
           </p>
           <p
             className={`text-2xl md:text-4xl font-black italic ${colors.text}`}
-            style={{ textWrap: "balance" as any }}
+            style={{ textWrap: "balance" }}
           >
             {insights.mantra}
           </p>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Shareable Card ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.52 }}
@@ -1023,10 +1056,10 @@ export default function AlignmentResults() {
               dominantRole={dominant}
             />
           )}
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Invite Tribe - Prominent CTA ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
@@ -1075,10 +1108,10 @@ export default function AlignmentResults() {
               </p>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── 360° Peer Review - Live Link Generator ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.58 }}
@@ -1103,13 +1136,13 @@ export default function AlignmentResults() {
               domain={domain}
             />
           )}
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Soulprint Teaser ── */}
         {(() => {
           const hasBirthData = !!localStorage.getItem("assessment_birth_date");
           return (
-            <motion.section
+            <FlowMotionSection
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.58 }}
@@ -1134,7 +1167,7 @@ export default function AlignmentResults() {
 
               <p
                 className="text-gray-700 leading-relaxed mb-4"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 Your Flow Circuit reveals <strong>what</strong> you do on a
                 team. Your Soulprint reveals <strong>why</strong> you do it that
@@ -1174,8 +1207,9 @@ export default function AlignmentResults() {
                   <p className="text-sm text-gray-600">
                     Your Soulprint report will be automatically generated when
                     the service launches - expected in the next couple of weeks.
-                    We'll notify you when it's ready. It will appear right here,
-                    seamlessly integrated with your Flow Circuit results.
+                    We&#39;ll notify you when it&#39;s ready. It will appear
+                    right here, seamlessly integrated with your Flow Circuit
+                    results.
                   </p>
                 </div>
               ) : (
@@ -1198,12 +1232,12 @@ export default function AlignmentResults() {
                   </Button>
                 </div>
               )}
-            </motion.section>
+            </FlowMotionSection>
           );
         })()}
 
         {/* ── Go Deeper: Deep Calibration CTA ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.59 }}
@@ -1227,14 +1261,14 @@ export default function AlignmentResults() {
                   </div>
                   <p
                     className="text-emerald-200 mt-1 text-base leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
+                    style={{ textWrap: "pretty" }}
                   >
                     Your Likert-based assessment captures your intuitive signal.
-                    Deep Calibration uses forced-ranking, which tends to reduce the
-                    "rate everything high" bias that Likert scales are prone to -
-                    giving you a more differentiated profile. It's a more rigorous
-                    self-report pass, not an independently audited or clinically
-                    validated score.
+                    Deep Calibration uses forced-ranking, which tends to reduce
+                    the &quot;rate everything high&quot; bias that Likert scales
+                    are prone to - giving you a more differentiated profile.
+                    It&#39;s a more rigorous self-report pass, not an
+                    independently audited or clinically validated score.
                   </p>
                 </div>
               </div>
@@ -1247,7 +1281,9 @@ export default function AlignmentResults() {
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                  <p className="text-3xl font-black text-emerald-300">~10 min</p>
+                  <p className="text-3xl font-black text-emerald-300">
+                    ~10 min
+                  </p>
                   <p className="text-xs text-emerald-200/70 mt-1 uppercase tracking-wider">
                     To Complete
                   </p>
@@ -1256,12 +1292,12 @@ export default function AlignmentResults() {
 
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
                 <p className="text-sm text-emerald-100 leading-relaxed">
-                  <strong className="text-white">How it works:</strong> You'll
-                  rank 8 sets of role-specific behaviors from "most like me" to
-                  "least like me." Unlike the standard assessment where you can
-                  rate everything high, forced-ranking reveals your true
-                  hierarchy - the roles you actually default to when resources
-                  are scarce.
+                  <strong className="text-white">How it works:</strong>{" "}
+                  You&#39;ll rank 8 sets of role-specific behaviors from
+                  &quot;most like me&quot; to &quot;least like me.&quot; Unlike
+                  the standard assessment where you can rate everything high,
+                  forced-ranking reveals your true hierarchy - the roles you
+                  actually default to when resources are scarce.
                 </p>
               </div>
 
@@ -1283,28 +1319,28 @@ export default function AlignmentResults() {
               </div>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Research Opt-In ── */}
         {assessmentId && (
-          <motion.section
+          <FlowMotionSection
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.595 }}
           >
             <ResearchOptIn assessmentId={Number(assessmentId)} />
-          </motion.section>
+          </FlowMotionSection>
         )}
 
         {/* ── Next Steps CTAs ── */}
-        <motion.section
+        <FlowMotionSection
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           className="space-y-4"
         >
           <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-6">
-            What's Next
+            What&#39;s Next
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Share Your Card */}
@@ -1316,7 +1352,7 @@ export default function AlignmentResults() {
               <h3 className="font-bold text-lg mb-1">Share Your Card</h3>
               <p
                 className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 Generate a visual card of your Flow Circuit role and share it on
                 LinkedIn.
@@ -1337,9 +1373,9 @@ export default function AlignmentResults() {
                 <h3 className="font-bold text-lg mb-1">View Tribe Map</h3>
                 <p
                   className="text-sm text-gray-500"
-                  style={{ textWrap: "pretty" as any }}
+                  style={{ textWrap: "pretty" }}
                 >
-                  See how your tribe's energy is distributed across the Flow
+                  See how your tribe&#39;s energy is distributed across the Flow
                   Circuit.
                 </p>
                 <ChevronRight className="w-5 h-5 mt-3 text-gray-300 group-hover:text-black transition-colors" />
@@ -1354,10 +1390,10 @@ export default function AlignmentResults() {
               <h3 className="font-bold text-lg mb-1">Family Circuit</h3>
               <p
                 className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
-                Map your family's energy dynamics. Home is where you should be
-                yourself.
+                Map your family&#39;s energy dynamics. Home is where you should
+                be yourself.
               </p>
               <ChevronRight className="w-5 h-5 mt-3 text-gray-300 group-hover:text-purple-500 transition-colors" />
             </button>
@@ -1370,10 +1406,10 @@ export default function AlignmentResults() {
               <h3 className="font-bold text-lg mb-1">SoulPrint</h3>
               <p
                 className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
-                Map your soul's blueprint. Combine it with your Flow Circuit DNA
-                for the full picture.
+                Map your soul&#39;s blueprint. Combine it with your Flow Circuit
+                DNA for the full picture.
               </p>
               <ChevronRight className="w-5 h-5 mt-3 text-indigo-300 group-hover:text-indigo-600 transition-colors" />
             </button>
@@ -1397,7 +1433,7 @@ export default function AlignmentResults() {
                 <h3 className="font-bold text-lg mb-1">Consciousness Layer</h3>
                 <p
                   className="text-sm text-gray-500"
-                  style={{ textWrap: "pretty" as any }}
+                  style={{ textWrap: "pretty" }}
                 >
                   Toggle in your SoulPrint reading - Enneagram, Human Design,
                   Astrology - for a deeper lens on your Flow Circuit role.
@@ -1418,7 +1454,7 @@ export default function AlignmentResults() {
               <h3 className="font-bold text-lg mb-1">Retake Assessment</h3>
               <p
                 className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" as any }}
+                style={{ textWrap: "pretty" }}
               >
                 Answer from a different context (work vs. family) to see how
                 your energy shifts.
@@ -1434,7 +1470,7 @@ export default function AlignmentResults() {
             </h3>
             <p
               className="text-sm text-gray-500 mb-6"
-              style={{ textWrap: "pretty" as any }}
+              style={{ textWrap: "pretty" }}
             >
               Your Flow Circuit role is one layer. Go deeper across the full
               ecosystem of self-discovery tools.
@@ -1505,10 +1541,10 @@ export default function AlignmentResults() {
               </a>
             </div>
           </div>
-        </motion.section>
+        </FlowMotionSection>
 
         {/* ── Download Report ── */}
-        <motion.div
+        <FlowMotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.65 }}
@@ -1528,7 +1564,7 @@ export default function AlignmentResults() {
             <Download className="w-5 h-5" />
             Download Full Report as PDF
           </Button>
-        </motion.div>
+        </FlowMotionDiv>
 
         {/* ── BlogBridge ── */}
         <BlogBridge pageKey="results" />

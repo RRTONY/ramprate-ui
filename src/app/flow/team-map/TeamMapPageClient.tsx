@@ -227,7 +227,7 @@ export default function TeamMapPage() {
             Find Your Tribe
           </h1>
           <p className="text-gray-400 text-lg">
-            Enter your company domain to see how your team's energy flows.
+            Enter your company domain to see how your team&#39;s energy flows.
           </p>
           <form
             onSubmit={(e) => {
@@ -285,7 +285,7 @@ export default function TeamMapPage() {
           </h1>
           <p className="text-gray-400 text-lg">
             No one from <strong className="text-white">{domain}</strong> has
-            taken the assessment yet. Be the first to map your team's energy.
+            taken the assessment yet. Be the first to map your team&#39;s energy.
           </p>
           <Link href={`/assessment?domain=${encodeURIComponent(domain || "")}`}>
             <Button className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold px-8 py-6 text-xl">
@@ -943,7 +943,7 @@ export default function TeamMapPage() {
                 >
                   <strong>Best internal candidate:</strong> {candidate.name} has{" "}
                   {role} as a secondary strength. With a formal mandate and
-                  protected time, they're the most viable internal {role}. This
+                  protected time, they&#39;re the most viable internal {role}. This
                   is a title and scope conversation, not a new hire.
                 </p>
               )}

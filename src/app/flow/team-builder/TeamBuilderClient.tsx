@@ -144,7 +144,7 @@ export default function TeamBuilderClient() {
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
                 <h2 className="text-2xl md:text-3xl font-bold">
-                  Want to See What You'll Get?
+                  Want to See What You&#39;ll Get?
                 </h2>
                 <p className="text-lg text-white/70 max-w-xl mx-auto">
                   View a sample team report with 10 pre-filled profiles,

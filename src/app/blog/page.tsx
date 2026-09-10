@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
-import { sanityFetch } from "@/lib/sanity/client";
+import { contentFetch } from "@/lib/content/client";
 import {
   postsQuery,
   postsByCategoryQuery,
   postCountQuery,
   postCountByCategoryQuery,
   categoriesQuery,
-} from "@/lib/sanity/queries";
+} from "@/lib/content/queries";
 import PostCard from "@/components/blog/PostCard";
 import Pagination from "@/components/blog/Pagination";
 import CategoryFilter from "@/components/blog/CategoryFilter";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 interface SanityPost {
@@ -59,14 +59,14 @@ const FALLBACK_METADATA: Metadata = {
     type: "website",
     url: "https://ramprate.com/blog",
     siteName: "RampRate",
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog | RampRate",
     description:
       "Expert insights on enterprise IT sourcing, cloud optimization, and emerging technology from RampRate.",
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
   },
 };
 
@@ -83,7 +83,7 @@ export default async function BlogPage({
   const sp = await searchParams;
 
   return (
-    <div style={{ background: "var(--dark)", minHeight: "100vh" }}>
+    <div className="blog-blue min-h-screen">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
@@ -110,19 +110,19 @@ async function BlogContent({
   const end = start + POSTS_PER_PAGE;
 
   const [posts, totalCount, categories] = await Promise.all([
-    sanityFetch({
+    contentFetch({
       query: activeCategory ? postsByCategoryQuery : postsQuery,
       params: activeCategory
         ? { categorySlug: activeCategory, start, end }
         : { start, end },
       tags: ["posts"],
     }),
-    sanityFetch({
+    contentFetch({
       query: activeCategory ? postCountByCategoryQuery : postCountQuery,
       params: activeCategory ? { categorySlug: activeCategory } : {},
       tags: ["posts"],
     }),
-    sanityFetch({ query: categoriesQuery, tags: ["categories"] }),
+    contentFetch({ query: categoriesQuery, tags: ["categories"] }),
   ]);
 
   const count = (totalCount as number) ?? 0;

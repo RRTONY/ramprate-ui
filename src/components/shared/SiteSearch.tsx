@@ -12,6 +12,7 @@ import {
   BookOpen,
   FileText,
   RotateCcw,
+  Loader2,
 } from "lucide-react";
 import { matchSitePages } from "@/lib/site-pages";
 
@@ -33,16 +34,11 @@ const SUGGESTED = [
   "How do I apply as a BioChain supplier or buyer?",
 ];
 
-function TypingDots() {
+function AssistantPending() {
   return (
-    <div className="flex items-center gap-1.5 py-0.5">
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className="w-2 h-2 rounded-full animate-bounce inline-block bg-amber"
-          style={{ animationDelay: `${i * 0.18}s`, animationDuration: "0.9s" }}
-        />
-      ))}
+    <div className="flex items-center gap-2 py-0.5 text-white/65">
+      <Loader2 className="size-4 animate-spin text-amber" aria-hidden="true" />
+      <span className="font-body text-sm">Preparing a focused answer</span>
     </div>
   );
 }
@@ -302,6 +298,9 @@ export default function SiteSearch({
         body: JSON.stringify({ question: q, history: chat.slice(-10) }),
       });
       const data = await res.json();
+      if (!res.ok || typeof data.answer !== "string") {
+        throw new Error("Ask RampRate was unavailable.");
+      }
       setChat((prev) => [...prev, { role: "assistant", content: data.answer }]);
     } catch {
       setChat((prev) => [
@@ -543,7 +542,7 @@ export default function SiteSearch({
                     <Sparkles size={12} className="text-[#050a15]" />
                   </div>
                   <div className="px-4 py-3 bg-white/4 border border-white/6 rounded-[0.2rem_1rem_1rem_1rem]">
-                    <TypingDots />
+                    <AssistantPending />
                   </div>
                 </div>
               )}

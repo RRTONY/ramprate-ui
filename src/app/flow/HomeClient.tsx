@@ -130,9 +130,9 @@ export default function HomeClient() {
                 Your Nature.
               </h1>
               <p className="text-xl sm:text-2xl md:text-3xl text-white/80 max-w-4xl mx-auto font-light leading-snug">
-                You're not burned out because you work too hard.
+                You&#39;re not burned out because you work too hard.
                 <br className="hidden md:block" />
-                You're burned out because you're in the wrong seat.
+                You&#39;re burned out because you&#39;re in the wrong seat.
               </p>
             </motion.div>
 
@@ -183,7 +183,7 @@ export default function HomeClient() {
                 Why Teams Break
               </h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                It's not personality conflicts. It's not bad culture. It's
+                It&#39;s not personality conflicts. It&#39;s not bad culture. It&#39;s
                 physics.
               </p>
             </div>
@@ -196,9 +196,9 @@ export default function HomeClient() {
                   </div>
                   <h3 className="text-xl font-bold">The Burnout Trap</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    A natural Spark forced into execution work doesn't just
-                    underperform - they burn out. The stress isn't from the
-                    workload. It's from fighting their own wiring.
+                    A natural Spark forced into execution work doesn&#39;t just
+                    underperform - they burn out. The stress isn&#39;t from the
+                    workload. It&#39;s from fighting their own wiring.
                   </p>
                 </CardContent>
               </Card>
@@ -210,7 +210,7 @@ export default function HomeClient() {
                   </div>
                   <h3 className="text-xl font-bold">The Friction Tax</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    When energy can't flow from ideation to execution, every
+                    When energy can&#39;t flow from ideation to execution, every
                     handoff creates friction. Innovation cycles stretch from
                     weeks to quarters. The best ideas die in committee.
                   </p>
@@ -224,7 +224,7 @@ export default function HomeClient() {
                   </div>
                   <h3 className="text-xl font-bold">The Invisible Gap</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Org charts show reporting lines. They don't show energy
+                    Org charts show reporting lines. They don&#39;t show energy
                     flow. A team with three Sparks and no Ground has a circuit
                     break nobody can see - until the project fails.
                   </p>

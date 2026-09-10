@@ -139,7 +139,7 @@ export default function HeadToHead({ members }: HeadToHeadProps) {
                 </p>
                 <div className="bg-white/5 p-3 rounded border-l-2 border-white/20">
                   <p className="text-xs text-gray-400 italic">
-                    <strong className="text-white not-italic">Manager's Tip:</strong> {analysis.tip}
+                    <strong className="text-white not-italic">Manager&#39;s Tip:</strong> {analysis.tip}
                   </p>
                 </div>
               </div>

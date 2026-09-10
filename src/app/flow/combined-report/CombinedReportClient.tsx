@@ -98,7 +98,7 @@ export default function CombinedReport() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Your Flow Circuit tells you how you wire into a team. Your SoulPrint
-            tells you what your soul won't let you stop doing. The Combined
+            tells you what your soul won&#39;t let you stop doing. The Combined
             Report tells you{" "}
             <span className="text-foreground font-semibold">why</span> - and
             what to do about it.
@@ -110,7 +110,7 @@ export default function CombinedReport() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-display font-bold text-center mb-12">
-            What's Inside the 12,000-Word Report
+            What&#39;s Inside the 12,000-Word Report
           </h2>
           <div className="space-y-6">
             {reportSections.map((section, i) => (
@@ -229,7 +229,7 @@ export default function CombinedReport() {
             </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
               The Combined Report is powered by a partnership between The Flow
-              Circuit and TrueSelf's SoulPrint platform. The first 1,000 users
+              Circuit and TrueSelf&#39;s SoulPrint platform. The first 1,000 users
               receive SoulPrint analysis free. After that, standalone SoulPrint
               reports are $44.
             </p>

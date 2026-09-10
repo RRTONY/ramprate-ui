@@ -1,21 +1,21 @@
-import { client } from "@/lib/sanity/client";
+import { contentFetch } from "@/lib/content/client";
 import {
   postBySlugQuery,
   allPostSlugsQuery,
   relatedPostsQuery,
   recentPostsQuery,
-} from "@/lib/sanity/queries";
+} from "@/lib/content/queries";
 import {
   PortableText,
   portableTextComponents,
-} from "@/lib/sanity/portable-text";
-import SanityImage from "@/components/shared/SanityImage";
+} from "@/lib/content/portable-text";
+import ContentImage from "@/components/shared/ContentImage";
 import JsonLd, {
   blogPostJsonLd,
   breadcrumbJsonLd,
 } from "@/components/shared/JsonLd";
-import { urlFor } from "@/lib/sanity/image";
-import { stripSiteNameSuffix } from "@/lib/sanity/seo";
+import { urlFor } from "@/lib/content/image";
+import { stripSiteNameSuffix } from "@/lib/content/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -32,7 +32,10 @@ type RelatedPost = {
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const posts = await client.fetch(allPostSlugsQuery);
+  const posts = await contentFetch({
+    query: allPostSlugsQuery,
+    tags: ["posts"],
+  });
   return posts.map((post: { slug: { current: string } }) => ({
     slug: post.slug.current,
   }));
@@ -44,7 +47,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await client.fetch(postBySlugQuery, { slug });
+  const post = await contentFetch({
+    query: postBySlugQuery,
+    params: { slug },
+    tags: ["posts"],
+  });
   if (!post) return {};
   const ogImage = post.seo?.ogImage || post.mainImage;
   // The root layout appends " | RampRate" to every title via its template.
@@ -88,7 +95,11 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await client.fetch(postBySlugQuery, { slug });
+  const post = await contentFetch({
+    query: postBySlugQuery,
+    params: { slug },
+    tags: ["posts"],
+  });
 
   if (!post) notFound();
 
@@ -96,10 +107,18 @@ export default async function BlogPostPage({
     (c: { slug: { current: string } }) => c.slug.current,
   );
   let relatedPosts: RelatedPost[] = categorySlugs.length
-    ? await client.fetch(relatedPostsQuery, { slug, categorySlugs })
+    ? await contentFetch({
+        query: relatedPostsQuery,
+        params: { slug, categorySlugs },
+        tags: ["posts"],
+      })
     : [];
   if (relatedPosts.length === 0) {
-    relatedPosts = await client.fetch(recentPostsQuery, { slug });
+    relatedPosts = await contentFetch({
+      query: recentPostsQuery,
+      params: { slug },
+      tags: ["posts"],
+    });
   }
 
   const date = post.publishedAt
@@ -111,7 +130,7 @@ export default async function BlogPostPage({
     : null;
 
   return (
-    <div className="bg-dark min-h-screen">
+    <div className="blog-blue min-h-screen">
       <JsonLd
         data={blogPostJsonLd({
           title: post.title,
@@ -210,7 +229,7 @@ export default async function BlogPostPage({
         {/* Featured image */}
         {post.mainImage && (
           <div className="mb-10 rounded-xl overflow-hidden">
-            <SanityImage
+            <ContentImage
               image={post.mainImage}
               alt={post.mainImage.alt || post.title}
               width={896}
@@ -245,7 +264,7 @@ export default async function BlogPostPage({
                 >
                   {rp.mainImage && (
                     <div className="mb-3 rounded-lg overflow-hidden aspect-video">
-                      <SanityImage
+                      <ContentImage
                         image={rp.mainImage}
                         alt={rp.mainImage.alt || rp.title}
                         width={400}

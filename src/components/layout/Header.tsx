@@ -17,6 +17,7 @@ const practices = [
 ];
 
 const navItems = [
+  { label: "Process", href: "/process" },
   { label: "Proof", href: "/proof" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
@@ -32,6 +33,7 @@ export default function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -63,9 +65,7 @@ export default function Header() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        dark
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-black/5"
-          : "bg-transparent"
+        dark ? "bg-white shadow-md border-b border-black/10" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 sm:h-20">
@@ -134,6 +134,16 @@ export default function Header() {
 
           <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
+          <Link
+            href="/contact"
+            className={`font-body inline-flex items-center justify-center rounded-md px-4 py-2 text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:-translate-y-0.5 hover:brightness-105 ${
+              dark
+                ? "bg-gold text-dark shadow-sm"
+                : "bg-gold text-dark shadow-[0_12px_28px_rgba(212,168,67,0.24)]"
+            }`}
+          >
+            Tell Us What&apos;s Broken
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -221,6 +231,13 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/contact"
+              className="font-body mt-3 flex items-center justify-center rounded-md bg-gold px-4 py-3 text-sm font-bold text-dark"
+              onClick={() => setMobileOpen(false)}
+            >
+              Tell Us What&apos;s Broken
+            </Link>
           </div>
         </div>
       )}

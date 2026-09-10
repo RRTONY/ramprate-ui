@@ -144,7 +144,7 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
             <p className="text-[#2C1810]/70 mb-6">
               Your review of{" "}
               <span className="font-semibold">{data.session.subjectName}</span>{" "}
-              has been submitted. They'll see the aggregated results once 3 or
+              has been submitted. They&#39;ll see the aggregated results once 3 or
               more people respond.
             </p>
             <div className="border-t border-[#E8DDD3] pt-6 mt-6">

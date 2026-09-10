@@ -200,7 +200,7 @@ export default function DeepCalibrationClient() {
 
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
                 The standard assessment tells you who you are. This tells you
-                who you <em>can't pretend not to be</em>.
+                who you <em>can&#39;t pretend not to be</em>.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
@@ -230,8 +230,8 @@ export default function DeepCalibrationClient() {
                     <BadgeCheck className="w-5 h-5 text-emerald-400" />
                     <h3 className="font-semibold text-sm">Calibrated Badge</h3>
                     <p className="text-xs text-muted-foreground">
-                      Completing calibration earns a "Calibrated" badge on your
-                      profile - it means you've done the more rigorous
+                      Completing calibration earns a &quot;Calibrated&quot; badge on your
+                      profile - it means you&#39;ve done the more rigorous
                       forced-ranking pass, not an independent audit.
                     </p>
                   </CardContent>

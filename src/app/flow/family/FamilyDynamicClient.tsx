@@ -328,7 +328,7 @@ export default function FamilyDynamic() {
             style={{ textWrap: "balance" as any }}
           >
             The same Flow Circuit that powers teams also runs through families.
-            Someone's the Spark, someone's the Ground - and the friction of
+            Someone&#39;s the Spark, someone&#39;s the Ground - and the friction of
             being forced into the wrong role at home is just as real as at work.
             Maybe more.
           </p>
@@ -394,7 +394,7 @@ export default function FamilyDynamic() {
           <p className="text-gray-500 text-lg">
             No one has taken the assessment with the code{" "}
             <strong className="text-gray-900">{domain}</strong> yet. Be the
-            first to map your family's energy.
+            first to map your family&#39;s energy.
           </p>
           <Link
             href={`/assessment?domain=${encodeURIComponent(domain)}&context=family`}
@@ -696,7 +696,7 @@ export default function FamilyDynamic() {
                 Family Dynamic Report
               </h2>
               <p className="text-gray-500 text-sm">
-                How your family's energy flows - and where it gets stuck.
+                How your family&#39;s energy flows - and where it gets stuck.
               </p>
             </div>
 
@@ -729,7 +729,7 @@ export default function FamilyDynamic() {
                 Where the Stress Lives
               </h2>
               <p className="text-gray-500 text-sm">
-                Home is supposed to be where you can be yourself. Here's where
+                Home is supposed to be where you can be yourself. Here&#39;s where
                 that breaks down.
               </p>
             </div>
@@ -741,7 +741,7 @@ export default function FamilyDynamic() {
                   <AlertTriangle className="w-4 h-4" /> Natural Tension Points
                 </h3>
                 <p className="text-xs text-gray-500">
-                  These aren't personality clashes - they're different operating
+                  These aren&#39;t personality clashes - they&#39;re different operating
                   systems trying to share the same house.
                 </p>
                 <div className="space-y-3">

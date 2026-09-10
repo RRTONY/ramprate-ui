@@ -8,7 +8,6 @@ import {
   patchContentDocument,
 } from "@/lib/admin/content-documents";
 import { checkPageSeo } from "@/lib/admin/seo-check";
-import { checkLighthouse } from "@/lib/admin/lighthouse-check";
 import { checkCode } from "@/lib/admin/code-check";
 import {
   createClickupTask,
@@ -40,9 +39,8 @@ async function formatIfPossible(
   }
 }
 
-// Anthropic tool schemas. Kept as plain objects (not the SDK's Tool type)
-// since the SDK's messages.create() accepts this shape directly and it keeps
-// this file dependency-light.
+// Provider-neutral tool schemas. Kept as plain objects so the administrative
+// interface remains dependency-light and transport-agnostic.
 export const ADMIN_TOOLS = [
   {
     name: "github_list_dir",
@@ -131,23 +129,6 @@ export const ADMIN_TOOLS = [
       type: "object" as const,
       properties: {
         path: { type: "string", description: "Site route, e.g. /growth or /" },
-      },
-      required: ["path"],
-    },
-  },
-  {
-    name: "lighthouse_check_page",
-    description:
-      "Run a real Lighthouse audit (via Google's PageSpeed Insights API) against a live page on ramprate.com — returns performance/accessibility/best-practices/SEO scores plus the top failing audits.",
-    input_schema: {
-      type: "object" as const,
-      properties: {
-        path: { type: "string", description: "Site route, e.g. /growth or /" },
-        strategy: {
-          type: "string",
-          enum: ["mobile", "desktop"],
-          description: "Defaults to mobile",
-        },
       },
       required: ["path"],
     },
@@ -601,22 +582,6 @@ export async function runAdminTool(
       }
     }
 
-    case "lighthouse_check_page": {
-      const path = String(input.path ?? "/");
-      const strategy = input.strategy === "desktop" ? "desktop" : "mobile";
-      try {
-        const result = await checkLighthouse(path, strategy);
-        return { output: result };
-      } catch (err) {
-        return {
-          output: {
-            error:
-              err instanceof Error ? err.message : "Lighthouse check failed",
-          },
-          isError: true,
-        };
-      }
-    }
 
     case "check_code_quality": {
       const path = normalizeRepoPath(input.path);

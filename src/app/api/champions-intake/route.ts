@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { storeFormSubmission } from "@/lib/submissions/store";
 
 export async function POST(req: NextRequest) {
   const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
@@ -24,6 +25,13 @@ export async function POST(req: NextRequest) {
     sourceUrl,
     projectName: "Champions - RampRate",
   };
+
+  await storeFormSubmission({
+    formType: "champions-intake",
+    sourceUrl,
+    payload: payload.formData,
+    attachments: payload.files,
+  });
 
   const res = await fetch(scriptUrl, {
     method: "POST",

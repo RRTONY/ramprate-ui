@@ -351,7 +351,7 @@ export default function TeamComparison() {
                   emerge. The roles that are{" "}
                   <strong>strong in one team but weak in the other</strong>{" "}
                   represent the highest-value integration points - these are the
-                  people who will fill gaps the other team didn't know it had.
+                  people who will fill gaps the other team didn&#39;t know it had.
                 </p>
 
                 {(() => {
@@ -376,7 +376,7 @@ export default function TeamComparison() {
                               ✓ {comparison.team1.name}
                             </span>{" "}
                             <span className="text-green-700">
-                              fills {comparison.team2.name}'s gap in:{" "}
+                              fills {comparison.team2.name}&#39;s gap in:{" "}
                               {t1Fills.join(", ")}
                             </span>
                           </p>
@@ -389,7 +389,7 @@ export default function TeamComparison() {
                               ✓ {comparison.team2.name}
                             </span>{" "}
                             <span className="text-green-700">
-                              fills {comparison.team1.name}'s gap in:{" "}
+                              fills {comparison.team1.name}&#39;s gap in:{" "}
                               {t2Fills.join(", ")}
                             </span>
                           </p>
@@ -425,8 +425,8 @@ export default function TeamComparison() {
                 })()}
 
                 <p className="text-xs text-muted-foreground italic">
-                  "Don't just merge balance sheets; merge nervous systems. Map
-                  the acquirer and the acquired to prevent organ rejection."
+                  &quot;Don&#39;t just merge balance sheets; merge nervous systems. Map
+                  the acquirer and the acquired to prevent organ rejection.&quot;
                 </p>
               </CardContent>
             </Card>

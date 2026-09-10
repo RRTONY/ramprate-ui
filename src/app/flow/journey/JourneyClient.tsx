@@ -121,7 +121,7 @@ export default function JourneyClient() {
         <div className="text-center space-y-8 bg-gradient-to-b from-transparent to-primary/5 p-12 rounded-3xl border border-primary/10">
           <h2 className="text-3xl font-bold">The Destination: The Autotelic Team</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            An "Autotelic Team" is one that works for the sheer joy of the work itself.
+            An &quot;Autotelic Team&quot; is one that works for the sheer joy of the work itself.
             The friction is gone. The politics are gone. All that remains is the pure velocity of creation.
           </p>
           <Link href="/flow/team-builder">

@@ -44,7 +44,7 @@ export default function FrictionDashboard() {
               Friction Calculator
             </CardTitle>
             <p className="text-muted-foreground">
-              Adjust the sliders to estimate the annual cost of "invisible friction" in your team.
+              Adjust the sliders to estimate the annual cost of &quot;invisible friction&quot; in your team.
             </p>
           </CardHeader>
           <CardContent className="space-y-8">
@@ -165,7 +165,7 @@ export default function FrictionDashboard() {
               ))}
               <p className="text-[11px] text-gray-500 pt-1">
                 Illustrative split based on common patterns we see in role-misaligned teams -
-                not measured from your specific team's data. The total above is calculated
+                not measured from your specific team&#39;s data. The total above is calculated
                 directly from your inputs.
               </p>
             </div>

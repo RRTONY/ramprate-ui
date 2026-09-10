@@ -6,7 +6,7 @@ import { vi, describe, expect, it } from "vitest";
 
 vi.mock("next/image", () => ({
   default: ({ src, alt }: { src: string; alt: string }) => (
-    <img src={src} alt={alt} />
+    <span role="img" aria-label={alt} data-source={src} />
   ),
 }));
 
@@ -37,7 +37,7 @@ describe("migrated Portable Text image blocks", () => {
     expect(
       screen
         .getByRole("img", { name: "A managed database content image" })
-        .getAttribute("src"),
+        .getAttribute("data-source"),
     ).toBe(
       "https://cdn.sanity.io/images/xdo1fb5d/production/migrated.jpg?w=800",
     );

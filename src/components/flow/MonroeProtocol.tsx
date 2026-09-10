@@ -82,7 +82,7 @@ export default function MonroeProtocol() {
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Before we build the team, we must build the mind. We draw on the
-          Monroe Institute's Focus-level framework and Hemi-Sync® audio
+          Monroe Institute&#39;s Focus-level framework and Hemi-Sync® audio
           technology as an experiential warm-up tool - not a clinically
           validated intervention.
         </p>
@@ -111,7 +111,7 @@ export default function MonroeProtocol() {
               </CardHeader>
               <CardContent className="text-xs text-muted-foreground">
                 Brainwave entrainment to external rhythms (like binaural beats) is a real, studied
-                phenomenon, though its effect on subjective "flow states" specifically is not well
+                phenomenon, though its effect on subjective &quot;flow states&quot; specifically is not well
                 established. We use it here as an optional relaxation aid, not a proven performance
                 mechanism.
               </CardContent>
@@ -135,8 +135,8 @@ export default function MonroeProtocol() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-xs text-muted-foreground">
-                Hemi-Sync® is the Monroe Institute's proprietary audio technology, intended to
-                support a relaxed, focused state. We use their "Spark/Filter working together"
+                Hemi-Sync® is the Monroe Institute&#39;s proprietary audio technology, intended to
+                support a relaxed, focused state. We use their &quot;Spark/Filter working together&quot;
                 framing as a metaphor, not a claim about measured brain hemisphere activity.
               </CardContent>
             </Card>
@@ -144,7 +144,7 @@ export default function MonroeProtocol() {
         )}
       </AnimatePresence>
       <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto -mt-4">
-        The Monroe Institute's Focus levels are an experiential, self-reported framework - not a
+        The Monroe Institute&#39;s Focus levels are an experiential, self-reported framework - not a
         peer-reviewed neuroscience model. Treat the descriptions below as evocative language for a
         meditative state, not literal claims.
       </p>
@@ -174,15 +174,15 @@ export default function MonroeProtocol() {
           <CardContent className="flex-1 flex flex-col justify-between space-y-6">
             <div className="prose prose-invert italic text-muted-foreground">
               <p>
-                "I am more than my physical body. Because I am more than
+                &quot;I am more than my physical body. Because I am more than
                 physical matter, I can perceive that which is greater than the
-                physical world."
+                physical world.&quot;
               </p>
               <p>
-                "Therefore, I deeply desire to Expand, to Experience; to Know,
+                &quot;Therefore, I deeply desire to Expand, to Experience; to Know,
                 to Understand; to Control, to Use such greater energies and
                 energy systems as may be beneficial and constructive to me and
-                to those who follow me."
+                to those who follow me.&quot;
               </p>
             </div>
 

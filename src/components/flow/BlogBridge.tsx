@@ -197,7 +197,7 @@ export default function BlogBridge({
           </h3>
         </div>
         <p className="text-muted-foreground mb-8 max-w-2xl">
-          The Flow Circuit didn't appear overnight. These articles from
+          The Flow Circuit didn&#39;t appear overnight. These articles from
           tonygreenberg.com trace the intellectual journey that led here.
         </p>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

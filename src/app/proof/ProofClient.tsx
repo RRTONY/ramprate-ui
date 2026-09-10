@@ -263,7 +263,7 @@ export default function ProofClient({
               className="text-white/70 text-lg leading-relaxed mb-10"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Don't take our word for it. Here's what our clients say about
+              Don&#39;t take our word for it. Here&#39;s what our clients say about
               working with RampRate - and why they keep coming back.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
@@ -854,7 +854,7 @@ export default function ProofClient({
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 Many of our most impactful engagements are protected by NDA.
-                We've shared these with permission, with identifying details
+                We&#39;ve shared these with permission, with identifying details
                 removed. References are available to qualified prospects upon
                 request.
               </p>
@@ -891,7 +891,7 @@ export default function ProofClient({
                     className="text-sm text-white/70 leading-relaxed mb-5 italic"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
-                    "{t.quote}"
+                    &quot;{t.quote}&quot;
                   </p>
                   <div className="border-t border-white/[0.06] pt-4">
                     <div className="flex items-center gap-2">
@@ -975,7 +975,7 @@ export default function ProofClient({
             className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            The audit is free. The ROI guarantee is real. Let's talk.
+            The audit is free. The ROI guarantee is real. Let&#39;s talk.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

@@ -165,7 +165,7 @@ export default function Family360ReviewClient({ token }: { token: string }) {
               <span className="font-semibold text-rose-600">
                 {data.session.subjectName}
               </span>{" "}
-              has been recorded. They'll see the combined family perspective
+              has been recorded. They&#39;ll see the combined family perspective
               once 3 or more people respond.
             </p>
             <div className="border-t border-rose-100 pt-6 mt-6">

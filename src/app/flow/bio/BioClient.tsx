@@ -36,17 +36,17 @@ export default function BioClient() {
             </p>
             <div className="prose prose-lg prose-invert">
               <p>
-                Tony Greenberg doesn't just build companies; he builds the{" "}
+                Tony Greenberg doesn&#39;t just build companies; he builds the{" "}
                 <strong>operating systems</strong> that run them.
               </p>
               <p>
                 As the founder of RampRate, he has saved Fortune 500 companies
-                billions of dollars. But his true legacy isn't in the data
-                center-it's in the <strong>human center</strong>.
+                billions of dollars. But his true legacy isn&#39;t in the data
+                center-it&#39;s in the <strong>human center</strong>.
               </p>
               <p>
-                He believes that the greatest inefficiency in the world isn't
-                server latency; it's <strong>human friction</strong>.
+                He believes that the greatest inefficiency in the world isn&#39;t
+                server latency; it&#39;s <strong>human friction</strong>.
               </p>
             </div>
             <div className="flex gap-4">
@@ -88,7 +88,7 @@ export default function BioClient() {
                 The Vision
               </p>
               <p className="text-2xl font-bold">
-                "We are boiling the human out of the machine."
+                &quot;We are boiling the human out of the machine.&quot;
               </p>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function BioClient() {
               <CardContent>
                 <p className="text-muted-foreground">
                   From transforming the digital supply chain to redefining
-                  social impact, Tony's career is a testament to the power of{" "}
+                  social impact, Tony&#39;s career is a testament to the power of{" "}
                   <strong>disruptive altruism</strong>.
                 </p>
               </CardContent>
@@ -137,7 +137,7 @@ export default function BioClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Believing that "communities drive asset value," he focuses on
+                  Believing that &quot;communities drive asset value,&quot; he focuses on
                   building ecosystems where every participant thrives.
                 </p>
               </CardContent>
@@ -150,9 +150,9 @@ export default function BioClient() {
           <h2 className="text-3xl font-bold mb-6">Why This Matters Now</h2>
           <div className="prose prose-xl prose-invert mx-auto max-w-3xl">
             <p>
-              "We are standing at the precipice of the AI age. If we do not
-              understand our own 'source code'-our human operating system-we
-              will be overwritten by the synthetic one."
+              &quot;We are standing at the precipice of the AI age. If we do not
+              understand our own &#39;source code&#39;-our human operating system-we
+              will be overwritten by the synthetic one.&quot;
             </p>
             <p className="font-bold text-primary">- Tony Greenberg</p>
           </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import HomeContent from "@/components/home/HomeContent";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 
 export const revalidate = 60;
 
@@ -12,15 +12,12 @@ const FALLBACK_METADATA: Metadata = {
   title: HOME_TITLE,
   description: HOME_DESCRIPTION,
   keywords: [
-    "technology advisory",
+    "IT infrastructure advisory",
     "enterprise IT sourcing",
     "data center procurement",
     "supplier negotiation",
-    "B Lab certified advisory",
+    "technology sourcing strategy",
     "RampRate",
-    "peptide supplier network",
-    "verified peptide suppliers",
-    "peptide sourcing",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -28,13 +25,20 @@ const FALLBACK_METADATA: Metadata = {
     description: HOME_DESCRIPTION,
     url: "https://ramprate.com",
     type: "website",
-    images: ["/og.png"],
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "RampRate technology advisory",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
   },
 };
 

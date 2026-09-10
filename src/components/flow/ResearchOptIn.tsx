@@ -48,7 +48,7 @@ export default function ResearchOptIn({ assessmentId }: ResearchOptInProps) {
               className="text-sky-700 text-sm leading-relaxed mb-3"
             >
               Thank you! Your anonymized data is now part of the Flow Circuit
-              validation study. You're helping build the evidence base for a
+              validation study. You&#39;re helping build the evidence base for a
               more rigorous approach to team dynamics.
             </motion.p>
           )}
@@ -77,7 +77,7 @@ export default function ResearchOptIn({ assessmentId }: ResearchOptInProps) {
             style={{ textWrap: "pretty" as any }}
           >
             Our Monte Carlo simulations show forced-ranking outperforms Likert
-            scoring - but simulated data isn't real data. By opting in, your
+            scoring - but simulated data isn&#39;t real data. By opting in, your
             anonymized results feed a live validation dashboard that tracks
             whether the theory holds up in the wild.
           </p>

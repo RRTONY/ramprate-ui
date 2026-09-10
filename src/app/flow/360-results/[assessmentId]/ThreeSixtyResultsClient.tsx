@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { FlowMotionDiv } from "@/components/flow/FlowReveal";
 import { trpc } from "@/lib/flow/trpc";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
@@ -234,8 +234,8 @@ export default function ThreeSixtyResultsClient({
               Assessment Not Found
             </h2>
             <p className="text-[#2C1810]/60">
-              We couldn't find an assessment with this ID. Take the assessment
-              first to get your Flow Circuit results.
+              We couldn&#39;t find an assessment with this ID. Take the
+              assessment first to get your Flow Circuit results.
             </p>
             <Button
               onClick={() => router.push("/flow/assessment")}
@@ -267,7 +267,7 @@ export default function ThreeSixtyResultsClient({
         </button>
 
         {/* Header */}
-        <motion.div
+        <FlowMotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
@@ -276,16 +276,16 @@ export default function ThreeSixtyResultsClient({
             360 Gap Report
           </p>
           <h1 className="text-3xl md:text-4xl font-bold text-[#2C1810] mb-2">
-            {firstName}'s Perception Gap
+            {firstName}&#39;s Perception Gap
           </h1>
           <p className="text-[#2C1810]/60 max-w-lg mx-auto">
             How you see yourself vs. how others experience you. The gap is where
             growth lives.
           </p>
-        </motion.div>
+        </FlowMotionDiv>
 
         {/* Response Counter */}
-        <motion.div
+        <FlowMotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -337,11 +337,11 @@ export default function ThreeSixtyResultsClient({
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </FlowMotionDiv>
 
         {/* If not enough responses, show link generator */}
         {needsMore && assessmentId && (
-          <motion.div
+          <FlowMotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -351,14 +351,14 @@ export default function ThreeSixtyResultsClient({
               subjectName={subjectName}
               domain={data.session?.teamSlug || undefined}
             />
-          </motion.div>
+          </FlowMotionDiv>
         )}
 
         {/* Gap Report - only show if 3+ responses */}
         {!needsMore && (
           <>
             {/* Radar Chart */}
-            <motion.div
+            <FlowMotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -401,10 +401,10 @@ export default function ThreeSixtyResultsClient({
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
-            </motion.div>
+            </FlowMotionDiv>
 
             {/* Key Insights */}
-            <motion.div
+            <FlowMotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -455,10 +455,10 @@ export default function ThreeSixtyResultsClient({
                   </CardContent>
                 </Card>
               )}
-            </motion.div>
+            </FlowMotionDiv>
 
             {/* Full Gap Breakdown */}
-            <motion.div
+            <FlowMotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -517,10 +517,10 @@ export default function ThreeSixtyResultsClient({
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </FlowMotionDiv>
 
             {/* Action Items */}
-            <motion.div
+            <FlowMotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -541,9 +541,10 @@ export default function ThreeSixtyResultsClient({
                           <strong className="text-white">
                             Investigate your {biggestBlindSpot.label} gap.
                           </strong>{" "}
-                          Ask a trusted colleague: "When do you see me trying to
-                          be the {biggestBlindSpot.label} but it doesn't land?"
-                          Their answer will be specific and actionable.
+                          Ask a trusted colleague: &quot;When do you see me
+                          trying to be the {biggestBlindSpot.label} but it
+                          doesn&#39;t land?&quot; Their answer will be specific
+                          and actionable.
                         </p>
                       </div>
                     )}
@@ -571,14 +572,14 @@ export default function ThreeSixtyResultsClient({
                           Share this with your team.
                         </strong>{" "}
                         When everyone on the team does a 360, you can see the
-                        full relay - who's covering what, where the handoff
+                        full relay - who&#39;s covering what, where the handoff
                         friction lives, and what role the team is missing.
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </FlowMotionDiv>
           </>
         )}
 

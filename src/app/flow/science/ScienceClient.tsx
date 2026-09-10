@@ -75,7 +75,7 @@ export default function ScienceClient() {
             style={{ textWrap: "pretty" as any }}
           >
             For decades, organizations have hired for skills, trained for
-            knowledge, and promoted for experience. The data says they've been
+            knowledge, and promoted for experience. The data says they&#39;ve been
             optimizing the wrong variable.
           </motion.p>
 
@@ -147,7 +147,7 @@ export default function ScienceClient() {
                     Your operational energy - whether you naturally generate
                     ideas (Spark), amplify others (Amplifier), refine quality
                     (Filter), execute reliably (Ground), or orchestrate flow
-                    (Conductor) - is not a learned behavior. It's your
+                    (Conductor) - is not a learned behavior. It&#39;s your
                     neurological operating system.
                   </p>
                   <div className="pt-2 border-t border-gray-100">
@@ -155,9 +155,9 @@ export default function ScienceClient() {
                       className="text-sm text-gray-500 italic"
                       style={{ textWrap: "pretty" as any }}
                     >
-                      "Personality trait consistency climbs from the college
+                      &quot;Personality trait consistency climbs from the college
                       years into adulthood, reaching test-retest correlations
-                      around 0.74 by ages 50–70."
+                      around 0.74 by ages 50–70.&quot;
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       - Roberts & DelVecchio, <em>Psychological Bulletin</em>,
@@ -196,10 +196,10 @@ export default function ScienceClient() {
                     className="text-muted-foreground leading-relaxed"
                     style={{ textWrap: "pretty" as any }}
                   >
-                    When you're forced to operate outside your natural role - a
+                    When you&#39;re forced to operate outside your natural role - a
                     Spark doing Ground work, a Filter forced to Amplify -
                     cortisol rises, cognitive load increases, and performance
-                    degrades. It's not about capability. It's about cost.
+                    degrades. It&#39;s not about capability. It&#39;s about cost.
                   </p>
                   <div className="pt-2 border-t border-gray-100">
                     <p
@@ -208,8 +208,8 @@ export default function ScienceClient() {
                     >
                       Role misfit - not a skill gap - is one of the most
                       commonly cited drivers of disengagement and turnover in
-                      workplace research. We don't have a single verified
-                      statistic we're comfortable quoting here, so we're not
+                      workplace research. We don&#39;t have a single verified
+                      statistic we&#39;re comfortable quoting here, so we&#39;re not
                       citing one.
                     </p>
                   </div>
@@ -236,9 +236,9 @@ export default function ScienceClient() {
                     className="text-muted-foreground leading-relaxed"
                     style={{ textWrap: "pretty" as any }}
                   >
-                    The highest-IQ teams don't automatically win. Meredith
-                    Belbin's team-role research at Henley Management College
-                    found that "Apollo teams" (all-star, no role diversity)
+                    The highest-IQ teams don&#39;t automatically win. Meredith
+                    Belbin&#39;s team-role research at Henley Management College
+                    found that &quot;Apollo teams&quot; (all-star, no role diversity)
                     routinely lost to teams where each member operated in their
                     natural energy.
                   </p>
@@ -247,8 +247,8 @@ export default function ScienceClient() {
                       className="text-sm text-gray-500 italic"
                       style={{ textWrap: "pretty" as any }}
                     >
-                      "The Apollo Syndrome: teams of the brightest individuals
-                      consistently finished last in team competitions."
+                      &quot;The Apollo Syndrome: teams of the brightest individuals
+                      consistently finished last in team competitions.&quot;
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       - Meredith Belbin, <em>Management Teams</em>, 1981 (
@@ -323,15 +323,15 @@ export default function ScienceClient() {
                   className="text-gray-300 leading-relaxed"
                   style={{ textWrap: "pretty" as any }}
                 >
-                  When forced into an unnatural role, the brain's threat
+                  When forced into an unnatural role, the brain&#39;s threat
                   detection system activates. Sustained stress and elevated
                   cortisol are associated with impaired prefrontal cortex
                   function - the very region responsible for creative
                   thinking and decision-making.
                 </p>
                 <p className="text-xs text-gray-500">
-                  Arnsten, 2009 - "Stress signalling pathways that impair
-                  prefrontal cortex structure and function," <em>Nature Reviews Neuroscience</em> (
+                  Arnsten, 2009 - &quot;Stress signalling pathways that impair
+                  prefrontal cortex structure and function,&quot; <em>Nature Reviews Neuroscience</em> (
                   <a href="https://www.nature.com/articles/nrn2648" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">source</a>
                   )
                 </p>
@@ -355,7 +355,7 @@ export default function ScienceClient() {
                 >
                   Operating in your natural role draws on System 1 thinking -
                   fast, intuitive, effortless. Operating outside it forces
-                  System 2 - slow, deliberate, effortful. Kahneman's research
+                  System 2 - slow, deliberate, effortful. Kahneman&#39;s research
                   shows System 2 reasoning consumes noticeably more cognitive
                   effort for the same task.
                 </p>
@@ -386,12 +386,12 @@ export default function ScienceClient() {
                   Flow states require transient hypofrontality - the
                   deactivation of the inner critic. Role misfit keeps the
                   prefrontal cortex hyperactive (monitoring, compensating,
-                  translating), making flow neurologically impossible. You can't
+                  translating), making flow neurologically impossible. You can&#39;t
                   enter flow while fighting your own wiring.
                 </p>
                 <p className="text-xs text-gray-500">
-                  Dietrich, 2004 - "Neurocognitive mechanisms underlying the
-                  experience of flow"
+                  Dietrich, 2004 - &quot;Neurocognitive mechanisms underlying the
+                  experience of flow&quot;
                 </p>
               </motion.div>
 
@@ -414,9 +414,9 @@ export default function ScienceClient() {
                 >
                   When people operate in their natural role, dopamine and
                   norepinephrine are believed to help optimize attention,
-                  pattern recognition, and creative output. This isn't just
+                  pattern recognition, and creative output. This isn&#39;t just
                   motivation - it has a neurochemical basis. Your best self
-                  isn't aspirational. It's operational.
+                  isn&#39;t aspirational. It&#39;s operational.
                 </p>
                 <p className="text-xs text-gray-500">
                   Kotler, 2014 - <em>The Rise of Superman: Decoding the
@@ -437,8 +437,8 @@ export default function ScienceClient() {
                 className="text-2xl md:text-3xl font-black text-yellow-400 italic"
                 style={{ textWrap: "balance" as any }}
               >
-                "Operating outside your nature doesn't just reduce performance.
-                It reduces your possibility as a human being."
+                &quot;Operating outside your nature doesn&#39;t just reduce performance.
+                It reduces your possibility as a human being.&quot;
               </p>
             </motion.div>
           </div>
@@ -452,7 +452,7 @@ export default function ScienceClient() {
         <div className="grid md:grid-cols-2 gap-16 items-center max-w-5xl mx-auto">
           <div className="space-y-8">
             <h2 className="text-3xl md:text-4xl font-black tracking-tight">
-              Why "Personality Tests" Fail Teams
+              Why &quot;Personality Tests&quot; Fail Teams
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground">
               <p style={{ textWrap: "pretty" as any }}>
@@ -462,14 +462,14 @@ export default function ScienceClient() {
                 <em> is</em> in isolation.
               </p>
               <p style={{ textWrap: "pretty" as any }}>
-                But work doesn't happen in isolation. It happens in{" "}
+                But work doesn&#39;t happen in isolation. It happens in{" "}
                 <strong className="text-black">motion</strong>.
               </p>
               <p style={{ textWrap: "pretty" as any }}>
                 The Flow Circuit measures
                 <strong className="text-primary"> Operational Physics</strong>:
                 the transfer of energy, information, and responsibility between
-                people. It's not about who you are in a vacuum - it's about how
+                people. It&#39;s not about who you are in a vacuum - it&#39;s about how
                 your energy moves through a system.
               </p>
             </div>
@@ -480,7 +480,7 @@ export default function ScienceClient() {
                   <Brain className="h-8 w-8 text-gray-400 mb-2" />
                   <h3 className="font-bold">Psychology</h3>
                   <p className="text-sm text-muted-foreground">
-                    Internal. Static. Subjective. "Who I am."
+                    Internal. Static. Subjective. &quot;Who I am.&quot;
                   </p>
                 </CardContent>
               </Card>
@@ -489,7 +489,7 @@ export default function ScienceClient() {
                   <Zap className="h-8 w-8 text-primary mb-2" />
                   <h3 className="font-bold text-primary">Physics</h3>
                   <p className="text-sm text-muted-foreground">
-                    External. Kinetic. Objective. "How I move."
+                    External. Kinetic. Objective. &quot;How I move.&quot;
                   </p>
                 </CardContent>
               </Card>
@@ -508,8 +508,8 @@ export default function ScienceClient() {
                 className="text-white text-lg font-medium"
                 style={{ textWrap: "pretty" as any }}
               >
-                "You can't fix a clock by psychoanalyzing the gears. You have to
-                look at how they mesh."
+                &quot;You can&#39;t fix a clock by psychoanalyzing the gears. You have to
+                look at how they mesh.&quot;
               </p>
             </div>
           </div>
@@ -544,7 +544,7 @@ export default function ScienceClient() {
           <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           <p className="text-sm text-amber-800 leading-relaxed" style={{ textWrap: "pretty" as any }}>
             <strong>Important:</strong> the studies below explain the general science behind flow states,
-            stress, and team dynamics. They were the inspiration for The Flow Circuit's design - they are
+            stress, and team dynamics. They were the inspiration for The Flow Circuit&#39;s design - they are
             not studies of The Flow Circuit itself. We have not yet published an independent validation
             study of this assessment. See our <a href="#validation-status" className="underline hover:text-amber-900">current validation status</a> below.
           </p>
@@ -565,10 +565,10 @@ export default function ScienceClient() {
                 className="text-muted-foreground"
                 style={{ textWrap: "pretty" as any }}
               >
-                Fahden's insight that innovation is a relay between distinct cognitive roles
+                Fahden&#39;s insight that innovation is a relay between distinct cognitive roles
                 (Creator, Advancer, Refiner, Executor) - and that forcing someone out of their
                 natural role stalls both the work and the person - is the direct ancestor of
-                the Flow Circuit's five-role model.{" "}
+                the Flow Circuit&#39;s five-role model.{" "}
                 <a href="https://www.amazon.com/Innovation-Demand-Allen-Fahden/dp/0962966312" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">source</a>
               </p>
             </CardContent>
@@ -590,9 +590,9 @@ export default function ScienceClient() {
                 style={{ textWrap: "pretty" as any }}
               >
                 Flow states are associated with deactivation of the prefrontal cortex (the inner
-                critic). We designed the Flow Circuit's role model around the idea that removing
+                critic). We designed the Flow Circuit&#39;s role model around the idea that removing
                 social friction and role ambiguity should make that state easier to reach - a
-                hypothesis, not yet something we've measured directly.
+                hypothesis, not yet something we&#39;ve measured directly.
               </p>
             </CardContent>
           </Card>
@@ -612,7 +612,7 @@ export default function ScienceClient() {
                 className="text-muted-foreground"
                 style={{ textWrap: "pretty" as any }}
               >
-                Individuals who self-induce flow are "autotelic." Our framework borrows this
+                Individuals who self-induce flow are &quot;autotelic.&quot; Our framework borrows this
                 concept for what we call the Autotelic Team - a group that finds purpose
                 in the process of collaboration itself.
               </p>
@@ -645,14 +645,14 @@ export default function ScienceClient() {
             <p className="text-gray-700 leading-relaxed" style={{ textWrap: "pretty" as any }}>
               The Flow Circuit is a new assessment. Instruments like Kolbe A, Belbin, and DISC
               have decades of published, peer-reviewed research behind their validity numbers.
-              We don't have that yet - and we're not going to publish a validity score for our
+              We don&#39;t have that yet - and we&#39;re not going to publish a validity score for our
               own tool until an independent researcher has actually run the study.
             </p>
             <p className="text-gray-700 leading-relaxed" style={{ textWrap: "pretty" as any }}>
               What the Flow Circuit is built on today is the established research summarized
               above, plus our own design reasoning about how those findings should translate
-              into a team-context tool. That's a hypothesis worth testing - not proof the tool
-              itself has been tested. We'll publish real validation data here the moment it exists.
+              into a team-context tool. That&#39;s a hypothesis worth testing - not proof the tool
+              itself has been tested. We&#39;ll publish real validation data here the moment it exists.
             </p>
           </div>
         </div>
@@ -699,8 +699,8 @@ export default function ScienceClient() {
               className="text-lg text-white/70 leading-relaxed"
               style={{ textWrap: "pretty" as any }}
             >
-              Download our white paper laying out the research that shaped The Flow Circuit's
-              design - and where the framework's own validation currently stands.
+              Download our white paper laying out the research that shaped The Flow Circuit&#39;s
+              design - and where the framework&#39;s own validation currently stands.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -733,7 +733,7 @@ export default function ScienceClient() {
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
             style={{ textWrap: "pretty" as any }}
           >
-            We are constantly researching the "Invisible Architecture" of human
+            We are constantly researching the &quot;Invisible Architecture&quot; of human
             performance. Your contribution helps us expand the open-source
             dataset and refine the algorithms.
           </p>

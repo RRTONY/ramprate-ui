@@ -187,7 +187,7 @@ export default function PeerAssessmentClient({
                 <em>you</em> perceive their energy.
               </p>
               <p>
-                You'll answer the same 12 questions - but this time, answer
+                You&#39;ll answer the same 12 questions - but this time, answer
                 based on how <strong>{targetName}</strong> actually shows up in
                 the work. Not who they want to be. How they <em>are</em>.
               </p>

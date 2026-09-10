@@ -156,8 +156,8 @@ export default function ProtocolClient() {
             </h2>
             <div className="prose prose-lg prose-invert">
               <p>
-                As we integrate AI agents into the workforce, the "Human OS"
-                becomes even more critical. AI is the ultimate "Ground" role-it
+                As we integrate AI agents into the workforce, the &quot;Human OS&quot;
+                becomes even more critical. AI is the ultimate &quot;Ground&quot; role-it
                 executes perfectly but lacks the Spark of creation.
               </p>
               <p>

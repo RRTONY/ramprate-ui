@@ -673,7 +673,7 @@ export default function SampleReportsClient() {
                   Team Archetype
                 </span>
                 <h2 className="text-2xl font-bold text-stone-900 mt-1">
-                  "The Innovation Engine"
+                  &quot;The Innovation Engine&quot;
                 </h2>
                 <p className="text-sm text-stone-600 mt-2 leading-relaxed max-w-xl">
                   With strong Spark and Amplifier energy, this team generates
@@ -740,7 +740,7 @@ export default function SampleReportsClient() {
             Want this for your team?
           </h3>
           <p className="text-stone-500 text-sm mb-6 max-w-md mx-auto">
-            Get your team's real Tribe Energy Map in under 10 minutes per
+            Get your team&#39;s real Tribe Energy Map in under 10 minutes per
             person. Named friction pairs, individual playbooks, and hiring
             recommendations specific to your team composition.
           </p>

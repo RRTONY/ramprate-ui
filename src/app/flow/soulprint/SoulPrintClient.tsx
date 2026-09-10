@@ -202,18 +202,18 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
               <strong className="text-white">how</strong> you operate.
               <br />
               Your SoulPrint reveals{" "}
-              <strong className="text-white">why you can't stop</strong>.
+              <strong className="text-white">why you can&#39;t stop</strong>.
             </p>
 
             <p className="text-base text-gray-500 max-w-xl mx-auto mb-6">
               8 ancient + modern frameworks. One AI-synthesized portrait of your
-              soul's operating system, rendered in language you can finally
+              soul&#39;s operating system, rendered in language you can finally
               understand.
             </p>
 
             <p className="text-xs text-purple-300/70 max-w-xl mx-auto mb-10 bg-white/5 border border-white/10 rounded-full px-4 py-2 inline-block">
               A just-for-fun, optional add-on - separate from your Flow Circuit assessment and its
-              research basis. Astrology, Human Design, and Numerology don't have peer-reviewed
+              research basis. Astrology, Human Design, and Numerology don&#39;t have peer-reviewed
               empirical support; treat this as reflective entertainment, not a scientific reading.
             </p>
 
@@ -227,7 +227,7 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
                 <Flame className="w-4 h-4 text-green-400" />
                 <span>
                   <strong>{alphaRemaining}</strong> free alpha spots remaining -
-                  you're early
+                  you&#39;re early
                 </span>
               </motion.div>
             )}
@@ -285,7 +285,7 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
                   </div>
 
                   <p className="text-sm text-gray-400 mb-4 leading-relaxed italic">
-                    "{tier.tagline}"
+                    &quot;{tier.tagline}&quot;
                   </p>
 
                   <p className="text-sm text-gray-500 mb-4 leading-relaxed">
@@ -342,7 +342,7 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
               </h3>
               <p className="text-sm text-gray-500 mb-3">
                 Flow Circuit DNA + SoulPrint Soul - a unified report showing how
-                your team role maps to your soul's design.
+                your team role maps to your soul&#39;s design.
               </p>
               <div className="flex items-baseline gap-2">
                 {isAlpha ? (
@@ -382,7 +382,7 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
               </div>
               <h3 className="text-lg font-bold mb-1">SoulPrint Only</h3>
               <p className="text-sm text-gray-500 mb-3">
-                Your soul's architecture across 8 frameworks - without the team
+                Your soul&#39;s architecture across 8 frameworks - without the team
                 dynamics layer. Pure self-knowledge.
               </p>
               <div className="flex items-baseline gap-2">
@@ -700,25 +700,25 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
                 </h3>
                 <blockquote className="text-gray-400 leading-relaxed italic border-l-2 border-purple-500/40 pl-4 space-y-4">
                   <p>
-                    "Your Spark role isn't a career choice - it's a soul
+                    &quot;Your Spark role isn&#39;t a career choice - it&#39;s a soul
                     instruction. Your Manifesting Generator design means you
                     were literally built to respond to creative impulses with
                     sacral energy. When organizations put you in a Filter role,
-                    they're not just misusing your talent - they're fighting
-                    your soul's architecture."
+                    they&#39;re not just misusing your talent - they&#39;re fighting
+                    your soul&#39;s architecture.&quot;
                   </p>
                   <p>
-                    "The cortisol spike you feel in those moments isn't just
-                    stress. It's your entire being screaming that you're
-                    broadcasting on the wrong frequency."
+                    &quot;The cortisol spike you feel in those moments isn&#39;t just
+                    stress. It&#39;s your entire being screaming that you&#39;re
+                    broadcasting on the wrong frequency.&quot;
                   </p>
                   <p>
-                    "Your Gene Key 55 shadow of Victimization maps precisely to
+                    &quot;Your Gene Key 55 shadow of Victimization maps precisely to
                     what happens when a Spark is grounded against their will.
                     The gift of Freedom emerges when you find a team that lets
                     you be the Spark - and your Flow Circuit assessment just
                     told you exactly which team composition makes that
-                    possible."
+                    possible.&quot;
                   </p>
                 </blockquote>
               </CardContent>

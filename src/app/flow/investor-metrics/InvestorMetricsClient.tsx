@@ -173,7 +173,7 @@ export default function InvestorMetrics() {
                 Distribution of dominant roles across all assessed individuals.
                 A healthy spread across all five roles is a good sign the
                 assessment differentiates people rather than clustering
-                everyone into one bucket - it's a directional signal, not a
+                everyone into one bucket - it&#39;s a directional signal, not a
                 substitute for a formal discriminant validity study.
               </p>
               {topRole && (

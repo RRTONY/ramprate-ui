@@ -211,7 +211,7 @@ export default function Integrations() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Get real-time role alerts in Slack or Teams when team members
-            complete their Flow Circuit assessment. Know who's a Spark, who's a
+            complete their Flow Circuit assessment. Know who&#39;s a Spark, who&#39;s a
             Ground, and where the friction lives - without leaving your
             workspace.
           </p>
@@ -333,10 +333,10 @@ export default function Integrations() {
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
               <p className="text-xs text-amber-700 dark:text-amber-300">
-                <strong>Stress Alert Example:</strong> "Asking a Spark to
+                <strong>Stress Alert Example:</strong> &quot;Asking a Spark to
                 operate as a Ground costs 85% more energy. Every day they
-                operate outside their nature, they're leaving performance on the
-                table."
+                operate outside their nature, they&#39;re leaving performance on the
+                table.&quot;
               </p>
             </div>
           </CardContent>
@@ -424,8 +424,8 @@ export default function Integrations() {
                 that matches their natural energy - not against it.
               </p>
               <div className="text-xs text-primary font-semibold">
-                "Sarah just completed her assessment - she's a Spark-Amplifier
-                (78% purity). Don't put her on the compliance audit."
+                &quot;Sarah just completed her assessment - she&#39;s a Spark-Amplifier
+                (78% purity). Don&#39;t put her on the compliance audit.&quot;
               </div>
             </CardContent>
           </Card>
@@ -438,8 +438,8 @@ export default function Integrations() {
                 stress alerts flag misalignment in real-time.
               </p>
               <div className="text-xs text-amber-600 dark:text-amber-400 font-semibold">
-                "Engineering team has 4 Sparks and 0 Grounds. Execution risk:
-                HIGH."
+                &quot;Engineering team has 4 Sparks and 0 Grounds. Execution risk:
+                HIGH.&quot;
               </div>
             </CardContent>
           </Card>

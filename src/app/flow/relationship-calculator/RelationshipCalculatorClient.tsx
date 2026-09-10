@@ -189,8 +189,8 @@ export default function RelationshipCalculator() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            "If your <em>us</em> doesn't equal more than you two separately, it
-            just doesn't add up." Select two roles and discover whether you
+            &quot;If your <em>us</em> doesn&#39;t equal more than you two separately, it
+            just doesn&#39;t add up.&quot; Select two roles and discover whether you
             multiply, complement, or create productive tension.
           </p>
         </div>
@@ -360,7 +360,7 @@ export default function RelationshipCalculator() {
                 <div className="mt-8 flex flex-col sm:flex-row gap-4">
                   <Link href="/flow/assessment">
                     <Button className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold">
-                      Don't Know Your Role? Take the Assessment
+                      Don&#39;t Know Your Role? Take the Assessment
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
@@ -385,8 +385,8 @@ export default function RelationshipCalculator() {
       <section className="py-20 px-4 mt-8">
         <div className="max-w-3xl mx-auto">
           <blockquote className="text-xl md:text-2xl text-center text-muted-foreground italic leading-relaxed">
-            "If your <em>us</em> doesn't equal more than you two separately, it
-            just doesn't add up."
+            &quot;If your <em>us</em> doesn&#39;t equal more than you two separately, it
+            just doesn&#39;t add up.&quot;
           </blockquote>
           <p className="text-center text-sm text-muted-foreground mt-4">
             - Tony Greenberg,{" "}

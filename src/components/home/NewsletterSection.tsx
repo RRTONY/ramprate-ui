@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
@@ -8,25 +9,22 @@ export default function NewsletterSection() {
     "idle" | "submitting" | "done" | "error"
   >("idle");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) return;
     setStatus("submitting");
-    const data = new FormData();
-    data.append("form-name", "newsletter");
-    data.append("email", email);
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(
-        data as unknown as Record<string, string>,
-      ).toString(),
-    })
-      .then(() => {
-        setStatus("done");
-        setEmail("");
-      })
-      .catch(() => setStatus("error"));
+    try {
+      const response = await fetch("/api/newsletter-intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) throw new Error("Newsletter intake failed");
+      setStatus("done");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -66,7 +64,14 @@ export default function NewsletterSection() {
               disabled={status === "submitting"}
               className="font-body px-6 py-3 rounded-md text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap bg-[oklch(0.55_0.15_30)]"
             >
-              {status === "submitting" ? "Subscribing…" : "Subscribe"}
+              {status === "submitting" ? (
+                <Loader2
+                  className="size-4 animate-spin"
+                  aria-label="Subscribing"
+                />
+              ) : (
+                "Subscribe"
+              )}
             </button>
           </form>
         )}

@@ -67,7 +67,7 @@ export default function TribeTrial() {
           <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-emerald-600" />
           </div>
-          <h1 className="text-3xl font-bold text-[#2C1810]">You're In.</h1>
+          <h1 className="text-3xl font-bold text-[#2C1810]">You&#39;re In.</h1>
           <p className="text-[#2C1810]/70 text-lg">
             Your 30-day Tribe trial is live. Full access to team dashboards, 360
             peer review, friction pair detection, and the manager guidebook.
@@ -79,7 +79,7 @@ export default function TribeTrial() {
             <p className="text-white/90">
               Send your 360 link to 3 colleagues today. The gap between how you
               see yourself and how others experience you is the most actionable
-              data you'll collect this month.
+              data you&#39;ll collect this month.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
@@ -122,7 +122,7 @@ export default function TribeTrial() {
           </h1>
           <p className="text-lg text-[#2C1810]/70 max-w-2xl mx-auto">
             The gap between how you see yourself and how your team experiences
-            you is the most actionable data you'll collect this quarter. Start
+            you is the most actionable data you&#39;ll collect this quarter. Start
             free. No credit card required.
           </p>
         </motion.div>
@@ -254,7 +254,7 @@ export default function TribeTrial() {
             <div className="border-t border-white/10" />
             <p className="text-sm text-white/60 pt-2">
               The Tribe plan pays for itself the first time a role-misfit
-              handoff doesn't happen.
+              handoff doesn&#39;t happen.
             </p>
           </div>
         </motion.div>

@@ -21,9 +21,11 @@ export function urlFor(source: ImageSource) {
       return this;
     },
     fit(_value: string) {
+      void _value;
       return this;
     },
     crop(_value: string) {
+      void _value;
       return this;
     },
     url() {

@@ -266,7 +266,7 @@ export default function Coaching() {
             ) : (
               <>
                 <Sparkles className="w-4 h-4 mr-2" />
-                Generate This Week's Coaching
+                Generate This Week&#39;s Coaching
               </>
             )}
           </Button>
@@ -352,7 +352,7 @@ export default function Coaching() {
                   Ready When You Are
                 </h3>
                 <p className="text-gray-500 max-w-md mx-auto">
-                  Click "Generate This Week's Coaching" above to get three
+                  Click &quot;Generate This Week&#39;s Coaching&quot; above to get three
                   personalized action prompts based on your Flow Circuit
                   profile.
                 </p>

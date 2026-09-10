@@ -132,7 +132,7 @@ export default function ThreeSixtyLinkGenerator({
                 </h3>
                 <p className="text-muted-foreground text-sm mt-2 leading-relaxed max-w-md">
                   Get 3+ people who know you to rank your energy in 30 seconds.
-                  You'll receive a gap report showing where self-perception
+                  You&#39;ll receive a gap report showing where self-perception
                   diverges from reality.
                 </p>
               </div>

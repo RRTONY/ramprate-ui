@@ -185,7 +185,7 @@ export default function MagicQuestions() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Based on Tony Greenberg's original framework for kicking assumptions
+            Based on Tony Greenberg&#39;s original framework for kicking assumptions
             before they kick you. Each question maps to a Flow Circuit role -
             because every project failure is a relay failure.
           </p>
@@ -338,7 +338,7 @@ export default function MagicQuestions() {
       <section className="py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-display font-bold mb-4">
-            Now Map Your Team's Wiring
+            Now Map Your Team&#39;s Wiring
           </h2>
           <p className="text-muted-foreground mb-8">
             The 10 questions tell you what your project needs. The assessment
@@ -357,7 +357,7 @@ export default function MagicQuestions() {
             <Link href="/flow/conductor-playbook">
               <Button size="lg" variant="outline" className="font-medium">
                 <Target className="mr-2 w-4 h-4" />
-                Conductor's Playbook
+                Conductor&#39;s Playbook
               </Button>
             </Link>
           </div>

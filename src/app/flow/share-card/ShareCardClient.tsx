@@ -292,14 +292,14 @@ export default function ShareCardClient() {
             Suggested LinkedIn Caption
           </p>
           <p className="text-sm text-white/60 leading-relaxed">
-            Just discovered I'm a{" "}
+            Just discovered I&#39;m a{" "}
             <strong className="text-white">{primaryRole}</strong> on The Flow
             Circuit
             {secondaryRole ? ` with ${secondaryRole} tendencies` : ""}.
             {purity >= 80
               ? " My purity score is off the charts - this is my natural operating system."
               : " Understanding my operational energy changes how I show up in teams."}{" "}
-            What's your energy DNA? 👉 theflowcircuit.com
+            What&#39;s your energy DNA? 👉 theflowcircuit.com
           </p>
         </div>
       </div>

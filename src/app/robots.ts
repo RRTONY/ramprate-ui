@@ -50,5 +50,6 @@ export default function robots(): MetadataRoute.Robots {
       {userAgent: aiBots, allow: '/', disallow},
     ],
     sitemap: 'https://ramprate.com/sitemap.xml',
+    host: 'https://ramprate.com',
   }
 }

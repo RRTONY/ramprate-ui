@@ -349,7 +349,7 @@ export default function Pricing() {
             <div className="border-t border-amber-200" />
             <p className="text-xs text-center text-muted-foreground pt-2">
               The Tribe plan pays for itself the first time a role-misfit
-              handoff doesn't happen.
+              handoff doesn&#39;t happen.
             </p>
           </CardContent>
         </Card>
@@ -379,8 +379,8 @@ export default function Pricing() {
               <div>
                 <p className="text-3xl font-black text-blue-400">80%</p>
                 <p className="text-sm text-gray-300 mt-1">
-                  Of turnover comes from role misfit, not skill gaps. You're
-                  losing people because they're in the wrong seat, not the wrong
+                  Of turnover comes from role misfit, not skill gaps. You&#39;re
+                  losing people because they&#39;re in the wrong seat, not the wrong
                   company.
                 </p>
               </div>

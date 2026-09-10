@@ -723,7 +723,7 @@ export default function Assessment() {
                 who started the game, or the one who made sure everyone played
                 fair? Did you get excited telling everyone about the idea, or
                 did you quietly build the fort while others talked? That
-                instinct - that first impulse - is what we're looking for.
+                instinct - that first impulse - is what we&#39;re looking for.
               </p>
               <p className="text-white font-bold text-lg md:text-xl border-l-4 border-yellow-400 pl-4 py-2 bg-white/5">
                 Answer from your innate superpower - who you are when no one is
@@ -744,9 +744,9 @@ export default function Assessment() {
                   01
                 </span>
                 <p>
-                  <strong className="text-white">Rank, don't pick.</strong> For
-                  each question, you'll see five responses. Drag them into order
-                  from "most like me" at the top to "least like me" at the
+                  <strong className="text-white">Rank, don&#39;t pick.</strong> For
+                  each question, you&#39;ll see five responses. Drag them into order
+                  from &quot;most like me&quot; at the top to &quot;least like me&quot; at the
                   bottom. Every response gets a position - no ties, no skipping.
                 </p>
               </div>
@@ -756,7 +756,7 @@ export default function Assessment() {
                 </span>
                 <p>
                   <strong className="text-white">Go with your gut.</strong> Your
-                  first instinct is the right one. If you deliberate, you're
+                  first instinct is the right one. If you deliberate, you&#39;re
                   answering from your job, not your core. Speed is accuracy
                   here.
                 </p>
@@ -769,7 +769,7 @@ export default function Assessment() {
                   <strong className="text-white">
                     Answer for YOU, not your role.
                   </strong>{" "}
-                  Forget your title, your KPIs, your boss's expectations. This
+                  Forget your title, your KPIs, your boss&#39;s expectations. This
                   is about the human underneath.
                 </p>
               </div>
@@ -779,7 +779,7 @@ export default function Assessment() {
                 </span>
                 <p>
                   <strong className="text-white">Every role matters.</strong>{" "}
-                  There are no wrong answers. The circuit doesn't work without
+                  There are no wrong answers. The circuit doesn&#39;t work without
                   all five energies. The ranking just reveals your{" "}
                   <em>distribution</em>.
                 </p>
@@ -856,7 +856,7 @@ export default function Assessment() {
                   <span className="text-yellow-400 text-xl">🗺️</span>
                   <p>
                     <strong className="text-white">Your Team Map</strong> - see
-                    where you land on the team's energy grid. Identify gaps,
+                    where you land on the team&#39;s energy grid. Identify gaps,
                     overlaps, and friction points across the entire group. Learn
                     who to hand the baton to, and who should never be in the
                     same lane.
@@ -871,7 +871,7 @@ export default function Assessment() {
                       Team Mapping (Optional)
                     </strong>{" "}
                     - after your individual results, invite your team. Enter
-                    your company domain and everyone's results get mapped
+                    your company domain and everyone&#39;s results get mapped
                     together - revealing the real dynamics, the friction, and
                     the flow.
                   </p>
@@ -1004,7 +1004,7 @@ export default function Assessment() {
                         </strong>
                         . Everyone with an @{detectedDomain} email is mapped
                         together - individual results stay private, but the
-                        team's energy distribution is visible to all members.
+                        team&#39;s energy distribution is visible to all members.
                       </p>
                       <div className="flex items-center gap-3 pt-1">
                         <div className="flex items-center gap-1.5">
@@ -1063,7 +1063,7 @@ export default function Assessment() {
               Unlock Your Soulprint
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-              Want to go deeper? Add your birth data and we'll layer in a whole
+              Want to go deeper? Add your birth data and we&#39;ll layer in a whole
               new dimension.
             </p>
           </div>
@@ -1088,7 +1088,7 @@ export default function Assessment() {
               into a single, unified archetype profile.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Think of it as the "cosmic fingerprint" that sits underneath your
+              Think of it as the &quot;cosmic fingerprint&quot; that sits underneath your
               Flow Circuit role. Your Flow Circuit tells you{" "}
               <em>what you do</em> on a team. Your Soulprint tells you{" "}
               <em>why you do it that way</em>.
@@ -1109,7 +1109,7 @@ export default function Assessment() {
           <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl space-y-6">
             <p className="text-sm text-gray-400">
               All three fields are needed to generate an accurate Soulprint.
-              Don't know your birth time? That's okay - skip this step and come
+              Don&#39;t know your birth time? That&#39;s okay - skip this step and come
               back later.
             </p>
 
@@ -1267,7 +1267,7 @@ export default function Assessment() {
               Assessment Complete!
             </h2>
             <p className="text-gray-300 text-lg">
-              Now let's get your 360° view,{" "}
+              Now let&#39;s get your 360° view,{" "}
               <strong className="text-white">{guestName}</strong>.
             </p>
           </div>
@@ -1516,7 +1516,7 @@ export default function Assessment() {
                 Your individual results and team contribution have been recorded
                 simultaneously. View your personal Flow Circuit report, or jump
                 straight to the <strong>{companyName} Team Map</strong> to see
-                how your team's energy is distributed.
+                how your team&#39;s energy is distributed.
               </p>
             </motion.div>
           )}

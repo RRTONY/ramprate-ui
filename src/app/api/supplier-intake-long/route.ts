@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { storeFormSubmission } from '@/lib/submissions/store'
 
 // Mirrors scripts/supplier-intake-apps-script.gs's FIELD_NAME_MAP exactly -
 // some Stage 2 field keys collide with the old single-stage form's field
@@ -110,6 +111,13 @@ export async function POST(req: NextRequest) {
     sourceUrl,
     projectName,
   }
+
+  await storeFormSubmission({
+    formType: 'supplier-intake-stage-2',
+    sourceUrl,
+    payload: payload.formData,
+    attachments: payload.files,
+  })
 
   const res = await fetch(scriptUrl, {
     method: 'POST',

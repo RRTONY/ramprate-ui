@@ -1,9 +1,22 @@
 import "server-only";
 
-import { and, desc, eq, ne } from "drizzle-orm";
+import { asc, desc, eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { cache } from "react";
-import { contentDocuments, type ContentDocument } from "./schema";
+import {
+  boardAdvisors,
+  caseStudies,
+  clientLogos,
+  contentCategories,
+  contentPages,
+  contentPosts,
+  mediaAssets,
+  contentTestimonials,
+  pageSeo,
+  postCategories,
+  siteSettings,
+  teamMembers,
+} from "./schema";
 import type { ContentQuery } from "./queries";
 
 type ContentRecord = Record<string, unknown>;
@@ -21,46 +34,16 @@ function asRecord(value: unknown): ContentRecord {
   return value && typeof value === "object" ? (value as ContentRecord) : {};
 }
 
-function toContentRecord(document: ContentDocument): ContentRecord {
-  const data = asRecord(document.data);
-  return {
-    ...data,
-    _id: document.sourceId,
-    _type: document.contentType,
-    _updatedAt: document.sourceUpdatedAt?.toISOString(),
-  };
-}
-
-function valueAt(record: ContentRecord, field: string): unknown {
-  return record[field];
+function toIsoString(value: Date | null): string | undefined {
+  return value?.toISOString();
 }
 
 function getSlug(record: ContentRecord): string | undefined {
-  const slug = valueAt(record, "slug");
+  const slug = record.slug;
   if (typeof slug === "string") return slug;
-  if (
-    slug &&
-    typeof slug === "object" &&
-    typeof (slug as ContentRecord).current === "string"
-  ) {
-    return (slug as ContentRecord).current as string;
-  }
-  return undefined;
-}
-
-function getCategories(record: ContentRecord): ContentRecord[] {
-  const categories = valueAt(record, "categories");
-  return Array.isArray(categories)
-    ? categories.filter((category): category is ContentRecord =>
-        Boolean(category && typeof category === "object"),
-      )
-    : [];
-}
-
-function categoriesMatch(record: ContentRecord, categorySlug: string): boolean {
-  return getCategories(record).some(
-    (category) => getSlug(category) === categorySlug,
-  );
+  if (!slug || typeof slug !== "object") return undefined;
+  const current = (slug as ContentRecord).current;
+  return typeof current === "string" ? current : undefined;
 }
 
 function portableTextToPlainText(value: unknown): string {
@@ -79,6 +62,87 @@ function imageUrl(value: unknown): string | undefined {
   const record = value as ContentRecord;
   if (typeof record.url === "string") return record.url;
   return imageUrl(record.asset);
+}
+
+function genericRecord(
+  sourceId: string,
+  contentType: string,
+  metadata: unknown,
+  sourceUpdatedAt: Date | null,
+): ContentRecord {
+  return {
+    ...asRecord(metadata),
+    _id: sourceId,
+    _type: contentType,
+    _updatedAt: toIsoString(sourceUpdatedAt),
+  };
+}
+
+function categoryRecord(
+  category: typeof contentCategories.$inferSelect,
+): ContentRecord {
+  return {
+    ...genericRecord(
+      category.sourceId,
+      "category",
+      category.metadata,
+      category.sourceUpdatedAt,
+    ),
+    title: category.title,
+    description: category.description,
+    slug: { current: category.slug },
+  };
+}
+
+function mediaRecord(asset: typeof mediaAssets.$inferSelect): ContentRecord {
+  return {
+    ...genericRecord(
+      asset.sourceId,
+      "imageAsset",
+      asset.metadata,
+      asset.sourceUpdatedAt,
+    ),
+    url: asset.url,
+    alt: asset.altText,
+  };
+}
+
+function postRecord(
+  post: typeof contentPosts.$inferSelect,
+  categories: ContentRecord[],
+  mainImage?: ContentRecord,
+): ContentRecord {
+  return {
+    ...genericRecord(
+      post.sourceId,
+      "post",
+      post.metadata,
+      post.sourceUpdatedAt,
+    ),
+    title: post.title,
+    excerpt: post.excerpt,
+    slug: { current: post.slug },
+    section: post.section,
+    body: post.body ?? [],
+    publishedAt: toIsoString(post.publishedAt),
+    categories,
+    ...(mainImage ? { mainImage: mainImage } : {}),
+  };
+}
+
+function pageRecord(page: typeof contentPages.$inferSelect): ContentRecord {
+  return {
+    ...genericRecord(
+      page.sourceId,
+      "page",
+      page.metadata,
+      page.sourceUpdatedAt,
+    ),
+    title: page.title,
+    slug: { current: page.slug },
+    route: page.route,
+    content: page.content ?? [],
+  };
 }
 
 function postSummary(record: ContentRecord): ContentRecord {
@@ -104,83 +168,112 @@ function postSummary(record: ContentRecord): ContentRecord {
   };
 }
 
-function sortByPublishedAt(records: ContentRecord[]): ContentRecord[] {
-  return records.sort((left, right) => {
-    const leftDate = String(left.publishedAt ?? "");
-    const rightDate = String(right.publishedAt ?? "");
-    return rightDate.localeCompare(leftDate);
-  });
+function categoriesMatch(record: ContentRecord, categorySlug: string): boolean {
+  const categories = Array.isArray(record.categories) ? record.categories : [];
+  return categories.some(
+    (category) =>
+      category &&
+      typeof category === "object" &&
+      getSlug(category as ContentRecord) === categorySlug,
+  );
 }
 
-const getByType = cache(async (contentType: string) => {
-  const documents = await database
-    .select()
-    .from(contentDocuments)
-    .where(eq(contentDocuments.contentType, contentType));
-  return documents.map(toContentRecord);
-});
+function sortByPublishedAt(records: ContentRecord[]): ContentRecord[] {
+  return records.sort((left, right) =>
+    String(right.publishedAt ?? "").localeCompare(
+      String(left.publishedAt ?? ""),
+    ),
+  );
+}
+
+async function hydratePosts(posts: (typeof contentPosts.$inferSelect)[]) {
+  if (posts.length === 0) return [];
+  const postIds = posts.map((post) => post.id);
+  const imageSourceIds = posts
+    .map((post) => post.mainImageSourceId)
+    .filter((sourceId): sourceId is string => Boolean(sourceId));
+  const [links, assets] = await Promise.all([
+    database
+      .select({ postId: postCategories.postId, category: contentCategories })
+      .from(postCategories)
+      .innerJoin(
+        contentCategories,
+        eq(postCategories.categoryId, contentCategories.id),
+      )
+      .where(inArray(postCategories.postId, postIds)),
+    imageSourceIds.length > 0
+      ? database
+          .select()
+          .from(mediaAssets)
+          .where(inArray(mediaAssets.sourceId, imageSourceIds))
+      : Promise.resolve([]),
+  ]);
+
+  const categoriesByPost = new Map<number, ContentRecord[]>();
+  for (const link of links) {
+    const categories = categoriesByPost.get(link.postId) ?? [];
+    categories.push(categoryRecord(link.category));
+    categoriesByPost.set(link.postId, categories);
+  }
+  const mediaBySourceId = new Map(
+    assets.map((asset) => [asset.sourceId, mediaRecord(asset)]),
+  );
+  return posts.map((post) =>
+    postRecord(
+      post,
+      categoriesByPost.get(post.id) ?? [],
+      post.mainImageSourceId
+        ? mediaBySourceId.get(post.mainImageSourceId)
+        : undefined,
+    ),
+  );
+}
 
 const getPostDocuments = cache(async (section?: "thinking" | "blog") => {
-  const condition =
-    section === "thinking"
-      ? and(
-          eq(contentDocuments.contentType, "post"),
-          eq(contentDocuments.section, "thinking"),
-        )
-      : section === "blog"
-        ? and(
-            eq(contentDocuments.contentType, "post"),
-            ne(contentDocuments.section, "thinking"),
-          )
-        : eq(contentDocuments.contentType, "post");
-  const documents = await database
+  const posts = await database
     .select()
-    .from(contentDocuments)
-    .where(condition)
-    .orderBy(desc(contentDocuments.publishedAt));
-  return documents.map(toContentRecord);
+    .from(contentPosts)
+    .where(section ? eq(contentPosts.section, section) : undefined)
+    .orderBy(desc(contentPosts.publishedAt));
+  return hydratePosts(posts);
 });
 
 async function getPostBySlug(slug: string) {
-  const [document] = await database
+  const [post] = await database
     .select()
-    .from(contentDocuments)
-    .where(
-      and(
-        eq(contentDocuments.contentType, "post"),
-        eq(contentDocuments.slug, slug),
-      ),
-    )
+    .from(contentPosts)
+    .where(eq(contentPosts.slug, slug))
     .limit(1);
-  return document ? toContentRecord(document) : null;
+  return post ? ((await hydratePosts([post]))[0] ?? null) : null;
 }
 
 async function getPageBySlug(slug: string) {
-  const [document] = await database
+  const [page] = await database
     .select()
-    .from(contentDocuments)
-    .where(
-      and(
-        eq(contentDocuments.contentType, "page"),
-        eq(contentDocuments.slug, slug),
-      ),
-    )
+    .from(contentPages)
+    .where(eq(contentPages.slug, slug))
     .limit(1);
-  return document ? toContentRecord(document) : null;
+  return page ? pageRecord(page) : null;
 }
 
-async function getPageSeo(route: string) {
-  const [document] = await database
+export const getPublicPageByRoute = cache(async (route: string) => {
+  const [page] = await database
     .select()
-    .from(contentDocuments)
-    .where(
-      and(
-        eq(contentDocuments.contentType, "pageSeo"),
-        eq(contentDocuments.route, route),
-      ),
-    )
+    .from(contentPages)
+    .where(eq(contentPages.route, route))
     .limit(1);
-  return document ? toContentRecord(document) : null;
+  return page ? pageRecord(page) : null;
+});
+
+async function getPageSeo(route: string) {
+  const [seo] = await database
+    .select()
+    .from(pageSeo)
+    .where(eq(pageSeo.route, route))
+    .limit(1);
+  return seo
+    ? genericRecord(seo.sourceId, "pageSeo", seo.metadata, seo.sourceUpdatedAt)
+    : null;
 }
 
 async function getRelatedPosts(
@@ -201,6 +294,32 @@ async function getRelatedPosts(
   return sortByPublishedAt(candidates).slice(0, 3).map(postSummary);
 }
 
+async function getCategoriesWithCounts() {
+  const [categories, posts] = await Promise.all([
+    database
+      .select()
+      .from(contentCategories)
+      .orderBy(asc(contentCategories.title)),
+    getPostDocuments("blog"),
+  ]);
+  return categories
+    .map((category) => {
+      const record = categoryRecord(category);
+      return {
+        _id: record._id,
+        title: record.title,
+        slug: record.slug,
+        postCount: posts.filter((post) => categoriesMatch(post, category.slug))
+          .length,
+      };
+    })
+    .sort(
+      (left, right) =>
+        Number(right.postCount) - Number(left.postCount) ||
+        String(left.title).localeCompare(String(right.title)),
+    );
+}
+
 async function executeContentQuery(
   query: ContentQuery,
   params: ContentParams,
@@ -210,8 +329,19 @@ async function executeContentQuery(
 
   switch (query.name) {
     case "siteSettings": {
-      const [settings] = await getByType("siteSettings");
-      return settings ?? null;
+      const [settings] = await database
+        .select()
+        .from(siteSettings)
+        .where(eq(siteSettings.settingKey, "primary"))
+        .limit(1);
+      return settings
+        ? genericRecord(
+            settings.settingKey,
+            "siteSettings",
+            settings.settings,
+            settings.sourceUpdatedAt,
+          )
+        : null;
     }
     case "pageSeo":
       return getPageSeo(String(params.route));
@@ -249,33 +379,15 @@ async function executeContentQuery(
       );
     case "recentThinkingPosts":
       return getRelatedPosts(String(params.slug), [], "thinking");
-    case "categories": {
-      const [categories, posts] = await Promise.all([
-        getByType("category"),
-        getPostDocuments("blog"),
-      ]);
-      return categories
-        .map((category) => ({
-          _id: category._id,
-          title: category.title,
-          slug: category.slug,
-          postCount: posts.filter((post) =>
-            categoriesMatch(post, getSlug(category) ?? ""),
-          ).length,
-        }))
-        .sort(
-          (left, right) =>
-            Number(right.postCount) - Number(left.postCount) ||
-            String(left.title).localeCompare(String(right.title)),
-        );
-    }
+    case "categories":
+      return getCategoriesWithCounts();
     case "categoryBySlug": {
-      const categorySlug = String(params.slug);
-      return (
-        (await getByType("category")).find(
-          (category) => getSlug(category) === categorySlug,
-        ) ?? null
-      );
+      const [category] = await database
+        .select()
+        .from(contentCategories)
+        .where(eq(contentCategories.slug, String(params.slug)))
+        .limit(1);
+      return category ? categoryRecord(category) : null;
     }
     case "postsByCategory": {
       const posts = await getPostDocuments("blog");
@@ -289,41 +401,94 @@ async function executeContentQuery(
         categoriesMatch(post, String(params.categorySlug)),
       ).length;
     case "teamMembers":
-      return (await getByType("teamMember"))
-        .sort(
-          (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
-        )
-        .map((member) => ({
-          ...member,
-          bio: portableTextToPlainText(member.bio),
-        }));
+      return (
+        await database
+          .select()
+          .from(teamMembers)
+          .orderBy(asc(teamMembers.sortOrder))
+      ).map((member) => {
+        const record = genericRecord(
+          member.sourceId,
+          "teamMember",
+          member.metadata,
+          member.sourceUpdatedAt,
+        );
+        return { ...record, bio: portableTextToPlainText(record.bio) };
+      });
     case "testimonials":
-      return (await getByType("testimonial")).sort(
-        (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
+      return (
+        await database
+          .select()
+          .from(contentTestimonials)
+          .where(eq(contentTestimonials.kind, "standard"))
+          .orderBy(asc(contentTestimonials.sortOrder))
+      ).map((item) =>
+        genericRecord(
+          item.sourceId,
+          "testimonial",
+          item.metadata,
+          item.sourceUpdatedAt,
+        ),
       );
     case "boardAdvisors":
-      return (await getByType("boardAdvisor"))
-        .sort(
-          (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
-        )
-        .map((advisor) => ({
-          ...advisor,
-          bio: portableTextToPlainText(advisor.bio),
-        }));
+      return (
+        await database
+          .select()
+          .from(boardAdvisors)
+          .orderBy(asc(boardAdvisors.sortOrder))
+      ).map((advisor) => {
+        const record = genericRecord(
+          advisor.sourceId,
+          "boardAdvisor",
+          advisor.metadata,
+          advisor.sourceUpdatedAt,
+        );
+        return { ...record, bio: portableTextToPlainText(record.bio) };
+      });
     case "caseStudies":
-      return (await getByType("caseStudy")).sort(
-        (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
+      return (
+        await database
+          .select()
+          .from(caseStudies)
+          .orderBy(asc(caseStudies.sortOrder))
+      ).map((item) =>
+        genericRecord(
+          item.sourceId,
+          "caseStudy",
+          item.metadata,
+          item.sourceUpdatedAt,
+        ),
       );
     case "confidentialTestimonials":
-      return (await getByType("confidentialTestimonial")).sort(
-        (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
+      return (
+        await database
+          .select()
+          .from(contentTestimonials)
+          .where(eq(contentTestimonials.kind, "confidential"))
+          .orderBy(asc(contentTestimonials.sortOrder))
+      ).map((item) =>
+        genericRecord(
+          item.sourceId,
+          "confidentialTestimonial",
+          item.metadata,
+          item.sourceUpdatedAt,
+        ),
       );
     case "clientLogos":
-      return (await getByType("clientLogo"))
-        .sort(
-          (left, right) => Number(left.order ?? 0) - Number(right.order ?? 0),
-        )
-        .map((logo) => ({ ...logo, logoUrl: imageUrl(logo.logo) }));
+      return (
+        await database
+          .select()
+          .from(clientLogos)
+          .orderBy(asc(clientLogos.sortOrder))
+      ).map((logo) => {
+        const record = genericRecord(
+          logo.sourceId,
+          "clientLogo",
+          logo.metadata,
+          logo.sourceUpdatedAt,
+        );
+        return { ...record, logoUrl: imageUrl(record.logo) };
+      });
     case "allThinkingPosts":
       return (await getPostDocuments("thinking")).map((post) => ({
         ...postSummary(post),
@@ -332,11 +497,13 @@ async function executeContentQuery(
     case "allPostSlugs":
       return (await getPostDocuments()).map(postSummary);
     case "allCategorySlugs":
-      return (await getByType("category")).map((category) => ({
-        _id: category._id,
-        slug: category.slug,
-        _updatedAt: category._updatedAt,
-      }));
+      return (await database.select().from(contentCategories)).map(
+        (category) => ({
+          _id: category.sourceId,
+          slug: { current: category.slug },
+          _updatedAt: toIsoString(category.sourceUpdatedAt),
+        }),
+      );
     case "searchPosts": {
       const queryText = String(params.q ?? "").toLowerCase();
       return (await getPostDocuments())
@@ -350,21 +517,21 @@ async function executeContentQuery(
 }
 
 export const client = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Existing page routes rely on Sanity client's permissive generic default during the staged migration.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Existing page routes retain the former CMS client's permissive default during the relational query migration.
   fetch<T = any>(
     query: ContentQuery | string,
     params: ContentParams = {},
   ): Promise<T> {
     if (typeof query === "string") {
       throw new Error(
-        "Raw GROQ queries are unavailable after the content database migration.",
+        "Raw GROQ queries are unavailable after the database migration.",
       );
     }
     return executeContentQuery(query, params) as Promise<T>;
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Existing page routes rely on Sanity client's permissive generic default during the staged migration.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Existing page routes retain the former CMS client's permissive default during the relational query migration.
 export async function contentFetch<T = any>({
   query,
   params = {},

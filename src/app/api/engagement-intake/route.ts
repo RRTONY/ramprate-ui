@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { storeFormSubmission } from "@/lib/submissions/store";
 
 export async function POST(req: NextRequest) {
   const scriptUrl = process.env.ENGAGEMENT_INTAKE_SCRIPT_URL;
@@ -11,6 +12,13 @@ export async function POST(req: NextRequest) {
   }
 
   const payload = await req.json();
+  const sourceUrl = req.headers.get("referer");
+
+  await storeFormSubmission({
+    formType: "engagement-intake",
+    sourceUrl,
+    payload,
+  });
 
   const res = await fetch(scriptUrl, {
     method: "POST",

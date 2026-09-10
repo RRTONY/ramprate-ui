@@ -227,6 +227,214 @@
   color: oklch(0.95 0.02 80);
 }
 
+/* ── RAMP RATE EDITORIAL HOME SYSTEM ── */
+.home-blue,
+.blog-blue {
+  --gold: #f2bb5d;
+  --gold-light: #ffe1a4;
+  --rust: #a55342;
+  --dark: #0d0919;
+  --dark-mid: #171025;
+  --dark-card: #221735;
+  --warm-bg: #f6f0e7;
+  --warm-light: #fcfaf5;
+  --text-dark: #2a1c29;
+  --text-mid: #695766;
+}
+.home-blue .section-sunset,
+.blog-blue {
+  background:
+    radial-gradient(circle at 82% 12%, rgb(175 79 86 / 0.32), transparent 32%),
+    linear-gradient(145deg, #0d0919 0%, #1d102a 52%, #30182e 125%);
+  color: #fffaf0;
+}
+.home-blue .section-warm {
+  background: linear-gradient(135deg, #f5efe5 0%, #fbf6ed 54%, #f1e5d8 100%);
+  color: #2a1c29;
+}
+.home-blue .section-light {
+  background: #fcfaf5;
+  color: #2a1c29;
+}
+.home-blue .glass-orb-amber,
+.blog-blue .glass-orb-amber {
+  background: oklch(0.78 0.14 75);
+}
+.home-blue .glass-orb-rust {
+  background: oklch(0.56 0.16 18);
+}
+.home-blue .glass-orb-pink {
+  background: oklch(0.5 0.14 330);
+}
+.home-blue-hero {
+  background-color: #0d0919;
+}
+.home-blue-hero-image {
+  opacity: 0.18;
+  filter: saturate(0.7) contrast(1.05) brightness(0.62);
+}
+.home-blue-hero-grid {
+  background-image:
+    radial-gradient(circle at 62% 44%, rgb(161 80 104 / 0.36), transparent 30%),
+    radial-gradient(circle at 83% 27%, rgb(236 172 93 / 0.23), transparent 32%),
+    radial-gradient(circle at 30% 110%, rgb(83 51 116 / 0.34), transparent 42%);
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+  background-size: auto, auto, auto;
+  opacity: 0.84;
+}
+.home-blue-scrim {
+  background: linear-gradient(
+    to right,
+    rgb(10 6 22 / 0.98) 18%,
+    rgb(20 10 33 / 0.91) 56%,
+    rgb(35 15 39 / 0.32) 100%
+  );
+}
+.home-blue-vignette {
+  background: linear-gradient(
+    to top,
+    rgb(10 6 22 / 0.98) 0%,
+    transparent 42%,
+    rgb(57 26 73 / 0.34) 100%
+  );
+}
+.home-blue-light-wash {
+  background: radial-gradient(
+    circle at 76% 34%,
+    rgb(241 181 95 / 0.56) 0%,
+    rgb(159 68 84 / 0.4) 35%,
+    transparent 70%
+  );
+}
+.home-blue-orb-large {
+  animation-duration: 8s;
+}
+.home-blue-orb-medium {
+  animation-duration: 12s;
+}
+.home-blue-orb-small {
+  top: 33%;
+  right: 25%;
+  animation-duration: 10s;
+}
+.home-blue-hero-copy {
+  position: relative;
+}
+.home-blue-eyebrow,
+.home-blue-title,
+.home-blue-summary,
+.home-blue-actions,
+.home-blue-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.home-blue .section-sunset .rounded-xl {
+  background: linear-gradient(
+    135deg,
+    rgb(46 24 60 / 0.82),
+    rgb(87 38 57 / 0.42)
+  );
+  border-color: rgb(255 225 164 / 0.14);
+  box-shadow: 0 18px 48px rgb(8 4 15 / 0.22);
+}
+.home-blue .section-light .rounded-xl,
+.home-blue .section-warm .rounded-xl {
+  border-color: rgb(139 83 61 / 0.16);
+  box-shadow: 0 16px 36px rgb(42 28 41 / 0.07);
+}
+@keyframes home-grid-drift {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      5% 3%,
+      96% 6%,
+      25% 108%;
+  }
+}
+@keyframes home-hero-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes home-orb-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-18px, 16px, 0) scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home-blue-hero-grid {
+    animation: home-grid-drift 24s linear infinite;
+  }
+  .home-blue-eyebrow {
+    animation: home-hero-enter 520ms var(--ease-out, ease-out) 90ms forwards;
+  }
+  .home-blue-title {
+    animation: home-hero-enter 620ms var(--ease-out, ease-out) 170ms forwards;
+  }
+  .home-blue-summary {
+    animation: home-hero-enter 620ms var(--ease-out, ease-out) 250ms forwards;
+  }
+  .home-blue-actions {
+    animation: home-hero-enter 620ms var(--ease-out, ease-out) 330ms forwards;
+  }
+  .home-blue-scroll {
+    animation: home-hero-enter 520ms var(--ease-out, ease-out) 460ms forwards;
+  }
+  .home-blue-orb-large,
+  .home-blue-orb-medium,
+  .home-blue-orb-small {
+    animation: home-orb-float 10s ease-in-out infinite;
+  }
+  .home-blue-orb-medium {
+    animation-delay: -3s;
+  }
+  .home-blue-orb-small {
+    animation-delay: -6s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-blue-eyebrow,
+  .home-blue-title,
+  .home-blue-summary,
+  .home-blue-actions,
+  .home-blue-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.flow-reveal {
+  animation: flow-reveal-in 360ms var(--ease-out, ease-out) both;
+}
+@keyframes flow-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-reveal {
+    animation: none;
+  }
+}
+
 /* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
 /* The connecting rail between step markers is a real border on the list item,
    so the counter badge has to sit on top of it with a negative offset. That is

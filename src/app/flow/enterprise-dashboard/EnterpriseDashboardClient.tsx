@@ -153,8 +153,8 @@ export default function EnterpriseDashboard() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            See your team's entire circuit composition at a glance. Where are the
-            gaps? Where's the overload? What does the relay actually look like
+            See your team&#39;s entire circuit composition at a glance. Where are the
+            gaps? Where&#39;s the overload? What does the relay actually look like
             when you map it?
           </p>
         </div>
@@ -206,7 +206,7 @@ export default function EnterpriseDashboard() {
               <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-bold mb-2">No Assessments Yet</h3>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                This team hasn't completed any Flow Circuit assessments yet. Share the team code to get started.
+                This team hasn&#39;t completed any Flow Circuit assessments yet. Share the team code to get started.
               </p>
               <Link href="/flow/assessment">
                 <Button className="bg-blue-500 hover:bg-blue-600">
@@ -362,7 +362,7 @@ export default function EnterpriseDashboard() {
                       {distribution.Spark === 0 && (
                         <div className="p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
                           <p className="text-sm font-medium text-yellow-400 mb-1">⚡ Add a Spark</p>
-                          <p className="text-xs text-muted-foreground">Without a Spark, innovation stalls. Look for the person who sees what doesn't exist yet.</p>
+                          <p className="text-xs text-muted-foreground">Without a Spark, innovation stalls. Look for the person who sees what doesn&#39;t exist yet.</p>
                         </div>
                       )}
                       {distribution.Ground === 0 && (
@@ -406,7 +406,7 @@ export default function EnterpriseDashboard() {
           <div className="text-center py-12">
             <Link href="/flow/assessment">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8">
-                Map Your Team's Circuit <ArrowRight className="w-4 h-4 ml-2" />
+                Map Your Team&#39;s Circuit <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
           </div>

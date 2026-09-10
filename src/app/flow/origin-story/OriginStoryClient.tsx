@@ -149,7 +149,7 @@ export default function OriginStory() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            This framework wasn't built in a weekend hackathon. It was forged
+            This framework wasn&#39;t built in a weekend hackathon. It was forged
             across 25 years of watching brilliant teams fail for preventable
             reasons - and occasionally watching mediocre teams produce miracles
             when the wiring was right.
@@ -251,9 +251,9 @@ export default function OriginStory() {
             The Thesis That Never Changed
           </h2>
           <blockquote className="text-xl md:text-2xl text-center text-muted-foreground italic leading-relaxed border-l-4 border-primary pl-6 md:border-l-0 md:pl-0">
-            "Teams don't fail because they lack talent. They fail because they
-            don't understand their own wiring. Technology alone can't fix what's
-            fundamentally a human operating system problem."
+            &quot;Teams don&#39;t fail because they lack talent. They fail because they
+            don&#39;t understand their own wiring. Technology alone can&#39;t fix what&#39;s
+            fundamentally a human operating system problem.&quot;
           </blockquote>
           <p className="text-center text-sm text-muted-foreground mt-4">
             - The through-line from Harvard 2010 to The Flow Circuit 2025
