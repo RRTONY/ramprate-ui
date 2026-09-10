@@ -59,7 +59,7 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="section-sunset py-12 sm:py-16 relative overflow-hidden">
+    <section className="bg-dark-mid text-white py-12 sm:py-16 relative overflow-hidden">
       <div
         className="glass-orb glass-orb-pink w-[420px] h-[420px] -top-48 -right-24"
         style={{ animationDuration: "9s" }}

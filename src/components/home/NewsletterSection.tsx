@@ -30,7 +30,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="section-sunset py-20 sm:py-24">
+    <section className="bg-dark-mid text-white py-20 sm:py-24">
       <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
         <div className="font-body inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5 bg-gold/10 text-gold">
           Intelligence Brief

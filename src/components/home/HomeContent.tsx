@@ -209,10 +209,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section
-        className="relative min-h-screen flex flex-col overflow-hidden"
-        style={{ background: "rgb(5,14,26)" }}
-      >
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
         <div className="absolute inset-0">
           <Image
             src="/hero.webp"
@@ -220,27 +217,84 @@ export default function HomeContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right"
+            className="object-cover object-right brightness-[1.35] saturate-[1.3] contrast-[1.05]"
           />
-          {/* Navy scrim across the copy zone only, falling away to almost
-              nothing over the building so the photo stays the photo. */}
+          {/* Layered light washes over the photo - same treatment as the Manus
+              reference build, re-hued to the brand gold/amber/rust palette. */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "linear-gradient(90deg, rgba(4,12,22,.78) 0%, rgba(5,14,26,.57) 35%, rgba(5,14,26,.16) 73%, rgba(5,14,26,.04) 100%)",
+                "linear-gradient(135deg, oklch(0.55 0.15 30 / 0.22) 0%, oklch(0.62 0.16 45 / 0.15) 20%, oklch(0.78 0.16 70 / 0.08) 40%, transparent 55%, oklch(0.5 0.13 35 / 0.12) 75%, oklch(0.4 0.1 40 / 0.18) 100%)",
             }}
           />
-          {/* Restrained bottom fade so the scroll cue and section seam land on
-              navy rather than mid-photo. */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "linear-gradient(to top, rgba(5,14,26,.72) 0%, rgba(5,14,26,0) 32%)",
+                "radial-gradient(ellipse at 60% 45%, oklch(0.82 0.15 75 / 0.2) 0%, oklch(0.7 0.16 55 / 0.12) 25%, oklch(0.58 0.14 40 / 0.06) 45%, transparent 65%)",
             }}
           />
+          <div
+            className="absolute inset-0 mix-blend-screen"
+            style={{
+              background:
+                "radial-gradient(ellipse at 85% 15%, oklch(0.72 0.14 60 / 0.16) 0%, oklch(0.55 0.12 45 / 0.08) 30%, transparent 50%), radial-gradient(ellipse at 5% 75%, oklch(0.5 0.13 35 / 0.14) 0%, oklch(0.42 0.1 40 / 0.06) 25%, transparent 45%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 mix-blend-color-dodge"
+            style={{
+              background:
+                "linear-gradient(180deg, oklch(0.5 0.13 40 / 0.18) 0%, oklch(0.6 0.14 55 / 0.1) 20%, transparent 45%)",
+            }}
+          />
+          {/* Navy grounding fades keep the seam and scroll cue on solid dark. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/80 via-dark/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent" />
         </div>
+
+        {/* Ambient glow orbs - decorative, brand gold/amber/rust. */}
+        <div
+          className="pointer-events-none absolute -top-32 -right-10 z-[1] h-[800px] w-[800px] rounded-full opacity-40 animate-pulse [animation-duration:9s] motion-reduce:animate-none"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.72 0.16 60 / 0.22) 0%, oklch(0.55 0.15 35 / 0.12) 30%, oklch(0.8 0.12 75 / 0.06) 55%, transparent 75%)",
+            filter: "blur(60px)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute bottom-0 left-[10%] z-[1] hidden h-[550px] w-[550px] rounded-full opacity-35 animate-pulse [animation-duration:13s] motion-reduce:animate-none sm:block"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.6 0.16 40 / 0.2) 0%, oklch(0.5 0.14 30 / 0.1) 35%, transparent 60%)",
+            filter: "blur(80px)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute right-[25%] top-[15%] z-[1] hidden h-[400px] w-[400px] rounded-full opacity-35 animate-pulse [animation-duration:11s] motion-reduce:animate-none sm:block"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.88 0.13 78 / 0.22) 0%, oklch(0.78 0.14 55 / 0.1) 40%, transparent 65%)",
+            filter: "blur(45px)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute right-[5%] top-1/2 z-[1] h-[500px] w-[500px] rounded-full opacity-30 animate-pulse [animation-duration:15s] motion-reduce:animate-none"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.5 0.14 35 / 0.2) 0%, oklch(0.4 0.11 40 / 0.08) 40%, transparent 65%)",
+            filter: "blur(70px)",
+          }}
+        />
+        {/* Left-side scrim above the orbs so the headline keeps its contrast. */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[2]"
+          style={{
+            background:
+              "linear-gradient(90deg, oklch(0.13 0.015 250 / 0.72) 0%, oklch(0.14 0.02 255 / 0.42) 30%, oklch(0.16 0.02 260 / 0.15) 55%, transparent 80%)",
+          }}
+        />
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
@@ -310,7 +364,7 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="section-sunset py-16 sm:py-20">
+      <section className="bg-dark text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -347,7 +401,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="section-sunset py-16 sm:py-20">
+      <section id="brands" className="bg-dark-mid text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
@@ -423,7 +477,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="section-sunset py-16 sm:py-20">
+      <section className="bg-dark-card text-white py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -515,7 +569,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="section-sunset py-16 sm:py-20 overflow-hidden">
+      <section className="bg-dark text-white py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
@@ -569,7 +623,7 @@ export default function HomeContent() {
       <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="section-sunset py-16 sm:py-20">
+      <section className="bg-dark-mid text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -613,7 +667,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="section-sunset py-16 sm:py-20">
+      <section className="bg-dark-card text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -680,10 +734,7 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section
-        className="font-body py-16 sm:py-20 text-center text-white border-t border-white/8"
-        style={{ background: "rgb(4,11,21)" }}
-      >
+      <section className="font-body py-16 sm:py-20 text-center text-white bg-[oklch(0.55_0.15_30)]">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tell Us What&apos;s Broken.
@@ -698,7 +749,7 @@ export default function HomeContent() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-[oklch(0.35_0.1_30)] shadow-lg"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>
