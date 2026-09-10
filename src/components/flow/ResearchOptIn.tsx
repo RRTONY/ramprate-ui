@@ -16,8 +16,12 @@ export default function ResearchOptIn({ assessmentId }: ResearchOptInProps) {
 
   // Check localStorage for previous opt-in
   useEffect(() => {
-    const stored = localStorage.getItem("research_opt_in");
-    if (stored === "true") setOptedIn(true);
+    const frame = window.requestAnimationFrame(() => {
+      if (localStorage.getItem("research_opt_in") === "true") {
+        setOptedIn(true);
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const handleOptIn = async () => {
@@ -72,10 +76,7 @@ export default function ResearchOptIn({ assessmentId }: ResearchOptInProps) {
           <h3 className="text-xl font-bold text-sky-900 mb-1">
             Help Validate the Science
           </h3>
-          <p
-            className="text-sky-700 text-sm leading-relaxed"
-            style={{ textWrap: "pretty" as any }}
-          >
+          <p className="text-sky-700 text-sm leading-relaxed text-pretty">
             Our Monte Carlo simulations show forced-ranking outperforms Likert
             scoring - but simulated data isn&#39;t real data. By opting in, your
             anonymized results feed a live validation dashboard that tracks

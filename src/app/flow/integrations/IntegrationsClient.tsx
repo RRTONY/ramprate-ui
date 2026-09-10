@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState } from "react";
 import { Button } from "@/components/flow/ui/button";
 import {
@@ -211,9 +213,9 @@ export default function Integrations() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Get real-time role alerts in Slack or Teams when team members
-            complete their Flow Circuit assessment. Know who&#39;s a Spark, who&#39;s a
-            Ground, and where the friction lives - without leaving your
-            workspace.
+            complete their Flow Circuit assessment. Know who&#39;s a Spark,
+            who&#39;s a Ground, and where the friction lives - without leaving
+            your workspace.
           </p>
         </div>
 
@@ -335,8 +337,8 @@ export default function Integrations() {
               <p className="text-xs text-amber-700 dark:text-amber-300">
                 <strong>Stress Alert Example:</strong> &quot;Asking a Spark to
                 operate as a Ground costs 85% more energy. Every day they
-                operate outside their nature, they&#39;re leaving performance on the
-                table.&quot;
+                operate outside their nature, they&#39;re leaving performance on
+                the table.&quot;
               </p>
             </div>
           </CardContent>
@@ -424,8 +426,9 @@ export default function Integrations() {
                 that matches their natural energy - not against it.
               </p>
               <div className="text-xs text-primary font-semibold">
-                &quot;Sarah just completed her assessment - she&#39;s a Spark-Amplifier
-                (78% purity). Don&#39;t put her on the compliance audit.&quot;
+                &quot;Sarah just completed her assessment - she&#39;s a
+                Spark-Amplifier (78% purity). Don&#39;t put her on the
+                compliance audit.&quot;
               </div>
             </CardContent>
           </Card>
@@ -438,8 +441,8 @@ export default function Integrations() {
                 stress alerts flag misalignment in real-time.
               </p>
               <div className="text-xs text-amber-600 dark:text-amber-400 font-semibold">
-                &quot;Engineering team has 4 Sparks and 0 Grounds. Execution risk:
-                HIGH.&quot;
+                &quot;Engineering team has 4 Sparks and 0 Grounds. Execution
+                risk: HIGH.&quot;
               </div>
             </CardContent>
           </Card>
@@ -449,12 +452,12 @@ export default function Integrations() {
         <div className="text-center space-y-4 py-8">
           <p className="text-muted-foreground">
             Need a custom integration? The{" "}
-            <a
+            <Link
               href="/flow/white-label"
               className="text-primary hover:underline"
             >
               Enterprise API
-            </a>{" "}
+            </Link>{" "}
             supports webhooks for any platform.
           </p>
         </div>

@@ -4,7 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Search, X } from "lucide-react";
-import { useSearchSuggestions, SearchSuggestionsDropdown } from "./SearchSuggestions";
+import {
+  useSearchSuggestions,
+  SearchSuggestionsDropdown,
+} from "./SearchSuggestions";
 import { SITE_PAGES } from "@/lib/site-pages";
 
 interface Props {
@@ -15,7 +18,9 @@ interface Props {
 // the live /api/search suggestions below) - a handful of hand-picked
 // destinations rather than a blank bar with nothing to click.
 const DEFAULT_SUGGESTION_PATHS = ["/proof", "/expertise", "/biochain", "/blog"];
-const DEFAULT_SUGGESTIONS = SITE_PAGES.filter((p) => DEFAULT_SUGGESTION_PATHS.includes(p.path));
+const DEFAULT_SUGGESTIONS = SITE_PAGES.filter((p) =>
+  DEFAULT_SUGGESTION_PATHS.includes(p.path),
+);
 
 export default function HeaderSearch({ scrolled = false }: Props) {
   const [open, setOpen] = useState(false);
@@ -32,7 +37,8 @@ export default function HeaderSearch({ scrolled = false }: Props) {
 
   // Close when route pathname changes (navigating to a different page)
   useEffect(() => {
-    close();
+    const frame = window.requestAnimationFrame(close);
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname, close]);
 
   // Focus input when opened
@@ -88,7 +94,10 @@ export default function HeaderSearch({ scrolled = false }: Props) {
               onSubmit={submit}
               className="relative flex items-center gap-3 w-full max-w-7xl mx-auto"
             >
-              <Search size={18} className="shrink-0 text-[oklch(0.55_0.03_50)]" />
+              <Search
+                size={18}
+                className="shrink-0 text-[oklch(0.55_0.03_50)]"
+              />
               <input
                 ref={inputRef}
                 type="text"

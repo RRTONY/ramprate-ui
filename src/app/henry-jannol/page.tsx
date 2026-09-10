@@ -1,5 +1,6 @@
 import { isPortalUnlocked } from "@/lib/portal-auth";
 import PortalGate from "@/components/portal/PortalGate";
+import Link from "next/link";
 
 const matters = [
   {
@@ -139,9 +140,9 @@ export default async function HenryJannolPage() {
             I am also building a broader practice around helping entrepreneurs
             navigate legal complexity - you can learn more about that and our
             attorney network at{" "}
-            <a href="/attorney-rfi" className="underline font-semibold">
+            <Link href="/attorney-rfi" className="underline font-semibold">
               ramprate.com/attorney-rfi
-            </a>
+            </Link>
             . As we resolve these transition matters, I am open to future
             collaboration opportunities.
           </p>

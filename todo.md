@@ -9,7 +9,7 @@
 - [x] Implement secure Google sign-in with clear signed-in, loading, error, and logged-out states. Deferred to the external Flow backend because it currently exposes only credential authentication.
 - [x] Add or revise automated tests for all changed core journeys and configuration validation.
 - [ ] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
-- [ ] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
+- [x] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
 - [x] Replace credential-form textual loading indicators with the required accessible Lucide spinner treatment.
@@ -70,7 +70,9 @@
 - [x] Persist submissions from every supported public intake and contact form in normalized managed-database records.
 - [x] Add an authorized admin inbox for form submissions with status, search, and detail views, without exposing submitted data publicly.
 - [x] Add automated tests for admin authorization, content mutations, form persistence, and admin-only form-data access.
-- [ ] Compare the live Ramprate blog sitemap and article inventory against migrated database posts and reconcile any missing published content or categories.
+- [x] Compare the live Ramprate blog sitemap and article inventory against migrated database posts and reconcile any missing published content or categories.
+- [x] Compare live blog category routes and taxonomy with normalized categories and post-category mappings, then document coverage and route availability.
+- [x] Verify every normalized category against its retained source category record and validate the canonical filtered-blog route for every category slug.
 - [x] Correct the migrated blog query so posts with null sections are included rather than being excluded by SQL null comparison semantics.
 - [x] Preserve existing Google Sheet submission delivery while additionally persisting every supported form payload and attachment metadata in the managed database.
 - [x] Audit supplied environment-variable names against current runtime requirements and document any missing, retired, or external-only configuration without committing secrets.

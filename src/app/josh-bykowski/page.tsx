@@ -1,5 +1,6 @@
 import { isPortalUnlocked } from "@/lib/portal-auth";
 import PortalGate from "@/components/portal/PortalGate";
+import Link from "next/link";
 
 const matters = [
   {
@@ -142,9 +143,9 @@ export default async function JoshBykowskiPage() {
             I am actively searching for additional counsel. If you have capacity
             and are interested in co-counsel opportunities, please review our
             attorney network application at{" "}
-            <a href="/attorney-rfi" className="underline font-semibold">
+            <Link href="/attorney-rfi" className="underline font-semibold">
               ramprate.com/attorney-rfi
-            </a>
+            </Link>
             .
           </p>
         </div>

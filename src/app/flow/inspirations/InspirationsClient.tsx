@@ -377,7 +377,8 @@ const researchCitations = [
     finding:
       "Teams composed entirely of high-IQ individuals consistently underperformed balanced teams. Cognitive diversity in team roles predicted success better than raw intelligence.",
     relevance: "Foundation for 'who you ARE > what you KNOW'",
-    sourceUrl: "https://www.belbin.com/resources/articles-directory/belbin-apollo-teams",
+    sourceUrl:
+      "https://www.belbin.com/resources/articles-directory/belbin-apollo-teams",
   },
   {
     study: "Neurocognitive Mechanisms Underlying Flow",
@@ -397,11 +398,13 @@ const researchCitations = [
       "Chronic elevation of stress hormones like cortisol is associated with impaired hippocampal function, affecting memory and decision-making quality.",
     relevance:
       "General biological plausibility for why sustained role-misfit stress could degrade performance",
-    sourceUrl: "https://www.sciencedirect.com/science/article/abs/pii/S0278262607000322",
+    sourceUrl:
+      "https://www.sciencedirect.com/science/article/abs/pii/S0278262607000322",
   },
   {
     study: "Project Aristotle",
-    authors: "Google re:Work, drawing on Amy Edmondson's psychological safety research",
+    authors:
+      "Google re:Work, drawing on Amy Edmondson's psychological safety research",
     year: "2015",
     finding:
       "After studying 180+ internal teams, Google found psychological safety was the strongest predictor of team effectiveness it measured - ahead of who was on the team.",
@@ -447,8 +450,8 @@ export default function Inspirations() {
             className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
             style={{ textWrap: "pretty" as any }}
           >
-            The Flow Circuit didn&#39;t emerge from thin air. It was forged in the
-            crucible of decades of research by people who dared to ask the
+            The Flow Circuit didn&#39;t emerge from thin air. It was forged in
+            the crucible of decades of research by people who dared to ask the
             uncomfortable question:
             <span className="text-foreground font-semibold">
               {" "}
@@ -611,16 +614,22 @@ export default function Inspirations() {
               className="text-lg text-muted-foreground max-w-2xl mx-auto"
               style={{ textWrap: "pretty" as any }}
             >
-              The Flow Circuit&#39;s design draws on decades of established research from
-              some of the most rigorous institutions in the world.
+              The Flow Circuit&#39;s design draws on decades of established
+              research from some of the most rigorous institutions in the world.
             </p>
             <p
               className="text-sm text-amber-700 max-w-2xl mx-auto mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3"
               style={{ textWrap: "pretty" as any }}
             >
-              These are general findings that inspired the framework&#39;s design - not studies
-              of The Flow Circuit itself. See our{" "}
-              <a href="/flow/science#validation-status" className="underline hover:text-amber-900">current validation status</a>.
+              These are general findings that inspired the framework&#39;s
+              design - not studies of The Flow Circuit itself. See our{" "}
+              <Link
+                href="/flow/science#validation-status"
+                className="underline hover:text-amber-900"
+              >
+                current validation status
+              </Link>
+              .
             </p>
           </motion.div>
 
@@ -648,7 +657,8 @@ export default function Inspirations() {
                           {citation.authors} &middot; {citation.year}
                           {citation.sourceUrl && (
                             <>
-                              {" "}&middot;{" "}
+                              {" "}
+                              &middot;{" "}
                               <a
                                 href={citation.sourceUrl}
                                 target="_blank"
@@ -714,8 +724,8 @@ export default function Inspirations() {
 
                 <div className="border-t border-border/30 pt-8 mt-2">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Know someone whose work should be on this page? We&#39;re always
-                    learning.
+                    Know someone whose work should be on this page? We&#39;re
+                    always learning.
                   </p>
                   <Link href="/flow/feedback">
                     <Button
@@ -749,7 +759,8 @@ export default function Inspirations() {
               in the Circuit?
             </h2>
             <p className="text-lg text-muted-foreground">
-              These thinkers built the science. Now it&#39;s your turn to live it.
+              These thinkers built the science. Now it&#39;s your turn to live
+              it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/flow/assessment">

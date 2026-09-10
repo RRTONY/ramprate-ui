@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useRef } from "react";
 
 /* ── custom color tokens (oklch - not in Tailwind palette) ── */
@@ -1034,14 +1036,14 @@ function AiDocContent() {
               accredited investors only. Community tiers open to all.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
+              <Link
                 href="/contact"
                 className="inline-block px-8 py-4 rounded-xl font-extrabold text-sm text-black no-underline"
                 style={{ background: Y }}
               >
                 Request Investor Deck
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="inline-block px-8 py-4 rounded-xl font-semibold text-sm no-underline"
                 style={{
@@ -1050,7 +1052,7 @@ function AiDocContent() {
                 }}
               >
                 Schedule a Call
-              </a>
+              </Link>
             </div>
           </div>
         </section>

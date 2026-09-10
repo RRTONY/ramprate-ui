@@ -1,17 +1,40 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Input } from "@/components/flow/ui/input";
 import { Label } from "@/components/flow/ui/label";
-import { Settings, Upload, Save, CheckCircle2, Image, Hash, Bell, Mail } from "lucide-react";
+import {
+  Settings,
+  Upload,
+  Save,
+  CheckCircle2,
+  Image as ImageIcon,
+  Hash,
+  Mail,
+} from "lucide-react";
 import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
 
+interface TeamSettingsRecord {
+  id: number;
+  name: string;
+  companyName?: string | null;
+  slackWebhookUrl?: string | null;
+  weeklyReportEmail?: string | null;
+  weeklyReportEnabled?: boolean | null;
+  logoUrl?: string | null;
+}
+
 export default function TeamSettings() {
-  const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [selectedTeamId, setSelectedTeamId] = useState<number | null>(null);
   const [teamName, setTeamName] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -22,9 +45,12 @@ export default function TeamSettings() {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
-  const { data: teams, isLoading: teamsLoading } = trpc.team.myTeams.useQuery(undefined, {
-    enabled: isAuthenticated,
-  });
+  const { data: teams, isLoading: teamsLoading } = trpc.team.myTeams.useQuery(
+    undefined,
+    {
+      enabled: isAuthenticated,
+    },
+  );
 
   const updateSettings = trpc.team.updateSettings.useMutation({
     onSuccess: () => {
@@ -35,30 +61,32 @@ export default function TeamSettings() {
 
   const uploadLogo = trpc.team.uploadLogo.useMutation();
 
+  const populateTeam = useCallback((team: TeamSettingsRecord) => {
+    setSelectedTeamId(team.id);
+    setTeamName(team.name);
+    setCompanyName(team.companyName || "");
+    setSlackWebhookUrl(team.slackWebhookUrl || "");
+    setWeeklyReportEmail(team.weeklyReportEmail || "");
+    setWeeklyReportEnabled(team.weeklyReportEnabled || false);
+    setLogoPreview(team.logoUrl || null);
+  }, []);
+
   // Load team data when selected
   useEffect(() => {
     if (teams && teams.length > 0 && !selectedTeamId) {
-      const team = teams[0];
-      setSelectedTeamId(team.id);
-      setTeamName(team.name);
-      setCompanyName(team.companyName || "");
-      setSlackWebhookUrl(team.slackWebhookUrl || "");
-      setWeeklyReportEmail(team.weeklyReportEmail || "");
-      setWeeklyReportEnabled(team.weeklyReportEnabled || false);
-      setLogoPreview(team.logoUrl || null);
+      const frame = window.requestAnimationFrame(() => {
+        populateTeam(teams[0] as TeamSettingsRecord);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
-  }, [teams, selectedTeamId]);
+  }, [teams, selectedTeamId, populateTeam]);
 
   const handleTeamSelect = (teamId: number) => {
-    const team = teams?.find((t: any) => t.id === teamId);
+    const team = (teams as TeamSettingsRecord[] | undefined)?.find(
+      (candidate) => candidate.id === teamId,
+    );
     if (team) {
-      setSelectedTeamId(team.id);
-      setTeamName(team.name);
-      setCompanyName(team.companyName || "");
-      setSlackWebhookUrl(team.slackWebhookUrl || "");
-      setWeeklyReportEmail(team.weeklyReportEmail || "");
-      setWeeklyReportEnabled(team.weeklyReportEnabled || false);
-      setLogoPreview(team.logoUrl || null);
+      populateTeam(team);
     }
   };
 
@@ -116,10 +144,16 @@ export default function TeamSettings() {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
         <div className="text-center space-y-6">
-          <h1 className="text-4xl font-black uppercase tracking-tighter">Team Settings</h1>
-          <p className="text-gray-400 text-lg">Sign in to manage your team settings.</p>
+          <h1 className="text-4xl font-black uppercase tracking-tighter">
+            Team Settings
+          </h1>
+          <p className="text-gray-400 text-lg">
+            Sign in to manage your team settings.
+          </p>
           <Button
-            onClick={() => { window.location.href = "/flow/login"; }}
+            onClick={() => {
+              window.location.href = "/flow/login";
+            }}
             className="bg-yellow-400 text-black hover:bg-white font-bold px-8 py-4 text-lg"
           >
             Sign In
@@ -133,10 +167,16 @@ export default function TeamSettings() {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
         <div className="text-center space-y-6">
-          <h1 className="text-4xl font-black uppercase tracking-tighter">No Teams Yet</h1>
-          <p className="text-gray-400 text-lg">Create a team from the Team Dashboard first.</p>
+          <h1 className="text-4xl font-black uppercase tracking-tighter">
+            No Teams Yet
+          </h1>
+          <p className="text-gray-400 text-lg">
+            Create a team from the Team Dashboard first.
+          </p>
           <Button
-            onClick={() => { window.location.href = "/team-dashboard"; }}
+            onClick={() => {
+              window.location.href = "/team-dashboard";
+            }}
             className="bg-yellow-400 text-black hover:bg-white font-bold"
           >
             Go to Team Dashboard
@@ -165,12 +205,16 @@ export default function TeamSettings() {
         {/* Team Selector */}
         {teams.length > 1 && (
           <div className="flex gap-2 flex-wrap">
-            {teams.map((team: any) => (
+            {(teams as TeamSettingsRecord[]).map((team) => (
               <Button
                 key={team.id}
                 variant={selectedTeamId === team.id ? "default" : "outline"}
                 onClick={() => handleTeamSelect(team.id)}
-                className={selectedTeamId === team.id ? "bg-yellow-400 text-black" : "border-white/20 text-white hover:bg-white/10"}
+                className={
+                  selectedTeamId === team.id
+                    ? "bg-yellow-400 text-black"
+                    : "border-white/20 text-white hover:bg-white/10"
+                }
               >
                 {team.name}
               </Button>
@@ -182,7 +226,7 @@ export default function TeamSettings() {
         <Card className="bg-white/5 border-white/10">
           <CardHeader>
             <CardTitle className="text-lg text-white flex items-center gap-2">
-              <Image className="w-5 h-5" /> Branding
+              <ImageIcon className="w-5 h-5" /> Branding
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -208,15 +252,26 @@ export default function TeamSettings() {
               <Label className="text-gray-300">Company Logo</Label>
               <div className="flex items-center gap-4">
                 {logoPreview && (
-                  <img src={logoPreview} alt="Logo" className="w-16 h-16 rounded-lg object-cover border border-white/10" />
+                  <img
+                    src={logoPreview}
+                    alt="Logo"
+                    className="w-16 h-16 rounded-lg object-cover border border-white/10"
+                  />
                 )}
                 <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/20 rounded-lg hover:bg-white/10 transition-colors">
                   <Upload className="w-4 h-4 text-gray-300" />
                   <span className="text-gray-300 text-sm">Upload Logo</span>
-                  <input type="file" accept="image/*" onChange={handleLogoChange} className="hidden" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoChange}
+                    className="hidden"
+                  />
                 </label>
               </div>
-              <p className="text-xs text-gray-500">Logo will appear on PDF reports generated for this team.</p>
+              <p className="text-xs text-gray-500">
+                Logo will appear on PDF reports generated for this team.
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -238,7 +293,9 @@ export default function TeamSettings() {
                 className="bg-black/50 border-white/20 text-white"
               />
               <p className="text-xs text-gray-500">
-                Get a webhook URL from your Slack workspace settings. You will receive a notification every time a team member completes the assessment.
+                Get a webhook URL from your Slack workspace settings. You will
+                receive a notification every time a team member completes the
+                assessment.
               </p>
             </div>
           </CardContent>
@@ -257,9 +314,13 @@ export default function TeamSettings() {
                 onClick={() => setWeeklyReportEnabled(!weeklyReportEnabled)}
                 className={`relative w-12 h-6 rounded-full transition-colors ${weeklyReportEnabled ? "bg-yellow-400" : "bg-white/20"}`}
               >
-                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${weeklyReportEnabled ? "translate-x-6" : "translate-x-0.5"}`} />
+                <div
+                  className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${weeklyReportEnabled ? "translate-x-6" : "translate-x-0.5"}`}
+                />
               </button>
-              <Label className="text-gray-300">Send weekly energy shift summary</Label>
+              <Label className="text-gray-300">
+                Send weekly energy shift summary
+              </Label>
             </div>
             {weeklyReportEnabled && (
               <div className="space-y-2">
@@ -282,11 +343,15 @@ export default function TeamSettings() {
           className="w-full bg-yellow-400 text-black hover:bg-white h-14 text-lg font-bold uppercase tracking-widest"
         >
           {saved ? (
-            <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Saved!</span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5" /> Saved!
+            </span>
           ) : updateSettings.isPending || uploadLogo.isPending ? (
             "Saving..."
           ) : (
-            <span className="flex items-center gap-2"><Save className="w-5 h-5" /> Save Settings</span>
+            <span className="flex items-center gap-2">
+              <Save className="w-5 h-5" /> Save Settings
+            </span>
           )}
         </Button>
       </div>

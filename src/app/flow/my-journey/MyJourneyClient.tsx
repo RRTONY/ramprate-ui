@@ -99,16 +99,17 @@ export default function MyJourneyClient() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-lg mx-auto mb-10 leading-relaxed">
             Sign in to see your Flow Circuit results, team connections,
-            SoulPrint status, and every tool you&#39;ve explored - all in one place.
+            SoulPrint status, and every tool you&#39;ve explored - all in one
+            place.
           </p>
-          <a href="/flow/login">
+          <Link href="/flow/login">
             <Button
               size="lg"
               className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8"
             >
               <LogIn className="w-4 h-4 mr-2" /> Sign In to Begin
             </Button>
-          </a>
+          </Link>
         </section>
       </div>
     );

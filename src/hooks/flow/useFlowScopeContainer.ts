@@ -15,7 +15,10 @@ export function useFlowScopeContainer() {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setContainer(document.querySelector<HTMLElement>(".flow-scope"));
+    const frame = window.requestAnimationFrame(() => {
+      setContainer(document.querySelector<HTMLElement>(".flow-scope"));
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   return container;

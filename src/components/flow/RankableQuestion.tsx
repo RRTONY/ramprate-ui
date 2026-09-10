@@ -68,7 +68,7 @@ function SortableItem({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    zIndex: isDragging ? 50 : ("auto" as any),
+    zIndex: isDragging ? 50 : undefined,
   };
 
   const isTop = index === 0;
@@ -162,10 +162,7 @@ function SortableItem({
         </div>
 
         {/* Option text */}
-        <span
-          className="text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-snug flex-1 text-white/90"
-          style={{ textWrap: "pretty" as any }}
-        >
+        <span className="text-sm sm:text-base md:text-lg lg:text-xl font-medium leading-snug flex-1 text-white/90 text-pretty">
           {option.text}
         </span>
 
@@ -231,9 +228,12 @@ export default function RankableQuestion({
 
   // Critical: reset state when question changes
   useEffect(() => {
-    setItems(options);
-    setHasInteracted(false);
-  }, [questionId]);
+    const frame = window.requestAnimationFrame(() => {
+      setItems(options);
+      setHasInteracted(false);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [questionId, options]);
 
   const itemIds = items.map((item) => `${questionId}-${item.role}`);
 
@@ -281,7 +281,8 @@ export default function RankableQuestion({
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto">
+      <p className="sr-only">{questionText}</p>
       {/* Instruction hint */}
       <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
         <div className="flex items-center gap-1.5 text-white/40 text-xs md:text-sm font-medium">

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useCallback } from "react";
 import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
@@ -144,18 +146,18 @@ export default function ThreeSixtyReviewClient({ token }: { token: string }) {
             <p className="text-[#2C1810]/70 mb-6">
               Your review of{" "}
               <span className="font-semibold">{data.session.subjectName}</span>{" "}
-              has been submitted. They&#39;ll see the aggregated results once 3 or
-              more people respond.
+              has been submitted. They&#39;ll see the aggregated results once 3
+              or more people respond.
             </p>
             <div className="border-t border-[#E8DDD3] pt-6 mt-6">
               <p className="text-sm text-[#2C1810]/60 mb-3">
                 Curious about your own energy type?
               </p>
-              <a href="/flow/assessment">
+              <Link href="/flow/assessment">
                 <Button className="bg-[#2C1810] hover:bg-[#1a0f0a] text-white">
                   Take the Free Assessment
                 </Button>
-              </a>
+              </Link>
             </div>
           </CardContent>
         </Card>

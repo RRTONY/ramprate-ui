@@ -1,42 +1,52 @@
-'use client'
+"use client";
 
-import { useState, useRef, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Search, X } from 'lucide-react'
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Search, X } from "lucide-react";
 
-export default function SearchInput({ initialQuery = '' }: { initialQuery?: string }) {
-  const [query, setQuery] = useState(initialQuery)
-  const [focused, setFocused] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const router = useRouter()
+export default function SearchInput({
+  initialQuery = "",
+}: {
+  initialQuery?: string;
+}) {
+  const [query, setQuery] = useState(initialQuery);
+  const [focused, setFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   // Sync from URL only when the user isn't actively typing
   useEffect(() => {
-    if (!focused) setQuery(initialQuery)
-  }, [initialQuery, focused])
+    if (focused) return;
+    const frame = window.requestAnimationFrame(() => {
+      setQuery((currentQuery) =>
+        currentQuery === initialQuery ? currentQuery : initialQuery,
+      );
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [initialQuery, focused]);
 
   // Auto-redirect 600 ms after the user stops typing (min 2 chars)
   useEffect(() => {
-    const q = query.trim()
-    if (!focused || q.length < 2) return
+    const q = query.trim();
+    if (!focused || q.length < 2) return;
     const timer = setTimeout(() => {
-      router.push(`/search?q=${encodeURIComponent(q)}`, { scroll: false })
-    }, 600)
-    return () => clearTimeout(timer)
-  }, [query, focused, router])
+      router.push(`/search?q=${encodeURIComponent(q)}`, { scroll: false });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [query, focused, router]);
 
   const submit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const q = query.trim()
-    if (q.length < 2) return
-    router.push(`/search?q=${encodeURIComponent(q)}`, { scroll: false })
-  }
+    e.preventDefault();
+    const q = query.trim();
+    if (q.length < 2) return;
+    router.push(`/search?q=${encodeURIComponent(q)}`, { scroll: false });
+  };
 
   const clear = () => {
-    setQuery('')
-    router.push('/search', { scroll: false })
-    setTimeout(() => inputRef.current?.focus(), 50)
-  }
+    setQuery("");
+    router.push("/search", { scroll: false });
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
 
   return (
     <form onSubmit={submit} className="relative w-full max-w-2xl">
@@ -50,7 +60,7 @@ export default function SearchInput({ initialQuery = '' }: { initialQuery?: stri
           ref={inputRef}
           type="text"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder="Search articles, blog posts, insights..."
@@ -73,5 +83,5 @@ export default function SearchInput({ initialQuery = '' }: { initialQuery?: stri
         )}
       </div>
     </form>
-  )
+  );
 }

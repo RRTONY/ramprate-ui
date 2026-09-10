@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/flow/ui/card";
@@ -212,9 +214,10 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
             </p>
 
             <p className="text-xs text-purple-300/70 max-w-xl mx-auto mb-10 bg-white/5 border border-white/10 rounded-full px-4 py-2 inline-block">
-              A just-for-fun, optional add-on - separate from your Flow Circuit assessment and its
-              research basis. Astrology, Human Design, and Numerology don&#39;t have peer-reviewed
-              empirical support; treat this as reflective entertainment, not a scientific reading.
+              A just-for-fun, optional add-on - separate from your Flow Circuit
+              assessment and its research basis. Astrology, Human Design, and
+              Numerology don&#39;t have peer-reviewed empirical support; treat
+              this as reflective entertainment, not a scientific reading.
             </p>
 
             {isAlpha && (
@@ -382,8 +385,8 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
               </div>
               <h3 className="text-lg font-bold mb-1">SoulPrint Only</h3>
               <p className="text-sm text-gray-500 mb-3">
-                Your soul&#39;s architecture across 8 frameworks - without the team
-                dynamics layer. Pure self-knowledge.
+                Your soul&#39;s architecture across 8 frameworks - without the
+                team dynamics layer. Pure self-knowledge.
               </p>
               <div className="flex items-baseline gap-2">
                 {isAlpha ? (
@@ -700,25 +703,25 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
                 </h3>
                 <blockquote className="text-gray-400 leading-relaxed italic border-l-2 border-purple-500/40 pl-4 space-y-4">
                   <p>
-                    &quot;Your Spark role isn&#39;t a career choice - it&#39;s a soul
-                    instruction. Your Manifesting Generator design means you
-                    were literally built to respond to creative impulses with
-                    sacral energy. When organizations put you in a Filter role,
-                    they&#39;re not just misusing your talent - they&#39;re fighting
-                    your soul&#39;s architecture.&quot;
+                    &quot;Your Spark role isn&#39;t a career choice - it&#39;s a
+                    soul instruction. Your Manifesting Generator design means
+                    you were literally built to respond to creative impulses
+                    with sacral energy. When organizations put you in a Filter
+                    role, they&#39;re not just misusing your talent -
+                    they&#39;re fighting your soul&#39;s architecture.&quot;
                   </p>
                   <p>
-                    &quot;The cortisol spike you feel in those moments isn&#39;t just
-                    stress. It&#39;s your entire being screaming that you&#39;re
-                    broadcasting on the wrong frequency.&quot;
+                    &quot;The cortisol spike you feel in those moments isn&#39;t
+                    just stress. It&#39;s your entire being screaming that
+                    you&#39;re broadcasting on the wrong frequency.&quot;
                   </p>
                   <p>
-                    &quot;Your Gene Key 55 shadow of Victimization maps precisely to
-                    what happens when a Spark is grounded against their will.
-                    The gift of Freedom emerges when you find a team that lets
-                    you be the Spark - and your Flow Circuit assessment just
-                    told you exactly which team composition makes that
-                    possible.&quot;
+                    &quot;Your Gene Key 55 shadow of Victimization maps
+                    precisely to what happens when a Spark is grounded against
+                    their will. The gift of Freedom emerges when you find a team
+                    that lets you be the Spark - and your Flow Circuit
+                    assessment just told you exactly which team composition
+                    makes that possible.&quot;
                   </p>
                 </blockquote>
               </CardContent>
@@ -765,12 +768,12 @@ export default function SoulPrintClient({ orderId }: { orderId?: string }) {
             TrueSelf
           </a>{" "}
           (Max Marmer) in partnership with{" "}
-          <a
+          <Link
             href="/flow"
             className="text-purple-500 hover:text-purple-400 underline"
           >
             The Flow Circuit
-          </a>{" "}
+          </Link>{" "}
           (Tony Greenberg).
         </p>
         <p className="mt-1">

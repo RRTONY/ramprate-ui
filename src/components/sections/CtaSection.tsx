@@ -1,14 +1,21 @@
-import SanityImage from '@/components/shared/SanityImage'
+import Link from "next/link";
+import SanityImage from "@/components/shared/SanityImage";
 
 interface CtaSectionProps {
-  heading?: string
-  body?: string
-  buttonText?: string
-  buttonLink?: string
-  backgroundImage?: any
+  heading?: string;
+  body?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  backgroundImage?: any;
 }
 
-export default function CtaSection({heading, body, buttonText, buttonLink, backgroundImage}: CtaSectionProps) {
+export default function CtaSection({
+  heading,
+  body,
+  buttonText,
+  buttonLink,
+  backgroundImage,
+}: CtaSectionProps) {
   return (
     <section className="relative py-24 text-center text-white bg-rust">
       {backgroundImage ? (
@@ -40,22 +47,40 @@ export default function CtaSection({heading, body, buttonText, buttonLink, backg
             className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
           >
             {buttonText}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
         ) : (
-          <a
+          <Link
             href="/contact"
             className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
           >
             Start a Conversation
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </Link>
         )}
       </div>
     </section>
-  )
+  );
 }

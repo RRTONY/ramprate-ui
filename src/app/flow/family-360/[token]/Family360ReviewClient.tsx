@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useCallback } from "react";
 import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
@@ -172,12 +174,12 @@ export default function Family360ReviewClient({ token }: { token: string }) {
               <p className="text-sm text-gray-500 mb-3">
                 Curious about your own family energy?
               </p>
-              <a href="/flow/assessment?context=family">
+              <Link href="/flow/assessment?context=family">
                 <Button className="bg-rose-500 hover:bg-rose-600 text-white">
                   <Sparkles className="mr-2 h-4 w-4" />
                   Discover Your Energy
                 </Button>
-              </a>
+              </Link>
             </div>
           </CardContent>
         </Card>
