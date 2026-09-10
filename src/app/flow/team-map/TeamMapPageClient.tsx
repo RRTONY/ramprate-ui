@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { Button } from "@/components/flow/ui/button";
 import { trpc } from "@/lib/flow/trpc";
 import Link from "next/link";
@@ -11,13 +11,38 @@ import {
   calculateRoleScores,
   getCombinationProfile,
   getStressZones,
-  getRolePercentages,
   analyzeTeamStress,
   TeamMemberProfile,
   roleInsights,
   ROLE_ORDER,
+  RankingAnswer,
 } from "@/lib/flow/surveyData";
 import { getInteraction } from "@/lib/flow/interactionMatrix";
+
+type AssessmentAnswers = Record<number, string | RankingAnswer>;
+type RoleProfile = ReturnType<typeof getCombinationProfile>;
+
+interface TeamAssessmentRecord {
+  id: string | number;
+  role?: string | null;
+  guestName?: string | null;
+  answers?: string | AssessmentAnswers | null;
+}
+
+interface TeamMapMember {
+  id: string | number;
+  name: string;
+  role: Role;
+  scores: Record<Role, number> | null;
+  profile: RoleProfile | null;
+  purityScore: number;
+  comboLabel: string;
+}
+
+type ProfiledTeamMember = TeamMapMember & {
+  scores: Record<Role, number>;
+  profile: RoleProfile;
+};
 
 // Canonical quadrant position for each role on the Innovation/Execution x Analysis/Momentum
 // scatter plot (480x480 viewBox). Multiple members of the same role fan out around this point.
@@ -51,6 +76,16 @@ const ROLE_HEX: Record<Role, string> = {
   Conductor: "#7B68AE",
 };
 
+function toRole(value: unknown): Role {
+  return typeof value === "string" && value in ROLE_POSITIONS
+    ? (value as Role)
+    : "Conductor";
+}
+
+function hasProfile(member: TeamMapMember): member is ProfiledTeamMember {
+  return member.scores !== null && member.profile !== null;
+}
+
 export default function TeamMapPage() {
   const router = useRouter();
   const [copiedLink, setCopiedLink] = useState(false);
@@ -68,22 +103,25 @@ export default function TeamMapPage() {
       { enabled: !!domain },
     );
 
-  const results = domainResults || [];
+  const results = useMemo(
+    () => (domainResults ?? []) as TeamAssessmentRecord[],
+    [domainResults],
+  );
   const isLoading = domainLoading;
 
   const teamMembers = useMemo(() => {
-    return results.map((assessment: any, index: number) => {
-      const role = assessment.role || "Conductor";
+    return results.map((assessment, index): TeamMapMember => {
+      const role = toRole(assessment.role);
       let scores: Record<Role, number> | null = null;
-      let profile = null;
+      let profile: RoleProfile | null = null;
       let purityScore = 0;
-      let comboLabel = role;
+      let comboLabel: string = role;
 
       if (assessment.answers) {
         try {
-          const parsedAnswers =
+          const parsedAnswers: AssessmentAnswers =
             typeof assessment.answers === "string"
-              ? JSON.parse(assessment.answers)
+              ? (JSON.parse(assessment.answers) as AssessmentAnswers)
               : assessment.answers;
           scores = calculateRoleScores(parsedAnswers);
           profile = getCombinationProfile(scores);
@@ -108,8 +146,8 @@ export default function TeamMapPage() {
 
   const roleDistribution = useMemo(() => {
     const counts: Record<string, number> = {};
-    teamMembers.forEach((m: any) => {
-      counts[m.role] = (counts[m.role] || 0) + 1;
+    teamMembers.forEach((member) => {
+      counts[member.role] = (counts[member.role] || 0) + 1;
     });
     return counts;
   }, [teamMembers]);
@@ -117,12 +155,12 @@ export default function TeamMapPage() {
   // Team stress analysis using the full model
   const teamStressAnalysis = useMemo(() => {
     const membersWithProfiles: TeamMemberProfile[] = teamMembers
-      .filter((m: any) => m.scores && m.profile)
-      .map((m: any) => ({
-        name: m.name,
-        scores: m.scores!,
-        profile: m.profile!,
-        stressZones: getStressZones(m.profile!, m.scores!),
+      .filter(hasProfile)
+      .map((member) => ({
+        name: member.name,
+        scores: member.scores,
+        profile: member.profile,
+        stressZones: getStressZones(member.profile, member.scores),
       }));
 
     if (membersWithProfiles.length < 2) return null;
@@ -133,8 +171,8 @@ export default function TeamMapPage() {
   // around their role's canonical quadrant instead of stacking them exactly on top of each other.
   const scatterNodes = useMemo(() => {
     const seenPerRole: Record<string, number> = {};
-    return teamMembers.map((m: any) => {
-      const role: Role = ROLE_POSITIONS[m.role as Role] ? m.role : "Conductor";
+    return teamMembers.map((member) => {
+      const role = member.role;
       const base = ROLE_POSITIONS[role];
       const idx = seenPerRole[role] || 0;
       seenPerRole[role] = idx + 1;
@@ -142,19 +180,19 @@ export default function TeamMapPage() {
       const spread = idx === 0 ? 0 : 28 + idx * 18;
       const x = Math.max(30, Math.min(450, base.x + spread * Math.cos(angle)));
       const y = Math.max(30, Math.min(450, base.y + spread * Math.sin(angle)));
-      const purity = m.purityScore || 20;
+      const purity = member.purityScore || 20;
       const radius = 14 + Math.min(18, purity / 6);
       const initials =
-        m.name
+        member.name
           .split(" ")
           .map((n: string) => n[0])
           .filter(Boolean)
           .join("")
           .slice(0, 2)
           .toUpperCase() || "?";
-      const firstName = m.name.split(" ")[0];
+      const firstName = member.name.split(" ")[0];
       return {
-        ...m,
+        ...member,
         role,
         x,
         y,
@@ -230,9 +268,10 @@ export default function TeamMapPage() {
             Enter your company domain to see how your team&#39;s energy flows.
           </p>
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const input = (e.target as any).domain.value;
+            onSubmit={(event: FormEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              const input = new FormData(event.currentTarget).get("domain");
+              if (typeof input !== "string") return;
               if (input)
                 router.push(
                   `/flow/team-map?domain=${encodeURIComponent(input.trim())}`,
@@ -285,7 +324,8 @@ export default function TeamMapPage() {
           </h1>
           <p className="text-gray-400 text-lg">
             No one from <strong className="text-white">{domain}</strong> has
-            taken the assessment yet. Be the first to map your team&#39;s energy.
+            taken the assessment yet. Be the first to map your team&#39;s
+            energy.
           </p>
           <Link href={`/assessment?domain=${encodeURIComponent(domain || "")}`}>
             <Button className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold px-8 py-6 text-xl">
@@ -449,10 +489,12 @@ export default function TeamMapPage() {
               {/* Friction lines between real members whose roles are known to clash */}
               {roleFrictionCards.map((card, i) => {
                 const a = scatterNodes.find(
-                  (n: any) => n.role === card.roleA && n.name === card.nameA,
+                  (node) =>
+                    node.role === card.roleA && node.name === card.nameA,
                 );
                 const b = scatterNodes.find(
-                  (n: any) => n.role === card.roleB && n.name === card.nameB,
+                  (node) =>
+                    node.role === card.roleB && node.name === card.nameB,
                 );
                 if (!a || !b) return null;
                 return (
@@ -514,7 +556,7 @@ export default function TeamMapPage() {
               })}
 
               {/* Real team member nodes */}
-              {scatterNodes.map((node: any) => (
+              {scatterNodes.map((node) => (
                 <g key={node.id}>
                   <circle
                     cx={node.x}
@@ -878,7 +920,7 @@ export default function TeamMapPage() {
         {/* Critical Gap callout -- built from whichever role(s) this real team is actually missing */}
         {missingRoles.map((role) => {
           const candidate = teamMembers.find(
-            (m: any) => m.profile?.secondary === role,
+            (member) => member.profile?.secondary === role,
           );
           return (
             <div
@@ -943,8 +985,8 @@ export default function TeamMapPage() {
                 >
                   <strong>Best internal candidate:</strong> {candidate.name} has{" "}
                   {role} as a secondary strength. With a formal mandate and
-                  protected time, they&#39;re the most viable internal {role}. This
-                  is a title and scope conversation, not a new hire.
+                  protected time, they&#39;re the most viable internal {role}.
+                  This is a title and scope conversation, not a new hire.
                 </p>
               )}
               <p
@@ -971,10 +1013,7 @@ export default function TeamMapPage() {
             <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">
               Tribe Recommendation
             </h3>
-            <p
-              className="text-gray-200 leading-relaxed"
-              style={{ textWrap: "pretty" as any }}
-            >
+            <p className="text-gray-200 leading-relaxed text-pretty">
               {teamStressAnalysis.recommendation}
             </p>
           </div>
@@ -1008,8 +1047,8 @@ export default function TeamMapPage() {
             What each person should do this week.
           </h2>
           <div style={{ display: "grid", gap: "14px" }}>
-            {teamMembers.map((member: any) => {
-              const insight = roleInsights[member.role as Role];
+            {teamMembers.map((member) => {
+              const insight = roleInsights[member.role];
               if (!insight) return null;
               const subtitle = member.purityScore
                 ? `${member.comboLabel}, ${Math.round(member.purityScore)}% purity`
@@ -1044,7 +1083,7 @@ export default function TeamMapPage() {
                           width: "10px",
                           height: "10px",
                           borderRadius: "50%",
-                          background: ROLE_HEX[member.role as Role],
+                          background: ROLE_HEX[member.role],
                           marginRight: "10px",
                         }}
                       ></span>
@@ -1142,8 +1181,8 @@ export default function TeamMapPage() {
               Tribe Roster
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {teamMembers.map((member: any) => {
-                const color = ROLE_HEX[member.role as Role] || "#999";
+              {teamMembers.map((member) => {
+                const color = ROLE_HEX[member.role] || "#999";
                 return (
                   <div
                     key={member.id}
