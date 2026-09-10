@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { trpc } from "@/lib/flow/trpc";
 import {
@@ -22,11 +22,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
   ScatterChart,
   Scatter,
   ZAxis,
@@ -39,13 +34,26 @@ import {
   Shield,
   TrendingUp,
   Activity,
-  Zap,
-  Radio,
-  Anchor,
   ArrowLeft,
   Database,
   Target,
 } from "lucide-react";
+
+interface ResearchScoreRecord {
+  role: string;
+  score: number;
+  scores?: Record<string, number> | null;
+}
+
+type ResearchScoreWithValues = ResearchScoreRecord & {
+  scores: Record<string, number>;
+};
+
+function hasScoreValues(
+  scoreRecord: ResearchScoreRecord,
+): scoreRecord is ResearchScoreWithValues {
+  return Boolean(scoreRecord.scores && typeof scoreRecord.scores === "object");
+}
 
 const ROLE_COLORS: Record<string, string> = {
   Spark: "#f59e0b",
@@ -53,14 +61,6 @@ const ROLE_COLORS: Record<string, string> = {
   Filter: "#8b5cf6",
   Ground: "#2563eb",
   Conductor: "#10b981",
-};
-
-const ROLE_ICONS: Record<string, any> = {
-  Spark: Zap,
-  Amplifier: Activity,
-  Filter: Shield,
-  Ground: Anchor,
-  Conductor: Radio,
 };
 
 // Monte Carlo simulation benchmarks (from efficacy report)
@@ -76,6 +76,10 @@ const BENCHMARKS = {
 export default function ResearchDashboardClient() {
   const router = useRouter();
   const { data: stats, isLoading } = trpc.assessment.researchStats.useQuery();
+  const researchScores = useMemo(
+    () => (stats?.researchScores as ResearchScoreRecord[] | undefined) ?? [],
+    [stats?.researchScores],
+  );
 
   const roleData = useMemo(() => {
     if (!stats?.roleDistribution) return [];
@@ -96,14 +100,13 @@ export default function ResearchDashboardClient() {
 
   // Calculate live accuracy metrics from real data
   const liveMetrics = useMemo(() => {
-    if (!stats?.researchScores || stats.researchScores.length === 0)
-      return null;
+    if (researchScores.length === 0) return null;
 
-    const n = stats.researchScores.length;
+    const n = researchScores.length;
     const roleFrequencies: Record<string, number> = {};
     let totalScoreSpread = 0;
 
-    for (const s of stats.researchScores) {
+    for (const s of researchScores) {
       roleFrequencies[s.role] = (roleFrequencies[s.role] || 0) + 1;
       if (s.scores && typeof s.scores === "object") {
         const vals = Object.values(s.scores as Record<string, number>);
@@ -134,25 +137,22 @@ export default function ResearchDashboardClient() {
       sparkInflation: sparkInflation.toFixed(1),
       roleFrequencies,
     };
-  }, [stats]);
+  }, [researchScores]);
 
   // Score distribution for scatter plot
   const scatterData = useMemo(() => {
-    if (!stats?.researchScores) return [];
-    return stats.researchScores
-      .filter((s: any) => s.scores && typeof s.scores === "object")
-      .map((s: any, i: number) => {
-        const scores = s.scores as Record<string, number>;
-        return {
-          id: i,
-          role: s.role,
-          score: s.score,
-          spark: scores.Spark || 0,
-          ground: scores.Ground || 0,
-          fill: ROLE_COLORS[s.role] || "#94a3b8",
-        };
-      });
-  }, [stats]);
+    return researchScores.filter(hasScoreValues).map((s, i) => {
+      const scores = s.scores;
+      return {
+        id: i,
+        role: s.role,
+        score: s.score,
+        spark: scores.Spark || 0,
+        ground: scores.Ground || 0,
+        fill: ROLE_COLORS[s.role] || "#94a3b8",
+      };
+    });
+  }, [researchScores]);
 
   if (isLoading) {
     return (
@@ -186,10 +186,7 @@ export default function ResearchDashboardClient() {
               <h1 className="text-3xl md:text-4xl font-black tracking-tight">
                 Live Research Dashboard
               </h1>
-              <p
-                className="text-gray-500 mt-1 max-w-2xl"
-                style={{ textWrap: "pretty" as any }}
-              >
+              <p className="text-gray-500 mt-1 max-w-2xl text-pretty">
                 Real-time validation data from opted-in participants. Comparing
                 theoretical Monte Carlo predictions against actual respondent
                 behavior.
@@ -277,10 +274,7 @@ export default function ResearchDashboardClient() {
               <h3 className="text-xl font-bold text-gray-700 mb-2">
                 Waiting for Research Data
               </h3>
-              <p
-                className="text-gray-500 max-w-md mx-auto mb-6"
-                style={{ textWrap: "pretty" as any }}
-              >
+              <p className="text-gray-500 max-w-md mx-auto mb-6 text-pretty">
                 No participants have opted into the research study yet. Once
                 people complete the assessment and opt in, their anonymized data
                 will appear here in real time.
@@ -526,7 +520,9 @@ export default function ResearchDashboardClient() {
                         <Scatter
                           key={role}
                           name={role}
-                          data={scatterData.filter((d: any) => d.role === role)}
+                          data={scatterData.filter(
+                            (datum) => datum.role === role,
+                          )}
                           fill={ROLE_COLORS[role]}
                         />
                       ))}
@@ -585,10 +581,7 @@ export default function ResearchDashboardClient() {
                 <h4 className="font-bold text-sm uppercase tracking-wider text-gray-500 mb-2">
                   Methodology Note
                 </h4>
-                <p
-                  className="text-sm text-gray-600 leading-relaxed"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-sm text-gray-600 leading-relaxed text-pretty">
                   All data on this dashboard is anonymized. No names, emails, or
                   personally identifiable information is displayed or stored in
                   the research dataset. Role scores and distributions are
