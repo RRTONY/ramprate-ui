@@ -209,9 +209,10 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[oklch(0.2_0.05_30)]">
-        {/* Hero background image - warmed and lifted so the scene (and any
-            people in it) reads as sunset-lit rather than dimmed dark. */}
+      <section
+        className="relative min-h-screen flex flex-col overflow-hidden"
+        style={{ background: "rgb(5,14,26)" }}
+      >
         <div className="absolute inset-0">
           <Image
             src="/hero.webp"
@@ -219,49 +220,27 @@ export default function HomeContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-110 saturate-125"
+            className="object-cover object-right"
           />
-          {/* Left-side scrim for text legibility - warm rust/plum instead of navy */}
+          {/* Navy scrim across the copy zone only, falling away to almost
+              nothing over the building so the photo stays the photo. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to right, oklch(0.2 0.05 30) 40%, oklch(0.2 0.05 30 / 0.85) 65%, transparent 100%)",
+                "linear-gradient(90deg, rgba(4,12,22,.78) 0%, rgba(5,14,26,.57) 35%, rgba(5,14,26,.16) 73%, rgba(5,14,26,.04) 100%)",
             }}
           />
-          {/* Top/bottom vignette - fades into a warm amber horizon glow at the base */}
+          {/* Restrained bottom fade so the scroll cue and section seam land on
+              navy rather than mid-photo. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, oklch(0.2 0.05 30 / 0.9) 0%, transparent 40%, oklch(0.4 0.14 50 / 0.5) 100%)",
-            }}
-          />
-          {/* Cinematic sunset light wash - soft-light blended so it illuminates
-              the photo itself (and any people in it) rather than sitting on top
-              of it like a flat filter. */}
-          <div
-            className="absolute inset-0 mix-blend-soft-light"
-            style={{
-              background:
-                "radial-gradient(circle at 78% 28%, oklch(0.88 0.16 75 / 0.95) 0%, oklch(0.68 0.19 40 / 0.55) 35%, transparent 70%)",
+                "linear-gradient(to top, rgba(5,14,26,.72) 0%, rgba(5,14,26,0) 32%)",
             }}
           />
         </div>
-
-        {/* Glassmorphic orbs - full sunset palette (plum, rust, amber, rose) */}
-        <div
-          className="glass-orb glass-orb-amber w-[500px] h-[500px] -top-40 -right-40 z-[1]"
-          style={{ animationDuration: "8s" }}
-        />
-        <div
-          className="glass-orb glass-orb-rust w-[300px] h-[300px] bottom-20 left-10 z-[1]"
-          style={{ animationDuration: "12s" }}
-        />
-        <div
-          className="glass-orb glass-orb-pink w-[200px] h-[200px] z-[1]"
-          style={{ top: "33%", right: "25%", animationDuration: "10s" }}
-        />
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
