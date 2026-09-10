@@ -680,22 +680,25 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section className="font-body py-16 sm:py-20 text-center text-white bg-rust">
+      <section
+        className="font-body py-16 sm:py-20 text-center text-white border-t border-white/8"
+        style={{ background: "rgb(4,11,21)" }}
+      >
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tell Us What&apos;s Broken.
           </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
+          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/70">
             Principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/80">
+          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/70">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>
