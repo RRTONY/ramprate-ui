@@ -444,13 +444,13 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="section-warm py-16 sm:py-20">
+      <section className="section-sunset py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
               Why We&apos;re Different
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
               An Objective Transaction Agency.
             </h2>
           </div>
@@ -459,27 +459,27 @@ export default function HomeContent() {
             <table className="w-full text-left border-collapse min-w-[560px]">
               <thead>
                 <tr>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-white/10 text-white/50">
                     Traditional Consulting
                   </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-white/10 text-white/50">
                     Traditional Middleman
                   </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-[#8a5f0e] border-b-gold">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-gold border-b-gold">
                     RampRate
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {diffRows.map((row, i) => (
-                  <tr key={i} className="border-b border-black/5">
-                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
+                  <tr key={i} className="border-b border-white/8">
+                    <td className="font-body py-4 pr-6 text-sm text-white/50">
                       {row.trad}
                     </td>
-                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
+                    <td className="font-body py-4 pr-6 text-sm text-white/50">
                       {row.broker}
                     </td>
-                    <td className="font-body py-4 text-sm font-semibold text-ink">
+                    <td className="font-body py-4 text-sm font-semibold text-white">
                       {row.ramp}
                     </td>
                   </tr>
@@ -488,7 +488,7 @@ export default function HomeContent() {
             </table>
           </div>
 
-          <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-ink">
+          <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-white">
             You work with principals. No junior layering. No staffing pyramid.
             <br className="hidden sm:block" />
             The people on the testimonials are the people who serve you.
@@ -515,7 +515,7 @@ export default function HomeContent() {
             </Link>
             <Link
               href="/process"
-              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-[rgba(10,15,26,0.3)] text-dark"
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/20 text-white/80 hover:bg-white/5"
             >
               Find Your Me / Way / Our
               <svg
@@ -590,14 +590,14 @@ export default function HomeContent() {
       <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="section-warm py-16 sm:py-20">
+      <section className="section-sunset py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
               Our Approach
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
-              Research. Blueprint. <span className="text-rust">Activate.</span>
+            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Research. Blueprint. <span className="text-gold">Activate.</span>
             </h2>
           </div>
 
@@ -605,25 +605,25 @@ export default function HomeContent() {
             {operateSteps.map((step) => (
               <div
                 key={step.num}
-                className="rounded-xl p-8 bg-white/60 border border-black/6"
+                className="rounded-xl p-8 bg-white/4 border border-white/8"
               >
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-rust/10">
-                    <step.Icon size={22} className="text-rust" />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gold/10">
+                    <step.Icon size={22} className="text-gold" />
                   </div>
-                  <span className="font-mono text-3xl font-bold text-rust/90">
+                  <span className="font-mono text-3xl font-bold text-gold/90">
                     {step.num}
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold mb-3 text-ink">
+                <h3 className="font-display text-xl font-bold mb-3 text-white">
                   {step.title}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-4 text-ink-mid">
+                <p className="font-body text-sm leading-relaxed mb-4 text-white/60">
                   {step.desc}
                 </p>
                 <Link
                   href={step.link.href}
-                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-rust"
+                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-gold"
                 >
                   {step.link.label}
                 </Link>
@@ -634,62 +634,62 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="section-light py-16 sm:py-20">
+      <section className="section-sunset py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
+              <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
                 Compensation
               </span>
-              <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+              <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
                 We Align Compensation{" "}
-                <span className="text-rust">With Value Created.</span>
+                <span className="text-gold">With Value Created.</span>
               </h2>
-              <p className="font-body mt-5 leading-relaxed text-ink-mid text-base">
+              <p className="font-body mt-5 leading-relaxed text-white/60 text-base">
                 No retainers held hostage. No billable hours divorced from
                 results. We eat what we hunt - and we have a 25-year track
                 record to prove it.
               </p>
             </div>
 
-            <div className="rounded-xl p-8 bg-white/60 border border-black/6">
+            <div className="rounded-xl p-8 bg-white/4 border border-white/8">
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
-                  <DollarSign size={20} className="shrink-0 mt-0.5 text-rust" />
+                  <DollarSign size={20} className="shrink-0 mt-0.5 text-gold" />
                   <div>
-                    <div className="font-display text-base font-bold mb-1 text-ink">
+                    <div className="font-display text-base font-bold mb-1 text-white">
                       $15K–$50K/month
                     </div>
-                    <p className="font-body text-sm text-ink-mid">
+                    <p className="font-body text-sm text-white/60">
                       Depending on scope. Equity-forward available.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <Shield size={20} className="shrink-0 mt-0.5 text-rust" />
+                  <Shield size={20} className="shrink-0 mt-0.5 text-gold" />
                   <div>
-                    <div className="font-display text-base font-bold mb-1 text-ink">
+                    <div className="font-display text-base font-bold mb-1 text-white">
                       Performance Accountability
                     </div>
-                    <p className="font-body text-sm text-ink-mid">
+                    <p className="font-body text-sm text-white/60">
                       Clawbacks where appropriate. Historical multiplier: 20X.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <Target size={20} className="shrink-0 mt-0.5 text-rust" />
+                  <Target size={20} className="shrink-0 mt-0.5 text-gold" />
                   <div>
-                    <div className="font-display text-base font-bold mb-1 text-ink">
+                    <div className="font-display text-base font-bold mb-1 text-white">
                       Every Engagement Is Custom
                     </div>
-                    <p className="font-body text-sm text-ink-mid">
+                    <p className="font-body text-sm text-white/60">
                       The only way to know the number is to tell us what&apos;s
                       broken.
                     </p>
                   </div>
                 </div>
               </div>
-              <p className="font-body mt-8 pt-6 text-sm font-semibold italic text-ink border-t border-black/5">
+              <p className="font-body mt-8 pt-6 text-sm font-semibold italic text-white border-t border-white/10">
                 We have never invoiced and disappeared. In 25 years.
               </p>
             </div>
