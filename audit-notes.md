@@ -67,6 +67,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The Flow science page’s 27 inline text-wrap casts were replaced with Tailwind typography utilities and unused imports were removed. The global lint count is now 108 errors and 121 warnings, with no new suppression or behavioral change introduced.
 - The Flow family dashboard now uses typed assessment, member, role, profile, icon, error, and form contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 96 errors and 111 warnings without suppressing rules.
 - The Flow team map now uses typed assessment, member, profile, role, form, scatter-node, and roster contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 83 errors and 109 warnings without suppressing rules.
+- The Flow SoulPrint dashboard now uses typed stored-section, content-block, icon, synthesis, and profile-data contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 73 errors and 102 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 

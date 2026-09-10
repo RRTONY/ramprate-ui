@@ -2,15 +2,12 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { Switch } from "@/components/flow/ui/switch";
 import { trpc } from "@/lib/flow/trpc";
 import { useRouter } from "next/navigation";
 import {
   Eye,
-  EyeOff,
-  Users,
   Sparkles,
   Brain,
   Compass,
@@ -19,22 +16,37 @@ import {
   ChevronDown,
   ChevronUp,
   Shield,
-  Flame,
   Heart,
   Zap,
   Activity,
   Anchor,
   Radio,
   Lock,
-  Unlock,
   AlertTriangle,
   BookOpen,
-  ExternalLink,
   TrendingUp,
   Award,
   Building2,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { toast } from "sonner";
+
+type SoulBlockText = string | string[];
+
+interface SoulBlock {
+  id?: string | number;
+  index?: number;
+  title?: string;
+  text?: SoulBlockText;
+}
+
+interface SoulSection {
+  index?: number;
+  topic?: string;
+  title?: string;
+  subtitle?: string;
+  blocks?: SoulBlock[];
+}
 
 // ─── Enneagram → Flow Circuit Role Cross-Reference ─────────────────────────
 const enneagramToFlowCircuit: Record<
@@ -115,7 +127,7 @@ const enneagramToFlowCircuit: Record<
 const topicConfig: Record<
   string,
   {
-    icon: any;
+    icon: LucideIcon;
     label: string;
     color: string;
     glowColor: string;
@@ -172,7 +184,7 @@ const topicConfig: Record<
   },
 };
 
-const roleIcons: Record<string, any> = {
+const roleIcons: Record<string, LucideIcon> = {
   Spark: Zap,
   Amplifier: Activity,
   Filter: Shield,
@@ -186,15 +198,18 @@ const evidenceData = [
     stat: "200% ROI",
     detail: "Global mindfulness & self-awareness program",
     source: "Reuters, 2018",
-    sourceUrl: "https://www.reuters.com/article/business/at-germanys-sap-employee-mindfulness-leads-to-higher-profits-idUSKCN1IP0BF/",
+    sourceUrl:
+      "https://www.reuters.com/article/business/at-germanys-sap-employee-mindfulness-leads-to-higher-profits-idUSKCN1IP0BF/",
     icon: TrendingUp,
   },
   {
     company: "Aetna",
     stat: "$9M Saved",
-    detail: "Paid medical claims per employee dropped over 7% following mindfulness programs",
+    detail:
+      "Paid medical claims per employee dropped over 7% following mindfulness programs",
     source: "Fierce Healthcare, 2015",
-    sourceUrl: "https://www.fiercehealthcare.com/payer/how-aetna-s-bertolini-embraces-mindfulness-to-improve-company-culture",
+    sourceUrl:
+      "https://www.fiercehealthcare.com/payer/how-aetna-s-bertolini-embraces-mindfulness-to-improve-company-culture",
     icon: Building2,
   },
   {
@@ -208,7 +223,8 @@ const evidenceData = [
   {
     company: "Intel",
     stat: "Awake@Intel",
-    detail: "Internal mindfulness program reporting improved focus and reduced stress in participant surveys",
+    detail:
+      "Internal mindfulness program reporting improved focus and reduced stress in participant surveys",
     source: "Intel internal reporting",
     sourceUrl: undefined,
     icon: Award,
@@ -216,7 +232,7 @@ const evidenceData = [
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
-function parseSections(data: any[]) {
+function parseSections(data: SoulSection[]) {
   if (!Array.isArray(data)) return [];
   return data
     .filter(
@@ -225,22 +241,24 @@ function parseSections(data: any[]) {
     )
     .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
     .map((s) => ({
-      topic: s.topic,
-      title: s.title || s.subtitle || s.topic,
+      topic: s.topic ?? "soulprint",
+      title: s.title || s.subtitle || s.topic || "Soulprint",
       subtitle: s.subtitle,
-      blocks: (s.blocks || []).sort(
-        (a: any, b: any) => (a.index ?? 0) - (b.index ?? 0),
+      blocks: [...(s.blocks ?? [])].sort(
+        (a, b) => (a.index ?? 0) - (b.index ?? 0),
       ),
     }));
 }
 
-function getSynthesis(data: any[]): string {
+function getSynthesis(data: SoulSection[]): string {
   if (!Array.isArray(data)) return "";
   const d = data.find((s) => s.topic === "dashboard_clone");
-  return d?.blocks?.[0]?.text || "";
+  const text = d?.blocks?.[0]?.text;
+  if (typeof text === "string") return text;
+  return Array.isArray(text) ? text.join("\n") : "";
 }
 
-function getEnneagramNum(data: any[]): string | null {
+function getEnneagramNum(data: SoulSection[]): string | null {
   if (!Array.isArray(data)) return null;
   const e = data.find((s) => s.topic === "enneagram");
   const title = e?.blocks?.[0]?.title;
@@ -272,7 +290,7 @@ function getEnneagramNum(data: any[]): string | null {
   return null;
 }
 
-function BlockText({ block }: { block: any }) {
+function BlockText({ block }: { block: SoulBlock }) {
   if (!block.text) return null;
   if (Array.isArray(block.text)) {
     return (
@@ -296,7 +314,12 @@ function BlockText({ block }: { block: any }) {
 function Section({
   section,
 }: {
-  section: { topic: string; title: string; subtitle?: string; blocks: any[] };
+  section: {
+    topic: string;
+    title: string;
+    subtitle?: string;
+    blocks: SoulBlock[];
+  };
 }) {
   const [open, setOpen] = useState(false);
   const cfg = topicConfig[section.topic] || {
@@ -539,7 +562,8 @@ function CrossReferenceCard({
                 <AlertTriangle className="w-3 h-3 inline mr-1" />
                 Your Flow Circuit role ({flowRole}) differs from the Enneagram
                 prediction ({mapping.primaryRole}). This tension can be a source
-                of creative power - you operate in a space most people don&#39;t.
+                of creative power - you operate in a space most people
+                don&#39;t.
               </p>
             </div>
           )}
@@ -595,7 +619,7 @@ export default function SoulPrintLayerClient({
   });
 
   // Parse the data
-  const soulprintData = profile?.soulprintData as any[] | null;
+  const soulprintData = profile?.soulprintData as SoulSection[] | null;
   const sections = useMemo(
     () => parseSections(soulprintData || []),
     [soulprintData],
