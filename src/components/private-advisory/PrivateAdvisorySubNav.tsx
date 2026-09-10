@@ -14,6 +14,10 @@ export default function PrivateAdvisorySubNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const linkClass = scrolled
+    ? "text-[oklch(0.52_0.12_70)]"
+    : "text-white hover:text-white/80";
+
   return (
     <div
       className={`fixed top-16 sm:top-20 left-0 right-0 z-40 transition-all duration-500 ${
@@ -22,28 +26,14 @@ export default function PrivateAdvisorySubNav() {
           : "border-b border-white/10 bg-[rgba(10,15,26,0.95)] backdrop-blur-sm"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center h-11">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center gap-6 h-11 overflow-x-auto no-scrollbar">
         <a
           href={LEGAL_PARTNER_FORM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-body inline-flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-opacity duration-300 hover:opacity-85"
-          style={{ background: "var(--gold)", color: "var(--dark)" }}
+          className={`font-body text-xs font-semibold tracking-wide uppercase whitespace-nowrap transition-colors duration-300 ${linkClass}`}
         >
           Become a Legal Partner
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M7 17 17 7M9 7h8v8" />
-          </svg>
         </a>
       </div>
     </div>
