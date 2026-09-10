@@ -15,16 +15,10 @@ import {
   Zap,
   FileText,
   Download,
-  ArrowRight,
-  CheckCircle2,
   Activity,
-  Target,
   Heart,
   AlertTriangle,
-  TrendingUp,
   Users,
-  Flame,
-  Shield,
 } from "lucide-react";
 import MagicQuadrant from "@/components/flow/MagicQuadrant";
 import FrictionCostCalculator from "@/components/flow/FrictionCostCalculator";
@@ -71,12 +65,11 @@ export default function ScienceClient() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto"
-            style={{ textWrap: "pretty" as any }}
+            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty"
           >
             For decades, organizations have hired for skills, trained for
-            knowledge, and promoted for experience. The data says they&#39;ve been
-            optimizing the wrong variable.
+            knowledge, and promoted for experience. The data says they&#39;ve
+            been optimizing the wrong variable.
           </motion.p>
 
           <motion.div
@@ -140,10 +133,7 @@ export default function ScienceClient() {
                   <h3 className="text-xl font-black uppercase tracking-tight">
                     Innate Energy Is Fixed
                   </h3>
-                  <p
-                    className="text-muted-foreground leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
-                  >
+                  <p className="text-muted-foreground leading-relaxed text-pretty">
                     Your operational energy - whether you naturally generate
                     ideas (Spark), amplify others (Amplifier), refine quality
                     (Filter), execute reliably (Ground), or orchestrate flow
@@ -151,13 +141,10 @@ export default function ScienceClient() {
                     neurological operating system.
                   </p>
                   <div className="pt-2 border-t border-gray-100">
-                    <p
-                      className="text-sm text-gray-500 italic"
-                      style={{ textWrap: "pretty" as any }}
-                    >
-                      &quot;Personality trait consistency climbs from the college
-                      years into adulthood, reaching test-retest correlations
-                      around 0.74 by ages 50–70.&quot;
+                    <p className="text-sm text-gray-500 italic text-pretty">
+                      &quot;Personality trait consistency climbs from the
+                      college years into adulthood, reaching test-retest
+                      correlations around 0.74 by ages 50–70.&quot;
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       - Roberts & DelVecchio, <em>Psychological Bulletin</em>,
@@ -192,25 +179,20 @@ export default function ScienceClient() {
                   <h3 className="text-xl font-black uppercase tracking-tight">
                     Misfit Creates Stress
                   </h3>
-                  <p
-                    className="text-muted-foreground leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
-                  >
-                    When you&#39;re forced to operate outside your natural role - a
-                    Spark doing Ground work, a Filter forced to Amplify -
+                  <p className="text-muted-foreground leading-relaxed text-pretty">
+                    When you&#39;re forced to operate outside your natural role
+                    - a Spark doing Ground work, a Filter forced to Amplify -
                     cortisol rises, cognitive load increases, and performance
-                    degrades. It&#39;s not about capability. It&#39;s about cost.
+                    degrades. It&#39;s not about capability. It&#39;s about
+                    cost.
                   </p>
                   <div className="pt-2 border-t border-gray-100">
-                    <p
-                      className="text-xs text-gray-400"
-                      style={{ textWrap: "pretty" as any }}
-                    >
+                    <p className="text-xs text-gray-400 text-pretty">
                       Role misfit - not a skill gap - is one of the most
                       commonly cited drivers of disengagement and turnover in
                       workplace research. We don&#39;t have a single verified
-                      statistic we&#39;re comfortable quoting here, so we&#39;re not
-                      citing one.
+                      statistic we&#39;re comfortable quoting here, so we&#39;re
+                      not citing one.
                     </p>
                   </div>
                 </CardContent>
@@ -232,23 +214,18 @@ export default function ScienceClient() {
                   <h3 className="text-xl font-black uppercase tracking-tight">
                     Teams Beat Individuals
                   </h3>
-                  <p
-                    className="text-muted-foreground leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
-                  >
+                  <p className="text-muted-foreground leading-relaxed text-pretty">
                     The highest-IQ teams don&#39;t automatically win. Meredith
                     Belbin&#39;s team-role research at Henley Management College
-                    found that &quot;Apollo teams&quot; (all-star, no role diversity)
-                    routinely lost to teams where each member operated in their
-                    natural energy.
+                    found that &quot;Apollo teams&quot; (all-star, no role
+                    diversity) routinely lost to teams where each member
+                    operated in their natural energy.
                   </p>
                   <div className="pt-2 border-t border-gray-100">
-                    <p
-                      className="text-sm text-gray-500 italic"
-                      style={{ textWrap: "pretty" as any }}
-                    >
-                      &quot;The Apollo Syndrome: teams of the brightest individuals
-                      consistently finished last in team competitions.&quot;
+                    <p className="text-sm text-gray-500 italic text-pretty">
+                      &quot;The Apollo Syndrome: teams of the brightest
+                      individuals consistently finished last in team
+                      competitions.&quot;
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       - Meredith Belbin, <em>Management Teams</em>, 1981 (
@@ -290,19 +267,14 @@ export default function ScienceClient() {
                 <br />
                 Outside Your Nature
               </h2>
-              <p
-                className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed"
-                style={{ textWrap: "pretty" as any }}
-              >
+              <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed text-pretty">
                 Every hour spent fighting your natural operational energy is an
                 hour stolen from your best self. The science explains why.
               </p>
-              <p
-                className="text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed mt-4"
-                style={{ textWrap: "pretty" as any }}
-              >
-                The studies below describe general findings on stress, cognition, and flow -
-                they were not conducted on The Flow Circuit assessment.
+              <p className="text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed mt-4 text-pretty">
+                The studies below describe general findings on stress,
+                cognition, and flow - they were not conducted on The Flow
+                Circuit assessment.
               </p>
             </motion.div>
 
@@ -319,20 +291,25 @@ export default function ScienceClient() {
                   </div>
                   <h3 className="text-xl font-bold">Cortisol Cascade</h3>
                 </div>
-                <p
-                  className="text-gray-300 leading-relaxed"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-gray-300 leading-relaxed text-pretty">
                   When forced into an unnatural role, the brain&#39;s threat
                   detection system activates. Sustained stress and elevated
                   cortisol are associated with impaired prefrontal cortex
-                  function - the very region responsible for creative
-                  thinking and decision-making.
+                  function - the very region responsible for creative thinking
+                  and decision-making.
                 </p>
                 <p className="text-xs text-gray-500">
                   Arnsten, 2009 - &quot;Stress signalling pathways that impair
-                  prefrontal cortex structure and function,&quot; <em>Nature Reviews Neuroscience</em> (
-                  <a href="https://www.nature.com/articles/nrn2648" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">source</a>
+                  prefrontal cortex structure and function,&quot;{" "}
+                  <em>Nature Reviews Neuroscience</em> (
+                  <a
+                    href="https://www.nature.com/articles/nrn2648"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-gray-300"
+                  >
+                    source
+                  </a>
                   )
                 </p>
               </motion.div>
@@ -349,19 +326,23 @@ export default function ScienceClient() {
                   </div>
                   <h3 className="text-xl font-bold">Cognitive Load Tax</h3>
                 </div>
-                <p
-                  className="text-gray-300 leading-relaxed"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-gray-300 leading-relaxed text-pretty">
                   Operating in your natural role draws on System 1 thinking -
                   fast, intuitive, effortless. Operating outside it forces
-                  System 2 - slow, deliberate, effortful. Kahneman&#39;s research
-                  shows System 2 reasoning consumes noticeably more cognitive
-                  effort for the same task.
+                  System 2 - slow, deliberate, effortful. Kahneman&#39;s
+                  research shows System 2 reasoning consumes noticeably more
+                  cognitive effort for the same task.
                 </p>
                 <p className="text-xs text-gray-500">
                   Kahneman, 2011 - <em>Thinking, Fast and Slow</em> (
-                  <a href="https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">source</a>
+                  <a
+                    href="https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-gray-300"
+                  >
+                    source
+                  </a>
                   )
                 </p>
               </motion.div>
@@ -379,19 +360,16 @@ export default function ScienceClient() {
                   </div>
                   <h3 className="text-xl font-bold">Flow State Blockade</h3>
                 </div>
-                <p
-                  className="text-gray-300 leading-relaxed"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-gray-300 leading-relaxed text-pretty">
                   Flow states require transient hypofrontality - the
                   deactivation of the inner critic. Role misfit keeps the
                   prefrontal cortex hyperactive (monitoring, compensating,
-                  translating), making flow neurologically impossible. You can&#39;t
-                  enter flow while fighting your own wiring.
+                  translating), making flow neurologically impossible. You
+                  can&#39;t enter flow while fighting your own wiring.
                 </p>
                 <p className="text-xs text-gray-500">
-                  Dietrich, 2004 - &quot;Neurocognitive mechanisms underlying the
-                  experience of flow&quot;
+                  Dietrich, 2004 - &quot;Neurocognitive mechanisms underlying
+                  the experience of flow&quot;
                 </p>
               </motion.div>
 
@@ -408,10 +386,7 @@ export default function ScienceClient() {
                   </div>
                   <h3 className="text-xl font-bold">The Best-Self Effect</h3>
                 </div>
-                <p
-                  className="text-gray-300 leading-relaxed"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-gray-300 leading-relaxed text-pretty">
                   When people operate in their natural role, dopamine and
                   norepinephrine are believed to help optimize attention,
                   pattern recognition, and creative output. This isn&#39;t just
@@ -419,9 +394,20 @@ export default function ScienceClient() {
                   isn&#39;t aspirational. It&#39;s operational.
                 </p>
                 <p className="text-xs text-gray-500">
-                  Kotler, 2014 - <em>The Rise of Superman: Decoding the
-                  Science of Ultimate Human Performance</em> (
-                  <a href="https://www.amazon.com/Rise-Superman-Decoding-Science-Performance/dp/0544286249" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">source</a>
+                  Kotler, 2014 -{" "}
+                  <em>
+                    The Rise of Superman: Decoding the Science of Ultimate Human
+                    Performance
+                  </em>{" "}
+                  (
+                  <a
+                    href="https://www.amazon.com/Rise-Superman-Decoding-Science-Performance/dp/0544286249"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-gray-300"
+                  >
+                    source
+                  </a>
                   )
                 </p>
               </motion.div>
@@ -433,12 +419,9 @@ export default function ScienceClient() {
               viewport={{ once: true }}
               className="text-center mt-12"
             >
-              <p
-                className="text-2xl md:text-3xl font-black text-yellow-400 italic"
-                style={{ textWrap: "balance" as any }}
-              >
-                &quot;Operating outside your nature doesn&#39;t just reduce performance.
-                It reduces your possibility as a human being.&quot;
+              <p className="text-2xl md:text-3xl font-black text-yellow-400 italic text-balance">
+                &quot;Operating outside your nature doesn&#39;t just reduce
+                performance. It reduces your possibility as a human being.&quot;
               </p>
             </motion.div>
           </div>
@@ -455,22 +438,22 @@ export default function ScienceClient() {
               Why &quot;Personality Tests&quot; Fail Teams
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground">
-              <p style={{ textWrap: "pretty" as any }}>
+              <p className="text-pretty">
                 Traditional assessments (MBTI, DISC, Enneagram) are
                 <strong className="text-black"> static snapshots</strong> of
                 individual psychology. They tell you who someone
                 <em> is</em> in isolation.
               </p>
-              <p style={{ textWrap: "pretty" as any }}>
+              <p className="text-pretty">
                 But work doesn&#39;t happen in isolation. It happens in{" "}
                 <strong className="text-black">motion</strong>.
               </p>
-              <p style={{ textWrap: "pretty" as any }}>
+              <p className="text-pretty">
                 The Flow Circuit measures
                 <strong className="text-primary"> Operational Physics</strong>:
                 the transfer of energy, information, and responsibility between
-                people. It&#39;s not about who you are in a vacuum - it&#39;s about how
-                your energy moves through a system.
+                people. It&#39;s not about who you are in a vacuum - it&#39;s
+                about how your energy moves through a system.
               </p>
             </div>
 
@@ -504,12 +487,9 @@ export default function ScienceClient() {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 to-transparent z-20">
-              <p
-                className="text-white text-lg font-medium"
-                style={{ textWrap: "pretty" as any }}
-              >
-                &quot;You can&#39;t fix a clock by psychoanalyzing the gears. You have to
-                look at how they mesh.&quot;
+              <p className="text-white text-lg font-medium text-pretty">
+                &quot;You can&#39;t fix a clock by psychoanalyzing the gears.
+                You have to look at how they mesh.&quot;
               </p>
             </div>
           </div>
@@ -537,16 +517,25 @@ export default function ScienceClient() {
             The Research That Inspired This Framework
           </h2>
           <p className="text-muted-foreground text-lg">
-            Built on decades of established research into human performance and team dynamics.
+            Built on decades of established research into human performance and
+            team dynamics.
           </p>
         </div>
         <div className="max-w-3xl mx-auto mb-12 flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4">
           <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          <p className="text-sm text-amber-800 leading-relaxed" style={{ textWrap: "pretty" as any }}>
-            <strong>Important:</strong> the studies below explain the general science behind flow states,
-            stress, and team dynamics. They were the inspiration for The Flow Circuit&#39;s design - they are
-            not studies of The Flow Circuit itself. We have not yet published an independent validation
-            study of this assessment. See our <a href="#validation-status" className="underline hover:text-amber-900">current validation status</a> below.
+          <p className="text-sm text-amber-800 leading-relaxed text-pretty">
+            <strong>Important:</strong> the studies below explain the general
+            science behind flow states, stress, and team dynamics. They were the
+            inspiration for The Flow Circuit&#39;s design - they are not studies
+            of The Flow Circuit itself. We have not yet published an independent
+            validation study of this assessment. See our{" "}
+            <a
+              href="#validation-status"
+              className="underline hover:text-amber-900"
+            >
+              current validation status
+            </a>{" "}
+            below.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -561,15 +550,20 @@ export default function ScienceClient() {
               </p>
             </CardHeader>
             <CardContent>
-              <p
-                className="text-muted-foreground"
-                style={{ textWrap: "pretty" as any }}
-              >
-                Fahden&#39;s insight that innovation is a relay between distinct cognitive roles
-                (Creator, Advancer, Refiner, Executor) - and that forcing someone out of their
-                natural role stalls both the work and the person - is the direct ancestor of
-                the Flow Circuit&#39;s five-role model.{" "}
-                <a href="https://www.amazon.com/Innovation-Demand-Allen-Fahden/dp/0962966312" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">source</a>
+              <p className="text-muted-foreground text-pretty">
+                Fahden&#39;s insight that innovation is a relay between distinct
+                cognitive roles (Creator, Advancer, Refiner, Executor) - and
+                that forcing someone out of their natural role stalls both the
+                work and the person - is the direct ancestor of the Flow
+                Circuit&#39;s five-role model.{" "}
+                <a
+                  href="https://www.amazon.com/Innovation-Demand-Allen-Fahden/dp/0962966312"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-primary"
+                >
+                  source
+                </a>
               </p>
             </CardContent>
           </Card>
@@ -585,13 +579,11 @@ export default function ScienceClient() {
               </p>
             </CardHeader>
             <CardContent>
-              <p
-                className="text-muted-foreground"
-                style={{ textWrap: "pretty" as any }}
-              >
-                Flow states are associated with deactivation of the prefrontal cortex (the inner
-                critic). We designed the Flow Circuit&#39;s role model around the idea that removing
-                social friction and role ambiguity should make that state easier to reach - a
+              <p className="text-muted-foreground text-pretty">
+                Flow states are associated with deactivation of the prefrontal
+                cortex (the inner critic). We designed the Flow Circuit&#39;s
+                role model around the idea that removing social friction and
+                role ambiguity should make that state easier to reach - a
                 hypothesis, not yet something we&#39;ve measured directly.
               </p>
             </CardContent>
@@ -608,13 +600,11 @@ export default function ScienceClient() {
               </p>
             </CardHeader>
             <CardContent>
-              <p
-                className="text-muted-foreground"
-                style={{ textWrap: "pretty" as any }}
-              >
-                Individuals who self-induce flow are &quot;autotelic.&quot; Our framework borrows this
-                concept for what we call the Autotelic Team - a group that finds purpose
-                in the process of collaboration itself.
+              <p className="text-muted-foreground text-pretty">
+                Individuals who self-induce flow are &quot;autotelic.&quot; Our
+                framework borrows this concept for what we call the Autotelic
+                Team - a group that finds purpose in the process of
+                collaboration itself.
               </p>
             </CardContent>
           </Card>
@@ -624,7 +614,10 @@ export default function ScienceClient() {
       {/* ═══════════════════════════════════════════════════════════ */}
       {/* VALIDATION STATUS                                         */}
       {/* ═══════════════════════════════════════════════════════════ */}
-      <section id="validation-status" className="container mx-auto px-4 mb-32 relative z-10">
+      <section
+        id="validation-status"
+        className="container mx-auto px-4 mb-32 relative z-10"
+      >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-black mb-4">
@@ -642,17 +635,20 @@ export default function ScienceClient() {
                 In Development - Pending Independent Validation
               </span>
             </div>
-            <p className="text-gray-700 leading-relaxed" style={{ textWrap: "pretty" as any }}>
-              The Flow Circuit is a new assessment. Instruments like Kolbe A, Belbin, and DISC
-              have decades of published, peer-reviewed research behind their validity numbers.
-              We don&#39;t have that yet - and we&#39;re not going to publish a validity score for our
-              own tool until an independent researcher has actually run the study.
+            <p className="text-gray-700 leading-relaxed text-pretty">
+              The Flow Circuit is a new assessment. Instruments like Kolbe A,
+              Belbin, and DISC have decades of published, peer-reviewed research
+              behind their validity numbers. We don&#39;t have that yet - and
+              we&#39;re not going to publish a validity score for our own tool
+              until an independent researcher has actually run the study.
             </p>
-            <p className="text-gray-700 leading-relaxed" style={{ textWrap: "pretty" as any }}>
-              What the Flow Circuit is built on today is the established research summarized
-              above, plus our own design reasoning about how those findings should translate
-              into a team-context tool. That&#39;s a hypothesis worth testing - not proof the tool
-              itself has been tested. We&#39;ll publish real validation data here the moment it exists.
+            <p className="text-gray-700 leading-relaxed text-pretty">
+              What the Flow Circuit is built on today is the established
+              research summarized above, plus our own design reasoning about how
+              those findings should translate into a team-context tool.
+              That&#39;s a hypothesis worth testing - not proof the tool itself
+              has been tested. We&#39;ll publish real validation data here the
+              moment it exists.
             </p>
           </div>
         </div>
@@ -666,10 +662,7 @@ export default function ScienceClient() {
           <h2 className="text-3xl md:text-4xl font-black mb-4">
             Calculate Your Friction Cost
           </h2>
-          <p
-            className="text-muted-foreground text-lg"
-            style={{ textWrap: "pretty" as any }}
-          >
+          <p className="text-muted-foreground text-lg text-pretty">
             Most leaders underestimate the financial impact of role
             misalignment. Use this calculator to see the hidden tax on your
             payroll.
@@ -695,12 +688,10 @@ export default function ScienceClient() {
               The Assessment Revolution
             </h2>
 
-            <p
-              className="text-lg text-white/70 leading-relaxed"
-              style={{ textWrap: "pretty" as any }}
-            >
-              Download our white paper laying out the research that shaped The Flow Circuit&#39;s
-              design - and where the framework&#39;s own validation currently stands.
+            <p className="text-lg text-white/70 leading-relaxed text-pretty">
+              Download our white paper laying out the research that shaped The
+              Flow Circuit&#39;s design - and where the framework&#39;s own
+              validation currently stands.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -714,7 +705,11 @@ export default function ScienceClient() {
                 size="lg"
                 variant="outline"
                 className="border-white/20 text-white hover:bg-white/10 font-bold h-14 px-8 rounded-xl"
-                onClick={() => document.getElementById('validation-status')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() =>
+                  document
+                    .getElementById("validation-status")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
               >
                 View Validation Status
               </Button>
@@ -729,13 +724,10 @@ export default function ScienceClient() {
       <section className="container mx-auto px-4 mb-24 relative z-10">
         <div className="bg-gradient-to-br from-primary/20 via-background to-background p-12 rounded-3xl border border-primary/20 text-center space-y-8 backdrop-blur-sm">
           <h2 className="text-3xl font-bold">Fuel the Science</h2>
-          <p
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            style={{ textWrap: "pretty" as any }}
-          >
-            We are constantly researching the &quot;Invisible Architecture&quot; of human
-            performance. Your contribution helps us expand the open-source
-            dataset and refine the algorithms.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+            We are constantly researching the &quot;Invisible Architecture&quot;
+            of human performance. Your contribution helps us expand the
+            open-source dataset and refine the algorithms.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button
