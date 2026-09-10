@@ -24,7 +24,7 @@ import {
   FileText,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 const ROLE_COLORS: Record<string, string> = {
   Spark: "#f59e0b",
@@ -33,6 +33,44 @@ const ROLE_COLORS: Record<string, string> = {
   Ground: "#10b981",
   Conductor: "#ef4444",
 };
+
+interface RoleDistributionItem {
+  role: string;
+  count: number;
+}
+
+interface DomainActivityItem {
+  domain: string;
+  count: number;
+}
+
+interface RecentAssessmentItem {
+  id: number;
+  guestName?: string | null;
+  guestEmail?: string | null;
+  domain?: string | null;
+  role: string;
+  score: number;
+  createdAt: Date | string;
+}
+
+interface TeamStatItem {
+  id: number;
+  name: string;
+  companyName?: string | null;
+  domain?: string | null;
+  maxMembers?: number | null;
+  isAlpha: boolean;
+  createdAt: Date | string;
+}
+
+interface PendingDripItem {
+  id: number;
+  name?: string | null;
+  email: string;
+  domain?: string | null;
+  role?: string | null;
+}
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
@@ -87,8 +125,16 @@ export default function AdminDashboard() {
     );
   }
 
+  const roleDistribution = stats.roleDistribution as RoleDistributionItem[];
+  const domainActivity = stats.domainActivity as DomainActivityItem[];
+  const recentAssessments = stats.recentAssessments as RecentAssessmentItem[];
+  const teamStats = stats.teamStats as TeamStatItem[];
+  const emailDrips = (pendingDrips ?? []) as PendingDripItem[];
+
   const maxRoleCount = Math.max(
-    ...stats.roleDistribution.map((r: any) => r.count),
+    ...roleDistribution.map(
+      (roleDistributionItem) => roleDistributionItem.count,
+    ),
     1,
   );
 
@@ -231,24 +277,29 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {stats.roleDistribution.map((r: any) => (
-                  <div key={r.role} className="space-y-1">
+                {roleDistribution.map((roleDistributionItem) => (
+                  <div key={roleDistributionItem.role} className="space-y-1">
                     <div className="flex justify-between text-sm">
-                      <span className="font-bold">{r.role}</span>
-                      <span className="text-muted-foreground">{r.count}</span>
+                      <span className="font-bold">
+                        {roleDistributionItem.role}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {roleDistributionItem.count}
+                      </span>
                     </div>
                     <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-500"
                         style={{
-                          width: `${(r.count / maxRoleCount) * 100}%`,
-                          backgroundColor: ROLE_COLORS[r.role] || "#6b7280",
+                          width: `${(roleDistributionItem.count / maxRoleCount) * 100}%`,
+                          backgroundColor:
+                            ROLE_COLORS[roleDistributionItem.role] || "#6b7280",
                         }}
                       />
                     </div>
                   </div>
                 ))}
-                {stats.roleDistribution.length === 0 && (
+                {roleDistribution.length === 0 && (
                   <p className="text-sm text-muted-foreground text-center py-8">
                     No assessments completed yet.
                   </p>
@@ -267,23 +318,25 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {stats.domainActivity.map((d: any, i: number) => (
+                {domainActivity.map((domainActivityItem, i) => (
                   <div
-                    key={d.domain}
+                    key={domainActivityItem.domain}
                     className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-bold text-gray-400 w-6">
                         #{i + 1}
                       </span>
-                      <span className="font-medium">{d.domain}</span>
+                      <span className="font-medium">
+                        {domainActivityItem.domain}
+                      </span>
                     </div>
                     <span className="text-sm font-bold bg-black text-white px-2 py-0.5 rounded">
-                      {d.count} assessments
+                      {domainActivityItem.count} assessments
                     </span>
                   </div>
                 ))}
-                {stats.domainActivity.length === 0 && (
+                {domainActivity.length === 0 && (
                   <p className="text-sm text-muted-foreground text-center py-8">
                     No domain-based assessments yet.
                   </p>
@@ -324,36 +377,39 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {stats.recentAssessments.map((a: any) => (
-                    <tr key={a.id} className="hover:bg-gray-50">
+                  {recentAssessments.map((assessment) => (
+                    <tr key={assessment.id} className="hover:bg-gray-50">
                       <td className="py-2 px-3 font-medium">
-                        {a.guestName || "-"}
+                        {assessment.guestName || "-"}
                       </td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {a.guestEmail || "-"}
+                        {assessment.guestEmail || "-"}
                       </td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {a.domain || "-"}
+                        {assessment.domain || "-"}
                       </td>
                       <td className="py-2 px-3">
                         <span
                           className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold text-white"
                           style={{
-                            backgroundColor: ROLE_COLORS[a.role] || "#6b7280",
+                            backgroundColor:
+                              ROLE_COLORS[assessment.role] || "#6b7280",
                           }}
                         >
-                          {a.role}
+                          {assessment.role}
                         </span>
                       </td>
-                      <td className="py-2 px-3 font-bold">{a.score}%</td>
+                      <td className="py-2 px-3 font-bold">
+                        {assessment.score}%
+                      </td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {new Date(a.createdAt).toLocaleDateString()}
+                        {new Date(assessment.createdAt).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {stats.recentAssessments.length === 0 && (
+              {recentAssessments.length === 0 && (
                 <p className="text-sm text-muted-foreground text-center py-8">
                   No assessments yet.
                 </p>
@@ -393,18 +449,20 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {stats.teamStats.map((t: any) => (
-                    <tr key={t.id} className="hover:bg-gray-50">
-                      <td className="py-2 px-3 font-medium">{t.name}</td>
+                  {teamStats.map((teamStat) => (
+                    <tr key={teamStat.id} className="hover:bg-gray-50">
+                      <td className="py-2 px-3 font-medium">{teamStat.name}</td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {t.companyName || "-"}
+                        {teamStat.companyName || "-"}
                       </td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {t.domain || "-"}
+                        {teamStat.domain || "-"}
                       </td>
-                      <td className="py-2 px-3">{t.maxMembers || "∞"}</td>
                       <td className="py-2 px-3">
-                        {t.isAlpha ? (
+                        {teamStat.maxMembers || "∞"}
+                      </td>
+                      <td className="py-2 px-3">
+                        {teamStat.isAlpha ? (
                           <span className="text-green-600 font-bold text-xs">
                             YES
                           </span>
@@ -413,7 +471,7 @@ export default function AdminDashboard() {
                         )}
                       </td>
                       <td className="py-2 px-3 text-muted-foreground">
-                        {new Date(t.createdAt).toLocaleDateString()}
+                        {new Date(teamStat.createdAt).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
@@ -449,9 +507,9 @@ export default function AdminDashboard() {
               ))}
             </div>
 
-            {pendingDrips && pendingDrips.length > 0 ? (
+            {emailDrips.length > 0 ? (
               <div className="space-y-3">
-                {pendingDrips.map((drip: any) => (
+                {emailDrips.map((drip) => (
                   <div
                     key={drip.id}
                     className="flex items-center justify-between p-4 rounded-lg border bg-white"
