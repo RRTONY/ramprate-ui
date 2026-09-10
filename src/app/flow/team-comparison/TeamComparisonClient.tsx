@@ -18,9 +18,44 @@ import {
   Zap,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
-const ROLE_COLORS: Record<string, string> = {
+const COMPARISON_ROLES = [
+  "Spark",
+  "Amplifier",
+  "Filter",
+  "Ground",
+  "Conductor",
+] as const;
+
+type ComparisonRole = (typeof COMPARISON_ROLES)[number];
+
+interface TeamOption {
+  id: number;
+  name: string;
+  companyName?: string | null;
+}
+
+interface RoleBreakdown {
+  role: ComparisonRole;
+  count: number;
+  percentage: number;
+}
+
+interface ComparisonTeam {
+  name: string;
+  memberCount: number;
+  averageScore: number;
+  roleBreakdown: RoleBreakdown[];
+  missingRoles: ComparisonRole[];
+}
+
+interface TeamComparisonResult {
+  team1: ComparisonTeam;
+  team2: ComparisonTeam;
+}
+
+const ROLE_COLORS: Record<ComparisonRole, string> = {
   Spark: "#f59e0b",
   Amplifier: "#3b82f6",
   Filter: "#8b5cf6",
@@ -28,7 +63,7 @@ const ROLE_COLORS: Record<string, string> = {
   Conductor: "#ef4444",
 };
 
-const ROLE_ICONS: Record<string, string> = {
+const ROLE_ICONS: Record<ComparisonRole, string> = {
   Spark: "⚡",
   Amplifier: "📡",
   Filter: "🔬",
@@ -79,7 +114,8 @@ export default function TeamComparison() {
     );
   }
 
-  const teams = myTeams || [];
+  const teams = (myTeams ?? []) as TeamOption[];
+  const comparisonResult = comparison as TeamComparisonResult | undefined;
 
   return (
     <div className="min-h-screen pt-24 pb-16 bg-gray-50">
@@ -120,19 +156,19 @@ export default function TeamComparison() {
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {teams.map((t: any) => (
+                  {teams.map((team) => (
                     <button
-                      key={t.id}
-                      onClick={() => setTeam1Id(t.id)}
+                      key={team.id}
+                      onClick={() => setTeam1Id(team.id)}
                       className={`w-full text-left p-3 rounded-lg border transition-all ${
-                        team1Id === t.id
+                        team1Id === team.id
                           ? "border-black bg-black text-white"
                           : "border-gray-200 hover:border-gray-400"
                       }`}
                     >
-                      <p className="font-bold">{t.name}</p>
-                      {t.companyName && (
-                        <p className="text-xs opacity-70">{t.companyName}</p>
+                      <p className="font-bold">{team.name}</p>
+                      {team.companyName && (
+                        <p className="text-xs opacity-70">{team.companyName}</p>
                       )}
                     </button>
                   ))}
@@ -155,20 +191,22 @@ export default function TeamComparison() {
               ) : (
                 <div className="space-y-2">
                   {teams
-                    .filter((t: any) => t.id !== team1Id)
-                    .map((t: any) => (
+                    .filter((team) => team.id !== team1Id)
+                    .map((team) => (
                       <button
-                        key={t.id}
-                        onClick={() => setTeam2Id(t.id)}
+                        key={team.id}
+                        onClick={() => setTeam2Id(team.id)}
                         className={`w-full text-left p-3 rounded-lg border transition-all ${
-                          team2Id === t.id
+                          team2Id === team.id
                             ? "border-black bg-black text-white"
                             : "border-gray-200 hover:border-gray-400"
                         }`}
                       >
-                        <p className="font-bold">{t.name}</p>
-                        {t.companyName && (
-                          <p className="text-xs opacity-70">{t.companyName}</p>
+                        <p className="font-bold">{team.name}</p>
+                        {team.companyName && (
+                          <p className="text-xs opacity-70">
+                            {team.companyName}
+                          </p>
                         )}
                       </button>
                     ))}
@@ -185,12 +223,12 @@ export default function TeamComparison() {
           </div>
         )}
 
-        {comparison && (
+        {comparisonResult && (
           <div className="space-y-8">
             {/* Overview Cards */}
             <div className="grid md:grid-cols-2 gap-6">
-              {[comparison.team1, comparison.team2].map(
-                (team: any, idx: number) => (
+              {[comparisonResult.team1, comparisonResult.team2].map(
+                (team, idx) => (
                   <Card key={idx}>
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
@@ -213,23 +251,26 @@ export default function TeamComparison() {
 
                       {/* Role Breakdown Bars */}
                       <div className="space-y-2">
-                        {team.roleBreakdown.map((r: any) => (
-                          <div key={r.role} className="space-y-1">
+                        {team.roleBreakdown.map((roleBreakdown) => (
+                          <div key={roleBreakdown.role} className="space-y-1">
                             <div className="flex justify-between text-xs">
                               <span className="font-bold">
-                                {ROLE_ICONS[r.role]} {r.role}
+                                {ROLE_ICONS[roleBreakdown.role]}{" "}
+                                {roleBreakdown.role}
                               </span>
                               <span className="text-muted-foreground">
-                                {r.count} ({r.percentage}%)
+                                {roleBreakdown.count} (
+                                {roleBreakdown.percentage}%)
                               </span>
                             </div>
                             <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full rounded-full transition-all duration-700"
                                 style={{
-                                  width: `${r.percentage}%`,
+                                  width: `${roleBreakdown.percentage}%`,
                                   backgroundColor:
-                                    ROLE_COLORS[r.role] || "#6b7280",
+                                    ROLE_COLORS[roleBreakdown.role] ||
+                                    "#6b7280",
                                 }}
                               />
                             </div>
@@ -279,58 +320,54 @@ export default function TeamComparison() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {["Spark", "Amplifier", "Filter", "Ground", "Conductor"].map(
-                    (role) => {
-                      const t1 = comparison.team1.roleBreakdown.find(
-                        (r: any) => r.role === role,
-                      );
-                      const t2 = comparison.team2.roleBreakdown.find(
-                        (r: any) => r.role === role,
-                      );
-                      const t1Pct = t1?.percentage || 0;
-                      const t2Pct = t2?.percentage || 0;
-                      const diff = t1Pct - t2Pct;
-
-                      return (
-                        <div key={role} className="space-y-1">
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="font-bold w-24">
-                              {ROLE_ICONS[role]} {role}
-                            </span>
-                            <div className="flex-1 flex items-center gap-2">
-                              {/* Team A bar (right-aligned) */}
-                              <div className="flex-1 flex justify-end">
-                                <div
-                                  className="h-6 rounded-l-md flex items-center justify-end px-2 text-xs font-bold text-white transition-all duration-700"
-                                  style={{
-                                    width: `${Math.max(t1Pct, 5)}%`,
-                                    backgroundColor: ROLE_COLORS[role],
-                                    opacity: 0.8,
-                                  }}
-                                >
-                                  {t1Pct}%
-                                </div>
+                  {COMPARISON_ROLES.map((role) => {
+                    const t1 = comparisonResult.team1.roleBreakdown.find(
+                      (roleBreakdown) => roleBreakdown.role === role,
+                    );
+                    const t2 = comparisonResult.team2.roleBreakdown.find(
+                      (roleBreakdown) => roleBreakdown.role === role,
+                    );
+                    const t1Pct = t1?.percentage || 0;
+                    const t2Pct = t2?.percentage || 0;
+                    return (
+                      <div key={role} className="space-y-1">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="font-bold w-24">
+                            {ROLE_ICONS[role]} {role}
+                          </span>
+                          <div className="flex-1 flex items-center gap-2">
+                            {/* Team A bar (right-aligned) */}
+                            <div className="flex-1 flex justify-end">
+                              <div
+                                className="h-6 rounded-l-md flex items-center justify-end px-2 text-xs font-bold text-white transition-all duration-700"
+                                style={{
+                                  width: `${Math.max(t1Pct, 5)}%`,
+                                  backgroundColor: ROLE_COLORS[role],
+                                  opacity: 0.8,
+                                }}
+                              >
+                                {t1Pct}%
                               </div>
-                              <div className="w-px h-6 bg-gray-300" />
-                              {/* Team B bar (left-aligned) */}
-                              <div className="flex-1">
-                                <div
-                                  className="h-6 rounded-r-md flex items-center px-2 text-xs font-bold text-white transition-all duration-700"
-                                  style={{
-                                    width: `${Math.max(t2Pct, 5)}%`,
-                                    backgroundColor: ROLE_COLORS[role],
-                                    opacity: 0.6,
-                                  }}
-                                >
-                                  {t2Pct}%
-                                </div>
+                            </div>
+                            <div className="w-px h-6 bg-gray-300" />
+                            {/* Team B bar (left-aligned) */}
+                            <div className="flex-1">
+                              <div
+                                className="h-6 rounded-r-md flex items-center px-2 text-xs font-bold text-white transition-all duration-700"
+                                style={{
+                                  width: `${Math.max(t2Pct, 5)}%`,
+                                  backgroundColor: ROLE_COLORS[role],
+                                  opacity: 0.6,
+                                }}
+                              >
+                                {t2Pct}%
                               </div>
                             </div>
                           </div>
                         </div>
-                      );
-                    },
-                  )}
+                      </div>
+                    );
+                  })}
                   <div className="flex justify-between text-xs text-muted-foreground mt-2 px-24">
                     <span className="font-bold">{comparison.team1.name}</span>
                     <span className="font-bold">{comparison.team2.name}</span>
@@ -351,7 +388,8 @@ export default function TeamComparison() {
                   emerge. The roles that are{" "}
                   <strong>strong in one team but weak in the other</strong>{" "}
                   represent the highest-value integration points - these are the
-                  people who will fill gaps the other team didn&#39;t know it had.
+                  people who will fill gaps the other team didn&#39;t know it
+                  had.
                 </p>
 
                 {(() => {
@@ -425,8 +463,9 @@ export default function TeamComparison() {
                 })()}
 
                 <p className="text-xs text-muted-foreground italic">
-                  &quot;Don&#39;t just merge balance sheets; merge nervous systems. Map
-                  the acquirer and the acquired to prevent organ rejection.&quot;
+                  &quot;Don&#39;t just merge balance sheets; merge nervous
+                  systems. Map the acquirer and the acquired to prevent organ
+                  rejection.&quot;
                 </p>
               </CardContent>
             </Card>
