@@ -2,7 +2,12 @@
 
 import { useAuth } from "@/hooks/flow/useAuth";
 import { trpc } from "@/lib/flow/trpc";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import {
   Dialog,
@@ -11,7 +16,21 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/flow/ui/dialog";
-import { Loader2, Shield, ArrowLeft, FileText, Users, Download, RefreshCw, Filter, Calendar, Search, ExternalLink, Zap, Globe, BarChart3, Mail } from "lucide-react";
+import {
+  Loader2,
+  Shield,
+  ArrowLeft,
+  FileText,
+  Users,
+  Download,
+  Filter,
+  Calendar,
+  Search,
+  Zap,
+  Globe,
+  BarChart3,
+  Mail,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 
@@ -47,20 +66,44 @@ const ROLE_ICONS: Record<string, string> = {
   Conductor: "🎼",
 };
 
+const REPORT_DATE_RANGES = ["all", "7d", "30d", "90d"] as const;
+type ReportDateRange = (typeof REPORT_DATE_RANGES)[number];
+
+interface ReportAssessment {
+  id: number;
+  guestName?: string | null;
+  guestEmail?: string | null;
+  domain?: string | null;
+  role: string;
+  score: number;
+  scores?: Record<string, unknown> | null;
+  shareToken?: string | null;
+  createdAt?: Date | string | null;
+}
+
 export default function ReportsDashboard() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const [domainFilter, setDomainFilter] = useState<string>("all");
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [dateRange, setDateRange] = useState<"all" | "7d" | "30d" | "90d">("all");
+  const [dateRange, setDateRange] = useState<ReportDateRange>("all");
+  const [dateFilterReferenceTime, setDateFilterReferenceTime] = useState<
+    number | null
+  >(null);
   const [generatingPDF, setGeneratingPDF] = useState<number | null>(null);
-  const [generatingTeamPDF, setGeneratingTeamPDF] = useState<string | null>(null);
-  const [selectedAssessment, setSelectedAssessment] = useState<any | null>(null);
+  const [generatingTeamPDF, setGeneratingTeamPDF] = useState<string | null>(
+    null,
+  );
+  const [selectedAssessment, setSelectedAssessment] =
+    useState<ReportAssessment | null>(null);
 
-  const { data: assessments, isLoading } = trpc.admin.allAssessments.useQuery(undefined, {
-    enabled: !!user && user.role === "admin",
-  });
+  const { data: assessments, isLoading } = trpc.admin.allAssessments.useQuery(
+    undefined,
+    {
+      enabled: !!user && user.role === "admin",
+    },
+  );
 
   const { data: domains } = trpc.admin.domains.useQuery(undefined, {
     enabled: !!user && user.role === "admin",
@@ -68,48 +111,64 @@ export default function ReportsDashboard() {
 
   const generateIndividualPDF = trpc.admin.generateIndividualPDF.useMutation();
   const generateTeamPDF = trpc.admin.generateTeamPDF.useMutation();
+  const reportAssessments = useMemo(
+    () => (assessments ?? []) as ReportAssessment[],
+    [assessments],
+  );
+  const reportDomains = useMemo(() => (domains ?? []) as string[], [domains]);
 
   // Filter assessments
   const filtered = useMemo(() => {
-    if (!assessments) return [];
-    let result = [...assessments];
+    let result = [...reportAssessments];
 
     // Domain filter
     if (domainFilter !== "all") {
-      result = result.filter(a => a.domain === domainFilter);
+      result = result.filter((a) => a.domain === domainFilter);
     }
 
     // Role filter
     if (roleFilter !== "all") {
-      result = result.filter(a => a.role === roleFilter);
+      result = result.filter((a) => a.role === roleFilter);
     }
 
     // Search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(a =>
-        (a.guestName || "").toLowerCase().includes(q) ||
-        (a.guestEmail || "").toLowerCase().includes(q) ||
-        (a.domain || "").toLowerCase().includes(q)
+      result = result.filter(
+        (a) =>
+          (a.guestName || "").toLowerCase().includes(q) ||
+          (a.guestEmail || "").toLowerCase().includes(q) ||
+          (a.domain || "").toLowerCase().includes(q),
       );
     }
 
     // Date range
     if (dateRange !== "all") {
-      const now = Date.now();
       const days = dateRange === "7d" ? 7 : dateRange === "30d" ? 30 : 90;
-      const cutoff = now - days * 24 * 60 * 60 * 1000;
-      result = result.filter(a => a.createdAt && new Date(a.createdAt).getTime() > cutoff);
+      const cutoff =
+        (dateFilterReferenceTime ?? 0) - days * 24 * 60 * 60 * 1000;
+      result = result.filter(
+        (a) => a.createdAt && new Date(a.createdAt).getTime() > cutoff,
+      );
     }
 
     return result;
-  }, [assessments, domainFilter, roleFilter, searchQuery, dateRange]);
+  }, [
+    reportAssessments,
+    domainFilter,
+    roleFilter,
+    searchQuery,
+    dateRange,
+    dateFilterReferenceTime,
+  ]);
 
   // Domain stats
   const domainStats = useMemo(() => {
-    if (!assessments) return [];
-    const map = new Map<string, { count: number; roles: Record<string, number> }>();
-    for (const a of assessments) {
+    const map = new Map<
+      string,
+      { count: number; roles: Record<string, number> }
+    >();
+    for (const a of reportAssessments) {
       const d = a.domain || "unknown";
       if (!map.has(d)) map.set(d, { count: 0, roles: {} });
       const entry = map.get(d)!;
@@ -119,7 +178,7 @@ export default function ReportsDashboard() {
     return Array.from(map.entries())
       .map(([domain, data]) => ({ domain, ...data }))
       .sort((a, b) => b.count - a.count);
-  }, [assessments]);
+  }, [reportAssessments]);
 
   // Role distribution
   const roleStats = useMemo(() => {
@@ -131,14 +190,14 @@ export default function ReportsDashboard() {
     return counts;
   }, [filtered]);
 
-  const handleGenerateIndividualPDF = async (assessment: any) => {
+  const handleGenerateIndividualPDF = async (assessment: ReportAssessment) => {
     setGeneratingPDF(assessment.id);
     try {
       const rawScores = assessment.scores as Record<string, unknown> | null;
       const scores: Record<string, number> = {};
       if (rawScores) {
         for (const [k, v] of Object.entries(rawScores)) {
-          scores[k] = typeof v === 'number' ? v : 0;
+          scores[k] = typeof v === "number" ? v : 0;
         }
       }
       const result = await generateIndividualPDF.mutateAsync({
@@ -201,31 +260,47 @@ export default function ReportsDashboard() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Button variant="ghost" size="sm" onClick={() => router.push("/flow/admin")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/flow/admin")}
+              >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
-              <h1 className="text-3xl font-display font-bold text-foreground">Reports Dashboard</h1>
+              <h1 className="text-3xl font-display font-bold text-foreground">
+                Reports Dashboard
+              </h1>
             </div>
             <p className="text-muted-foreground ml-10">
-              {assessments?.length || 0} total assessments across {domains?.length || 0} domains
+              {reportAssessments.length} total assessments across{" "}
+              {reportDomains.length} domains
             </p>
           </div>
         </div>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
-          {["Spark", "Amplifier", "Filter", "Ground", "Conductor"].map(role => (
-            <Card key={role} className={`border ${ROLE_BG[role]} cursor-pointer transition-all hover:scale-[1.02]`}
-              onClick={() => setRoleFilter(roleFilter === role ? "all" : role)}>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl mb-1">{ROLE_ICONS[role]}</div>
-                <div className={`text-2xl font-bold ${ROLE_COLORS[role]}`}>
-                  {roleStats[role] || 0}
-                </div>
-                <div className="text-xs text-muted-foreground font-medium">{role}s</div>
-              </CardContent>
-            </Card>
-          ))}
+          {["Spark", "Amplifier", "Filter", "Ground", "Conductor"].map(
+            (role) => (
+              <Card
+                key={role}
+                className={`border ${ROLE_BG[role]} cursor-pointer transition-all hover:scale-[1.02]`}
+                onClick={() =>
+                  setRoleFilter(roleFilter === role ? "all" : role)
+                }
+              >
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl mb-1">{ROLE_ICONS[role]}</div>
+                  <div className={`text-2xl font-bold ${ROLE_COLORS[role]}`}>
+                    {roleStats[role] || 0}
+                  </div>
+                  <div className="text-xs text-muted-foreground font-medium">
+                    {role}s
+                  </div>
+                </CardContent>
+              </Card>
+            ),
+          )}
         </div>
 
         {/* Filters */}
@@ -239,7 +314,7 @@ export default function ReportsDashboard() {
                   type="text"
                   placeholder="Search by name, email, or domain..."
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                 />
               </div>
@@ -249,12 +324,14 @@ export default function ReportsDashboard() {
                 <Globe className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={domainFilter}
-                  onChange={e => setDomainFilter(e.target.value)}
+                  onChange={(e) => setDomainFilter(e.target.value)}
                   className="px-3 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value="all">All Domains</option>
-                  {(domains || []).map((d: any) => (
-                    <option key={d} value={d}>{d}</option>
+                  {reportDomains.map((domain) => (
+                    <option key={domain} value={domain}>
+                      {domain}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -264,13 +341,17 @@ export default function ReportsDashboard() {
                 <Filter className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={roleFilter}
-                  onChange={e => setRoleFilter(e.target.value)}
+                  onChange={(e) => setRoleFilter(e.target.value)}
                   className="px-3 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value="all">All Roles</option>
-                  {["Spark", "Amplifier", "Filter", "Ground", "Conductor"].map(r => (
-                    <option key={r} value={r}>{r}</option>
-                  ))}
+                  {["Spark", "Amplifier", "Filter", "Ground", "Conductor"].map(
+                    (r) => (
+                      <option key={r} value={r}>
+                        {r}
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
 
@@ -279,7 +360,16 @@ export default function ReportsDashboard() {
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={dateRange}
-                  onChange={e => setDateRange(e.target.value as any)}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    if (REPORT_DATE_RANGES.includes(value as ReportDateRange)) {
+                      const nextDateRange = value as ReportDateRange;
+                      setDateRange(nextDateRange);
+                      setDateFilterReferenceTime(
+                        nextDateRange === "all" ? null : Date.now(),
+                      );
+                    }
+                  }}
                   className="px-3 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value="all">All Time</option>
@@ -291,9 +381,18 @@ export default function ReportsDashboard() {
             </div>
 
             <div className="mt-3 text-sm text-muted-foreground">
-              Showing {filtered.length} of {assessments?.length || 0} assessments
-              {domainFilter !== "all" && <span className="ml-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">{domainFilter}</span>}
-              {roleFilter !== "all" && <span className="ml-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">{roleFilter}</span>}
+              Showing {filtered.length} of {reportAssessments.length}{" "}
+              assessments
+              {domainFilter !== "all" && (
+                <span className="ml-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
+                  {domainFilter}
+                </span>
+              )}
+              {roleFilter !== "all" && (
+                <span className="ml-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
+                  {roleFilter}
+                </span>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -313,47 +412,87 @@ export default function ReportsDashboard() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border/50 bg-muted/30">
-                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Name</th>
-                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground">Role</th>
-                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden md:table-cell">Domain</th>
-                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden sm:table-cell">Score</th>
-                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden lg:table-cell">Date</th>
-                        <th className="text-right px-4 py-3 font-semibold text-muted-foreground">PDF</th>
+                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
+                          Name
+                        </th>
+                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
+                          Role
+                        </th>
+                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden md:table-cell">
+                          Domain
+                        </th>
+                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden sm:table-cell">
+                          Score
+                        </th>
+                        <th className="text-left px-4 py-3 font-semibold text-muted-foreground hidden lg:table-cell">
+                          Date
+                        </th>
+                        <th className="text-right px-4 py-3 font-semibold text-muted-foreground">
+                          PDF
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {filtered.length === 0 ? (
                         <tr>
-                          <td colSpan={6} className="text-center py-12 text-muted-foreground">
+                          <td
+                            colSpan={6}
+                            className="text-center py-12 text-muted-foreground"
+                          >
                             No assessments match your filters.
                           </td>
                         </tr>
                       ) : (
-                        filtered.slice(0, 50).map(a => (
+                        filtered.slice(0, 50).map((a) => (
                           <tr
                             key={a.id}
                             onClick={() => setSelectedAssessment(a)}
                             className="border-b border-border/30 hover:bg-muted/20 transition-colors cursor-pointer"
                           >
                             <td className="px-4 py-3">
-                              <div className="font-medium text-foreground">{a.guestName || "Anonymous"}</div>
-                              <div className="text-xs text-muted-foreground">{a.guestEmail || ""}</div>
+                              <div className="font-medium text-foreground">
+                                {a.guestName || "Anonymous"}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {a.guestEmail || ""}
+                              </div>
                             </td>
                             <td className="px-4 py-3">
-                              <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-semibold border ${ROLE_BG[a.role]}`}>
+                              <span
+                                className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-semibold border ${ROLE_BG[a.role]}`}
+                              >
                                 <span>{ROLE_ICONS[a.role]}</span>
-                                <span className={ROLE_COLORS[a.role]}>{a.role}</span>
+                                <span className={ROLE_COLORS[a.role]}>
+                                  {a.role}
+                                </span>
                               </span>
                             </td>
                             <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
-                              {a.domain || <span className="text-muted-foreground/50 italic">none</span>}
+                              {a.domain || (
+                                <span className="text-muted-foreground/50 italic">
+                                  none
+                                </span>
+                              )}
                             </td>
                             <td className="px-4 py-3 hidden sm:table-cell">
-                              <span className="font-mono font-bold text-foreground">{a.score}</span>
-                              <span className="text-muted-foreground text-xs">/100</span>
+                              <span className="font-mono font-bold text-foreground">
+                                {a.score}
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                /100
+                              </span>
                             </td>
                             <td className="px-4 py-3 text-muted-foreground text-xs hidden lg:table-cell">
-                              {a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}
+                              {a.createdAt
+                                ? new Date(a.createdAt).toLocaleDateString(
+                                    "en-US",
+                                    {
+                                      month: "short",
+                                      day: "numeric",
+                                      year: "numeric",
+                                    },
+                                  )
+                                : ""}
                             </td>
                             <td className="px-4 py-3 text-right">
                               <Button
@@ -381,7 +520,8 @@ export default function ReportsDashboard() {
                 </div>
                 {filtered.length > 50 && (
                   <div className="px-4 py-3 text-center text-sm text-muted-foreground border-t border-border/30">
-                    Showing first 50 of {filtered.length} results. Use filters to narrow down.
+                    Showing first 50 of {filtered.length} results. Use filters
+                    to narrow down.
                   </div>
                 )}
               </CardContent>
@@ -399,21 +539,32 @@ export default function ReportsDashboard() {
               </CardHeader>
               <CardContent className="space-y-3">
                 {domainStats.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-4">No domains found.</p>
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No domains found.
+                  </p>
                 ) : (
-                  domainStats.map(ds => {
+                  domainStats.map((ds) => {
                     const canGenerate = ds.count >= 3;
                     return (
-                      <div key={ds.domain} className="p-3 rounded-lg bg-muted/30 border border-border/30">
+                      <div
+                        key={ds.domain}
+                        className="p-3 rounded-lg bg-muted/30 border border-border/30"
+                      >
                         <div className="flex items-center justify-between mb-2">
                           <div>
-                            <div className="font-semibold text-foreground text-sm">{ds.domain}</div>
-                            <div className="text-xs text-muted-foreground">{ds.count} member{ds.count !== 1 ? "s" : ""}</div>
+                            <div className="font-semibold text-foreground text-sm">
+                              {ds.domain}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {ds.count} member{ds.count !== 1 ? "s" : ""}
+                            </div>
                           </div>
                           <Button
                             variant={canGenerate ? "default" : "ghost"}
                             size="sm"
-                            disabled={!canGenerate || generatingTeamPDF === ds.domain}
+                            disabled={
+                              !canGenerate || generatingTeamPDF === ds.domain
+                            }
                             onClick={() => handleGenerateTeamPDF(ds.domain)}
                             className="text-xs"
                           >
@@ -422,17 +573,26 @@ export default function ReportsDashboard() {
                             ) : (
                               <BarChart3 className="w-3 h-3 mr-1" />
                             )}
-                            {canGenerate ? "Generate" : `Need ${3 - ds.count} more`}
+                            {canGenerate
+                              ? "Generate"
+                              : `Need ${3 - ds.count} more`}
                           </Button>
                         </div>
                         {/* Mini role distribution */}
                         <div className="flex gap-1 flex-wrap">
-                          {Object.entries(ds.roles).sort((a, b) => b[1] - a[1]).map(([role, count]) => (
-                            <span key={role} className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium border ${ROLE_BG[role]}`}>
-                              <span>{ROLE_ICONS[role]}</span>
-                              <span className={ROLE_COLORS[role]}>{count}</span>
-                            </span>
-                          ))}
+                          {Object.entries(ds.roles)
+                            .sort((a, b) => b[1] - a[1])
+                            .map(([role, count]) => (
+                              <span
+                                key={role}
+                                className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium border ${ROLE_BG[role]}`}
+                              >
+                                <span>{ROLE_ICONS[role]}</span>
+                                <span className={ROLE_COLORS[role]}>
+                                  {count}
+                                </span>
+                              </span>
+                            ))}
                         </div>
                       </div>
                     );
@@ -451,22 +611,41 @@ export default function ReportsDashboard() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-border/30">
-                  <span className="text-sm text-muted-foreground">Total Assessments</span>
-                  <span className="font-bold text-foreground">{assessments?.length || 0}</span>
+                  <span className="text-sm text-muted-foreground">
+                    Total Assessments
+                  </span>
+                  <span className="font-bold text-foreground">
+                    {reportAssessments.length}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-border/30">
-                  <span className="text-sm text-muted-foreground">Active Domains</span>
-                  <span className="font-bold text-foreground">{domains?.length || 0}</span>
+                  <span className="text-sm text-muted-foreground">
+                    Active Domains
+                  </span>
+                  <span className="font-bold text-foreground">
+                    {reportDomains.length}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-border/30">
-                  <span className="text-sm text-muted-foreground">Team-Ready Domains</span>
-                  <span className="font-bold text-foreground">{domainStats.filter(d => d.count >= 3).length}</span>
+                  <span className="text-sm text-muted-foreground">
+                    Team-Ready Domains
+                  </span>
+                  <span className="font-bold text-foreground">
+                    {domainStats.filter((d) => d.count >= 3).length}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-sm text-muted-foreground">Avg Score</span>
+                  <span className="text-sm text-muted-foreground">
+                    Avg Score
+                  </span>
                   <span className="font-bold text-foreground">
-                    {assessments && assessments.length > 0
-                      ? Math.round(assessments.reduce((s: number, a: any) => s + (a.score || 0), 0) / assessments.length)
+                    {reportAssessments.length > 0
+                      ? Math.round(
+                          reportAssessments.reduce(
+                            (sum, assessment) => sum + (assessment.score || 0),
+                            0,
+                          ) / reportAssessments.length,
+                        )
                       : 0}
                   </span>
                 </div>
@@ -477,7 +656,10 @@ export default function ReportsDashboard() {
       </div>
 
       {/* Full Report Modal */}
-      <Dialog open={!!selectedAssessment} onOpenChange={(open) => !open && setSelectedAssessment(null)}>
+      <Dialog
+        open={!!selectedAssessment}
+        onOpenChange={(open) => !open && setSelectedAssessment(null)}
+      >
         <DialogContent className="sm:max-w-xl max-h-[85vh] overflow-y-auto">
           {selectedAssessment && (
             <>
@@ -492,59 +674,86 @@ export default function ReportsDashboard() {
                 <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                   {selectedAssessment.guestEmail && (
                     <span className="flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5" /> {selectedAssessment.guestEmail}
+                      <Mail className="w-3.5 h-3.5" />{" "}
+                      {selectedAssessment.guestEmail}
                     </span>
                   )}
                   {selectedAssessment.domain && (
                     <span className="flex items-center gap-1.5">
-                      <Globe className="w-3.5 h-3.5" /> {selectedAssessment.domain}
+                      <Globe className="w-3.5 h-3.5" />{" "}
+                      {selectedAssessment.domain}
                     </span>
                   )}
                   {selectedAssessment.createdAt && (
                     <span className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" />
-                      {new Date(selectedAssessment.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      {new Date(
+                        selectedAssessment.createdAt,
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
                     </span>
                   )}
                 </div>
 
-                <div className={`p-4 rounded-lg border ${ROLE_BG[selectedAssessment.role]}`}>
-                  <div className={`text-lg font-bold ${ROLE_COLORS[selectedAssessment.role]}`}>
-                    {selectedAssessment.role} — {ROLE_TAGLINES[selectedAssessment.role]}
+                <div
+                  className={`p-4 rounded-lg border ${ROLE_BG[selectedAssessment.role]}`}
+                >
+                  <div
+                    className={`text-lg font-bold ${ROLE_COLORS[selectedAssessment.role]}`}
+                  >
+                    {selectedAssessment.role} —{" "}
+                    {ROLE_TAGLINES[selectedAssessment.role]}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
-                    Dominant Score: <strong className="text-foreground">{selectedAssessment.score}%</strong>
+                    Dominant Score:{" "}
+                    <strong className="text-foreground">
+                      {selectedAssessment.score}%
+                    </strong>
                   </div>
                 </div>
 
-                {selectedAssessment.scores && Object.keys(selectedAssessment.scores).length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-foreground mb-3">Energy Distribution</h3>
-                    <div className="space-y-3">
-                      {Object.entries(selectedAssessment.scores as Record<string, number>)
-                        .sort(([, a], [, b]) => (b as number) - (a as number))
-                        .map(([role, score]) => (
-                          <div key={role} className="space-y-1">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">{role}</span>
-                              <span className="text-muted-foreground">{score}%</span>
+                {selectedAssessment.scores &&
+                  Object.keys(selectedAssessment.scores).length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-semibold text-foreground mb-3">
+                        Energy Distribution
+                      </h3>
+                      <div className="space-y-3">
+                        {Object.entries(
+                          selectedAssessment.scores as Record<string, number>,
+                        )
+                          .sort(([, a], [, b]) => (b as number) - (a as number))
+                          .map(([role, score]) => (
+                            <div key={role} className="space-y-1">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-muted-foreground">
+                                  {role}
+                                </span>
+                                <span className="text-muted-foreground">
+                                  {score}%
+                                </span>
+                              </div>
+                              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                <div
+                                  className={`h-full rounded-full ${role === selectedAssessment.role ? "bg-primary" : "bg-muted-foreground/30"}`}
+                                  style={{ width: `${score}%` }}
+                                />
+                              </div>
                             </div>
-                            <div className="h-2 bg-muted rounded-full overflow-hidden">
-                              <div
-                                className={`h-full rounded-full ${role === selectedAssessment.role ? "bg-primary" : "bg-muted-foreground/30"}`}
-                                style={{ width: `${score}%` }}
-                              />
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
 
               <DialogFooter>
                 <Button
-                  onClick={() => handleGenerateIndividualPDF(selectedAssessment)}
+                  onClick={() =>
+                    handleGenerateIndividualPDF(selectedAssessment)
+                  }
                   disabled={generatingPDF === selectedAssessment.id}
                 >
                   {generatingPDF === selectedAssessment.id ? (
