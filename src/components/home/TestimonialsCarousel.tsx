@@ -73,7 +73,7 @@ export default function TestimonialsCarousel() {
   return (
     <section className="section-sunset py-28 sm:py-36 overflow-hidden relative">
       <div
-        className="glass-orb glass-orb-amber w-[380px] h-[380px] -top-40 left-1/4"
+        className="glass-orb glass-orb-pink w-[380px] h-[380px] -top-40 left-1/4"
         style={{ animationDuration: "11s" }}
       />
       <div
