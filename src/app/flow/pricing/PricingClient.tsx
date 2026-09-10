@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 const TIERS = [
@@ -98,10 +98,25 @@ const TIERS = [
   },
 ];
 
+function getCheckoutUrl(response: unknown): string | null {
+  if (
+    typeof response === "object" &&
+    response !== null &&
+    "url" in response &&
+    typeof response.url === "string"
+  ) {
+    return response.url;
+  }
+  return null;
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Please try again.";
+}
+
 export default function Pricing() {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
-  const [checkingOut, setCheckingOut] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   // Check for success/cancel URL params
   useEffect(() => {
@@ -127,27 +142,20 @@ export default function Pricing() {
     enabled: isAuthenticated,
   });
 
-  const createCheckout = trpc.stripe.createCheckout.useMutation({
-    onSuccess: (data: any) => {
-      setCheckingOut(false);
-      toast.info("Redirecting to checkout...", {
-        description: "You'll be taken to Stripe to complete your subscription.",
-      });
-      window.open(data.url, "_blank");
-    },
-    onError: (err: any) => {
-      setCheckingOut(false);
-      toast.error("Checkout failed", { description: err.message });
-    },
-  });
-
   const createPortal = trpc.stripe.createPortal.useMutation({
-    onSuccess: (data: any) => {
-      window.open(data.url, "_blank");
+    onSuccess: (data: unknown) => {
+      const portalUrl = getCheckoutUrl(data);
+      if (!portalUrl) {
+        toast.error("Could not open billing portal", {
+          description: "The billing provider did not return a valid URL.",
+        });
+        return;
+      }
+      window.open(portalUrl, "_blank");
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       toast.error("Could not open billing portal", {
-        description: err.message,
+        description: getErrorMessage(err),
       });
     },
   });
@@ -286,13 +294,13 @@ export default function Pricing() {
                 <Button
                   className="w-full gap-2"
                   variant={tier.popular ? "default" : "outline"}
-                  disabled={checkingOut && tier.tier === "tribe"}
+                  disabled={createPortal.isPending && tier.tier === "tribe"}
                   onClick={() => handleTierClick(tier)}
                 >
-                  {checkingOut && tier.tier === "tribe" ? (
+                  {createPortal.isPending && tier.tier === "tribe" ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin" /> Creating
-                      checkout...
+                      <Loader2 className="w-4 h-4 animate-spin" /> Opening
+                      billing portal...
                     </>
                   ) : subStatus?.active && tier.tier === "tribe" ? (
                     <>
@@ -380,8 +388,8 @@ export default function Pricing() {
                 <p className="text-3xl font-black text-blue-400">80%</p>
                 <p className="text-sm text-gray-300 mt-1">
                   Of turnover comes from role misfit, not skill gaps. You&#39;re
-                  losing people because they&#39;re in the wrong seat, not the wrong
-                  company.
+                  losing people because they&#39;re in the wrong seat, not the
+                  wrong company.
                 </p>
               </div>
               <div>

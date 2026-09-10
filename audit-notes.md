@@ -73,6 +73,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The Flow Inspirations page now uses standards-based Tailwind typography utilities in place of every legacy text-wrap cast. Its focused lint pass is clean, and the global lint backlog is reduced to 52 errors and 93 warnings without suppressing rules.
 - The Flow Admin Dashboard now uses typed role distribution, domain activity, assessment, team, and email-drip contracts. Its focused lint pass is clean, and the global lint backlog is reduced to 46 errors and 92 warnings without suppressing rules.
 - The Flow Reports dashboard now uses typed assessment selection, PDF generation, filters, date-range changes, and score aggregation. Its focused lint pass is clean, and the global lint backlog is reduced to 40 errors and 90 warnings without suppressing rules.
+- The Flow Pricing page now uses safely narrowed portal responses and errors, and its Tribe button reflects the live billing-portal pending state rather than an inactive checkout flag. Its focused lint pass is clean, and the global lint backlog is reduced to 36 errors and 88 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 
