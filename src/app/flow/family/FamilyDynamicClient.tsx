@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { Card, CardContent } from "@/components/flow/ui/card";
 import { trpc } from "@/lib/flow/trpc";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,19 +20,49 @@ import {
   CheckCircle2,
   Copy,
   Heart,
-  Home as HomeIcon,
   Download,
   Loader2,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import {
   Role,
   calculateRoleScores,
   getCombinationProfile,
   getStressZones,
-  getRolePercentages,
   analyzeTeamStress,
   TeamMemberProfile,
+  RankingAnswer,
 } from "@/lib/flow/surveyData";
+
+type AssessmentAnswers = Record<number, string | RankingAnswer>;
+type RoleProfile = ReturnType<typeof getCombinationProfile>;
+
+interface FamilyAssessmentRecord {
+  id: string | number;
+  role?: string | null;
+  guestName?: string | null;
+  answers?: string | AssessmentAnswers | null;
+}
+
+interface FamilyMember {
+  id: string | number;
+  name: string;
+  role: Role;
+  chaos: { x: number; y: number };
+  flow: { x: number; y: number };
+  color: string;
+  colorHex: string;
+  icon: LucideIcon;
+  scores: Record<Role, number> | null;
+  profile: RoleProfile | null;
+  purityScore: number;
+  comboLabel: string;
+}
+
+type ProfiledFamilyMember = FamilyMember & {
+  scores: Record<Role, number>;
+  profile: RoleProfile;
+};
 
 const roleConfig: Record<
   string,
@@ -41,7 +70,7 @@ const roleConfig: Record<
     color: string;
     bgClass: string;
     textClass: string;
-    icon: any;
+    icon: LucideIcon;
     label: string;
     familyDescription: string;
   }
@@ -110,11 +139,18 @@ function generatePositions(index: number, role: string) {
   return { chaos: { x: chaosX, y: chaosY }, flow: { x: flowX, y: flowY } };
 }
 
+function toRole(value: unknown): Role {
+  return typeof value === "string" && value in roleConfig
+    ? (value as Role)
+    : "Conductor";
+}
+
+function hasProfile(member: FamilyMember): member is ProfiledFamilyMember {
+  return member.scores !== null && member.profile !== null;
+}
+
 // Family-specific insights based on role combinations
-function getFamilyInsight(
-  roleDistribution: Record<string, number>,
-  total: number,
-): string[] {
+function getFamilyInsight(roleDistribution: Record<string, number>): string[] {
   const insights: string[] = [];
 
   if (!roleDistribution.Conductor || roleDistribution.Conductor === 0) {
@@ -188,9 +224,13 @@ function DownloadFamilyReportButton({
       if (result.url) {
         window.open(result.url, "_blank");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to generate family report:", err);
-      alert(err?.message || "Failed to generate report. Please try again.");
+      alert(
+        err instanceof Error
+          ? err.message
+          : "Failed to generate report. Please try again.",
+      );
     } finally {
       setDownloading(false);
     }
@@ -219,8 +259,6 @@ export default function FamilyDynamic() {
   const [isFixed, setIsFixed] = useState(false);
   const router = useRouter();
   const [copiedLink, setCopiedLink] = useState(false);
-  const [familyName, setFamilyName] = useState("");
-  const [showSetup, setShowSetup] = useState(false);
 
   const searchParams = useMemo(
     () => new URLSearchParams(window.location.search),
@@ -233,24 +271,27 @@ export default function FamilyDynamic() {
     { enabled: !!domain },
   );
 
-  const results = domainResults || [];
+  const results = useMemo(
+    () => (domainResults ?? []) as FamilyAssessmentRecord[],
+    [domainResults],
+  );
 
   const familyMembers = useMemo(() => {
-    return results.map((assessment: any, index: number) => {
-      const role = assessment.role || "Conductor";
+    return results.map((assessment, index): FamilyMember => {
+      const role = toRole(assessment.role);
       const config = roleConfig[role] || roleConfig.Conductor;
       const positions = generatePositions(index, role);
 
       let scores: Record<Role, number> | null = null;
-      let profile = null;
+      let profile: RoleProfile | null = null;
       let purityScore = 0;
-      let comboLabel = role;
+      let comboLabel: string = role;
 
       if (assessment.answers) {
         try {
-          const parsedAnswers =
+          const parsedAnswers: AssessmentAnswers =
             typeof assessment.answers === "string"
-              ? JSON.parse(assessment.answers)
+              ? (JSON.parse(assessment.answers) as AssessmentAnswers)
               : assessment.answers;
           scores = calculateRoleScores(parsedAnswers);
           profile = getCombinationProfile(scores);
@@ -279,8 +320,8 @@ export default function FamilyDynamic() {
 
   const roleDistribution = useMemo(() => {
     const counts: Record<string, number> = {};
-    familyMembers.forEach((m: any) => {
-      counts[m.role] = (counts[m.role] || 0) + 1;
+    familyMembers.forEach((member) => {
+      counts[member.role] = (counts[member.role] || 0) + 1;
     });
     return counts;
   }, [familyMembers]);
@@ -288,12 +329,12 @@ export default function FamilyDynamic() {
   // Family stress analysis
   const familyStressAnalysis = useMemo(() => {
     const membersWithProfiles: TeamMemberProfile[] = familyMembers
-      .filter((m: any) => m.scores && m.profile)
-      .map((m: any) => ({
-        name: m.name,
-        scores: m.scores!,
-        profile: m.profile!,
-        stressZones: getStressZones(m.profile!, m.scores!),
+      .filter(hasProfile)
+      .map((member) => ({
+        name: member.name,
+        scores: member.scores,
+        profile: member.profile,
+        stressZones: getStressZones(member.profile, member.scores),
       }));
 
     if (membersWithProfiles.length < 2) return null;
@@ -302,7 +343,7 @@ export default function FamilyDynamic() {
 
   const familyInsights = useMemo(() => {
     if (familyMembers.length < 2) return [];
-    return getFamilyInsight(roleDistribution, familyMembers.length);
+    return getFamilyInsight(roleDistribution);
   }, [familyMembers, roleDistribution]);
 
   const handleCopyInviteLink = () => {
@@ -323,23 +364,21 @@ export default function FamilyDynamic() {
           <h1 className="text-4xl font-black uppercase tracking-tighter text-gray-900">
             Family Dynamic
           </h1>
-          <p
-            className="text-gray-500 text-lg leading-relaxed"
-            style={{ textWrap: "balance" as any }}
-          >
+          <p className="text-gray-500 text-lg leading-relaxed text-balance">
             The same Flow Circuit that powers teams also runs through families.
-            Someone&#39;s the Spark, someone&#39;s the Ground - and the friction of
-            being forced into the wrong role at home is just as real as at work.
-            Maybe more.
+            Someone&#39;s the Spark, someone&#39;s the Ground - and the friction
+            of being forced into the wrong role at home is just as real as at
+            work. Maybe more.
           </p>
           <p className="text-gray-400 text-sm">
             Create a family code and have each family member take the
             assessment.
           </p>
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const input = (e.target as any).familyCode.value;
+            onSubmit={(event: FormEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              const input = new FormData(event.currentTarget).get("familyCode");
+              if (typeof input !== "string") return;
               if (input)
                 router.push(
                   `/flow/family?family=${encodeURIComponent(input.trim().toLowerCase().replace(/\s+/g, "-"))}`,
@@ -561,7 +600,7 @@ export default function FamilyDynamic() {
             </AnimatePresence>
 
             {/* Family Nodes */}
-            {familyMembers.map((member: any) => {
+            {familyMembers.map((member, index) => {
               const initials = member.name
                 .split(" ")
                 .map((n: string) => n[0])
@@ -596,7 +635,7 @@ export default function FamilyDynamic() {
                     stiffness: 40,
                     damping: 15,
                     mass: 1.2,
-                    delay: isFixed ? (member.id % 20) * 0.05 : 0,
+                    delay: isFixed ? (index % 20) * 0.05 : 0,
                   }}
                   whileHover={{ scale: 1.15, zIndex: 50 }}
                 >
@@ -709,10 +748,7 @@ export default function FamilyDynamic() {
                   transition={{ delay: i * 0.1 }}
                   className="p-5 md:p-6 rounded-2xl bg-rose-50 border-2 border-rose-200"
                 >
-                  <p
-                    className="text-gray-700 leading-relaxed"
-                    style={{ textWrap: "pretty" as any }}
-                  >
+                  <p className="text-gray-700 leading-relaxed text-pretty">
                     {insight}
                   </p>
                 </motion.div>
@@ -729,8 +765,8 @@ export default function FamilyDynamic() {
                 Where the Stress Lives
               </h2>
               <p className="text-gray-500 text-sm">
-                Home is supposed to be where you can be yourself. Here&#39;s where
-                that breaks down.
+                Home is supposed to be where you can be yourself. Here&#39;s
+                where that breaks down.
               </p>
             </div>
 
@@ -741,8 +777,8 @@ export default function FamilyDynamic() {
                   <AlertTriangle className="w-4 h-4" /> Natural Tension Points
                 </h3>
                 <p className="text-xs text-gray-500">
-                  These aren&#39;t personality clashes - they&#39;re different operating
-                  systems trying to share the same house.
+                  These aren&#39;t personality clashes - they&#39;re different
+                  operating systems trying to share the same house.
                 </p>
                 <div className="space-y-3">
                   {familyStressAnalysis.frictionPairs.map((pair, i) => (
@@ -773,10 +809,7 @@ export default function FamilyDynamic() {
                 <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.2em] text-rose-700">
                   <Heart className="w-4 h-4" /> The Hidden Cost
                 </h3>
-                <p
-                  className="text-gray-700 leading-relaxed text-sm"
-                  style={{ textWrap: "pretty" as any }}
-                >
+                <p className="text-gray-700 leading-relaxed text-sm text-pretty">
                   {getFamilyStressInsight(familyStressAnalysis.gaps)}
                 </p>
               </div>
@@ -790,7 +823,7 @@ export default function FamilyDynamic() {
             Family Members
           </h3>
           <div className="grid sm:grid-cols-2 gap-3">
-            {familyMembers.map((member: any) => {
+            {familyMembers.map((member) => {
               const config = roleConfig[member.role];
               const Icon = config?.icon || Users;
               return (
