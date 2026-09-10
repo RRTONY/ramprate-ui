@@ -63,6 +63,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - Focused quality remediation removed all remaining local internal-anchor navigation violations and reduced the global lint backlog to 139 errors and 128 warnings without suppressing rules.
 - The release candidate passed 60 deterministic tests, with two opt-in external availability checks skipped by default; strict type checking, focused linting for changed files, and an optimized production build generating 212 static pages all succeeded.
 - Local release checks returned HTTP 200 for the home page, blog archive and article, category redirect, Flow login and results, favicon, Apple icon, manifest, robots, sitemap, and Open Graph route. Invalid Ask RampRate input returned HTTP 400, confirming the public validation boundary.
+- A follow-up Flow quality pass removed the remaining `set-state-in-effect` and `set-state-in-render` findings from shared and assessment components. The current global lint count is 135 errors and 127 warnings, which remain primarily legacy explicit typing, unused-symbol, and image optimization findings outside the revised release paths.
 
 ## Cloud Cleanup and Built-in AI Boundary
 

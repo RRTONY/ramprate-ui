@@ -164,7 +164,10 @@ export default function Assessment() {
       priorAssessment &&
       !localPriorAssessment
     ) {
-      setShowReturningDashboard(true);
+      const frame = window.requestAnimationFrame(() => {
+        setShowReturningDashboard(true);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
   }, [
     priorAssessment,
@@ -270,20 +273,26 @@ export default function Assessment() {
 
   // Handle Soulprint retake - jump directly to birth data step
   useEffect(() => {
-    const soulprintRetake = localStorage.getItem("fc_soulprint_retake");
-    if (soulprintRetake === "true") {
+    const frame = window.requestAnimationFrame(() => {
+      const soulprintRetake = localStorage.getItem("fc_soulprint_retake");
+      if (soulprintRetake !== "true") return;
+
       localStorage.removeItem("fc_soulprint_retake");
-      // Load existing answers if available
       const storedResults = localStorage.getItem("assessment_results");
       const storedName =
         localStorage.getItem("assessment_guest_name") ||
         localStorage.getItem("assessment_name");
-      if (storedResults && storedName) {
+      if (!storedResults || !storedName) return;
+
+      try {
         setAnswers(JSON.parse(storedResults));
         setGuestName(storedName);
         setPhase("birth");
+      } catch {
+        localStorage.removeItem("assessment_results");
       }
-    }
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   // Capture team code and domain from URL if present
@@ -744,10 +753,11 @@ export default function Assessment() {
                   01
                 </span>
                 <p>
-                  <strong className="text-white">Rank, don&#39;t pick.</strong> For
-                  each question, you&#39;ll see five responses. Drag them into order
-                  from &quot;most like me&quot; at the top to &quot;least like me&quot; at the
-                  bottom. Every response gets a position - no ties, no skipping.
+                  <strong className="text-white">Rank, don&#39;t pick.</strong>{" "}
+                  For each question, you&#39;ll see five responses. Drag them
+                  into order from &quot;most like me&quot; at the top to
+                  &quot;least like me&quot; at the bottom. Every response gets a
+                  position - no ties, no skipping.
                 </p>
               </div>
               <div className="flex items-start gap-3">
@@ -769,8 +779,8 @@ export default function Assessment() {
                   <strong className="text-white">
                     Answer for YOU, not your role.
                   </strong>{" "}
-                  Forget your title, your KPIs, your boss&#39;s expectations. This
-                  is about the human underneath.
+                  Forget your title, your KPIs, your boss&#39;s expectations.
+                  This is about the human underneath.
                 </p>
               </div>
               <div className="flex items-start gap-3">
@@ -779,8 +789,8 @@ export default function Assessment() {
                 </span>
                 <p>
                   <strong className="text-white">Every role matters.</strong>{" "}
-                  There are no wrong answers. The circuit doesn&#39;t work without
-                  all five energies. The ranking just reveals your{" "}
+                  There are no wrong answers. The circuit doesn&#39;t work
+                  without all five energies. The ranking just reveals your{" "}
                   <em>distribution</em>.
                 </p>
               </div>
@@ -1004,7 +1014,8 @@ export default function Assessment() {
                         </strong>
                         . Everyone with an @{detectedDomain} email is mapped
                         together - individual results stay private, but the
-                        team&#39;s energy distribution is visible to all members.
+                        team&#39;s energy distribution is visible to all
+                        members.
                       </p>
                       <div className="flex items-center gap-3 pt-1">
                         <div className="flex items-center gap-1.5">
@@ -1063,8 +1074,8 @@ export default function Assessment() {
               Unlock Your Soulprint
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-              Want to go deeper? Add your birth data and we&#39;ll layer in a whole
-              new dimension.
+              Want to go deeper? Add your birth data and we&#39;ll layer in a
+              whole new dimension.
             </p>
           </div>
 
@@ -1088,8 +1099,8 @@ export default function Assessment() {
               into a single, unified archetype profile.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Think of it as the &quot;cosmic fingerprint&quot; that sits underneath your
-              Flow Circuit role. Your Flow Circuit tells you{" "}
+              Think of it as the &quot;cosmic fingerprint&quot; that sits
+              underneath your Flow Circuit role. Your Flow Circuit tells you{" "}
               <em>what you do</em> on a team. Your Soulprint tells you{" "}
               <em>why you do it that way</em>.
             </p>
@@ -1109,8 +1120,8 @@ export default function Assessment() {
           <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-2xl space-y-6">
             <p className="text-sm text-gray-400">
               All three fields are needed to generate an accurate Soulprint.
-              Don&#39;t know your birth time? That&#39;s okay - skip this step and come
-              back later.
+              Don&#39;t know your birth time? That&#39;s okay - skip this step
+              and come back later.
             </p>
 
             <div className="space-y-5">

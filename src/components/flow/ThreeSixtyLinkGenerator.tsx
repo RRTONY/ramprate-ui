@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
@@ -44,19 +44,21 @@ export default function ThreeSixtyLinkGenerator({
 
   const createSession = trpc.threeSixty.createSession.useMutation();
 
-  const [session, setSession] = useState<{
+  const [createdSession, setCreatedSession] = useState<{
     token: string;
     responseCount: number;
   } | null>(null);
-
-  useEffect(() => {
-    if (existingSession.data) {
-      setSession({
-        token: existingSession.data.session.token,
-        responseCount: existingSession.data.responseCount,
-      });
-    }
-  }, [existingSession.data]);
+  const session = useMemo(
+    () =>
+      createdSession ??
+      (existingSession.data
+        ? {
+            token: existingSession.data.session.token,
+            responseCount: existingSession.data.responseCount,
+          }
+        : null),
+    [createdSession, existingSession.data],
+  );
 
   const handleGenerate = async () => {
     if (session) return;
@@ -69,7 +71,7 @@ export default function ThreeSixtyLinkGenerator({
       selfScores: selfScores || undefined,
     });
 
-    setSession({
+    setCreatedSession({
       token: result.session.token,
       responseCount: result.responseCount,
     });
@@ -80,21 +82,16 @@ export default function ThreeSixtyLinkGenerator({
     return `${window.location.origin}/360/${session.token}`;
   }, [session]);
 
-  const firstName = subjectName.split(" ")[0];
-
   const defaultMessage = useMemo(
     () =>
       `Hey - I just took a 2-minute energy assessment and I'd love your honest perspective on how I show up.\n\nIt takes 30 seconds. Just drag-rank 5 energy types from "most like me" to "least like me":\n\n${reviewLink}\n\nNo login needed. Totally anonymous. Thanks!`,
     [reviewLink],
   );
 
-  const [inviteMessage, setInviteMessage] = useState("");
-
-  useEffect(() => {
-    if (reviewLink) {
-      setInviteMessage(defaultMessage);
-    }
-  }, [reviewLink, defaultMessage]);
+  const [inviteMessageOverride, setInviteMessageOverride] = useState<
+    string | null
+  >(null);
+  const inviteMessage = inviteMessageOverride ?? defaultMessage;
 
   const copyLink = () => {
     navigator.clipboard.writeText(reviewLink);
@@ -309,7 +306,7 @@ export default function ThreeSixtyLinkGenerator({
               </div>
               <Textarea
                 value={inviteMessage}
-                onChange={(e) => setInviteMessage(e.target.value)}
+                onChange={(e) => setInviteMessageOverride(e.target.value)}
                 rows={5}
                 className="bg-muted/30 border-border text-sm rounded-xl resize-none focus:ring-primary/20"
               />
