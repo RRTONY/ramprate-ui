@@ -895,6 +895,26 @@
 .peer-assessment-intro-texture {
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
 }
+
+@keyframes scroll-to-top-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.scroll-to-top-float {
+  animation: scroll-to-top-float 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top-float {
+    animation: none;
+  }
+}
 @media (max-width: 767px) {
   .home-proof-section::after,
   .home-practices-section::after,

@@ -142,3 +142,4 @@
 - [x] Replace the static Find Your Path decorative-grid and compass animation-duration styles with scoped CSS or utility equivalents while retaining portal-specific dynamic styling and interactions.
 - [x] Replace the fixed decorative texture in the Flow Peer Assessment intro with scoped CSS while retaining the data-driven assessment-progress animation and question interactions.
 - [x] Add contract coverage for the Web3, Values, How We Work, and Payments Advisory marketing-route metadata and structured-data boundaries without changing public pages.
+- [x] Move the fixed shared Scroll to Top float animation out of component inline styles while retaining its visibility and smooth-scroll behavior.
