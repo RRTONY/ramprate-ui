@@ -7,7 +7,12 @@ import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import { Label } from "@/components/flow/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -24,8 +29,10 @@ function ResetPasswordForm() {
     try {
       await resetPassword.mutateAsync({ token, password });
       setDone(true);
-    } catch (err: any) {
-      setError(err?.message || "Failed to reset password.");
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : "Failed to reset password.",
+      );
     }
   };
 
@@ -33,7 +40,10 @@ function ResetPasswordForm() {
     return (
       <p className="text-sm text-destructive">
         This reset link is missing its token. Please request a new one from the{" "}
-        <Link href="/flow/forgot-password" className="underline underline-offset-2">
+        <Link
+          href="/flow/forgot-password"
+          className="underline underline-offset-2"
+        >
           forgot password
         </Link>{" "}
         page.
@@ -44,7 +54,9 @@ function ResetPasswordForm() {
   if (done) {
     return (
       <div className="space-y-4 text-center">
-        <p className="text-sm text-muted-foreground">Your password has been updated.</p>
+        <p className="text-sm text-muted-foreground">
+          Your password has been updated.
+        </p>
         <Link href="/flow/login">
           <Button className="w-full">Sign in</Button>
         </Link>
@@ -67,7 +79,11 @@ function ResetPasswordForm() {
         />
       </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
-      <Button type="submit" className="w-full" disabled={resetPassword.isPending}>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={resetPassword.isPending}
+      >
         {resetPassword.isPending ? "Resetting..." : "Reset password"}
       </Button>
     </form>
