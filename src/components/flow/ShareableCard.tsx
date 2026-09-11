@@ -26,7 +26,7 @@ export default function ShareableCard({
   rolePercentages,
   dominantRole,
 }: ShareableCardProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const drawCard = useCallback(() => {
     const canvas = canvasRef.current;
@@ -283,7 +283,7 @@ export default function ShareableCard({
   const canvasCallbackRef = useCallback(
     (node: HTMLCanvasElement | null) => {
       if (node) {
-        (canvasRef as any).current = node;
+        canvasRef.current = node;
         setTimeout(drawCard, 100);
       }
     },
