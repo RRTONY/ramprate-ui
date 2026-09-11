@@ -8,18 +8,21 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import {
-  ArrowRight,
-  Quote,
-  Play,
-  Send,
-  CheckCircle,
-} from "lucide-react";
+import { ArrowRight, Quote, Play, Send, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
 import { toast } from "sonner";
 import BlogBridge from "@/components/flow/BlogBridge";
+
+interface CommunityTestimonial {
+  id: number | string;
+  testimonialQuote: string;
+  authorName: string;
+  authorTitle?: string | null;
+  authorCompany?: string | null;
+  flowCircuitRole?: string | null;
+}
 
 export default function TestimonialsClient() {
   const router = useRouter();
@@ -133,8 +136,8 @@ export default function TestimonialsClient() {
             transition={{ delay: 0.5 }}
             className="text-xl md:text-3xl text-white/70 font-light max-w-4xl mx-auto leading-relaxed"
           >
-            We don&#39;t just talk about innovation. We engineer the outcomes that
-            define industries.
+            We don&#39;t just talk about innovation. We engineer the outcomes
+            that define industries.
           </motion.p>
         </section>
 
@@ -216,8 +219,11 @@ export default function TestimonialsClient() {
 function CommunityTestimonials() {
   const { data: testimonials, isLoading } =
     trpc.testimonial.approved.useQuery();
+  const communityTestimonials = testimonials as
+    CommunityTestimonial[] | undefined;
 
-  if (isLoading || !testimonials || testimonials.length === 0) return null;
+  if (isLoading || !communityTestimonials || communityTestimonials.length === 0)
+    return null;
 
   return (
     <section className="space-y-12">
@@ -230,7 +236,7 @@ function CommunityTestimonials() {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {testimonials.map((t: any, i: number) => (
+        {communityTestimonials.map((t, i) => (
           <motion.div
             key={t.id}
             initial={{ opacity: 0, y: 30 }}

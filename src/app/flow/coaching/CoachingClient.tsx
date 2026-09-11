@@ -86,7 +86,7 @@ export default function Coaching() {
   const [context, setContext] = useState<CoachingContext>("work");
 
   // Load assessment data from localStorage
-  const selfData = useMemo(() => {
+  const [selfData] = useState(() => {
     const stored = localStorage.getItem("assessment_self_answers");
     if (!stored) return null;
     try {
@@ -97,7 +97,7 @@ export default function Coaching() {
     } catch {
       return null;
     }
-  }, []);
+  });
 
   const rolePercentages = useMemo(() => {
     if (!selfData) return [];
@@ -352,9 +352,9 @@ export default function Coaching() {
                   Ready When You Are
                 </h3>
                 <p className="text-gray-500 max-w-md mx-auto">
-                  Click &quot;Generate This Week&#39;s Coaching&quot; above to get three
-                  personalized action prompts based on your Flow Circuit
-                  profile.
+                  Click &quot;Generate This Week&#39;s Coaching&quot; above to
+                  get three personalized action prompts based on your Flow
+                  Circuit profile.
                 </p>
               </motion.div>
             ) : null}
