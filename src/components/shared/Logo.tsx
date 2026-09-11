@@ -12,6 +12,12 @@ const sizes = {
   lg: { height: 48, width: 152 },
 };
 
+const sizeClasses = {
+  sm: "w-[88px] max-h-7",
+  md: "w-[112px] max-h-9",
+  lg: "w-[152px] max-h-12",
+};
+
 export default function Logo({
   variant = "light",
   className = "",
@@ -29,8 +35,7 @@ export default function Logo({
         alt="RampRate"
         width={width}
         height={height}
-        className={`h-auto object-contain ${variant === "light" ? "brightness-0 invert" : ""}`}
-        style={{ width, maxHeight: height }}
+        className={`h-auto object-contain ${sizeClasses[size]} ${variant === "light" ? "brightness-0 invert" : ""}`}
         priority
       />
     </span>
