@@ -50,4 +50,24 @@ describe("blue public content routes", () => {
     expect(thinking).toContain("function groupByYear");
     expect(thinking).toContain("allThinkingPostsQuery");
   });
+
+  it("retains managed SEO and structured-data boundaries across additional marketing routes", async () => {
+    const pages = await Promise.all(
+      [
+        "src/app/careers/page.tsx",
+        "src/app/expertise/page.tsx",
+        "src/app/growth/page.tsx",
+        "src/app/impactsoul/page.tsx",
+        "src/app/private-advisory/page.tsx",
+        "src/app/talk-to-us/page.tsx",
+      ].map((path) => readFile(projectFile(path), "utf8")),
+    );
+
+    for (const source of pages) {
+      expect(source).toContain('from "@/lib/content/seo"');
+      expect(source).toContain("getPageSeo(");
+      expect(source).toContain("withSeoOverrides(");
+      expect(source).toContain("<JsonLd");
+    }
+  });
 });
