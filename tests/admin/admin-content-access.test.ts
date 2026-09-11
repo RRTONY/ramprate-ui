@@ -1,19 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { NextRequest } from "next/server";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { GET as getContent } from "@/app/api/admin/content/[resource]/route";
 import { POST as postContact } from "@/app/api/contact-intake/route";
-import { getAuthorizedAdmin, isConfiguredAdmin } from "@/lib/admin/access";
+import { isActiveCmsMember, normalizeCmsEmail } from "@/lib/admin/access";
 
 const projectFile = (path: string) => resolve(process.cwd(), path);
-const originalAdminEmails = process.env.ADMIN_EMAILS;
-
-afterEach(() => {
-  vi.unstubAllGlobals();
-  if (originalAdminEmails === undefined) delete process.env.ADMIN_EMAILS;
-  else process.env.ADMIN_EMAILS = originalAdminEmails;
-});
 
 describe("admin content access", () => {
   it("uses the existing Yup convention rather than Zod for new content mutations", async () => {
@@ -51,38 +44,22 @@ describe("admin content access", () => {
     expect(apiSource).toContain("getAuthorizedAdmin");
   });
 
-  it("recognizes only configured administrator emails after an upstream session check", async () => {
-    process.env.ADMIN_EMAILS = "admin@ramprate.com";
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(
-        JSON.stringify({
-          user: { email: "ADMIN@RAMPRATE.COM", name: "Admin" },
-        }),
-        {
-          status: 200,
-          headers: { "content-type": "application/json" },
-        },
+  it("normalizes email identity and only recognizes an active database CMS member", () => {
+    const email = normalizeCmsEmail(" ADMIN@RAMPRATE.COM ");
+
+    expect(email).toBe("admin@ramprate.com");
+    expect(
+      isActiveCmsMember(
+        { email: "admin@ramprate.com", role: "owner", isActive: 1 },
+        email,
       ),
-    );
-    vi.stubGlobal("fetch", fetchMock);
-
-    const administrator = await getAuthorizedAdmin(
-      new Request("https://ramprate.com/api/admin/content/posts", {
-        headers: { cookie: "next-auth.session-token=session" },
-      }),
-    );
-
-    expect(isConfiguredAdmin("admin@ramprate.com")).toBe(true);
-    expect(administrator).toEqual({
-      email: "admin@ramprate.com",
-      name: "Admin",
-    });
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://flow.tonygreenberg.com/api/auth/session",
-      expect.objectContaining({
-        headers: { cookie: "next-auth.session-token=session" },
-      }),
-    );
+    ).toBe(true);
+    expect(
+      isActiveCmsMember(
+        { email: "admin@ramprate.com", role: "owner", isActive: 0 },
+        email,
+      ),
+    ).toBe(false);
   });
 
   it("denies unauthenticated callers before administrative data can be queried", async () => {

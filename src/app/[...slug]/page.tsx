@@ -5,6 +5,7 @@ import {
   portableTextComponents,
 } from "@/lib/content/portable-text";
 import { getPublicPageByRoute } from "@/lib/content/client";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 type PageParams = { slug: string[] };
@@ -20,23 +21,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const route = toRoute(slug);
-  const page = await getPublicPageByRoute(route);
+  const [page, pageSeo] = await Promise.all([
+    getPublicPageByRoute(route),
+    getPageSeo(route),
+  ]);
   if (!page) return {};
+  const pageTitle =
+    typeof page.title === "string" ? page.title : "RampRate resources";
 
-  const seo = page.seo as Record<string, unknown> | undefined;
-  const metaTitle =
-    typeof seo?.metaTitle === "string" ? seo.metaTitle : page.title;
-  const description =
-    typeof seo?.metaDescription === "string"
-      ? seo.metaDescription
-      : `RampRate advisory information: ${page.title ?? "Resources"}.`;
-
-  return {
-    title: metaTitle as string,
-    description,
-    alternates: { canonical: route },
-    robots: { index: true, follow: true },
-  };
+  return withSeoOverrides(
+    {
+      title: pageTitle,
+      description: `RampRate advisory information: ${pageTitle}.`,
+      alternates: { canonical: route },
+      robots: { index: true, follow: true },
+    },
+    pageSeo?.seo,
+  );
 }
 
 export default async function ManagedContentPage({
@@ -46,7 +47,10 @@ export default async function ManagedContentPage({
 }) {
   const { slug } = await params;
   const route = toRoute(slug);
-  const page = await getPublicPageByRoute(route);
+  const [page, pageSeo] = await Promise.all([
+    getPublicPageByRoute(route),
+    getPageSeo(route),
+  ]);
   if (!page) notFound();
 
   const pageTitle = typeof page.title === "string" ? page.title : "RampRate";
@@ -60,6 +64,7 @@ export default async function ManagedContentPage({
           { name: pageTitle, url: `https://ramprate.com${route}` },
         ])}
       />
+      {isJsonLd(pageSeo?.jsonLd) && <JsonLd data={pageSeo.jsonLd} />}
       <article className="mx-auto max-w-4xl px-5 sm:px-8">
         <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">
           RampRate resource
@@ -73,4 +78,15 @@ export default async function ManagedContentPage({
       </article>
     </main>
   );
+}
+
+function isJsonLd(
+  value: unknown,
+): value is Record<string, unknown> | Record<string, unknown>[] {
+  if (Array.isArray(value)) {
+    return value.every((item) =>
+      Boolean(item && typeof item === "object" && !Array.isArray(item)),
+    );
+  }
+  return Boolean(value && typeof value === "object");
 }

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { client } from "@/lib/sanity/client";
-import { allThinkingPostsQuery } from "@/lib/sanity/queries";
+import { client } from "@/lib/content/client";
+import { allThinkingPostsQuery } from "@/lib/content/queries";
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const revalidate = 60;
@@ -102,8 +102,8 @@ export default async function ThinkingPage() {
             className="text-white/60 text-lg leading-relaxed max-w-2xl"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Evergreen analysis on technology, blockchain, enterprise
-            strategy, and conscious business. Not trends - principles.
+            Evergreen analysis on technology, blockchain, enterprise strategy,
+            and conscious business. Not trends - principles.
           </p>
         </div>
       </section>
@@ -255,8 +255,8 @@ export default async function ThinkingPage() {
             className="text-white/60 leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            You&#39;ve read the thinking. Now let&#39;s put it to work. Tell us what&#39;s
-            broken and we&#39;ll tell you what it&#39;s worth to fix.
+            You&#39;ve read the thinking. Now let&#39;s put it to work. Tell us
+            what&#39;s broken and we&#39;ll tell you what it&#39;s worth to fix.
           </p>
           <Link
             href="/contact"

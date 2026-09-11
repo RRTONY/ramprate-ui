@@ -26,10 +26,14 @@ const database = drizzle(process.env.DATABASE_URL ?? "");
 
 function asRecord(value: unknown): ContentRecord {
   if (typeof value === "string") {
-    const parsed = JSON.parse(value) as unknown;
-    return parsed && typeof parsed === "object"
-      ? (parsed as ContentRecord)
-      : {};
+    try {
+      const parsed = JSON.parse(value) as unknown;
+      return parsed && typeof parsed === "object"
+        ? (parsed as ContentRecord)
+        : {};
+    } catch {
+      return {};
+    }
   }
   return value && typeof value === "object" ? (value as ContentRecord) : {};
 }
@@ -95,15 +99,17 @@ function categoryRecord(
 }
 
 function mediaRecord(asset: typeof mediaAssets.$inferSelect): ContentRecord {
+  const metadata = asset.metadata as Record<string, unknown>;
   return {
     ...genericRecord(
       asset.sourceId,
       "imageAsset",
-      asset.metadata,
+      metadata,
       asset.sourceUpdatedAt,
     ),
     url: asset.url,
     alt: asset.altText,
+    title: typeof metadata.title === "string" ? metadata.title : undefined,
   };
 }
 
@@ -271,9 +277,40 @@ async function getPageSeo(route: string) {
     .from(pageSeo)
     .where(eq(pageSeo.route, route))
     .limit(1);
-  return seo
-    ? genericRecord(seo.sourceId, "pageSeo", seo.metadata, seo.sourceUpdatedAt)
-    : null;
+  if (!seo) return null;
+
+  const metadata = seo.metadata as Record<string, unknown>;
+  const nestedSeo = (metadata.seo ?? {}) as Record<string, unknown>;
+  const [socialImage] = seo.imageSourceId
+    ? await database
+        .select()
+        .from(mediaAssets)
+        .where(eq(mediaAssets.sourceId, seo.imageSourceId))
+        .limit(1)
+    : [];
+
+  return {
+    ...genericRecord(seo.sourceId, "pageSeo", metadata, seo.sourceUpdatedAt),
+    route: seo.route,
+    title: seo.title,
+    description: seo.description,
+    imageSourceId: seo.imageSourceId,
+    jsonLd: metadata.jsonLd,
+    seo: {
+      ...nestedSeo,
+      metaTitle:
+        seo.title ??
+        (typeof nestedSeo.metaTitle === "string"
+          ? nestedSeo.metaTitle
+          : undefined),
+      metaDescription:
+        seo.description ??
+        (typeof nestedSeo.metaDescription === "string"
+          ? nestedSeo.metaDescription
+          : undefined),
+      ogImage: socialImage ? mediaRecord(socialImage) : nestedSeo.ogImage,
+    },
+  };
 }
 
 async function getRelatedPosts(

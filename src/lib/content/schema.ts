@@ -93,7 +93,9 @@ export const contentPosts = mysqlTable(
     id: int("id").autoincrement().primaryKey(),
     sourceId: varchar("source_id", { length: 128 }).notNull(),
     slug: varchar("slug", { length: 255 }).notNull(),
-    section: mysqlEnum("section", ["blog", "thinking"]).default("blog").notNull(),
+    section: mysqlEnum("section", ["blog", "thinking"])
+      .default("blog")
+      .notNull(),
     title: varchar("title", { length: 512 }).notNull(),
     excerpt: text("excerpt"),
     body: json("body"),
@@ -130,7 +132,10 @@ export const postCategories = mysqlTable(
       table.postId,
       table.categoryId,
     ),
-    index("post_categories_category_post_idx").on(table.categoryId, table.postId),
+    index("post_categories_category_post_idx").on(
+      table.categoryId,
+      table.postId,
+    ),
   ],
 );
 
@@ -230,7 +235,10 @@ export const contentTestimonials = mysqlTable(
   },
   (table) => [
     uniqueIndex("content_testimonials_source_id_unique").on(table.sourceId),
-    index("content_testimonials_kind_order_idx").on(table.kind, table.sortOrder),
+    index("content_testimonials_kind_order_idx").on(
+      table.kind,
+      table.sortOrder,
+    ),
   ],
 );
 
@@ -339,5 +347,30 @@ export const formSubmissions = mysqlTable(
       table.receivedAt,
     ),
     index("form_submissions_email_idx").on(table.submitterEmail),
+  ],
+);
+
+/**
+ * Dedicated RampRate CMS membership. This is intentionally separate from the
+ * Flow product’s access model: a valid identity session establishes who the
+ * caller is, while this table determines whether that person may administer
+ * RampRate editorial content and submissions.
+ */
+export const cmsAdminMembers = mysqlTable(
+  "cms_admin_members",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    email: varchar("email", { length: 320 }).notNull(),
+    role: mysqlEnum("role", ["owner", "admin", "editor"])
+      .default("editor")
+      .notNull(),
+    isActive: int("is_active").default(1).notNull(),
+    invitedByEmail: varchar("invited_by_email", { length: 320 }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("cms_admin_members_email_unique").on(table.email),
+    index("cms_admin_members_active_role_idx").on(table.isActive, table.role),
   ],
 );

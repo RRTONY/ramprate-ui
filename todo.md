@@ -8,7 +8,7 @@
 - [x] Connect data journeys to Supabase and preserve Sanity-managed content patterns where used by the existing project. Superseded by the confirmed existing external Flow backend architecture.
 - [x] Implement secure Google sign-in with clear signed-in, loading, error, and logged-out states. Deferred to the external Flow backend because it currently exposes only credential authentication.
 - [x] Add or revise automated tests for all changed core journeys and configuration validation.
-- [ ] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
+- [x] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
 - [x] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
@@ -21,7 +21,7 @@
 - [x] Add UI-level regression tests for Flow sign-in and sign-up validation, spinner state, auth failure messaging, and successful redirect handling using mocked authentication and tRPC clients.
 - [x] Add automated regression checks for the production build command and the preserved external credential-provider boundary.
 - [x] Add a successful Flow sign-up regression test covering external registration, credential sign-in, and the `/flow` redirect.
-- [ ] Assess and remediate the repository-wide ESLint backlog without suppressing code-quality rules or introducing unrelated regressions.
+- [x] Assess and remediate the repository-wide ESLint backlog without suppressing code-quality rules or introducing unrelated regressions.
 - [x] Resolve repository-wide `react/no-unescaped-entities` findings through rule-guided JSX text replacements.
 - [x] Remove render-phase state updates from the shared marketing header navigation.
 - [x] Inventory all Sanity schemas, queries, webhooks, Studio routes, and public pages that depend on managed content.
@@ -107,3 +107,25 @@
 - [x] Remove the “Tell Us What's Broken” hero CTA and rebalance the remaining hero action across responsive layouts.
 - [x] Add markup-level visual-contract coverage for the redesigned non-hero home sections and the simplified single-action hero.
 - [x] Remove the remaining “Tell Us What's Broken” call-to-action from the shared marketing header and rebalance responsive navigation controls.
+- [ ] Inventory legacy Framer Motion and high-impact inline-style usage across Flow routes, then prioritize low-risk modernization batches.
+- [ ] Replace the first bounded batch of direct Framer Motion presentation patterns with reduced-motion-safe CSS conventions without changing route behavior.
+- [ ] Validate the first Flow modernization batch with focused route checks, type checking, automated tests, linting, and a production build.
+- [x] Redesign the “Six practices. One coalition.” section with a calmer background, improved practice-card hierarchy, and clearer icons while preserving existing copy and links.
+- [x] Validate the revised practices section on desktop and mobile, then add or update focused visual-contract regression coverage.
+- [x] Refine the RampRate browser favicon and shared header brand mark so the iconography is legible, premium, and consistent with the current plum-and-gold visual system.
+- [x] Compare the live `/thinking` page with the local route and restore any missing public content, structure, or navigation without replacing established project behavior.
+- [x] Refine the blog category filter pills by removing the heavy shadow and improving the inactive and active visual states without changing filtering behavior.
+- [x] Create a distinct protected RampRate CMS admin route and interface, separate from the Flow product admin, for pages, blog posts, categories, settings, media references, and form-submission records.
+- [x] Add a database-managed RampRate CMS administrator and team-member access model so permissions can be granted or revoked in the CMS without environment-variable changes.
+- [x] Seed admin@ramprate.com as the initial database-backed RampRate CMS administrator through a controlled bootstrap rule.
+- [x] Validate independent CMS authorization, access management, content and submission workflows, and public-route continuity before release.
+- [x] Rebalance the home hero image, scrim, vignette, and color layers so the contextual office image remains visible while copy contrast and the plum-and-amber brand atmosphere are preserved.
+- [x] Restore the year-grouped Thinking archive section and all 18 published Thinking records from the retained managed-content archive.
+- [x] Replace Careers-page emoji with consistent accessible project icons while preserving existing content and layout.
+- [x] Attach the BioChain secondary navigation cleanly below the shared header and prevent gaps or overlap with the page content at desktop and mobile breakpoints.
+- [x] Audit and repair managed `page_seo` titles, descriptions, JSON-LD, and image-source references, then validate public metadata output.
+- [x] Expand the separate RampRate CMS into a headless workspace for editable page content, page SEO, blog posts, categories, media references, site settings, and form submissions.
+- [x] Add protected CMS APIs and interface controls for page SEO title, description, JSON-LD, and social image-source management.
+- [ ] Audit every public and managed image for meaningful alt text and title metadata, then repair missing or weak values through the database-backed CMS.
+- [x] Remove the redundant far-left RampRate monogram from the shared header while retaining the primary wordmark and responsive navigation controls.
+- [x] Refine non-hero home-page sections to match the approved plum-and-amber hero theme while preserving the hero image and component unchanged.

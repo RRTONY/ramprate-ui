@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/flow/ui/button";
 import { Shield, Zap, Users, Activity } from "lucide-react";
 import MonroeProtocol from "@/components/flow/MonroeProtocol";
-import { motion } from "framer-motion";
 
 export default function ProtocolClient() {
   const protocols = [
@@ -58,13 +57,9 @@ export default function ProtocolClient() {
       <div className="container mx-auto px-4 py-24 space-y-24 relative z-10">
         {/* Header */}
         <div className="text-center space-y-6 max-w-4xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight"
-          >
+          <h1 className="flow-reveal text-5xl md:text-7xl font-bold tracking-tight">
             The Protocol
-          </motion.h1>
+          </h1>
           <p className="text-xl md:text-2xl text-muted-foreground">
             The Operating Manual for High-Performance Teams.
           </p>

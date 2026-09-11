@@ -65,6 +65,17 @@ describe("home page SEO metadata", () => {
     expect(renderedImageAlternatives.every(Boolean)).toBe(true);
   });
 
+  it("keeps the shared header brand treatment focused on the RampRate wordmark", async () => {
+    const logo = await readFile(
+      projectFile("src/components/shared/Logo.tsx"),
+      "utf8",
+    );
+
+    expect(logo).toContain('src="/ramprate-logo.png"');
+    expect(logo).not.toContain("BRAND_MARK_SRC");
+    expect(logo).not.toContain('src="/icon.svg"');
+  });
+
   it("declares published favicon, manifest, social preview, canonical, and crawler metadata", async () => {
     const [layout, robots, manifest] = await Promise.all([
       readFile(projectFile("src/app/layout.tsx"), "utf8"),
@@ -79,6 +90,20 @@ describe("home page SEO metadata", () => {
     expect(layout).toContain('url: "/opengraph-image"');
     expect(robots).toContain("sitemap: 'https://ramprate.com/sitemap.xml'");
     expect(robots).toContain("host: 'https://ramprate.com'");
-    expect(manifest).toContain('theme_color: "#0B3B91"');
+    expect(manifest).toContain('theme_color: "#170B25"');
+  });
+
+  it("keeps managed content images meaningful when legacy records lack a hand-authored caption", async () => {
+    const [contentImage, portableText] = await Promise.all([
+      readFile(projectFile("src/components/shared/ContentImage.tsx"), "utf8"),
+      readFile(projectFile("src/lib/content/portable-text.tsx"), "utf8"),
+    ]);
+
+    expect(contentImage).toContain("alt={alternative}");
+    expect(contentImage).toContain("title={title}");
+    expect(contentImage).toContain('"RampRate content image"');
+    expect(portableText).toContain(
+      'alt={value.alt || value.caption || "RampRate article image"}',
+    );
   });
 });

@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  ChartNoAxesCombined,
+  Check,
+  Globe2,
+  Lightbulb,
+  Target,
+  Wrench,
+  X,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
@@ -52,42 +63,47 @@ const Arrow = () => (
 
 const whyCards = [
   {
-    emoji: "⚡",
+    Icon: Zap,
     title: "No Junior Layers",
     body: "You work directly with 25-year veterans and Fortune 100 principals. No staffing pyramid. No account managers between you and the outcome.",
     tag: "SAME SENIOR TEAM, ALWAYS",
   },
   {
-    emoji: "🎯",
+    Icon: Target,
     title: "Skin in the Game",
     body: "Our compensation is aligned to the value we create. We don't advise from the sidelines - we execute end-to-end. Your win is our win.",
     tag: "300%+ ROI OR DON'T PAY",
   },
   {
-    emoji: "🌐",
+    Icon: Globe2,
     title: "Real Global Impact",
     body: "B Corp Certified from the start. We operate across 50+ countries with NGOs, enterprises, startups, and impact-driven founders reshaping the world.",
     tag: "50+ COUNTRIES · B CORP",
   },
   {
-    emoji: "🔧",
+    Icon: Wrench,
     title: "Five Practices, One Coalition",
     body: "Work across enterprise IT sourcing, founder growth, Web3 advisory, impact consulting, and executive advisory - or go deep in your domain. The team shares everything.",
     tag: "SOURCING · SYZYGY · STRATUM · IMPACTSOUL · PRIVATE ADVISORY",
   },
   {
-    emoji: "💡",
+    Icon: Lightbulb,
     title: "Fix the Signal First",
     body: "Our process starts before the solution - with finding the real problem, not the symptom. You'll be trained to diagnose before prescribing.",
     tag: "FIX THE SIGNAL, CLOSE THE DEAL.",
   },
   {
-    emoji: "📊",
+    Icon: ChartNoAxesCombined,
     title: "150K+ Data Points",
     body: "Our proprietary SPY Index carries 25 years of real market intelligence. You'll make decisions others can only guess at - with data few in the world possess.",
     tag: "$10B+ IN DECISIONS BROKERED",
   },
-];
+] satisfies Array<{
+  Icon: LucideIcon;
+  title: string;
+  body: string;
+  tag: string;
+}>;
 
 const compareRows = [
   {
@@ -266,8 +282,12 @@ export default function CareersPage() {
                 key={card.title}
                 className="glass-card p-7 flex flex-col gap-4"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 bg-white/[0.05] border border-white/8">
-                  {card.emoji}
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/[0.05] border border-white/8">
+                  <card.Icon
+                    aria-hidden="true"
+                    className="size-5 text-(--gold)"
+                    strokeWidth={1.8}
+                  />
                 </div>
                 <div>
                   <h3
@@ -319,9 +339,11 @@ export default function CareersPage() {
                 {compareRows.map((row, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
-                      <span className="text-red-400 text-[11px] font-bold leading-none">
-                        ✕
-                      </span>
+                      <X
+                        aria-hidden="true"
+                        className="size-3 text-red-400"
+                        strokeWidth={2.4}
+                      />
                     </span>
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-(--text-mid) opacity-60 mb-0.5">
@@ -350,9 +372,11 @@ export default function CareersPage() {
                 {compareRows.map((row, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-green-50 border border-green-100 flex items-center justify-center">
-                      <span className="text-green-600 text-[11px] font-bold leading-none">
-                        ✓
-                      </span>
+                      <Check
+                        aria-hidden="true"
+                        className="size-3 text-green-600"
+                        strokeWidth={2.4}
+                      />
                     </span>
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-(--rust) opacity-70 mb-0.5">

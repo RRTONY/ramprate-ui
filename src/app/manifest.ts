@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Technology sourcing and product strategy that turns relationships into revenue.",
     start_url: "/",
     display: "standalone",
-    background_color: "#071426",
-    theme_color: "#0B3B91",
+    background_color: "#170B25",
+    theme_color: "#170B25",
     icons: [
       {
         src: "/icon.svg",

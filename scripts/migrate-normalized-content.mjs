@@ -92,7 +92,7 @@ const upsertStatements = {
 
 try {
   const [rows] = await connection.execute(
-    "SELECT source_id, content_type, slug, route, title, published_at, source_updated_at, data FROM content_documents ORDER BY id",
+    "SELECT source_id, content_type, slug, route, section, title, published_at, source_updated_at, data FROM content_documents ORDER BY id",
   );
   await connection.beginTransaction();
 

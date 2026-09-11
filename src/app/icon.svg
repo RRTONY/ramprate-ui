@@ -1,13 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">RampRate</title>
-  <defs>
-    <linearGradient id="rampGold" x1="15" y1="12" x2="50" y2="51" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFE1A4"/>
-      <stop offset="0.5" stop-color="#F2BB5D"/>
-      <stop offset="1" stop-color="#C66A45"/>
-    </linearGradient>
-  </defs>
   <rect width="64" height="64" rx="16" fill="#170B25"/>
-  <path d="M17 48V16h15.8c9.5 0 14.8 4.3 14.8 11.8 0 4.8-2.2 8.4-6.1 10.3L49.2 48H38.4l-6.3-7.9H27.2V48H17Zm10.2-16.6h5.5c3.5 0 5.5-1.4 5.5-4.2 0-2.7-2-4.1-5.5-4.1h-5.5v8.3Z" fill="url(#rampGold)"/>
-  <path d="M12 12h15" stroke="#FFE1A4" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+  <path d="M13 43.5 27.5 25l8 8L48.5 16l4 4.5-17 20.5-8-8-10 14.5-4.5-4Z" fill="#F2BB5D"/>
+  <path d="M13 49h38" stroke="#FFE1A4" stroke-width="3" stroke-linecap="round"/>
 </svg>

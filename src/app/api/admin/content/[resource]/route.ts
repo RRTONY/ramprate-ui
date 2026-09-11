@@ -1,4 +1,4 @@
-import { desc, eq, inArray } from "drizzle-orm";
+import { desc, eq, inArray, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
@@ -7,11 +7,20 @@ import {
   contentCategories,
   contentPages,
   contentPosts,
+  mediaAssets,
+  pageSeo,
   postCategories,
   siteSettings,
 } from "@/lib/content/schema";
 
-const resources = ["posts", "pages", "categories", "settings"] as const;
+const resources = [
+  "posts",
+  "pages",
+  "categories",
+  "settings",
+  "seo",
+  "media",
+] as const;
 type Resource = (typeof resources)[number];
 type RecordValue = Record<string, unknown>;
 type RouteContext = { params: Promise<{ resource: string }> };
@@ -71,6 +80,34 @@ const settingsInputSchema = yup.object({
   address: yup.string().max(10000).nullable().optional(),
   logoSourceId: yup.string().max(128).nullable().optional(),
   settings: recordSchema,
+});
+
+const jsonLdSchema = yup
+  .mixed()
+  .test(
+    "json-ld",
+    "JSON-LD must be an object or an array of objects.",
+    (value) =>
+      value === undefined ||
+      value === null ||
+      (typeof value === "object" && value !== null),
+  )
+  .default({});
+
+const seoInputSchema = yup.object({
+  sourceId: yup.string().min(1).max(128).optional(),
+  route: yup.string().required().max(512),
+  title: yup.string().required().max(512),
+  description: yup.string().required().max(10000),
+  imageSourceId: yup.string().max(128).nullable().optional(),
+  jsonLd: jsonLdSchema,
+  metadata: recordSchema,
+});
+
+const mediaInputSchema = yup.object({
+  sourceId: yup.string().required().max(128),
+  title: yup.string().required().max(512),
+  altText: yup.string().required().max(1000),
 });
 
 function database() {
@@ -156,7 +193,27 @@ export async function GET(request: NextRequest, context: RouteContext) {
         .limit(1);
       return NextResponse.json({ item: settings ?? null });
     }
+    case "seo":
+      return NextResponse.json({
+        items: await db.select().from(pageSeo).orderBy(pageSeo.route),
+      });
+    case "media":
+      return NextResponse.json({
+        items: await db
+          .select({
+            sourceId: mediaAssets.sourceId,
+            url: mediaAssets.url,
+            altText: mediaAssets.altText,
+            title: sql<
+              string | null
+            >`JSON_UNQUOTE(JSON_EXTRACT(${mediaAssets.metadata}, '$.title'))`,
+          })
+          .from(mediaAssets)
+          .orderBy(mediaAssets.altText),
+      });
   }
+
+  return notFoundResource();
 }
 
 export async function POST(request: NextRequest, context: RouteContext) {
@@ -228,14 +285,12 @@ export async function POST(request: NextRequest, context: RouteContext) {
           .from(contentCategories)
           .where(inArray(contentCategories.sourceId, categorySourceIds));
         if (categories.length > 0) {
-          await db
-            .insert(postCategories)
-            .values(
-              categories.map((category) => ({
-                postId: post.id,
-                categoryId: category.id,
-              })),
-            );
+          await db.insert(postCategories).values(
+            categories.map((category) => ({
+              postId: post.id,
+              categoryId: category.id,
+            })),
+          );
         }
       }
     }
@@ -280,6 +335,94 @@ export async function POST(request: NextRequest, context: RouteContext) {
         },
       });
     return NextResponse.json({ ok: true, sourceId: identifier });
+  }
+
+  if (resource === "seo") {
+    const value = await validate(seoInputSchema, input);
+    if (!value) {
+      return NextResponse.json(
+        { error: "Invalid page SEO metadata." },
+        { status: 400 },
+      );
+    }
+    const identifier = value.sourceId ?? sourceId("pageSeo");
+    const [existing] = await db
+      .select({ metadata: pageSeo.metadata })
+      .from(pageSeo)
+      .where(eq(pageSeo.sourceId, identifier))
+      .limit(1);
+    const currentMetadata = (existing?.metadata ?? {}) as Record<
+      string,
+      unknown
+    >;
+    const currentSeo = (currentMetadata.seo ?? {}) as Record<string, unknown>;
+    const ogImage = value.imageSourceId
+      ? { _type: "image", asset: { _ref: value.imageSourceId } }
+      : undefined;
+    const metadata = {
+      ...currentMetadata,
+      ...value.metadata,
+      route: value.route,
+      seo: {
+        ...currentSeo,
+        metaTitle: value.title,
+        metaDescription: value.description,
+        ...(ogImage ? { ogImage } : {}),
+      },
+      jsonLd: value.jsonLd,
+    };
+    await db
+      .insert(pageSeo)
+      .values({
+        sourceId: identifier,
+        route: value.route,
+        title: value.title,
+        description: value.description,
+        imageSourceId: value.imageSourceId ?? null,
+        metadata,
+        sourceUpdatedAt: new Date(),
+      })
+      .onDuplicateKeyUpdate({
+        set: {
+          route: value.route,
+          title: value.title,
+          description: value.description,
+          imageSourceId: value.imageSourceId ?? null,
+          metadata,
+          sourceUpdatedAt: new Date(),
+        },
+      });
+    return NextResponse.json({ ok: true, sourceId: identifier });
+  }
+
+  if (resource === "media") {
+    const value = await validate(mediaInputSchema, input);
+    if (!value) {
+      return NextResponse.json(
+        { error: "Invalid media metadata." },
+        { status: 400 },
+      );
+    }
+    const [asset] = await db
+      .select({ metadata: mediaAssets.metadata })
+      .from(mediaAssets)
+      .where(eq(mediaAssets.sourceId, value.sourceId))
+      .limit(1);
+    if (!asset) {
+      return NextResponse.json(
+        { error: "Media asset not found." },
+        { status: 404 },
+      );
+    }
+    const metadata = {
+      ...(asset.metadata as Record<string, unknown>),
+      title: value.title,
+    };
+    await db
+      .update(mediaAssets)
+      .set({ altText: value.altText, metadata, sourceUpdatedAt: new Date() })
+      .where(eq(mediaAssets.sourceId, value.sourceId));
+    return NextResponse.json({ ok: true, sourceId: value.sourceId });
   }
 
   if (resource === "categories") {

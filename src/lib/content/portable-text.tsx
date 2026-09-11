@@ -374,7 +374,8 @@ export const portableTextComponents: PortableTextComponents = {
         <figure style={{ margin: 0 }}>
           <Image
             src={urlFor(value).width(800).url()}
-            alt={value.alt || ""}
+            alt={value.alt || value.caption || "RampRate article image"}
+            title={value.alt || value.caption || "RampRate article image"}
             width={refW}
             height={refH}
             sizes="(max-width: 768px) 100vw, 800px"

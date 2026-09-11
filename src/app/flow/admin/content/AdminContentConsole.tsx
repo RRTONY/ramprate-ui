@@ -12,16 +12,18 @@ import {
   ArrowLeft,
   FileText,
   FolderTree,
+  ImageIcon,
   Inbox,
-  Loader2,
   Plus,
   Save,
+  SearchCheck,
   Settings2,
+  UsersRound,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-type Resource = "posts" | "pages" | "categories" | "settings";
+type Resource = "posts" | "pages" | "categories" | "settings" | "seo" | "media";
 type SubmissionStatus = "new" | "reviewed" | "archived";
 type ContentItem = {
   id: number;
@@ -38,6 +40,10 @@ type ContentItem = {
   address?: string | null;
   logoSourceId?: string | null;
   mainImageSourceId?: string | null;
+  imageSourceId?: string | null;
+  altText?: string | null;
+  url?: string | null;
+  metadata?: unknown;
   content?: unknown;
   body?: unknown;
 };
@@ -56,9 +62,31 @@ const tabOptions = [
   { id: "pages", label: "Pages", Icon: FolderTree },
   { id: "categories", label: "Categories", Icon: Settings2 },
   { id: "settings", label: "Site settings", Icon: Settings2 },
+  { id: "seo", label: "Page SEO", Icon: SearchCheck },
+  { id: "media", label: "Media metadata", Icon: ImageIcon },
   { id: "submissions", label: "Submissions", Icon: Inbox },
 ] as const;
-type Tab = (typeof tabOptions)[number]["id"];
+const memberTabOption = {
+  id: "members",
+  label: "CMS team",
+  Icon: UsersRound,
+} as const;
+type Tab = (typeof tabOptions)[number]["id"] | typeof memberTabOption.id;
+
+type CmsMember = {
+  id: number;
+  email: string;
+  role: "owner" | "admin" | "editor";
+  isActive: number;
+  invitedByEmail: string | null;
+};
+
+type AdminContentConsoleProps = {
+  apiBase?: "/api/admin" | "/api/cms";
+  includeMemberManagement?: boolean;
+  returnHref?: string;
+  returnLabel?: string;
+};
 
 function slugify(value: string) {
   return value
@@ -92,12 +120,18 @@ async function requestJson<T>(url: string, options?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-export default function AdminContentConsole() {
-  const { user, loading, error: authError } = useAuth();
+export default function AdminContentConsole({
+  apiBase = "/api/admin",
+  includeMemberManagement = false,
+  returnHref = "/flow/admin",
+  returnLabel = "Dashboard",
+}: AdminContentConsoleProps) {
+  const { user, error: authError } = useAuth();
   const [tab, setTab] = useState<Tab>("posts");
   const [items, setItems] = useState<ContentItem[]>([]);
   const [categories, setCategories] = useState<ContentItem[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [members, setMembers] = useState<CmsMember[]>([]);
   const [selected, setSelected] = useState<ContentItem | null>(null);
   const [contentText, setContentText] = useState("");
   const [title, setTitle] = useState("");
@@ -112,20 +146,21 @@ export default function AdminContentConsole() {
   const [settingsPhone, setSettingsPhone] = useState("");
   const [settingsAddress, setSettingsAddress] = useState("");
   const [logoSourceId, setLogoSourceId] = useState("");
+  const [mediaSourceId, setMediaSourceId] = useState("");
+  const [jsonLdText, setJsonLdText] = useState("{}");
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"" | SubmissionStatus>("");
+  const [memberEmail, setMemberEmail] = useState("");
+  const [memberRole, setMemberRole] = useState<CmsMember["role"]>("editor");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [sessionWaitExpired, setSessionWaitExpired] = useState(false);
 
-  const resource = tab === "submissions" ? null : (tab as Resource);
-
-  useEffect(() => {
-    if (!loading) return;
-    const timeout = window.setTimeout(() => setSessionWaitExpired(true), 8000);
-    return () => window.clearTimeout(timeout);
-  }, [loading]);
+  const resource =
+    tab === "submissions" || tab === "members" ? null : (tab as Resource);
+  const availableTabs = includeMemberManagement
+    ? [...tabOptions, memberTabOption]
+    : tabOptions;
 
   const resetEditor = () => {
     setSelected(null);
@@ -142,13 +177,15 @@ export default function AdminContentConsole() {
     setSettingsPhone("");
     setSettingsAddress("");
     setLogoSourceId("");
+    setMediaSourceId("");
+    setJsonLdText("{}");
   };
 
   const loadContent = async (nextResource: Resource) => {
     const data = await requestJson<{
       items?: ContentItem[];
       item?: ContentItem;
-    }>(`/api/admin/content/${nextResource}`);
+    }>(`${apiBase}/content/${nextResource}`);
     setItems(data.items ?? (data.item ? [data.item] : []));
   };
 
@@ -157,41 +194,50 @@ export default function AdminContentConsole() {
     if (query) search.set("q", query);
     if (statusFilter) search.set("status", statusFilter);
     const data = await requestJson<{ items: Submission[] }>(
-      `/api/admin/submissions?${search.toString()}`,
+      `${apiBase}/submissions?${search.toString()}`,
     );
     setSubmissions(data.items);
   };
+
+  const loadMembers = useCallback(async () => {
+    const data = await requestJson<{ items: CmsMember[] }>(
+      `${apiBase}/members`,
+    );
+    setMembers(data.items);
+  }, [apiBase]);
 
   useEffect(() => {
     if (!user) return;
     const load = async () => {
       try {
-        if (tab === "submissions") {
+        if (tab === "members") {
+          await loadMembers();
+        } else if (tab === "submissions") {
           const data = await requestJson<{ items: Submission[] }>(
-            "/api/admin/submissions",
+            `${apiBase}/submissions`,
           );
           setSubmissions(data.items);
         } else {
           const data = await requestJson<{
             items?: ContentItem[];
             item?: ContentItem;
-          }>(`/api/admin/content/${tab}`);
+          }>(`${apiBase}/content/${tab}`);
           setItems(data.items ?? (data.item ? [data.item] : []));
           if (tab === "posts") {
             const data = await requestJson<{ items: ContentItem[] }>(
-              "/api/admin/content/categories",
+              `${apiBase}/content/categories`,
             );
             setCategories(data.items);
           }
         }
       } catch {
         setError(
-          "Your administrator session could not load this data. Please sign in with an allowed administrator email.",
+          "Your CMS session could not load this data. Sign in with an active RampRate CMS team email.",
         );
       }
     };
     void load();
-  }, [tab, user]);
+  }, [apiBase, loadMembers, tab, user]);
 
   const editorTitle = useMemo(
     () =>
@@ -205,13 +251,17 @@ export default function AdminContentConsole() {
     setSlug(item.slug ?? "");
     setRoute(item.route ?? "");
     setExcerpt(item.excerpt ?? "");
-    setDescription(item.description ?? "");
+    setDescription(item.altText ?? item.description ?? "");
     setSection(item.section ?? "blog");
     setMainImageSourceId(item.mainImageSourceId ?? "");
     setSettingsEmail(item.email ?? "");
     setSettingsPhone(item.phone ?? "");
     setSettingsAddress(item.address ?? "");
     setLogoSourceId(item.logoSourceId ?? "");
+    setMediaSourceId(item.sourceId ?? "");
+    setMainImageSourceId(item.imageSourceId ?? item.mainImageSourceId ?? "");
+    const metadata = item.metadata as Record<string, unknown> | undefined;
+    setJsonLdText(JSON.stringify(metadata?.jsonLd ?? {}, null, 2));
     if (tab === "settings") setTitle(item.companyName ?? "");
     const blocks = (item.body ?? item.content) as
       Array<{ children?: Array<{ text?: string }> }> | undefined;
@@ -232,6 +282,15 @@ export default function AdminContentConsole() {
     setNotice(null);
     const safeSlug = slug || slugify(title);
     try {
+      let jsonLd: unknown = {};
+      if (resource === "seo") {
+        try {
+          jsonLd = JSON.parse(jsonLdText || "{}");
+        } catch {
+          setError("JSON-LD must be valid JSON before it can be saved.");
+          return;
+        }
+      }
       const payload =
         resource === "posts"
           ? {
@@ -260,13 +319,28 @@ export default function AdminContentConsole() {
                   address: settingsAddress || null,
                   logoSourceId: logoSourceId || null,
                 }
-              : {
-                  sourceId: selected?.sourceId,
-                  title,
-                  slug: safeSlug,
-                  description: description || null,
-                };
-      await requestJson(`/api/admin/content/${resource}`, {
+              : resource === "seo"
+                ? {
+                    sourceId: selected?.sourceId,
+                    route: route || "/",
+                    title,
+                    description,
+                    imageSourceId: mainImageSourceId || null,
+                    jsonLd,
+                  }
+                : resource === "media"
+                  ? {
+                      sourceId: mediaSourceId || selected?.sourceId,
+                      title,
+                      altText: description,
+                    }
+                  : {
+                      sourceId: selected?.sourceId,
+                      title,
+                      slug: safeSlug,
+                      description: description || null,
+                    };
+      await requestJson(`${apiBase}/content/${resource}`, {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -289,7 +363,7 @@ export default function AdminContentConsole() {
     setBusy(true);
     setError(null);
     try {
-      await requestJson("/api/admin/submissions", {
+      await requestJson(`${apiBase}/submissions`, {
         method: "PATCH",
         body: JSON.stringify({ id, status }),
       });
@@ -301,31 +375,70 @@ export default function AdminContentConsole() {
     }
   };
 
-  if (loading && !sessionWaitExpired) {
-    return (
-      <div className="min-h-screen grid place-items-center">
-        <Loader2 className="size-8 animate-spin" />
-      </div>
-    );
-  }
+  const saveMember = async () => {
+    if (!memberEmail.trim()) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await requestJson(`${apiBase}/members`, {
+        method: "POST",
+        body: JSON.stringify({ email: memberEmail, role: memberRole }),
+      });
+      setMemberEmail("");
+      setMemberRole("editor");
+      await loadMembers();
+      setNotice("CMS team access updated.");
+    } catch {
+      setError("The CMS team member could not be saved.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const updateMember = async (
+    member: CmsMember,
+    update: Pick<CmsMember, "role" | "isActive">,
+  ) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await requestJson(`${apiBase}/members`, {
+        method: "PATCH",
+        body: JSON.stringify({ id: member.id, ...update }),
+      });
+      await loadMembers();
+      setNotice("CMS team access updated.");
+    } catch {
+      setError(
+        "The CMS team member could not be updated. Keep at least one active owner.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  };
 
   if (!user) {
     return (
       <main className="min-h-screen grid place-items-center px-6 bg-slate-950 text-white">
         <div className="max-w-md text-center space-y-4">
-          <h1 className="text-3xl font-bold">Administrator access required</h1>
+          <h1 className="text-3xl font-bold">RampRate CMS access required</h1>
           <p className="text-slate-300">
-            Sign in with your configured RampRate administrator email to
-            continue.{" "}
-            {authError || sessionWaitExpired
-              ? "The external Flow session could not be reached just now."
+            Sign in with an active RampRate CMS team email to continue.{" "}
+            {authError
+              ? "The shared sign-in session could not be reached just now."
               : ""}
           </p>
           <Link
-            href="/flow/admin"
+            href="/flow/login?redirect=%2Fcms"
+            className="inline-flex items-center rounded-md bg-sky-300 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-sky-200"
+          >
+            Sign in to RampRate CMS
+          </Link>
+          <Link
+            href={returnHref}
             className="inline-flex items-center gap-2 text-sky-300 hover:text-sky-200"
           >
-            <ArrowLeft className="size-4" /> Return to Flow admin
+            <ArrowLeft className="size-4" /> {returnLabel}
           </Link>
         </div>
       </main>
@@ -349,10 +462,10 @@ export default function AdminContentConsole() {
             </p>
           </div>
           <Link
-            href="/flow/admin"
+            href={returnHref}
             className="inline-flex items-center gap-2 text-sm text-sky-300 hover:text-white"
           >
-            <ArrowLeft className="size-4" /> Dashboard
+            <ArrowLeft className="size-4" /> {returnLabel}
           </Link>
         </header>
 
@@ -360,7 +473,7 @@ export default function AdminContentConsole() {
           className="flex flex-wrap gap-2"
           aria-label="Content administration sections"
         >
-          {tabOptions.map(({ id, label, Icon }) => (
+          {availableTabs.map(({ id, label, Icon }) => (
             <Button
               key={id}
               type="button"
@@ -369,7 +482,6 @@ export default function AdminContentConsole() {
                 resetEditor();
                 setError(null);
                 setNotice(null);
-                setSessionWaitExpired(false);
                 setTab(id);
               }}
               className="gap-2"
@@ -393,7 +505,102 @@ export default function AdminContentConsole() {
           </p>
         )}
 
-        {tab === "submissions" ? (
+        {tab === "members" ? (
+          <Card className="border-sky-100/10 bg-white text-slate-900">
+            <CardHeader>
+              <CardTitle>CMS team access</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <p className="max-w-2xl text-sm text-slate-600">
+                Owners can add, reactivate, change, or deactivate CMS members.
+                Editors and administrators may manage content, while only owners
+                can manage this access list.
+              </p>
+              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
+                <input
+                  value={memberEmail}
+                  onChange={(event) => setMemberEmail(event.target.value)}
+                  type="email"
+                  placeholder="team@ramprate.com"
+                  className="rounded-md border bg-white px-3 py-2 text-sm"
+                />
+                <select
+                  value={memberRole}
+                  onChange={(event) =>
+                    setMemberRole(event.target.value as CmsMember["role"])
+                  }
+                  className="rounded-md border bg-white px-3 py-2 text-sm"
+                >
+                  <option value="editor">Editor</option>
+                  <option value="admin">Admin</option>
+                  <option value="owner">Owner</option>
+                </select>
+                <Button
+                  type="button"
+                  onClick={() => void saveMember()}
+                  disabled={busy || !memberEmail.trim()}
+                >
+                  Add member
+                </Button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b text-xs uppercase tracking-wide text-slate-500">
+                      <th className="p-3">Email</th>
+                      <th className="p-3">Role</th>
+                      <th className="p-3">Status</th>
+                      <th className="p-3">Granted by</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {members.map((member) => (
+                      <tr key={member.id} className="border-b align-middle">
+                        <td className="p-3 font-medium">{member.email}</td>
+                        <td className="p-3">
+                          <select
+                            aria-label={`Role for ${member.email}`}
+                            value={member.role}
+                            disabled={busy}
+                            onChange={(event) =>
+                              void updateMember(member, {
+                                role: event.target.value as CmsMember["role"],
+                                isActive: member.isActive,
+                              })
+                            }
+                            className="rounded border px-2 py-1 text-xs"
+                          >
+                            <option value="editor">Editor</option>
+                            <option value="admin">Admin</option>
+                            <option value="owner">Owner</option>
+                          </select>
+                        </td>
+                        <td className="p-3">
+                          <button
+                            type="button"
+                            disabled={busy}
+                            onClick={() =>
+                              void updateMember(member, {
+                                role: member.role,
+                                isActive: member.isActive === 1 ? 0 : 1,
+                              })
+                            }
+                            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${member.isActive === 1 ? "bg-emerald-100 text-emerald-800" : "bg-slate-200 text-slate-600"}`}
+                          >
+                            {member.isActive === 1 ? "Active" : "Inactive"}
+                          </button>
+                        </td>
+                        <td className="p-3 text-slate-500">
+                          {member.invitedByEmail ?? "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        ) : tab === "submissions" ? (
           <Card className="border-sky-100/10 bg-white text-slate-900">
             <CardHeader>
               <CardTitle>Private submission inbox</CardTitle>
@@ -530,17 +737,30 @@ export default function AdminContentConsole() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <label className="block text-sm">
-                  {tab === "settings" ? "Company name" : "Title"}
+                  {tab === "settings"
+                    ? "Company name"
+                    : tab === "seo"
+                      ? "SEO title"
+                      : tab === "media"
+                        ? "Image title"
+                        : "Title"}
                   <input
                     value={title}
                     onChange={(event) => {
                       setTitle(event.target.value);
-                      if (!slug) setSlug(slugify(event.target.value));
+                      if (
+                        tab !== "settings" &&
+                        tab !== "seo" &&
+                        tab !== "media" &&
+                        !slug
+                      ) {
+                        setSlug(slugify(event.target.value));
+                      }
                     }}
                     className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
                   />
                 </label>
-                {tab !== "settings" && (
+                {tab !== "settings" && tab !== "seo" && tab !== "media" && (
                   <label className="block text-sm">
                     Slug
                     <input
@@ -622,6 +842,73 @@ export default function AdminContentConsole() {
                     />
                   </label>
                 )}
+                {tab === "seo" && (
+                  <>
+                    <label className="block text-sm">
+                      Public route
+                      <input
+                        value={route}
+                        onChange={(event) => setRoute(event.target.value)}
+                        placeholder="/about"
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                    <label className="block text-sm">
+                      Meta description
+                      <textarea
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}
+                        rows={3}
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                    <label className="block text-sm">
+                      Social image asset ID
+                      <input
+                        value={mainImageSourceId}
+                        onChange={(event) =>
+                          setMainImageSourceId(event.target.value)
+                        }
+                        placeholder="image-…"
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                    <label className="block text-sm">
+                      JSON-LD
+                      <textarea
+                        value={jsonLdText}
+                        onChange={(event) => setJsonLdText(event.target.value)}
+                        rows={9}
+                        spellCheck={false}
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2 font-mono text-xs"
+                      />
+                    </label>
+                  </>
+                )}
+                {tab === "media" && (
+                  <>
+                    <label className="block text-sm">
+                      Media asset ID
+                      <input
+                        value={mediaSourceId}
+                        onChange={(event) =>
+                          setMediaSourceId(event.target.value)
+                        }
+                        placeholder="image-…"
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                    <label className="block text-sm">
+                      Descriptive alternative text
+                      <textarea
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}
+                        rows={3}
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                  </>
+                )}
                 {tab === "categories" && (
                   <label className="block text-sm">
                     Description
@@ -680,22 +967,32 @@ export default function AdminContentConsole() {
                     </label>
                   </>
                 )}
-                {tab !== "categories" && tab !== "settings" && (
-                  <label className="block text-sm">
-                    Content
-                    <textarea
-                      value={contentText}
-                      onChange={(event) => setContentText(event.target.value)}
-                      rows={12}
-                      placeholder="Write in paragraphs. Each blank line becomes a content block."
-                      className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
-                    />
-                  </label>
-                )}
+                {tab !== "categories" &&
+                  tab !== "settings" &&
+                  tab !== "seo" &&
+                  tab !== "media" && (
+                    <label className="block text-sm">
+                      Content
+                      <textarea
+                        value={contentText}
+                        onChange={(event) => setContentText(event.target.value)}
+                        rows={12}
+                        placeholder="Write in paragraphs. Each blank line becomes a content block."
+                        className="mt-1 w-full rounded-md border border-white/15 bg-white/5 px-3 py-2"
+                      />
+                    </label>
+                  )}
                 <Button
                   type="button"
                   onClick={() => void saveContent()}
-                  disabled={busy || (tab === "settings" ? false : !title)}
+                  disabled={
+                    busy ||
+                    (tab === "settings"
+                      ? false
+                      : tab === "media"
+                        ? !title || !description || !mediaSourceId
+                        : !title)
+                  }
                   className="w-full gap-2"
                 >
                   <Save className="size-4" />{" "}

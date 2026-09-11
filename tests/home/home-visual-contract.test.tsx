@@ -34,6 +34,9 @@ describe("home visual contract", () => {
     const hero = container.querySelector("section.home-blue-hero");
 
     expect(hero).not.toBeNull();
+    expect(
+      hero?.querySelector('img[src="/hero.webp"]')?.getAttribute("alt"),
+    ).toBe("Technology advisory team collaborating in a modern office");
     expect(hero?.querySelector('a[href="/proof"]')?.textContent).toMatch(
       /see case results/i,
     );

@@ -7,12 +7,16 @@ export type SeoFields = {
   metaTitle?: string;
   metaDescription?: string;
   keywords?: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ogImage?: any;
+  ogImage?: unknown;
+};
+
+export type PageSeoRecord = {
+  seo?: SeoFields;
+  jsonLd?: unknown;
 };
 
 export async function getPageSeo(route: string) {
-  return contentFetch<{ seo?: SeoFields } | null>({
+  return contentFetch<PageSeoRecord | null>({
     query: pageSeoQuery,
     params: { route },
     tags: ["pageSeo"],

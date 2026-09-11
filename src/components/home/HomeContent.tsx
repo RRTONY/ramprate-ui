@@ -4,14 +4,19 @@ import dynamic from "next/dynamic";
 import {
   ArrowRight,
   ArrowDown,
+  Boxes,
+  BriefcaseBusiness,
+  ChartNoAxesCombined,
+  Compass,
   Target,
   Users,
   Shield,
   Database,
   DollarSign,
+  Dna,
+  HeartHandshake,
 } from "lucide-react";
 import type { CSSProperties } from "react";
-import PracticeIcon from "./PracticeIcon";
 
 // Below-the-fold, interactive-only sections - split into their own JS chunks
 // so the hero above the fold doesn't have to wait on their code to hydrate.
@@ -155,7 +160,7 @@ const brands = [
     description:
       "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement.",
     href: "/sourcing",
-    iconKind: "sourcing" as const,
+    Icon: ChartNoAxesCombined,
     accentColor: "oklch(0.82 0.15 75)",
   },
   {
@@ -164,7 +169,7 @@ const brands = [
     description:
       "Advisory built for founders navigating growth, fundraising, and the decisions that define a company's trajectory.",
     href: "/growth",
-    iconKind: "syzygy" as const,
+    Icon: Compass,
     accentColor: "oklch(0.65 0.2 150)",
   },
   {
@@ -173,7 +178,7 @@ const brands = [
     description:
       "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure.",
     href: "/web3",
-    iconKind: "stratum" as const,
+    Icon: Boxes,
     accentColor: "oklch(0.65 0.2 280)",
   },
   {
@@ -182,7 +187,7 @@ const brands = [
     description:
       "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, chain-of-custody tracking.",
     href: "/biochain",
-    iconKind: "biochain" as const,
+    Icon: Dna,
     accentColor: "oklch(0.62 0.12 190)",
   },
   {
@@ -191,7 +196,7 @@ const brands = [
     description:
       "Impact-focused advisory for NGOs and mission-driven organizations building sustainable operating models.",
     href: "/impactsoul",
-    iconKind: "impact" as const,
+    Icon: HeartHandshake,
     accentColor: "oklch(0.7 0.18 30)",
   },
   {
@@ -200,7 +205,7 @@ const brands = [
     description:
       "Confidential, executive-level advisory for leaders who need a trusted outside perspective in the room.",
     href: "/private-advisory",
-    iconKind: "advisory" as const,
+    Icon: BriefcaseBusiness,
     accentColor: "oklch(0.65 0.12 70)",
   },
 ];
@@ -336,23 +341,23 @@ export default function HomeContent() {
       {/* ═══ BRANDS / PRACTICES ═══ */}
       <section
         id="brands"
-        className="home-practices-section section-sunset py-16 sm:py-20"
+        className="home-practices-section py-16 sm:py-20"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-[rgba(58,31,53,0.52)]">
               01 - Our Practices
             </span>
             <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
               One discipline — turning relationships into revenue — applied
               across six practices:
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-ink leading-tight">
               Six practices. One coalition.
               <br />
               Pick the one that fits you.
             </h2>
-            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/50">
+            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-[rgba(58,31,53,0.66)]">
               Each practice is purpose-built for a distinct audience - but they
               share the same team of superstars behind the scenes.
             </p>
@@ -363,29 +368,20 @@ export default function HomeContent() {
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="home-practice-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                className="home-practice-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 p-7 transition-all duration-300 ease-out hover:-translate-y-1"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-[rgba(58,31,53,0.4)]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
-                <div className="relative w-12 h-12 mb-5">
-                  <div
-                    className="absolute -inset-2 rounded-full blur-lg opacity-0 transition-opacity duration-500 group-hover:opacity-40"
-                    style={{ background: brand.accentColor }}
+                <div className="mb-6 flex h-11 w-11 items-center justify-center border-b-2" style={{ borderColor: brand.accentColor }}>
+                  <brand.Icon
+                    aria-hidden="true"
+                    size={25}
+                    strokeWidth={1.65}
+                    style={{ color: brand.accentColor }}
                   />
-                  <div
-                    className="relative w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-400 group-hover:scale-110 group-hover:rounded-xl"
-                    style={{
-                      background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
-                    }}
-                  >
-                    <PracticeIcon
-                      kind={brand.iconKind}
-                      color={brand.accentColor}
-                    />
-                  </div>
                 </div>
                 <p
                   className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
@@ -393,10 +389,10 @@ export default function HomeContent() {
                 >
                   {brand.tag}
                 </p>
-                <h3 className="font-display text-xl font-bold text-white mb-3">
+                <h3 className="font-display text-xl font-bold text-ink mb-3">
                   {brand.name}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-white/60">
+                <p className="font-body text-sm leading-relaxed mb-6 text-[rgba(58,31,53,0.66)]">
                   {brand.description}
                 </p>
                 <span

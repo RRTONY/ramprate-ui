@@ -369,7 +369,7 @@ export default function BioChainSourcingPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative pt-44 pb-20 overflow-hidden section-light">
+      <section className="relative pt-32 pb-20 overflow-hidden section-light">
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[280px] h-[280px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">

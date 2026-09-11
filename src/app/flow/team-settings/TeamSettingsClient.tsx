@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -190,18 +189,14 @@ export default function TeamSettings() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 py-16 space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-reveal text-center space-y-4">
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-gray-300 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">
             <Settings className="w-4 h-4" /> Team Settings
           </div>
           <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
             Configure Your Circuit
           </h1>
-        </motion.div>
+        </div>
 
         {/* Team Selector */}
         {teams.length > 1 && (

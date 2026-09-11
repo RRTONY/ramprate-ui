@@ -25,7 +25,7 @@ export default function BioChainSubNav() {
 
   return (
     <div
-      className={`fixed top-16 sm:top-20 left-0 right-0 z-40 transition-all duration-500 ${
+      className={`fixed top-16 sm:top-[4.75rem] left-0 right-0 z-[90] transition-all duration-500 ${
         light
           ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-black/5"
           : "border-b border-white/10 bg-[rgba(10,15,26,0.95)] backdrop-blur-sm"

@@ -15,9 +15,11 @@ function FilterPills({ categories }: { categories: Category[] }) {
   const active = searchParams.get("category");
 
   const pill =
-    "font-body shrink-0 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all whitespace-nowrap";
-  const activeClass = "bg-gold text-dark";
-  const inactiveClass = "bg-white/4 text-white/50 border border-white/8";
+    "font-body shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-[background-color,border-color,color] whitespace-nowrap shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--dark)]";
+  const activeClass =
+    "border-[rgba(255,210,100,0.72)] bg-[rgba(224,178,75,0.96)] text-[var(--dark)]";
+  const inactiveClass =
+    "border-white/14 bg-transparent text-white/62 hover:border-[rgba(255,210,100,0.4)] hover:bg-white/[0.035] hover:text-white";
 
   return (
     <div className="relative pt-6 mb-10 pb-8 border-b border-white/7">

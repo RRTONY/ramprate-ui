@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -138,11 +137,7 @@ Let's decode our flow.
     return (
       <div className="min-h-screen bg-black text-white p-4 md:p-8">
         <div className="max-w-xl mx-auto space-y-8 pt-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-4"
-          >
+          <div className="flow-reveal text-center space-y-4">
             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
               Create Your <span className="text-yellow-400">Team Circuit</span>
             </h1>
@@ -150,7 +145,7 @@ Let's decode our flow.
               Set up your team to start inviting members. Up to 25 people per
               team.
             </p>
-          </motion.div>
+          </div>
 
           <Card className="bg-white/5 border-white/10">
             <CardContent className="pt-6 space-y-4">
