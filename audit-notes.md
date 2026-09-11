@@ -77,6 +77,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The Flow assessment experience now uses typed ranked roles, safe mutation-error handling, narrowed 360 invite links, and utility-based text balancing. Its focused lint pass is clean, and the global lint backlog is reduced to 32 errors and 85 warnings without suppressing rules.
 - The Flow Team Dashboard now uses typed creation responses, team summaries, assessment records, and member mappings. Its focused lint pass is clean, and the global lint backlog is reduced to 29 errors and 84 warnings without suppressing rules.
 - The shared TeamMap now uses Framer Motion's typed drag contract and removes obsolete motion-value bindings. Its focused lint pass is clean, and the global lint backlog is reduced to 27 errors and 82 warnings without suppressing rules.
+- The Tribe trial now narrows signup responses and errors safely while preserving the existing active-trial and successful-start messaging. Its focused lint pass is clean, and the global lint backlog is reduced to 25 errors and 82 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 

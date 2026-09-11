@@ -18,6 +18,21 @@ import {
   GitBranch,
 } from "lucide-react";
 
+function hasActiveTrial(response: unknown): boolean {
+  return (
+    typeof response === "object" &&
+    response !== null &&
+    "alreadyActive" in response &&
+    response.alreadyActive === true
+  );
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error && error.message
+    ? error.message
+    : "Something went wrong. Please try again.";
+}
+
 export default function TribeTrial() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -27,23 +42,19 @@ export default function TribeTrial() {
   // Get source from URL params
   const params = new URLSearchParams(window.location.search);
   const source = (params.get("source") || "pricing") as
-    | "results_page"
-    | "360_link"
-    | "360_gap"
-    | "pricing"
-    | "pdf";
+    "results_page" | "360_link" | "360_gap" | "pricing" | "pdf";
 
   const signup = trpc.trial.signup.useMutation({
-    onSuccess: (data: any) => {
-      if (data.alreadyActive) {
+    onSuccess: (data: unknown) => {
+      if (hasActiveTrial(data)) {
         toast.info("You already have an active trial!");
       } else {
         toast.success("Your 30-day free trial is live!");
       }
       setSubmitted(true);
     },
-    onError: (err: any) => {
-      toast.error(err.message || "Something went wrong. Please try again.");
+    onError: (err: unknown) => {
+      toast.error(getErrorMessage(err));
     },
   });
 
@@ -122,8 +133,8 @@ export default function TribeTrial() {
           </h1>
           <p className="text-lg text-[#2C1810]/70 max-w-2xl mx-auto">
             The gap between how you see yourself and how your team experiences
-            you is the most actionable data you&#39;ll collect this quarter. Start
-            free. No credit card required.
+            you is the most actionable data you&#39;ll collect this quarter.
+            Start free. No credit card required.
           </p>
         </motion.div>
 
