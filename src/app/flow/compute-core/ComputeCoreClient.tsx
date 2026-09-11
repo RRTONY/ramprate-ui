@@ -1,39 +1,39 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { Terminal, Cpu, Zap, ShieldAlert, ArrowLeft } from "lucide-react";
+import { Terminal, ShieldAlert, ArrowLeft } from "lucide-react";
 
 export default function ComputeCoreClient() {
   const [bootSequence, setBootSequence] = useState<string[]>([]);
   const [isBooted, setIsBooted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userInput, setUserInput] = useState('');
-  const [history, setHistory] = useState<{q: string, a: string}[]>([]);
+  const [userInput, setUserInput] = useState("");
+  const [history, setHistory] = useState<{ q: string; a: string }[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const questions = [
     {
       id: 1,
       text: "INITIATING HANDSHAKE PROTOCOL...\n\nQUERY: You optimize for zero latency. But have you noticed that your PURPOSE is suffering from packet loss?",
-      placeholder: "Define your purpose latency..."
+      placeholder: "Define your purpose latency...",
     },
     {
       id: 2,
       text: "THERMAL CHECK REQUIRED.\n\nQUERY: You are cooling the servers with liquid nitrogen. But who is cooling the ARCHITECT?",
-      placeholder: "Input cooling strategy for the soul..."
+      placeholder: "Input cooling strategy for the soul...",
     },
     {
       id: 3,
       text: "PREDICTIVE MODELING ENGAGED.\n\nQUERY: If we achieve General Intelligence tomorrow, will it inherit our WISDOM or our WOUNDS?",
-      placeholder: "Predict the inheritance..."
+      placeholder: "Predict the inheritance...",
     },
     {
       id: 4,
       text: "KERNEL PANIC IMMINENT.\n\nQUERY: Are you building a tool to free humanity, or a cage to contain it?",
-      placeholder: "State your intent..."
-    }
+      placeholder: "State your intent...",
+    },
   ];
 
   useEffect(() => {
@@ -44,14 +44,14 @@ export default function ComputeCoreClient() {
       "LOADING CONSCIOUSNESS DRIVERS... OK",
       "MOUNTING SOUL PARTITION... OK",
       "CHECKING INTENTION INTEGRITY... WARNING: AMBIGUOUS",
-      "INITIATING SILICON SANCTUARY..."
+      "INITIATING SILICON SANCTUARY...",
     ];
 
     let delay = 0;
     bootLines.forEach((line, index) => {
       delay += Math.random() * 500 + 200;
       setTimeout(() => {
-        setBootSequence(prev => [...prev, line]);
+        setBootSequence((prev) => [...prev, line]);
         if (index === bootLines.length - 1) {
           setTimeout(() => setIsBooted(true), 1000);
         }
@@ -69,14 +69,17 @@ export default function ComputeCoreClient() {
     e.preventDefault();
     if (!userInput.trim()) return;
 
-    setHistory([...history, { q: questions[currentQuestion].text, a: userInput }]);
-    setUserInput('');
+    setHistory([
+      ...history,
+      { q: questions[currentQuestion].text, a: userInput },
+    ]);
+    setUserInput("");
 
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     } else {
       // End sequence
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     }
   };
 
@@ -90,9 +93,15 @@ export default function ComputeCoreClient() {
         <div className="flex justify-between items-center mb-12 border-b border-green-500/30 pb-4">
           <div className="flex items-center gap-2">
             <Terminal className="h-6 w-6" />
-            <span className="text-xl tracking-widest">SILICON SANCTUARY // TERMINAL_01</span>
+            <span className="text-xl tracking-widest">
+              SILICON SANCTUARY // TERMINAL_01
+            </span>
           </div>
-          <Button variant="ghost" className="text-green-500 hover:text-green-400 hover:bg-green-500/10" onClick={() => window.location.href = '/'}>
+          <Button
+            variant="ghost"
+            className="text-green-500 hover:text-green-400 hover:bg-green-500/10"
+            onClick={() => (window.location.href = "/")}
+          >
             <ArrowLeft className="mr-2 h-4 w-4" /> JACK OUT
           </Button>
         </div>
@@ -120,8 +129,13 @@ export default function ComputeCoreClient() {
             {/* History */}
             <div className="space-y-6 opacity-70">
               {history.map((item, i) => (
-                <div key={i} className="space-y-2 border-l-2 border-green-500/30 pl-4">
-                  <div className="text-xs text-green-500/50">QUERY_0{i+1}</div>
+                <div
+                  key={i}
+                  className="space-y-2 border-l-2 border-green-500/30 pl-4"
+                >
+                  <div className="text-xs text-green-500/50">
+                    QUERY_0{i + 1}
+                  </div>
                   <div className="whitespace-pre-wrap">{item.q}</div>
                   <div className="text-white/90">&gt;&gt; {item.a}</div>
                 </div>
@@ -136,11 +150,14 @@ export default function ComputeCoreClient() {
                 className="space-y-6"
               >
                 <div className="text-lg md:text-xl leading-relaxed whitespace-pre-wrap">
-                  <span className="animate-pulse">_</span> {questions[currentQuestion].text}
+                  <span className="animate-pulse">_</span>{" "}
+                  {questions[currentQuestion].text}
                 </div>
 
                 <form onSubmit={handleSubmit} className="relative">
-                  <span className="absolute left-0 top-3 text-green-500">&gt;&gt;</span>
+                  <span className="absolute left-0 top-3 text-green-500">
+                    &gt;&gt;
+                  </span>
                   <input
                     ref={inputRef}
                     type="text"
@@ -159,17 +176,20 @@ export default function ComputeCoreClient() {
                 className="space-y-8 text-center pt-12"
               >
                 <ShieldAlert className="h-16 w-16 mx-auto text-red-500 animate-pulse" />
-                <h2 className="text-3xl font-bold text-red-500">SYSTEM OVERRIDE DETECTED</h2>
+                <h2 className="text-3xl font-bold text-red-500">
+                  SYSTEM OVERRIDE DETECTED
+                </h2>
                 <p className="text-xl text-white">
                   Your intentions have been logged in the Akashic Records.
                 </p>
                 <p className="text-green-500">
-                  Proceed with caution, Architect. The code you write today becomes the reality we inhabit tomorrow.
+                  Proceed with caution, Architect. The code you write today
+                  becomes the reality we inhabit tomorrow.
                 </p>
                 <Button
                   variant="outline"
                   className="border-green-500 text-green-500 hover:bg-green-500 hover:text-black mt-8"
-                  onClick={() => window.location.href = '/'}
+                  onClick={() => (window.location.href = "/")}
                 >
                   RETURN TO THE SIMULATION
                 </Button>

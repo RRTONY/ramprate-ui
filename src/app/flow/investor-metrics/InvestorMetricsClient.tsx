@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -15,14 +14,10 @@ import { useRouter } from "next/navigation";
 import {
   BarChart3,
   Users,
-  Building2,
   TrendingUp,
   Globe,
-  Zap,
   Target,
-  Shield,
   Lock,
-  ArrowRight,
 } from "lucide-react";
 
 export default function InvestorMetrics() {
@@ -172,8 +167,8 @@ export default function InvestorMetrics() {
               <p className="text-gray-600 mb-4">
                 Distribution of dominant roles across all assessed individuals.
                 A healthy spread across all five roles is a good sign the
-                assessment differentiates people rather than clustering
-                everyone into one bucket - it&#39;s a directional signal, not a
+                assessment differentiates people rather than clustering everyone
+                into one bucket - it&#39;s a directional signal, not a
                 substitute for a formal discriminant validity study.
               </p>
               {topRole && (
@@ -261,8 +256,8 @@ export default function InvestorMetrics() {
                 <p className="text-xs text-gray-500">
                   Number of distinct roles appearing in assessments. A 5/5
                   spread is a good directional sign - not formal proof of
-                  discriminant validity, which requires a dedicated study
-                  (see /flow/efficacy).
+                  discriminant validity, which requires a dedicated study (see
+                  /flow/efficacy).
                 </p>
               </CardContent>
             </Card>

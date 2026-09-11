@@ -25,7 +25,7 @@ import { useAuth } from "@/hooks/flow/useAuth";
 
 export default function ManagerGuidebookClient() {
   const router = useRouter();
-  const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [copied, setCopied] = useState<string | null>(null);
   const [teamName, setTeamName] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -244,8 +244,10 @@ Let's decode our flow.
             <CardContent className="space-y-4">
               <p className="text-gray-300">
                 This link is tied to your team{" "}
-                <strong className="text-white">&quot;{selectedTeam.name}&quot;</strong>.
-                Anyone who completes the assessment via this URL will
+                <strong className="text-white">
+                  &quot;{selectedTeam.name}&quot;
+                </strong>
+                . Anyone who completes the assessment via this URL will
                 automatically appear in your team matrix.
               </p>
               <div className="flex gap-2">

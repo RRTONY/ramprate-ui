@@ -8,7 +8,6 @@ import Link from "next/link";
 import {
   Zap,
   Heart,
-  Brain,
   Globe,
   Droplets,
   ArrowRight,
@@ -338,12 +337,13 @@ export default function FindYourPathClient() {
           <p className="text-lg text-white/50 leading-relaxed">
             When you take the Flow Circuit Assessment AND add your SoulPrint
             data, something extraordinary happens. Your energy DNA meets your
-            soul blueprint. The report doesn&#39;t just tell you what you do - it
-            tells you <em>why you can&#39;t stop doing it</em>.
+            soul blueprint. The report doesn&#39;t just tell you what you do -
+            it tells you <em>why you can&#39;t stop doing it</em>.
           </p>
           <p className="text-sm text-white/30">
             Your Flow Circuit role is the WHAT. Your SoulPrint is the WHY.
-            Together, they&#39;re the closest thing to a user manual for your soul.
+            Together, they&#39;re the closest thing to a user manual for your
+            soul.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Link href="/flow/assessment">

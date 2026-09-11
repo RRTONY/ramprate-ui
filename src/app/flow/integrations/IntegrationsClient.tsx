@@ -20,7 +20,6 @@ import {
   AlertTriangle,
   Zap,
   Users,
-  ArrowRight,
   Shield,
 } from "lucide-react";
 
@@ -79,7 +78,7 @@ const TEAMS_CARD_TEMPLATE = `{
 }`;
 
 export default function Integrations() {
-  const { user, isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const [slackUrl, setSlackUrl] = useState("");
   const [teamsUrl, setTeamsUrl] = useState("");
   const [testingSlack, setTestingSlack] = useState(false);
@@ -178,7 +177,7 @@ export default function Integrations() {
       } else {
         toast.error(`Webhook test failed (${response.status}). Check the URL.`);
       }
-    } catch (err) {
+    } catch {
       toast.error("Failed to reach webhook. Check the URL and try again.");
     } finally {
       if (type === "slack") setTestingSlack(false);

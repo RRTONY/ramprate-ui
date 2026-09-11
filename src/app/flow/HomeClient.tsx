@@ -27,10 +27,8 @@ import {
   Brain,
   Flame,
 } from "lucide-react";
-import { useAuth } from "@/hooks/flow/useAuth";
 
 export default function HomeClient() {
-  const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [teamCode, setTeamCode] = useState("");
 
@@ -183,8 +181,8 @@ export default function HomeClient() {
                 Why Teams Break
               </h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                It&#39;s not personality conflicts. It&#39;s not bad culture. It&#39;s
-                physics.
+                It&#39;s not personality conflicts. It&#39;s not bad culture.
+                It&#39;s physics.
               </p>
             </div>
 

@@ -8,7 +8,6 @@ import {
 } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { Linkedin, Globe, Award, Zap, Heart, ExternalLink } from "lucide-react";
-import { bioContent } from "@/content/flow/bio_content";
 import BlogBridge from "@/components/flow/BlogBridge";
 
 export default function BioClient() {
@@ -45,8 +44,9 @@ export default function BioClient() {
                 center-it&#39;s in the <strong>human center</strong>.
               </p>
               <p>
-                He believes that the greatest inefficiency in the world isn&#39;t
-                server latency; it&#39;s <strong>human friction</strong>.
+                He believes that the greatest inefficiency in the world
+                isn&#39;t server latency; it&#39;s{" "}
+                <strong>human friction</strong>.
               </p>
             </div>
             <div className="flex gap-4">
@@ -112,8 +112,8 @@ export default function BioClient() {
               <CardContent>
                 <p className="text-muted-foreground">
                   From transforming the digital supply chain to redefining
-                  social impact, Tony&#39;s career is a testament to the power of{" "}
-                  <strong>disruptive altruism</strong>.
+                  social impact, Tony&#39;s career is a testament to the power
+                  of <strong>disruptive altruism</strong>.
                 </p>
               </CardContent>
             </Card>
@@ -137,8 +137,9 @@ export default function BioClient() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Believing that &quot;communities drive asset value,&quot; he focuses on
-                  building ecosystems where every participant thrives.
+                  Believing that &quot;communities drive asset value,&quot; he
+                  focuses on building ecosystems where every participant
+                  thrives.
                 </p>
               </CardContent>
             </Card>
@@ -151,8 +152,8 @@ export default function BioClient() {
           <div className="prose prose-xl prose-invert mx-auto max-w-3xl">
             <p>
               &quot;We are standing at the precipice of the AI age. If we do not
-              understand our own &#39;source code&#39;-our human operating system-we
-              will be overwritten by the synthetic one.&quot;
+              understand our own &#39;source code&#39;-our human operating
+              system-we will be overwritten by the synthetic one.&quot;
             </p>
             <p className="font-bold text-primary">- Tony Greenberg</p>
           </div>

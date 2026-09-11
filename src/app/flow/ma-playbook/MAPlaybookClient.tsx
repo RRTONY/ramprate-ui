@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   DollarSign,
   Users,
-  Zap,
   Shield,
   Target,
 } from "lucide-react";
@@ -127,9 +126,9 @@ export default function MAPlaybook() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Don&#39;t just merge balance sheets - merge nervous systems. The Flow
-            Circuit framework applied to the highest-stakes team integration
-            challenge in business.
+            Don&#39;t just merge balance sheets - merge nervous systems. The
+            Flow Circuit framework applied to the highest-stakes team
+            integration challenge in business.
           </p>
         </div>
       </section>
@@ -145,11 +144,12 @@ export default function MAPlaybook() {
               </h2>
             </div>
             <p className="text-foreground leading-relaxed mb-4">
-              Widely-cited industry research puts the failure rate for mergers and acquisitions to
-              achieve their stated synergy targets at 70-90%. The reason often isn&#39;t financial - it&#39;s human. When you
-              merge two organizations, you&#39;re merging two circuits. And if you
-              don&#39;t understand the wiring of each one, you&#39;re not integrating -
-              you&#39;re colliding.
+              Widely-cited industry research puts the failure rate for mergers
+              and acquisitions to achieve their stated synergy targets at
+              70-90%. The reason often isn&#39;t financial - it&#39;s human.
+              When you merge two organizations, you&#39;re merging two circuits.
+              And if you don&#39;t understand the wiring of each one, you&#39;re
+              not integrating - you&#39;re colliding.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               The Flow Circuit provides a diagnostic framework that maps the

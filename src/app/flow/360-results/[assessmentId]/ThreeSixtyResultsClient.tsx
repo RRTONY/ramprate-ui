@@ -16,16 +16,13 @@ import {
   Legend,
 } from "recharts";
 import {
-  Users,
   ArrowLeft,
   AlertTriangle,
   CheckCircle2,
   TrendingUp,
-  Copy,
   Eye,
   EyeOff,
 } from "lucide-react";
-import { toast } from "sonner";
 import ThreeSixtyLinkGenerator from "@/components/flow/ThreeSixtyLinkGenerator";
 
 const ROLES = ["spark", "amplifier", "filter", "ground", "conductor"];

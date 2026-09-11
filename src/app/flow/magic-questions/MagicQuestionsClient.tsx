@@ -11,8 +11,6 @@ import {
   Circle,
   ChevronDown,
   ChevronUp,
-  Zap,
-  Users,
   Target,
 } from "lucide-react";
 import BlogBridge from "@/components/flow/BlogBridge";
@@ -185,9 +183,9 @@ export default function MagicQuestions() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Based on Tony Greenberg&#39;s original framework for kicking assumptions
-            before they kick you. Each question maps to a Flow Circuit role -
-            because every project failure is a relay failure.
+            Based on Tony Greenberg&#39;s original framework for kicking
+            assumptions before they kick you. Each question maps to a Flow
+            Circuit role - because every project failure is a relay failure.
           </p>
           <a
             href="https://tonygreenberg.com/10-magic-questions-to-make-your-project-go-right-how-to-kick-ass-by-kicking-assumptions/"
