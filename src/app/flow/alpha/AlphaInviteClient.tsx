@@ -27,22 +27,24 @@ import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
 import { saveTeamData, getLatestTeam } from "@/lib/flow/assessmentPersistence";
 
+interface CreatedTeam {
+  code: string;
+  name: string;
+}
+
 export default function AlphaInviteClient() {
   const { user, isAuthenticated, loading } = useAuth();
   const [teamName, setTeamName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   // Fix #3: Restore team data from localStorage on mount
-  const [createdTeam, setCreatedTeam] = useState<{
-    code: string;
-    name: string;
-  } | null>(() => {
+  const [createdTeam, setCreatedTeam] = useState<CreatedTeam | null>(() => {
     const persisted = getLatestTeam();
     return persisted ? { code: persisted.code, name: persisted.name } : null;
   });
 
   const createTeam = trpc.team.create.useMutation({
-    onSuccess: (team: any) => {
+    onSuccess: (team: CreatedTeam) => {
       if (team) {
         setCreatedTeam({ code: team.code, name: team.name });
         // Fix #3: Persist team data to localStorage
@@ -466,4 +468,8 @@ ${user?.name || "[Your Name]"}`;
       </div>
     </div>
   );
+}
+interface CreatedTeam {
+  code: string;
+  name: string;
 }

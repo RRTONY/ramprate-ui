@@ -152,7 +152,9 @@ export default function AttorneyRFIPage() {
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(data as any).toString(),
+      body: new URLSearchParams(
+        Array.from(data.entries(), ([key, value]) => [key, String(value)]),
+      ).toString(),
     })
       .then(() => setSubmitted(true))
       .catch(() => setSubmitted(true));
