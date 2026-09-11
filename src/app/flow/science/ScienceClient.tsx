@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -32,9 +33,12 @@ export default function ScienceClient() {
     <div className="min-h-screen pt-24 pb-16 bg-background text-foreground relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/BlGGVdyTaOJOVVji.png"
-          alt="Science Background"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
           className="w-full h-full object-cover opacity-10"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
@@ -481,9 +485,11 @@ export default function ScienceClient() {
 
           <div className="relative aspect-[4/5] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
               alt="Complex machinery representing team dynamics"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 to-transparent z-20">

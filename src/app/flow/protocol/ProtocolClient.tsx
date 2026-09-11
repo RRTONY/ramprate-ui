@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -43,9 +44,12 @@ export default function ProtocolClient() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/mMqEfcwIslMQXZsn.png"
-          alt="Protocol Dynamo Background"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
           className="w-full h-full object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />

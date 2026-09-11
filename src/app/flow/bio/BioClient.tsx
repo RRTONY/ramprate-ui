@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -15,9 +16,12 @@ export default function BioClient() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/DcgleuTmuJOvbbhl.png"
-          alt="Bio Dynamo Background"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
           className="w-full h-full object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
@@ -78,9 +82,11 @@ export default function BioClient() {
           {/* Image Placeholder - Replace with actual headshot if available */}
           <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border border-primary/20 shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10" />
-            <img
+            <Image
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/eZeNGKGQdgplwDcz.png"
               alt="Tony Greenberg Vision"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-8 left-8 z-20">

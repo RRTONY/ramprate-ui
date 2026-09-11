@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
@@ -252,9 +253,12 @@ export default function TeamSettings() {
               <Label className="text-gray-300">Company Logo</Label>
               <div className="flex items-center gap-4">
                 {logoPreview && (
-                  <img
+                  <Image
                     src={logoPreview}
                     alt="Logo"
+                    width={64}
+                    height={64}
+                    unoptimized
                     className="w-16 h-16 rounded-lg object-cover border border-white/10"
                   />
                 )}

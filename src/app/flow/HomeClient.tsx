@@ -97,16 +97,12 @@ export default function HomeClient() {
               loop
               muted
               playsInline
+              poster="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/FNWsxTgAVMLjFeTN.jpg"
               className="w-full h-full object-cover"
             >
               <source
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/HyOBAibfDVCWexqm.mp4"
                 type="video/mp4"
-              />
-              <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663242884547/FNWsxTgAVMLjFeTN.jpg"
-                alt="Glass Clockwork"
-                className="w-full h-full object-cover"
               />
             </video>
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-background z-10" />
