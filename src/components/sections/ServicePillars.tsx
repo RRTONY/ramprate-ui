@@ -1,19 +1,26 @@
-import SanityImage from '@/components/shared/SanityImage'
+import SanityImage from "@/components/shared/SanityImage";
 
 interface Pillar {
-  title?: string
-  description?: string
-  icon?: any
-  link?: string
+  title?: string;
+  description?: string;
+  icon?: unknown;
+  link?: string;
 }
 
 interface ServicePillarsProps {
-  heading?: string
-  pillars?: Pillar[]
+  heading?: string;
+  pillars?: Pillar[];
 }
 
-export default function ServicePillars({heading, pillars}: ServicePillarsProps) {
-  if (!pillars?.length) return null
+function hasIcon(value: unknown): boolean {
+  return value !== null && value !== undefined && value !== false;
+}
+
+export default function ServicePillars({
+  heading,
+  pillars,
+}: ServicePillarsProps) {
+  if (!pillars?.length) return null;
 
   return (
     <section className="py-24 text-white bg-dark-mid">
@@ -34,9 +41,14 @@ export default function ServicePillars({heading, pillars}: ServicePillarsProps) 
               key={i}
               className="rounded-xl p-8 bg-white/3 border border-white/6 border-t-[3px] border-t-gold"
             >
-              {pillar.icon && (
+              {hasIcon(pillar.icon) && (
                 <div className="mb-5">
-                  <SanityImage image={pillar.icon} alt={pillar.title || ''} width={48} height={48} />
+                  <SanityImage
+                    image={pillar.icon}
+                    alt={pillar.title || ""}
+                    width={48}
+                    height={48}
+                  />
                 </div>
               )}
               <h3 className="font-display text-lg font-bold text-white mb-3">
@@ -51,8 +63,17 @@ export default function ServicePillars({heading, pillars}: ServicePillarsProps) 
                   className="font-body inline-flex items-center gap-1.5 mt-5 text-sm font-medium transition-colors hover:opacity-80 text-gold"
                 >
                   Learn more
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </a>
               )}
@@ -61,5 +82,5 @@ export default function ServicePillars({heading, pillars}: ServicePillarsProps) 
         </div>
       </div>
     </section>
-  )
+  );
 }
