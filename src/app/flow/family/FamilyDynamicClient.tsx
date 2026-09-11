@@ -524,19 +524,9 @@ export default function FamilyDynamic() {
         </div>
 
         {/* The Family Map */}
-        <div
-          className="relative w-full max-w-3xl mx-auto"
-          style={{ aspectRatio: "5/4", maxHeight: "480px" }}
-        >
+        <div className="relative w-full max-w-3xl mx-auto aspect-[5/4] max-h-[480px]">
           <div className="absolute inset-0 bg-rose-50/50 rounded-2xl border-2 border-rose-200 overflow-hidden">
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  "linear-gradient(#e11d48 1px, transparent 1px), linear-gradient(90deg, #e11d48 1px, transparent 1px)",
-                backgroundSize: "50px 50px",
-              }}
-            />
+            <div className="family-energy-map-grid absolute inset-0 opacity-10" />
 
             {/* Axis labels */}
             <div className="absolute inset-0 pointer-events-none z-[5]">

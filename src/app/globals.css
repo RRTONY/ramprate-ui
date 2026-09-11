@@ -873,6 +873,16 @@
     transparent 1px
   );
 }
+
+/* The Family Dynamic map uses a fixed, decorative coordinate grid. Node
+   placement, colors, and motion remain component-driven because they are
+   calculated from assessment data. */
+.family-energy-map-grid {
+  background-image:
+    linear-gradient(#e11d48 1px, transparent 1px),
+    linear-gradient(90deg, #e11d48 1px, transparent 1px);
+  background-size: 50px 50px;
+}
 @media (max-width: 767px) {
   .home-proof-section::after,
   .home-practices-section::after,

@@ -138,3 +138,4 @@
 - [x] Audit every local home component against the live RampRate home styling and align only homepage colors and visual surfaces on the feature branch.
 - [x] Replace Flow-dependent CMS access with a dedicated RampRate CMS login, database-backed sessions, and independent authorization shell for the seeded CMS owner.
 - [x] Re-align the homepage header, hero, client proof band, and results cards to the supplied current live RampRate screenshot palette and visual treatment without changing non-home routes.
+- [x] Replace static inline layout and decorative-grid styles in the Flow Family Dynamic map with equivalent Tailwind or scoped CSS while retaining the data-driven map behavior.
