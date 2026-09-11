@@ -295,8 +295,7 @@ export default function ShareableCard({
       <div className="rounded-2xl overflow-hidden border-2 border-gray-200 shadow-lg">
         <canvas
           ref={canvasCallbackRef}
-          className="w-full h-auto"
-          style={{ aspectRatio: "1200/630" }}
+          className="aspect-[1200/630] h-auto w-full"
         />
       </div>
       <div className="flex gap-3">

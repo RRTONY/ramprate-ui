@@ -167,26 +167,19 @@ function SortableItem({
         </span>
 
         {/* Arrow buttons - completely separate from drag context, large tap targets, high z-index */}
-        <div
-          className="flex flex-col gap-0.5 flex-shrink-0 relative"
-          style={{ zIndex: 10 }}
-        >
+        <div className="flex flex-col gap-0.5 flex-shrink-0 relative z-10">
           <button
             ref={upRef}
             type="button"
             onClick={handleMoveUp}
             onPointerDown={handleMoveUp}
             disabled={isTop}
-            className={`p-2 rounded-lg transition-colors select-auto ${
+            className={`touch-manipulation [-webkit-tap-highlight-color:transparent] p-2 rounded-lg transition-colors select-auto ${
               isTop
                 ? "text-white/10 cursor-not-allowed"
                 : "text-white/50 hover:text-white hover:bg-white/15 active:bg-white/25 cursor-pointer"
             }`}
             aria-label="Move up"
-            style={{
-              touchAction: "manipulation",
-              WebkitTapHighlightColor: "transparent",
-            }}
           >
             <ChevronUp className="w-6 h-6" />
           </button>
@@ -196,16 +189,12 @@ function SortableItem({
             onClick={handleMoveDown}
             onPointerDown={handleMoveDown}
             disabled={isBottom}
-            className={`p-2 rounded-lg transition-colors select-auto ${
+            className={`touch-manipulation [-webkit-tap-highlight-color:transparent] p-2 rounded-lg transition-colors select-auto ${
               isBottom
                 ? "text-white/10 cursor-not-allowed"
                 : "text-white/50 hover:text-white hover:bg-white/15 active:bg-white/25 cursor-pointer"
             }`}
             aria-label="Move down"
-            style={{
-              touchAction: "manipulation",
-              WebkitTapHighlightColor: "transparent",
-            }}
           >
             <ChevronDown className="w-6 h-6" />
           </button>

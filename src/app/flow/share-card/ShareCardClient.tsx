@@ -248,8 +248,7 @@ export default function ShareCardClient() {
           <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 max-w-[600px] w-full">
             <canvas
               ref={canvasRef}
-              className="w-full h-auto"
-              style={{ aspectRatio: "1200/630" }}
+              className="aspect-[1200/630] h-auto w-full"
             />
           </div>
         </div>

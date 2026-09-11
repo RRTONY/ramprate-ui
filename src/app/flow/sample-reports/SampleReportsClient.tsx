@@ -212,10 +212,7 @@ function ScatterPlot({ members }: { members: SampleMember[] }) {
   const padding = 40;
 
   return (
-    <div
-      className="relative w-full overflow-hidden rounded-lg"
-      style={{ backgroundColor: "#FAF6F0" }}
-    >
+    <div className="relative w-full overflow-hidden rounded-lg bg-[#faf6f0]">
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
         {/* Quadrant labels */}
         <text
@@ -433,10 +430,7 @@ function PillRow({ members }: { members: SampleMember[] }) {
 
 function FrictionCard({ pair }: { pair: FrictionPair }) {
   return (
-    <div
-      className="rounded-lg border border-stone-200 p-5"
-      style={{ backgroundColor: "#FAF6F0" }}
-    >
+    <div className="rounded-lg border border-stone-200 bg-[#faf6f0] p-5">
       <div className="flex items-center gap-3 mb-3">
         <span
           className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wide"
@@ -459,10 +453,7 @@ function FrictionCard({ pair }: { pair: FrictionPair }) {
 function PlaybookCard({ pb }: { pb: Playbook }) {
   const color = ROLE_COLORS[pb.role] || "#666";
   return (
-    <div
-      className="rounded-lg border border-stone-200 p-5"
-      style={{ backgroundColor: "#FAF6F0" }}
-    >
+    <div className="rounded-lg border border-stone-200 bg-[#faf6f0] p-5">
       <div className="flex items-center gap-2 mb-3">
         <span
           className="w-3 h-3 rounded-full shrink-0"
@@ -496,7 +487,7 @@ export default function SampleReportsClient() {
   const [activeTab, setActiveTab] = useState<"team" | "individual">("team");
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#FBF8F3" }}>
+    <div className="min-h-screen bg-[#fbf8f3]">
       {/* Header */}
       <header className="border-b border-stone-200 py-8 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
@@ -622,10 +613,7 @@ export default function SampleReportsClient() {
 
             {/* Conductor Gap */}
             <section>
-              <div
-                className="rounded-lg border-2 border-dashed border-[#7B68AE] p-6"
-                style={{ backgroundColor: "#F9F7FC" }}
-              >
+              <div className="rounded-lg border-2 border-dashed border-[#7B68AE] bg-[#f9f7fc] p-6">
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#7B68AE] font-bold mb-2">
                   Critical Gap - Priority Hire or Designate
                 </p>
@@ -682,10 +670,7 @@ export default function SampleReportsClient() {
                 </p>
               </div>
 
-              <div
-                className="rounded-lg border border-stone-200 p-5 mt-6"
-                style={{ backgroundColor: "#FAF6F0" }}
-              >
+              <div className="mt-6 rounded-lg border border-stone-200 bg-[#faf6f0] p-5">
                 <h3 className="text-xs uppercase tracking-wide text-stone-500 font-bold mb-3">
                   Path to Less Friction
                 </h3>
@@ -731,10 +716,7 @@ export default function SampleReportsClient() {
         )}
 
         {/* CTA Section */}
-        <div
-          className="mt-12 rounded-lg border border-stone-200 p-8 text-center"
-          style={{ backgroundColor: "#FAF6F0" }}
-        >
+        <div className="mt-12 rounded-lg border border-stone-200 bg-[#faf6f0] p-8 text-center">
           <h3 className="text-xl font-bold text-stone-900 mb-2">
             Want this for your team?
           </h3>
