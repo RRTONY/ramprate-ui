@@ -140,7 +140,7 @@ export default function PeerAssessmentClient({
         },
         {
           onSuccess: () => setPhase("complete"),
-          onError: (err: any) => {
+          onError: (err: unknown) => {
             console.error("Failed to submit review", err);
             setPhase("error");
           },

@@ -21,6 +21,7 @@ import {
   Shield,
   Anchor,
   Radio,
+  type LucideIcon,
 } from "lucide-react";
 
 interface OnboardingWizardProps {
@@ -31,7 +32,7 @@ interface OnboardingWizardProps {
   onClose: () => void;
 }
 
-const ROLE_ICONS: Record<string, any> = {
+const ROLE_ICONS: Record<string, LucideIcon> = {
   Spark: Zap,
   Amplifier: Activity,
   Filter: Shield,
@@ -148,7 +149,9 @@ export default function OnboardingWizard({
                         <RoleIcon className="w-10 h-10" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black">You&#39;re a {role}</h2>
+                        <h2 className="text-2xl font-black">
+                          You&#39;re a {role}
+                        </h2>
                         <p className="text-muted-foreground mt-1">
                           Score: {score}% alignment with your natural operating
                           energy
@@ -283,7 +286,8 @@ export default function OnboardingWizard({
                     </div>
 
                     <p className="text-xs text-center text-muted-foreground italic">
-                      &quot;Don&#39;t just merge balance sheets; merge nervous systems.&quot;
+                      &quot;Don&#39;t just merge balance sheets; merge nervous
+                      systems.&quot;
                     </p>
                   </>
                 )}
