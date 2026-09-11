@@ -153,13 +153,7 @@ export default function PeerAssessmentClient({
   if (phase === "intro" || phase === "loading") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            backgroundImage:
-              "url('https://www.transparenttextures.com/patterns/cubes.png')",
-          }}
-        />
+        <div className="peer-assessment-intro-texture absolute inset-0 opacity-20 pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
