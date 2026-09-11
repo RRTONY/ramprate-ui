@@ -81,6 +81,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The My Journey view now uses typed team and assessment records for team navigation and assessment history. Its focused lint pass is clean, and the global lint backlog is reduced to 23 errors and 78 warnings without suppressing rules.
 - The testimonial presentation now uses unknown-compatible media fields and explicit media guards without changing any testimonial copy or attribution. Its focused lint pass is clean, and the global lint backlog is reduced to 21 errors and 78 warnings without suppressing rules.
 - The shared Input and Textarea components now rely on native keyboard composition flags rather than broad casts, preserving CJK IME behavior. Their focused lint pass is clean, and the global lint backlog is reduced to 19 errors and 78 warnings without suppressing rules.
+- The public TeamGrid now uses an unknown-compatible media field with an explicit photo guard without altering team content. Its focused lint pass is clean, and the global lint backlog is reduced to 18 errors and 78 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 
