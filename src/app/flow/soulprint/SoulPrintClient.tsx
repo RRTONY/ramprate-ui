@@ -15,14 +15,11 @@ import {
   Compass,
   Flame,
   Star,
-  ArrowRight,
   CheckCircle2,
   Lock,
-  Users,
   Zap,
   Heart,
   Shield,
-  ChevronDown,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/flow/trpc";
@@ -103,10 +100,9 @@ const tiers: TierInfo[] = [
   },
 ];
 
-export default function SoulPrintClient({ orderId }: { orderId?: string }) {
+export default function SoulPrintClient() {
   const [selectedTier, setSelectedTier] = useState<Tier>("compass");
   const [reportType, setReportType] = useState<ReportType>("combined");
-  const [showForm, setShowForm] = useState(false);
   const [birthDate, setBirthDate] = useState("");
   const [birthTime, setBirthTime] = useState("");
   const [birthCity, setBirthCity] = useState("");

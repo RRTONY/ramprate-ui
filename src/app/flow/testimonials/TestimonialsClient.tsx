@@ -1,14 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, Quote, Play, Send, CheckCircle } from "lucide-react";
+import { ArrowRight, Quote, Send, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/flow/trpc";
 import { useAuth } from "@/hooks/flow/useAuth";
@@ -26,11 +21,6 @@ interface CommunityTestimonial {
 
 export default function TestimonialsClient() {
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
 
   const businessTestimonials = [
     {
@@ -108,10 +98,7 @@ export default function TestimonialsClient() {
   ];
 
   return (
-    <div
-      ref={containerRef}
-      className="min-h-screen bg-black text-white overflow-x-hidden relative"
-    >
+    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
       {/* Background gradient */}
       <div className="fixed inset-0 z-0 opacity-40 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
@@ -278,7 +265,7 @@ function CommunityTestimonials() {
 }
 
 function TestimonialForm() {
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState("");
   const [quote, setQuote] = useState("");

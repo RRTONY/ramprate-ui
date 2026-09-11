@@ -30,7 +30,6 @@ import {
   RefreshCw,
   Lock,
   ArrowRight,
-  ChevronRight,
 } from "lucide-react";
 
 type CoachingContext = "work" | "family" | "personal";
@@ -81,7 +80,7 @@ const categoryConfig: Record<
 };
 
 export default function Coaching() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [context, setContext] = useState<CoachingContext>("work");
 

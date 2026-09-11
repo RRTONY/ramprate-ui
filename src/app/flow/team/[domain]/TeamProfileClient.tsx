@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/hooks/flow/useAuth";
 import { trpc } from "@/lib/flow/trpc";
 import { useMemo, useRef, useEffect, useState } from "react";
 import {
@@ -15,7 +14,6 @@ import {
   Users,
   Zap,
   AlertTriangle,
-  Download,
   Share2,
   ArrowRight,
   CheckCircle2,

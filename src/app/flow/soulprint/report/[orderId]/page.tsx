@@ -7,11 +7,6 @@ export const metadata: Metadata = {
     "8 ancient + modern frameworks. One AI-synthesized portrait of your soul's operating system - the thing you can't run from, rendered in language you can finally understand.",
 };
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ orderId: string }>;
-}) {
-  const { orderId } = await params;
-  return <SoulPrintClient orderId={orderId} />;
+export default function Page() {
+  return <SoulPrintClient />;
 }

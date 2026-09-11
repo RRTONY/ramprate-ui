@@ -1,5 +1,3 @@
-import { Zap, Activity, Filter, Anchor, Users } from "lucide-react";
-
 // --- Types ---
 export type Role = "Spark" | "Amplifier" | "Filter" | "Ground" | "Conductor";
 

@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, Shield, Zap, Users, Activity } from "lucide-react";
+import { Shield, Zap, Users, Activity } from "lucide-react";
 import MonroeProtocol from "@/components/flow/MonroeProtocol";
 import { motion } from "framer-motion";
 
@@ -156,9 +156,10 @@ export default function ProtocolClient() {
             </h2>
             <div className="prose prose-lg prose-invert">
               <p>
-                As we integrate AI agents into the workforce, the &quot;Human OS&quot;
-                becomes even more critical. AI is the ultimate &quot;Ground&quot; role-it
-                executes perfectly but lacks the Spark of creation.
+                As we integrate AI agents into the workforce, the &quot;Human
+                OS&quot; becomes even more critical. AI is the ultimate
+                &quot;Ground&quot; role-it executes perfectly but lacks the
+                Spark of creation.
               </p>
               <p>
                 <strong>

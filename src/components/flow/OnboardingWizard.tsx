@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/lib/flow/trpc";
-import { useAuth } from "@/hooks/flow/useAuth";
 import { toast } from "sonner";
 import {
   CheckCircle2,
@@ -66,12 +64,10 @@ export default function OnboardingWizard({
   role,
   score,
   teamCode,
-  assessmentId,
   onClose,
 }: OnboardingWizardProps) {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  const { user } = useAuth();
   const [invitesCopied, setInvitesCopied] = useState(false);
 
   const RoleIcon = ROLE_ICONS[role] || Zap;
