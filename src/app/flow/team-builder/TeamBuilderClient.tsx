@@ -7,13 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import { Card, CardContent } from "@/components/flow/ui/card";
-import {
-  Users,
-  User,
-  ArrowRight,
-  ClipboardCheck,
-  BarChart3,
-} from "lucide-react";
+import { Users, User, ArrowRight, BarChart3 } from "lucide-react";
 
 export default function TeamBuilderClient() {
   const router = useRouter();

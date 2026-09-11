@@ -5,9 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/flow/ui/button";
 import {
   ArrowRight,
-  Users,
   Heart,
-  Zap,
   Scale,
   TrendingUp,
   TrendingDown,
@@ -189,9 +187,10 @@ export default function RelationshipCalculator() {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            &quot;If your <em>us</em> doesn&#39;t equal more than you two separately, it
-            just doesn&#39;t add up.&quot; Select two roles and discover whether you
-            multiply, complement, or create productive tension.
+            &quot;If your <em>us</em> doesn&#39;t equal more than you two
+            separately, it just doesn&#39;t add up.&quot; Select two roles and
+            discover whether you multiply, complement, or create productive
+            tension.
           </p>
         </div>
       </section>
@@ -385,8 +384,8 @@ export default function RelationshipCalculator() {
       <section className="py-20 px-4 mt-8">
         <div className="max-w-3xl mx-auto">
           <blockquote className="text-xl md:text-2xl text-center text-muted-foreground italic leading-relaxed">
-            &quot;If your <em>us</em> doesn&#39;t equal more than you two separately, it
-            just doesn&#39;t add up.&quot;
+            &quot;If your <em>us</em> doesn&#39;t equal more than you two
+            separately, it just doesn&#39;t add up.&quot;
           </blockquote>
           <p className="text-center text-sm text-muted-foreground mt-4">
             - Tony Greenberg,{" "}

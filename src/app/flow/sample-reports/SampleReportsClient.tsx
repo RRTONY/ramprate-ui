@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/flow/ui/button";
-import { Badge } from "@/components/flow/ui/badge";
 import Link from "next/link";
-import { ArrowRight, Download, Users, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 
 // --- Sample Data (matches the real report output) ---
 const ROLE_COLORS: Record<string, string> = {
