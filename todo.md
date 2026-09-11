@@ -107,9 +107,9 @@
 - [x] Remove the “Tell Us What's Broken” hero CTA and rebalance the remaining hero action across responsive layouts.
 - [x] Add markup-level visual-contract coverage for the redesigned non-hero home sections and the simplified single-action hero.
 - [x] Remove the remaining “Tell Us What's Broken” call-to-action from the shared marketing header and rebalance responsive navigation controls.
-- [ ] Inventory legacy Framer Motion and high-impact inline-style usage across Flow routes, then prioritize low-risk modernization batches.
-- [ ] Replace the first bounded batch of direct Framer Motion presentation patterns with reduced-motion-safe CSS conventions without changing route behavior.
-- [ ] Validate the first Flow modernization batch with focused route checks, type checking, automated tests, linting, and a production build.
+- [x] Inventory legacy Framer Motion and high-impact inline-style usage across Flow routes, then prioritize low-risk modernization batches.
+- [x] Replace the first bounded batch of direct Framer Motion presentation patterns with reduced-motion-safe CSS conventions without changing route behavior.
+- [x] Validate the first Flow modernization batch with focused route checks, type checking, automated tests, linting, and a production build.
 - [x] Redesign the “Six practices. One coalition.” section with a calmer background, improved practice-card hierarchy, and clearer icons while preserving existing copy and links.
 - [x] Validate the revised practices section on desktop and mobile, then add or update focused visual-contract regression coverage.
 - [x] Refine the RampRate browser favicon and shared header brand mark so the iconography is legible, premium, and consistent with the current plum-and-gold visual system.
@@ -126,6 +126,6 @@
 - [x] Audit and repair managed `page_seo` titles, descriptions, JSON-LD, and image-source references, then validate public metadata output.
 - [x] Expand the separate RampRate CMS into a headless workspace for editable page content, page SEO, blog posts, categories, media references, site settings, and form submissions.
 - [x] Add protected CMS APIs and interface controls for page SEO title, description, JSON-LD, and social image-source management.
-- [ ] Audit every public and managed image for meaningful alt text and title metadata, then repair missing or weak values through the database-backed CMS.
+- [x] Audit every public and managed image for meaningful alt text and title metadata, then repair missing or weak values through the database-backed CMS.
 - [x] Remove the redundant far-left RampRate monogram from the shared header while retaining the primary wordmark and responsive navigation controls.
 - [x] Refine non-hero home-page sections to match the approved plum-and-amber hero theme while preserving the hero image and component unchanged.

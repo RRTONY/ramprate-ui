@@ -32,6 +32,7 @@ describe("headless CMS SEO and media workflows", () => {
     expect(source).toContain('label: "Media metadata"');
     expect(source).toContain("Social image asset ID");
     expect(source).toContain("Descriptive alternative text");
+    expect(source).toContain('"Image title"');
     expect(source).toContain("JSON-LD must be valid JSON");
   });
 });
