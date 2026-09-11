@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence, Reorder } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
@@ -44,8 +44,14 @@ const ROLE_BG: Record<Role, string> = {
   Amplifier: "bg-cyan-500/10 border-cyan-500/30",
   Filter: "bg-rose-500/10 border-rose-500/30",
   Ground: "bg-emerald-500/10 border-emerald-500/30",
-  Conductor: "bg-violet-500/10 border-violet-500/30",
+  Conductor: "bg-violet-400/10 border-violet-400/30",
 };
+
+interface CalibrationMutationResult {
+  calibratedScores: Record<Role, number>;
+  calibratedRole: Role;
+  confidenceScore: number;
+}
 
 export default function DeepCalibrationClient() {
   const { user, loading: authLoading } = useAuth();
@@ -76,7 +82,7 @@ export default function DeepCalibrationClient() {
   }, [myResults]);
 
   const saveCalibration = trpc.assessment.saveCalibration.useMutation({
-    onSuccess: (data: any) => {
+    onSuccess: (data: CalibrationMutationResult) => {
       setResults({
         scores: data.calibratedScores,
         percentages: scoresToPercentages(data.calibratedScores),
@@ -84,8 +90,7 @@ export default function DeepCalibrationClient() {
         consistency: data.confidenceScore,
         originalRole: latestAssessment?.role,
         originalScores: latestAssessment?.scores as
-          | Record<string, number>
-          | undefined,
+          Record<string, number> | undefined,
       });
       setPhase("results");
       toast.success("Deep Calibration complete!");
@@ -230,9 +235,9 @@ export default function DeepCalibrationClient() {
                     <BadgeCheck className="w-5 h-5 text-emerald-400" />
                     <h3 className="font-semibold text-sm">Calibrated Badge</h3>
                     <p className="text-xs text-muted-foreground">
-                      Completing calibration earns a &quot;Calibrated&quot; badge on your
-                      profile - it means you&#39;ve done the more rigorous
-                      forced-ranking pass, not an independent audit.
+                      Completing calibration earns a &quot;Calibrated&quot;
+                      badge on your profile - it means you&#39;ve done the more
+                      rigorous forced-ranking pass, not an independent audit.
                     </p>
                   </CardContent>
                 </Card>
