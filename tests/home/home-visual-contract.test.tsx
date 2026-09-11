@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
 
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { render } from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -54,5 +56,24 @@ describe("home visual contract", () => {
     ].forEach((className) => {
       expect(container.querySelector(`.${className}`)).not.toBeNull();
     });
+  });
+
+  it("keeps the current live-reference navy surfaces and restrained gold accents scoped to the homepage", async () => {
+    const css = await readFile(
+      resolve(process.cwd(), "src/app/globals.css"),
+      "utf8",
+    );
+
+    expect(css).toContain(
+      "/* ── HOMEPAGE: CURRENT LIVE RAMP RATE REFERENCE ──",
+    );
+    expect(css).toContain("--dark: #050b14;");
+    expect(css).toContain("--dark-mid: #071221;");
+    expect(css).toContain("--gold: #d6ad42;");
+    expect(css).toContain(".home-proof-card {");
+    expect(css).toContain(
+      "background: linear-gradient(145deg, #0f1725, #0d1624)",
+    );
+    expect(css).toContain(".home-client-wall,");
   });
 });

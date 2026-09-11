@@ -215,7 +215,7 @@ export default function HomeContent() {
     <div className="home-blue min-h-screen">
       {/* ═══ HERO ═══ */}
       <section className="home-blue-hero relative min-h-screen flex flex-col overflow-hidden">
-        {/* The office photo remains contextual; the violet-and-amber editorial atmosphere carries the primary brand experience. */}
+        {/* The office photo remains contextual beneath the live site's midnight-navy and restrained-gold atmosphere. */}
         <div className="absolute inset-0">
           <Image
             src="/hero.webp"
@@ -227,14 +227,14 @@ export default function HomeContent() {
           />
           {/* Left-side scrim protects the reading column over the contextual image. */}
           <div className="home-blue-scrim absolute inset-0" />
-          {/* The warm-violet vignette grounds the hero in the wider content system. */}
+          {/* A navy vignette grounds the hero in the wider content system. */}
           <div className="home-blue-vignette absolute inset-0" />
-          {/* The amber wash adds depth without sacrificing title contrast. */}
+          {/* The restrained gold wash adds depth without sacrificing title contrast. */}
           <div className="home-blue-light-wash absolute inset-0 mix-blend-soft-light" />
         </div>
         <div className="home-blue-hero-grid absolute inset-0 z-[1]" />
 
-        {/* Ambient color fields keep the hero alive without distracting from the copy. */}
+        {/* Ambient navy, gold, and violet fields keep the hero alive without distracting from the copy. */}
         <div className="home-blue-orb-large glass-orb glass-orb-amber w-[500px] h-[500px] -top-40 -right-40 z-[1]" />
         <div className="home-blue-orb-medium glass-orb glass-orb-rust w-[300px] h-[300px] bottom-20 left-10 z-[1]" />
         <div className="home-blue-orb-small glass-orb glass-orb-pink w-[200px] h-[200px] z-[1]" />
@@ -278,7 +278,7 @@ export default function HomeContent() {
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(56,189,248,0.28)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(214,173,66,0.28)]"
                 >
                   See Case Results
                   <ArrowRight size={16} />
@@ -342,7 +342,7 @@ export default function HomeContent() {
       <section id="brands" className="home-practices-section py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-[rgba(58,31,53,0.52)]">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/42">
               01 - Our Practices
             </span>
             <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
@@ -368,7 +368,7 @@ export default function HomeContent() {
                 className="home-practice-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 p-7 transition-all duration-300 ease-out hover:-translate-y-1"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-[rgba(58,31,53,0.4)]">
+                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/35">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
