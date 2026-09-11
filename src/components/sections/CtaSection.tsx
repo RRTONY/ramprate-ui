@@ -6,7 +6,7 @@ interface CtaSectionProps {
   body?: string;
   buttonText?: string;
   buttonLink?: string;
-  backgroundImage?: any;
+  backgroundImage?: unknown;
 }
 
 export default function CtaSection({

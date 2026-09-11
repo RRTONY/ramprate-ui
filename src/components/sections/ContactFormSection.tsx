@@ -1,27 +1,32 @@
-'use client'
+"use client";
 
-import {useState} from 'react'
+import { useState } from "react";
 
 interface ContactFormSectionProps {
-  heading?: string
-  description?: string
+  heading?: string;
+  description?: string;
 }
 
-export default function ContactFormSection({heading, description}: ContactFormSectionProps) {
-  const [submitted, setSubmitted] = useState(false)
+export default function ContactFormSection({
+  heading,
+  description,
+}: ContactFormSectionProps) {
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const data = new FormData(form)
-    fetch('/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(data as any).toString(),
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(
+        Array.from(data.entries(), ([key, value]) => [key, String(value)]),
+      ).toString(),
     })
       .then(() => setSubmitted(true))
-      .catch(() => setSubmitted(true))
-  }
+      .catch(() => setSubmitted(true));
+  };
 
   if (submitted) {
     return (
@@ -31,14 +36,16 @@ export default function ContactFormSection({heading, description}: ContactFormSe
           <p className="text-gray-600">We&apos;ll get back to you shortly.</p>
         </div>
       </section>
-    )
+    );
   }
 
   return (
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
         {heading && (
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">{heading}</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
+            {heading}
+          </h2>
         )}
         {description && (
           <p className="text-center text-gray-600 mb-8">{description}</p>
@@ -58,7 +65,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Name
               </label>
               <input
@@ -70,7 +80,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email
               </label>
               <input
@@ -85,7 +98,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Phone
               </label>
               <input
@@ -96,7 +112,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
               />
             </div>
             <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="company"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Company
               </label>
               <input
@@ -109,7 +128,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
           </div>
 
           <div>
-            <label htmlFor="jobFunction" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="jobFunction"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Job Function
             </label>
             <select
@@ -127,7 +149,10 @@ export default function ContactFormSection({heading, description}: ContactFormSe
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Message
             </label>
             <textarea
@@ -149,5 +174,5 @@ export default function ContactFormSection({heading, description}: ContactFormSe
         </form>
       </div>
     </section>
-  )
+  );
 }

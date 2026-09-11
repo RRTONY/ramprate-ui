@@ -1,15 +1,21 @@
-import SanityImage from '@/components/shared/SanityImage'
-import Link from 'next/link'
+import SanityImage from "@/components/shared/SanityImage";
+import Link from "next/link";
 
 interface HeroProps {
-  headline?: string
-  subheadline?: string
-  backgroundImage?: any
-  ctaText?: string
-  ctaLink?: string
+  headline?: string;
+  subheadline?: string;
+  backgroundImage?: unknown;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
-export default function Hero({headline, subheadline, backgroundImage, ctaText, ctaLink}: HeroProps) {
+export default function Hero({
+  headline,
+  subheadline,
+  backgroundImage,
+  ctaText,
+  ctaLink,
+}: HeroProps) {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
       {/* Background image */}
@@ -28,7 +34,8 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
           <div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse at 70% 50%, rgba(212,168,67,0.08) 0%, transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(139,69,19,0.06) 0%, transparent 50%)',
+              background:
+                "radial-gradient(ellipse at 70% 50%, rgba(212,168,67,0.08) 0%, transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(139,69,19,0.06) 0%, transparent 50%)",
             }}
           />
         )}
@@ -36,13 +43,15 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to right, var(--dark), rgba(10,15,26,0.85), transparent)',
+            background:
+              "linear-gradient(to right, var(--dark), rgba(10,15,26,0.85), transparent)",
           }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to top, rgba(10,15,26,0.9), transparent, rgba(10,15,26,0.4))',
+            background:
+              "linear-gradient(to top, rgba(10,15,26,0.9), transparent, rgba(10,15,26,0.4))",
           }}
         />
       </div>
@@ -52,9 +61,7 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
         <div className="max-w-xl lg:max-w-2xl pt-20 sm:pt-28 pb-20 sm:pb-32">
           {/* Label pill */}
           <div className="mb-8">
-            <span
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
-            >
+            <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-gold" />
               <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
                 Enterprise Decisions Collective
@@ -85,7 +92,9 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
           )}
           {!subheadline && (
             <p className="font-body mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-lg">
-              Since 2000, we&apos;ve transacted $10B+ in trajectory-changing connections across 50+ countries. We clean up intractable messes, speed up &amp; de-risk innovation, and align profit with purpose.
+              Since 2000, we&apos;ve transacted $10B+ in trajectory-changing
+              connections across 50+ countries. We clean up intractable messes,
+              speed up &amp; de-risk innovation, and align profit with purpose.
             </p>
           )}
 
@@ -97,8 +106,17 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
                 className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90 bg-gold text-dark"
               >
                 {ctaText}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
             ) : (
@@ -107,8 +125,17 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
                 className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90 bg-gold text-dark"
               >
                 Explore Our Work
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
             )}
@@ -123,9 +150,9 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
           {/* Micro-stats */}
           <div className="mt-16 flex gap-8 sm:gap-12">
             {[
-              {value: '$10B+', label: 'Decisions Transacted'},
-              {value: '50+', label: 'Countries'},
-              {value: '24', label: 'Years Deep'},
+              { value: "$10B+", label: "Decisions Transacted" },
+              { value: "50+", label: "Countries" },
+              { value: "24", label: "Years Deep" },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="font-mono text-xl sm:text-2xl font-bold text-white/90 tracking-tight">
@@ -145,10 +172,19 @@ export default function Hero({headline, subheadline, backgroundImage, ctaText, c
         <span className="font-body text-[10px] tracking-[0.3em] uppercase">
           Scroll
         </span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>
       </div>
     </section>
-  )
+  );
 }
