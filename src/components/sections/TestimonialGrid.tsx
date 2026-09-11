@@ -1,4 +1,4 @@
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface Testimonial {
   _id?: string;
@@ -63,7 +63,7 @@ export default function TestimonialGrid({
               <div className="flex items-center gap-4 pt-4 border-t border-white/8">
                 {hasMedia(t.photo) && (
                   <div className="flex-shrink-0 w-11 h-11 rounded-full overflow-hidden ring-1 ring-white/10">
-                    <SanityImage
+                    <ContentImage
                       image={t.photo}
                       alt={t.personName || ""}
                       width={44}
@@ -84,7 +84,7 @@ export default function TestimonialGrid({
                 </div>
                 {hasMedia(t.companyLogo) && (
                   <div className="ml-auto flex-shrink-0 opacity-50 brightness-0 invert">
-                    <SanityImage
+                    <ContentImage
                       image={t.companyLogo}
                       alt={t.company || ""}
                       width={60}

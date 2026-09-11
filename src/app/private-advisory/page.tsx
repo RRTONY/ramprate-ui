@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, {
   serviceJsonLd,
   breadcrumbJsonLd,

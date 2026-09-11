@@ -1,20 +1,20 @@
-import { client } from "@/lib/sanity/client";
+import { client } from "@/lib/content/client";
 import {
   allThinkingPostsQuery,
   postBySlugQuery,
   relatedThinkingPostsQuery,
   recentThinkingPostsQuery,
-} from "@/lib/sanity/queries";
+} from "@/lib/content/queries";
 import {
   PortableText,
   portableTextComponents,
-} from "@/lib/sanity/portable-text";
-import SanityImage from "@/components/shared/SanityImage";
+} from "@/lib/content/portable-text";
+import ContentImage from "@/components/shared/ContentImage";
 import JsonLd, {
   blogPostJsonLd,
   breadcrumbJsonLd,
 } from "@/components/shared/JsonLd";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor } from "@/lib/content/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -203,7 +203,7 @@ export default async function ThinkingPostPage({
       <article className="max-w-4xl mx-auto px-5 sm:px-8 py-12">
         {post.mainImage && (
           <div className="mb-10 rounded-xl overflow-hidden">
-            <SanityImage
+            <ContentImage
               image={post.mainImage}
               alt={post.mainImage.alt || post.title}
               width={896}
@@ -237,7 +237,7 @@ export default async function ThinkingPostPage({
                 >
                   {rp.mainImage && (
                     <div className="mb-3 rounded-lg overflow-hidden aspect-video">
-                      <SanityImage
+                      <ContentImage
                         image={rp.mainImage}
                         alt={rp.mainImage.alt || rp.title}
                         width={400}

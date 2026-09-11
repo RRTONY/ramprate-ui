@@ -1,4 +1,4 @@
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface Logo {
   name?: string;
@@ -30,7 +30,7 @@ export default function LogoBar({ heading, logos }: LogoBarProps) {
             >
               {logo.url ? (
                 <a href={logo.url} target="_blank" rel="noopener noreferrer">
-                  <SanityImage
+                  <ContentImage
                     image={logo.logo}
                     alt={logo.name || ""}
                     width={120}
@@ -38,7 +38,7 @@ export default function LogoBar({ heading, logos }: LogoBarProps) {
                   />
                 </a>
               ) : (
-                <SanityImage
+                <ContentImage
                   image={logo.logo}
                   alt={logo.name || ""}
                   width={120}

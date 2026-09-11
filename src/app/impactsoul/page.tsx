@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",

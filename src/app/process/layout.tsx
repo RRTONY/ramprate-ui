@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {

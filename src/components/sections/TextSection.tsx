@@ -1,18 +1,25 @@
-import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
+import {
+  PortableText,
+  portableTextComponents,
+} from "@/lib/content/portable-text";
 
 interface TextSectionProps {
-  heading?: string
+  heading?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: any
-  alignment?: 'left' | 'center' | 'right'
+  body?: any;
+  alignment?: "left" | "center" | "right";
 }
 
-export default function TextSection({heading, body, alignment = 'left'}: TextSectionProps) {
+export default function TextSection({
+  heading,
+  body,
+  alignment = "left",
+}: TextSectionProps) {
   const alignClass = {
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right',
-  }[alignment]
+    left: "text-left",
+    center: "text-center",
+    right: "text-right",
+  }[alignment];
 
   return (
     <section className="py-16 md:py-24 bg-dark-mid">
@@ -29,5 +36,5 @@ export default function TextSection({heading, body, alignment = 'left'}: TextSec
         )}
       </div>
     </section>
-  )
+  );
 }

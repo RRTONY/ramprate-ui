@@ -11,7 +11,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const revalidate = 60;

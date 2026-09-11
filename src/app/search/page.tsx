@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { sanityFetch } from "@/lib/sanity/client";
-import { searchPostsQuery } from "@/lib/sanity/queries";
+import { sanityFetch } from "@/lib/content/client";
+import { searchPostsQuery } from "@/lib/content/queries";
 import { buildGroqSearchTerm } from "@/lib/search";
 import SearchInput from "@/components/shared/SearchInput";
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 import JsonLd from "@/components/shared/JsonLd";
 import { matchSitePages, type SitePage } from "@/lib/site-pages";
 
@@ -288,7 +288,10 @@ function SearchPageCard({ page }: { page: SitePage }) {
       </h3>
       <p
         className="text-sm leading-relaxed"
-        style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-body)" }}
+        style={{
+          color: "rgba(255,255,255,0.45)",
+          fontFamily: "var(--font-body)",
+        }}
       >
         {page.description}
       </p>
@@ -325,7 +328,7 @@ function SearchPostCard({
       {/* Thumbnail */}
       {post.mainImage ? (
         <Link href={href} className="block overflow-hidden">
-          <SanityImage
+          <ContentImage
             image={post.mainImage}
             alt={post.title || ""}
             width={600}

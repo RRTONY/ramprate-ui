@@ -19,10 +19,6 @@
       }
     ],
     "paths": {
-      "@/components/shared/SanityImage": [
-        "./src/components/shared/ContentImage.tsx"
-      ],
-      "@/lib/sanity/*": ["./src/lib/content/*"],
       "@/*": ["./src/*"]
     }
   },

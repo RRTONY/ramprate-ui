@@ -4,7 +4,7 @@ import JsonLd, {
   serviceJsonLd,
   breadcrumbJsonLd,
 } from "@/components/shared/JsonLd";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Expertise",
@@ -117,8 +117,7 @@ export default function ExpertisePage() {
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl">
-            Five Brands.{" "}
-            <span className="text-amber">One Mission.</span>
+            Five Brands. <span className="text-amber">One Mission.</span>
           </h1>
 
           <p className="font-body mt-6 text-base sm:text-lg leading-relaxed max-w-2xl text-white/50">
@@ -218,7 +217,8 @@ export default function ExpertisePage() {
             href="/contact"
             className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:brightness-110 bg-amber text-[oklch(0.15_0.02_75)]"
             style={{
-              boxShadow: "0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)",
+              boxShadow:
+                "0 8px 32px color-mix(in oklch, oklch(0.82 0.15 75) 20%, transparent)",
             }}
           >
             Tell Us What&apos;s Broken

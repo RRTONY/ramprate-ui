@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sanityFetch } from "@/lib/sanity/client";
-import { searchPostsQuery } from "@/lib/sanity/queries";
+import { sanityFetch } from "@/lib/content/client";
+import { searchPostsQuery } from "@/lib/content/queries";
 import { buildGroqSearchTerm } from "@/lib/search";
 import { matchSitePages } from "@/lib/site-pages";
 

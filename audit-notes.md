@@ -147,3 +147,8 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - Audited all 646 managed media assets and confirmed every record has non-empty alternative text. Repaired the 565 metadata records missing a title by safely mirroring each existing descriptive alternative text into the CMS-managed title field; no image captions, URLs, or assets were invented or replaced.
 - Reviewed source-level image usage: project raw HTML image matches are internal code-check guidance or explicitly documented PDF-rendering exceptions, while public Next image usage maintains required alternative-text inputs. CMS regression coverage now protects the Image title and descriptive alternative-text controls.
 - Direct checks of the first CSS-motion modernization surfaces (`/flow/protocol`, `/flow/team-settings`, and `/flow/manager-guidebook`) confirmed the expected Flow shell and protected navigation state. The focused media suite, strict type checking, full deterministic tests, clean ESLint, and optimized production build passed.
+
+## Direct Managed-Content Import Completion
+
+- Replaced the 22 residual public and shared-component `@/lib/sanity/*` compatibility imports with explicit `@/lib/content/*` module paths. Renamed all public `SanityImage` usages to `ContentImage` and removed the obsolete TypeScript compatibility aliases.
+- Added a source-contract regression that ensures managed routes retain direct content imports and cannot reintroduce the retired aliases. Type checking, the full deterministic suite, clean repository lint, optimized production build, and direct HTTP 200 checks for representative home, public, blog, Thinking, search, proof, contact, and sitemap routes passed after the migration.

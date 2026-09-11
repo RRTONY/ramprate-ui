@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Syzygy Growth Advisory - Anchor Clients, Advisors, Capital",
@@ -327,12 +330,12 @@ export default function GrowthPage() {
             </p>
             <p>
               Most growth advisors sell you a methodology. We sell you access.
-              Access to the 350+ supplier relationships, 50+ country network, and
-              24 years of enterprise trust that our principals have built. When
-              a CIO at a Fortune 500 company takes our call, they&apos;re not
-              taking a cold call from an advisor - they&apos;re taking a call
-              from someone who saved them millions on their last infrastructure
-              deal. That trust transfers to you.
+              Access to the 350+ supplier relationships, 50+ country network,
+              and 24 years of enterprise trust that our principals have built.
+              When a CIO at a Fortune 500 company takes our call, they&apos;re
+              not taking a cold call from an advisor - they&apos;re taking a
+              call from someone who saved them millions on their last
+              infrastructure deal. That trust transfers to you.
             </p>
           </div>
         </div>

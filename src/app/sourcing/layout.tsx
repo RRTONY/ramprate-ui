@@ -6,7 +6,7 @@ import JsonLd, {
 } from "@/components/shared/JsonLd";
 import { pressingQuestions } from "./pressing-questions";
 import { testimonials } from "./testimonials";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Enterprise IT Infrastructure Consulting Services | RampRate",

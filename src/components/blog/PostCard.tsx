@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface Category {
   title?: string;
@@ -34,7 +34,7 @@ export default function PostCard({ post }: PostCardProps) {
           href={`/blog/${post.slug?.current}`}
           className="block overflow-hidden"
         >
-          <SanityImage
+          <ContentImage
             image={post.mainImage}
             alt={post.title || ""}
             width={600}

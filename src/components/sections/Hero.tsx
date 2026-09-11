@@ -1,4 +1,4 @@
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 import Link from "next/link";
 
 interface HeroProps {
@@ -21,7 +21,7 @@ export default function Hero({
       {/* Background image */}
       <div className="absolute inset-0">
         {backgroundImage ? (
-          <SanityImage
+          <ContentImage
             image={backgroundImage}
             alt=""
             width={1920}

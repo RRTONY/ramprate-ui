@@ -1,14 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity/client";
+import { client } from "@/lib/content/client";
 import {
   teamMembersQuery,
   boardAdvisorsQuery,
   siteSettingsQuery,
-} from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+} from "@/lib/content/queries";
+import { urlFor } from "@/lib/content/image";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, {
   breadcrumbJsonLd,
   personJsonLd,

@@ -1,6 +1,6 @@
-import { client } from "@/lib/sanity/client";
-import { allPostSlugsQuery } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
+import { client } from "@/lib/content/client";
+import { allPostSlugsQuery } from "@/lib/content/queries";
+import { urlFor } from "@/lib/content/image";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://ramprate.com";

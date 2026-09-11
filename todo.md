@@ -11,6 +11,10 @@
 - [x] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
 - [x] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
+- [ ] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
+- [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [ ] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
+- [x] Replace residual legacy Sanity import paths in public routes with the active managed-database content modules and validate equivalent behavior.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
 - [x] Replace credential-form textual loading indicators with the required accessible Lucide spinner treatment.
 - [x] Replace the remote Flow authentication proxy with a direct Supabase cookie-session implementation after explicit dependency approval and secure runtime credentials are available. Superseded by the later decision to preserve the existing backend.

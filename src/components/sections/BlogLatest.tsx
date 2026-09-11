@@ -1,17 +1,20 @@
-import {client} from '@/lib/sanity/client'
-import {postsQuery} from '@/lib/sanity/queries'
-import PostCard from '@/components/blog/PostCard'
-import Link from 'next/link'
+import { client } from "@/lib/content/client";
+import { postsQuery } from "@/lib/content/queries";
+import PostCard from "@/components/blog/PostCard";
+import Link from "next/link";
 
 interface BlogLatestProps {
-  heading?: string
-  count?: number
+  heading?: string;
+  count?: number;
 }
 
-export default async function BlogLatest({heading, count = 3}: BlogLatestProps) {
-  const posts = await client.fetch(postsQuery, {start: 0, end: count})
+export default async function BlogLatest({
+  heading,
+  count = 3,
+}: BlogLatestProps) {
+  const posts = await client.fetch(postsQuery, { start: 0, end: count });
 
-  if (!posts?.length) return null
+  if (!posts?.length) return null;
 
   return (
     <section className="py-24 text-white bg-dark-card">
@@ -22,7 +25,7 @@ export default async function BlogLatest({heading, count = 3}: BlogLatestProps) 
               Latest Thinking
             </p>
             <h2 className="font-display font-bold text-white text-[clamp(1.75rem,4vw,2.75rem)]">
-              {heading || 'From the Blog'}
+              {heading || "From the Blog"}
             </h2>
           </div>
           <Link
@@ -30,8 +33,17 @@ export default async function BlogLatest({heading, count = 3}: BlogLatestProps) 
             className="font-body hidden sm:inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-70 text-gold"
           >
             View all posts
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
@@ -46,12 +58,21 @@ export default async function BlogLatest({heading, count = 3}: BlogLatestProps) 
             className="font-body inline-flex items-center gap-2 text-sm font-medium text-gold"
           >
             View all posts
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }

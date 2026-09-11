@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity/client";
+import { sanityFetch } from "@/lib/content/client";
 import {
   clientLogosQuery,
   testimonialsQuery,
   boardAdvisorsQuery,
   caseStudiesQuery,
   confidentialTestimonialsQuery,
-} from "@/lib/sanity/queries";
+} from "@/lib/content/queries";
 import ProofClient, {
   type SanityLogo,
   type SanityTestimonial,
@@ -14,7 +14,7 @@ import ProofClient, {
   type SanityCaseStudy,
   type SanityConfidentialTestimonial,
 } from "./ProofClient";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {

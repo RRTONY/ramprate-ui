@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import { getPageSeo, withSeoOverrides } from "@/lib/content/seo";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
   title: "Stratum - Web3 & Enterprise Blockchain Advisory",
@@ -317,9 +320,9 @@ export default function Web3Page() {
               className="text-white/70 text-lg leading-relaxed mb-10"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Enterprise blockchain and stablecoin advisory: transparent
-              reserve structures, tokenization strategy, and regulatory
-              navigation for Fortune 500 teams entering Web3.
+              Enterprise blockchain and stablecoin advisory: transparent reserve
+              structures, tokenization strategy, and regulatory navigation for
+              Fortune 500 teams entering Web3.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[

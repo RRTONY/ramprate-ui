@@ -1,8 +1,8 @@
 import {
   PortableText,
   portableTextComponents,
-} from "@/lib/sanity/portable-text";
-import SanityImage from "@/components/shared/SanityImage";
+} from "@/lib/content/portable-text";
+import ContentImage from "@/components/shared/ContentImage";
 import type { ReactNode } from "react";
 
 interface ImpactItem {
@@ -42,7 +42,7 @@ export default function ImpactSection({
               <div key={i} className="bg-gray-50 rounded-lg p-6">
                 {item.icon && (
                   <div className="mb-4">
-                    <SanityImage
+                    <ContentImage
                       image={item.icon}
                       alt={item.title || ""}
                       width={48}

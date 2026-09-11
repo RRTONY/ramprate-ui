@@ -1,4 +1,4 @@
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface Pillar {
   title?: string;
@@ -43,7 +43,7 @@ export default function ServicePillars({
             >
               {hasIcon(pillar.icon) && (
                 <div className="mb-5">
-                  <SanityImage
+                  <ContentImage
                     image={pillar.icon}
                     alt={pillar.title || ""}
                     width={48}

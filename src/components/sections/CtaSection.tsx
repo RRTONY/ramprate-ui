@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface CtaSectionProps {
   heading?: string;
@@ -20,7 +20,7 @@ export default function CtaSection({
     <section className="relative py-24 text-center text-white bg-rust">
       {backgroundImage ? (
         <div className="absolute inset-0 overflow-hidden">
-          <SanityImage
+          <ContentImage
             image={backgroundImage}
             alt=""
             aria-hidden="true"

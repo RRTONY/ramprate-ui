@@ -1,4 +1,4 @@
-import SanityImage from "@/components/shared/SanityImage";
+import ContentImage from "@/components/shared/ContentImage";
 
 interface Member {
   name?: string;
@@ -38,7 +38,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
             <div key={i} className="text-center">
               {hasPhoto(member.photo) && (
                 <div className="mb-5 mx-auto w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-2 ring-white/10">
-                  <SanityImage
+                  <ContentImage
                     image={member.photo}
                     alt={member.name || ""}
                     width={144}

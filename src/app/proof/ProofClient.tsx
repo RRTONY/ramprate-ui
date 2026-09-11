@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor } from "@/lib/content/image";
 
 export interface SanityLogo {
   _id: string;
@@ -263,8 +263,8 @@ export default function ProofClient({
               className="text-white/70 text-lg leading-relaxed mb-10"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Don&#39;t take our word for it. Here&#39;s what our clients say about
-              working with RampRate - and why they keep coming back.
+              Don&#39;t take our word for it. Here&#39;s what our clients say
+              about working with RampRate - and why they keep coming back.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {[
