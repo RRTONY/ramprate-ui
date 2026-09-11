@@ -8,10 +8,6 @@ import { Button } from "@/components/flow/ui/button";
 import {
   Compass,
   Zap,
-  Shield,
-  Radio,
-  Target,
-  Filter as FilterIcon,
   ArrowRight,
   Loader2,
   LogIn,
@@ -46,6 +42,19 @@ const roleBorder: Record<string, string> = {
   Ground: "border-emerald-500/30",
   Conductor: "border-purple-500/30",
 };
+
+interface JourneyTeam {
+  id: number;
+  name: string;
+  code: string;
+}
+
+interface JourneyAssessment {
+  id: number;
+  role: string;
+  score: number;
+  createdAt: string | number | Date;
+}
 
 export default function MyJourneyClient() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -261,7 +270,7 @@ export default function MyJourneyClient() {
               </div>
             ) : teamsQuery.data && teamsQuery.data.length > 0 ? (
               <div className="grid md:grid-cols-2 gap-4">
-                {teamsQuery.data.map((team: any) => (
+                {teamsQuery.data.map((team: JourneyTeam) => (
                   <Link key={team.id} href={`/team/${team.id}`}>
                     <div className="p-4 rounded-xl bg-background/50 border border-border/50 hover:border-blue-500/30 transition-colors cursor-pointer">
                       <div className="flex items-center gap-3">
@@ -302,29 +311,31 @@ export default function MyJourneyClient() {
                 <h2 className="text-lg font-bold">Assessment History</h2>
               </div>
               <div className="space-y-3">
-                {assessmentsQuery.data.map((a: any, i: number) => (
-                  <div
-                    key={a.id}
-                    className="flex items-center gap-4 p-3 rounded-xl bg-background/50 border border-border/50"
-                  >
-                    <span className="text-2xl">
-                      {roleEmoji[a.role] || "❓"}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium">
-                        {a.role} · Score {a.score}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(a.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                    {i === 0 && (
-                      <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full">
-                        Latest
+                {assessmentsQuery.data.map(
+                  (assessment: JourneyAssessment, i: number) => (
+                    <div
+                      key={assessment.id}
+                      className="flex items-center gap-4 p-3 rounded-xl bg-background/50 border border-border/50"
+                    >
+                      <span className="text-2xl">
+                        {roleEmoji[assessment.role] || "❓"}
                       </span>
-                    )}
-                  </div>
-                ))}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">
+                          {assessment.role} · Score {assessment.score}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(assessment.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      {i === 0 && (
+                        <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full">
+                          Latest
+                        </span>
+                      )}
+                    </div>
+                  ),
+                )}
               </div>
             </div>
           )}
