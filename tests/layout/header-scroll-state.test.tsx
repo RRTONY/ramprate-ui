@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -38,6 +38,7 @@ describe("marketing header scroll state", () => {
     const navigation = container.querySelector("nav");
 
     expect(navigation?.className).toContain("bg-transparent");
+    expect(screen.queryByText("Tell Us What's Broken")).toBeNull();
 
     Object.defineProperty(window, "scrollY", { value: 1, configurable: true });
     fireEvent.scroll(window);

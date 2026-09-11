@@ -106,3 +106,4 @@
 - [x] Remove the circular container around the Ask RampRate AI icon so the standalone icon aligns cleanly with the header controls.
 - [x] Remove the “Tell Us What's Broken” hero CTA and rebalance the remaining hero action across responsive layouts.
 - [x] Add markup-level visual-contract coverage for the redesigned non-hero home sections and the simplified single-action hero.
+- [x] Remove the remaining “Tell Us What's Broken” call-to-action from the shared marketing header and rebalance responsive navigation controls.

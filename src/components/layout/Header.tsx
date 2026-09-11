@@ -141,16 +141,6 @@ export default function Header() {
 
           <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
-          <Link
-            href="/contact"
-            className={`font-body inline-flex items-center justify-center rounded-full px-4 py-2 text-[0.68rem] font-bold tracking-[0.07em] uppercase transition-all duration-200 hover:-translate-y-0.5 hover:brightness-105 ${
-              dark
-                ? "bg-gold text-dark shadow-sm"
-                : "bg-gold text-dark shadow-[0_12px_28px_rgba(212,168,67,0.24)]"
-            }`}
-          >
-            Tell Us What&apos;s Broken
-          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -219,13 +209,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="font-body mt-3 flex items-center justify-center rounded-md bg-gold px-4 py-3 text-sm font-bold text-dark"
-              onClick={() => setMobileOpen(false)}
-            >
-              Tell Us What&apos;s Broken
-            </Link>
           </div>
         </div>
       )}
