@@ -144,3 +144,4 @@
 - [x] Add contract coverage for the Web3, Values, How We Work, and Payments Advisory marketing-route metadata and structured-data boundaries without changing public pages.
 - [x] Move the fixed shared Scroll to Top float animation out of component inline styles while retaining its visibility and smooth-scroll behavior.
 - [x] Replace the shared Logo component’s fixed size-variant inline dimensions with equivalent Tailwind classes while preserving all three responsive branding variants.
+- [x] Repair the `/aidoc-ownership-brief` public route runtime failure and add a regression check for successful rendering without altering the completed homepage or CMS work.
