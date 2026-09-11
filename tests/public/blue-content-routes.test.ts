@@ -70,4 +70,29 @@ describe("blue public content routes", () => {
       expect(source).toContain("<JsonLd");
     }
   });
+
+  it("retains metadata and structured-data boundaries on further public marketing routes", async () => {
+    const [web3, values, howWeWork, paymentsAdvisory] = await Promise.all(
+      [
+        "src/app/web3/page.tsx",
+        "src/app/values/page.tsx",
+        "src/app/howwework/page.tsx",
+        "src/app/payments-advisory/page.tsx",
+      ].map((path) => readFile(projectFile(path), "utf8")),
+    );
+
+    expect(web3).toContain('from "@/lib/content/seo"');
+    expect(web3).toContain('getPageSeo("/web3")');
+    expect(web3).toContain("withSeoOverrides(");
+    expect(web3).toContain("serviceJsonLd(");
+    expect(web3).toContain("breadcrumbJsonLd(");
+
+    for (const source of [values, howWeWork, paymentsAdvisory]) {
+      expect(source).toContain("export const metadata");
+      expect(source).toContain("<JsonLd");
+      expect(source).toContain("breadcrumbJsonLd(");
+    }
+
+    expect(paymentsAdvisory).toContain("serviceJsonLd(");
+  });
 });

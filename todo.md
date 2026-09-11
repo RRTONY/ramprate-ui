@@ -141,3 +141,4 @@
 - [x] Replace static inline layout and decorative-grid styles in the Flow Family Dynamic map with equivalent Tailwind or scoped CSS while retaining the data-driven map behavior.
 - [x] Replace the static Find Your Path decorative-grid and compass animation-duration styles with scoped CSS or utility equivalents while retaining portal-specific dynamic styling and interactions.
 - [x] Replace the fixed decorative texture in the Flow Peer Assessment intro with scoped CSS while retaining the data-driven assessment-progress animation and question interactions.
+- [x] Add contract coverage for the Web3, Values, How We Work, and Payments Advisory marketing-route metadata and structured-data boundaries without changing public pages.
