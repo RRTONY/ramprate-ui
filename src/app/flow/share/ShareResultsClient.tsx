@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -139,11 +138,7 @@ export default function ShareResults() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 py-16 space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-reveal text-center space-y-4">
           <p className="text-sm text-gray-500 uppercase tracking-widest">
             Flow Circuit Assessment Result
           </p>
@@ -159,7 +154,7 @@ export default function ShareResults() {
               - {roleInfo.tagline}
             </span>
           </div>
-        </motion.div>
+        </div>
 
         <Card className="bg-white/5 border-white/10">
           <CardContent className="pt-8 space-y-4">

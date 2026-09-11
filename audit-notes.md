@@ -149,6 +149,14 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - Direct checks of the first CSS-motion modernization surfaces (`/flow/protocol`, `/flow/team-settings`, and `/flow/manager-guidebook`) confirmed the expected Flow shell and protected navigation state. The focused media suite, strict type checking, full deterministic tests, clean ESLint, and optimized production build passed.
 
 ## Direct Managed-Content Import Completion
-
 - Replaced the 22 residual public and shared-component `@/lib/sanity/*` compatibility imports with explicit `@/lib/content/*` module paths. Renamed all public `SanityImage` usages to `ContentImage` and removed the obsolete TypeScript compatibility aliases.
 - Added a source-contract regression that ensures managed routes retain direct content imports and cannot reintroduce the retired aliases. Type checking, the full deterministic suite, clean repository lint, optimized production build, and direct HTTP 200 checks for representative home, public, blog, Thinking, search, proof, contact, and sitemap routes passed after the migration.
+
+## Live Home-Palette Alignment and Second Flow Motion Batch
+- Compared the live `ramprate.com` home surface system against the local page. The live site uses deep `#0d0919`, `#171025`, and `#221735` bands with gold proof accents and restrained translucent cards. The local home’s non-hero parchment panels were aligned to that dark plum system while the approved hero image and component were left unchanged.
+- Updated the client wall, practice grid, comparison section, operating model, compensation, and newsletter surfaces with live-compatible dark backgrounds, readable white/amber typography, and low-elevation translucent cards. Desktop and mobile full-page reviews confirmed the revised hierarchy remains legible.
+- Migrated the static entry wrappers on both Share Results and Team Builder from Framer Motion to the existing reduced-motion-safe CSS reveal system, including a third stagger delay for Team Builder. Added source-contract coverage for both routes and representative About, Contact, Proof, and Thinking route contracts. Formatting, strict type checking, the full deterministic suite, repository lint, and the optimized production build passed.
+
+## Live-Palette Verification
+- Captured the live `ramprate.com` home page and confirmed its non-hero surfaces use dark navy-plum bands, low-elevation translucent cards, and reserved gold accents. Updated the local home client wall, practice, comparison, operating-model, compensation, and newsletter surfaces to match that direction while preserving the user-approved hero image and component.
+- Desktop and mobile full-page reviews confirmed readable white and amber foregrounds over the updated surfaces. Strict type checking, the complete deterministic suite, repository-wide ESLint, and the optimized production build passed after the palette change.

@@ -11,7 +11,7 @@
 - [x] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
 - [x] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
-- [ ] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
+- [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [ ] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
 - [x] Replace residual legacy Sanity import paths in public routes with the active managed-database content modules and validate equivalent behavior.
@@ -133,3 +133,4 @@
 - [x] Audit every public and managed image for meaningful alt text and title metadata, then repair missing or weak values through the database-backed CMS.
 - [x] Remove the redundant far-left RampRate monogram from the shared header while retaining the primary wordmark and responsive navigation controls.
 - [x] Refine non-hero home-page sections to match the approved plum-and-amber hero theme while preserving the hero image and component unchanged.
+- [x] Compare the live Ramprate home-page color system with the project and align non-hero backgrounds and accents while preserving the approved hero image and component.

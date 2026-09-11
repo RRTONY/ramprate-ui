@@ -5,6 +5,8 @@ const migratedModules = [
   "src/app/flow/protocol/ProtocolClient.tsx",
   "src/app/flow/team-settings/TeamSettingsClient.tsx",
   "src/app/flow/manager-guidebook/ManagerGuidebookClient.tsx",
+  "src/app/flow/share/ShareResultsClient.tsx",
+  "src/app/flow/team-builder/TeamBuilderClient.tsx",
 ] as const;
 
 describe("Flow CSS motion migration", () => {
@@ -28,6 +30,7 @@ describe("Flow CSS motion migration", () => {
     const stylesheet = await readFile(stylesheetFile, "utf8");
 
     expect(stylesheet).toContain(".flow-reveal");
+    expect(stylesheet).toContain(".flow-reveal-delay-3");
     expect(stylesheet).toContain("@media (prefers-reduced-motion: reduce)");
   });
 });

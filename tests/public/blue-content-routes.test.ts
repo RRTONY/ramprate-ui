@@ -31,4 +31,23 @@ describe("blue public content routes", () => {
     expect(article).toContain("canonical: `/blog/${slug}`");
     expect(article).toContain('type: "article" as const');
   });
+
+  it("keeps representative marketing routes connected to direct managed content and their core page contracts", async () => {
+    const [about, contact, proof, thinking] = await Promise.all([
+      readFile(projectFile("src/app/about/page.tsx"), "utf8"),
+      readFile(projectFile("src/app/contact/page.tsx"), "utf8"),
+      readFile(projectFile("src/app/proof/page.tsx"), "utf8"),
+      readFile(projectFile("src/app/thinking/page.tsx"), "utf8"),
+    ]);
+
+    for (const source of [about, contact, proof, thinking]) {
+      expect(source).toContain('from "@/lib/content/seo"');
+    }
+
+    expect(about).toContain('from "@/lib/content/client"');
+    expect(contact).toContain("<ContactForm />");
+    expect(proof).toContain("<ProofClient");
+    expect(thinking).toContain("function groupByYear");
+    expect(thinking).toContain("allThinkingPostsQuery");
+  });
 });

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/flow/ui/button";
@@ -25,25 +24,17 @@ export default function TeamBuilderClient() {
   return (
     <div className="min-h-screen bg-background text-foreground p-4 md:p-8 pt-24">
       <div className="max-w-4xl mx-auto space-y-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-reveal text-center space-y-4">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter">
             TEAM ARCHITECTURE
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Map your innovation relay. Identify the friction. Engineer the flow.
           </p>
-        </motion.div>
+        </div>
 
         {/* Step 1: Take the Assessment */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
+        <div className="flow-reveal flow-reveal-delay-1">
           <Card className="bg-white/80 backdrop-blur-md border-2 border-black/10 shadow-xl">
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
@@ -90,14 +81,10 @@ export default function TeamBuilderClient() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Step 2: View Team Dashboard */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="flow-reveal flow-reveal-delay-2">
           <Card className="bg-white/80 backdrop-blur-md border-2 border-black/10 shadow-xl">
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
@@ -126,14 +113,10 @@ export default function TeamBuilderClient() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Step 3: Sample Reports */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
+        <div className="flow-reveal flow-reveal-delay-3">
           <Card className="bg-black text-white border-0 shadow-xl">
             <CardContent className="p-8 md:p-12">
               <div className="text-center space-y-6">
@@ -153,7 +136,7 @@ export default function TeamBuilderClient() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
