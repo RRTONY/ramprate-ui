@@ -1,25 +1,121 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/flow/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/flow/ui/select";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Badge } from "@/components/flow/ui/badge";
-import { Play, RefreshCw, Send, CheckCircle2, AlertCircle, Zap, Activity, Filter, Anchor, Hand } from 'lucide-react';
+import {
+  Play,
+  RefreshCw,
+  Send,
+  CheckCircle2,
+  Zap,
+  Activity,
+  Filter,
+  Anchor,
+  Hand,
+} from "lucide-react";
 import { toast } from "sonner";
 
 // Define the 10 team members with their roles and "Chaos" vs "Flow" positions
 const teamMembers = [
-  { id: 1, name: "Sarah", role: "Spark", chaos: { x: 10, y: 20 }, flow: { x: 50, y: 10 }, color: "bg-red-500", icon: Zap },
-  { id: 2, name: "Mike", role: "Anchor", chaos: { x: 80, y: 80 }, flow: { x: 50, y: 90 }, color: "bg-blue-500", icon: Anchor },
-  { id: 3, name: "Jessica", role: "Amplifier", chaos: { x: 20, y: 70 }, flow: { x: 80, y: 30 }, color: "bg-yellow-500", icon: Activity },
-  { id: 4, name: "David", role: "Filter", chaos: { x: 60, y: 30 }, flow: { x: 20, y: 70 }, color: "bg-purple-500", icon: Filter },
-  { id: 5, name: "Tom", role: "Spark", chaos: { x: 15, y: 25 }, flow: { x: 40, y: 15 }, color: "bg-red-500", icon: Zap },
-  { id: 6, name: "Linda", role: "Anchor", chaos: { x: 85, y: 75 }, flow: { x: 60, y: 90 }, color: "bg-blue-500", icon: Anchor },
-  { id: 7, name: "Chris", role: "Amplifier", chaos: { x: 25, y: 65 }, flow: { x: 90, y: 35 }, color: "bg-yellow-500", icon: Activity },
-  { id: 8, name: "Amanda", role: "Filter", chaos: { x: 55, y: 35 }, flow: { x: 10, y: 65 }, color: "bg-purple-500", icon: Filter },
-  { id: 9, name: "James", role: "Spark", chaos: { x: 12, y: 18 }, flow: { x: 60, y: 10 }, color: "bg-red-500", icon: Zap },
-  { id: 10, name: "Emily", role: "Filter", chaos: { x: 65, y: 25 }, flow: { x: 30, y: 70 }, color: "bg-purple-500", icon: Filter },
+  {
+    id: 1,
+    name: "Sarah",
+    role: "Spark",
+    chaos: { x: 10, y: 20 },
+    flow: { x: 50, y: 10 },
+    color: "bg-red-500",
+    icon: Zap,
+  },
+  {
+    id: 2,
+    name: "Mike",
+    role: "Anchor",
+    chaos: { x: 80, y: 80 },
+    flow: { x: 50, y: 90 },
+    color: "bg-blue-500",
+    icon: Anchor,
+  },
+  {
+    id: 3,
+    name: "Jessica",
+    role: "Amplifier",
+    chaos: { x: 20, y: 70 },
+    flow: { x: 80, y: 30 },
+    color: "bg-yellow-500",
+    icon: Activity,
+  },
+  {
+    id: 4,
+    name: "David",
+    role: "Filter",
+    chaos: { x: 60, y: 30 },
+    flow: { x: 20, y: 70 },
+    color: "bg-purple-500",
+    icon: Filter,
+  },
+  {
+    id: 5,
+    name: "Tom",
+    role: "Spark",
+    chaos: { x: 15, y: 25 },
+    flow: { x: 40, y: 15 },
+    color: "bg-red-500",
+    icon: Zap,
+  },
+  {
+    id: 6,
+    name: "Linda",
+    role: "Anchor",
+    chaos: { x: 85, y: 75 },
+    flow: { x: 60, y: 90 },
+    color: "bg-blue-500",
+    icon: Anchor,
+  },
+  {
+    id: 7,
+    name: "Chris",
+    role: "Amplifier",
+    chaos: { x: 25, y: 65 },
+    flow: { x: 90, y: 35 },
+    color: "bg-yellow-500",
+    icon: Activity,
+  },
+  {
+    id: 8,
+    name: "Amanda",
+    role: "Filter",
+    chaos: { x: 55, y: 35 },
+    flow: { x: 10, y: 65 },
+    color: "bg-purple-500",
+    icon: Filter,
+  },
+  {
+    id: 9,
+    name: "James",
+    role: "Spark",
+    chaos: { x: 12, y: 18 },
+    flow: { x: 60, y: 10 },
+    color: "bg-red-500",
+    icon: Zap,
+  },
+  {
+    id: 10,
+    name: "Emily",
+    role: "Filter",
+    chaos: { x: 65, y: 25 },
+    flow: { x: 30, y: 70 },
+    color: "bg-purple-500",
+    icon: Filter,
+  },
 ];
 
 export default function TeamMap() {
@@ -28,15 +124,11 @@ export default function TeamMap() {
   const [role, setRole] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
-  // Swipe Logic
-  const x = useMotionValue(0);
-  const opacity = useTransform(x, [-100, 0, 100], [0, 1, 0]);
 
   const playSound = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(e => console.log("Audio play failed", e));
+      audioRef.current.play().catch((e) => console.log("Audio play failed", e));
     }
   };
 
@@ -45,7 +137,10 @@ export default function TeamMap() {
     setIsFixed(!isFixed);
   };
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
     if (info.offset.x > 100) {
       handleFixTeam();
     }
@@ -63,32 +158,43 @@ export default function TeamMap() {
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-12">
-      <audio ref={audioRef} src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3" preload="auto" />
-      
+      <audio
+        ref={audioRef}
+        src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3"
+        preload="auto"
+      />
+
       {/* Header */}
       <div className="text-center space-y-4">
         <h2 className="text-3xl md:text-4xl font-bold">The Team Map</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          See how your team actually moves. Click &quot;Fix This Team&quot; or <span className="font-bold text-primary">Swipe Right</span> to see the Flow Circuit organize the chaos.
+          See how your team actually moves. Click &quot;Fix This Team&quot; or{" "}
+          <span className="font-bold text-primary">Swipe Right</span> to see the
+          Flow Circuit organize the chaos.
         </p>
       </div>
 
       {/* The Map Visualization */}
-      <motion.div 
+      <motion.div
         className="relative w-full aspect-[16/9] bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60 overflow-hidden shadow-2xl group touch-pan-y"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         onDragEnd={handleDragEnd}
       >
         {/* Grid Background */}
-        <div className="absolute inset-0 opacity-30" 
-             style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
         />
 
         {/* Mobile Swipe Hint */}
         <AnimatePresence>
           {!isFixed && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -104,31 +210,45 @@ export default function TeamMap() {
         {/* Axis Labels (Visible only in Flow mode for clarity) */}
         <AnimatePresence>
           {isFixed && (
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 pointer-events-none"
             >
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-red-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">Ignition (Spark)</div>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-blue-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">Solidification (Anchor)</div>
-              <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-bold uppercase tracking-widest text-purple-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">Compression (Filter)</div>
-              <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 text-xs font-bold uppercase tracking-widest text-yellow-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">Expansion (Amplifier)</div>
-              
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-red-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+                Ignition (Spark)
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-blue-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+                Solidification (Anchor)
+              </div>
+              <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-bold uppercase tracking-widest text-purple-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+                Compression (Filter)
+              </div>
+              <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 text-xs font-bold uppercase tracking-widest text-yellow-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+                Expansion (Amplifier)
+              </div>
+
               {/* Flow Lines */}
               <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
                 <defs>
-                  <linearGradient id="flowLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient
+                    id="flowLineGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
+                  >
                     <stop offset="0%" stopColor="#ef4444" />
                     <stop offset="33%" stopColor="#eab308" />
                     <stop offset="66%" stopColor="#a855f7" />
                     <stop offset="100%" stopColor="#3b82f6" />
                   </linearGradient>
                 </defs>
-                <motion.path 
-                  d="M 50% 15% Q 90% 15% 90% 50% T 50% 85% T 10% 50% T 50% 15%" 
-                  fill="none" 
-                  stroke="url(#flowLineGradient)" 
+                <motion.path
+                  d="M 50% 15% Q 90% 15% 90% 50% T 50% 85% T 10% 50% T 50% 15%"
+                  fill="none"
+                  stroke="url(#flowLineGradient)"
                   strokeWidth="4"
                   strokeLinecap="round"
                   initial={{ pathLength: 0, opacity: 0 }}
@@ -153,17 +273,17 @@ export default function TeamMap() {
                 top: isFixed ? `${member.flow.y}%` : `${member.chaos.y}%`,
                 scale: isFixed ? 1.1 : 1,
               }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 40, 
-                damping: 15, 
+              transition={{
+                type: "spring",
+                stiffness: 40,
+                damping: 15,
                 mass: 1.2,
-                delay: isFixed ? member.id * 0.05 : 0 // Staggered animation
+                delay: isFixed ? member.id * 0.05 : 0, // Staggered animation
               }}
               whileHover={{ scale: 1.2, zIndex: 50 }}
             >
               <Icon className="w-6 h-6" />
-              
+
               {/* Tooltip */}
               <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full opacity-0 hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl">
                 {member.name} • {member.role}
@@ -174,10 +294,10 @@ export default function TeamMap() {
 
         {/* Control Button */}
         <div className="absolute bottom-8 right-8 z-20 hidden md:block">
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             onClick={handleFixTeam}
-            className={`shadow-2xl transition-all duration-500 h-14 px-8 rounded-full text-lg font-bold ${isFixed ? 'bg-black text-white hover:bg-black/80' : 'bg-primary text-primary-foreground hover:bg-primary/90 animate-pulse'}`}
+            className={`shadow-2xl transition-all duration-500 h-14 px-8 rounded-full text-lg font-bold ${isFixed ? "bg-black text-white hover:bg-black/80" : "bg-primary text-primary-foreground hover:bg-primary/90 animate-pulse"}`}
           >
             {isFixed ? (
               <>
@@ -196,14 +316,23 @@ export default function TeamMap() {
       <Card className="bg-white/80 backdrop-blur-md border-black/5 shadow-xl overflow-hidden">
         <CardContent className="p-8 md:p-12 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold">Get Your Team&#39;s Flow Report</h3>
+            <h3 className="text-3xl font-bold">
+              Get Your Team&#39;s Flow Report
+            </h3>
             <p className="text-muted-foreground text-lg">
-              Stop guessing why your team is stuck. Get a custom analysis of your friction points and a step-by-step playbook to fix it.
+              Stop guessing why your team is stuck. Get a custom analysis of
+              your friction points and a step-by-step playbook to fix it.
             </p>
             <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="px-3 py-1 text-sm">Includes Friction Cost</Badge>
-              <Badge variant="secondary" className="px-3 py-1 text-sm">Role-Specific Scripts</Badge>
-              <Badge variant="secondary" className="px-3 py-1 text-sm">10-Person Audit</Badge>
+              <Badge variant="secondary" className="px-3 py-1 text-sm">
+                Includes Friction Cost
+              </Badge>
+              <Badge variant="secondary" className="px-3 py-1 text-sm">
+                Role-Specific Scripts
+              </Badge>
+              <Badge variant="secondary" className="px-3 py-1 text-sm">
+                10-Person Audit
+              </Badge>
             </div>
           </div>
 
@@ -211,26 +340,38 @@ export default function TeamMap() {
             {!submitted ? (
               <form onSubmit={handleEmailSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">What is your core energy?</label>
+                  <label className="text-sm font-bold ml-1">
+                    What is your core energy?
+                  </label>
                   <Select onValueChange={setRole} required>
                     <SelectTrigger className="h-12 bg-white border-black/10">
                       <SelectValue placeholder="Select your role..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Spark">Spark (I start things)</SelectItem>
-                      <SelectItem value="Amplifier">Amplifier (I scale things)</SelectItem>
-                      <SelectItem value="Filter">Filter (I refine things)</SelectItem>
-                      <SelectItem value="Anchor">Anchor (I stabilize things)</SelectItem>
-                      <SelectItem value="Unsure">I&#39;m not sure yet</SelectItem>
+                      <SelectItem value="Spark">
+                        Spark (I start things)
+                      </SelectItem>
+                      <SelectItem value="Amplifier">
+                        Amplifier (I scale things)
+                      </SelectItem>
+                      <SelectItem value="Filter">
+                        Filter (I refine things)
+                      </SelectItem>
+                      <SelectItem value="Anchor">
+                        Anchor (I stabilize things)
+                      </SelectItem>
+                      <SelectItem value="Unsure">
+                        I&#39;m not sure yet
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm font-bold ml-1">Work Email</label>
-                  <Input 
-                    type="email" 
-                    placeholder="name@company.com" 
+                  <Input
+                    type="email"
+                    placeholder="name@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="h-12 bg-white border-black/10"
@@ -238,7 +379,11 @@ export default function TeamMap() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full text-lg font-bold h-12 shadow-lg hover:shadow-xl transition-all" disabled={!role || !email}>
+                <Button
+                  type="submit"
+                  className="w-full text-lg font-bold h-12 shadow-lg hover:shadow-xl transition-all"
+                  disabled={!role || !email}
+                >
                   <Send className="mr-2 h-5 w-5" /> Unlock My Report
                 </Button>
                 <p className="text-xs text-center text-muted-foreground">
@@ -246,7 +391,7 @@ export default function TeamMap() {
                 </p>
               </form>
             ) : (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center space-y-6 py-8"
@@ -255,12 +400,20 @@ export default function TeamMap() {
                   <CheckCircle2 className="h-10 w-10" />
                 </div>
                 <div>
-                  <h4 className="text-2xl font-bold mb-2">You&#39;re on the list!</h4>
+                  <h4 className="text-2xl font-bold mb-2">
+                    You&#39;re on the list!
+                  </h4>
                   <p className="text-muted-foreground">
-                    We&#39;re preparing a report specifically for a <strong>{role}</strong> like you. Check your inbox in 5 minutes.
+                    We&#39;re preparing a report specifically for a{" "}
+                    <strong>{role}</strong> like you. Check your inbox in 5
+                    minutes.
                   </p>
                 </div>
-                <Button variant="outline" onClick={() => setSubmitted(false)} className="w-full">
+                <Button
+                  variant="outline"
+                  onClick={() => setSubmitted(false)}
+                  className="w-full"
+                >
                   Send to another teammate
                 </Button>
               </motion.div>
