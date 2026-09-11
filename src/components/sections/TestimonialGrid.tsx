@@ -1,22 +1,29 @@
-import SanityImage from '@/components/shared/SanityImage'
+import SanityImage from "@/components/shared/SanityImage";
 
 interface Testimonial {
-  _id?: string
-  quote?: string
-  personName?: string
-  role?: string
-  company?: string
-  companyLogo?: any
-  photo?: any
+  _id?: string;
+  quote?: string;
+  personName?: string;
+  role?: string;
+  company?: string;
+  companyLogo?: unknown;
+  photo?: unknown;
 }
 
 interface TestimonialGridProps {
-  heading?: string
-  testimonials?: Testimonial[]
+  heading?: string;
+  testimonials?: Testimonial[];
 }
 
-export default function TestimonialGrid({heading, testimonials}: TestimonialGridProps) {
-  if (!testimonials?.length) return null
+function hasMedia(value: unknown): boolean {
+  return value !== null && value !== undefined && value !== false;
+}
+
+export default function TestimonialGrid({
+  heading,
+  testimonials,
+}: TestimonialGridProps) {
+  if (!testimonials?.length) return null;
 
   return (
     <section className="py-24 bg-dark-mid">
@@ -41,7 +48,7 @@ export default function TestimonialGrid({heading, testimonials}: TestimonialGrid
               {/* Quote mark */}
               <div
                 className="text-5xl leading-none mb-4 select-none text-gold"
-                style={{fontFamily: 'Georgia, serif'}}
+                style={{ fontFamily: "Georgia, serif" }}
                 aria-hidden
               >
                 &ldquo;
@@ -54,11 +61,11 @@ export default function TestimonialGrid({heading, testimonials}: TestimonialGrid
 
               {/* Attribution */}
               <div className="flex items-center gap-4 pt-4 border-t border-white/8">
-                {t.photo && (
+                {hasMedia(t.photo) && (
                   <div className="flex-shrink-0 w-11 h-11 rounded-full overflow-hidden ring-1 ring-white/10">
                     <SanityImage
                       image={t.photo}
-                      alt={t.personName || ''}
+                      alt={t.personName || ""}
                       width={44}
                       height={44}
                       className="w-full h-full object-cover"
@@ -71,15 +78,15 @@ export default function TestimonialGrid({heading, testimonials}: TestimonialGrid
                   </p>
                   {(t.role || t.company) && (
                     <p className="font-body text-xs truncate text-white/45">
-                      {[t.role, t.company].filter(Boolean).join(', ')}
+                      {[t.role, t.company].filter(Boolean).join(", ")}
                     </p>
                   )}
                 </div>
-                {t.companyLogo && (
+                {hasMedia(t.companyLogo) && (
                   <div className="ml-auto flex-shrink-0 opacity-50 brightness-0 invert">
                     <SanityImage
                       image={t.companyLogo}
-                      alt={t.company || ''}
+                      alt={t.company || ""}
                       width={60}
                       height={24}
                       className="object-contain"
@@ -92,5 +99,5 @@ export default function TestimonialGrid({heading, testimonials}: TestimonialGrid
         </div>
       </div>
     </section>
-  )
+  );
 }
