@@ -1,5 +1,5 @@
-import AdminContentConsole from "./AdminContentConsole";
+import { redirect } from "next/navigation";
 
 export default function AdminContentPage() {
-  return <AdminContentConsole />;
+  redirect("/cms");
 }

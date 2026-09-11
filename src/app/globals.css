@@ -230,84 +230,84 @@
 /* ── RAMP RATE EDITORIAL HOME SYSTEM ── */
 .home-blue,
 .blog-blue {
-  --gold: #f2bb5d;
-  --gold-light: #ffe1a4;
-  --rust: #a55342;
-  --dark: #0d0919;
-  --dark-mid: #171025;
-  --dark-card: #221735;
-  --warm-bg: #f6f0e7;
-  --warm-light: #fcfaf5;
-  --text-dark: #2a1c29;
-  --text-mid: #695766;
+  --gold: #fcb442;
+  --gold-light: #ffd27a;
+  --rust: #b94739;
+  --dark: #1c0d06;
+  --dark-mid: #2c1810;
+  --dark-card: #321a12;
+  --warm-bg: #faf8f5;
+  --warm-light: #fffdf9;
+  --text-dark: #2c1810;
+  --text-mid: #73594d;
 }
 .home-blue .section-sunset,
 .blog-blue {
   background:
-    radial-gradient(circle at 82% 12%, rgb(175 79 86 / 0.32), transparent 32%),
-    linear-gradient(145deg, #0d0919 0%, #1d102a 52%, #30182e 125%);
-  color: #fffaf0;
+    radial-gradient(circle at 82% 12%, rgb(185 71 57 / 0.2), transparent 32%),
+    linear-gradient(145deg, #1c0d06 0%, #2c1810 56%, #1c0d06 100%);
+  color: #faf8f5;
 }
 .home-blue .section-warm {
-  background: linear-gradient(145deg, #0d0919 0%, #171025 52%, #0d0919 100%);
-  color: #fffaf0;
+  background: linear-gradient(145deg, #1c0d06 0%, #2c1810 52%, #1c0d06 100%);
+  color: #faf8f5;
 }
 .home-blue .section-light {
-  background: #0d0919;
-  color: #fffaf0;
+  background: #1c0d06;
+  color: #faf8f5;
 }
 .home-blue .glass-orb-amber,
 .blog-blue .glass-orb-amber {
   background: oklch(0.78 0.14 75);
 }
 .home-blue .glass-orb-rust {
-  background: oklch(0.56 0.16 18);
+  background: #b94739;
 }
 .home-blue .glass-orb-pink {
-  background: oklch(0.5 0.14 330);
+  background: #b94739;
 }
 .home-blue-hero {
-  background-color: #0d0919;
+  background-color: #1c0d06;
 }
 .home-blue-hero-image {
-  opacity: 0.48;
-  filter: saturate(0.88) contrast(1.04) brightness(0.78);
+  opacity: 0.9;
+  filter: saturate(1.04) contrast(1.02) brightness(1.02);
 }
 .home-blue-hero-grid {
   background-image:
-    radial-gradient(circle at 62% 44%, rgb(161 80 104 / 0.36), transparent 30%),
-    radial-gradient(circle at 83% 27%, rgb(236 172 93 / 0.23), transparent 32%),
-    radial-gradient(circle at 30% 110%, rgb(83 51 116 / 0.34), transparent 42%);
+    radial-gradient(circle at 78% 28%, rgb(252 180 66 / 0.24), transparent 30%),
+    radial-gradient(circle at 64% 72%, rgb(185 71 57 / 0.18), transparent 36%),
+    radial-gradient(circle at 14% 104%, rgb(44 24 16 / 0.56), transparent 44%);
   background-position:
     0 0,
     0 0,
     0 0;
   background-size: auto, auto, auto;
-  opacity: 0.44;
+  opacity: 0.16;
 }
 .home-blue-scrim {
   background: linear-gradient(
     to right,
-    rgb(10 6 22 / 0.94) 0%,
-    rgb(16 8 29 / 0.82) 43%,
-    rgb(27 12 35 / 0.34) 67%,
-    rgb(27 12 35 / 0.08) 100%
+    rgb(28 13 6 / 0.84) 0%,
+    rgb(28 13 6 / 0.62) 42%,
+    rgb(28 13 6 / 0.18) 68%,
+    rgb(28 13 6 / 0.02) 100%
   );
 }
 .home-blue-vignette {
   background: linear-gradient(
     to top,
-    rgb(10 6 22 / 0.8) 0%,
-    transparent 38%,
-    rgb(57 26 73 / 0.18) 100%
+    rgb(28 13 6 / 0.64) 0%,
+    transparent 42%,
+    rgb(28 13 6 / 0.04) 100%
   );
 }
 .home-blue-light-wash {
-  opacity: 0.58;
+  opacity: 0.24;
   background: radial-gradient(
     circle at 76% 34%,
-    rgb(241 181 95 / 0.44) 0%,
-    rgb(159 68 84 / 0.28) 35%,
+    rgb(252 180 66 / 0.34) 0%,
+    rgb(185 71 57 / 0.18) 35%,
     transparent 70%
   );
 }
@@ -336,10 +336,10 @@
 .home-blue .section-sunset .rounded-xl {
   background: linear-gradient(
     135deg,
-    rgb(32 15 47 / 0.92),
-    rgb(69 30 52 / 0.68)
+    rgb(44 24 16 / 0.94),
+    rgb(69 35 25 / 0.72)
   );
-  border-color: rgb(242 187 93 / 0.16);
+  border-color: rgb(252 180 66 / 0.16);
   box-shadow: none;
 }
 .home-blue .section-light .rounded-xl,
@@ -403,8 +403,8 @@
   border-radius: 0.9rem !important;
   background: linear-gradient(
     145deg,
-    rgb(34 18 48 / 0.92),
-    rgb(77 34 54 / 0.56)
+    rgb(44 24 16 / 0.94),
+    rgb(62 32 21 / 0.68)
   ) !important;
 }
 .home-proof-card::before {
@@ -426,9 +426,9 @@
 }
 .home-practices-section {
   background:
-    radial-gradient(circle at 92% 8%, rgb(242 187 93 / 0.14), transparent 30%),
-    radial-gradient(circle at 8% 95%, rgb(81 39 108 / 0.22), transparent 34%),
-    linear-gradient(145deg, #171025 0%, #0d0919 51%, #171025 100%) !important;
+    radial-gradient(circle at 92% 8%, rgb(252 180 66 / 0.12), transparent 30%),
+    radial-gradient(circle at 8% 95%, rgb(185 71 57 / 0.1), transparent 34%),
+    linear-gradient(145deg, #1c0d06 0%, #2c1810 51%, #1c0d06 100%) !important;
 }
 .home-practices-section::before {
   opacity: 0.26;
@@ -469,9 +469,9 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 88% 12%, rgb(242 187 93 / 0.13), transparent 26%),
-    radial-gradient(circle at 14% 84%, rgb(81 39 108 / 0.2), transparent 32%),
-    linear-gradient(135deg, #0d0919 0%, #171025 55%, #0d0919 100%) !important;
+    radial-gradient(circle at 88% 12%, rgb(252 180 66 / 0.12), transparent 26%),
+    radial-gradient(circle at 14% 84%, rgb(185 71 57 / 0.09), transparent 32%),
+    linear-gradient(135deg, #1c0d06 0%, #2c1810 55%, #1c0d06 100%) !important;
 }
 .home-difference-section::before {
   position: absolute;
@@ -500,8 +500,8 @@
 }
 .home-timeline-section {
   background:
-    radial-gradient(circle at 50% 8%, rgb(242 187 93 / 0.17), transparent 24%),
-    linear-gradient(155deg, #10091d 0%, #261231 56%, #151024 100%) !important;
+    radial-gradient(circle at 50% 8%, rgb(252 180 66 / 0.15), transparent 24%),
+    linear-gradient(155deg, #1c0d06 0%, #2c1810 56%, #1c0d06 100%) !important;
 }
 .home-timeline-track {
   position: relative;
@@ -524,13 +524,13 @@
 .home-testimonials-section {
   position: relative;
   background:
-    radial-gradient(circle at 90% 4%, rgb(242 187 93 / 0.12), transparent 28%),
-    linear-gradient(145deg, #160b25 0%, #2c1531 58%, #160b25 100%);
+    radial-gradient(circle at 90% 4%, rgb(252 180 66 / 0.11), transparent 28%),
+    linear-gradient(145deg, #1c0d06 0%, #2c1810 58%, #1c0d06 100%);
 }
 .home-operate-section {
   background:
-    radial-gradient(circle at 8% 12%, rgb(242 187 93 / 0.12), transparent 22%),
-    linear-gradient(115deg, #171025 0%, #0d0919 48%, #171025 100%) !important;
+    radial-gradient(circle at 8% 12%, rgb(252 180 66 / 0.11), transparent 22%),
+    linear-gradient(115deg, #1c0d06 0%, #2c1810 48%, #1c0d06 100%) !important;
 }
 .home-operate-card {
   position: relative;
@@ -553,9 +553,9 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 82% 22%, rgb(242 187 93 / 0.18), transparent 27%),
-    radial-gradient(circle at 12% 85%, rgb(81 39 108 / 0.18), transparent 30%),
-    linear-gradient(180deg, #0d0919 0%, #171025 100%) !important;
+    radial-gradient(circle at 82% 22%, rgb(252 180 66 / 0.15), transparent 27%),
+    radial-gradient(circle at 12% 85%, rgb(185 71 57 / 0.1), transparent 30%),
+    linear-gradient(180deg, #1c0d06 0%, #2c1810 100%) !important;
 }
 .home-compensation-panel {
   border: 1px solid rgb(255 255 255 / 0.09) !important;
@@ -569,14 +569,14 @@
 }
 .home-client-wall {
   background:
-    radial-gradient(circle at 82% 12%, rgb(242 187 93 / 0.1), transparent 30%),
-    linear-gradient(145deg, #171025 0%, #0d0919 58%, #171025 100%) !important;
+    radial-gradient(circle at 82% 12%, rgb(252 180 66 / 0.1), transparent 30%),
+    linear-gradient(145deg, #1c0d06 0%, #2c1810 58%, #1c0d06 100%) !important;
 }
 .home-newsletter-section {
   background:
-    radial-gradient(circle at 50% 4%, rgb(242 187 93 / 0.11), transparent 28%),
-    linear-gradient(145deg, #171025 0%, #0d0919 58%, #171025 100%) !important;
-  color: #fffaf0;
+    radial-gradient(circle at 50% 4%, rgb(252 180 66 / 0.1), transparent 28%),
+    linear-gradient(145deg, #1c0d06 0%, #2c1810 58%, #1c0d06 100%) !important;
+  color: #faf8f5;
 }
 .home-practices-section h2,
 .home-practices-section h3,
@@ -638,9 +638,9 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 14% 4%, rgb(242 187 93 / 0.28), transparent 27%),
-    radial-gradient(circle at 88% 92%, rgb(114 49 62 / 0.4), transparent 32%),
-    linear-gradient(115deg, #170b25 0%, #30172e 53%, #211027 100%) !important;
+    radial-gradient(circle at 14% 4%, rgb(252 180 66 / 0.24), transparent 27%),
+    radial-gradient(circle at 88% 92%, rgb(185 71 57 / 0.22), transparent 32%),
+    linear-gradient(115deg, #1c0d06 0%, #2c1810 53%, #1c0d06 100%) !important;
 }
 .home-final-cta::before {
   position: absolute;
@@ -650,7 +650,7 @@
   opacity: 0.24;
   background-image: linear-gradient(
     90deg,
-    rgb(242 187 93 / 0.16) 1px,
+    rgb(252 180 66 / 0.16) 1px,
     transparent 1px
   );
   background-size: 5rem 100%;

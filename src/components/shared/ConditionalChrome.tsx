@@ -12,7 +12,8 @@ export function ConditionalChrome({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const hideChrome = pathname?.startsWith("/flow");
+  const hideChrome =
+    pathname?.startsWith("/flow") || pathname?.startsWith("/cms");
 
   return (
     <>

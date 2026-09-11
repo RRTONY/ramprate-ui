@@ -339,10 +339,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section
-        id="brands"
-        className="home-practices-section py-16 sm:py-20"
-      >
+      <section id="brands" className="home-practices-section py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-[rgba(58,31,53,0.52)]">
@@ -375,7 +372,10 @@ export default function HomeContent() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
-                <div className="mb-6 flex h-11 w-11 items-center justify-center border-b-2" style={{ borderColor: brand.accentColor }}>
+                <div
+                  className="mb-6 flex h-11 w-11 items-center justify-center border-b-2"
+                  style={{ borderColor: brand.accentColor }}
+                >
                   <brand.Icon
                     aria-hidden="true"
                     size={25}

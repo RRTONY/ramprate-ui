@@ -1,6 +1,7 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { cmsAdminMembers } from "@/lib/content/schema";
+import { hashCmsSessionToken, getCmsSessionToken } from "@/lib/cms-auth";
+import { cmsAdminMembers, cmsAdminSessions } from "@/lib/content/schema";
 
 export type CmsAdminRole = "owner" | "admin" | "editor";
 
@@ -8,13 +9,8 @@ export type AdminIdentity = {
   email: string;
   name: string | null;
   role: CmsAdminRole;
+  mustChangePassword: boolean;
 };
-
-type FlowSession = {
-  user?: { email?: string | null; name?: string | null } | null;
-};
-
-const FLOW_UPSTREAM = "https://flow.tonygreenberg.com";
 
 export function normalizeCmsEmail(
   email: string | null | undefined,
@@ -44,37 +40,37 @@ function database() {
 export async function getAuthorizedAdmin(
   request: Request,
 ): Promise<AdminIdentity | null> {
-  const cookie = request.headers.get("cookie");
-  if (!cookie) return null;
-
-  const response = await fetch(`${FLOW_UPSTREAM}/api/auth/session`, {
-    headers: { cookie },
-    cache: "no-store",
-  }).catch(() => null);
-  if (!response?.ok) return null;
-
-  const session = (await response
-    .json()
-    .catch(() => null)) as FlowSession | null;
-  const email = normalizeCmsEmail(session?.user?.email);
+  const token = getCmsSessionToken(request);
   const db = database();
-  if (!email || !db) return null;
+  if (!token || !db) return null;
 
-  const [member] = await db
+  const [session] = await db
     .select({
       email: cmsAdminMembers.email,
       role: cmsAdminMembers.role,
       isActive: cmsAdminMembers.isActive,
+      mustChangePassword: cmsAdminMembers.mustChangePassword,
     })
-    .from(cmsAdminMembers)
-    .where(eq(cmsAdminMembers.email, email))
+    .from(cmsAdminSessions)
+    .innerJoin(
+      cmsAdminMembers,
+      eq(cmsAdminSessions.memberId, cmsAdminMembers.id),
+    )
+    .where(
+      and(
+        eq(cmsAdminSessions.tokenHash, hashCmsSessionToken(token)),
+        gt(cmsAdminSessions.expiresAt, new Date()),
+        eq(cmsAdminMembers.isActive, 1),
+      ),
+    )
     .limit(1);
 
-  if (!isActiveCmsMember(member, email)) return null;
+  if (!session) return null;
 
   return {
-    email,
-    name: session?.user?.name ?? null,
-    role: member.role,
+    email: session.email,
+    name: null,
+    role: session.role,
+    mustChangePassword: session.mustChangePassword === 1,
   };
 }

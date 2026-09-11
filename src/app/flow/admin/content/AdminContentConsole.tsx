@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/hooks/flow/useAuth";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -14,6 +13,7 @@ import {
   FolderTree,
   ImageIcon,
   Inbox,
+  LogOut,
   Plus,
   Save,
   SearchCheck,
@@ -81,6 +81,12 @@ type CmsMember = {
   invitedByEmail: string | null;
 };
 
+type CmsSessionMember = {
+  email: string;
+  role: CmsMember["role"];
+  mustChangePassword: boolean;
+};
+
 type AdminContentConsoleProps = {
   apiBase?: "/api/admin" | "/api/cms";
   includeMemberManagement?: boolean;
@@ -126,7 +132,6 @@ export default function AdminContentConsole({
   returnHref = "/flow/admin",
   returnLabel = "Dashboard",
 }: AdminContentConsoleProps) {
-  const { user, error: authError } = useAuth();
   const [tab, setTab] = useState<Tab>("posts");
   const [items, setItems] = useState<ContentItem[]>([]);
   const [categories, setCategories] = useState<ContentItem[]>([]);
@@ -151,16 +156,20 @@ export default function AdminContentConsole({
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"" | SubmissionStatus>("");
   const [memberEmail, setMemberEmail] = useState("");
+  const [memberPassword, setMemberPassword] = useState("");
   const [memberRole, setMemberRole] = useState<CmsMember["role"]>("editor");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [cmsMember, setCmsMember] = useState<CmsSessionMember | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const resource =
     tab === "submissions" || tab === "members" ? null : (tab as Resource);
-  const availableTabs = includeMemberManagement
-    ? [...tabOptions, memberTabOption]
-    : tabOptions;
+  const availableTabs =
+    includeMemberManagement && cmsMember?.role === "owner"
+      ? [...tabOptions, memberTabOption]
+      : tabOptions;
 
   const resetEditor = () => {
     setSelected(null);
@@ -207,7 +216,23 @@ export default function AdminContentConsole({
   }, [apiBase]);
 
   useEffect(() => {
-    if (!user) return;
+    const loadSession = async () => {
+      try {
+        const data = await requestJson<{ member: CmsSessionMember }>(
+          "/api/cms/auth/session",
+        );
+        setCmsMember(data.member);
+      } catch {
+        setCmsMember(null);
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+    void loadSession();
+  }, []);
+
+  useEffect(() => {
+    if (!cmsMember) return;
     const load = async () => {
       try {
         if (tab === "members") {
@@ -237,7 +262,7 @@ export default function AdminContentConsole({
       }
     };
     void load();
-  }, [apiBase, loadMembers, tab, user]);
+  }, [apiBase, cmsMember, loadMembers, tab]);
 
   const editorTitle = useMemo(
     () =>
@@ -376,18 +401,28 @@ export default function AdminContentConsole({
   };
 
   const saveMember = async () => {
-    if (!memberEmail.trim()) return;
+    if (!memberEmail.trim() || memberPassword.length < 12) {
+      setError(
+        "Enter a valid email address and a temporary password of at least 12 characters.",
+      );
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
       await requestJson(`${apiBase}/members`, {
         method: "POST",
-        body: JSON.stringify({ email: memberEmail, role: memberRole }),
+        body: JSON.stringify({
+          email: memberEmail,
+          role: memberRole,
+          temporaryPassword: memberPassword,
+        }),
       });
       setMemberEmail("");
+      setMemberPassword("");
       setMemberRole("editor");
       await loadMembers();
-      setNotice("CMS team access updated.");
+      setNotice("CMS team member and temporary password created.");
     } catch {
       setError("The CMS team member could not be saved.");
     } finally {
@@ -417,28 +452,70 @@ export default function AdminContentConsole({
     }
   };
 
-  if (!user) {
+  const signOut = async () => {
+    await fetch("/api/cms/auth/logout", { method: "POST" }).catch(() => null);
+    window.location.assign("/cms/login");
+  };
+
+  if (authLoading) {
     return (
-      <main className="min-h-screen grid place-items-center px-6 bg-slate-950 text-white">
+      <main className="grid min-h-screen place-items-center bg-[#0d0919] px-6 text-[#fffaf0]">
+        <p className="text-sm text-[#d9d0dc]">
+          Checking your RampRate CMS session…
+        </p>
+      </main>
+    );
+  }
+
+  if (!cmsMember) {
+    return (
+      <main className="grid min-h-screen place-items-center bg-[#0d0919] px-6 text-[#fffaf0]">
         <div className="max-w-md text-center space-y-4">
-          <h1 className="text-3xl font-bold">RampRate CMS access required</h1>
-          <p className="text-slate-300">
-            Sign in with an active RampRate CMS team email to continue.{" "}
-            {authError
-              ? "The shared sign-in session could not be reached just now."
-              : ""}
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f4c85a]">
+            RampRate CMS
+          </p>
+          <h1 className="font-serif text-4xl text-white">
+            CMS access required
+          </h1>
+          <p className="text-[#d9d0dc]">
+            Sign in with a database-managed RampRate CMS account to continue.
           </p>
           <Link
-            href="/flow/login?redirect=%2Fcms"
-            className="inline-flex items-center rounded-md bg-sky-300 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-sky-200"
+            href="/cms/login"
+            className="inline-flex items-center rounded-xl bg-[#f4c85a] px-4 py-2 text-sm font-semibold text-[#171025] transition-colors hover:bg-[#ffe08a]"
           >
             Sign in to RampRate CMS
           </Link>
           <Link
             href={returnHref}
-            className="inline-flex items-center gap-2 text-sky-300 hover:text-sky-200"
+            className="inline-flex items-center gap-2 text-[#f4c85a] hover:text-[#fff0b8]"
           >
             <ArrowLeft className="size-4" /> {returnLabel}
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  if (cmsMember.mustChangePassword) {
+    return (
+      <main className="grid min-h-screen place-items-center bg-[#0d0919] px-6 text-[#fffaf0]">
+        <div className="max-w-md space-y-4 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f4c85a]">
+            RampRate CMS
+          </p>
+          <h1 className="font-serif text-4xl text-white">
+            Secure your CMS access
+          </h1>
+          <p className="text-[#d9d0dc]">
+            Replace your temporary password before managing RampRate editorial
+            content.
+          </p>
+          <Link
+            href="/cms/change-password"
+            className="inline-flex rounded-xl bg-[#f4c85a] px-4 py-2 text-sm font-semibold text-[#171025] transition-colors hover:bg-[#ffe08a]"
+          >
+            Set a new CMS password
           </Link>
         </div>
       </main>
@@ -461,12 +538,21 @@ export default function AdminContentConsole({
               data is available only to authorized administrators.
             </p>
           </div>
-          <Link
-            href={returnHref}
-            className="inline-flex items-center gap-2 text-sm text-sky-300 hover:text-white"
-          >
-            <ArrowLeft className="size-4" /> {returnLabel}
-          </Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href={returnHref}
+              className="inline-flex items-center gap-2 text-sm text-sky-300 hover:text-white"
+            >
+              <ArrowLeft className="size-4" /> {returnLabel}
+            </Link>
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-white"
+            >
+              <LogOut className="size-4" /> Sign out {cmsMember.email}
+            </button>
+          </div>
         </header>
 
         <nav
@@ -516,12 +602,21 @@ export default function AdminContentConsole({
                 Editors and administrators may manage content, while only owners
                 can manage this access list.
               </p>
-              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
+              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_10rem_auto]">
                 <input
                   value={memberEmail}
                   onChange={(event) => setMemberEmail(event.target.value)}
                   type="email"
                   placeholder="team@ramprate.com"
+                  className="rounded-md border bg-white px-3 py-2 text-sm"
+                />
+                <input
+                  value={memberPassword}
+                  onChange={(event) => setMemberPassword(event.target.value)}
+                  type="password"
+                  minLength={12}
+                  autoComplete="new-password"
+                  placeholder="Temporary password"
                   className="rounded-md border bg-white px-3 py-2 text-sm"
                 />
                 <select
@@ -538,7 +633,9 @@ export default function AdminContentConsole({
                 <Button
                   type="button"
                   onClick={() => void saveMember()}
-                  disabled={busy || !memberEmail.trim()}
+                  disabled={
+                    busy || !memberEmail.trim() || memberPassword.length < 12
+                  }
                 >
                   Add member
                 </Button>

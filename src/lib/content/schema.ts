@@ -361,6 +361,9 @@ export const cmsAdminMembers = mysqlTable(
   {
     id: int("id").autoincrement().primaryKey(),
     email: varchar("email", { length: 320 }).notNull(),
+    passwordHash: varchar("password_hash", { length: 255 }),
+    mustChangePassword: int("must_change_password").default(1).notNull(),
+    passwordUpdatedAt: timestamp("password_updated_at"),
     role: mysqlEnum("role", ["owner", "admin", "editor"])
       .default("editor")
       .notNull(),
@@ -372,5 +375,29 @@ export const cmsAdminMembers = mysqlTable(
   (table) => [
     uniqueIndex("cms_admin_members_email_unique").on(table.email),
     index("cms_admin_members_active_role_idx").on(table.isActive, table.role),
+  ],
+);
+
+/**
+ * Opaque CMS session tokens are stored only as SHA-256 hashes. The browser
+ * receives the random token in a httpOnly cookie, while an active database
+ * member record determines the session's editorial authorization.
+ */
+export const cmsAdminSessions = mysqlTable(
+  "cms_admin_sessions",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    memberId: int("member_id").notNull(),
+    tokenHash: varchar("token_hash", { length: 128 }).notNull(),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    lastSeenAt: timestamp("last_seen_at"),
+  },
+  (table) => [
+    uniqueIndex("cms_admin_sessions_token_hash_unique").on(table.tokenHash),
+    index("cms_admin_sessions_member_expiry_idx").on(
+      table.memberId,
+      table.expiresAt,
+    ),
   ],
 );

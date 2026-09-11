@@ -117,10 +117,7 @@ function RoleDistChart({
                   }}
                 />
                 {/* Ideal line at 20% */}
-                <div
-                  className="absolute top-0 h-full w-px bg-white/40"
-                  style={{ left: "20%" }}
-                />
+                <div className="absolute top-0 left-1/5 h-full w-px bg-white/40" />
               </div>
             </div>
           );
@@ -320,9 +317,9 @@ export default function EfficacyReportClient() {
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We generated 10,000 synthetic respondents, each with a known
-              &quot;true&quot; dominant role. Then we ran each respondent through both
-              assessment methods and measured how often each method correctly
-              identified the true dominant role.
+              &quot;true&quot; dominant role. Then we ran each respondent
+              through both assessment methods and measured how often each method
+              correctly identified the true dominant role.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -356,8 +353,9 @@ export default function EfficacyReportClient() {
                   />
                   <p className="text-xs text-muted-foreground mt-2">
                     The Likert method has high spread (42pp) but low accuracy
-                    because social desirability bias inflates &quot;attractive&quot;
-                    roles. The spread is noise, not signal.
+                    because social desirability bias inflates
+                    &quot;attractive&quot; roles. The spread is noise, not
+                    signal.
                   </p>
                 </CardContent>
               </Card>
@@ -412,10 +410,10 @@ export default function EfficacyReportClient() {
                       A 42-point spread sounds like strong differentiation, but
                       it&#39;s driven by bias, not truth. When everyone inflates
                       their Spark score, the spread between Spark and Ground
-                      widens artificially. The forced-rank method&#39;s 21.5-point
-                      spread is smaller but represents genuine behavioral
-                      differences - the signal-to-noise ratio is dramatically
-                      higher.
+                      widens artificially. The forced-rank method&#39;s
+                      21.5-point spread is smaller but represents genuine
+                      behavioral differences - the signal-to-noise ratio is
+                      dramatically higher.
                     </p>
                   </div>
                 </div>
@@ -434,8 +432,8 @@ export default function EfficacyReportClient() {
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We simulated 2,000 people taking each assessment twice. The
               correlation between their first and second results measures
-              reliability. In psychometrics, r &gt; 0.80 is considered &quot;good&quot;
-              and r &gt; 0.90 is &quot;excellent.&quot;
+              reliability. In psychometrics, r &gt; 0.80 is considered
+              &quot;good&quot; and r &gt; 0.90 is &quot;excellent.&quot;
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -576,8 +574,9 @@ export default function EfficacyReportClient() {
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-3xl">
               We simulated 2,000 people who are truly Grounds but are
-              deliberately trying to appear as Sparks (the most &quot;attractive&quot;
-              role). This tests whether the assessment can be gamed.
+              deliberately trying to appear as Sparks (the most
+              &quot;attractive&quot; role). This tests whether the assessment
+              can be gamed.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -703,10 +702,11 @@ export default function EfficacyReportClient() {
                       Sparks - nearly double the expected 20%. Meanwhile,
                       Filters (4.7%) and Grounds (6.9%) are dramatically
                       underrepresented. This isn&#39;t because most people are
-                      Sparks. It&#39;s because &quot;I generate innovative ideas&quot; sounds
-                      better than &quot;I identify flaws in other people&#39;s work.&quot; The
-                      forced-rank method produces a distribution within 2% of
-                      the ideal for every role.
+                      Sparks. It&#39;s because &quot;I generate innovative
+                      ideas&quot; sounds better than &quot;I identify flaws in
+                      other people&#39;s work.&quot; The forced-rank method
+                      produces a distribution within 2% of the ideal for every
+                      role.
                     </p>
                   </div>
                 </div>

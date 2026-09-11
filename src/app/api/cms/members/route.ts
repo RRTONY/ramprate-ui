@@ -7,6 +7,7 @@ import {
   normalizeCmsEmail,
   type CmsAdminRole,
 } from "@/lib/admin/access";
+import { hashCmsPassword } from "@/lib/cms-auth";
 import { cmsAdminMembers } from "@/lib/content/schema";
 
 const roles = ["owner", "admin", "editor"] as const;
@@ -14,6 +15,7 @@ const roles = ["owner", "admin", "editor"] as const;
 const createSchema = yup.object({
   email: yup.string().email().max(320).required(),
   role: yup.mixed<CmsAdminRole>().oneOf(roles).default("editor"),
+  temporaryPassword: yup.string().min(12).max(256).required(),
 });
 
 const updateSchema = yup.object({
@@ -102,6 +104,8 @@ export async function POST(request: NextRequest) {
     .insert(cmsAdminMembers)
     .values({
       email,
+      passwordHash: await hashCmsPassword(value.temporaryPassword),
+      mustChangePassword: 1,
       role: value.role,
       isActive: 1,
       invitedByEmail: administrator.email,
@@ -111,6 +115,8 @@ export async function POST(request: NextRequest) {
         role: value.role,
         isActive: 1,
         invitedByEmail: administrator.email,
+        passwordHash: await hashCmsPassword(value.temporaryPassword),
+        mustChangePassword: 1,
       },
     });
 
