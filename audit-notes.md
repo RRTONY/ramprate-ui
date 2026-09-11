@@ -75,6 +75,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The Flow Reports dashboard now uses typed assessment selection, PDF generation, filters, date-range changes, and score aggregation. Its focused lint pass is clean, and the global lint backlog is reduced to 40 errors and 90 warnings without suppressing rules.
 - The Flow Pricing page now uses safely narrowed portal responses and errors, and its Tribe button reflects the live billing-portal pending state rather than an inactive checkout flag. Its focused lint pass is clean, and the global lint backlog is reduced to 36 errors and 88 warnings without suppressing rules.
 - The Flow assessment experience now uses typed ranked roles, safe mutation-error handling, narrowed 360 invite links, and utility-based text balancing. Its focused lint pass is clean, and the global lint backlog is reduced to 32 errors and 85 warnings without suppressing rules.
+- The Flow Team Dashboard now uses typed creation responses, team summaries, assessment records, and member mappings. Its focused lint pass is clean, and the global lint backlog is reduced to 29 errors and 84 warnings without suppressing rules.
 
 ## Cloud Cleanup and Built-in AI Boundary
 
