@@ -21,6 +21,7 @@ import {
   calculateRoleScores,
   getDominantRole,
   type RankingAnswer,
+  type Role,
 } from "@/lib/flow/surveyData";
 import RankableQuestion from "@/components/flow/RankableQuestion";
 import { logAssessmentData } from "@/lib/flow/dataLogger";
@@ -82,6 +83,36 @@ interface SavedSession {
   timestamp: number;
 }
 
+interface GeneratedInviteLink {
+  email: string;
+  url: string;
+}
+
+function getGeneratedInviteLinks(result: unknown): GeneratedInviteLink[] {
+  if (
+    typeof result !== "object" ||
+    result === null ||
+    !("invites" in result) ||
+    !Array.isArray(result.invites)
+  ) {
+    return [];
+  }
+
+  return result.invites.flatMap((invite) => {
+    if (
+      typeof invite === "object" &&
+      invite !== null &&
+      "email" in invite &&
+      "inviteUrl" in invite &&
+      typeof invite.email === "string" &&
+      typeof invite.inviteUrl === "string"
+    ) {
+      return [{ email: invite.email, url: invite.inviteUrl }];
+    }
+    return [];
+  });
+}
+
 function loadSession(): SavedSession | null {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
@@ -101,7 +132,7 @@ function loadSession(): SavedSession | null {
 export default function Assessment() {
   const saved = useMemo(() => loadSession(), []);
   const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
   // ─── Fix #2: Show results dashboard for returning users ───
   const searchParamsInit = useMemo(
@@ -323,23 +354,10 @@ export default function Assessment() {
       shuffledQuestions.length) *
     100;
 
-  // Legacy single-select handler (kept for backward compatibility)
-  const handleAnswerLegacy = (answerText: string) => {
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: answerText }));
-
-    if (currentQuestionIndex < shuffledQuestions.length - 1) {
-      setTimeout(() => {
-        setCurrentQuestionIndex((prev) => prev + 1);
-      }, 300);
-    } else {
-      setPhase("birth");
-    }
-  };
-
   // Forced-rank handler: saves the full ranking array for each question
   const handleRankComplete = (ranking: { role: string; text: string }[]) => {
     const rankingAnswer: RankingAnswer = ranking.map((r) => ({
-      role: r.role as any,
+      role: r.role as Role,
       text: r.text,
     }));
     setAnswers((prev) => ({ ...prev, [currentQuestion.id]: rankingAnswer }));
@@ -453,8 +471,12 @@ export default function Assessment() {
 
       // Go to 360 invite phase instead of complete
       setPhase("invite360");
-    } catch (err: any) {
-      setSubmissionError(err.message || "Failed to submit. Please try again.");
+    } catch (err: unknown) {
+      setSubmissionError(
+        err instanceof Error && err.message
+          ? err.message
+          : "Failed to submit. Please try again.",
+      );
       setPhase("birth"); // Go back to let them retry
     }
   };
@@ -483,13 +505,6 @@ export default function Assessment() {
       Filter: "text-violet-400",
       Ground: "text-blue-400",
       Conductor: "text-emerald-400",
-    };
-    const roleBgMap: Record<string, string> = {
-      Spark: "bg-amber-500/20 border-amber-500/30",
-      Amplifier: "bg-red-500/20 border-red-500/30",
-      Filter: "bg-violet-500/20 border-violet-500/30",
-      Ground: "bg-blue-500/20 border-blue-500/30",
-      Conductor: "bg-emerald-500/20 border-emerald-500/30",
     };
     const roleDescMap: Record<string, string> = {
       Spark: "You ignite ideas and see what others can't yet.",
@@ -1245,12 +1260,7 @@ export default function Assessment() {
           reviewerEmails: validEmails,
           origin: window.location.origin,
         });
-        setGeneratedInviteLinks(
-          result.invites.map((i: any) => ({
-            email: i.email,
-            url: i.inviteUrl,
-          })),
-        );
+        setGeneratedInviteLinks(getGeneratedInviteLinks(result));
         setInvitesSent(true);
       } catch (err) {
         console.error("Failed to send invites", err);
@@ -1604,10 +1614,7 @@ export default function Assessment() {
               transition={{ duration: 0.3 }}
               className="flex flex-col flex-1"
             >
-              <h2
-                className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center"
-                style={{ textWrap: "balance" as any }}
-              >
+              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center text-balance">
                 {currentQuestion.text}
               </h2>
 
