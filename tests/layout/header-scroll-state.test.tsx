@@ -39,13 +39,14 @@ describe("marketing header scroll state", () => {
 
     expect(navigation?.className).toContain("bg-transparent");
 
-    Object.defineProperty(window, "scrollY", { value: 96, configurable: true });
+    Object.defineProperty(window, "scrollY", { value: 1, configurable: true });
     fireEvent.scroll(window);
 
     await waitFor(() => {
       expect(navigation?.className).toContain("bg-white");
       expect(navigation?.className).not.toContain("bg-white/");
-      expect(navigation?.className).toContain("shadow-md");
+      expect(navigation?.className).toContain("z-[100]");
+      expect(navigation?.className).toContain("border-b");
     });
   });
 });

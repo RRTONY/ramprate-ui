@@ -146,7 +146,10 @@ function MessageContent({ content }: { content: string }) {
     const h1m = line.match(/^# (.+)/);
     if (h1m) {
       blocks.push(
-        <p key={k++} className="font-bold text-[0.95rem] text-white my-[0.15rem]">
+        <p
+          key={k++}
+          className="font-bold text-[0.95rem] text-white my-[0.15rem]"
+        >
           {parseInline(h1m[1])}
         </p>,
       );
@@ -156,7 +159,10 @@ function MessageContent({ content }: { content: string }) {
     const h2m = line.match(/^## (.+)/);
     if (h2m) {
       blocks.push(
-        <p key={k++} className="font-bold text-[0.9rem] text-white/95 my-[0.15rem]">
+        <p
+          key={k++}
+          className="font-bold text-[0.9rem] text-white/95 my-[0.15rem]"
+        >
           {parseInline(h2m[1])}
         </p>,
       );
@@ -166,7 +172,10 @@ function MessageContent({ content }: { content: string }) {
     const h3m = line.match(/^### (.+)/);
     if (h3m) {
       blocks.push(
-        <p key={k++} className="font-semibold text-[0.85rem] text-amber my-[0.1rem]">
+        <p
+          key={k++}
+          className="font-semibold text-[0.85rem] text-amber my-[0.1rem]"
+        >
           {parseInline(h3m[1])}
         </p>,
       );
@@ -182,7 +191,10 @@ function MessageContent({ content }: { content: string }) {
         i++;
       }
       blocks.push(
-        <ul key={k++} className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]">
+        <ul
+          key={k++}
+          className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]"
+        >
           {items.map((item, j) => (
             <li key={j} className="flex gap-[0.4rem] items-start">
               <span className="text-amber shrink-0 mt-[0.15rem] text-[0.7rem]">
@@ -204,7 +216,10 @@ function MessageContent({ content }: { content: string }) {
         i++;
       }
       blocks.push(
-        <ol key={k++} className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]">
+        <ol
+          key={k++}
+          className="my-[0.1rem] p-0 list-none flex flex-col gap-[0.2rem]"
+        >
           {items.map((item, j) => (
             <li key={j} className="flex gap-[0.4rem] items-start">
               <span className="text-amber shrink-0 font-semibold min-w-[1rem] text-xs">
@@ -221,7 +236,10 @@ function MessageContent({ content }: { content: string }) {
     // Horizontal rule
     if (line.match(/^-{3,}$/) || line.match(/^\*{3,}$/)) {
       blocks.push(
-        <hr key={k++} className="border-none border-t border-white/8 my-[0.3rem]" />,
+        <hr
+          key={k++}
+          className="border-none border-t border-white/8 my-[0.3rem]"
+        />,
       );
       i++;
       continue;
@@ -368,15 +386,18 @@ export default function SiteSearch({
       {/* Trigger button */}
       <button
         onClick={openSearch}
-        className={`font-body ai-btn-glow flex items-center gap-2 px-3.5 py-2 min-h-12 rounded-full border transition-all duration-300 text-sm group ${
+        className={`font-body ai-btn-glow inline-flex items-center justify-center p-2.5 sm:gap-2 sm:min-h-12 sm:px-3.5 sm:py-2 sm:rounded-full sm:border transition-all duration-200 text-sm group ${
           scrolled
-            ? "border-gold/25 bg-[linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))] text-[oklch(0.35_0.03_50)]"
-            : "border-gold/20 bg-[linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))] text-white/75"
+            ? "text-[oklch(0.35_0.03_50)] sm:border-gold/25 sm:bg-[linear-gradient(135deg,rgba(212,168,67,0.07),rgba(212,168,67,0.03))]"
+            : "text-gold sm:border-gold/20 sm:bg-[linear-gradient(135deg,rgba(212,168,67,0.12),rgba(255,255,255,0.04))] sm:text-white/75"
         }`}
         aria-label="Ask RampRate AI"
       >
         <span className="ai-btn-sparkle">
-          <Sparkles size={14} className="text-amber" />
+          <Sparkles
+            className="size-5 sm:size-3.5 text-amber"
+            strokeWidth={1.8}
+          />
         </span>
         <span className="hidden sm:inline text-xs font-semibold tracking-wide [letter-spacing:0.02em]">
           Ask RampRate
@@ -497,7 +518,10 @@ export default function SiteSearch({
                           <span className="font-body flex-1 text-sm text-white/80">
                             {item.title}
                           </span>
-                          <ArrowRight size={12} className="shrink-0 text-white/20" />
+                          <ArrowRight
+                            size={12}
+                            className="shrink-0 text-white/20"
+                          />
                         </button>
                       );
                     })}

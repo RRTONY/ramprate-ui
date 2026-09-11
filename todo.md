@@ -97,3 +97,12 @@
 - [x] Ensure the shared marketing header transitions to an unambiguous white background after scrolling, with readable navigation, search, logo, and CTA contrast.
 - [x] Validate the transparent top-of-hero and white scrolled-header states at desktop and mobile breakpoints.
 - [x] Compare `master` with `feat/ramprate-product-completion` and selectively integrate the user-confirmed home-color and header fixes without overwriting database, admin, AI, results, SEO, or deployment work.
+- [x] Correct the shared header overlap visible during scrolling, enforce an opaque white background as soon as scrolling begins, and provide clear dark high-contrast navigation and icon states.
+- [x] Replace the current header icon treatment with a clean accessible icon state and validate transparent-at-top and white-on-scroll behavior on desktop and mobile.
+- [x] Audit and redesign all non-hero home-page sections with a cohesive, accessible RampRate visual system while preserving current content, routes, and calls to action.
+- [x] Validate the redesigned home sections at desktop and mobile breakpoints for hierarchy, contrast, rhythm, and responsive usability.
+- [x] Refine the shared desktop and mobile header styling, layout, icon treatment, and scroll-state surfaces without regressing navigation access or contrast.
+- [x] Improve the RampRate favicon and browser-icon presentation, then validate icon, manifest, and touch-icon routes in production-compatible output.
+- [x] Remove the circular container around the Ask RampRate AI icon so the standalone icon aligns cleanly with the header controls.
+- [x] Remove the “Tell Us What's Broken” hero CTA and rebalance the remaining hero action across responsive layouts.
+- [x] Add markup-level visual-contract coverage for the redesigned non-hero home sections and the simplified single-action hero.

@@ -83,6 +83,7 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The shared Input and Textarea components now rely on native keyboard composition flags rather than broad casts, preserving CJK IME behavior. Their focused lint pass is clean, and the global lint backlog is reduced to 19 errors and 78 warnings without suppressing rules.
 - The public TeamGrid now uses an unknown-compatible media field with an explicit photo guard without altering team content. Its focused lint pass is clean, and the global lint backlog is reduced to 18 errors and 78 warnings without suppressing rules.
 - The public ServicePillars section now uses an unknown-compatible icon field with an explicit rendering guard without altering service content. Its focused lint pass is clean, and the global lint backlog is reduced to 17 errors and 78 warnings without suppressing rules.
+- Home review, 2026-09-11: the hero remains the strongest surface and is retained. The non-hero desktop sections are coherent but rely too heavily on repeated dark gradient cards, small uppercase labels, and lightly differentiated proof blocks. On mobile, long stacked card groups weaken scan hierarchy. The redesign will keep the plum, amber, and cream palette but introduce a repeating relationship-pathway motif, stronger proof numerals, fewer competing card treatments, clearer display hierarchy, and more deliberate light-section inversions.
 
 ## Cloud Cleanup and Built-in AI Boundary
 
@@ -102,3 +103,12 @@ The supplied GitHub repository `RRTONY/ramprate-ui` uses `master` as the live-co
 - The active implementation already contains those changes and strengthens them without replacing the managed-database, administration, AI, results, SEO, or deployment work. The home uses warm violet, rust, and amber editorial surfaces; the shared header retains `text-white/85` over the hero and changes to an opaque white surface with dark navigation after scrolling.
 - A browser-environment regression test confirms the top-of-hero header begins transparent and becomes `bg-white` with a shadow when the scroll threshold is crossed. Strict type checking and focused linting pass for the header and its test.
 - Desktop and mobile visual checks confirm that the warm violet, rust, and amber hero retains readable navigation, clear gold calls to action, and a compact mobile search/menu treatment without clipping the primary message.
+
+## Header, Home, and Browser-Icon Refinement
+
+- The shared marketing header now retains its transparent hero state at the exact top and switches to an opaque white, dark-text surface after the first scroll pixel. Navigation, search, and menu controls maintain high contrast in each state; the browser-environment regression confirms this state transition.
+- The mobile Ask RampRate trigger is now a standalone gold sparkles glyph without a rounded container, border, background, or glow ring. The desktop control retains its labelled, keyboard-discoverable presentation. A focused regression guards against reintroducing a bare circular mobile container.
+- The non-hero home experience now uses a unified plum, gold, copper, and warm-cream editorial system across proof, practices, comparison, timeline, testimonials, operating model, compensation, and close. It uses a restrained relationship-pathway motif, responsive table handling, and reduced-motion-safe transitions while preserving the approved hero direction.
+- The hero now presents a single primary “See Case Results” action; the duplicate “Tell Us What's Broken” button has been removed at the user's request.
+- App Router favicon and Apple touch-icon artwork now use the same plum-and-gold RampRate mark. Local route checks returned HTTP 200 with the expected image, manifest, robots, sitemap, and home content types.
+- Validation for this refinement passed: focused header/AI/metadata tests, strict type checking, focused linting, markup-level visual-contract coverage, the complete deterministic suite (62 passed, 2 opt-in checks skipped), a fresh production build generating 212 static pages, and desktop/mobile visual review.

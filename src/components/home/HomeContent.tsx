@@ -272,16 +272,11 @@ export default function HomeContent() {
 
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href="/proof"
                   className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(56,189,248,0.28)]"
                 >
-                  Tell Us What&apos;s Broken <ArrowRight size={16} />
-                </Link>
-                <Link
-                  href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
-                >
                   See Case Results
+                  <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
@@ -302,7 +297,7 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="section-sunset py-16 sm:py-20">
+      <section className="home-proof-section section-sunset py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -317,10 +312,10 @@ export default function HomeContent() {
             {engagements.map((eng) => (
               <div
                 key={eng.label}
-                className="rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
+                className="home-proof-card rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
               >
                 <div
-                  className="w-1 h-10 rounded-full mb-6"
+                  className="home-proof-marker w-1 h-10 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
                 <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
@@ -339,7 +334,10 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="section-sunset py-16 sm:py-20">
+      <section
+        id="brands"
+        className="home-practices-section section-sunset py-16 sm:py-20"
+      >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
@@ -365,7 +363,7 @@ export default function HomeContent() {
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                className="home-practice-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
                 <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
@@ -415,7 +413,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="section-warm py-16 sm:py-20">
+      <section className="home-difference-section section-warm py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
@@ -427,7 +425,7 @@ export default function HomeContent() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[560px]">
+            <table className="home-difference-table w-full text-left border-collapse min-w-[560px]">
               <thead>
                 <tr>
                   <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
@@ -507,7 +505,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="section-sunset py-16 sm:py-20 overflow-hidden">
+      <section className="home-timeline-section section-sunset py-16 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
@@ -516,7 +514,7 @@ export default function HomeContent() {
           </div>
 
           {/* Desktop: horizontal */}
-          <div className="hidden md:flex gap-0 overflow-x-auto pb-4 [scrollbar-width:thin]">
+          <div className="home-timeline-track hidden md:flex gap-0 overflow-x-auto pb-4 [scrollbar-width:thin]">
             {timeline.map((item) => (
               <div key={item.year} className="flex-shrink-0 w-[200px] relative">
                 <div className="flex flex-col items-center">
@@ -558,10 +556,12 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <TestimonialsCarousel />
+      <div className="home-testimonials-section">
+        <TestimonialsCarousel />
+      </div>
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="section-warm py-16 sm:py-20">
+      <section className="home-operate-section section-warm py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
@@ -576,7 +576,7 @@ export default function HomeContent() {
             {operateSteps.map((step) => (
               <div
                 key={step.num}
-                className="rounded-xl p-8 bg-white/60 border border-black/6"
+                className="home-operate-card rounded-xl p-8 bg-white/60 border border-black/6"
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-rust/10">
@@ -605,7 +605,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="section-light py-16 sm:py-20">
+      <section className="home-compensation-section section-light py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -623,7 +623,7 @@ export default function HomeContent() {
               </p>
             </div>
 
-            <div className="rounded-xl p-8 bg-white/60 border border-black/6">
+            <div className="home-compensation-panel rounded-xl p-8 bg-white/60 border border-black/6">
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
                   <DollarSign size={20} className="shrink-0 mt-0.5 text-rust" />
@@ -672,7 +672,7 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section className="font-body py-16 sm:py-20 text-center text-white bg-rust">
+      <section className="home-final-cta font-body py-16 sm:py-20 text-center text-white bg-rust">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tell Us What&apos;s Broken.

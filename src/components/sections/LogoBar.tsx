@@ -1,18 +1,18 @@
-import SanityImage from '@/components/shared/SanityImage'
+import SanityImage from "@/components/shared/SanityImage";
 
 interface Logo {
-  name?: string
-  logo?: any
-  url?: string
+  name?: string;
+  logo?: unknown;
+  url?: string;
 }
 
 interface LogoBarProps {
-  heading?: string
-  logos?: Logo[]
+  heading?: string;
+  logos?: Logo[];
 }
 
-export default function LogoBar({heading, logos}: LogoBarProps) {
-  if (!logos?.length) return null
+export default function LogoBar({ heading, logos }: LogoBarProps) {
+  if (!logos?.length) return null;
 
   return (
     <section className="py-14 bg-dark-card">
@@ -30,15 +30,25 @@ export default function LogoBar({heading, logos}: LogoBarProps) {
             >
               {logo.url ? (
                 <a href={logo.url} target="_blank" rel="noopener noreferrer">
-                  <SanityImage image={logo.logo} alt={logo.name || ''} width={120} height={48} />
+                  <SanityImage
+                    image={logo.logo}
+                    alt={logo.name || ""}
+                    width={120}
+                    height={48}
+                  />
                 </a>
               ) : (
-                <SanityImage image={logo.logo} alt={logo.name || ''} width={120} height={48} />
+                <SanityImage
+                  image={logo.logo}
+                  alt={logo.name || ""}
+                  width={120}
+                  height={48}
+                />
               )}
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

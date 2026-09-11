@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Logo from "@/components/shared/Logo";
 import SiteSearch from "@/components/shared/SiteSearch";
 import HeaderSearch from "@/components/shared/HeaderSearch";
@@ -32,7 +33,7 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 0);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -64,18 +65,23 @@ export default function Header() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        dark ? "bg-white shadow-md border-b border-black/10" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-[background-color,border-color,box-shadow] duration-150 ${
+        dark
+          ? "bg-white shadow-[0_12px_26px_rgba(15,23,42,0.12)] border-b border-black/10"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 sm:h-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4 h-16 sm:h-[4.75rem]">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link
+          href="/"
+          className="flex items-center gap-3 shrink-0 transition-opacity hover:opacity-80"
+        >
           <Logo variant={dark ? "dark" : "light"} size="md" />
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6">
           {/* Practices dropdown */}
           <div
             className="relative"
@@ -83,9 +89,10 @@ export default function Header() {
             onMouseLeave={() => setPracticesOpen(false)}
           >
             <button
-              className={`font-body text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${navLinkClass}`}
+              className={`font-body inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase transition-colors duration-200 ${navLinkClass}`}
             >
               Practices
+              <ChevronDown size={13} strokeWidth={1.8} aria-hidden="true" />
             </button>
             {practicesOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
@@ -114,7 +121,7 @@ export default function Header() {
           {isBiochainPage && (
             <Link
               href="/biochain/catalogue"
-              className={`font-body text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-colors duration-300 ${navLinkClass}`}
+              className={`font-body text-[0.72rem] font-semibold tracking-[0.08em] uppercase whitespace-nowrap transition-colors duration-200 ${navLinkClass}`}
             >
               Browse Catalogue
             </Link>
@@ -126,7 +133,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setPracticesOpen(false)}
-              className={`font-body text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${navLinkClass}`}
+              className={`font-body text-[0.72rem] font-semibold tracking-[0.08em] uppercase transition-colors duration-200 ${navLinkClass}`}
             >
               {item.label}
             </Link>
@@ -136,7 +143,7 @@ export default function Header() {
           <SiteSearch scrolled={dark} />
           <Link
             href="/contact"
-            className={`font-body inline-flex items-center justify-center rounded-md px-4 py-2 text-xs font-bold tracking-wide uppercase transition-all duration-200 hover:-translate-y-0.5 hover:brightness-105 ${
+            className={`font-body inline-flex items-center justify-center rounded-full px-4 py-2 text-[0.68rem] font-bold tracking-[0.07em] uppercase transition-all duration-200 hover:-translate-y-0.5 hover:brightness-105 ${
               dark
                 ? "bg-gold text-dark shadow-sm"
                 : "bg-gold text-dark shadow-[0_12px_28px_rgba(212,168,67,0.24)]"
@@ -151,38 +158,16 @@ export default function Header() {
           <HeaderSearch scrolled={dark} />
           <SiteSearch scrolled={dark} />
           <button
-            className={`p-3 transition-colors ${mobileIconClass}`}
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-black/5 ${mobileIconClass}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-marketing-menu"
           >
             {mobileOpen ? (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <Menu className="h-6 w-6" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -190,7 +175,10 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-black/5 shadow-lg">
+        <div
+          id="mobile-marketing-menu"
+          className="lg:hidden bg-white border-t border-black/5 shadow-lg"
+        >
           <div className="px-5 py-6 space-y-1">
             {/* Practices in mobile */}
             <p className="font-body px-3 py-1 text-xs uppercase tracking-widest mb-1 text-[oklch(0.5_0.02_50)]">
