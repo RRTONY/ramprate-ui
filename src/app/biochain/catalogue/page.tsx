@@ -34,7 +34,10 @@ export default async function BioChainCataloguePage() {
     redirect("/biochain/buyer-intake");
   }
 
-  const totalItems = PRODUCT_CATEGORIES.reduce((sum, c) => sum + c.items.length, 0);
+  const totalItems = PRODUCT_CATEGORIES.reduce(
+    (sum, c) => sum + c.items.length,
+    0,
+  );
 
   return (
     <main>
@@ -45,13 +48,19 @@ export default async function BioChainCataloguePage() {
           { name: "Catalogue", url: "https://ramprate.com/biochain/catalogue" },
         ])}
       />
-      <section className="relative pt-36 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
+      <section
+        className="relative pt-36 pb-16 overflow-hidden"
+        style={{ background: "var(--dark)" }}
+      >
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             RampRate BioChain Sourcing
           </span>
@@ -61,8 +70,12 @@ export default async function BioChainCataloguePage() {
           >
             Full Product Catalog
           </h1>
-          <p className="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl" style={{ fontFamily: "var(--font-body)" }}>
-            {totalItems}+ peptides and biologics across {PRODUCT_CATEGORIES.length} categories.
+          <p
+            className="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            {totalItems}+ peptides and biologics across{" "}
+            {PRODUCT_CATEGORIES.length} categories.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
@@ -89,9 +102,15 @@ export default async function BioChainCataloguePage() {
             <div
               key={cat.name}
               className="rounded-xl border p-6 sm:p-7"
-              style={{ borderColor: "oklch(0.9 0.01 80)", background: "oklch(0.98 0.01 75)" }}
+              style={{
+                borderColor: "oklch(0.9 0.01 80)",
+                background: "oklch(0.98 0.01 75)",
+              }}
             >
-              <h2 className="text-lg font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+              <h2
+                className="text-lg font-bold mb-4"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 {cat.name}
               </h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -99,7 +118,11 @@ export default async function BioChainCataloguePage() {
                   <div
                     key={item}
                     className="text-sm px-3.5 py-2.5 rounded-lg border bg-white"
-                    style={{ borderColor: "oklch(0.9 0.01 80)", color: "oklch(0.25 0.02 50)", fontFamily: "var(--font-body)" }}
+                    style={{
+                      borderColor: "oklch(0.9 0.01 80)",
+                      color: "oklch(0.25 0.02 50)",
+                      fontFamily: "var(--font-body)",
+                    }}
                   >
                     {item}
                   </div>

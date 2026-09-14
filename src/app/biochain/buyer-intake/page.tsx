@@ -43,7 +43,10 @@ export default function ClientIntakePage() {
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
           { name: "BioChain", url: "https://ramprate.com/biochain" },
-          { name: "Buyer Intake", url: "https://ramprate.com/biochain/buyer-intake" },
+          {
+            name: "Buyer Intake",
+            url: "https://ramprate.com/biochain/buyer-intake",
+          },
         ])}
       />
       {/* Hero */}
@@ -56,7 +59,10 @@ export default function ClientIntakePage() {
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             RampRate BioChain Sourcing
           </span>
@@ -72,13 +78,16 @@ export default function ClientIntakePage() {
           >
             An 8-section intake covering your organization, current sourcing,
             full product catalog, and goals - so we can scope your sourcing
-            audit and calibrate the right supply strategy from day one. No
-            fee. No obligation. Confidential.
+            audit and calibrate the right supply strategy from day one. No fee.
+            No obligation. Confidential.
           </p>
           <Link
             href="/biochain/catalogue-access"
             className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-80"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Browse our full product catalogue first
             <ArrowRight size={14} />

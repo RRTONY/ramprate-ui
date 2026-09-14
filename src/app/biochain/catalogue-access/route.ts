@@ -7,7 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 // short-lived cookie the catalogue page checks server-side before rendering
 // (see src/app/biochain/catalogue/page.tsx) and redirects there.
 export async function GET(request: NextRequest) {
-  const response = NextResponse.redirect(new URL("/biochain/catalogue", request.url));
+  const response = NextResponse.redirect(
+    new URL("/biochain/catalogue", request.url),
+  );
   response.cookies.set("biochain_catalogue_gate", "1", {
     httpOnly: true,
     secure: true,
