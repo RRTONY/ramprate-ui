@@ -12,7 +12,9 @@ const DESCRIPTION =
   "Torque, from RampRate: we source the litigation counsel and leverage you need — pre-suit or already in it.";
 
 const FALLBACK_METADATA: Metadata = {
-  title: TITLE,
+  // absolute - TITLE already ends in "| RampRate", so a plain string would
+  // get the root layout's "%s | RampRate" template applied on top of it.
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
     "litigation counsel sourcing",

@@ -3,7 +3,11 @@ import Link from "next/link";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "How Sourcing Works - RampRate Process",
+  // Plain string, no hardcoded "RampRate" - the root layout's template
+  // ("%s | RampRate") already adds it once. The old value ("... - RampRate
+  // Process") meant this rendered as "... - RampRate Process | RampRate",
+  // mentioning RampRate twice; this now matches the openGraph title below.
+  title: "How Sourcing Works",
   description:
     "RampRate's IT sourcing process: find your stack, find your spend, find your leverage. From first audit to signed contract in 90 days.",
   keywords: [
@@ -159,8 +163,8 @@ export default function SourcingProcessPage() {
               className="text-white/70 text-lg leading-relaxed mb-8"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              First we find your stack. Then your spend. Then your leverage.
-              25 years. 250+ enterprises. It&apos;s never not worked.
+              First we find your stack. Then your spend. Then your leverage. 25
+              years. 250+ enterprises. It&apos;s never not worked.
             </p>
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
@@ -360,9 +364,8 @@ export default function SourcingProcessPage() {
               className="text-sm sm:text-base text-white/70 italic"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Our role: find the waste, connect the vendors, fix the
-              contracts, build the process. Not the biggest vendor - the
-              right vendor.
+              Our role: find the waste, connect the vendors, fix the contracts,
+              build the process. Not the biggest vendor - the right vendor.
             </p>
           </div>
           <p
@@ -805,8 +808,8 @@ export default function SourcingProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                If we haven&apos;t delivered measurable savings in 90 days,
-                you can walk. No penalty. No hard feelings. No lock-in.
+                If we haven&apos;t delivered measurable savings in 90 days, you
+                can walk. No penalty. No hard feelings. No lock-in.
               </p>
               <p
                 className="text-sm leading-relaxed font-medium"

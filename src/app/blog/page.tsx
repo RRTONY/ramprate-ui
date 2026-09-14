@@ -70,9 +70,29 @@ const FALLBACK_METADATA: Metadata = {
   },
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; category?: string }>;
+}): Promise<Metadata> {
   const data = await getPageSeo("/blog");
-  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+  const metadata = withSeoOverrides(FALLBACK_METADATA, data?.seo);
+
+  // Every category/page combination already declares /blog as its canonical
+  // (see FALLBACK_METADATA above - that never changes per-facet), but a
+  // canonical is only a hint Google can choose to override, and it doesn't
+  // stop these facet URLs from being crawled/indexed with the exact same
+  // title as /blog itself, which is what actually produces a duplicate-
+  // title cluster. noindex is the stronger signal: it drops the faceted
+  // view from the index outright while `follow: true` still lets crawlers
+  // reach the individual posts linked from it. The bare /blog page (no
+  // params) is untouched and stays fully indexable.
+  const sp = await searchParams;
+  if (sp.category || sp.page) {
+    metadata.robots = { index: false, follow: true };
+  }
+
+  return metadata;
 }
 
 export default async function BlogPage({
