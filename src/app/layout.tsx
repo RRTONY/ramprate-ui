@@ -39,7 +39,7 @@ import { ConditionalChrome } from "@/components/shared/ConditionalChrome";
 export const metadata: Metadata = {
   metadataBase: new URL("https://ramprate.com"),
   title: {
-    default: "RampRate | Data Center, Telecom & Cloud Advisory",
+    default: "RampRate | Impact Innovation",
     template: "%s | RampRate",
   },
   description:
