@@ -9,7 +9,13 @@ import { testimonials } from "./testimonials";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 const FALLBACK_METADATA: Metadata = {
-  title: "Enterprise IT Infrastructure Consulting Services | RampRate",
+  // Plain string, no hardcoded "RampRate" suffix - the root layout's
+  // template ("%s | RampRate") already adds it once. Using `title.absolute`
+  // here instead would fix this segment's own title but breaks template
+  // inheritance for child routes under /sourcing that rely on it (verified
+  // via a real build: /sourcing/process lost its "| RampRate" suffix
+  // entirely when this was `absolute`) - a plain string is the safe fix.
+  title: "Enterprise IT Infrastructure Consulting Services",
   description:
     "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
   keywords: [

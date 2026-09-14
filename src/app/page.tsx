@@ -4,12 +4,17 @@ import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 
 export const revalidate = 60;
 
-const HOME_TITLE = "RampRate | Data Center, Telecom & Cloud Advisory";
+const HOME_TITLE = "RampRate | Impact Innovation";
 const HOME_DESCRIPTION =
   "RampRate: B Lab-certified advisory turning relationships into revenue via technology sourcing and product strategy — $10B+ managed since 2000.";
 
 const FALLBACK_METADATA: Metadata = {
-  title: HOME_TITLE,
+  // absolute, not a plain string: the root layout's title template
+  // ("%s | RampRate") would otherwise append a second " | RampRate" onto
+  // this, since HOME_TITLE already ends in "RampRate" - confirmed via a
+  // real build (a plain-string title on /terms does get the template
+  // applied), not just from reading the docs.
+  title: { absolute: HOME_TITLE },
   description: HOME_DESCRIPTION,
   keywords: [
     "technology advisory",
@@ -18,9 +23,6 @@ const FALLBACK_METADATA: Metadata = {
     "supplier negotiation",
     "B Lab certified advisory",
     "RampRate",
-    "peptide supplier network",
-    "verified peptide suppliers",
-    "peptide sourcing",
   ],
   alternates: { canonical: "/" },
   openGraph: {

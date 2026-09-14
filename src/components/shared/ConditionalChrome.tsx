@@ -12,7 +12,17 @@ export function ConditionalChrome({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const hideChrome = pathname?.startsWith("/flow");
+  const segments = pathname?.split("/").filter(Boolean) || [];
+  // /artifacts/[slug] artifact pages render standalone (no site nav/footer
+  // around the sandboxed iframe) - but not the /artifacts listing itself
+  // or /artifacts/admin, which should feel like normal parts of the site.
+  // Segment-based check (not a string-prefix check) so a real artifact
+  // slugged e.g. "admin-something" isn't mistaken for the admin route.
+  const isStandaloneArtifact =
+    segments[0] === "artifacts" &&
+    segments.length === 2 &&
+    segments[1] !== "admin";
+  const hideChrome = pathname?.startsWith("/flow") || isStandaloneArtifact;
 
   return (
     <>

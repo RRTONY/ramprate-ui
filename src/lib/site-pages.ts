@@ -42,11 +42,11 @@ export const SITE_PAGES: SitePage[] = [
       "Impact consulting - ESG, B Corp, regenerative projects, and grant management for NGOs and mission-driven organizations.",
   },
   {
-    title: "Private Advisory - Because Some Challenges Require More Than an Advisor",
-    path: "/private-advisory",
+    title: "Torque - Litigation Counsel Sourcing",
+    path: "/torque",
     type: "practice",
     keywords:
-      "dispute resolution specialist sourcing coordination equity dispute creditor claim discovery windfall asset protection portfolio remediation litigation support squeezed out operator slow walked creditor protected principal mixed ledger principal",
+      "litigation counsel sourcing specialist coordination equity dispute creditor claim discovery windfall asset protection portfolio remediation litigation support squeezed out operator slow walked creditor protected principal mixed ledger principal",
     description:
       "We source, vet, and coordinate the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
   },
@@ -152,7 +152,7 @@ export const SITE_PAGES: SitePage[] = [
     path: "/biochain",
     type: "page",
     keywords:
-      "biochain sourcing peptide sourcing exosome sourcing stem cell procurement regenerative medicine supply chain biologics supplier sourcing NAD+ sourcing verified biologics procurement healing economy peptides exosomes stem cells peptide marketplace peptide supplier network verified peptide suppliers B2B peptide sourcing research peptides BPC-157 TB-500 semaglutide tirzepatide research-use-only RUO peptides compounded pharmacy peptides peptide synthesis Certificate of Analysis COA verified cGMP certified peptide manufacturer",
+      "biochain sourcing peptide sourcing exosome sourcing stem cell procurement regenerative medicine supply chain biologics supplier sourcing NAD+ sourcing verified biologics procurement healing economy peptides exosomes stem cells peptide marketplace peptide supplier network verified peptide suppliers B2B peptide sourcing research peptides BPC-157 TB-500 research-use-only RUO peptides compounded pharmacy peptides peptide synthesis Certificate of Analysis COA verified cGMP certified peptide manufacturer",
     description:
       "RampRate's BioChain practice: verified sourcing for peptides, exosomes, stem cells, and regenerative biologics. 24 years of procurement intelligence applied to the healing economy.",
   },
@@ -256,7 +256,9 @@ export function matchSitePages(query: string, limit = 5): SitePage[] {
     if (matchedCount === 0) return null;
     if (matchedCount === tokens.length) score += 100;
     return { item, score };
-  }).filter((entry): entry is { item: SitePage; score: number } => entry !== null);
+  }).filter(
+    (entry): entry is { item: SitePage; score: number } => entry !== null,
+  );
 
   scored.sort((a, b) => b.score - a.score);
   return scored.slice(0, limit).map((entry) => entry.item);

@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local .gs reference copy carries a hardcoded live Slack bot token - never commit
+/scripts/supplier-intake-apps-script.gs
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

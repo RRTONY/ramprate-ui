@@ -18,28 +18,29 @@ import PracticeIcon from "./PracticeIcon";
 const ClientWall = dynamic(() => import("./ClientWall"));
 const TestimonialsCarousel = dynamic(() => import("./TestimonialsCarousel"));
 const NewsletterSection = dynamic(() => import("./NewsletterSection"));
+const Timeline = dynamic(() => import("./Timeline"));
 
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
   {
-    label: "ViacomCBS / Hearst",
-    stats: "75% infrastructure cost reduction",
+    label: "Paramount",
+    stats: "16 years of eliminating risk",
     detail:
-      "16+ year relationship across multiple CTO tenures. Created methodology adopted at exec level. Millions in reinvestable budget freed across Broadcast, Satellite, Telecom, Cloud, and CDN.",
+      "From Viacom & CBS split in 2005 to reuniting in 2020, RampRate was there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
     accent: "oklch(0.82 0.15 75)",
   },
   {
     label: "eBay",
-    stats: "27% savings while strengthening relationships",
+    stats: "$50M in savings while strengthening relationships",
     detail:
-      "Risk-free model: 2× fee guarantee or full refund. Global data center optimization. Millions in ongoing value. Supplier relationships stronger than before.",
+      "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
     accent: "oklch(0.6 0.2 280)",
   },
   {
-    label: "Syntropy",
+    label: "NOIA",
     stats: "US market penetration in months",
     detail:
-      "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Under-promised, over-delivered.",
+      "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
     accent: "oklch(0.65 0.2 150)",
   },
 ];
@@ -70,6 +71,11 @@ const diffRows = [
     trad: "Forecasts ±30-40%",
     broker: "No forecasts",
     ramp: "Forecasts within 5-10%",
+  },
+  {
+    trad: "Pays lip service to impact",
+    broker: "Sacrifices impact for profit",
+    ramp: "Finds profit through purpose",
   },
 ];
 
@@ -129,35 +135,26 @@ const operateSteps = [
     title: "Deep Research",
     desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers. 80 countries. Forecasts within 5-10% of outcome.",
     Icon: Database,
-    link: { label: "Our Process →", href: "/our-process" },
+    link: { label: "Our Process", href: "/process" },
   },
   {
     num: "02",
     title: "Strategic Blueprint",
     desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
     Icon: Target,
-    link: { label: "See How We Think →", href: "/thinking" },
+    link: { label: "See How We Think", href: "/thinking" },
   },
   {
     num: "03",
     title: "Relationship Activation",
     desc: "25 years of enterprise trust. When we call, doors open. Not pitch. History. 99% of intros convert to contracts.",
     Icon: Users,
-    link: { label: "See Results →", href: "/proof" },
+    link: { label: "See Results", href: "/proof" },
   },
 ];
 
 /* ── BRANDS ── */
 const brands = [
-  {
-    name: "Sourcing",
-    tag: "Enterprise IT",
-    description:
-      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement.",
-    href: "/sourcing",
-    iconKind: "sourcing" as const,
-    accentColor: "oklch(0.82 0.15 75)",
-  },
   {
     name: "Syzygy",
     tag: "Founders",
@@ -171,16 +168,25 @@ const brands = [
     name: "Stratum",
     tag: "Web3",
     description:
-      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure.",
+      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure and rails.",
     href: "/web3",
     iconKind: "stratum" as const,
     accentColor: "oklch(0.65 0.2 280)",
   },
   {
+    name: "Sourcing",
+    tag: "Enterprise IT",
+    description:
+      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement decisions.",
+    href: "/sourcing",
+    iconKind: "sourcing" as const,
+    accentColor: "oklch(0.82 0.15 75)",
+  },
+  {
     name: "BioChain",
     tag: "Bio-Sourcing",
     description:
-      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, chain-of-custody tracking.",
+      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, and chain-of-custody tracking on every shipment.",
     href: "/biochain",
     iconKind: "biochain" as const,
     accentColor: "oklch(0.62 0.12 190)",
@@ -189,17 +195,17 @@ const brands = [
     name: "ImpactSoul",
     tag: "NGOs",
     description:
-      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable operating models.",
+      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable, fundable operating models.",
     href: "/impactsoul",
     iconKind: "impact" as const,
     accentColor: "oklch(0.7 0.18 30)",
   },
   {
-    name: "Private Advisory",
+    name: "Torque",
     tag: "Executive",
     description:
-      "Confidential, executive-level advisory for leaders who need a trusted outside perspective in the room.",
-    href: "/private-advisory",
+      "Helping founders and execs resolve disputes & battle unscrupulous practices without calling in outside lawyers.",
+    href: "/torque",
     iconKind: "advisory" as const,
     accentColor: "oklch(0.65 0.12 70)",
   },
@@ -323,13 +329,12 @@ export default function HomeContent() {
               </h1>
 
               <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
-                Technology sourcing, product strategy, data centers, telecom,
-                managed services &amp; cloud — $10B+ managed since 2000.
+                Founder advisory, product strategy, mission-critical sourcing —
+                $10B+ managed since 2000.
               </p>
 
               <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
-                Fix the signal. Close the deal. We don&apos;t advise from the
-                sidelines - we execute.
+                We don&apos;t advise from the sidelines - we execute.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -408,8 +413,8 @@ export default function HomeContent() {
               01 - Our Practices
             </span>
             <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
-              One discipline — turning relationships into revenue — applied
-              across six practices:
+              One discipline — trust networks for profit through purpose —
+              applied across six practices:
             </p>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
               Six practices. One coalition.
@@ -484,7 +489,7 @@ export default function HomeContent() {
               Why We&apos;re Different
             </span>
             <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              An Objective Transaction Agency.
+              Data-Driven. Objective. Impact-Oriented.
             </h2>
           </div>
 
@@ -577,45 +582,7 @@ export default function HomeContent() {
             </h2>
           </div>
 
-          {/* Desktop: horizontal */}
-          <div className="hidden md:flex gap-0 overflow-x-auto pb-4 [scrollbar-width:thin]">
-            {timeline.map((item) => (
-              <div key={item.year} className="flex-shrink-0 w-[200px] relative">
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
-                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
-                  <span className="font-mono text-lg font-bold mb-2 text-gold">
-                    {item.year}
-                  </span>
-                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
-                    {item.event}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile: vertical */}
-          <div className="md:hidden space-y-0">
-            {timeline.map((item, i) => (
-              <div key={item.year} className="flex gap-5 relative">
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
-                  {i < timeline.length - 1 && (
-                    <div className="w-px flex-1 mt-1 bg-white/10" />
-                  )}
-                </div>
-                <div className="pb-8">
-                  <span className="font-mono text-sm font-bold text-gold">
-                    {item.year}
-                  </span>
-                  <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
-                    {item.event}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Timeline timeline={timeline} />
         </div>
       </section>
 
@@ -656,9 +623,10 @@ export default function HomeContent() {
                 </p>
                 <Link
                   href={step.link.href}
-                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-gold"
+                  className="font-body inline-flex items-center gap-1.5 text-xs font-semibold transition-all hover:gap-2.5 hover:opacity-70 text-gold"
                 >
                   {step.link.label}
+                  <ArrowRight size={12} />
                 </Link>
               </div>
             ))}

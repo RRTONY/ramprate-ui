@@ -144,7 +144,7 @@ const products = [
         href: "https://blueskypeptide.com",
       },
       {
-        label: "Amino Asylum - Variable Documentation Comp",
+        label: "Amino Asylum - Market Rate Comp",
         href: "https://aminoasylum.shop",
       },
     ],
@@ -2035,7 +2035,7 @@ export default function BioChainSourcingPage() {
           </div>
           <div className="text-center mt-10">
             <Link
-              href="/biochain/catalogue"
+              href="/biochain/catalogue-access"
               className="text-sm font-semibold underline underline-offset-4"
               style={{ color: gold, fontFamily: "var(--font-body)" }}
             >

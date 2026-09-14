@@ -288,7 +288,10 @@ function SearchPageCard({ page }: { page: SitePage }) {
       </h3>
       <p
         className="text-sm leading-relaxed"
-        style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-body)" }}
+        style={{
+          color: "rgba(255,255,255,0.45)",
+          fontFamily: "var(--font-body)",
+        }}
       >
         {page.description}
       </p>
@@ -456,7 +459,7 @@ function EmptyQuery() {
     "Syzygy",
     "Web3",
     "ImpactSoul",
-    "Private Advisory",
+    "Torque",
     "BioChain Sourcing",
     "Payments Advisory",
     "Become a Supplier",

@@ -29,7 +29,6 @@
 ## BioChain (peptide sourcing)
 - [BioChain Sourcing](https://ramprate.com/biochain): Verified peptide supplier sourcing and biologics procurement
 - [BioChain Process](https://ramprate.com/biochain/process): How BioChain sourcing and vetting works
-- [BioChain Catalogue](https://ramprate.com/biochain/catalogue): Full peptide product catalog
 - [Supplier Intake](https://ramprate.com/biochain/supplier-intake): Application for peptide suppliers to join the network
 - [Buyer Intake](https://ramprate.com/biochain/buyer-intake): Application for peptide buyers/clinics
 

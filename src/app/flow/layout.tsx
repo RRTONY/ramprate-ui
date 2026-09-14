@@ -30,14 +30,24 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Flow Circuit | RampRate",
+  // absolute - already ends in "| RampRate"; every /flow/* page sets its
+  // own title today so this rarely surfaces, but it's the fallback for
+  // any future page under /flow that doesn't, and a plain string here
+  // would get the root layout's "%s | RampRate" template applied again.
+  title: { absolute: "The Flow Circuit | RampRate" },
   description:
     "12 questions. 5 minutes. Discover if you're the Spark, Amplifier, Filter, Ground, or Conductor. Map your team's invisible architecture and find where the friction lives.",
 };
 
-export default function FlowLayout({ children }: { children: React.ReactNode }) {
+export default function FlowLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className={`${manrope.variable} ${syne.variable} ${spaceMono.variable} flow-scope`}>
+    <div
+      className={`${manrope.variable} ${syne.variable} ${spaceMono.variable} flow-scope`}
+    >
       <FlowProviders>
         <NoScrapeGuard />
         <FlowNavbar />

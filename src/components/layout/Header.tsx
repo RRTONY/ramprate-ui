@@ -13,7 +13,7 @@ const practices = [
   { label: "Stratum", href: "/web3", desc: "Web3" },
   { label: "BioChain", href: "/biochain", desc: "Bio-Sourcing" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "NGOs" },
-  { label: "Private Advisory", href: "/private-advisory", desc: "Executive" },
+  { label: "Torque", href: "/torque", desc: "Litigation Sourcing" },
 ];
 
 const navItems = [
@@ -55,7 +55,6 @@ export default function Header() {
     lightBgPaths.some((p) => pathname.startsWith(p)) ||
     lightBgExactPaths.includes(pathname);
   const dark = scrolled || isLightPage;
-  const isBiochainPage = pathname.startsWith("/biochain");
 
   // Un-scrolled state sits over the hero, which still carries a genuinely
   // deep indigo/magenta scrim on its left side (where the logo/nav live) even
@@ -116,16 +115,6 @@ export default function Header() {
               </div>
             )}
           </div>
-
-          {/* Catalogue link - only on BioChain pages */}
-          {isBiochainPage && (
-            <Link
-              href="/biochain/catalogue"
-              className={`font-body text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-colors duration-300 ${navLinkClass}`}
-            >
-              Browse Catalogue
-            </Link>
-          )}
 
           {/* Regular nav items */}
           {navItems.map((item) => (
@@ -208,15 +197,6 @@ export default function Header() {
               </Link>
             ))}
             <div className="border-t border-black/5 my-3" />
-            {isBiochainPage && (
-              <Link
-                href="/biochain/catalogue"
-                className="font-body block px-3 py-3 text-sm font-medium rounded-md transition-colors text-[oklch(0.18_0.03_50)] hover:bg-[oklch(0.94_0.03_80)]"
-                onClick={() => setMobileOpen(false)}
-              >
-                Browse Catalogue
-              </Link>
-            )}
             {navItems.map((item) => (
               <Link
                 key={item.href}

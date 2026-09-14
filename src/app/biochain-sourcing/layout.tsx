@@ -24,8 +24,6 @@ export const metadata: Metadata = {
     "research peptides",
     "BPC-157",
     "TB-500",
-    "semaglutide",
-    "tirzepatide",
     "research-use-only (RUO) peptides",
     "compounded pharmacy peptides",
     "peptide synthesis",

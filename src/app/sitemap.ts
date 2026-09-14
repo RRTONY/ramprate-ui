@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/values`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/web3`, changeFrequency: "monthly", priority: 0.6 },
     {
-      url: `${BASE_URL}/private-advisory`,
+      url: `${BASE_URL}/torque`,
       changeFrequency: "monthly",
       priority: 0.7,
     },
@@ -53,11 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/biochain/buyer-intake`,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${BASE_URL}/biochain/catalogue`,
       changeFrequency: "monthly",
       priority: 0.6,
     },
