@@ -358,7 +358,18 @@ function ArtifactForm({
   }
 
   if (success) {
-    const url = `https://ramprate.com/artifacts/${success.slug}`;
+    // Deliberately NOT hardcoded to https://ramprate.com - this same admin
+    // UI runs on localhost, Netlify deploy previews, and production, and
+    // an artifact published from a preview only actually exists (in a
+    // reachable, deployed sense) on that preview's own domain until this
+    // branch is merged. Pointing "View Artifact" at the real production
+    // domain from a preview would 404 there even though the publish
+    // genuinely succeeded - confirmed as the actual cause of a "my artifact
+    // won't publish" report during this build (it had published; the link
+    // just pointed at the wrong environment).
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const path = `/artifacts/${success.slug}`;
+    const url = `${origin}${path}`;
     return (
       <div className="max-w-2xl mx-auto px-5 sm:px-8 py-24 text-center">
         <div className="w-14 h-14 rounded-full bg-[oklch(0.6_0.14_150/0.15)] flex items-center justify-center mx-auto mb-6">
