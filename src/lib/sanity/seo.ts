@@ -38,6 +38,33 @@ export function stripSiteNameSuffix(title?: string): string | undefined {
   return stripped || title;
 }
 
+// A leading "RampRate | " lead-in (as opposed to a trailing suffix) - some
+// Sanity-authored titles were written this way (e.g. the homepage's
+// "RampRate | Data Center, Telecom & Cloud Advisory"). stripSiteNameSuffix
+// above only catches a *trailing* mention, so this catches the other shape.
+const SITE_NAME_PREFIX_RE = new RegExp(
+  `^\\s*${SITE_NAME}\\s*[|\\-–—]\\s*`,
+  "i",
+);
+
+// Normalizes a Sanity-authored title to exactly one "RampRate" mention, as
+// a trailing " | RampRate" suffix, regardless of whether the editor typed
+// it with a leading "RampRate |", a trailing "| RampRate", both, or neither.
+// The caller wraps the result in `{ absolute }` (see below) rather than
+// passing it through as a plain string - a plain string here would still
+// get the root layout's own title template ("%s | RampRate") applied on
+// top, doubling the brand name a second time regardless of how carefully
+// this function normalizes things. Confirmed via a real build that this
+// exact double-suffix bug was live on the homepage before this fix.
+export function normalizeSanityTitle(title: string): string {
+  const withoutTrailing = stripSiteNameSuffix(title) ?? title;
+  const withoutLeading = withoutTrailing
+    .replace(SITE_NAME_PREFIX_RE, "")
+    .trim();
+  const core = withoutLeading || withoutTrailing;
+  return `${core} | ${SITE_NAME}`;
+}
+
 // Overlays Sanity-authored SEO fields onto a page's hardcoded fallback
 // metadata. Only fields an editor actually filled in are overridden -
 // everything else (icons, robots, etc.) keeps flowing from the fallback.
@@ -47,7 +74,9 @@ export function withSeoOverrides(
 ): Metadata {
   if (!seo) return fallback;
 
-  const title = stripSiteNameSuffix(seo.metaTitle) || fallback.title;
+  const title = seo.metaTitle
+    ? { absolute: normalizeSanityTitle(seo.metaTitle) }
+    : fallback.title;
   const description = seo.metaDescription || fallback.description;
   const keywords = seo.keywords?.length ? seo.keywords : fallback.keywords;
   const ogImages = seo.ogImage
