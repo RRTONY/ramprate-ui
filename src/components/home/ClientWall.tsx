@@ -5,16 +5,22 @@ import { useState } from "react";
 /* ── CLIENT LOGO WALL - Two-Tier ── */
 const tier1Clients = [
   { name: "Microsoft", context: "50+ strategy & product studies" },
-  { name: "eBay", context: "27% infrastructure savings" },
-  { name: "Sony", context: "Deep 8-figure outsourcing deals" },
   {
-    name: "ViacomCBS",
-    context: "Budget optimization across all IT categories",
+    name: "eBay",
+    context: "$50M in savings & social impact dashboard for data centers",
+  },
+  { name: "Sony", context: "M&A for strategic pivot" },
+  {
+    name: "Paramount",
+    context: "14 years of de-risking record-breaking streaming events",
   },
   { name: "Intel", context: "Digital strategy & alliances research" },
-  { name: "Nike", context: "Multi-year procurement, 7-figure reductions" },
-  { name: "Hearst", context: "16+ years, saved millions globally" },
-  { name: "Blizzard", context: "Complex negotiations, rapid scaling" },
+  { name: "Nike", context: "49% savings on high complexity retail front-end" },
+  {
+    name: "Hearst",
+    context: "Millions in savings reinvested in innovation fund we planned",
+  },
+  { name: "Riot Games", context: "Supported rapid global expansion" },
 ];
 const tier2Clients = [
   { name: "Disney", context: "Best IT services deal during executive tenure" },
@@ -32,8 +38,7 @@ const tier2Clients = [
   { name: "Thomson Reuters", context: "Saved millions; marketplace mapping" },
   { name: "Beats Music", context: "Fully installed in 30 hours" },
   { name: "XPRIZE", context: "$3M+ grant funding managed" },
-  { name: "Syntropy", context: "4+ year daily engagement; growth accelerated" },
-  { name: "Riot Games", context: "Rapid scaling for multiplayer platforms" },
+  { name: "NOIA", context: "4+ year daily engagement; growth accelerated" },
   { name: "NBC", context: "Content delivery optimization" },
   { name: "Fox", context: "Broadcast infrastructure advisory" },
   { name: "Ticketmaster", context: "eCommerce infrastructure" },
