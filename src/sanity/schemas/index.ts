@@ -1,15 +1,16 @@
-import teamMember from './teamMember'
-import boardAdvisor from './boardAdvisor'
-import post from './post'
-import category from './category'
-import testimonial from './testimonial'
-import caseStudy from './caseStudy'
-import clientLogo from './clientLogo'
-import confidentialTestimonial from './confidentialTestimonial'
-import siteSettings from './siteSettings'
-import page from './page'
-import pageSeo from './pageSeo'
-import seo from './seo'
+import teamMember from "./teamMember";
+import boardAdvisor from "./boardAdvisor";
+import post from "./post";
+import category from "./category";
+import testimonial from "./testimonial";
+import caseStudy from "./caseStudy";
+import clientLogo from "./clientLogo";
+import confidentialTestimonial from "./confidentialTestimonial";
+import siteSettings from "./siteSettings";
+import page from "./page";
+import pageSeo from "./pageSeo";
+import seo from "./seo";
+import artifact from "./artifact";
 
 export const schemaTypes = [
   siteSettings,
@@ -24,4 +25,5 @@ export const schemaTypes = [
   caseStudy,
   clientLogo,
   confidentialTestimonial,
-]
+  artifact,
+];

@@ -13,6 +13,8 @@ const disallow = [
   // Gated behind the buyer intake flow - never a standalone crawlable page.
   "/biochain/catalogue",
   "/biochain/catalogue-access",
+  // Password-gated internal tool, not public content.
+  "/artifacts/admin",
   // Internal tool, not public content.
   "/flow/admin",
   // Tokenless duplicate of /flow/peer-review/[token] - no trailing slash since

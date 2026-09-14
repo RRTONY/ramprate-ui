@@ -253,6 +253,9 @@ was saved).
 | `/contact`          | Engage / Contact                       |
 | `/careers`          | Careers                                |
 | `/expertise`        | Expertise                              |
+| `/artifacts`        | Sales-published HTML artifacts (listing) — see Artifact Publishing System below |
+| `/artifacts/[slug]` | Individual published artifact, sandboxed iframe                          |
+| `/artifacts/admin`  | Password-gated Artifact Manager (internal, noindex)                      |
 
 ---
 
@@ -371,6 +374,75 @@ infrastructure to maintain.
 
 See `~/.claude/projects/-Users-dharmketsavani-Desktop-ramprate-ui/memory/project_admin_vibecoding.md`
 for the full build history, gotchas found during testing, and flagged security follow-ups.
+
+---
+
+## Artifact Publishing System
+
+Lets Sales/Marketing publish standalone HTML pages at `/artifacts/[slug]` themselves — paste
+title + HTML, click Publish, done — without asking the webmaster to touch code. Built 2026-09-15.
+
+**Storage:** a new Sanity document type, `artifact` (`src/sanity/schemas/artifact.ts`): `title`,
+`slug`, `description`, `html` (a `text` field holding the complete pasted HTML document), `status`
+(`published`/`draft`), `publishedAt`. Written **directly** via `writeClient` (`src/lib/artifacts.ts`)
+— unlike the admin-vibecoding content workflow above, there is no `drafts.<id>` + GitHub-PR-gated
+publish step here, since the entire point of this tool is instant, webmaster-free publishing.
+
+**Auth:** its own small module, `src/lib/artifact-auth.ts`, deliberately mirroring the site's
+existing password-portal pattern (`src/lib/portal-auth.ts`, used by `/attorney` etc.) rather than
+extending it — an HMAC-signed `artifact_admin_auth` cookie (not a random session token), verified
+via `timingSafeEqual` against `ARTIFACT_ADMIN_PASSWORD`, signed with the same `PORTAL_AUTH_SECRET`
+already used for the other portals. **`ARTIFACT_ADMIN_PASSWORD` must be set in both `.env` (local)
+and Netlify's dashboard (production)** — same pattern as every other secret in this file. Gotcha
+hit and fixed during this build: a `#` in the password value gets silently treated as a comment
+start by dotenv-style `.env` parsing unless the value is quoted (`ARTIFACT_ADMIN_PASSWORD="R@mr@te@#2026"`)
+— confirmed the raw local `.env` value was silently truncated before the `#` until quoted. Double-check
+the full value saves correctly when pasting into Netlify's env var UI too. Every mutating API route
+(`src/app/api/artifacts/route.ts`, `src/app/api/artifacts/[id]/route.ts`) calls
+`requireArtifactAdmin()` first — verified live that an unauthenticated request to these (not just
+the page) is rejected with 401. Login attempts are rate-limited by IP (best-effort, in-memory,
+resets on cold start — same documented limitation as the existing limiter in `src/app/api/ai/route.ts`;
+this stack has no shared/distributed store for a stronger guarantee).
+
+**HTML isolation:** the public page (`src/app/artifacts/[slug]/page.tsx`) renders the stored HTML
+inside `<iframe sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox
+allow-modals" srcDoc={html}>` — deliberately **omitting `allow-same-origin`**, so the artifact runs
+in a unique opaque origin with no access to ramprate.com's cookies, session, or DOM, even if the
+pasted HTML contains arbitrary/malicious JavaScript. This is the actual security boundary, not
+sanitization — no HTML sanitizer (DOMPurify etc.) was added, since sanitizing a full pasted HTML
+document while preserving forms/scripts/interactions isn't really achievable, and isn't needed once
+the content is architecturally isolated in a sandboxed iframe. `ConditionalChrome.tsx` hides the
+site header/footer for `/artifacts/[slug]` pages only (segment-based check, not a string prefix —
+so a real artifact slugged e.g. "admin-something" isn't mistaken for `/artifacts/admin`) so the
+artifact renders full-viewport/standalone; `/artifacts` (listing) and `/artifacts/admin` keep normal
+site chrome.
+
+**Slugs:** auto-generated from title, editable, validated (`lowercase-with-hyphens` only), duplicate
+slugs rejected outright on create (no silent-overwrite-with-confirmation flow — simpler and safer for
+an MVP). `"admin"` is a reserved slug (`RESERVED_SLUGS` in `src/lib/artifacts.ts`) since Next.js
+always resolves the static `/artifacts/admin` route before the `/artifacts/[slug]` catch-all, so an
+artifact literally slugged "admin" would be permanently unreachable. Editing a slug does **not**
+create a redirect from the old URL — the edit form warns the admin in-place that the old link will
+stop working instead (the simpler of the two options the spec offered).
+
+**Discoverability — deliberately NOT wired up**, per the user's explicit request during this build:
+`/artifacts` is not linked from the main nav, not in the XML sitemap, and not in the on-site
+search/AI-chatbot index (`src/lib/site-pages.ts`). It's reachable only by direct link (and the
+`/artifacts` listing page itself, once someone has that one URL). Revisit if that changes.
+
+**Verified end-to-end against the real Sanity dataset before calling this done** (not just built):
+correct/incorrect password, unauthenticated API calls rejected, create → publish → live public page
+→ listing shows it → edit title → unpublish (public page 404s, drops from listing) → delete
+(confirmed gone) → duplicate-slug rejected (409) → empty-title rejected (400) → reserved-slug
+rejected (400) → admin gate vs. dashboard render correctly logged-out vs. logged-in → `noindex` meta
+confirmed on `/artifacts/admin` → responsive-checked at mobile width (dashboard uses a stacked-card
+layout below `sm:`, not a horizontally-scrolling table).
+
+**Known limitations / follow-ups:** rate limiting is best-effort only (see above); no code/rich-text
+editor for the HTML paste box, just a plain `<textarea>` (deliberately — avoids a new dependency);
+individual artifact pages are not included in the XML sitemap per the discoverability note above,
+so if that's ever wanted, `src/app/sitemap.ts` would need a query added back in (removed during this
+build at the user's request, see git history).
 
 ---
 
