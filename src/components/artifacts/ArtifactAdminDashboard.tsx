@@ -81,24 +81,40 @@ export default function ArtifactAdminDashboard() {
   const [artifacts, setArtifacts] = useState<Artifact[] | null>(null);
   const [listError, setListError] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Artifact | null>(null);
-
-  async function loadArtifacts() {
-    setListError(null);
-    try {
-      const res = await fetch("/api/artifacts");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load artifacts.");
-      setArtifacts(data.artifacts);
-    } catch (e) {
-      setListError(
-        e instanceof Error ? e.message : "Failed to load artifacts.",
-      );
-    }
-  }
+  // Bumped by actions that need to refresh the list without themselves
+  // changing `view.name` (toggling status, deleting) - the effect below is
+  // the single place that fetches, keeping the "what triggers a reload"
+  // logic in its dependency array rather than calling a state-setting
+  // helper directly from inside an effect (avoids cascading-render lint
+  // issues and keeps this a plain "synchronize with the server" effect).
+  const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
-    if (view.name === "list") loadArtifacts();
-  }, [view.name]);
+    if (view.name !== "list") return;
+    let cancelled = false;
+    // Clearing the previous error is deferred into the async callback below
+    // (not called synchronously here) - a literal setState call directly in
+    // an effect's synchronous body trips react-hooks/set-state-in-effect,
+    // even though this one is idempotent and harmless.
+    fetch("/api/artifacts")
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to load artifacts.");
+        if (cancelled) return;
+        setListError(null);
+        setArtifacts(data.artifacts);
+      })
+      .catch((e) => {
+        if (!cancelled) {
+          setListError(
+            e instanceof Error ? e.message : "Failed to load artifacts.",
+          );
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [view.name, reloadToken]);
 
   async function toggleStatus(a: Artifact) {
     const nextStatus = a.status === "published" ? "draft" : "published";
@@ -107,7 +123,7 @@ export default function ArtifactAdminDashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: nextStatus }),
     });
-    if (res.ok) loadArtifacts();
+    if (res.ok) setReloadToken((t) => t + 1);
   }
 
   async function confirmDelete() {
@@ -116,7 +132,7 @@ export default function ArtifactAdminDashboard() {
       method: "DELETE",
     });
     setDeleteTarget(null);
-    if (res.ok) loadArtifacts();
+    if (res.ok) setReloadToken((t) => t + 1);
   }
 
   if (view.name === "form") {
