@@ -40,8 +40,8 @@ export function stripSiteNameSuffix(title?: string): string | undefined {
 
 // A leading "RampRate | " lead-in (as opposed to a trailing suffix) - some
 // Sanity-authored titles were written this way (e.g. the homepage's
-// "RampRate | Data Center, Telecom & Cloud Advisory"). stripSiteNameSuffix
-// above only catches a *trailing* mention, so this catches the other shape.
+// "RampRate | Impact Innovation"). stripSiteNameSuffix above only catches
+// a *trailing* mention, so this catches the other shape.
 const SITE_NAME_PREFIX_RE = new RegExp(
   `^\\s*${SITE_NAME}\\s*[|\\-–—]\\s*`,
   "i",
