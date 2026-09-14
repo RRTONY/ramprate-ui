@@ -42,12 +42,11 @@ export const SITE_PAGES: SitePage[] = [
       "Impact consulting - ESG, B Corp, regenerative projects, and grant management for NGOs and mission-driven organizations.",
   },
   {
-    title:
-      "Private Advisory - Because Some Challenges Require More Than an Advisor",
-    path: "/private-advisory",
+    title: "Torque - Litigation Counsel Sourcing",
+    path: "/torque",
     type: "practice",
     keywords:
-      "dispute resolution specialist sourcing coordination equity dispute creditor claim discovery windfall asset protection portfolio remediation litigation support squeezed out operator slow walked creditor protected principal mixed ledger principal",
+      "litigation counsel sourcing specialist coordination equity dispute creditor claim discovery windfall asset protection portfolio remediation litigation support squeezed out operator slow walked creditor protected principal mixed ledger principal",
     description:
       "We source, vet, and coordinate the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
   },

@@ -201,11 +201,11 @@ const brands = [
     accentColor: "oklch(0.7 0.18 30)",
   },
   {
-    name: "Private Advisory",
+    name: "Torque",
     tag: "Executive",
     description:
       "Helping founders and execs resolve disputes & battle unscrupulous practices without calling in outside lawyers.",
-    href: "/private-advisory",
+    href: "/torque",
     iconKind: "advisory" as const,
     accentColor: "oklch(0.65 0.12 70)",
   },

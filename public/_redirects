@@ -278,6 +278,10 @@
 /client-intake/             /biochain/buyer-intake        301
 /client-intake              /biochain/buyer-intake        301
 
+# Private Advisory renamed to Torque (SEO Fix Plan, Week 1 - 2026-09-15)
+/private-advisory/          /torque                       301
+/private-advisory           /torque                       301
+
 # ===== WORDPRESS SYSTEM REDIRECTS =====
 /wp-admin/                  /                            301
 /wp-login.php               /                            301

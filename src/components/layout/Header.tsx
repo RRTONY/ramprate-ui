@@ -13,7 +13,7 @@ const practices = [
   { label: "Stratum", href: "/web3", desc: "Web3" },
   { label: "BioChain", href: "/biochain", desc: "Bio-Sourcing" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "NGOs" },
-  { label: "Private Advisory", href: "/private-advisory", desc: "Executive" },
+  { label: "Torque", href: "/torque", desc: "Litigation Sourcing" },
 ];
 
 const navItems = [

@@ -7,41 +7,39 @@ import JsonLd, {
   personJsonLd,
 } from "@/components/shared/JsonLd";
 
+const TITLE = "Torque | Litigation Counsel Sourcing | RampRate";
+const DESCRIPTION =
+  "Torque, from RampRate: we source the litigation counsel and leverage you need — pre-suit or already in it.";
+
 const FALLBACK_METADATA: Metadata = {
-  title:
-    "Private Advisory - Because Some Challenges Require More Than an Advisor",
-  description:
-    "RampRate Private Advisory sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation. 25 years, $10B+ in enterprise decisions, B Corp certified.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
-    "dispute resolution advisory",
+    "litigation counsel sourcing",
     "specialist sourcing and coordination",
-    "equity dispute advisory",
-    "creditor claim advisory",
-    "asset protection advisory",
+    "equity dispute counsel sourcing",
+    "creditor claim counsel sourcing",
+    "asset protection specialist sourcing",
     "litigation support coordination",
   ],
-  alternates: { canonical: "/private-advisory" },
+  alternates: { canonical: "/torque" },
   openGraph: {
-    title:
-      "Private Advisory - Because Some Challenges Require More Than an Advisor",
-    description:
-      "RampRate Private Advisory sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation. 25 years, $10B+ in enterprise decisions, B Corp certified.",
-    url: "https://ramprate.com/private-advisory",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "https://ramprate.com/torque",
     type: "website",
     images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Private Advisory - Because Some Challenges Require More Than an Advisor",
-    description:
-      "RampRate Private Advisory sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation. 25 years, $10B+ in enterprise decisions, B Corp certified.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: ["/og.png"],
   },
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getPageSeo("/private-advisory");
+  const data = await getPageSeo("/torque");
   return withSeoOverrides(FALLBACK_METADATA, data?.seo);
 }
 
@@ -316,25 +314,25 @@ const team = [
   { name: "Josh Bykowski", role: "General Counsel", slug: "josh-bykowski" },
 ];
 
-export default function PrivateAdvisoryPage() {
+export default function TorquePage() {
   return (
     <main>
       <JsonLd
         data={serviceJsonLd({
-          name: "RampRate Private Advisory",
+          name: "RampRate Torque",
           description:
             "Sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
-          url: "https://ramprate.com/private-advisory",
+          url: "https://ramprate.com/torque",
           serviceType:
-            "Dispute resolution and specialist coordination advisory",
+            "Litigation counsel sourcing and specialist coordination",
         })}
       />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
           {
-            name: "Private Advisory",
-            url: "https://ramprate.com/private-advisory",
+            name: "Torque",
+            url: "https://ramprate.com/torque",
           },
         ])}
       />
@@ -364,29 +362,28 @@ export default function PrivateAdvisoryPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              Private Advisory - RampRate
+              Torque - RampRate
             </span>
             <h1
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Because Some Challenges Require{" "}
-              <span style={{ color: "var(--gold)" }}>
-                More Than an Advisor.
-              </span>
+              Sourcing the Counsel and{" "}
+              <span style={{ color: "var(--gold)" }}>Leverage You Need.</span>
             </h1>
             <p
               className="text-white/70 text-lg leading-relaxed mb-10"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              We partner with leaders to navigate the moments that matter most -
-              bringing the expertise, relationships, and strategic range to move
-              from uncertainty to decisive action.
+              Pre-litigation or already in suit, Torque sources and coordinates
+              the specialists a high-stakes dispute requires - without ever
+              stepping into the privileged strategy conversations that belong to
+              your attorney.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { value: "25 Years", label: "of enterprise decisions" },
-                { value: "$10B+", label: "in decisions advised" },
+                { value: "$10B+", label: "in decisions transacted" },
                 { value: "B Corp", label: "Certified · Highest standards" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
@@ -430,7 +427,7 @@ export default function PrivateAdvisoryPage() {
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            A Different Kind of Advisor.
+            A Different Kind of Leverage.
           </h2>
           <p
             className="mt-8 text-base leading-relaxed"

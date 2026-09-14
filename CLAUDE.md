@@ -245,7 +245,7 @@ was saved).
 | `/growth`           | Practice: Syzygy (Founders)            |
 | `/web3`             | Practice: Stratum (Web3)               |
 | `/impactsoul`       | Practice: ImpactSoul (NGOs)            |
-| `/private-advisory` | Practice: Private Advisory (Executive) |
+| `/torque`           | Practice: Torque (Litigation Counsel Sourcing, Executive) |
 | `/process`          | How We Work                            |
 | `/proof`            | Case Studies                           |
 | `/blog`             | Blog                                   |

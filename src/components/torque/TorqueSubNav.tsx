@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const LEGAL_PARTNER_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSeDGA75w6a1Pi-OKTxA34MWdiwn6WJVMM8a_CMqQNcSJv0HEA/viewform";
 
-export default function PrivateAdvisorySubNav() {
+export default function TorqueSubNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
