@@ -152,7 +152,7 @@ export const SITE_PAGES: SitePage[] = [
     path: "/biochain",
     type: "page",
     keywords:
-      "biochain sourcing peptide sourcing exosome sourcing stem cell procurement regenerative medicine supply chain biologics supplier sourcing NAD+ sourcing verified biologics procurement healing economy peptides exosomes stem cells peptide marketplace peptide supplier network verified peptide suppliers B2B peptide sourcing research peptides BPC-157 TB-500 semaglutide tirzepatide research-use-only RUO peptides compounded pharmacy peptides peptide synthesis Certificate of Analysis COA verified cGMP certified peptide manufacturer",
+      "biochain sourcing peptide sourcing exosome sourcing stem cell procurement regenerative medicine supply chain biologics supplier sourcing NAD+ sourcing verified biologics procurement healing economy peptides exosomes stem cells peptide marketplace peptide supplier network verified peptide suppliers B2B peptide sourcing research peptides BPC-157 TB-500 research-use-only RUO peptides compounded pharmacy peptides peptide synthesis Certificate of Analysis COA verified cGMP certified peptide manufacturer",
     description:
       "RampRate's BioChain practice: verified sourcing for peptides, exosomes, stem cells, and regenerative biologics. 24 years of procurement intelligence applied to the healing economy.",
   },

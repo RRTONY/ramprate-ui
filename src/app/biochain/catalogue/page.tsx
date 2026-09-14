@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { PRODUCT_CATEGORIES } from "@/lib/biochain-catalogue";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
@@ -8,6 +10,10 @@ export const metadata: Metadata = {
   description:
     "Browse RampRate BioChain Sourcing's full peptide, exosome, stem cell, and longevity product catalog before starting a client intake or supplier application.",
   alternates: { canonical: "/biochain/catalogue" },
+  // Gated behind the buyer intake flow (see catalogue-access/route.ts) -
+  // never meant to be a standalone indexed landing page. Keep noindex even
+  // if the gate mechanism ever changes.
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Full Product Catalog - BioChain Sourcing | RampRate",
     description:
@@ -18,7 +24,16 @@ export const metadata: Metadata = {
 
 const gold = "oklch(0.52 0.12 70)";
 
-export default function BioChainCataloguePage() {
+export default async function BioChainCataloguePage() {
+  // Only reachable via /biochain/catalogue-access, which sets this cookie -
+  // there is no public link directly into this page. Using cookies() here
+  // (a single leaf page, not a shared layout/metadata helper) opts only
+  // this route into dynamic rendering, not the rest of the site.
+  const cookieStore = await cookies();
+  if (!cookieStore.has("biochain_catalogue_gate")) {
+    redirect("/biochain/buyer-intake");
+  }
+
   const totalItems = PRODUCT_CATEGORIES.reduce((sum, c) => sum + c.items.length, 0);
 
   return (
@@ -47,8 +62,7 @@ export default function BioChainCataloguePage() {
             Full Product Catalog
           </h1>
           <p className="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl" style={{ fontFamily: "var(--font-body)" }}>
-            {totalItems}+ peptides and biologics across {PRODUCT_CATEGORIES.length} categories. Browse everything
-            we source before you start a client intake or supplier application - no login required.
+            {totalItems}+ peptides and biologics across {PRODUCT_CATEGORIES.length} categories.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link

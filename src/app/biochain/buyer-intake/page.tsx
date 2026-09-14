@@ -76,7 +76,7 @@ export default function ClientIntakePage() {
             fee. No obligation. Confidential.
           </p>
           <Link
-            href="/biochain/catalogue"
+            href="/biochain/catalogue-access"
             className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-80"
             style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
           >
