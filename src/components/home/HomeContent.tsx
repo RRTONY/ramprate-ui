@@ -135,21 +135,21 @@ const operateSteps = [
     title: "Deep Research",
     desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers. 80 countries. Forecasts within 5-10% of outcome.",
     Icon: Database,
-    link: { label: "Our Process →", href: "/our-process" },
+    link: { label: "Our Process", href: "/process" },
   },
   {
     num: "02",
     title: "Strategic Blueprint",
     desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
     Icon: Target,
-    link: { label: "See How We Think →", href: "/thinking" },
+    link: { label: "See How We Think", href: "/thinking" },
   },
   {
     num: "03",
     title: "Relationship Activation",
     desc: "25 years of enterprise trust. When we call, doors open. Not pitch. History. 99% of intros convert to contracts.",
     Icon: Users,
-    link: { label: "See Results →", href: "/proof" },
+    link: { label: "See Results", href: "/proof" },
   },
 ];
 
@@ -623,9 +623,10 @@ export default function HomeContent() {
                 </p>
                 <Link
                   href={step.link.href}
-                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-gold"
+                  className="font-body inline-flex items-center gap-1.5 text-xs font-semibold transition-all hover:gap-2.5 hover:opacity-70 text-gold"
                 >
                   {step.link.label}
+                  <ArrowRight size={12} />
                 </Link>
               </div>
             ))}
