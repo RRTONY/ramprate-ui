@@ -148,7 +148,7 @@
 - [x] Compare current `main` with `feat/ramprate-product-completion` and selectively integrate compatible code and style improvements without modifying `main` or regressing the independent CMS.
 - [ ] Compare current master SEO safeguards with the managed-content feature branch and selectively adopt compatible protections without reintroducing Sanity.
 - [ ] Audit all current live RampRate public pages against the feature branch, beginning with homepage content differences, and apply verified parity updates without changing master or regressing the independent CMS.
-- [ ] Keep all source commits and pushes exclusively in RRTONY/ramprate-ui on feat/ramprate-product-completion; use the managed workspace only for local development and preview.
+- [x] Keep all source commits and pushes exclusively in RRTONY/ramprate-ui on feat/ramprate-product-completion; use the managed workspace only for local development and preview.
 - [x] Align the BioChain catalogue path with the live client-intake application and retire or redirect the feature-only catalogue listing without disturbing existing form persistence.
 - [x] Align the live and feature BioChain supplier-application route behavior after verifying the current live path and the feature route response.
 - [ ] Repair the verified Flow route parity failures found in the full live sitemap audit, prioritizing routes that render a generic fallback or fail to load their primary client content.

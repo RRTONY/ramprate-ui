@@ -40,6 +40,10 @@ The live `/biochain/catalogue` and `/biochain/buyer-intake` routes both serve th
 
 The first automated sitemap sweep reported transient Flow differences while the development preview was recycling. Direct browser review of `/flow` subsequently confirmed a match for its title, navigation, hero, assessment calls to action, role explanation, friction calculator, and Flow footer. The remaining reported Flow-route findings require route-level client-render verification before they can be treated as content drift.
 
+## Complete Sitemap Sweep
+
+The current live sitemap at `https://ramprate.com/sitemap.xml` contains 146 public paths. A route-by-route passive comparison against the feature preview classified 125 routes as direct matches across status, title, principal heading, and primary content. The remaining automated candidates were concentrated in client-rendered Flow routes plus `/search`; they are retained for direct route verification rather than being copied blindly. This batch resolved the verified content and route differences identified outside that client-rendered review: current home entities and actions, Torque taxonomy and routing, live global navigation, BioChain copy, the canonical BioChain client-intake route, and the expertise practice card.
+
 | Area           | Current live content to align                                                                            | Feature-branch state before parity work                    |
 | -------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Hero           | Founder advisory / product strategy / mission-critical sourcing; includes both contact and proof actions | Earlier technology-sourcing copy and only the proof action |
