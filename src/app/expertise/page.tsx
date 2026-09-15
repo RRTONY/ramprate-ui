@@ -16,8 +16,8 @@ const FALLBACK_METADATA: Metadata = {
     "growth strategy advisory",
     "Web3 blockchain advisory",
     "impact consulting",
-    "private advisory",
-    "dispute resolution advisory",
+    "litigation counsel sourcing",
+    "dispute specialist coordination",
   ],
   alternates: { canonical: "/expertise" },
   openGraph: {
@@ -76,12 +76,12 @@ const practices = [
     stats: ["B Corp Certified", "$3M+ Grants", "Regenerative Focus"],
   },
   {
-    name: "Private Advisory",
-    tagline: "Because Some Challenges Require More Than an Advisor",
+    name: "Torque",
+    tagline: "Sourcing the Counsel and Leverage You Need, Pre-Litigation or in Suit",
     desc: "Sourcing and coordinating the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, and asset protection. 25 years and $10B+ in enterprise decisions.",
     color: "oklch(0.52 0.12 70)",
-    href: "/private-advisory",
-    stats: ["25 Years", "$10B+ Advised", "B Corp Certified"],
+    href: "/torque",
+    stats: ["25 Years", "$10B+ Transacted", "B Corp Certified"],
   },
 ];
 
@@ -92,7 +92,7 @@ export default function ExpertisePage() {
         data={serviceJsonLd({
           name: "RampRate Advisory Practices",
           description:
-            "Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and private advisory - independent advisory with transparency, skin in the game, and principals who execute.",
+            "Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and litigation counsel sourcing - independent advisory with transparency, skin in the game, and principals who execute.",
           url: "https://ramprate.com/expertise",
           serviceType: "IT and business advisory",
         })}

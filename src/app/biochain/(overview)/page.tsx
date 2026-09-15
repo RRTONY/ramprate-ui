@@ -144,7 +144,7 @@ const products = [
         href: "https://blueskypeptide.com",
       },
       {
-        label: "Amino Asylum - Variable Documentation Comp",
+        label: "Amino Asylum - Market Rate Comp",
         href: "https://aminoasylum.shop",
       },
     ],

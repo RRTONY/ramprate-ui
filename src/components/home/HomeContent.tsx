@@ -28,24 +28,24 @@ const Timeline = dynamic(() => import("./Timeline"));
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
   {
-    label: "ViacomCBS / Hearst",
-    stats: "75% infrastructure cost reduction",
+    label: "Paramount",
+    stats: "16 years of eliminating risk",
     detail:
-      "16+ year relationship across multiple CTO tenures. Created methodology adopted at exec level. Millions in reinvestable budget freed across Broadcast, Satellite, Telecom, Cloud, and CDN.",
+      "From Viacom & CBS split in 2005 to reuniting in 2020, RampRate was there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
     accent: "oklch(0.82 0.15 75)",
   },
   {
     label: "eBay",
-    stats: "27% savings while strengthening relationships",
+    stats: "$50M in savings while strengthening relationships",
     detail:
-      "Risk-free model: 2× fee guarantee or full refund. Global data center optimization. Millions in ongoing value. Supplier relationships stronger than before.",
+      "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
     accent: "oklch(0.6 0.2 280)",
   },
   {
-    label: "Syntropy",
+    label: "NOIA",
     stats: "US market penetration in months",
     detail:
-      "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Under-promised, over-delivered.",
+      "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
     accent: "oklch(0.65 0.2 150)",
   },
 ];
@@ -76,6 +76,11 @@ const diffRows = [
     trad: "Forecasts ±30-40%",
     broker: "No forecasts",
     ramp: "Forecasts within 5-10%",
+  },
+  {
+    trad: "Pays lip service to impact",
+    broker: "Sacrifices impact for profit",
+    ramp: "Finds profit through purpose",
   },
 ];
 
@@ -156,15 +161,6 @@ const operateSteps = [
 /* ── BRANDS ── */
 const brands = [
   {
-    name: "Sourcing",
-    tag: "Enterprise IT",
-    description:
-      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement.",
-    href: "/sourcing",
-    Icon: ChartNoAxesCombined,
-    accentColor: "oklch(0.82 0.15 75)",
-  },
-  {
     name: "Syzygy",
     tag: "Founders",
     description:
@@ -177,16 +173,25 @@ const brands = [
     name: "Stratum",
     tag: "Web3",
     description:
-      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure.",
+      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure and rails.",
     href: "/web3",
     Icon: Boxes,
     accentColor: "oklch(0.65 0.2 280)",
   },
   {
+    name: "Sourcing",
+    tag: "Enterprise IT",
+    description:
+      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement decisions.",
+    href: "/sourcing",
+    Icon: ChartNoAxesCombined,
+    accentColor: "oklch(0.82 0.15 75)",
+  },
+  {
     name: "BioChain",
     tag: "Bio-Sourcing",
     description:
-      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, chain-of-custody tracking.",
+      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, and chain-of-custody tracking on every shipment.",
     href: "/biochain",
     Icon: Dna,
     accentColor: "oklch(0.62 0.12 190)",
@@ -195,17 +200,17 @@ const brands = [
     name: "ImpactSoul",
     tag: "NGOs",
     description:
-      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable operating models.",
+      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable, fundable operating models.",
     href: "/impactsoul",
     Icon: HeartHandshake,
     accentColor: "oklch(0.7 0.18 30)",
   },
   {
-    name: "Private Advisory",
+    name: "Torque",
     tag: "Executive",
     description:
-      "Confidential, executive-level advisory for leaders who need a trusted outside perspective in the room.",
-    href: "/private-advisory",
+      "Helping founders and execs resolve disputes & battle unscrupulous practices without calling in outside lawyers.",
+    href: "/torque",
     Icon: BriefcaseBusiness,
     accentColor: "oklch(0.65 0.12 70)",
   },
@@ -267,19 +272,25 @@ export default function HomeContent() {
               </h1>
 
               <p className="home-blue-summary font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/70">
-                Technology sourcing, product strategy, data centers, telecom,
-                managed services &amp; cloud — $10B+ managed since 2000.
+                Founder advisory, product strategy, mission-critical sourcing —
+                $10B+ managed since 2000.
               </p>
 
               <p className="home-blue-summary font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/75">
-                Fix the signal. Close the deal. We don&apos;t advise from the
-                sidelines - we execute.
+                We don&apos;t advise from the sidelines - we execute.
               </p>
 
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
-                  href="/proof"
+                  href="/contact"
                   className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(214,173,66,0.28)]"
+                >
+                  Tell Us What&apos;s Broken
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/proof"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 border border-white/20 text-white hover:border-white/40 hover:bg-white/5"
                 >
                   See Case Results
                   <ArrowRight size={16} />
@@ -347,8 +358,8 @@ export default function HomeContent() {
               01 - Our Practices
             </span>
             <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
-              One discipline — turning relationships into revenue — applied
-              across six practices:
+              One discipline — trust networks for profit through purpose —
+              applied across six practices:
             </p>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-ink leading-tight">
               Six practices. One coalition.
@@ -417,7 +428,7 @@ export default function HomeContent() {
               Why We&apos;re Different
             </span>
             <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
-              An Objective Transaction Agency.
+              Data-Driven. Objective. Impact-Oriented.
             </h2>
           </div>
 

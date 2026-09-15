@@ -58,7 +58,7 @@ describe("blue public content routes", () => {
         "src/app/expertise/page.tsx",
         "src/app/growth/page.tsx",
         "src/app/impactsoul/page.tsx",
-        "src/app/private-advisory/page.tsx",
+        "src/app/torque/page.tsx",
         "src/app/talk-to-us/page.tsx",
       ].map((path) => readFile(projectFile(path), "utf8")),
     );

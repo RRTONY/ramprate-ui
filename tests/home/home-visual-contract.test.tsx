@@ -31,7 +31,7 @@ vi.mock("@/components/home/PracticeIcon", () => ({
 import HomeContent from "../../src/components/home/HomeContent";
 
 describe("home visual contract", () => {
-  it("uses the single-action hero and the shared editorial section system", () => {
+  it("uses the current live hero actions and the shared editorial section system", () => {
     const { container } = render(<HomeContent />);
     const hero = container.querySelector("section.home-blue-hero");
 
@@ -42,7 +42,9 @@ describe("home visual contract", () => {
     expect(hero?.querySelector('a[href="/proof"]')?.textContent).toMatch(
       /see case results/i,
     );
-    expect(hero?.querySelector('a[href="/contact"]')).toBeNull();
+    expect(hero?.querySelector('a[href="/contact"]')?.textContent).toMatch(
+      /tell us what'?s broken/i,
+    );
 
     [
       "home-proof-section",
@@ -56,6 +58,23 @@ describe("home visual contract", () => {
     ].forEach((className) => {
       expect(container.querySelector(`.${className}`)).not.toBeNull();
     });
+  });
+
+  it("keeps verified current live homepage editorial entities and practice routing", () => {
+    const { container } = render(<HomeContent />);
+
+    expect(container.textContent).toContain(
+      "Founder advisory, product strategy, mission-critical sourcing",
+    );
+    expect(container.textContent).toContain("$50M in savings");
+    expect(container.textContent).toContain("Paramount");
+    expect(container.textContent).toContain("NOIA");
+    expect(container.querySelector('a[href="/torque"]')?.textContent).toMatch(
+      /torque/i,
+    );
+    expect(container.textContent).toContain(
+      "Data-Driven. Objective. Impact-Oriented.",
+    );
   });
 
   it("keeps the current live-reference navy surfaces and restrained gold accents scoped to the homepage", async () => {

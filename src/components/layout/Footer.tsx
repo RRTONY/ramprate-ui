@@ -21,9 +21,9 @@ const brandLinks = [
   { label: "BioChain", href: "/biochain", desc: "Verified Bio-Sourcing" },
   { label: "ImpactSoul", href: "/impactsoul", desc: "Impact & Regenerative" },
   {
-    label: "Private Advisory",
-    href: "/private-advisory",
-    desc: "Executive Advisory",
+    label: "Torque",
+    href: "/torque",
+    desc: "Litigation Counsel Sourcing",
   },
 ];
 

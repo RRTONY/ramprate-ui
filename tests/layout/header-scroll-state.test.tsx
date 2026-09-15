@@ -39,6 +39,11 @@ describe("marketing header scroll state", () => {
 
     expect(navigation?.className).toContain("bg-transparent");
     expect(screen.queryByText("Tell Us What's Broken")).toBeNull();
+    expect(screen.queryByText("Process")).toBeNull();
+
+    fireEvent.mouseEnter(screen.getByRole("button", { name: /practices/i }));
+    expect(screen.getByText("Torque")).toBeTruthy();
+    expect(screen.queryByText("Private Advisory")).toBeNull();
 
     Object.defineProperty(window, "scrollY", { value: 1, configurable: true });
     fireEvent.scroll(window);
