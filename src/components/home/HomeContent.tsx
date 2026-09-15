@@ -23,6 +23,7 @@ import type { CSSProperties } from "react";
 const ClientWall = dynamic(() => import("./ClientWall"));
 const TestimonialsCarousel = dynamic(() => import("./TestimonialsCarousel"));
 const NewsletterSection = dynamic(() => import("./NewsletterSection"));
+const Timeline = dynamic(() => import("./Timeline"));
 
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
@@ -134,21 +135,21 @@ const operateSteps = [
     title: "Deep Research",
     desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers. 80 countries. Forecasts within 5-10% of outcome.",
     Icon: Database,
-    link: { label: "Our Process →", href: "/our-process" },
+    link: { label: "Our Process", href: "/process" },
   },
   {
     num: "02",
     title: "Strategic Blueprint",
     desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
     Icon: Target,
-    link: { label: "See How We Think →", href: "/thinking" },
+    link: { label: "See How We Think", href: "/thinking" },
   },
   {
     num: "03",
     title: "Relationship Activation",
     desc: "25 years of enterprise trust. When we call, doors open. Not pitch. History. 99% of intros convert to contracts.",
     Icon: Users,
-    link: { label: "See Results →", href: "/proof" },
+    link: { label: "See Results", href: "/proof" },
   },
 ];
 
@@ -509,45 +510,7 @@ export default function HomeContent() {
             </h2>
           </div>
 
-          {/* Desktop: horizontal */}
-          <div className="home-timeline-track hidden md:flex gap-0 overflow-x-auto pb-4 [scrollbar-width:thin]">
-            {timeline.map((item) => (
-              <div key={item.year} className="flex-shrink-0 w-[200px] relative">
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
-                  <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
-                  <span className="font-mono text-lg font-bold mb-2 text-gold">
-                    {item.year}
-                  </span>
-                  <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
-                    {item.event}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile: vertical */}
-          <div className="md:hidden space-y-0">
-            {timeline.map((item, i) => (
-              <div key={item.year} className="flex gap-5 relative">
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
-                  {i < timeline.length - 1 && (
-                    <div className="w-px flex-1 mt-1 bg-white/10" />
-                  )}
-                </div>
-                <div className="pb-8">
-                  <span className="font-mono text-sm font-bold text-gold">
-                    {item.year}
-                  </span>
-                  <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
-                    {item.event}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Timeline timeline={timeline} />
         </div>
       </section>
 
@@ -590,9 +553,10 @@ export default function HomeContent() {
                 </p>
                 <Link
                   href={step.link.href}
-                  className="font-body text-xs font-semibold transition-colors hover:opacity-70 text-rust"
+                  className="font-body inline-flex items-center gap-1.5 text-xs font-semibold transition-all hover:gap-2.5 hover:opacity-70 text-rust"
                 >
                   {step.link.label}
+                  <ArrowRight size={12} />
                 </Link>
               </div>
             ))}
