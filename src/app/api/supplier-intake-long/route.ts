@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { fetchAppsScriptJson } from '@/lib/apps-script-fetch'
 
 // Mirrors scripts/supplier-intake-apps-script.gs's FIELD_NAME_MAP exactly -
 // some Stage 2 field keys collide with the old single-stage form's field
@@ -68,8 +69,7 @@ export async function GET(req: NextRequest) {
 
   let result: { ok: boolean; error?: string; used?: boolean; values?: Record<string, string> }
   try {
-    const res = await fetch(url.toString())
-    result = await res.json()
+    result = await fetchAppsScriptJson(url.toString())
   } catch {
     return NextResponse.json({ ok: false, error: 'Lookup failed.' }, { status: 502 })
   }
@@ -111,6 +111,15 @@ export async function POST(req: NextRequest) {
     projectName,
   }
 
+  // Deliberately a single attempt, no retry, unlike the GET lookup above -
+  // this is a write (handleStage2Update). If it actually succeeds
+  // server-side but this fetch fails to read the response back (the same
+  // Apps Script echo-hop flakiness the GET retry works around), blindly
+  // retrying would resubmit the same data and, on a final submission,
+  // re-fire the Stage 2 receipt/staff/Slack emails a second time - worse
+  // than the original problem. A failed response here just tells the
+  // supplier to try again, which is safe since handleStage2Update updates
+  // by token rather than appending.
   const res = await fetch(scriptUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
