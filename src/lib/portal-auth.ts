@@ -6,6 +6,7 @@ export const PORTAL_IDS = [
   "henry-jannol",
   "josh-bykowski",
   "legal-master",
+  "biochain-partner-faq",
 ] as const;
 
 export type PortalId = (typeof PORTAL_IDS)[number];
@@ -15,6 +16,7 @@ const PASSWORD_ENV_VAR: Record<PortalId, string> = {
   "henry-jannol": "PORTAL_PASSWORD_HENRY_JANNOL",
   "josh-bykowski": "PORTAL_PASSWORD_JOSH_BYKOWSKI",
   "legal-master": "PORTAL_PASSWORD_LEGAL_MASTER",
+  "biochain-partner-faq": "PORTAL_PASSWORD_BIOCHAIN_PARTNER_FAQ",
 };
 
 function getAuthSecret(): string {

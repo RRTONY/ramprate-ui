@@ -3,9 +3,12 @@ import { revalidatePath } from "next/cache";
 import { requireArtifactAdmin } from "@/lib/artifact-auth";
 import { writeClient } from "@/lib/sanity/write-client";
 import {
+  htmlAssetField,
   listArtifacts,
   slugExists,
   slugify,
+  uploadHtmlAsset,
+  validateHtmlSize,
   validateSlug,
 } from "@/lib/artifacts";
 
@@ -44,6 +47,10 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
+  const sizeError = validateHtmlSize(html);
+  if (sizeError) {
+    return NextResponse.json({ ok: false, error: sizeError }, { status: 400 });
+  }
   const slugError = validateSlug(rawSlug);
   if (slugError) {
     return NextResponse.json({ ok: false, error: slugError }, { status: 400 });
@@ -58,13 +65,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const assetId = await uploadHtmlAsset(html, rawSlug);
   const now = new Date().toISOString();
   const doc = await writeClient.create({
     _type: "artifact",
     title,
     slug: { _type: "slug", current: rawSlug },
     description: description || undefined,
-    html,
+    htmlAsset: htmlAssetField(assetId),
     status,
     publishedAt: status === "published" ? now : undefined,
   });

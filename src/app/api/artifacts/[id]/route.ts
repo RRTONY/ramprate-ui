@@ -4,10 +4,34 @@ import { requireArtifactAdmin } from "@/lib/artifact-auth";
 import { writeClient } from "@/lib/sanity/write-client";
 import {
   getArtifactById,
+  htmlAssetField,
   slugExists,
   slugify,
+  uploadHtmlAsset,
+  validateHtmlSize,
   validateSlug,
 } from "@/lib/artifacts";
+
+// The admin list intentionally omits `html` for performance (see
+// listArtifacts) - the edit form fetches the real content, resolved from
+// the Sanity file asset, through this single-artifact endpoint instead.
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const unauthorized = await requireArtifactAdmin();
+  if (unauthorized) return unauthorized;
+
+  const { id } = await params;
+  const artifact = await getArtifactById(id);
+  if (!artifact) {
+    return NextResponse.json(
+      { ok: false, error: "Not found." },
+      { status: 404 },
+    );
+  }
+  return NextResponse.json({ ok: true, artifact });
+}
 
 export async function PATCH(
   req: NextRequest,
@@ -27,6 +51,7 @@ export async function PATCH(
 
   const body = await req.json().catch(() => null);
   const patch: Record<string, unknown> = {};
+  const unsetFields: string[] = [];
   const oldSlug = existing.slug;
   let newSlug = oldSlug;
 
@@ -37,7 +62,16 @@ export async function PATCH(
     patch.description = body.description.trim() || undefined;
   }
   if (typeof body?.html === "string" && body.html.trim()) {
-    patch.html = body.html;
+    const sizeError = validateHtmlSize(body.html);
+    if (sizeError) {
+      return NextResponse.json({ ok: false, error: sizeError }, { status: 400 });
+    }
+    const assetId = await uploadHtmlAsset(body.html, oldSlug);
+    patch.htmlAsset = htmlAssetField(assetId);
+    // Superseded by the freshly-uploaded asset above - clear the legacy
+    // inline field so resolveHtml() never has stale content to fall back
+    // to once an artifact has moved to asset-based storage.
+    unsetFields.push("html");
   }
   if (typeof body?.slug === "string" && body.slug.trim()) {
     newSlug = slugify(body.slug);
@@ -66,7 +100,9 @@ export async function PATCH(
     }
   }
 
-  await writeClient.patch(id).set(patch).commit();
+  let patchBuilder = writeClient.patch(id).set(patch);
+  if (unsetFields.length) patchBuilder = patchBuilder.unset(unsetFields);
+  await patchBuilder.commit();
 
   revalidatePath("/artifacts");
   revalidatePath(`/artifacts/${oldSlug}`);

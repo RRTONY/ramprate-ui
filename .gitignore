@@ -39,6 +39,10 @@ yarn-error.log*
 # local .gs reference copy carries a hardcoded live Slack bot token - never commit
 /scripts/supplier-intake-apps-script.gs
 
+# clasp-managed clone of the live Apps Script project (see scripts/gs-tool.sh)
+# - not a secret itself, but it's a local dev-tool workspace, not source
+/scripts/supplier-intake-gs-project/.clasp-deployment-id
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -33,12 +33,19 @@ export default defineType({
     }),
     defineField({
       name: "html",
-      title: "HTML",
+      title: "HTML (legacy, inline)",
       description:
-        "The complete HTML document for this artifact. Rendered in a sandboxed iframe on the public page.",
+        "Legacy inline storage for the HTML document - superseded by htmlAsset (a Sanity file asset, which isn't subject to Sanity's ~4MB mutation-document limit). Kept read-only here for artifacts created before that change; new/edited artifacts write to htmlAsset instead.",
       type: "text",
       rows: 20,
-      validation: (r) => r.required(),
+      readOnly: true,
+    }),
+    defineField({
+      name: "htmlAsset",
+      title: "HTML file",
+      description:
+        "The complete HTML document for this artifact, stored as a file asset (not inline) so it isn't bound by Sanity's mutation-document size limit. Rendered in a sandboxed iframe on the public page.",
+      type: "file",
     }),
     defineField({
       name: "status",

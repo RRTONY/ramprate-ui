@@ -40,11 +40,13 @@ function StatusBadge({ status }: { status: Artifact["status"] }) {
 
 function ArtifactActions({
   artifact,
+  editLoading,
   onEdit,
   onToggleStatus,
   onDelete,
 }: {
   artifact: Artifact;
+  editLoading: boolean;
   onEdit: () => void;
   onToggleStatus: () => void;
   onDelete: () => void;
@@ -60,8 +62,12 @@ function ArtifactActions({
           View
         </Link>
       )}
-      <button onClick={onEdit} className="text-gold-light hover:underline">
-        Edit
+      <button
+        onClick={onEdit}
+        disabled={editLoading}
+        className="text-gold-light hover:underline disabled:opacity-50"
+      >
+        {editLoading ? "Loading…" : "Edit"}
       </button>
       <button
         onClick={onToggleStatus}
@@ -88,6 +94,27 @@ export default function ArtifactAdminDashboard() {
   // helper directly from inside an effect (avoids cascading-render lint
   // issues and keeps this a plain "synchronize with the server" effect).
   const [reloadToken, setReloadToken] = useState(0);
+  // The list response omits `html` for performance (it's never rendered in
+  // the table) - editing fetches the real content on demand, so the button
+  // needs somewhere to show it's working while that request is in flight.
+  const [editLoadingId, setEditLoadingId] = useState<string | null>(null);
+
+  async function openEdit(a: Artifact) {
+    setEditLoadingId(a._id);
+    setListError(null);
+    try {
+      const res = await fetch(`/api/artifacts/${a._id}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load artifact.");
+      setView({ name: "form", artifact: data.artifact });
+    } catch (e) {
+      setListError(
+        e instanceof Error ? e.message : "Failed to load artifact.",
+      );
+    } finally {
+      setEditLoadingId(null);
+    }
+  }
 
   useEffect(() => {
     if (view.name !== "list") return;
@@ -227,7 +254,8 @@ export default function ArtifactAdminDashboard() {
                     <td className="px-4 py-3">
                       <ArtifactActions
                         artifact={a}
-                        onEdit={() => setView({ name: "form", artifact: a })}
+                        editLoading={editLoadingId === a._id}
+                        onEdit={() => openEdit(a)}
                         onToggleStatus={() => toggleStatus(a)}
                         onDelete={() => setDeleteTarget(a)}
                       />
@@ -258,7 +286,8 @@ export default function ArtifactAdminDashboard() {
                 </p>
                 <ArtifactActions
                   artifact={a}
-                  onEdit={() => setView({ name: "form", artifact: a })}
+                  editLoading={editLoadingId === a._id}
+                  onEdit={() => openEdit(a)}
                   onToggleStatus={() => toggleStatus(a)}
                   onDelete={() => setDeleteTarget(a)}
                 />
@@ -342,9 +371,12 @@ function ArtifactForm({
           body: JSON.stringify(payload),
         },
       );
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Something went wrong.");
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data) {
+        setError(
+          data?.error ||
+            "The server rejected this request without a readable response - this usually means the HTML is too large for the hosting platform to accept, even before our own size check runs. Try reducing the file size (e.g. compress or externally host embedded images) and try again.",
+        );
         return;
       }
       if (publish) {
@@ -352,6 +384,10 @@ function ArtifactForm({
       } else {
         onDone();
       }
+    } catch {
+      setError(
+        "The request failed before reaching the server. This is usually caused by a very large HTML paste - try reducing the file size and try again.",
+      );
     } finally {
       setSaving(false);
     }
