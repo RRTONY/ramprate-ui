@@ -31,7 +31,7 @@ vi.mock("@/components/home/PracticeIcon", () => ({
 import HomeContent from "../../src/components/home/HomeContent";
 
 describe("home visual contract", () => {
-  it("uses the approved single hero action and the shared editorial section system", () => {
+  it("uses a high-legibility hero with direct booking and case-study actions", () => {
     const { container } = render(<HomeContent />);
     const hero = container.querySelector("section.home-blue-hero");
 
@@ -39,10 +39,15 @@ describe("home visual contract", () => {
     expect(
       hero?.querySelector('img[src="/hero.webp"]')?.getAttribute("alt"),
     ).toBe("Technology advisory team collaborating in a modern office");
-    expect(hero?.querySelector('a[href="/proof"]')?.textContent).toMatch(
-      /see case results/i,
+    expect(hero?.textContent).toMatch(
+      /make complex technology decisions pay off/i,
     );
-    expect(hero?.querySelector('a[href="/contact"]')).toBeNull();
+    expect(hero?.querySelector('a[href="/contact"]')?.textContent).toMatch(
+      /book a call/i,
+    );
+    expect(hero?.querySelector('a[href="/proof"]')?.textContent).toMatch(
+      /view case studies/i,
+    );
     expect(hero?.textContent).not.toMatch(/tell us what'?s broken/i);
 
     [
@@ -59,35 +64,44 @@ describe("home visual contract", () => {
     });
   });
 
-  it("keeps verified current live homepage editorial entities and practice routing", () => {
+  it("uses plain-language services while retaining verified evidence and a separate ImpactSol handoff", () => {
     const { container } = render(<HomeContent />);
 
     expect(container.textContent).toContain(
-      "Founder advisory, product strategy, mission-critical sourcing",
+      "Relationship & Specialist Sourcing",
     );
+    expect(container.textContent).toContain("Deal & Partnership Structuring");
+    expect(container.textContent).toContain(
+      "Blockchain, Tokenization & Payment Infrastructure",
+    );
+    expect(container.textContent).toContain(
+      "Growth Strategy & Fractional Execution",
+    );
+    expect(container.textContent).toContain("A separate RampRate brand");
     expect(container.textContent).toContain("$50M in savings");
     expect(container.textContent).toContain("Paramount");
     expect(container.textContent).toContain("NOIA");
-    expect(container.querySelector('a[href="/torque"]')?.textContent).toMatch(
-      /torque/i,
-    );
+    expect(
+      container.querySelector(
+        'a[href="/services/deal-partnership-structuring"]',
+      ),
+    ).not.toBeNull();
+    expect(container.querySelector('a[href="/impactsoul"]')).not.toBeNull();
     expect(container.textContent).toContain(
       "Data-Driven. Objective. Impact-Oriented.",
     );
   });
 
-  it("keeps the current live-reference navy surfaces and restrained gold accents scoped to the homepage", async () => {
+  it("keeps the unified midnight-navy system and restrained gold emphasis", async () => {
     const css = await readFile(
       resolve(process.cwd(), "src/app/globals.css"),
       "utf8",
     );
 
-    expect(css).toContain(
-      "/* ── HOMEPAGE: CURRENT LIVE RAMP RATE REFERENCE ──",
-    );
-    expect(css).toContain("--dark: #050b14;");
-    expect(css).toContain("--dark-mid: #071221;");
+    expect(css).toContain("--rr-navy: #050b14;");
+    expect(css).toContain("--rr-navy-mid: #071221;");
     expect(css).toContain("--gold: #d6ad42;");
+    expect(css).toContain(".rr-public-surface {");
     expect(css).toContain(".home-proof-card {");
     expect(css).toContain(
       "background: linear-gradient(145deg, #0f1725, #0d1624)",

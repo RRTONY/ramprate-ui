@@ -32,7 +32,7 @@ describe("blue public content routes", () => {
     expect(article).toContain('type: "article" as const');
   });
 
-  it("keeps representative marketing routes connected to direct managed content and their core page contracts", async () => {
+  it("keeps representative marketing routes connected to managed content while redirecting the retired Thinking archive to About", async () => {
     const [about, contact, proof, thinking] = await Promise.all([
       readFile(projectFile("src/app/about/page.tsx"), "utf8"),
       readFile(projectFile("src/app/contact/page.tsx"), "utf8"),
@@ -40,15 +40,14 @@ describe("blue public content routes", () => {
       readFile(projectFile("src/app/thinking/page.tsx"), "utf8"),
     ]);
 
-    for (const source of [about, contact, proof, thinking]) {
+    for (const source of [about, contact, proof]) {
       expect(source).toContain('from "@/lib/content/seo"');
     }
 
     expect(about).toContain('from "@/lib/content/client"');
     expect(contact).toContain("<ContactForm />");
     expect(proof).toContain("<ProofClient");
-    expect(thinking).toContain("function groupByYear");
-    expect(thinking).toContain("allThinkingPostsQuery");
+    expect(thinking).toContain('permanentRedirect("/about#journey")');
   });
 
   it("retains managed SEO and structured-data boundaries across additional marketing routes", async () => {

@@ -253,10 +253,7 @@ export default function ProofClient({
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              24 Years of{" "}
-              <span className="text-[oklch(0.55_0.15_30)]">
-                Trajectory-Changing
-              </span>{" "}
+              24 Years of <span className="text-gold">Trajectory-Changing</span>{" "}
               Results
             </h1>
             <p
@@ -301,7 +298,7 @@ export default function ProofClient({
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
             <div className="mb-14">
               <span
-                className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.55_0.15_30)]"
+                className="text-xs font-semibold tracking-[0.2em] uppercase text-[#9b7417]"
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 Case Studies
@@ -310,8 +307,7 @@ export default function ProofClient({
                 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Enterprise-Grade{" "}
-                <span className="text-[oklch(0.55_0.15_30)]">Results</span>
+                Enterprise-Grade <span className="text-gold">Results</span>
               </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -323,14 +319,14 @@ export default function ProofClient({
                   <div className="flex items-center gap-3 mb-4">
                     <div
                       className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                      style={{ background: "rgba(214, 173, 66, 0.14)" }}
                     >
                       <svg
                         width="18"
                         height="18"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="oklch(0.55 0.15 30)"
+                        stroke="#b88716"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -348,10 +344,10 @@ export default function ProofClient({
                   </div>
                   <div
                     className="mb-4 px-3 py-2 rounded-md"
-                    style={{ background: "oklch(0.55 0.15 30 / 0.08)" }}
+                    style={{ background: "rgba(214, 173, 66, 0.1)" }}
                   >
                     <span
-                      className="text-sm font-bold text-[oklch(0.45_0.12_30)]"
+                      className="text-sm font-bold text-[#765910]"
                       style={{ fontFamily: "var(--font-mono)" }}
                     >
                       {cs.result}
@@ -500,8 +496,7 @@ export default function ProofClient({
               className="text-2xl sm:text-3xl font-bold text-white mb-8"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Board of{" "}
-              <span className="text-[oklch(0.55_0.15_30)]">Advisors</span>
+              Board of <span className="text-gold">Advisors</span>
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {boardAdvisors.map((m) => (
@@ -536,7 +531,7 @@ export default function ProofClient({
                       href={m.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-white hover:text-[oklch(0.55_0.15_30)] transition-colors"
+                      className="text-sm font-semibold text-white transition-colors hover:text-gold"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {m.name}
@@ -590,7 +585,7 @@ export default function ProofClient({
             style={{ background: "oklch(0.97 0.01 80)" }}
           >
             <div
-              className="text-3xl font-bold text-[oklch(0.55_0.15_30)]"
+              className="text-3xl font-bold text-gold"
               style={{ fontFamily: "var(--font-display)" }}
             >
               B
@@ -625,8 +620,7 @@ export default function ProofClient({
                 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                What Our{" "}
-                <span className="text-[oklch(0.55_0.15_30)]">Clients</span> Say
+                What Our <span className="text-gold">Clients</span> Say
               </h2>
               <p
                 className="text-sm text-[oklch(0.5_0.02_50)]"
@@ -659,21 +653,18 @@ export default function ProofClient({
                   style={{
                     fontFamily: "var(--font-mono)",
                     background:
-                      activeFilter === cat
-                        ? "oklch(0.55 0.15 30)"
-                        : "oklch(0.94 0.03 80)",
-                    color:
-                      activeFilter === cat ? "white" : "oklch(0.45 0.02 50)",
+                      activeFilter === cat ? "#d6ad42" : "oklch(0.94 0.03 80)",
+                    color: activeFilter === cat ? "#071221" : "#344254",
                   }}
                   onMouseEnter={(e) => {
                     if (activeFilter !== cat)
                       (e.currentTarget as HTMLButtonElement).style.background =
-                        "oklch(0.90 0.04 60)";
+                        "#eee2bd";
                   }}
                   onMouseLeave={(e) => {
                     if (activeFilter !== cat)
                       (e.currentTarget as HTMLButtonElement).style.background =
-                        "oklch(0.94 0.03 80)";
+                        "#fbfaf7";
                   }}
                 >
                   {cat}{" "}
@@ -696,7 +687,7 @@ export default function ProofClient({
                       : "oklch(0.97 0.01 80)",
                   borderColor:
                     t.tier === "principal"
-                      ? "oklch(0.55 0.15 30 / 0.15)"
+                      ? "rgba(214, 173, 66, 0.28)"
                       : "rgba(0,0,0,0.05)",
                 }}
               >
@@ -705,7 +696,7 @@ export default function ProofClient({
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
-                    fill="oklch(0.55 0.15 30 / 0.3)"
+                    fill="rgba(214, 173, 66, 0.38)"
                     stroke="none"
                   >
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -726,8 +717,8 @@ export default function ProofClient({
                         className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
                         style={{
                           fontFamily: "var(--font-mono)",
-                          background: "oklch(0.55 0.15 30 / 0.1)",
-                          color: "oklch(0.45 0.12 30)",
+                          background: "rgba(214, 173, 66, 0.14)",
+                          color: "#765910",
                         }}
                       >
                         Principal
@@ -960,10 +951,7 @@ export default function ProofClient({
       )}
 
       {/* CTA */}
-      <section
-        className="py-16 sm:py-20"
-        style={{ background: "oklch(0.55 0.15 30)" }}
-      >
+      <section className="rr-public-surface py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
           <h2
             className="text-3xl sm:text-4xl font-bold text-white mb-4"
@@ -982,7 +970,7 @@ export default function ProofClient({
               href="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
               style={{
-                color: "oklch(0.35 0.1 30)",
+                color: "#071221",
                 fontFamily: "var(--font-body)",
               }}
             >

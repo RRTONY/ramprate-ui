@@ -159,3 +159,19 @@
 - [x] Replace the Flow Alpha Invite static heading entry effects with reduced-motion-safe CSS while preserving authentication, team creation, invitation, and clipboard behavior.
 - [x] Replace the Flow Alpha Feedback heading and submitted-state Framer Motion effects with reduced-motion-safe CSS while preserving feedback submission and rating interactions.
 - [x] Verify the outstanding feature search-route parity candidate and repair only a confirmed user-facing difference without re-opening the completed broad sitemap audit.
+- [x] Directly compare the live and feature `/flow` landing route before altering any Flow authentication, navigation, or client-rendered content.
+- [x] Align the database-backed Blog archive visual system with the verified live midnight-navy and restrained-gold treatment without changing archive content, filters, pagination, or search behavior.
+- [x] Prepare a reference-led modern RampRate redesign direction using the supplied Inside Startups and Apple page references, preserving RampRate brand assets, independent CMS, managed content, accessibility, and existing public routes.
+- [x] After design-direction confirmation, implement the approved responsive visual system, motion, and only necessary video treatment on `feat/ramprate-product-completion` without changing `master`.
+- [x] Benchmark comparable premium advisory and enterprise-service websites, then create a RampRate redesign canvas that applies only compatible patterns from the supplied references.
+- [x] Replace branded public practice taxonomy with a plain-language Services model, exposing five finalized service offerings without removing the separate ImpactSol brand area.
+- [x] Simplify public navigation to Services, Case Studies, About, Blog, and Contact Us; fold the existing Thinking journey material into About and retain valid redirects for legacy public paths.
+- [x] Redesign the homepage hero for a clear 15–30 second value proposition, high-contrast readable copy, and direct Book a Call action(s).
+- [ ] Create a dedicated public page for each of the five plain-language services and associate every page with an existing approved testimonial or case-proof record; do not fabricate testimonials.
+- [x] Define the shared plain-language Services model and case-proof-only evidence records for the approved public redesign.
+- [x] Implement shared navigation and legacy-route compatibility for Services, Case Studies, About, Blog, and Contact Us without changing CMS authentication.
+- [x] Rebuild the homepage decision map and hero around the approved clear outcome statement, high-contrast Book a Call action, and separate ImpactSol brand treatment.
+- [x] Audit public-page color and typography variation, then define one shared RampRate visual system with midnight-navy authority, controlled gold emphasis, disciplined type scale, and intentional ImpactSol separation.
+- [x] Apply the unified visual system and reduced-motion-safe interaction behavior to the shared public shell, Services hub, homepage, and priority content pages without altering independent CMS authentication or public content data.
+- [x] Apply the unified RampRate visual system to the About hero and journey anchor, creating the approved destination for the existing Thinking journey material without changing managed team or advisor data.
+- [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.

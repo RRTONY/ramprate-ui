@@ -1,16 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --gold: #d4a843;
-  --gold-light: #e8c96a;
-  --dark: #0a0f1a;
-  --dark-mid: #0d1117;
-  --dark-card: #0f1419;
-  --warm-bg: #f5f0e8;
-  --warm-light: #faf7f2;
-  --rust: #8b4513;
-  --text-dark: #2a1f14;
-  --text-mid: #6b5e52;
+  --gold: #d6ad42;
+  --gold-light: #f0cd6f;
+  --dark: #050b14;
+  --dark-mid: #071221;
+  --dark-card: #0e1726;
+  --warm-bg: #f7f7f5;
+  --warm-light: #ffffff;
+  --rust: #a75942;
+  --text-dark: #07111f;
+  --text-mid: #667180;
+  --rr-navy: #050b14;
+  --rr-navy-mid: #071221;
+  --rr-navy-lift: #0e1726;
+  --rr-paper: #f7f7f5;
+  --rr-ink: #07111f;
+  --rr-muted: #667180;
+  --rr-line-dark: rgb(142 161 186 / 0.16);
+  --rr-line-light: rgb(7 17 31 / 0.12);
+  --rr-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 
   /* ── CHAMPION PROGRAM SUB-BRAND ──
      /champions is a partner recruitment page, not a practice page. It runs on
@@ -197,77 +206,72 @@
 
 /* ── SECTION BACKGROUNDS ── */
 .section-dark {
-  background-color: oklch(0.18 0.01 250);
-  color: oklch(0.92 0.01 80);
+  background-color: var(--rr-navy);
+  color: var(--rr-paper);
 }
 .section-warm {
-  background-color: oklch(0.94 0.03 80);
-  color: oklch(0.18 0.03 50);
+  background-color: var(--rr-paper);
+  color: var(--rr-ink);
 }
 .section-light {
-  background-color: oklch(1 0 0);
-  color: oklch(0.18 0.03 50);
+  background-color: var(--warm-light);
+  color: var(--rr-ink);
 }
 .section-blue {
-  background-color: oklch(0.45 0.22 260);
-  color: oklch(0.98 0 0);
+  background-color: #0d2038;
+  color: var(--rr-paper);
 }
-/* Homepage-only warm variant of .section-dark - cinematic sunset gradient
-   (dusk plum -> rust horizon -> amber glow) instead of a flat cold dark.
-   Lightness stays in the same 0.18-0.25 band as .section-dark so existing
-   white/white-opacity text keeps its contrast. Front page only - other pages
-   keep the standard .section-dark per the site's fixed per-section theme. */
 .section-sunset {
   background: linear-gradient(
     150deg,
-    oklch(0.19 0.05 315) 0%,
-    oklch(0.21 0.08 25) 45%,
-    oklch(0.25 0.12 45) 100%
+    var(--rr-navy) 0%,
+    var(--rr-navy-mid) 52%,
+    #091727 100%
   );
-  color: oklch(0.95 0.02 80);
+  color: var(--rr-paper);
 }
 
 /* ── RAMP RATE EDITORIAL HOME SYSTEM ── */
 .home-blue,
 .blog-blue {
-  --gold: #fcb442;
-  --gold-light: #ffd27a;
-  --rust: #b94739;
-  --dark: #1c0d06;
-  --dark-mid: #2c1810;
-  --dark-card: #321a12;
-  --warm-bg: #faf8f5;
-  --warm-light: #fffdf9;
-  --text-dark: #2c1810;
-  --text-mid: #73594d;
+  --gold: #d6ad42;
+  --gold-light: #f0cd6f;
+  --rust: #a75942;
+  --dark: #050b14;
+  --dark-mid: #071221;
+  --dark-card: #0e1726;
+  --warm-bg: #f7f7f5;
+  --warm-light: #ffffff;
+  --text-dark: #07111f;
+  --text-mid: #667180;
 }
 .home-blue .section-sunset,
 .blog-blue {
   background:
-    radial-gradient(circle at 82% 12%, rgb(185 71 57 / 0.2), transparent 32%),
-    linear-gradient(145deg, #1c0d06 0%, #2c1810 56%, #1c0d06 100%);
-  color: #faf8f5;
+    radial-gradient(circle at 82% 12%, rgb(29 70 120 / 0.2), transparent 32%),
+    linear-gradient(145deg, #050b14 0%, #071221 56%, #050b14 100%);
+  color: var(--rr-paper);
 }
 .home-blue .section-warm {
-  background: linear-gradient(145deg, #1c0d06 0%, #2c1810 52%, #1c0d06 100%);
-  color: #faf8f5;
+  background: linear-gradient(145deg, #050b14 0%, #071221 52%, #050b14 100%);
+  color: var(--rr-paper);
 }
 .home-blue .section-light {
-  background: #1c0d06;
-  color: #faf8f5;
+  background: #050b14;
+  color: var(--rr-paper);
 }
 .home-blue .glass-orb-amber,
 .blog-blue .glass-orb-amber {
   background: oklch(0.78 0.14 75);
 }
 .home-blue .glass-orb-rust {
-  background: #b94739;
+  background: #1f5f9e;
 }
 .home-blue .glass-orb-pink {
-  background: #b94739;
+  background: #7260c7;
 }
 .home-blue-hero {
-  background-color: #1c0d06;
+  background-color: #030914;
 }
 .home-blue-hero-image {
   opacity: 0.9;
@@ -336,16 +340,135 @@
 .home-blue .section-sunset .rounded-xl {
   background: linear-gradient(
     135deg,
-    rgb(44 24 16 / 0.94),
-    rgb(69 35 25 / 0.72)
+    rgb(14 23 38 / 0.94),
+    rgb(9 20 36 / 0.72)
   );
-  border-color: rgb(252 180 66 / 0.16);
+  border-color: rgb(214 173 66 / 0.16);
   box-shadow: none;
 }
 .home-blue .section-light .rounded-xl,
 .home-blue .section-warm .rounded-xl {
-  border-color: rgb(58 31 53 / 0.17);
+  border-color: var(--rr-line-dark);
   box-shadow: none;
+}
+
+/* ── SHARED RAMP RATE PUBLIC SYSTEM ──
+   These classes establish a quiet, repeatable visual grammar for public
+   marketing surfaces. ImpactSol intentionally keeps its own namespaced
+   palette above; every other public surface should use these tokens. */
+.rr-public-surface {
+  background:
+    radial-gradient(circle at 86% 8%, rgb(39 77 122 / 0.22), transparent 30%),
+    linear-gradient(
+      150deg,
+      var(--rr-navy) 0%,
+      var(--rr-navy-mid) 54%,
+      #091727 100%
+    );
+  color: var(--rr-paper);
+}
+
+.rr-paper-surface {
+  background: var(--rr-paper);
+  color: var(--rr-ink);
+}
+
+.rr-kicker {
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rr-card {
+  border: 1px solid var(--rr-line-dark);
+  background: linear-gradient(
+    145deg,
+    rgb(14 23 38 / 0.97),
+    rgb(11 20 34 / 0.9)
+  );
+  box-shadow: 0 18px 42px rgb(0 0 0 / 0.12);
+}
+
+.rr-card:hover {
+  border-color: rgb(214 173 66 / 0.46);
+  box-shadow: 0 24px 54px rgb(0 0 0 / 0.24);
+}
+
+.rr-motion-enter {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.rr-about-orb {
+  filter: blur(84px);
+}
+
+.rr-about-orb-primary {
+  background: #1d4d7d;
+  opacity: 0.2;
+}
+
+.rr-about-orb-gold {
+  background: var(--gold);
+  opacity: 0.11;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rr-motion-enter {
+    animation: rr-fade-up 520ms var(--rr-ease-out) both;
+  }
+}
+
+@keyframes rr-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── BLOG ARCHIVE: LIVE MIDNIGHT EDITORIAL SYSTEM ── */
+.blog-blue {
+  --gold: #d6ad42;
+  --gold-light: #f2cf75;
+  --rust: #a75942;
+  --dark: #050b14;
+  --dark-mid: #071221;
+  --dark-card: #0f1725;
+  --warm-bg: #f7f8fa;
+  --warm-light: #ffffff;
+  --text-dark: #071221;
+  --text-mid: #7f8a9e;
+  background:
+    radial-gradient(circle at 86% 6%, rgb(39 77 122 / 0.3), transparent 30%),
+    radial-gradient(circle at 10% 48%, rgb(32 93 151 / 0.16), transparent 34%),
+    linear-gradient(152deg, #050b14 0%, #071221 53%, #050b14 100%);
+  color: #f7f8fa;
+}
+
+.blog-blue .glass-orb-amber {
+  background: #d6ad42;
+}
+
+.blog-blue .glass-orb-blue {
+  background: #2563a6;
+}
+
+.blog-blue .blog-post-card {
+  border-color: rgb(202 218 240 / 0.12);
+  background: linear-gradient(
+    145deg,
+    rgb(15 23 37 / 0.94),
+    rgb(9 18 31 / 0.88)
+  );
+  box-shadow: none;
+}
+
+.blog-blue .blog-post-card:hover {
+  border-color: rgb(214 173 66 / 0.48);
+  box-shadow: 0 20px 42px rgb(0 0 0 / 0.24);
 }
 
 /* The home page carries one graphic idea after the hero: relationships are
@@ -1085,27 +1208,27 @@
 
 /* ── GLASSMORPHIC DESIGN SYSTEM ── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(15, 28, 47, 0.72);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(214, 173, 66, 0.16);
   border-radius: 16px;
 }
 .glass-card-warm {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 253, 247, 0.9);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(214, 173, 66, 0.22);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 32px rgba(7, 18, 34, 0.08);
 }
 .glass-card-dark {
-  background: rgba(10, 15, 26, 0.6);
+  background: rgba(7, 18, 34, 0.82);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(214, 173, 66, 0.16);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 32px rgba(7, 18, 34, 0.38);
 }
 .glass-orb {
   position: absolute;
@@ -1118,15 +1241,14 @@
   background: oklch(0.82 0.15 75);
 }
 .glass-orb-blue {
-  background: oklch(0.55 0.22 260);
+  background: #1d4d7d;
 }
 .glass-orb-rust {
-  background: oklch(0.55 0.15 30);
+  background: #d6ad42;
 }
-/* Warm rose/afterglow accent for the homepage sunset palette - replaces
-   glass-orb-blue on the front page so the hero has no cold hue left in it. */
+/* Cool indigo secondary glow keeps depth without adding a competing page palette. */
 .glass-orb-pink {
-  background: oklch(0.68 0.17 350);
+  background: #5a6f9c;
 }
 
 /* Hide floating elements while the AI modal is open */

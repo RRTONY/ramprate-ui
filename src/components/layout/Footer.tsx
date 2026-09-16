@@ -14,26 +14,30 @@ interface FooterProps {
   socialLinks?: SocialLink[];
 }
 
-const brandLinks = [
-  { label: "RampRate", href: "/sourcing", desc: "Enterprise IT Sourcing" },
-  { label: "Syzygy", href: "/growth", desc: "Growth Strategy" },
-  { label: "Stratum", href: "/web3", desc: "Web3 & Blockchain" },
-  { label: "BioChain", href: "/biochain", desc: "Verified Bio-Sourcing" },
-  { label: "ImpactSoul", href: "/impactsoul", desc: "Impact & Regenerative" },
+const serviceLinks = [
   {
-    label: "Torque",
-    href: "/torque",
-    desc: "Litigation Counsel Sourcing",
+    label: "Relationship & Specialist Sourcing",
+    href: "/services/relationship-specialist-sourcing",
+  },
+  {
+    label: "Deal & Partnership Structuring",
+    href: "/services/deal-partnership-structuring",
+  },
+  {
+    label: "Blockchain & Payment Infrastructure",
+    href: "/services/blockchain-tokenization-payment-infrastructure",
+  },
+  {
+    label: "Growth Strategy & Fractional Execution",
+    href: "/services/growth-strategy-fractional-execution",
   },
 ];
 
 const companyLinks = [
-  { label: "Proof", href: "/proof" },
+  { label: "Case Studies", href: "/proof" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Thinking", href: "/thinking" },
   { label: "Careers", href: "/careers" },
-  { label: "Engage", href: "/contact" },
 ];
 
 export default function Footer({
@@ -59,8 +63,8 @@ export default function Footer({
               <Logo variant="light" size="md" />
             </Link>
             <p className="font-body text-xs text-white/75 mb-5 leading-relaxed">
-              Since 2000. A fractional team of superstars creating
-              trajectory-changing connections.
+              Senior-led advisory for complex technology, partnership, and
+              growth decisions.
             </p>
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
@@ -70,25 +74,39 @@ export default function Footer({
             >
               B Lab Certified
             </a>
+            <Link
+              href="/impactsoul"
+              className="mt-5 block border-l border-gold/70 pl-3 text-sm font-semibold text-white transition-colors hover:text-gold"
+            >
+              ImpactSol{" "}
+              <span className="block pt-1 text-xs font-normal text-white/60">
+                A separate RampRate brand
+              </span>
+            </Link>
           </div>
 
-          {/* Column 2 - Brands */}
+          {/* Column 2 - Services */}
           <div>
             <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/75 mb-4">
-              Brands
+              Services
             </p>
             <ul className="space-y-3">
-              {brandLinks.map((link) => (
+              {serviceLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="font-body group block">
                     <span className="text-sm text-white/90 group-hover:text-white transition-colors block">
                       {link.label}
                     </span>
-                    <span className="text-xs text-white/70">{link.desc}</span>
                   </Link>
                 </li>
               ))}
             </ul>
+            <Link
+              href="/services"
+              className="mt-5 inline-flex text-xs font-semibold uppercase tracking-[0.14em] text-gold transition-colors hover:text-gold-light"
+            >
+              View all services
+            </Link>
           </div>
 
           {/* Column 3 - Company */}
@@ -110,11 +128,17 @@ export default function Footer({
             </ul>
           </div>
 
-          {/* Column 4 - Engage */}
+          {/* Column 4 - Contact */}
           <div>
             <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-white/75 mb-4">
-              Engage
+              Contact Us
             </p>
+            <Link
+              href="/contact"
+              className="mb-5 inline-flex rounded-full border border-gold/55 px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold hover:bg-gold hover:text-[#071221]"
+            >
+              Book a Call
+            </Link>
             <div className="space-y-2 mb-6">
               <a
                 href={`mailto:${email || "hello@ramprate.com"}`}

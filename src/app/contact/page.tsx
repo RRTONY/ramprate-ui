@@ -47,7 +47,7 @@ const offices = [
   { city: "Florida", role: "Southeast Office" },
 ];
 
-const rust = "oklch(0.55 0.15 30)";
+const rust = "#b88716";
 
 export default async function ContactPage() {
   const settings = await sanityFetch<{ phone?: string; email?: string }>({
@@ -68,8 +68,8 @@ export default async function ContactPage() {
         ])}
       />
       {/* ── HERO ── */}
-      <section className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden bg-[linear-gradient(135deg,oklch(0.12_0.01_250)_0%,oklch(0.16_0.02_260)_50%,oklch(0.12_0.01_250)_100%)]">
-        <div className="absolute top-0 right-0 w-100 h-100 rounded-full opacity-15 pointer-events-none bg-[oklch(0.55_0.15_30)] blur-[80px]" />
+      <section className="rr-public-surface relative overflow-hidden pb-20 pt-28 sm:pb-28 sm:pt-36">
+        <div className="absolute right-0 top-0 h-100 w-100 rounded-full bg-[#1d4d7d] opacity-20 blur-[80px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-62.5 h-62.5 rounded-full opacity-10 pointer-events-none bg-amber blur-[80px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
@@ -78,20 +78,19 @@ export default async function ContactPage() {
               Connect
             </span>
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl">
-            Trust Us With What You{" "}
-            <span className="text-amber">Hate to Do</span>
+          <h1 className="font-display max-w-3xl text-4xl font-bold leading-[0.98] tracking-[-0.025em] text-white sm:text-5xl md:text-6xl">
+            Start with a clearer <span className="text-gold">next move.</span>
           </h1>
-          <p className="font-body mt-6 text-base sm:text-lg leading-relaxed max-w-xl text-white/50">
-            And focus on the change you want to create in the world. The first
-            conversation is always free.
+          <p className="font-body mt-6 max-w-xl text-base leading-relaxed text-white/72 sm:text-lg">
+            Tell us where the decision is stuck. The first conversation is
+            always free.
           </p>
         </div>
       </section>
 
       {/* ── FORM + SIDEBAR ── */}
       <section className="relative section-warm overflow-hidden py-20 sm:py-28">
-        <div className="absolute -bottom-32 -right-32 w-75 h-75 rounded-full opacity-20 pointer-events-none bg-[oklch(0.55_0.15_30)] blur-[80px]" />
+        <div className="absolute -bottom-32 -right-32 w-75 h-75 rounded-full bg-[#1d4d7d] opacity-15 pointer-events-none blur-[80px]" />
         <div className="absolute top-10 -left-20 w-45 h-45 rounded-full opacity-15 pointer-events-none bg-amber blur-[80px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
@@ -134,7 +133,7 @@ export default async function ContactPage() {
                   href="https://calendly.com/ramprate"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-body inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold border-2 transition-all border-[oklch(0.55_0.15_30)] text-[oklch(0.55_0.15_30)]"
+                  className="font-body inline-flex items-center gap-2 rounded-full border border-gold px-5 py-3 text-sm font-semibold text-[#9b7417] transition-colors hover:bg-gold/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
                 >
                   Schedule a Meeting
                   <svg
@@ -175,7 +174,7 @@ export default async function ContactPage() {
                     </div>
                     <a
                       href={`mailto:${email}`}
-                      className="font-body text-sm hover:underline text-[oklch(0.55_0.15_30)]"
+                      className="font-body text-sm text-[#9b7417] hover:underline"
                     >
                       {email}
                     </a>
@@ -202,7 +201,7 @@ export default async function ContactPage() {
                     </div>
                     <a
                       href={`tel:${toTelHref(phone)}`}
-                      className="font-body text-sm hover:underline text-[oklch(0.55_0.15_30)]"
+                      className="font-body text-sm text-[#9b7417] hover:underline"
                     >
                       {phone}
                     </a>
@@ -262,7 +261,7 @@ export default async function ContactPage() {
               </div>
 
               {/* Guarantee */}
-              <div className="rounded-xl p-7 border bg-[oklch(0.97_0.01_80)] border-[rgba(100,60,30,0.1)]">
+              <div className="rounded-xl border border-gold/20 bg-[#fbfaf7] p-7">
                 <h4 className="font-display text-base font-bold mb-2">
                   The RampRate Guarantee
                 </h4>
@@ -284,7 +283,7 @@ export default async function ContactPage() {
                 <div className="space-y-2">
                   <Link
                     href="/process"
-                    className="font-body flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold transition-all w-full bg-[rgba(100,60,30,0.1)] text-[oklch(0.55_0.15_30)]"
+                    className="font-body flex w-full items-center gap-2 rounded-md bg-gold/15 px-4 py-2.5 text-xs font-bold text-[#765910] transition-colors hover:bg-gold/25"
                   >
                     <svg
                       width="13"
@@ -302,7 +301,7 @@ export default async function ContactPage() {
                   </Link>
                   <Link
                     href="/process"
-                    className="font-body flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold transition-all w-full bg-[rgba(96,60,180,0.1)] text-[oklch(0.6_0.2_280)]"
+                    className="font-body flex w-full items-center gap-2 rounded-md bg-[#1d4d7d]/10 px-4 py-2.5 text-xs font-bold text-[#1d4d7d] transition-colors hover:bg-[#1d4d7d]/15"
                   >
                     <svg
                       width="13"

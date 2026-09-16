@@ -125,7 +125,7 @@ export default async function AboutPage() {
     siteSettings?.corporateFacts ?? [];
 
   return (
-    <>
+    <main className="rr-about">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
@@ -154,54 +154,23 @@ export default async function AboutPage() {
           ) : null,
       )}
       {/* ═══ HERO ═══ */}
-      <section
-        className="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.12 0.01 250) 0%, oklch(0.16 0.02 260) 50%, oklch(0.12 0.01 250) 100%)",
-        }}
-      >
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full opacity-10 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+      <section className="rr-public-surface relative overflow-hidden pb-20 pt-28 sm:pb-28 sm:pt-36">
+        <div className="rr-about-orb rr-about-orb-primary absolute right-0 top-0 h-125 w-125 rounded-full pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb-gold absolute bottom-0 left-0 h-75 w-75 rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-4">
-            <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.2em]"
-              style={{
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.05)",
-                color: "rgba(255,255,255,0.5)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/55">
               About RampRate
             </span>
           </div>
 
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-4xl font-display text-4xl font-bold leading-[0.98] tracking-[-0.025em] text-white sm:text-5xl md:text-6xl">
             Impact and Technology-Focused Advisor for{" "}
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>
-              Enterprise & Startups
-            </span>
+            <span className="text-gold">Enterprise & Startups</span>
           </h1>
 
-          <p
-            className="mt-6 text-base sm:text-lg leading-relaxed max-w-2xl"
-            style={{
-              color: "rgba(255,255,255,0.5)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/72 sm:text-lg">
             RampRate is a global advisory firm focused on the most impactful,
             positive opportunities in tech and wellness. Founded in 2000.
             Private &amp; self-funded. Profitable since birth.
@@ -220,22 +189,10 @@ export default async function AboutPage() {
             ].map((s) => {
               const content = (
                 <>
-                  <div
-                    className="text-2xl sm:text-3xl font-bold"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <div className="font-mono text-2xl font-bold text-gold sm:text-3xl">
                     {s.value}
                   </div>
-                  <div
-                    className="mt-1 text-[10px] uppercase tracking-wider"
-                    style={{
-                      color: "rgba(255,255,255,0.4)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <div className="mt-1 text-[10px] uppercase tracking-wider text-white/48">
                     {s.label}
                   </div>
                 </>
@@ -485,7 +442,10 @@ export default async function AboutPage() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="relative section-dark overflow-hidden py-20 sm:py-28">
+      <section
+        id="journey"
+        className="rr-public-surface relative overflow-hidden py-20 sm:py-28"
+      >
         <div
           className="absolute -top-40 -right-40 w-[350px] h-[350px] rounded-full opacity-20 pointer-events-none"
           style={{ background: "oklch(0.55 0.22 260)", filter: "blur(80px)" }}
@@ -981,32 +941,20 @@ export default async function AboutPage() {
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section
-        className="py-16 sm:py-20"
-        style={{ background: "oklch(0.55 0.15 30)" }}
-      >
+      <section className="rr-public-surface py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Trust Us With What You Hate to Do
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+            The hard decision does not have to stay hard.
           </h2>
-          <p
-            className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
-            And focus on the change you want to create in the world.
+          <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+            Tell us where you are stuck. We will help you define the next move
+            with clarity.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white transition-all hover:bg-white/90 shadow-lg"
-            style={{
-              color: "oklch(0.35 0.1 30)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#071221] transition-all hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:scale-[0.97]"
           >
-            Start a Conversation
+            Book a Call
             <svg
               width="16"
               height="16"
@@ -1022,6 +970,6 @@ export default async function AboutPage() {
           </Link>
         </div>
       </section>
-    </>
+    </main>
   );
 }

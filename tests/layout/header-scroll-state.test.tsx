@@ -41,8 +41,9 @@ describe("marketing header scroll state", () => {
     expect(screen.queryByText("Tell Us What's Broken")).toBeNull();
     expect(screen.queryByText("Process")).toBeNull();
 
-    fireEvent.mouseEnter(screen.getByRole("button", { name: /practices/i }));
-    expect(screen.getByText("Torque")).toBeTruthy();
+    fireEvent.mouseEnter(screen.getByRole("button", { name: /services/i }));
+    expect(screen.getByText("Deal & Partnership Structuring")).toBeTruthy();
+    expect(screen.queryByText("Torque")).toBeNull();
     expect(screen.queryByText("Private Advisory")).toBeNull();
 
     Object.defineProperty(window, "scrollY", { value: 1, configurable: true });

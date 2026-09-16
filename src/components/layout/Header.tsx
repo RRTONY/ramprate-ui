@@ -8,27 +8,40 @@ import Logo from "@/components/shared/Logo";
 import SiteSearch from "@/components/shared/SiteSearch";
 import HeaderSearch from "@/components/shared/HeaderSearch";
 
-const practices = [
-  { label: "Sourcing", href: "/sourcing", desc: "Enterprise IT" },
-  { label: "Syzygy", href: "/growth", desc: "Founders" },
-  { label: "Stratum", href: "/web3", desc: "Web3" },
-  { label: "BioChain", href: "/biochain", desc: "Bio-Sourcing" },
-  { label: "ImpactSoul", href: "/impactsoul", desc: "NGOs" },
-  { label: "Torque", href: "/torque", desc: "Executive" },
+const services = [
+  {
+    label: "Relationship & Specialist Sourcing",
+    href: "/services/relationship-specialist-sourcing",
+    desc: "Find the right partner",
+  },
+  {
+    label: "Deal & Partnership Structuring",
+    href: "/services/deal-partnership-structuring",
+    desc: "Make complex deals work",
+  },
+  {
+    label: "Blockchain & Payment Infrastructure",
+    href: "/services/blockchain-tokenization-payment-infrastructure",
+    desc: "Build the foundation",
+  },
+  {
+    label: "Growth Strategy & Fractional Execution",
+    href: "/services/growth-strategy-fractional-execution",
+    desc: "Turn plans into progress",
+  },
 ];
 
 const navItems = [
-  { label: "Proof", href: "/proof" },
+  { label: "Case Studies", href: "/proof" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Thinking", href: "/thinking" },
-  { label: "Engage", href: "/contact" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [practicesOpen, setPracticesOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -80,33 +93,49 @@ export default function Header() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-4 xl:gap-6">
-          {/* Practices dropdown */}
+          {/* Services dropdown */}
           <div
             className="relative"
-            onMouseEnter={() => setPracticesOpen(true)}
-            onMouseLeave={() => setPracticesOpen(false)}
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
           >
             <button
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={servicesOpen}
               className={`font-body inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.08em] uppercase transition-colors duration-200 ${navLinkClass}`}
+              onClick={() => setServicesOpen((open) => !open)}
             >
-              Practices
+              Services
               <ChevronDown size={13} strokeWidth={1.8} aria-hidden="true" />
             </button>
-            {practicesOpen && (
+            {servicesOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
                 <div className="bg-white rounded-lg shadow-xl border border-black/5 p-4 min-w-[270px]">
-                  {practices.map((p) => (
+                  <Link
+                    href="/services"
+                    className="font-body mb-2 flex items-center justify-between gap-4 rounded-md bg-[oklch(0.94_0.03_80)] px-3 py-2.5 text-sm font-semibold text-[oklch(0.18_0.03_50)] transition-colors hover:bg-[oklch(0.91_0.04_80)]"
+                    onClick={() => setServicesOpen(false)}
+                  >
+                    View all services
+                    <ChevronDown
+                      className="rotate-[-90deg]"
+                      size={14}
+                      aria-hidden="true"
+                    />
+                  </Link>
+                  {services.map((service) => (
                     <Link
-                      key={p.href}
-                      href={p.href}
+                      key={service.href}
+                      href={service.href}
                       className="font-body flex items-center justify-between gap-4 px-3 py-2.5 rounded-md transition-colors group hover:bg-[oklch(0.94_0.03_80)]"
-                      onClick={() => setPracticesOpen(false)}
+                      onClick={() => setServicesOpen(false)}
                     >
                       <span className="text-sm font-medium transition-colors text-[oklch(0.18_0.03_50)]">
-                        {p.label}
+                        {service.label}
                       </span>
                       <span className="text-xs shrink-0 text-[oklch(0.5_0.02_50)]">
-                        {p.desc}
+                        {service.desc}
                       </span>
                     </Link>
                   ))}
@@ -120,7 +149,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setPracticesOpen(false)}
+              onClick={() => setServicesOpen(false)}
               className={`font-body text-[0.72rem] font-semibold tracking-[0.08em] uppercase transition-colors duration-200 ${navLinkClass}`}
             >
               {item.label}
@@ -158,22 +187,34 @@ export default function Header() {
           className="lg:hidden bg-white border-t border-black/5 shadow-lg"
         >
           <div className="px-5 py-6 space-y-1">
-            {/* Practices in mobile */}
+            {/* Services in mobile */}
             <p className="font-body px-3 py-1 text-xs uppercase tracking-widest mb-1 text-[oklch(0.5_0.02_50)]">
-              Practices
+              Services
             </p>
-            {practices.map((p) => (
+            <Link
+              href="/services"
+              className="font-body flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-semibold text-[oklch(0.18_0.03_50)] transition-colors hover:bg-[oklch(0.94_0.03_80)]"
+              onClick={() => setMobileOpen(false)}
+            >
+              View all services
+              <ChevronDown
+                className="rotate-[-90deg]"
+                size={14}
+                aria-hidden="true"
+              />
+            </Link>
+            {services.map((service) => (
               <Link
-                key={p.href}
-                href={p.href}
+                key={service.href}
+                href={service.href}
                 className="font-body flex items-center justify-between px-3 py-2.5 rounded-md transition-colors hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
               >
                 <span className="text-sm font-medium text-[oklch(0.18_0.03_50)]">
-                  {p.label}
+                  {service.label}
                 </span>
                 <span className="text-xs text-[oklch(0.5_0.02_50)]">
-                  {p.desc}
+                  {service.desc}
                 </span>
               </Link>
             ))}

@@ -7,16 +7,13 @@ import {
   Boxes,
   BriefcaseBusiness,
   ChartNoAxesCombined,
-  Compass,
   Target,
   Users,
   Shield,
   Database,
   DollarSign,
-  Dna,
-  HeartHandshake,
 } from "lucide-react";
-import type { CSSProperties } from "react";
+import { impactSolService, services } from "@/lib/service-catalog";
 
 // Below-the-fold, interactive-only sections - split into their own JS chunks
 // so the hero above the fold doesn't have to wait on their code to hydrate.
@@ -32,21 +29,21 @@ const engagements = [
     stats: "16 years of eliminating risk",
     detail:
       "From Viacom & CBS split in 2005 to reuniting in 2020, RampRate was there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
-    accent: "oklch(0.82 0.15 75)",
+    accentClass: "bg-gold",
   },
   {
     label: "eBay",
     stats: "$50M in savings while strengthening relationships",
     detail:
       "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
-    accent: "oklch(0.6 0.2 280)",
+    accentClass: "bg-[#7260c7]",
   },
   {
     label: "NOIA",
     stats: "US market penetration in months",
     detail:
       "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
-    accent: "oklch(0.65 0.2 150)",
+    accentClass: "bg-emerald-500",
   },
 ];
 
@@ -147,7 +144,7 @@ const operateSteps = [
     title: "Strategic Blueprint",
     desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
     Icon: Target,
-    link: { label: "See How We Think", href: "/thinking" },
+    link: { label: "Our story & approach", href: "/about#journey" },
   },
   {
     num: "03",
@@ -158,63 +155,17 @@ const operateSteps = [
   },
 ];
 
-/* ── BRANDS ── */
-const brands = [
-  {
-    name: "Syzygy",
-    tag: "Founders",
-    description:
-      "Advisory built for founders navigating growth, fundraising, and the decisions that define a company's trajectory.",
-    href: "/growth",
-    Icon: Compass,
-    accentColor: "oklch(0.65 0.2 150)",
-  },
-  {
-    name: "Stratum",
-    tag: "Web3",
-    description:
-      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure and rails.",
-    href: "/web3",
-    Icon: Boxes,
-    accentColor: "oklch(0.65 0.2 280)",
-  },
-  {
-    name: "Sourcing",
-    tag: "Enterprise IT",
-    description:
-      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement decisions.",
-    href: "/sourcing",
-    Icon: ChartNoAxesCombined,
-    accentColor: "oklch(0.82 0.15 75)",
-  },
-  {
-    name: "BioChain",
-    tag: "Bio-Sourcing",
-    description:
-      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, and chain-of-custody tracking on every shipment.",
-    href: "/biochain",
-    Icon: Dna,
-    accentColor: "oklch(0.62 0.12 190)",
-  },
-  {
-    name: "ImpactSoul",
-    tag: "NGOs",
-    description:
-      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable, fundable operating models.",
-    href: "/impactsoul",
-    Icon: HeartHandshake,
-    accentColor: "oklch(0.7 0.18 30)",
-  },
-  {
-    name: "Torque",
-    tag: "Executive",
-    description:
-      "Helping founders and execs resolve disputes & battle unscrupulous practices without calling in outside lawyers.",
-    href: "/torque",
-    Icon: BriefcaseBusiness,
-    accentColor: "oklch(0.65 0.12 70)",
-  },
-];
+/* ── PLAIN-LANGUAGE SERVICE DECISIONS ── */
+const serviceCards = services.map((service, index) => ({
+  ...service,
+  Icon: [Users, BriefcaseBusiness, Boxes, ChartNoAxesCombined][index],
+  accentClass: [
+    "text-gold",
+    "text-[#f0cd6f]",
+    "text-[#8fb8e3]",
+    "text-emerald-300",
+  ][index],
+}));
 
 export default function HomeContent() {
   return (
@@ -265,28 +216,32 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="home-blue-title font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
-                Where Relationships
-                <br />
-                Become <span className="text-gold">Revenue.</span>
+              <h1 className="home-blue-title max-w-3xl font-display text-[clamp(3.1rem,7vw,5.7rem)] font-bold leading-[0.94] tracking-[-0.035em] text-white">
+                Make complex technology decisions{" "}
+                <span className="text-gold">pay off.</span>
               </h1>
 
-              <p className="home-blue-summary font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/70">
-                Founder advisory, product strategy, mission-critical sourcing —
-                $10B+ managed since 2000.
+              <p className="home-blue-summary font-mono mt-7 max-w-2xl text-[0.68rem] font-semibold uppercase leading-relaxed tracking-[0.18em] text-white/72 sm:text-xs">
+                Enterprise technology · partnerships · infrastructure · growth
               </p>
 
-              <p className="home-blue-summary font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/75">
-                We don&apos;t advise from the sidelines - we execute.
+              <p className="home-blue-summary mt-6 max-w-xl font-body text-lg leading-relaxed text-white/82 sm:text-xl">
+                RampRate helps leaders source the right expertise, structure
+                high-stakes deals, and turn strategy into accountable progress.
               </p>
 
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
-                  href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(214,173,66,0.28)]"
+                  href="/contact"
+                  className="font-body inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-bold text-[#071221] shadow-[0_8px_30px_rgba(214,173,66,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:scale-[0.97]"
                 >
-                  See Case Results
-                  <ArrowRight size={16} />
+                  Book a Call <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/proof"
+                  className="font-body inline-flex min-h-12 items-center gap-2 rounded-full border border-white/26 px-6 py-3.5 text-sm font-bold text-white transition duration-200 hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:scale-[0.97]"
+                >
+                  View Case Studies
                 </Link>
               </div>
             </div>
@@ -325,8 +280,7 @@ export default function HomeContent() {
                 className="home-proof-card rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
               >
                 <div
-                  className="home-proof-marker w-1 h-10 rounded-full mb-6"
-                  style={{ backgroundColor: eng.accent }}
+                  className={`home-proof-marker mb-6 h-10 w-1 rounded-full ${eng.accentClass}`}
                 />
                 <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
                   {eng.label}
@@ -343,73 +297,81 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="home-practices-section py-16 sm:py-20">
+      {/* ═══ SERVICES ═══ */}
+      <section id="services" className="home-practices-section py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/42">
-              01 - Our Practices
-            </span>
-            <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
-              One discipline — trust networks for profit through purpose —
-              applied across six practices:
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-ink leading-tight">
-              Six practices. One coalition.
-              <br />
-              Pick the one that fits you.
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <span className="rr-kicker mb-4 block">Services</span>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[0.98] tracking-[-0.025em] text-white">
+              Start with the decision{" "}
+              <span className="text-gold">in front of you.</span>
             </h2>
-            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-[rgba(58,31,53,0.66)]">
-              Each practice is purpose-built for a distinct audience - but they
-              share the same team of superstars behind the scenes.
+            <p className="font-body mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg">
+              Clear services for moments when technology, relationships, and
+              growth have to work together.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-5">
-            {brands.map((brand, i) => (
+          <div className="grid gap-4 md:grid-cols-2">
+            {serviceCards.map((service, i) => (
               <Link
-                key={brand.name}
-                href={brand.href}
-                className="home-practice-card group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 p-7 transition-all duration-300 ease-out hover:-translate-y-1"
-                style={{ "--accent": brand.accentColor } as CSSProperties}
+                key={service.slug}
+                href={`/services/${service.slug}`}
+                className="home-practice-card group relative block overflow-hidden rounded-2xl p-7 transition duration-200 ease-out hover:-translate-y-1 sm:p-8"
               >
                 <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/35">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
                 <div
-                  className="mb-6 flex h-11 w-11 items-center justify-center border-b-2"
-                  style={{ borderColor: brand.accentColor }}
+                  className={`mb-8 flex h-11 w-11 items-center justify-center border-b-2 border-current ${service.accentClass}`}
                 >
-                  <brand.Icon
+                  <service.Icon
                     aria-hidden="true"
                     size={25}
                     strokeWidth={1.65}
-                    style={{ color: brand.accentColor }}
                   />
                 </div>
                 <p
-                  className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
-                  style={{ color: brand.accentColor }}
+                  className={`font-mono mb-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] ${service.accentClass}`}
                 >
-                  {brand.tag}
+                  Service 0{i + 1}
                 </p>
-                <h3 className="font-display text-xl font-bold text-ink mb-3">
-                  {brand.name}
+                <h3 className="font-display mb-3 text-2xl font-bold leading-tight text-white">
+                  {service.title}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-[rgba(58,31,53,0.66)]">
-                  {brand.description}
+                <p className="font-body mb-7 text-sm leading-relaxed text-white/66">
+                  {service.summary}
                 </p>
                 <span
-                  className="font-body inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
-                  style={{ color: brand.accentColor }}
+                  className={`font-body inline-flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5 ${service.accentClass}`}
                 >
-                  Explore {brand.name}
+                  Explore service
                   <ArrowRight size={14} />
                 </span>
               </Link>
             ))}
           </div>
+          <Link
+            href={impactSolService.href}
+            className="group mt-12 grid gap-5 rounded-2xl border border-gold/30 bg-[linear-gradient(130deg,#0f1725,#122742)] p-6 transition duration-200 hover:border-gold/70 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-8"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gold/10 text-gold">
+              <Target size={20} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="rr-kicker">A separate RampRate brand</p>
+              <h3 className="mt-2 font-display text-3xl font-bold text-white">
+                ImpactSol
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/70">
+                {impactSolService.summary}
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-gold">
+              Visit ImpactSol <ArrowRight size={15} aria-hidden="true" />
+            </span>
+          </Link>
         </div>
       </section>
 
@@ -461,15 +423,15 @@ export default function HomeContent() {
           <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-ink">
             You work with principals. No junior layering. No staffing pyramid.
             <br className="hidden sm:block" />
-            The people on the testimonials are the people who serve you.
+            The people accountable for the work stay close to the decision.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/process"
+              href="/about#journey"
               className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-gold text-dark"
             >
-              Take the Flow Circuit Assessment
+              See How We Work
               <svg
                 width="14"
                 height="14"
@@ -484,10 +446,10 @@ export default function HomeContent() {
               </svg>
             </Link>
             <Link
-              href="/process"
+              href="/contact"
               className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-[rgba(10,15,26,0.3)] text-dark"
             >
-              Find Your Me / Way / Our
+              Book a Call
               <svg
                 width="14"
                 height="14"
@@ -618,8 +580,8 @@ export default function HomeContent() {
                       Every Engagement Is Custom
                     </div>
                     <p className="font-body text-sm text-ink-mid">
-                      The only way to know the number is to tell us what&apos;s
-                      broken.
+                      Start with the decision in front of you. We&apos;ll help
+                      you define the right next move.
                     </p>
                   </div>
                 </div>
@@ -639,21 +601,21 @@ export default function HomeContent() {
       <section className="home-final-cta font-body py-16 sm:py-20 text-center text-white bg-rust">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            Tell Us What&apos;s Broken.
+            Start with a clearer next move.
           </h2>
           <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
-            Principal responds within 24 hours. No associates. No filters. No
-            intake maze.
+            Tell us what decision you need to make. A principal will respond
+            within 24 hours.
           </p>
           <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/80">
-            If we can create leverage, we&apos;ll show you how. If we
-            can&apos;t, we&apos;ll tell you fast.
+            If RampRate can create leverage, we&apos;ll show you how. If not,
+            we&apos;ll tell you quickly.
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           >
-            Tell Us What&apos;s Broken <ArrowRight size={16} />
+            Book a Call <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </section>

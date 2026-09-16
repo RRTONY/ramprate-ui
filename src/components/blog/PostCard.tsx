@@ -28,7 +28,7 @@ export default function PostCard({ post }: PostCardProps) {
     : null;
 
   return (
-    <article className="rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px] bg-white/3 border border-white/6">
+    <article className="blog-post-card rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px] bg-white/3 border border-white/6">
       {post.mainImage ? (
         <Link
           href={`/blog/${post.slug?.current}`}
