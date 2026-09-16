@@ -40,12 +40,15 @@ export const metadata: Metadata = {
 
 export default function SupplierIntakePage() {
   return (
-    <main>
+    <main className="rr-biochain-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
           { name: "BioChain", url: "https://ramprate.com/biochain" },
-          { name: "Supplier Intake", url: "https://ramprate.com/biochain/supplier-intake" },
+          {
+            name: "Supplier Intake",
+            url: "https://ramprate.com/biochain/supplier-intake",
+          },
         ])}
       />
       {/* Hero */}
@@ -75,9 +78,9 @@ export default function SupplierIntakePage() {
             className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            A quick, {STAGE1_TOTAL_FIELD_COUNT}-field first look - no uploads, about 2-3
-            minutes. If there&apos;s a fit, we&apos;ll follow up with a longer
-            application to confirm the details. No fee. No obligation.
+            A quick, {STAGE1_TOTAL_FIELD_COUNT}-field first look - no uploads,
+            about 2-3 minutes. If there&apos;s a fit, we&apos;ll follow up with
+            a longer application to confirm the details. No fee. No obligation.
           </p>
         </div>
       </section>

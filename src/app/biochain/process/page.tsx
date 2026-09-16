@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 };
 
 const supplyChainRoles = [
-  { name: "Manufacturer", sub: "Where it's made", color: "oklch(0.52 0.12 70)" },
-  { name: "Distributor", sub: "Getting to volume", color: "oklch(0.82 0.15 75)" },
-  { name: "Tester", sub: "Purity verification", color: "oklch(0.65 0.14 50)" },
-  { name: "Logistics", sub: "Cold chain & delivery", color: "oklch(0.55 0.15 30)" },
-  { name: "Compliance", sub: "Regulatory oversight", color: "oklch(0.45 0.1 40)" },
+  { name: "Manufacturer", sub: "Where it's made", color: "var(--gold)" },
+  { name: "Distributor", sub: "Getting to volume", color: "var(--gold)" },
+  { name: "Tester", sub: "Purity verification", color: "var(--gold)" },
+  { name: "Logistics", sub: "Cold chain & delivery", color: "var(--gold)" },
+  { name: "Compliance", sub: "Regulatory oversight", color: "var(--gold)" },
 ];
 
 const frictionPoints = [
@@ -43,7 +43,7 @@ const compoundStandardSupply = [
     label: "COMPOUND",
     id: "find-compound",
     title: "Find Your Compound",
-    color: "oklch(0.52 0.12 70)",
+    color: "var(--gold)",
     points: [
       "What are you actually sourcing, and at what purity?",
       "Which suppliers can't produce it at the volume you need?",
@@ -56,7 +56,7 @@ const compoundStandardSupply = [
     label: "STANDARD",
     id: "find-standard",
     title: "Find Your Standard",
-    color: "oklch(0.82 0.15 75)",
+    color: "var(--gold)",
     points: [
       "What's the right testing standard? Right lab?",
       "Stop trusting the supplier's own paperwork.",
@@ -69,7 +69,7 @@ const compoundStandardSupply = [
     label: "SUPPLY",
     id: "find-supply",
     title: "Find Your Supply",
-    color: "oklch(0.55 0.15 30)",
+    color: "var(--gold)",
     points: [
       "Supply security lives inside the chain of custody.",
       "The suppliers. The labs. The logistics.",
@@ -119,7 +119,7 @@ const summaryRows = [
 
 export default function BioChainProcessPage() {
   return (
-    <main>
+    <main className="rr-biochain-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
@@ -159,9 +159,9 @@ export default function BioChainProcessPage() {
               className="text-white/70 text-lg leading-relaxed mb-8"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              First we find your compound. Then your standard. Then your
-              supply chain. 25 years of procurement expertise. It&apos;s
-              never not worked.
+              First we find your compound. Then your standard. Then your supply
+              chain. 25 years of procurement expertise. It&apos;s never not
+              worked.
             </p>
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
@@ -193,8 +193,9 @@ export default function BioChainProcessPage() {
                 href="#find-compound"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.52 0.12 70)",
-                  background: "oklch(0.52 0.12 70 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -202,7 +203,7 @@ export default function BioChainProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.52 0.12 70)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <circle cx="12" cy="6" r="3" />
@@ -215,17 +216,16 @@ export default function BioChainProcessPage() {
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   Find Your{" "}
-                  <span style={{ color: "oklch(0.52 0.12 70)" }}>
-                    Compound
-                  </span>
+                  <span style={{ color: "var(--gold)" }}>Compound</span>
                 </span>
               </a>
               <a
                 href="#find-standard"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.82 0.15 75)",
-                  background: "oklch(0.82 0.15 75 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -233,7 +233,7 @@ export default function BioChainProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.82 0.15 75)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <path d="M9 11l3 3L22 4" />
@@ -244,17 +244,16 @@ export default function BioChainProcessPage() {
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   Find Your{" "}
-                  <span style={{ color: "oklch(0.82 0.15 75)" }}>
-                    Standard
-                  </span>
+                  <span style={{ color: "var(--gold)" }}>Standard</span>
                 </span>
               </a>
               <a
                 href="#find-supply"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.55 0.15 30)",
-                  background: "oklch(0.55 0.15 30 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -262,7 +261,7 @@ export default function BioChainProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.55 0.15 30)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -274,8 +273,7 @@ export default function BioChainProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.55 0.15 30)" }}>Supply</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Supply</span>
                 </span>
               </a>
             </div>
@@ -366,9 +364,8 @@ export default function BioChainProcessPage() {
               className="text-sm sm:text-base text-white/70 italic"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Our role: find the risk, verify the chain, fix the sourcing,
-              build the process. Not the cheapest supplier - the right
-              supplier.
+              Our role: find the risk, verify the chain, fix the sourcing, build
+              the process. Not the cheapest supplier - the right supplier.
             </p>
           </div>
           <p
@@ -451,8 +448,8 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                You tell us what you&apos;re sourcing. We listen. We diagnose
-                in 48 hours.
+                You tell us what you&apos;re sourcing. We listen. We diagnose in
+                48 hours.
               </p>
               <p
                 className="text-sm leading-relaxed"
@@ -461,8 +458,8 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                Could be an unverified supplier. A missing COA. A broken
-                chain of custody. Whatever the problem, there&apos;s always a
+                Could be an unverified supplier. A missing COA. A broken chain
+                of custody. Whatever the problem, there&apos;s always a
                 solution.
               </p>
             </div>
@@ -510,8 +507,8 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                Map your sourcing&apos;s invisible architecture. Who&apos;s
-                the Manufacturer? The Distributor? The Tester? The Logistics
+                Map your sourcing&apos;s invisible architecture. Who&apos;s the
+                Manufacturer? The Distributor? The Tester? The Logistics
                 partner?
               </p>
               <p
@@ -521,8 +518,8 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                Identify where risk is hiding. Calculate the exposure. See
-                the supply chain you have vs. the one you need.
+                Identify where risk is hiding. Calculate the exposure. See the
+                supply chain you have vs. the one you need.
               </p>
             </div>
           </div>
@@ -765,8 +762,8 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                Category management - not vendor claims. We test, verify,
-                close. Process over promises. Verification over paperwork.
+                Category management - not vendor claims. We test, verify, close.
+                Process over promises. Verification over paperwork.
               </p>
             </div>
             <div className="glass-card-warm p-7">
@@ -812,9 +809,9 @@ export default function BioChainProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                If we haven&apos;t delivered a verified, reliable supply
-                chain in 90 days, you can walk. No penalty. No hard feelings.
-                No lock-in.
+                If we haven&apos;t delivered a verified, reliable supply chain
+                in 90 days, you can walk. No penalty. No hard feelings. No
+                lock-in.
               </p>
               <p
                 className="text-sm leading-relaxed font-medium"
@@ -968,7 +965,7 @@ export default function BioChainProcessPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-24 sm:py-32 overflow-hidden">
+      <section className="rr-biochain-cta rr-public-cta relative py-24 sm:py-32 overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
@@ -981,7 +978,7 @@ export default function BioChainProcessPage() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Tell Us What&apos;s Broken.
+            Start with a clearer next move.
           </h2>
           <p
             className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto"
@@ -999,7 +996,7 @@ export default function BioChainProcessPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              Tell Us What&apos;s Broken
+              Book a Call
               <svg
                 width="18"
                 height="18"

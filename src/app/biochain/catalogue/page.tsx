@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function ClientIntakePage() {
   return (
-    <main>
+    <main className="rr-biochain-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },

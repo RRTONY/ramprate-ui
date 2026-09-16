@@ -1025,6 +1025,67 @@
     transform: scale(0.97);
   }
 }
+
+/* ── BIOCHAIN PROGRAM SURFACES ──
+   BioChain keeps its specialist sourcing language and form flows while using
+   the same public type, surface, and conversion grammar as RampRate. */
+.rr-biochain-surface {
+  background: var(--rr-paper);
+  color: var(--rr-ink);
+}
+
+.rr-biochain-surface .glass-orb-rust {
+  background: #315f8a;
+}
+
+.rr-biochain-surface [style*="color:oklch(0.55 0.15 30)"],
+.rr-biochain-surface [style*="color:oklch(0.55 0.2 160)"],
+.rr-biochain-surface [style*="color:oklch(0.55 0.2 190)"],
+.rr-biochain-surface [style*="color:oklch(0.6 0.2 280)"],
+.rr-biochain-surface [style*="color:oklch(0.7 0.18 30)"] {
+  color: var(--gold) !important;
+}
+
+.rr-biochain-surface [style*="border-color:oklch(0.55 0.15 30)"],
+.rr-biochain-surface [style*="border-color:oklch(0.55 0.2 160)"],
+.rr-biochain-surface [style*="border-color:oklch(0.55 0.2 190)"],
+.rr-biochain-surface [style*="border-color:oklch(0.6 0.2 280)"] {
+  border-color: var(--gold) !important;
+}
+
+.rr-biochain-surface [stroke="oklch(0.55 0.15 30)"],
+.rr-biochain-surface [stroke="oklch(0.55 0.2 160)"],
+.rr-biochain-surface [stroke="oklch(0.55 0.2 190)"],
+.rr-biochain-surface [stroke="oklch(0.6 0.2 280)"] {
+  stroke: var(--gold) !important;
+}
+
+.rr-biochain-cta > .absolute {
+  background:
+    radial-gradient(circle at 78% 18%, rgb(214 173 66 / 0.2), transparent 32%),
+    linear-gradient(145deg, var(--rr-navy), var(--rr-navy-mid)) !important;
+}
+
+.rr-biochain-cta a {
+  color: var(--rr-navy) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rr-biochain-surface .glass-card,
+  .rr-biochain-surface .glass-card-warm {
+    transition:
+      transform 180ms cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .rr-biochain-surface .glass-card:hover,
+  .rr-biochain-surface .glass-card-warm:hover {
+    transform: translateY(-4px);
+    border-color: rgb(214 173 66 / 0.45);
+    box-shadow: 0 20px 42px rgb(5 11 20 / 0.12);
+  }
+}
 .home-blue .section-sunset .rounded-xl,
 .home-blue .section-warm .rounded-xl,
 .home-blue .section-light .rounded-xl {
