@@ -156,3 +156,4 @@
 - [x] Add compatible managed-content safeguards for faceted blog URLs and duplicate RampRate title suffixes, based on the current master behavior without restoring Sanity.
 - [x] Remove the reintroduced “Tell Us What's Broken” homepage hero action and preserve the approved current hero action set on desktop and mobile.
 - [x] Replace the shared Flow Floating CTA Framer Motion entry and panel-swap effects with reduced-motion-safe CSS while preserving CTA actions, dismissal, and team-domain submission behavior.
+- [x] Replace the Flow Alpha Invite static heading entry effects with reduced-motion-safe CSS while preserving authentication, team creation, invitation, and clipboard behavior.

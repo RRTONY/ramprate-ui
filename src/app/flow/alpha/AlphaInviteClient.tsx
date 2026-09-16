@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -120,11 +119,7 @@ ${user?.name || "[Your Name]"}`;
     return (
       <div className="min-h-screen bg-black text-white">
         <div className="max-w-5xl mx-auto px-4 py-16 space-y-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-6"
-          >
+          <div className="flow-alpha-heading-enter text-center space-y-6">
             <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">
               <Star className="w-4 h-4" /> Alpha Program
             </div>
@@ -136,7 +131,7 @@ ${user?.name || "[Your Name]"}`;
               pilot The Flow Circuit - a new team dynamics assessment that maps
               the invisible architecture of high-performance teams.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -223,11 +218,7 @@ ${user?.name || "[Your Name]"}`;
     return (
       <div className="min-h-screen bg-black text-white">
         <div className="max-w-2xl mx-auto px-4 py-16 space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-4"
-          >
+          <div className="flow-alpha-heading-enter text-center space-y-4">
             <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">
               <Star className="w-4 h-4" /> Alpha Program
             </div>
@@ -239,7 +230,7 @@ ${user?.name || "[Your Name]"}`;
               <strong className="text-white">{user?.name || "Captain"}</strong>.
               Set up your team to generate the invite link.
             </p>
-          </motion.div>
+          </div>
 
           <Card className="bg-white/5 border-white/10">
             <CardContent className="pt-8 space-y-6">
@@ -291,11 +282,7 @@ ${user?.name || "[Your Name]"}`;
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-4xl mx-auto px-4 py-16 space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-alpha-heading-enter text-center space-y-4">
           <div className="flex justify-center">
             <div className="bg-green-500 text-white p-3 rounded-full">
               <Check className="w-8 h-8" />
@@ -308,7 +295,7 @@ ${user?.name || "[Your Name]"}`;
             <strong className="text-white">{createdTeam.name}</strong> is ready.
             Now share the link with your staff.
           </p>
-        </motion.div>
+        </div>
 
         {/* The Magic Link */}
         <Card className="bg-yellow-400/5 border-yellow-400/30">
