@@ -459,7 +459,7 @@ function EmptyQuery() {
     "Syzygy",
     "Web3",
     "ImpactSoul",
-    "Private Advisory",
+    "Torque",
     "BioChain Sourcing",
     "Payments Advisory",
     "Become a Supplier",

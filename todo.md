@@ -158,3 +158,4 @@
 - [x] Replace the shared Flow Floating CTA Framer Motion entry and panel-swap effects with reduced-motion-safe CSS while preserving CTA actions, dismissal, and team-domain submission behavior.
 - [x] Replace the Flow Alpha Invite static heading entry effects with reduced-motion-safe CSS while preserving authentication, team creation, invitation, and clipboard behavior.
 - [x] Replace the Flow Alpha Feedback heading and submitted-state Framer Motion effects with reduced-motion-safe CSS while preserving feedback submission and rating interactions.
+- [x] Verify the outstanding feature search-route parity candidate and repair only a confirmed user-facing difference without re-opening the completed broad sitemap audit.
