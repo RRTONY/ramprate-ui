@@ -4,11 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 
 const circuitRoles = [
-  { name: "Spark", sub: "Ideation", color: "oklch(0.7 0.18 30)" },
-  { name: "Amplifier", sub: "Promotion", color: "oklch(0.82 0.15 75)" },
-  { name: "Filter", sub: "Refinement", color: "oklch(0.6 0.2 180)" },
-  { name: "Ground", sub: "Execution", color: "oklch(0.55 0.2 150)" },
-  { name: "Conductor", sub: "Orchestration", color: "oklch(0.6 0.2 280)" },
+  { name: "Spark", sub: "Ideation", color: "var(--gold)" },
+  { name: "Amplifier", sub: "Promotion", color: "var(--gold)" },
+  { name: "Filter", sub: "Refinement", color: "var(--gold)" },
+  { name: "Ground", sub: "Execution", color: "var(--gold)" },
+  { name: "Conductor", sub: "Orchestration", color: "var(--gold)" },
 ];
 
 const frictionPoints = [
@@ -25,7 +25,7 @@ const meWayOur = [
     label: "ME",
     id: "find-me",
     title: "Find Your Me",
-    color: "oklch(0.6 0.2 280)",
+    color: "var(--gold)",
     points: [
       "What's your core frequency?",
       "What role do you play in the circuit?",
@@ -38,7 +38,7 @@ const meWayOur = [
     label: "WAY",
     id: "find-way",
     title: "Find Your Way",
-    color: "oklch(0.82 0.15 75)",
+    color: "var(--gold)",
     points: [
       "What's the right market? Right model?",
       "Stop chasing the big idea.",
@@ -51,7 +51,7 @@ const meWayOur = [
     label: "OUR",
     id: "find-our",
     title: "Find Your Our",
-    color: "oklch(0.55 0.2 160)",
+    color: "var(--gold)",
     points: [
       "'Our' lives inside the word 'Your.'",
       "The team. The relationships. The circuit.",
@@ -105,7 +105,7 @@ export default function ProcessPage() {
   void setOpenAccordion;
 
   return (
-    <main>
+    <main className="rr-process-surface">
       {/* Hero */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"
@@ -129,8 +129,8 @@ export default function ProcessPage() {
               style={{ fontFamily: "var(--font-display)" }}
             >
               From First Call to{" "}
-              <span style={{ color: "oklch(0.55 0.2 190)" }}>Closed Deals</span>{" "}
-              in 90 Days.
+              <span style={{ color: "var(--gold)" }}>Closed Deals</span> in 90
+              Days.
             </h1>
             <p
               className="text-white/70 text-lg leading-relaxed mb-8"
@@ -169,8 +169,9 @@ export default function ProcessPage() {
                 href="#find-me"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.6 0.2 280)",
-                  background: "oklch(0.6 0.2 280 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -178,7 +179,7 @@ export default function ProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.6 0.2 280)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <circle cx="12" cy="8" r="5" />
@@ -188,16 +189,16 @@ export default function ProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.6 0.2 280)" }}>Me</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Me</span>
                 </span>
               </a>
               <a
                 href="#find-way"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.82 0.15 75)",
-                  background: "oklch(0.82 0.15 75 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -205,7 +206,7 @@ export default function ProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.82 0.15 75)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <circle cx="12" cy="12" r="10" />
@@ -215,16 +216,16 @@ export default function ProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.82 0.15 75)" }}>Way</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Way</span>
                 </span>
               </a>
               <a
                 href="#find-our"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.55 0.2 160)",
-                  background: "oklch(0.55 0.2 160 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -232,7 +233,7 @@ export default function ProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.55 0.2 160)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -244,8 +245,7 @@ export default function ProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.55 0.2 160)" }}>Our</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Our</span>
                 </span>
               </a>
             </div>
@@ -934,7 +934,7 @@ export default function ProcessPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-24 sm:py-32 overflow-hidden">
+      <section className="rr-process-cta rr-public-cta relative py-24 sm:py-32 overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
@@ -947,7 +947,7 @@ export default function ProcessPage() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Tell Us What&apos;s Broken.
+            Start with a clearer next move.
           </h2>
           <p
             className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto"
@@ -965,7 +965,7 @@ export default function ProcessPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              Tell Us What&apos;s Broken
+              Book a Call
               <svg
                 width="18"
                 height="18"

@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 };
 
 const stackRoles = [
-  { name: "Core", sub: "Primary system", color: "oklch(0.52 0.12 70)" },
-  { name: "Redundant", sub: "Backup capacity", color: "oklch(0.82 0.15 75)" },
-  { name: "Bottleneck", sub: "Refinement", color: "oklch(0.65 0.14 50)" },
-  { name: "Legacy", sub: "Execution", color: "oklch(0.55 0.15 30)" },
-  { name: "Orchestrator", sub: "Oversight", color: "oklch(0.45 0.1 40)" },
+  { name: "Core", sub: "Primary system", color: "var(--gold)" },
+  { name: "Redundant", sub: "Backup capacity", color: "var(--gold)" },
+  { name: "Bottleneck", sub: "Refinement", color: "var(--gold)" },
+  { name: "Legacy", sub: "Execution", color: "var(--gold)" },
+  { name: "Orchestrator", sub: "Oversight", color: "var(--gold)" },
 ];
 
 const frictionPoints = [
@@ -43,7 +43,7 @@ const stackSpendLeverage = [
     label: "STACK",
     id: "find-stack",
     title: "Find Your Stack",
-    color: "oklch(0.52 0.12 70)",
+    color: "var(--gold)",
     points: [
       "What's actually running your infrastructure?",
       "Which vendors do you not even remember signing?",
@@ -56,7 +56,7 @@ const stackSpendLeverage = [
     label: "SPEND",
     id: "find-spend",
     title: "Find Your Spend",
-    color: "oklch(0.82 0.15 75)",
+    color: "var(--gold)",
     points: [
       "What's the real cost, not the invoice cost?",
       "Stop renewing on autopilot.",
@@ -69,7 +69,7 @@ const stackSpendLeverage = [
     label: "LEVERAGE",
     id: "find-leverage",
     title: "Find Your Leverage",
-    color: "oklch(0.55 0.15 30)",
+    color: "var(--gold)",
     points: [
       "Leverage lives inside the renewal date.",
       "The contracts. The SLAs. The exit clauses.",
@@ -119,7 +119,7 @@ const summaryRows = [
 
 export default function SourcingProcessPage() {
   return (
-    <main>
+    <main className="rr-process-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
@@ -159,8 +159,8 @@ export default function SourcingProcessPage() {
               className="text-white/70 text-lg leading-relaxed mb-8"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              First we find your stack. Then your spend. Then your leverage.
-              25 years. 250+ enterprises. It&apos;s never not worked.
+              First we find your stack. Then your spend. Then your leverage. 25
+              years. 250+ enterprises. It&apos;s never not worked.
             </p>
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
@@ -192,8 +192,9 @@ export default function SourcingProcessPage() {
                 href="#find-stack"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.52 0.12 70)",
-                  background: "oklch(0.52 0.12 70 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -201,7 +202,7 @@ export default function SourcingProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.52 0.12 70)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <circle cx="12" cy="12" r="9" />
@@ -211,16 +212,16 @@ export default function SourcingProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.52 0.12 70)" }}>Stack</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Stack</span>
                 </span>
               </a>
               <a
                 href="#find-spend"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.82 0.15 75)",
-                  background: "oklch(0.82 0.15 75 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -228,7 +229,7 @@ export default function SourcingProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.82 0.15 75)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <line x1="18" y1="20" x2="18" y2="10" />
@@ -239,16 +240,16 @@ export default function SourcingProcessPage() {
                   className="text-sm font-bold tracking-wider uppercase text-white"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.82 0.15 75)" }}>Spend</span>
+                  Find Your <span style={{ color: "var(--gold)" }}>Spend</span>
                 </span>
               </a>
               <a
                 href="#find-leverage"
                 className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
                 style={{
-                  borderColor: "oklch(0.55 0.15 30)",
-                  background: "oklch(0.55 0.15 30 / 0.1)",
+                  borderColor: "var(--gold)",
+                  background:
+                    "color-mix(in srgb, var(--gold) 10%, transparent)",
                 }}
               >
                 <svg
@@ -256,7 +257,7 @@ export default function SourcingProcessPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="oklch(0.55 0.15 30)"
+                  stroke="var(--gold)"
                   strokeWidth="2"
                 >
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -269,7 +270,7 @@ export default function SourcingProcessPage() {
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   Find Your{" "}
-                  <span style={{ color: "oklch(0.55 0.15 30)" }}>Leverage</span>
+                  <span style={{ color: "var(--gold)" }}>Leverage</span>
                 </span>
               </a>
             </div>
@@ -360,9 +361,8 @@ export default function SourcingProcessPage() {
               className="text-sm sm:text-base text-white/70 italic"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Our role: find the waste, connect the vendors, fix the
-              contracts, build the process. Not the biggest vendor - the
-              right vendor.
+              Our role: find the waste, connect the vendors, fix the contracts,
+              build the process. Not the biggest vendor - the right vendor.
             </p>
           </div>
           <p
@@ -805,8 +805,8 @@ export default function SourcingProcessPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                If we haven&apos;t delivered measurable savings in 90 days,
-                you can walk. No penalty. No hard feelings. No lock-in.
+                If we haven&apos;t delivered measurable savings in 90 days, you
+                can walk. No penalty. No hard feelings. No lock-in.
               </p>
               <p
                 className="text-sm leading-relaxed font-medium"
@@ -960,7 +960,7 @@ export default function SourcingProcessPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-24 sm:py-32 overflow-hidden">
+      <section className="rr-process-cta rr-public-cta relative py-24 sm:py-32 overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
@@ -973,7 +973,7 @@ export default function SourcingProcessPage() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Tell Us What&apos;s Broken.
+            Start with a clearer next move.
           </h2>
           <p
             className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto"
@@ -991,7 +991,7 @@ export default function SourcingProcessPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              Tell Us What&apos;s Broken
+              Book a Call
               <svg
                 width="18"
                 height="18"
