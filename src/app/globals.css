@@ -227,6 +227,34 @@
   color: var(--rr-paper);
 }
 
+/* ── VALUES + IMPACTSOL PUBLIC SURFACES ── */
+.rr-values,
+.rr-impactsol {
+  background: var(--rr-paper);
+  color: var(--rr-ink);
+}
+.rr-values .glass-orb-rust {
+  background: #837441;
+}
+.rr-impactsol {
+  --impactsol-accent: #4f7d73;
+  --impactsol-accent-deep: #315f57;
+}
+.rr-impactsol .glass-orb-rust {
+  background: var(--impactsol-accent);
+}
+.rr-public-cta {
+  background:
+    radial-gradient(circle at 78% 18%, rgb(214 173 66 / 0.24), transparent 32%),
+    linear-gradient(
+      135deg,
+      var(--rr-navy) 0%,
+      var(--rr-navy-mid) 56%,
+      #0b1d2e 100%
+    );
+  color: var(--rr-paper);
+}
+
 /* ── RAMP RATE EDITORIAL HOME SYSTEM ── */
 .home-blue,
 .blog-blue {

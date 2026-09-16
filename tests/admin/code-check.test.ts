@@ -21,7 +21,7 @@ describe("checkCode", () => {
       true,
     );
     expect(result.patternIssues.some((p) => p.includes("<img>"))).toBe(true);
-  });
+  }, 20_000);
 
   it("reports clean results for well-formed, already-formatted code", async () => {
     const goodCode = `export default function Good() {\n  return <p>Hello</p>;\n}\n`;

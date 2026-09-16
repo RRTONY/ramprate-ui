@@ -56,13 +56,13 @@ const whatWeDo = [
     title: "Growth Strategy & Implementation",
     desc: "Accelerate growth strategy and implementation for earlier stage companies.",
     items: ["Finding them", "Vetting them", "Optimizing"],
-    color: "oklch(0.82 0.15 75)",
+    color: "var(--gold)",
   },
   {
     title: "Boutique Business Planning",
     desc: "General purpose boutique business planning and consultancy.",
     items: [],
-    color: "oklch(0.6 0.2 280)",
+    color: "var(--gold)",
   },
   {
     title: "Social Impact Consulting",
@@ -74,7 +74,7 @@ const whatWeDo = [
       "Strategic sustainability",
       "Non-financial reporting & outcome measurement",
     ],
-    color: "oklch(0.65 0.2 150)",
+    color: "var(--gold)",
   },
   {
     title: "IT Supply Chain Optimization",
@@ -84,7 +84,7 @@ const whatWeDo = [
       "Negotiating contracts & right-sizing",
       "Re-architect supply chains for carbon optimization",
     ],
-    color: "oklch(0.55 0.15 30)",
+    color: "var(--gold)",
   },
 ];
 
@@ -145,7 +145,7 @@ const ArrowRight = () => (
 
 export default function ValuesPage() {
   return (
-    <main>
+    <main className="rr-values">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
@@ -159,7 +159,7 @@ export default function ValuesPage() {
       >
         <div
           className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(100px)" }}
+          style={{ background: "var(--gold)", filter: "blur(100px)" }}
         />
         <div
           className="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full opacity-10 pointer-events-none"
@@ -277,14 +277,14 @@ export default function ValuesPage() {
                 reach their potential.
               </p>
               <p>
-                So that&#39;s what we&#39;re doing today - we find the next unicorns and
-                gatekeepers to impact that will not just earn millions yet
-                better millions of lives. We grok their vision while putting
-                them through bootcamp to be ready for life-changing
-                opportunities. And then we kick down the barriers to their
-                success by connecting them with our ecosystem and leveraging the
-                trust we&#39;ve built in the Fortune 1000 over 20-plus years to
-                create opportunities few others can access.
+                So that&#39;s what we&#39;re doing today - we find the next
+                unicorns and gatekeepers to impact that will not just earn
+                millions yet better millions of lives. We grok their vision
+                while putting them through bootcamp to be ready for
+                life-changing opportunities. And then we kick down the barriers
+                to their success by connecting them with our ecosystem and
+                leveraging the trust we&#39;ve built in the Fortune 1000 over
+                20-plus years to create opportunities few others can access.
               </p>
               <p>
                 The purpose driven economy is here. And its leaders, in one way
@@ -311,9 +311,10 @@ export default function ValuesPage() {
             className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-snug"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            &quot;We build an Ecosystem of impact-preneurs and trailblazers powered
-            by opportunities, resources, innovation and{" "}
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>human spirit.</span>&quot;
+            &quot;We build an Ecosystem of impact-preneurs and trailblazers
+            powered by opportunities, resources, innovation and{" "}
+            <span style={{ color: "oklch(0.82 0.15 75)" }}>human spirit.</span>
+            &quot;
           </blockquote>
         </div>
       </section>
@@ -833,10 +834,7 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section
-        className="py-20 sm:py-24"
-        style={{ background: "oklch(0.55 0.15 30)" }}
-      >
+      <section className="rr-public-cta py-20 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
           <h2
             className="text-3xl sm:text-4xl font-bold text-white mb-5"
@@ -848,14 +846,14 @@ export default function ValuesPage() {
             className="text-white/75 text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Ready to align capital with purpose? Tell us what you&#39;re trying to
-            change.
+            Ready to align capital with purpose? Tell us what you&#39;re trying
+            to change.
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold bg-white shadow-lg transition-all hover:bg-white/90"
             style={{
-              color: "oklch(0.35 0.1 30)",
+              color: "var(--rr-navy)",
               fontFamily: "var(--font-body)",
             }}
           >

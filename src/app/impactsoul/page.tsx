@@ -7,7 +7,7 @@ import JsonLd, {
 } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
-  title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
+  title: "ImpactSol - Tokenize Assets to Rally Impact Movements",
   description:
     "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
   keywords: [
@@ -20,7 +20,7 @@ const FALLBACK_METADATA: Metadata = {
   ],
   alternates: { canonical: "/impactsoul" },
   openGraph: {
-    title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
+    title: "ImpactSol - Tokenize Assets to Rally Impact Movements",
     description:
       "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
     url: "https://ramprate.com/impactsoul",
@@ -29,7 +29,7 @@ const FALLBACK_METADATA: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ImpactSoul - Tokenize Assets to Rally Impact Movements",
+    title: "ImpactSol - Tokenize Assets to Rally Impact Movements",
     description:
       "Turn cultural treasures and purpose into powerful economic engines. For NGOs & Stewards of Art & Artifacts.",
     images: ["/og.png"],
@@ -257,10 +257,10 @@ const dnaIcons = [
 
 export default function ImpactSoulPage() {
   return (
-    <main>
+    <main className="rr-impactsol">
       <JsonLd
         data={serviceJsonLd({
-          name: "ImpactSoul",
+          name: "ImpactSol",
           description:
             "Tokenize cultural treasures and purpose-driven assets to rally impact movements, for NGOs and stewards of art and artifacts.",
           url: "https://ramprate.com/impactsoul",
@@ -270,7 +270,7 @@ export default function ImpactSoulPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "ImpactSoul", url: "https://ramprate.com/impactsoul" },
+          { name: "ImpactSol", url: "https://ramprate.com/impactsoul" },
         ])}
       />
       {/* Hero */}
@@ -289,14 +289,14 @@ export default function ImpactSoulPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              ImpactSoul - Since 2024
+              ImpactSol - Since 2024
             </span>
             <h1
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Tokenize Assets to Rally{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>
+              <span style={{ color: "var(--impactsol-accent)" }}>
                 Impact Movements
               </span>
             </h1>
@@ -720,10 +720,7 @@ export default function ImpactSoulPage() {
       </section>
 
       {/* CTA */}
-      <section
-        className="py-16 sm:py-20"
-        style={{ background: "oklch(0.55 0.15 30)" }}
-      >
+      <section className="rr-public-cta py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
           <h2
             className="text-3xl sm:text-4xl font-bold text-white mb-4"
@@ -742,7 +739,7 @@ export default function ImpactSoulPage() {
               href="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
               style={{
-                color: "oklch(0.35 0.1 30)",
+                color: "var(--rr-navy)",
                 fontFamily: "var(--font-body)",
               }}
             >
