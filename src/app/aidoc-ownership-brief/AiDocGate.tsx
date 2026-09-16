@@ -232,30 +232,19 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
   }
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 py-12"
-      style={{ background: "var(--rr-navy)", fontFamily: "var(--font-body)" }}
-    >
+    <div className="rr-aidoc-gate min-h-screen flex items-center justify-center px-4 py-12">
       <div
-        className="w-full max-w-md rounded-md text-center px-8 py-14 sm:px-12"
-        style={{
-          background: "var(--rr-paper)",
-          borderTop: "4px solid var(--gold)",
-          boxShadow: "0 24px 52px rgba(5,11,20,0.28)",
-          transform: shake ? "translateX(-6px)" : "none",
-          transition: "transform 0.1s",
-        }}
+        className={`rr-aidoc-gate-panel w-full max-w-md rounded-md text-center px-8 py-14 sm:px-12 ${
+          shake ? "is-shaking" : ""
+        }`}
       >
-        <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-5">
+        <p className="rr-aidoc-gate-label text-xs font-semibold tracking-widest uppercase mb-5">
           Restricted Access · The AI Doc
         </p>
-        <h1
-          className="text-4xl sm:text-5xl font-bold mb-4 leading-tight tracking-tight text-zinc-900"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <h1 className="rr-aidoc-gate-title text-4xl sm:text-5xl font-bold mb-4 leading-tight tracking-tight">
           Ownership Brief
         </h1>
-        <p className="text-sm text-gray-500 leading-relaxed mb-9 max-w-xs mx-auto">
+        <p className="rr-aidoc-gate-copy text-sm leading-relaxed mb-9 max-w-xs mx-auto">
           This document is for specific recipients only. Enter your access code
           to continue.
         </p>
@@ -270,12 +259,9 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
           }}
           onKeyDown={(e) => e.key === "Enter" && attempt()}
           placeholder="Enter access code"
-          className="w-full rounded px-5 py-4 text-sm text-center tracking-widest outline-none font-mono mb-3"
-          style={{
-            background: "#f0ede5",
-            border: error ? "1.5px solid #EF4444" : "1.5px solid transparent",
-            color: "#374151",
-          }}
+          className={`rr-aidoc-gate-input w-full rounded px-5 py-4 text-sm text-center tracking-widest outline-none font-mono mb-3 ${
+            error ? "is-error" : ""
+          }`}
         />
         {error && (
           <p className="text-xs text-red-500 mb-3 tracking-wide">
@@ -284,14 +270,7 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
         )}
         <button
           onClick={attempt}
-          className="w-full py-4 text-white font-bold text-xs tracking-widest uppercase rounded cursor-pointer transition-colors"
-          style={{ background: "var(--gold)", color: "var(--rr-navy)" }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "var(--gold-light)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = "var(--gold)")
-          }
+          className="rr-aidoc-gate-button w-full py-4 font-bold text-xs tracking-widest uppercase rounded cursor-pointer"
         >
           Enter
         </button>

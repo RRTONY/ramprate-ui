@@ -25,10 +25,11 @@ describe("utility-route public visual system", () => {
       "utf8",
     );
 
-    expect(gate).toContain('background: "var(--rr-navy)"');
-    expect(gate).toContain('background: "var(--rr-paper)"');
-    expect(gate).toContain('borderTop: "4px solid var(--gold)"');
-    expect(gate).toContain('fontFamily: "var(--font-display)"');
-    expect(gate).toContain('background: "var(--gold)"');
+    expect(gate).toContain('className="rr-aidoc-gate');
+    expect(gate).toContain("rr-aidoc-gate-panel");
+    expect(gate).toContain("rr-aidoc-gate-input");
+    expect(gate).toContain("rr-aidoc-gate-button");
+    expect(gate).toContain('error ? "is-error" : ""');
+    expect(gate).toContain('shake ? "is-shaking" : ""');
   });
 });

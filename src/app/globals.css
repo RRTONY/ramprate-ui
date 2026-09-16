@@ -1119,6 +1119,85 @@
     transform: scale(0.97);
   }
 }
+
+/* ── PROTECTED OWNERSHIP-BRIEF GATE ── */
+.rr-aidoc-gate {
+  background: var(--rr-navy);
+  font-family: var(--font-body);
+}
+
+.rr-aidoc-gate-panel {
+  background: var(--rr-paper);
+  border-top: 4px solid var(--gold);
+  box-shadow: 0 24px 52px rgb(5 11 20 / 0.28);
+}
+
+.rr-aidoc-gate-label {
+  color: #9ca3af;
+}
+
+.rr-aidoc-gate-title {
+  color: var(--rr-ink);
+  font-family: var(--font-display);
+}
+
+.rr-aidoc-gate-copy {
+  color: #6b7280;
+}
+
+.rr-aidoc-gate-input {
+  background: #f0ede5;
+  border: 1.5px solid transparent;
+  color: #374151;
+}
+
+.rr-aidoc-gate-input:focus-visible {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgb(214 173 66 / 0.22);
+}
+
+.rr-aidoc-gate-input.is-error {
+  border-color: #ef4444;
+}
+
+.rr-aidoc-gate-button {
+  background: var(--gold);
+  color: var(--rr-navy);
+  transition:
+    background-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.rr-aidoc-gate-button:hover {
+  background: var(--gold-light);
+}
+
+.rr-aidoc-gate-button:active {
+  transform: scale(0.97);
+}
+
+.rr-aidoc-gate-button:focus-visible {
+  outline: 2px solid var(--rr-navy);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rr-aidoc-gate-panel.is-shaking {
+    animation: rr-aidoc-gate-shake 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+@keyframes rr-aidoc-gate-shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
 .home-blue .section-sunset .rounded-xl,
 .home-blue .section-warm .rounded-xl,
 .home-blue .section-light .rounded-xl {

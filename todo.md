@@ -13,6 +13,7 @@
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.
 - [ ] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
 - [x] Replace residual legacy Sanity import paths in public routes with the active managed-database content modules and validate equivalent behavior.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
@@ -175,7 +176,7 @@
 - [x] Apply the unified visual system and reduced-motion-safe interaction behavior to the shared public shell, Services hub, homepage, and priority content pages without altering independent CMS authentication or public content data.
 - [x] Apply the unified RampRate visual system to the About hero and journey anchor, creating the approved destination for the existing Thinking journey material without changing managed team or advisor data.
 - [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.
-- [ ] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
+- [x] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
 - [x] Inventory every non-Flow public route and group pages by shared visual structure, interactive forms, and canonical legacy redirects before completing the site-wide modern-style rollout.
 - [ ] Apply the unified modern RampRate CSS, responsive layout standards, and reduced-motion-safe scroll interaction patterns across every remaining public page, preserving approved content, working intake flows, CMS boundaries, SEO, and separate ImpactSol identity.
 - [x] Normalize the BioChain Sourcing header on its light specialist landing surface and align the restricted AI ownership-brief access screen with the shared navy-paper-gold system without changing route access, document protection, or form behavior.
