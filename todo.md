@@ -14,7 +14,8 @@
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.
-- [ ] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
+- [x] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
+- [x] Add a representative public-route matrix contract covering shared shell inheritance, canonical service paths, intentional compatibility redirects, specialist public intake routes, and protected access-gate routes.
 - [x] Replace residual legacy Sanity import paths in public routes with the active managed-database content modules and validate equivalent behavior.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
 - [x] Replace credential-form textual loading indicators with the required accessible Lucide spinner treatment.
