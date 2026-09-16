@@ -17,7 +17,7 @@ export default function CtaSection({
   backgroundImage,
 }: CtaSectionProps) {
   return (
-    <section className="relative py-24 text-center text-white bg-rust">
+    <section className="rr-shared-cta rr-public-cta relative py-24 text-center text-white">
       {backgroundImage ? (
         <div className="absolute inset-0 overflow-hidden">
           <ContentImage
@@ -44,7 +44,7 @@ export default function CtaSection({
         {buttonText && buttonLink ? (
           <a
             href={buttonLink}
-            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
+            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-[var(--rr-navy)]"
           >
             {buttonText}
             <svg
@@ -63,9 +63,9 @@ export default function CtaSection({
         ) : (
           <Link
             href="/contact"
-            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust"
+            className="font-body inline-flex items-center gap-2.5 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-[var(--rr-navy)]"
           >
-            Start a Conversation
+            Book a Call
             <svg
               width="16"
               height="16"
