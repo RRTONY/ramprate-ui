@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 const gold = "oklch(0.52 0.12 70)";
 
@@ -46,7 +49,7 @@ const PROCESS_STEPS = [
 
 export default function PaymentsAdvisoryPage() {
   return (
-    <main>
+    <main className="rr-payments-surface">
       <JsonLd
         data={serviceJsonLd({
           name: "RampRate Payments Advisory",
@@ -59,7 +62,10 @@ export default function PaymentsAdvisoryPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
+          {
+            name: "Payments Advisory",
+            url: "https://ramprate.com/payments-advisory",
+          },
         ])}
       />
       {/* Hero */}
@@ -72,7 +78,10 @@ export default function PaymentsAdvisoryPage() {
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             RampRate A-Team · B Corp Certified · $10B+ Transacted
           </span>
@@ -94,7 +103,10 @@ export default function PaymentsAdvisoryPage() {
           </p>
           <p
             className="text-sm mb-10 max-w-2xl"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             We represent merchants processing $50M-$2B+ annually. Our model is
             long-term supplier relationships, not one-time placements.
@@ -106,7 +118,14 @@ export default function PaymentsAdvisoryPage() {
               style={{ background: gold, fontFamily: "var(--font-body)" }}
             >
               Start Your Intake
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
@@ -135,13 +154,19 @@ export default function PaymentsAdvisoryPage() {
           <div key={l} className="text-center">
             <div
               className="text-2xl font-bold"
-              style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "oklch(0.2 0.02 50)",
+              }}
             >
               {n}
             </div>
             <div
               className="text-[11px] tracking-wide"
-              style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+              style={{
+                color: "oklch(0.45 0.02 50)",
+                fontFamily: "var(--font-body)",
+              }}
             >
               {l}
             </div>
@@ -153,13 +178,19 @@ export default function PaymentsAdvisoryPage() {
         >
           <div
             className="text-base font-bold"
-            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "oklch(0.2 0.02 50)",
+            }}
           >
             Rush Available
           </div>
           <div
             className="text-[11px] leading-snug"
-            style={{ color: "oklch(0.45 0.1 60)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "oklch(0.45 0.1 60)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Expedite on request, subject to availability
           </div>
@@ -178,7 +209,10 @@ export default function PaymentsAdvisoryPage() {
             </span>
             <h2
               className="text-3xl sm:text-4xl font-bold"
-              style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "oklch(0.2 0.02 50)",
+              }}
             >
               From Intake to Long-Term Partnership
             </h2>
@@ -188,23 +222,37 @@ export default function PaymentsAdvisoryPage() {
               <div
                 key={s.n}
                 className="rounded-xl p-7 border-t-4"
-                style={{ borderColor: gold, background: "white", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}
+                style={{
+                  borderColor: gold,
+                  background: "white",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
               >
                 <div
                   className="text-4xl font-bold mb-3"
-                  style={{ fontFamily: "var(--font-display)", color: gold, opacity: 0.25 }}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: gold,
+                    opacity: 0.25,
+                  }}
                 >
                   {s.n}
                 </div>
                 <h3
                   className="text-lg font-bold mb-2"
-                  style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: "oklch(0.2 0.02 50)",
+                  }}
                 >
                   {s.title}
                 </h3>
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+                  style={{
+                    color: "oklch(0.45 0.02 50)",
+                    fontFamily: "var(--font-body)",
+                  }}
                 >
                   {s.desc}
                 </p>
@@ -212,7 +260,7 @@ export default function PaymentsAdvisoryPage() {
             ))}
           </div>
 
-          {/* ImpactSoul integration */}
+          {/* ImpactSol integration */}
           <div
             className="rounded-2xl p-9 mt-14 flex flex-wrap items-center gap-10"
             style={{ background: "var(--dark)" }}
@@ -220,9 +268,12 @@ export default function PaymentsAdvisoryPage() {
             <div className="flex-1 min-w-[280px]">
               <span
                 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 block"
-                style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+                style={{
+                  color: "var(--gold-light)",
+                  fontFamily: "var(--font-body)",
+                }}
               >
-                ImpactSoul Integration
+                ImpactSol Integration
               </span>
               <h3
                 className="text-2xl font-bold text-white mb-4"
@@ -234,27 +285,34 @@ export default function PaymentsAdvisoryPage() {
                 className="text-white/60 text-sm leading-relaxed"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                RampRate&apos;s payments advisory integrates with ImpactSoul&apos;s
-                Impact Dollar / STBL rail - enabling clients to optionally
-                route a percentage of processing savings into
-                impact-verified investment vehicles. Payment optimization as
-                a regenerative capital strategy.
+                RampRate&apos;s payments advisory integrates with
+                ImpactSol&apos;s Impact Dollar / STBL rail - enabling clients to
+                optionally route a percentage of processing savings into
+                impact-verified investment vehicles. Payment optimization as a
+                regenerative capital strategy.
               </p>
             </div>
             <div className="flex flex-col gap-4 min-w-[220px]">
               {[
                 ["90%", "Impact distribution model"],
-                ["8-dim", "ImpactSoul scoring"],
+                ["8-dim", "ImpactSol scoring"],
                 ["STBL", "Stablecoin rail option"],
               ].map(([v, l]) => (
                 <div key={l} className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold"
-                    style={{ background: "oklch(0.6 0.15 170 / 0.15)", color: "oklch(0.7 0.13 170)", fontFamily: "var(--font-display)" }}
+                    style={{
+                      background: "oklch(0.6 0.15 170 / 0.15)",
+                      color: "oklch(0.7 0.13 170)",
+                      fontFamily: "var(--font-display)",
+                    }}
                   >
                     {v}
                   </div>
-                  <span className="text-white/70 text-sm" style={{ fontFamily: "var(--font-body)" }}>
+                  <span
+                    className="text-white/70 text-sm"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
                     {l}
                   </span>
                 </div>
@@ -265,24 +323,33 @@ export default function PaymentsAdvisoryPage() {
           {/* Qualify banner */}
           <div
             className="rounded-xl p-8 mt-10 flex justify-between items-center flex-wrap gap-6"
-            style={{ background: "oklch(0.94 0.03 80)", border: "2px solid oklch(0.88 0.03 75)" }}
+            style={{
+              background: "oklch(0.94 0.03 80)",
+              border: "2px solid oklch(0.88 0.03 75)",
+            }}
           >
             <div>
               <h3
                 className="text-xl font-bold mb-2"
-                style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "oklch(0.2 0.02 50)",
+                }}
               >
                 Who We Work With
               </h3>
               <p
                 className="text-sm leading-relaxed max-w-2xl"
-                style={{ color: "oklch(0.45 0.02 50)", fontFamily: "var(--font-body)" }}
+                style={{
+                  color: "oklch(0.45 0.02 50)",
+                  fontFamily: "var(--font-body)",
+                }}
               >
                 Merchants with <strong>$1M minimum</strong> annual revenue -
-                target is <strong>$50M and above</strong>. 25 industry
-                verticals including regulated, high-risk, and complex global
-                businesses. We are at capacity. Intakes are reviewed in the
-                order received and matched to an advisor before we proceed.
+                target is <strong>$50M and above</strong>. 25 industry verticals
+                including regulated, high-risk, and complex global businesses.
+                We are at capacity. Intakes are reviewed in the order received
+                and matched to an advisor before we proceed.
               </p>
             </div>
             <Link
@@ -291,7 +358,14 @@ export default function PaymentsAdvisoryPage() {
               style={{ background: gold, fontFamily: "var(--font-body)" }}
             >
               Start Intake
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>

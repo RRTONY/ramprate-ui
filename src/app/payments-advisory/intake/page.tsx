@@ -11,20 +11,32 @@ export const metadata: Metadata = {
 
 export default function PaymentsIntakePage() {
   return (
-    <main>
+    <main className="rr-payments-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
-          { name: "Intake", url: "https://ramprate.com/payments-advisory/intake" },
+          {
+            name: "Payments Advisory",
+            url: "https://ramprate.com/payments-advisory",
+          },
+          {
+            name: "Intake",
+            url: "https://ramprate.com/payments-advisory/intake",
+          },
         ])}
       />
-      <section className="relative pt-32 pb-16 overflow-hidden" style={{ background: "var(--dark)" }}>
+      <section
+        className="relative pt-32 pb-16 overflow-hidden"
+        style={{ background: "var(--dark)" }}
+      >
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Client Intake
           </span>
@@ -34,7 +46,10 @@ export default function PaymentsIntakePage() {
           >
             Tell Us About Your Business
           </h1>
-          <p className="text-white/70 text-base leading-relaxed max-w-2xl" style={{ fontFamily: "var(--font-body)" }}>
+          <p
+            className="text-white/70 text-base leading-relaxed max-w-2xl"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
             7 sections, ~15 minutes. Once submitted, RampRate writes your RFP,
             shops it to matched processors, and manages the process start to
             finish. Every advisory note explains why we ask what we ask.

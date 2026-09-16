@@ -976,6 +976,55 @@
     box-shadow: 0 20px 42px rgb(5 11 20 / 0.12);
   }
 }
+
+/* ── PAYMENTS ADVISORY SURFACES ──
+   The overview, client intake, and intelligence routes are one specialist
+   journey. These scoped rules align their outer presentation and feedback
+   without altering the form’s field names, validation, or API flow. */
+.rr-payments-surface {
+  background: var(--rr-paper);
+  color: var(--rr-ink);
+}
+
+.rr-payments-surface .glass-orb-rust {
+  background: #315f8a;
+}
+
+.rr-payments-surface .section-light,
+.rr-payments-surface .section-warm {
+  background: var(--rr-paper);
+}
+
+.rr-payments-surface .section-light .rounded-xl,
+.rr-payments-surface .section-warm .rounded-xl {
+  border-color: var(--rr-line-dark);
+  box-shadow: none;
+}
+
+.rr-payments-surface a:focus-visible,
+.rr-payments-surface button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rr-payments-industry-card {
+    transition:
+      transform 180ms cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+  }
+
+  .rr-payments-industry-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold) !important;
+    box-shadow: 0 18px 36px rgb(5 11 20 / 0.1) !important;
+  }
+
+  .rr-payments-industry-card:active {
+    transform: scale(0.97);
+  }
+}
 .home-blue .section-sunset .rounded-xl,
 .home-blue .section-warm .rounded-xl,
 .home-blue .section-light .rounded-xl {

@@ -12,19 +12,28 @@ export const metadata: Metadata = {
 
 export default function PaymentsIntelPage() {
   return (
-    <main>
+    <main className="rr-payments-surface">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "Payments Advisory", url: "https://ramprate.com/payments-advisory" },
-          { name: "Intel", url: "https://ramprate.com/payments-advisory/intel" },
+          {
+            name: "Payments Advisory",
+            url: "https://ramprate.com/payments-advisory",
+          },
+          {
+            name: "Intel",
+            url: "https://ramprate.com/payments-advisory/intel",
+          },
         ])}
       />
       <section className="pt-32 pb-14" style={{ background: "var(--dark)" }}>
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{ color: "var(--gold-light)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--gold-light)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             Market Intelligence
           </span>
@@ -34,7 +43,10 @@ export default function PaymentsIntelPage() {
           >
             Industry Classifications &amp; Processor Intelligence
           </h1>
-          <p className="text-white/60 text-base" style={{ fontFamily: "var(--font-body)" }}>
+          <p
+            className="text-white/60 text-base"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
             Click any industry card to see matched processor recommendations.
           </p>
         </div>
@@ -44,7 +56,10 @@ export default function PaymentsIntelPage() {
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <h2
             className="text-xl font-bold mb-6"
-            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "oklch(0.2 0.02 50)",
+            }}
           >
             25 Industry Verticals
           </h2>
@@ -52,23 +67,34 @@ export default function PaymentsIntelPage() {
 
           <h2
             className="text-xl font-bold mb-6 mt-16"
-            style={{ fontFamily: "var(--font-display)", color: "oklch(0.2 0.02 50)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "oklch(0.2 0.02 50)",
+            }}
           >
             25 Payment Processors &amp; Gateways
           </h2>
-          <div className="overflow-x-auto rounded-xl" style={{ border: "1px solid oklch(0.9 0.01 70)" }}>
+          <div
+            className="overflow-x-auto rounded-xl"
+            style={{ border: "1px solid oklch(0.9 0.01 70)" }}
+          >
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr style={{ background: "var(--dark)" }}>
-                  {["Processor", "Best For", "Avg Rate", "Min Volume"].map((h) => (
-                    <th
-                      key={h}
-                      className="text-left px-4 py-3 text-[11px] uppercase tracking-wide whitespace-nowrap"
-                      style={{ color: "white", fontFamily: "var(--font-mono)" }}
-                    >
-                      {h}
-                    </th>
-                  ))}
+                  {["Processor", "Best For", "Avg Rate", "Min Volume"].map(
+                    (h) => (
+                      <th
+                        key={h}
+                        className="text-left px-4 py-3 text-[11px] uppercase tracking-wide whitespace-nowrap"
+                        style={{
+                          color: "white",
+                          fontFamily: "var(--font-mono)",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -76,23 +102,45 @@ export default function PaymentsIntelPage() {
                   <tr
                     key={p.name}
                     style={{
-                      background: i % 2 === 0 ? "white" : "oklch(0.97 0.005 70)",
+                      background:
+                        i % 2 === 0 ? "white" : "oklch(0.97 0.005 70)",
                       borderBottom: "1px solid oklch(0.9 0.01 70)",
                     }}
                   >
                     <td
                       className="px-4 py-3 font-bold"
-                      style={{ fontFamily: "var(--font-display)", color: "oklch(0.52 0.12 70)" }}
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        color: "oklch(0.52 0.12 70)",
+                      }}
                     >
                       {p.name}
                     </td>
-                    <td className="px-4 py-3" style={{ fontFamily: "var(--font-body)", color: "oklch(0.2 0.02 50)" }}>
+                    <td
+                      className="px-4 py-3"
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        color: "oklch(0.2 0.02 50)",
+                      }}
+                    >
                       {p.bestFor}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap" style={{ fontFamily: "var(--font-mono)", color: "oklch(0.45 0.02 50)" }}>
+                    <td
+                      className="px-4 py-3 whitespace-nowrap"
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        color: "oklch(0.45 0.02 50)",
+                      }}
+                    >
                       {p.avgRate}
                     </td>
-                    <td className="px-4 py-3" style={{ fontFamily: "var(--font-mono)", color: "oklch(0.45 0.02 50)" }}>
+                    <td
+                      className="px-4 py-3"
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        color: "oklch(0.45 0.02 50)",
+                      }}
+                    >
                       {p.minVolume}
                     </td>
                   </tr>
