@@ -88,12 +88,12 @@ type Practice = {
 
 const PRACTICES: Practice[] = [
   {
-    tag: "Syzygy",
+    tag: "Growth Strategy & Fractional Execution",
     title: "Startups and founders",
     blurb:
       "Companies past the point where an advisory fee causes resentment rather than creating value.",
-    href: "/growth",
-    linkLabel: "About Syzygy",
+    href: "/services/growth-strategy-fractional-execution",
+    linkLabel: "View service",
     rows: [
       {
         term: "Size, any one of these",
@@ -123,12 +123,12 @@ const PRACTICES: Practice[] = [
     notFit: "Not a fit: anyone whose only pursuit right now is raising money.",
   },
   {
-    tag: "RampRate",
+    tag: "Relationship & Specialist Sourcing",
     title: "Enterprise technology sourcing",
     blurb:
       "Organizations who suspect they are overpaying on infrastructure and cannot prove it.",
-    href: "/sourcing",
-    linkLabel: "About Sourcing",
+    href: "/services/relationship-specialist-sourcing",
+    linkLabel: "View service",
     rows: [
       {
         term: "Annual spend in scope",
@@ -145,12 +145,12 @@ const PRACTICES: Practice[] = [
     ],
   },
   {
-    tag: "BioChain",
+    tag: "Relationship & Specialist Sourcing",
     title: "Biologics and peptide sourcing",
     blurb:
       "Clinics, compounding pharmacy networks, longevity practices and biotech.",
-    href: "/biochain",
-    linkLabel: "About BioChain",
+    href: "/services/relationship-specialist-sourcing",
+    linkLabel: "View service",
     rows: [
       {
         term: "Annual biologics spend",
@@ -167,12 +167,12 @@ const PRACTICES: Practice[] = [
     ],
   },
   {
-    tag: "Stratum",
+    tag: "Blockchain & Payment Infrastructure",
     title: "Web3 and blockchain",
     blurb:
       "Data-focused or enterprise-facing work rather than consumer speculation.",
-    href: "/web3",
-    linkLabel: "About Stratum",
+    href: "/services/blockchain-tokenization-payment-infrastructure",
+    linkLabel: "View service",
     rows: [
       {
         term: "Focus",
@@ -185,7 +185,7 @@ const PRACTICES: Practice[] = [
     ],
   },
   {
-    tag: "ImpactSoul",
+    tag: "ImpactSol",
     title: "NGOs and foundations",
     blurb:
       "Mission-driven organizations building sustainable operating models.",
@@ -207,7 +207,7 @@ const PRACTICES: Practice[] = [
     ],
   },
   {
-    tag: "ImpactSoul",
+    tag: "ImpactSol",
     title: "Assets for tokenization",
     blurb:
       "Real assets with real cash flows, held by owners open to shared ownership.",
@@ -233,11 +233,11 @@ const PRACTICES: Practice[] = [
     ],
   },
   {
-    tag: "All practices",
+    tag: "All services",
     title: "Venture funds",
     blurb: "Funds that work with their portfolio rather than just funding it.",
-    href: "/proof",
-    linkLabel: "See our work",
+    href: "/services",
+    linkLabel: "View services",
     rows: [
       {
         term: "Stage and size",
@@ -316,7 +316,7 @@ export default function ChampionsPage() {
         className="relative pt-32 pb-20 sm:pt-36 sm:pb-24 overflow-hidden"
         style={{
           background:
-            "radial-gradient(120% 90% at 10% 0%, rgba(119,40,204,0.45) 0%, rgba(20,16,31,0) 60%), linear-gradient(160deg, var(--champion-night-2) 0%, var(--champion-night) 68%)",
+            "radial-gradient(120% 90% at 10% 0%, rgba(29,77,125,0.42) 0%, rgba(7,18,33,0) 60%), linear-gradient(160deg, var(--champion-night-2) 0%, var(--champion-night) 68%)",
         }}
       >
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">

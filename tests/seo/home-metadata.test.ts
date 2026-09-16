@@ -36,26 +36,29 @@ describe("home page SEO metadata", () => {
   });
 
   it("provides a descriptive alternative text value for the home hero image", async () => {
-    const homeContent = await readFile(
-      projectFile("src/components/home/HomeContent.tsx"),
+    const heroMedia = await readFile(
+      projectFile("src/components/home/CinematicHeroMedia.tsx"),
       "utf8",
     );
 
-    expect(homeContent).toMatch(
+    expect(heroMedia).toMatch(
       /src="\/hero\.webp"\s+alt="Technology advisory team collaborating in a modern office"/,
     );
   });
 
   it("provides non-empty alternatives for all three rendered home-page images", async () => {
-    const [header, homeContent, footer, logo] = await Promise.all([
+    const [header, heroMedia, footer, logo] = await Promise.all([
       readFile(projectFile("src/components/layout/Header.tsx"), "utf8"),
-      readFile(projectFile("src/components/home/HomeContent.tsx"), "utf8"),
+      readFile(
+        projectFile("src/components/home/CinematicHeroMedia.tsx"),
+        "utf8",
+      ),
       readFile(projectFile("src/components/layout/Footer.tsx"), "utf8"),
       readFile(projectFile("src/components/shared/Logo.tsx"), "utf8"),
     ]);
     const renderedImageAlternatives = [
       imageAlternative(logo, "/ramprate-logo.png"),
-      imageAlternative(homeContent, "/hero.webp"),
+      imageAlternative(heroMedia, "/hero.webp"),
       imageAlternative(logo, "/ramprate-logo.png"),
     ];
 

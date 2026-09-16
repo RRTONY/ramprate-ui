@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import {
   ArrowRight,
@@ -14,6 +13,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { impactSolService, services } from "@/lib/service-catalog";
+import CinematicHeroMedia from "./CinematicHeroMedia";
 
 // Below-the-fold, interactive-only sections - split into their own JS chunks
 // so the hero above the fold doesn't have to wait on their code to hydrate.
@@ -172,16 +172,10 @@ export default function HomeContent() {
     <div className="home-blue min-h-screen">
       {/* ═══ HERO ═══ */}
       <section className="home-blue-hero relative min-h-screen flex flex-col overflow-hidden">
-        {/* The office photo remains contextual beneath the live site's midnight-navy and restrained-gold atmosphere. */}
+        {/* Motion media is decorative; an immediate static fallback preserves a readable
+            hero when reduced motion is requested or video cannot load. */}
         <div className="absolute inset-0">
-          <Image
-            src="/hero.webp"
-            alt="Technology advisory team collaborating in a modern office"
-            fill
-            priority
-            sizes="100vw"
-            className="home-blue-hero-image object-cover object-right"
-          />
+          <CinematicHeroMedia />
           {/* Left-side scrim protects the reading column over the contextual image. */}
           <div className="home-blue-scrim absolute inset-0" />
           {/* A navy vignette grounds the hero in the wider content system. */}

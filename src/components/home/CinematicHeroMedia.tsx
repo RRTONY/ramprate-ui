@@ -1,0 +1,51 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const HERO_VIDEO = "/manus-storage/ramprate-cinematic-hero-loop_9982d784.mp4";
+
+export default function CinematicHeroMedia() {
+  const [canAnimate, setCanAnimate] = useState(false);
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") {
+      return;
+    }
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setCanAnimate(!reducedMotion.matches);
+
+    updateMotionPreference();
+    reducedMotion.addEventListener("change", updateMotionPreference);
+    return () =>
+      reducedMotion.removeEventListener("change", updateMotionPreference);
+  }, []);
+
+  return (
+    <>
+      <Image
+        src="/hero.webp"
+        alt="Technology advisory team collaborating in a modern office"
+        fill
+        priority
+        sizes="100vw"
+        className="rr-cinematic-hero-fallback object-cover object-right"
+      />
+      {canAnimate ? (
+        <video
+          className="rr-cinematic-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero.webp"
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
+      ) : null}
+    </>
+  );
+}
