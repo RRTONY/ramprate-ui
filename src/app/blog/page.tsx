@@ -70,9 +70,23 @@ const FALLBACK_METADATA: Metadata = {
   },
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; category?: string }>;
+}): Promise<Metadata> {
   const data = await getPageSeo("/blog");
-  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
+  const metadata = withSeoOverrides(FALLBACK_METADATA, data?.seo);
+  const sp = await searchParams;
+
+  // Category and pagination URLs intentionally retain /blog as their canonical
+  // route. `noindex, follow` prevents duplicate archive-title clusters while
+  // retaining crawler discovery of the individual articles they link to.
+  if (sp.category || sp.page) {
+    metadata.robots = { index: false, follow: true };
+  }
+
+  return metadata;
 }
 
 export default async function BlogPage({
