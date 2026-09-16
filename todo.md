@@ -152,7 +152,7 @@
 - [x] Align the BioChain catalogue path with the live client-intake application and retire or redirect the feature-only catalogue listing without disturbing existing form persistence.
 - [x] Align the live and feature BioChain supplier-application route behavior after verifying the current live path and the feature route response.
 - [ ] Repair the verified Flow route parity failures found in the full live sitemap audit, prioritizing routes that render a generic fallback or fail to load their primary client content.
-- [ ] Reconcile the live and feature search-route presentation after the full sitemap audit identifies the specific current-content difference.
+- [x] Reconcile the live and feature search-route presentation after the full sitemap audit identifies the specific current-content difference.
 - [x] Add compatible managed-content safeguards for faceted blog URLs and duplicate RampRate title suffixes, based on the current master behavior without restoring Sanity.
 - [x] Remove the reintroduced “Tell Us What's Broken” homepage hero action and preserve the approved current hero action set on desktop and mobile.
 - [x] Replace the shared Flow Floating CTA Framer Motion entry and panel-swap effects with reduced-motion-safe CSS while preserving CTA actions, dismissal, and team-domain submission behavior.
@@ -167,7 +167,7 @@
 - [x] Replace branded public practice taxonomy with a plain-language Services model, exposing five finalized service offerings without removing the separate ImpactSol brand area.
 - [x] Simplify public navigation to Services, Case Studies, About, Blog, and Contact Us; fold the existing Thinking journey material into About and retain valid redirects for legacy public paths.
 - [x] Redesign the homepage hero for a clear 15–30 second value proposition, high-contrast readable copy, and direct Book a Call action(s).
-- [ ] Create a dedicated public page for each of the five plain-language services and associate every page with an existing approved testimonial or case-proof record; do not fabricate testimonials.
+- [x] Create a dedicated public page for each of the five plain-language services and associate every page with an existing approved testimonial or case-proof record; do not fabricate testimonials.
 - [x] Define the shared plain-language Services model and case-proof-only evidence records for the approved public redesign.
 - [x] Implement shared navigation and legacy-route compatibility for Services, Case Studies, About, Blog, and Contact Us without changing CMS authentication.
 - [x] Rebuild the homepage decision map and hero around the approved clear outcome statement, high-contrast Book a Call action, and separate ImpactSol brand treatment.
