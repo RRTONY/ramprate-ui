@@ -176,7 +176,8 @@
 - [x] Apply the unified RampRate visual system to the About hero and journey anchor, creating the approved destination for the existing Thinking journey material without changing managed team or advisor data.
 - [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.
 - [ ] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
-- [ ] Align the Champions, Expertise, Growth, and Web3 routes with the unified public system and retire their residual purple, red, and legacy branded-practice visual language without changing functional intake or advisory content.
+- [x] Align the Champions, Expertise, Growth, and Web3 routes with the unified public system and retire their residual purple, red, and legacy branded-practice visual language without changing functional intake or advisory content.
+- [x] Align the Expertise, Growth, and Web3 public routes with the unified RampRate system, clear plain-language service narrative, and controlled gold emphasis while retaining existing form and advisory behavior.
 - [x] Create a cinematic shared RampRate motion system with scroll-led section reveals, restrained parallax, and reduced-motion fallbacks rather than page-by-page animated treatments.
 - [x] Add a performance-safe homepage video or motion-media scene with a static fallback, no audio autoplay, clear copy contrast, and accessibility controls where required.
 - [x] Rebuild priority public storytelling sections with visual sequencing, animation, and media rhythm informed by the supplied Inside Startups and Metalab references without copying their assets or layouts.

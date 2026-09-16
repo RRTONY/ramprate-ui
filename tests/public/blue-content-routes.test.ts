@@ -50,12 +50,10 @@ describe("blue public content routes", () => {
     expect(thinking).toContain('permanentRedirect("/about#journey")');
   });
 
-  it("retains managed SEO and structured-data boundaries across additional marketing routes", async () => {
+  it("retains managed SEO and structured-data boundaries across retained marketing routes", async () => {
     const pages = await Promise.all(
       [
         "src/app/careers/page.tsx",
-        "src/app/expertise/page.tsx",
-        "src/app/growth/page.tsx",
         "src/app/impactsoul/page.tsx",
         "src/app/torque/page.tsx",
         "src/app/talk-to-us/page.tsx",
@@ -70,21 +68,32 @@ describe("blue public content routes", () => {
     }
   });
 
-  it("retains metadata and structured-data boundaries on further public marketing routes", async () => {
-    const [web3, values, howWeWork, paymentsAdvisory] = await Promise.all(
+  it("keeps retired branded practice URLs as permanent routes to the approved Services architecture", async () => {
+    const [expertise, growth, web3] = await Promise.all(
       [
+        "src/app/expertise/page.tsx",
+        "src/app/growth/page.tsx",
         "src/app/web3/page.tsx",
+      ].map((path) => readFile(projectFile(path), "utf8")),
+    );
+
+    expect(expertise).toContain('permanentRedirect("/services")');
+    expect(growth).toContain(
+      'permanentRedirect("/services/growth-strategy-fractional-execution")',
+    );
+    expect(web3).toContain(
+      'permanentRedirect("/services/blockchain-tokenization-payment-infrastructure")',
+    );
+  });
+
+  it("retains metadata and structured-data boundaries on further public marketing routes", async () => {
+    const [values, howWeWork, paymentsAdvisory] = await Promise.all(
+      [
         "src/app/values/page.tsx",
         "src/app/howwework/page.tsx",
         "src/app/payments-advisory/page.tsx",
       ].map((path) => readFile(projectFile(path), "utf8")),
     );
-
-    expect(web3).toContain('from "@/lib/content/seo"');
-    expect(web3).toContain('getPageSeo("/web3")');
-    expect(web3).toContain("withSeoOverrides(");
-    expect(web3).toContain("serviceJsonLd(");
-    expect(web3).toContain("breadcrumbJsonLd(");
 
     for (const source of [values, howWeWork, paymentsAdvisory]) {
       expect(source).toContain("export const metadata");
