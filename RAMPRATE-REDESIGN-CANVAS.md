@@ -98,6 +98,20 @@ The redesign must retain the independent `/cms` authentication system, managed d
 4. Apply the shared visual system to the priority public pages, then introduce only approved image or video treatment.
 5. Validate desktop and mobile readability, keyboard navigation, route redirects, CMS independence, SEO, test suite, lint, and production build.
 
+## Restarted Live Homepage Parity Finding
+
+The current live homepage was reviewed afresh on 2026-09-16 alongside the feature-branch homepage. The live page continues to present the legacy Practices navigation, six branded-practice cards, Thinking and Engage navigation, and the retired "Tell Us What’s Broken" action. Those labels, information architecture, and conversion language are intentionally superseded by the approved feature-branch Services, Case Studies, About, Blog, and Contact Us architecture.
+
+The retained reference value is behavioral rather than literal: a high-contrast enterprise hero, clear supporting proof, and decisive action hierarchy. The feature homepage preserves those valid signals through its existing cinematic imagery, explicit technology-decision proposition, Book a Call and Case Studies actions, plain-language Services navigation, and accessible responsive presentation. No live content change is required from this comparison because the observed differences are deliberately approved redesign decisions.
+
+The current live About page was also reviewed afresh. Its enterprise-advisor positioning, company longevity, global operating context, and B Lab credibility remain valid content themes. Its legacy Practices, Thinking, and Engage navigation plus the obsolete "Start a Conversation" conversion language are intentionally superseded. The feature About page already retains the approved long-view credibility and the durable Thinking journey destination, so no live-content import is required from this comparison.
+
+The current live Case Studies page was reviewed afresh. Its named result themes and evidence-oriented case-study framing are compatible with the feature experience, but its legacy navigation, rust-dominant treatment, and generalized client-testimonial language are superseded. The feature Proof surface already presents the retained case material using the approved navy-paper-gold system and the explicit **Case proof** guardrail; no unverified quote, rating, or attribution is imported from the live page.
+
+The current live Blog archive was reviewed afresh. Its category-led archive, article titles, public article URLs, and technology, sourcing, impact, and blockchain themes remain the relevant parity baseline. The feature archive intentionally retains those database-backed content and taxonomy behaviors while replacing the legacy header, practice taxonomy, and uneven archive presentation with the shared public system. No public content migration is required from this comparison.
+
+The current live Contact page was reviewed afresh. Its direct contact form, scheduling path, email, phone, and location-oriented information remain valid user-facing functions. The feature Contact experience already preserves the real form and direct contact paths in the shared visual system. Legacy topic labels tied to branded practices and its older navigation remain intentionally superseded by the approved plain-language services taxonomy, so no live content import is required.
+
 ## References
 
 [1] [RampRate feature font configuration](src/app/layout.tsx)
