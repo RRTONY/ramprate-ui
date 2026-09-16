@@ -1,5 +1,4 @@
 "use client";
-"use client";
 
 import Link from "next/link";
 
@@ -235,14 +234,14 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 py-12"
-      style={{ background: "#000000", fontFamily: "'Inter', sans-serif" }}
+      style={{ background: "var(--rr-navy)", fontFamily: "var(--font-body)" }}
     >
       <div
         className="w-full max-w-md rounded-md text-center px-8 py-14 sm:px-12"
         style={{
-          background: "#F5F2EC",
-          borderTop: "4px solid #5B21B6",
-          boxShadow: "0 4px 32px rgba(0,0,0,0.10)",
+          background: "var(--rr-paper)",
+          borderTop: "4px solid var(--gold)",
+          boxShadow: "0 24px 52px rgba(5,11,20,0.28)",
           transform: shake ? "translateX(-6px)" : "none",
           transition: "transform 0.1s",
         }}
@@ -252,7 +251,7 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
         </p>
         <h1
           className="text-4xl sm:text-5xl font-bold mb-4 leading-tight tracking-tight text-zinc-900"
-          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Ownership Brief
         </h1>
@@ -273,7 +272,7 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
           placeholder="Enter access code"
           className="w-full rounded px-5 py-4 text-sm text-center tracking-widest outline-none font-mono mb-3"
           style={{
-            background: "#E8E4DB",
+            background: "#f0ede5",
             border: error ? "1.5px solid #EF4444" : "1.5px solid transparent",
             color: "#374151",
           }}
@@ -286,9 +285,13 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
         <button
           onClick={attempt}
           className="w-full py-4 text-white font-bold text-xs tracking-widest uppercase rounded cursor-pointer transition-colors"
-          style={{ background: "#5B21B6" }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#4C1D95")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "#5B21B6")}
+          style={{ background: "var(--gold)", color: "var(--rr-navy)" }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "var(--gold-light)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = "var(--gold)")
+          }
         >
           Enter
         </button>

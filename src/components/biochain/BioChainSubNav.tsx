@@ -14,7 +14,8 @@ const tabs = [
 export default function BioChainSubNav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const isLightHeroPage = pathname === "/biochain";
+  const isLightHeroPage =
+    pathname === "/biochain" || pathname === "/biochain-sourcing";
   const light = scrolled || isLightHeroPage;
 
   useEffect(() => {
