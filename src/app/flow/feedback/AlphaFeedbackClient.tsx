@@ -1,15 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Input } from "@/components/flow/ui/input";
 import { Label } from "@/components/flow/ui/label";
-import { Star, MessageSquare, ThumbsUp, Send, CheckCircle2 } from "lucide-react";
+import {
+  Star,
+  MessageSquare,
+  ThumbsUp,
+  Send,
+  CheckCircle2,
+} from "lucide-react";
 import { trpc } from "@/lib/flow/trpc";
 
-function StarRating({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) {
+function StarRating({
+  value,
+  onChange,
+  label,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  label: string;
+}) {
   return (
     <div className="space-y-2">
       <Label className="text-gray-300">{label}</Label>
@@ -32,7 +50,9 @@ function StarRating({ value, onChange, label }: { value: number; onChange: (v: n
 
 export default function AlphaFeedbackClient() {
   const [submitted, setSubmitted] = useState(false);
-  const [authorName, setAuthorName] = useState(() => localStorage.getItem("assessment_guest_name") || "");
+  const [authorName, setAuthorName] = useState(
+    () => localStorage.getItem("assessment_guest_name") || "",
+  );
   const [authorEmail, setAuthorEmail] = useState("");
   const [accuracyRating, setAccuracyRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -66,36 +86,40 @@ export default function AlphaFeedbackClient() {
   if (submitted) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center space-y-6 max-w-lg"
-        >
+        <div className="flow-alpha-feedback-success text-center space-y-6 max-w-lg">
           <div className="flex justify-center">
             <div className="bg-green-500 p-4 rounded-full">
               <CheckCircle2 className="w-12 h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-black uppercase tracking-tighter">Feedback Received</h1>
+          <h1 className="text-4xl font-black uppercase tracking-tighter">
+            Feedback Received
+          </h1>
           <p className="text-gray-300 text-lg">
-            Thank you for being part of the alpha, <strong className="text-white">{authorName}</strong>. Your feedback is shaping the future of team dynamics assessment.
+            Thank you for being part of the alpha,{" "}
+            <strong className="text-white">{authorName}</strong>. Your feedback
+            is shaping the future of team dynamics assessment.
           </p>
           <div className="flex flex-col gap-3">
             <Button
-              onClick={() => { window.location.href = "/results"; }}
+              onClick={() => {
+                window.location.href = "/results";
+              }}
               className="bg-white text-black hover:bg-gray-200 font-bold"
             >
               View My Results
             </Button>
             <Button
-              onClick={() => { window.location.href = "/flow"; }}
+              onClick={() => {
+                window.location.href = "/flow";
+              }}
               variant="outline"
               className="border-white/20 text-white hover:bg-white/10"
             >
               Back to Home
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -103,11 +127,7 @@ export default function AlphaFeedbackClient() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 py-16 space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-alpha-feedback-heading text-center space-y-4">
           <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">
             <MessageSquare className="w-4 h-4" /> Alpha Feedback
           </div>
@@ -115,15 +135,18 @@ export default function AlphaFeedbackClient() {
             Share Your Impression
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            You are one of the first people to experience The Flow Circuit. Your honest feedback is invaluable.
+            You are one of the first people to experience The Flow Circuit. Your
+            honest feedback is invaluable.
           </p>
-        </motion.div>
+        </div>
 
         <div className="space-y-6">
           {/* Identity */}
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="text-lg text-white">Your Identity</CardTitle>
+              <CardTitle className="text-lg text-white">
+                Your Identity
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
@@ -152,7 +175,9 @@ export default function AlphaFeedbackClient() {
           {/* Individual Assessment Feedback */}
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="text-lg text-white">Your Individual Assessment</CardTitle>
+              <CardTitle className="text-lg text-white">
+                Your Individual Assessment
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <StarRating
@@ -161,7 +186,9 @@ export default function AlphaFeedbackClient() {
                 label="How accurate was your role assignment? (1 = Way Off, 5 = Nailed It)"
               />
               <div className="space-y-2">
-                <Label className="text-gray-300">What was your reaction? Did anything surprise you?</Label>
+                <Label className="text-gray-300">
+                  What was your reaction? Did anything surprise you?
+                </Label>
                 <textarea
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -175,7 +202,9 @@ export default function AlphaFeedbackClient() {
           {/* Team Dynamic Feedback */}
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="text-lg text-white">Team Dynamic Report (if you saw it)</CardTitle>
+              <CardTitle className="text-lg text-white">
+                Team Dynamic Report (if you saw it)
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <StarRating
@@ -184,7 +213,9 @@ export default function AlphaFeedbackClient() {
                 label="How useful was the team matrix/group dynamic view? (1 = Not Useful, 5 = Game-Changing)"
               />
               <div className="space-y-2">
-                <Label className="text-gray-300">Any thoughts on the team dynamics insights?</Label>
+                <Label className="text-gray-300">
+                  Any thoughts on the team dynamics insights?
+                </Label>
                 <textarea
                   value={teamComment}
                   onChange={(e) => setTeamComment(e.target.value)}
@@ -198,30 +229,44 @@ export default function AlphaFeedbackClient() {
           {/* Overall Alpha Feedback */}
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="text-lg text-white">Overall Alpha Experience</CardTitle>
+              <CardTitle className="text-lg text-white">
+                Overall Alpha Experience
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label className="text-gray-300">Would you recommend this to other teams?</Label>
+                <Label className="text-gray-300">
+                  Would you recommend this to other teams?
+                </Label>
                 <div className="flex gap-4">
                   <Button
                     variant={wouldRecommend === true ? "default" : "outline"}
                     onClick={() => setWouldRecommend(true)}
-                    className={wouldRecommend === true ? "bg-green-600 hover:bg-green-700 text-white" : "border-white/20 text-white hover:bg-white/10"}
+                    className={
+                      wouldRecommend === true
+                        ? "bg-green-600 hover:bg-green-700 text-white"
+                        : "border-white/20 text-white hover:bg-white/10"
+                    }
                   >
                     <ThumbsUp className="w-4 h-4 mr-2" /> Yes, absolutely
                   </Button>
                   <Button
                     variant={wouldRecommend === false ? "default" : "outline"}
                     onClick={() => setWouldRecommend(false)}
-                    className={wouldRecommend === false ? "bg-red-600 hover:bg-red-700 text-white" : "border-white/20 text-white hover:bg-white/10"}
+                    className={
+                      wouldRecommend === false
+                        ? "bg-red-600 hover:bg-red-700 text-white"
+                        : "border-white/20 text-white hover:bg-white/10"
+                    }
                   >
                     Not yet
                   </Button>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-gray-300">Any suggestions for improvement?</Label>
+                <Label className="text-gray-300">
+                  Any suggestions for improvement?
+                </Label>
                 <textarea
                   value={suggestion}
                   onChange={(e) => setSuggestion(e.target.value)}
@@ -238,8 +283,12 @@ export default function AlphaFeedbackClient() {
             disabled={!authorName.trim() || submitFeedback.isPending}
             className="w-full bg-yellow-400 text-black hover:bg-white h-14 text-lg font-bold uppercase tracking-widest"
           >
-            {submitFeedback.isPending ? "Submitting..." : (
-              <span className="flex items-center gap-2"><Send className="w-5 h-5" /> Submit Feedback</span>
+            {submitFeedback.isPending ? (
+              "Submitting..."
+            ) : (
+              <span className="flex items-center gap-2">
+                <Send className="w-5 h-5" /> Submit Feedback
+              </span>
             )}
           </Button>
         </div>
