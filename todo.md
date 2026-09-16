@@ -153,7 +153,10 @@
 - [x] Keep all source commits and pushes exclusively in RRTONY/ramprate-ui on feat/ramprate-product-completion; use the managed workspace only for local development and preview.
 - [x] Align the BioChain catalogue path with the live client-intake application and retire or redirect the feature-only catalogue listing without disturbing existing form persistence.
 - [x] Align the live and feature BioChain supplier-application route behavior after verifying the current live path and the feature route response.
-- [ ] Repair the verified Flow route parity failures found in the full live sitemap audit, prioritizing routes that render a generic fallback or fail to load their primary client content.
+- [x] Repair the verified Flow route parity failures found in the full live sitemap audit, prioritizing routes that render a generic fallback or fail to load their primary client content; production-mode verification confirmed no deployed Flow parity failure.
+- [x] Re-verify the previously transient Flow parity candidates through rendered live-versus-feature comparisons, preserving the external Flow architecture and making no change unless a current user-facing difference is confirmed.
+- [x] Verify the shared Flow `ClientOnly` mount guard against live and production-mode assessment rendering; retain the existing production-safe guard because the managed development renderer’s ecosystem-only view is not a deployed product defect.
+- [x] Verify the managed secure preview origin configuration for client-only Flow route hydration; no preview-specific configuration is retained because production-mode rendering is correct.
 - [x] Reconcile the live and feature search-route presentation after the full sitemap audit identifies the specific current-content difference.
 - [x] Add compatible managed-content safeguards for faceted blog URLs and duplicate RampRate title suffixes, based on the current master behavior without restoring Sanity.
 - [x] Remove the reintroduced “Tell Us What's Broken” homepage hero action and preserve the approved current hero action set on desktop and mobile.
