@@ -8,53 +8,87 @@ This canvas converts the approved direction into an implementation-ready public 
 
 ## Recommended Public Navigation
 
-| Navigation label | Destination | Visitor purpose | Implementation note |
-| --- | --- | --- | --- |
-| **Services** | `/services` | Understand the work RampRate can do. | Use a simple desktop dropdown and a direct mobile disclosure. Show four core RampRate services in plain language; present ImpactSol independently below. |
-| **Case Studies** | `/proof` | See evidence before starting a conversation. | Retain existing proof and client-result records. |
-| **About** | `/about` | Understand the people, values, and long view behind RampRate. | Add the existing Thinking timeline or journey as an About chapter. The primary navigation no longer needs a Thinking item. |
-| **Blog** | `/blog` | Explore current insights and archive content. | Preserve the database-backed archive, category filters, and SEO. |
-| **Contact Us** | `/contact` | Start a direct conversation. | Use this exact plain-language label consistently in shared navigation and calls to action. |
+| Navigation label | Destination | Visitor purpose                                               | Implementation note                                                                                                                                      |
+| ---------------- | ----------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Services**     | `/services` | Understand the work RampRate can do.                          | Use a simple desktop dropdown and a direct mobile disclosure. Show four core RampRate services in plain language; present ImpactSol independently below. |
+| **Case Studies** | `/proof`    | See evidence before starting a conversation.                  | Retain existing proof and client-result records.                                                                                                         |
+| **About**        | `/about`    | Understand the people, values, and long view behind RampRate. | Add the existing Thinking timeline or journey as an About chapter. The primary navigation no longer needs a Thinking item.                               |
+| **Blog**         | `/blog`     | Explore current insights and archive content.                 | Preserve the database-backed archive, category filters, and SEO.                                                                                         |
+| **Contact Us**   | `/contact`  | Start a direct conversation.                                  | Use this exact plain-language label consistently in shared navigation and calls to action.                                                               |
 
 Legacy public URLs should remain valid through permanent redirects where a route is consolidated. This protects current links and indexed URLs while moving visitors toward the clear public architecture.
 
 ## Plain-Language Service Model
 
-| Public service | Suggested canonical route | What a visitor should understand immediately | Continuity with existing work |
-| --- | --- | --- | --- |
-| **Relationship & Specialist Sourcing** | `/services/relationship-specialist-sourcing` | Find the right technology, specialist, or partner and structure a high-confidence selection. | Reframes Sourcing and relevant technology infrastructure work. |
-| **Deal & Partnership Structuring** | `/services/deal-partnership-structuring` | Turn complex supplier, commercial, and strategic relationships into durable agreements. | Reframes Torque, telecom, and deal-structure work. |
-| **Blockchain, Tokenization & Payment Infrastructure** | `/services/blockchain-tokenization-payment-infrastructure` | Design the commercial and operational foundations for tokenized, blockchain, and payment initiatives. | Reframes Stratum, Web3, and Payments Advisory work. |
-| **Growth Strategy & Fractional Execution** | `/services/growth-strategy-fractional-execution` | Move from growth decision to accountable delivery with senior, embedded support. | Reframes Growth and selected executive advisory work. |
-| **ImpactSol: Impact, ESG & Non-Dilutive Capital Advisory** | `/impactsoul` | A distinct RampRate-affiliated brand for measurable impact, ESG, and non-dilutive capital work. | Remains its own brand, visual section, and dedicated route—not a generic Services card. |
+| Public service                                             | Suggested canonical route                                  | What a visitor should understand immediately                                                          | Continuity with existing work                                                           |
+| ---------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Relationship & Specialist Sourcing**                     | `/services/relationship-specialist-sourcing`               | Find the right technology, specialist, or partner and structure a high-confidence selection.          | Reframes Sourcing and relevant technology infrastructure work.                          |
+| **Deal & Partnership Structuring**                         | `/services/deal-partnership-structuring`                   | Turn complex supplier, commercial, and strategic relationships into durable agreements.               | Reframes Torque, telecom, and deal-structure work.                                      |
+| **Blockchain, Tokenization & Payment Infrastructure**      | `/services/blockchain-tokenization-payment-infrastructure` | Design the commercial and operational foundations for tokenized, blockchain, and payment initiatives. | Reframes Stratum, Web3, and Payments Advisory work.                                     |
+| **Growth Strategy & Fractional Execution**                 | `/services/growth-strategy-fractional-execution`           | Move from growth decision to accountable delivery with senior, embedded support.                      | Reframes Growth and selected executive advisory work.                                   |
+| **ImpactSol: Impact, ESG & Non-Dilutive Capital Advisory** | `/impactsoul`                                              | A distinct RampRate-affiliated brand for measurable impact, ESG, and non-dilutive capital work.       | Remains its own brand, visual section, and dedicated route—not a generic Services card. |
 
 Every service page should use the same scannable sequence: one-sentence outcome, the decision it solves, three concrete engagement moments, a relevant **approved** testimonial or named case-proof record, related insights, and a direct **Book a Call** action. No testimonial quote, company attribution, result, or rating should be invented.
 
 ## Homepage Storyboard
 
-| Chapter | Visitor question | Recommended content and action |
-| --- | --- | --- |
-| **Hero** | “What does RampRate do, and why should I care?” | Eyebrow: **Enterprise technology, partnerships & growth.** Headline: **Make complex technology decisions pay off.** Supporting copy explains senior-led sourcing, deal structuring, infrastructure, and execution. Actions: **Book a Call** and **View Case Studies**. |
-| **Decision map** | “Is this relevant to my situation?” | Five concise outcome cards using plain service names. ImpactSol is visually separated and labelled as its own brand. |
-| **Proof field** | “Have you done this before?” | Existing named client-result records, case-study links, and approved evidence rather than generalized promises. |
-| **How RampRate works** | “What happens after we talk?” | A three-step process: Clarify the decision, structure the work, execute with accountability. |
-| **Long-view credibility** | “Why trust RampRate?” | Existing About story, people, B Lab context, and the current Thinking journey/timeline folded into About. |
-| **Final decision** | “What should I do next?” | Repeat one clear Book a Call action with a short expectation-setting line. |
+| Chapter                   | Visitor question                                | Recommended content and action                                                                                                                                                                                                                                         |
+| ------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hero**                  | “What does RampRate do, and why should I care?” | Eyebrow: **Enterprise technology, partnerships & growth.** Headline: **Make complex technology decisions pay off.** Supporting copy explains senior-led sourcing, deal structuring, infrastructure, and execution. Actions: **Book a Call** and **View Case Studies**. |
+| **Decision map**          | “Is this relevant to my situation?”             | Five concise outcome cards using plain service names. ImpactSol is visually separated and labelled as its own brand.                                                                                                                                                   |
+| **Proof field**           | “Have you done this before?”                    | Existing named client-result records, case-study links, and approved evidence rather than generalized promises.                                                                                                                                                        |
+| **How RampRate works**    | “What happens after we talk?”                   | A three-step process: Clarify the decision, structure the work, execute with accountability.                                                                                                                                                                           |
+| **Long-view credibility** | “Why trust RampRate?”                           | Existing About story, people, B Lab context, and the current Thinking journey/timeline folded into About.                                                                                                                                                              |
+| **Final decision**        | “What should I do next?”                        | Repeat one clear Book a Call action with a short expectation-setting line.                                                                                                                                                                                             |
 
 ## Visual and Interaction System
 
-| Layer | Direction |
-| --- | --- |
-| **Brand palette** | Keep RampRate midnight navy as the primary authority field, warm gold as a precise emphasis color, parchment/white for breathing room, and a restrained cool-blue signal. Avoid indiscriminate gradients, violet veils, and decorative effects that obscure copy. |
-| **Typography** | Preserve **Playfair Display** for authoritative editorial headlines, **DM Sans** for readable functional text, and **JetBrains Mono** only for compact labels, data, and navigation details. [1] |
-| **Layout** | Use Apple-like section focus: one clear purpose per chapter, larger visual breathing room, shorter copy blocks, and a consistent content grid. Use the editorial service narrative and numbered decision structure observed in Inside Startups—without copying its copy or identity. [2] [3] |
-| **Proof** | Treat proof as an evidence system: named client contexts, case outcomes, and approved testimonials only. Do not use empty logo walls or invented social proof. |
-| **Motion** | Use CSS-only opacity and transform transitions under 300ms for nonessential reveals. Respect `prefers-reduced-motion`; keyboard interactions remain instant. [4] |
-| **Video** | Add a muted, poster-backed, pause-capable 10–20 second ambient proof film only if a suitable existing or specifically approved brand-safe asset is available. Otherwise the design should use a strong still image and purposeful motion rather than decorative video. |
+| Layer             | Direction                                                                                                                                                                                                                                                                                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Brand palette** | Keep RampRate midnight navy as the primary authority field, warm gold as a precise emphasis color, parchment/white for breathing room, and a restrained cool-blue signal. Avoid indiscriminate gradients, violet veils, and decorative effects that obscure copy.                                                                                     |
+| **Typography**    | Use **Playfair Display** only for editorial headlines, **DM Sans** for all body, navigation, form, call-to-action, and supporting text, and **JetBrains Mono** only for compact labels or data markers where a utility signal is essential. Homepage copy should remain visually calm: one display role and one functional text role per chapter. [1] |
+| **Layout**        | Use Apple-like section focus: one clear purpose per chapter, larger visual breathing room, shorter copy blocks, and a consistent content grid. Use the editorial service narrative and numbered decision structure observed in Inside Startups—without copying its copy or identity. [2] [3]                                                          |
+| **Proof**         | Treat proof as an evidence system: named client contexts, case outcomes, and approved testimonials only. Do not use empty logo walls or invented social proof.                                                                                                                                                                                        |
+| **Motion**        | Use CSS-only opacity and transform transitions under 300ms for nonessential reveals. Respect `prefers-reduced-motion`; keyboard interactions remain instant. [4]                                                                                                                                                                                      |
+| **Video**         | Add a muted, poster-backed, pause-capable 10–20 second ambient proof film only if a suitable existing or specifically approved brand-safe asset is available. Otherwise the design should use a strong still image and purposeful motion rather than decorative video.                                                                                |
 
 ## Content and Trust Guardrails
 
 The redesign must retain the independent `/cms` authentication system, managed database content, public SEO metadata, and current user flows. It must not reintroduce Flow authentication into the CMS, Sanity dependencies, generic template claims, unverified performance figures, or fabricated testimonials. Existing approved case-proof records may be shown as **Case proof** until a verified testimonial quote and attribution are selected.
+
+## Site-wide Modernization Plan
+
+> **Mode:** Redesign · Preserve. The public presentation will be modernized across the site, while public routes, useful content, conversion paths, independent CMS behavior, and working intake forms remain protected.
+
+| Decision                  | Direction                                                                                                                                                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Preserve**              | The RampRate logo, current navigation, canonical URLs, CMS and Flow separation, SEO/JSON-LD, validated form fields and submission behavior, case-proof records, legal content, and the distinct ImpactSol role.     |
+| **Improve**               | Consistent visual hierarchy, shared responsive spacing, public-page surface treatment, accessible interaction states, targeted scroll-led reveals, and a more coherent page-to-page rhythm.                         |
+| **Remove or consolidate** | Redundant branded-practice presentations and competing purple, rust, or unrelated campaign treatments where canonical public destinations exist. Retain compatibility URLs through permanent redirects.             |
+| **Highest-risk change**   | Shared styling could reduce clarity in specialist intake and campaign flows. Keep their route-specific form contracts and only extend the unified visual system around, not through, user inputs and process logic. |
+| **Fallback**              | Each modernization increment remains separately tested, committed, and checkpointed, allowing the project to return to a verified release without changing data or authentication state.                            |
+
+### Design Read
+
+| Dial                    | Chosen direction                                                                                                                                                            |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Audience**            | Enterprise leaders and specialist decision-makers evaluating consequential technology, commercial, and impact work.                                                         |
+| **Visual language**     | Editorial decision-partner: midnight-navy authority fields, paper intervals, narrow controlled-gold emphasis, Playfair Display moments, and precise monospace labels.       |
+| **Visual variance**     | 5/10. Shared structure is more important than page-by-page novelty; individual campaign and ImpactSol contexts retain deliberately narrow distinctions.                     |
+| **Motion intensity**    | 4/10. Scroll-led reveals and media depth create progression without turning business content into a demo reel. All nonessential motion respects reduced-motion preferences. |
+| **Information density** | 6/10. Long-form specialist content remains scannable through short chapters, consistent grids, labeled evidence, and direct calls to action.                                |
+| **Asset dependence**    | 6/10. Existing RampRate identity assets, managed hero media, and approved proof records are used before introducing any new assets.                                         |
+| **Brand fidelity**      | 10/10. The purpose is a unified RampRate experience, not a visual clone of any reference site.                                                                              |
+
+### Route Modernization Groups
+
+| Group                                          | Routes and examples                                                                                                           | Planned approach                                                                                                                             |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core decision experience**                   | `/`, `/services`, service detail routes, `/proof`, `/about`, `/blog`, `/contact`                                              | Maintain the completed shared shell, high-contrast hierarchy, page storytelling rhythm, case-proof guardrails, and responsive navigation.    |
+| **Brand, people, and values**                  | `/values`, `/impactsoul`, `/careers`, `/champions`, team profiles                                                             | Keep the unified shell while preserving each page’s specific subject matter and the deliberate ImpactSol distinction.                        |
+| **Specialist programs and process pages**      | `/process`, `/sourcing/process`, `/payments-advisory`, `/payments-advisory/intake`, `/payments-advisory/intel`, `/biochain/*` | Normalize outer composition and interaction states while protecting specialized intake questions, process steps, and public program content. |
+| **Search, proof, and specialist entry points** | `/search`, `/service-provider-intelligence-index`, `/attorney`, `/attorney-rfi`, `/aidoc-ownership-brief`                     | Improve hierarchy and shell consistency without changing result semantics, access gates, or request workflows.                               |
+| **Legal and compatibility routes**             | `/privacy`, `/terms`, `/legal-master`, legacy branded-practice routes                                                         | Use readable paper-based long-form layouts and maintain valid compatibility redirects to canonical content.                                  |
 
 ## Implementation Sequence
 

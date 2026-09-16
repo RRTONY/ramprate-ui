@@ -289,10 +289,10 @@
   background: oklch(0.78 0.14 75);
 }
 .home-blue .glass-orb-rust {
-  background: #1f5f9e;
+  background: #315f8a;
 }
 .home-blue .glass-orb-pink {
-  background: #7260c7;
+  background: #3b5f78;
 }
 .home-blue-hero {
   background-color: #030914;
@@ -399,7 +399,7 @@
 
 .rr-kicker {
   color: var(--gold);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -834,10 +834,10 @@
   background: #d6ad42;
 }
 .home-blue .glass-orb-rust {
-  background: #1f5f9e;
+  background: #315f8a;
 }
 .home-blue .glass-orb-pink {
-  background: #7260c7;
+  background: #3b5f78;
 }
 .home-blue-hero {
   background-color: #030914;
@@ -878,6 +878,28 @@
     rgb(70 112 160 / 0.13) 38%,
     transparent 70%
   );
+}
+.home-blue .glass-orb-rust {
+  background: #315f8a;
+}
+.home-blue .glass-orb-pink {
+  background: #3b5f78;
+}
+.home-blue .font-mono,
+.home-blue .rr-kicker {
+  font-family: var(--font-body);
+}
+.home-blue .text-rust {
+  color: var(--gold);
+}
+.home-blue .bg-rust\/10 {
+  background-color: color-mix(in srgb, var(--gold) 10%, transparent);
+}
+.home-blue .home-blue-hero-grid {
+  background-image:
+    radial-gradient(circle at 74% 28%, rgb(32 82 138 / 0.2), transparent 31%),
+    radial-gradient(circle at 78% 12%, rgb(214 173 66 / 0.1), transparent 27%),
+    radial-gradient(circle at 8% 100%, rgb(3 8 18 / 0.7), transparent 48%);
 }
 .home-blue .section-sunset .rounded-xl,
 .home-blue .section-warm .rounded-xl,

@@ -36,14 +36,14 @@ const engagements = [
     stats: "$50M in savings while strengthening relationships",
     detail:
       "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
-    accentClass: "bg-[#7260c7]",
+    accentClass: "bg-gold",
   },
   {
     label: "NOIA",
     stats: "US market penetration in months",
     detail:
       "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
-    accentClass: "bg-emerald-500",
+    accentClass: "bg-gold",
   },
 ];
 
@@ -159,12 +159,7 @@ const operateSteps = [
 const serviceCards = services.map((service, index) => ({
   ...service,
   Icon: [Users, BriefcaseBusiness, Boxes, ChartNoAxesCombined][index],
-  accentClass: [
-    "text-gold",
-    "text-[#f0cd6f]",
-    "text-[#8fb8e3]",
-    "text-emerald-300",
-  ][index],
+  accentClass: "text-gold",
 }));
 
 export default function HomeContent() {
@@ -215,7 +210,7 @@ export default function HomeContent() {
                 <span className="text-gold">pay off.</span>
               </h1>
 
-              <p className="home-blue-summary font-mono mt-7 max-w-2xl text-[0.68rem] font-semibold uppercase leading-relaxed tracking-[0.18em] text-white/72 sm:text-xs">
+              <p className="home-blue-summary font-body mt-7 max-w-2xl text-[0.7rem] font-semibold uppercase leading-relaxed tracking-[0.14em] text-white/72 sm:text-xs">
                 Enterprise technology · partnerships · infrastructure · growth
               </p>
 
@@ -244,7 +239,7 @@ export default function HomeContent() {
 
         <div className="home-blue-scroll relative z-10 pb-8 flex justify-center">
           <div className="flex flex-col items-center gap-2 text-white/50">
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
+            <span className="font-body text-[10px] font-semibold tracking-[0.22em] uppercase block">
               Scroll
             </span>
             <ArrowDown size={16} className="animate-bounce" />
@@ -592,7 +587,7 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section className="home-final-cta font-body py-16 sm:py-20 text-center text-white bg-rust">
+      <section className="home-final-cta rr-public-cta font-body py-16 sm:py-20 text-center text-white">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Start with a clearer next move.
@@ -607,7 +602,7 @@ export default function HomeContent() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-dark shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           >
             Book a Call <ArrowRight size={16} aria-hidden="true" />
           </Link>

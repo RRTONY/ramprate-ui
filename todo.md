@@ -176,6 +176,10 @@
 - [x] Apply the unified RampRate visual system to the About hero and journey anchor, creating the approved destination for the existing Thinking journey material without changing managed team or advisor data.
 - [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.
 - [ ] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
+- [ ] Inventory every non-Flow public route and group pages by shared visual structure, interactive forms, and canonical legacy redirects before completing the site-wide modern-style rollout.
+- [ ] Apply the unified modern RampRate CSS, responsive layout standards, and reduced-motion-safe scroll interaction patterns across every remaining public page, preserving approved content, working intake flows, CMS boundaries, SEO, and separate ImpactSol identity.
+- [x] Rework the homepage hero and first-scroll sequence against the supplied reference principles, improving visual hierarchy, cinematic pacing, typography, and motion while preserving the approved copy, real actions, managed media fallback, and reduced-motion behavior.
+- [x] Standardize homepage and public-shell typography on Playfair Display for editorial headings, DM Sans for body and interface text, and JetBrains Mono only for compact labels, eliminating page-specific font inconsistencies without reducing readability.
 - [x] Normalize the Values and ImpactSol public surfaces to remove remaining red/rust visual dominance, retain their managed content and intentional ImpactSol distinction, and preserve responsive behavior.
 - [x] Stabilize the administrative code-check regression timeout so its ESLint and Prettier verification remains deterministic during complete release validation.
 - [x] Review the remaining static public routes and normalize the next verified legacy visual outliers without changing managed content, CMS authentication, or live intake behavior.
