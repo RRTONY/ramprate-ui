@@ -31,7 +31,7 @@ vi.mock("@/components/home/PracticeIcon", () => ({
 import HomeContent from "../../src/components/home/HomeContent";
 
 describe("home visual contract", () => {
-  it("uses the current live hero actions and the shared editorial section system", () => {
+  it("uses the approved single hero action and the shared editorial section system", () => {
     const { container } = render(<HomeContent />);
     const hero = container.querySelector("section.home-blue-hero");
 
@@ -42,9 +42,8 @@ describe("home visual contract", () => {
     expect(hero?.querySelector('a[href="/proof"]')?.textContent).toMatch(
       /see case results/i,
     );
-    expect(hero?.querySelector('a[href="/contact"]')?.textContent).toMatch(
-      /tell us what'?s broken/i,
-    );
+    expect(hero?.querySelector('a[href="/contact"]')).toBeNull();
+    expect(hero?.textContent).not.toMatch(/tell us what'?s broken/i);
 
     [
       "home-proof-section",

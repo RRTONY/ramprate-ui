@@ -282,15 +282,8 @@ export default function HomeContent() {
 
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(214,173,66,0.28)]"
-                >
-                  Tell Us What&apos;s Broken
-                  <ArrowRight size={16} />
-                </Link>
-                <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 border border-white/20 text-white hover:border-white/40 hover:bg-white/5"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:-translate-y-0.5 hover:opacity-95 bg-gold text-dark shadow-[0_8px_30px_rgba(214,173,66,0.28)]"
                 >
                   See Case Results
                   <ArrowRight size={16} />

@@ -154,3 +154,4 @@
 - [ ] Repair the verified Flow route parity failures found in the full live sitemap audit, prioritizing routes that render a generic fallback or fail to load their primary client content.
 - [ ] Reconcile the live and feature search-route presentation after the full sitemap audit identifies the specific current-content difference.
 - [x] Add compatible managed-content safeguards for faceted blog URLs and duplicate RampRate title suffixes, based on the current master behavior without restoring Sanity.
+- [x] Remove the reintroduced “Tell Us What's Broken” homepage hero action and preserve the approved current hero action set on desktop and mobile.
