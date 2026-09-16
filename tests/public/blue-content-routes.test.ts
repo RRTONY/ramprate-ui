@@ -55,7 +55,6 @@ describe("blue public content routes", () => {
       [
         "src/app/careers/page.tsx",
         "src/app/impactsoul/page.tsx",
-        "src/app/torque/page.tsx",
         "src/app/talk-to-us/page.tsx",
       ].map((path) => readFile(projectFile(path), "utf8")),
     );
@@ -69,11 +68,13 @@ describe("blue public content routes", () => {
   });
 
   it("keeps retired branded practice URLs as permanent routes to the approved Services architecture", async () => {
-    const [expertise, growth, web3] = await Promise.all(
+    const [expertise, growth, web3, torque, sourcing] = await Promise.all(
       [
         "src/app/expertise/page.tsx",
         "src/app/growth/page.tsx",
         "src/app/web3/page.tsx",
+        "src/app/torque/page.tsx",
+        "src/app/sourcing/page.tsx",
       ].map((path) => readFile(projectFile(path), "utf8")),
     );
 
@@ -83,6 +84,12 @@ describe("blue public content routes", () => {
     );
     expect(web3).toContain(
       'permanentRedirect("/services/blockchain-tokenization-payment-infrastructure")',
+    );
+    expect(torque).toContain(
+      'permanentRedirect("/services/relationship-specialist-sourcing")',
+    );
+    expect(sourcing).toContain(
+      'permanentRedirect("/services/relationship-specialist-sourcing")',
     );
   });
 

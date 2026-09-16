@@ -176,6 +176,8 @@
 - [x] Apply the unified RampRate visual system to the About hero and journey anchor, creating the approved destination for the existing Thinking journey material without changing managed team or advisor data.
 - [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.
 - [ ] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
+- [x] Review the remaining static public routes and normalize the next verified legacy visual outliers without changing managed content, CMS authentication, or live intake behavior.
+- [x] Redirect the legacy Torque and Sourcing public URLs to their canonical plain-language Services destinations, while retaining the working Talk to Us intake as a deliberate Contact Us compatibility route.
 - [x] Align the Champions, Expertise, Growth, and Web3 routes with the unified public system and retire their residual purple, red, and legacy branded-practice visual language without changing functional intake or advisory content.
 - [x] Align the Expertise, Growth, and Web3 public routes with the unified RampRate system, clear plain-language service narrative, and controlled gold emphasis while retaining existing form and advisory behavior.
 - [x] Create a cinematic shared RampRate motion system with scroll-led section reveals, restrained parallax, and reduced-motion fallbacks rather than page-by-page animated treatments.

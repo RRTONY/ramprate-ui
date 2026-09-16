@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 describe("Torque compatibility route", () => {
-  it("serves the live Torque content and permanently redirects the legacy advisory path", async () => {
+  it("permanently redirects the retired Torque route while retaining the legacy advisory alias", async () => {
     const [torqueSource, legacySource] = await Promise.all([
       readFile(resolve(process.cwd(), "src/app/torque/page.tsx"), "utf8"),
       readFile(
@@ -12,9 +12,10 @@ describe("Torque compatibility route", () => {
       ),
     ]);
 
-    expect(torqueSource).toContain('getPageSeo("/torque")');
-    expect(torqueSource).toContain("Torque - RampRate");
-    expect(torqueSource).toContain("Sourcing the Counsel and");
+    expect(torqueSource).toContain(
+      'permanentRedirect("/services/relationship-specialist-sourcing")',
+    );
+    expect(torqueSource).not.toContain("Torque - RampRate");
     expect(legacySource).toContain(
       'import { permanentRedirect } from "next/navigation"',
     );
