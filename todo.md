@@ -20,7 +20,7 @@
 - [x] Replace the Flow Research Dashboard’s domain-distribution Framer Motion bar with reduced-motion-safe CSS while preserving live research data, chart configuration, delayed bar feedback, and dynamic percentage widths.
 - [x] Replace the Flow Team Dashboard role-distribution Framer Motion bars with reduced-motion-safe CSS while preserving team data, computed percentages, invite controls, and dashboard navigation.
 - [x] Replace Flow Investor Metrics Framer Motion entry wrappers with reduced-motion-safe CSS while preserving authenticated admin access, live metrics, role-distribution widths, and research charts.
-- [ ] Replace Flow Magic Quadrant Framer Motion with reduced-motion-safe CSS and SVG feedback while preserving dynamic point geometry, filter and activation controls, detail selection, tooltips, kinetic connections, and external links.
+- [x] Replace Flow Magic Quadrant Framer Motion with reduced-motion-safe CSS and SVG feedback while preserving dynamic point geometry, filter and activation controls, detail selection, tooltips, kinetic connections, and external links.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
