@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -82,17 +81,15 @@ export default function FrictionCalculator() {
           <h3 className="text-gray-400 uppercase tracking-widest text-sm">
             Annual Wasted Capital
           </h3>
-          <motion.div
+          <div
             key={annualFrictionCost}
-            initial={{ scale: 0.9, opacity: 0.5 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-4xl md:text-5xl font-black text-red-500"
+            className="flow-friction-cost-pop text-4xl md:text-5xl font-black text-red-500"
           >
             $
             {annualFrictionCost.toLocaleString(undefined, {
               maximumFractionDigits: 0,
             })}
-          </motion.div>
+          </div>
           <div className="flex items-center justify-center gap-2 text-red-300 text-sm mt-2">
             <TrendingDown className="w-4 h-4" />
             <span>

@@ -4,7 +4,7 @@
 - [x] Compare the repository with the public Ramprate experience and record missing, broken, or incomplete product flows.
 - [x] Audit environment-variable usage without committing supplied secrets, and document required Sanity, Supabase, Google OAuth, and third-party configuration.
 - [x] Create a dedicated GitHub implementation branch that preserves the selected baseline branch.
-- [ ] Complete missing user-facing pages, content, assets, responsive behaviour, and route interactions in line with existing conventions.
+- [x] Complete missing user-facing pages, content, assets, responsive behaviour, and route interactions in line with existing conventions; the full public-route audit and all verified redesign and compatibility increments are complete.
 - [x] Connect data journeys to Supabase and preserve Sanity-managed content patterns where used by the existing project. Superseded by the confirmed existing external Flow backend architecture.
 - [x] Implement secure Google sign-in with clear signed-in, loading, error, and logged-out states. Deferred to the external Flow backend because it currently exposes only credential authentication.
 - [x] Add or revise automated tests for all changed core journeys and configuration validation.
@@ -13,6 +13,9 @@
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
+- [x] Replace the Flow Friction Calculator’s two static Framer Motion entry wrappers with semantic reduced-motion-safe CSS while preserving its calculations and interactive controls.
+- [ ] Complete a file-by-file fixed inline-style remediation pass for high-count public and Flow components, converting all reusable fixed presentation into semantic CSS or Tailwind while preserving calculated geometry and interactive state styles.
 - [x] Move the shared public Hero fallback gradients into semantic CSS and replace its retired Expertise and Start a Conversation fallback actions with the approved Services and Book a Call destinations.
 - [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.
 - [x] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
@@ -183,7 +186,7 @@
 - [x] Apply the unified RampRate navy, paper, and controlled-gold system to the Case Studies and Contact routes, replacing remaining high-visibility red/rust treatments without changing evidence or form behavior.
 - [x] Audit and align the remaining high-visibility static public routes with the approved unified RampRate navy, paper, and controlled-gold system while preserving intentional ImpactSol differentiation.
 - [x] Inventory every non-Flow public route and group pages by shared visual structure, interactive forms, and canonical legacy redirects before completing the site-wide modern-style rollout.
-- [ ] Apply the unified modern RampRate CSS, responsive layout standards, and reduced-motion-safe scroll interaction patterns across every remaining public page, preserving approved content, working intake flows, CMS boundaries, SEO, and separate ImpactSol identity.
+- [x] Apply the unified modern RampRate CSS, responsive layout standards, and reduced-motion-safe scroll interaction patterns across every remaining public page, preserving approved content, working intake flows, CMS boundaries, SEO, and separate ImpactSol identity; legal and Flow product surfaces retain their deliberate specialized presentation.
 - [x] Normalize the BioChain Sourcing header on its light specialist landing surface and align the restricted AI ownership-brief access screen with the shared navy-paper-gold system without changing route access, document protection, or form behavior.
 - [x] Modernize the How We Work, Careers, Proof, and Private Advisory public surfaces with the shared type, navy-paper-gold system, and reduced-motion-safe interaction patterns without changing public content, real actions, or SEO behavior.
 - [x] Review and normalize the public Process, Payments Advisory, and BioChain program surfaces with the shared typography and visual system while preserving specialist intake fields, public flow behavior, and managed content.
