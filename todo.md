@@ -36,6 +36,7 @@
 - [x] Replace Flow Find Your Path Framer Motion display layers with reduced-motion-safe CSS while preserving portal expansion, hover guidance, internal and external destinations, and content-driven icon colors.
 - [x] Replace Flow Inspirations Framer Motion display wrappers with reduced-motion-safe CSS while preserving thinker and research citations, outbound source links, validation disclosure, and assessment and science actions.
 - [x] Replace Flow SoulPrint Framer Motion display wrappers with reduced-motion-safe CSS and retain tier selection, alpha availability, order submission, and reflective-framework disclosure; preserve the order CTA without iframe-disruptive scrolling.
+- [x] Replace Flow Deep Calibration Framer Motion and Reorder with reduced-motion-safe CSS and native accessible ranking controls while preserving forced-order scoring, progress, authentication, submission, result comparisons, and retake navigation.
 - [x] Replace Flow Team Map Framer Motion with reduced-motion-safe CSS and native pointer handling while preserving chaotic and fixed team geometry, drag-to-fix controls, flow-path feedback, report capture, tooltips, and sound behavior.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.

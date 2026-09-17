@@ -1468,3 +1468,123 @@
     animation: none;
   }
 }
+
+@keyframes flow-deep-calibration-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-deep-calibration-side-enter {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-deep-calibration-badge-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.flow-deep-calibration-phase-enter {
+  animation: flow-deep-calibration-enter 300ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-deep-calibration-phase-enter--side {
+  animation-name: flow-deep-calibration-side-enter;
+}
+
+.flow-deep-calibration-badge-enter {
+  animation: flow-deep-calibration-badge-enter 220ms 100ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-deep-calibration-progress-bar,
+.flow-deep-calibration-score-bar {
+  transition: width 300ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.flow-deep-calibration-rank-item {
+  transition:
+    transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    box-shadow 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.flow-deep-calibration-rank-item[data-dragging="true"] {
+  transform: scale(1.015);
+  box-shadow: 0 8px 32px rgb(139 92 246 / 0.3);
+}
+
+.flow-deep-calibration-rank-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.5rem;
+  border: 1px solid rgb(148 163 184 / 0.25);
+  border-radius: 0.25rem;
+  color: var(--muted-foreground);
+  transition:
+    color 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    border-color 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+    background-color 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.flow-deep-calibration-rank-button:hover:not(:disabled),
+.flow-deep-calibration-rank-button:focus-visible {
+  border-color: rgb(167 139 250 / 0.75);
+  color: rgb(196 181 253);
+  background-color: rgb(139 92 246 / 0.12);
+}
+
+.flow-deep-calibration-rank-button:focus-visible {
+  outline: 2px solid rgb(196 181 253 / 0.9);
+  outline-offset: 2px;
+}
+
+.flow-deep-calibration-rank-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.flow-deep-calibration-spinner {
+  animation: flow-deep-calibration-spin 2s linear infinite;
+}
+
+@keyframes flow-deep-calibration-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-deep-calibration-phase-enter,
+  .flow-deep-calibration-badge-enter,
+  .flow-deep-calibration-spinner {
+    animation: none;
+  }
+
+  .flow-deep-calibration-progress-bar,
+  .flow-deep-calibration-score-bar,
+  .flow-deep-calibration-rank-item,
+  .flow-deep-calibration-rank-button {
+    transition: none;
+  }
+}
