@@ -372,7 +372,7 @@ export default function TorquePage() {
                 Torque
               </span>
               <span
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold"
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 , by RampRate.
