@@ -44,7 +44,8 @@ describe("marketing header scroll state", () => {
 
     fireEvent.mouseEnter(screen.getByRole("button", { name: /services/i }));
     expect(screen.getByText("Deal & Partnership Structuring")).toBeTruthy();
-    expect(screen.queryByText("Torque")).toBeNull();
+    expect(screen.getByText("Torque")).toBeTruthy();
+    expect(screen.getByText("Syzygy")).toBeTruthy();
     expect(screen.queryByText("Private Advisory")).toBeNull();
 
     Object.defineProperty(window, "scrollY", { value: 1, configurable: true });

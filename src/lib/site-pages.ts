@@ -8,6 +8,15 @@ export interface SitePage {
 
 export const SITE_PAGES: SitePage[] = [
   {
+    title: "Kumbaya - The Shared Upside Protocol",
+    path: "/kumbaya",
+    type: "page",
+    keywords:
+      "event sponsorship speaker partnerships impact distribution shared upside community opportunity intake",
+    description:
+      "A RampRate and ImpactSol intake for events, companies, causes, and stories where useful relationships, distribution, or shared upside can create meaningful progress.",
+  },
+  {
     title: "Sourcing - Enterprise IT Advisory",
     path: "/sourcing",
     type: "practice",

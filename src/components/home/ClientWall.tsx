@@ -1,26 +1,68 @@
 "use client";
 
 import { useState } from "react";
+import {
+  Cpu,
+  Globe2,
+  Network,
+  Newspaper,
+  PanelsTopLeft,
+  Radio,
+  Server,
+  Store,
+  type LucideIcon,
+} from "lucide-react";
 
 /* ── CLIENT LOGO WALL - Two-Tier ── */
 const tier1Clients = [
-  { name: "Microsoft", context: "50+ strategy & product studies" },
+  {
+    name: "Microsoft",
+    context: "50+ strategy & product studies",
+    icon: PanelsTopLeft,
+    iconLabel: "Strategy and product studies",
+  },
   {
     name: "eBay",
     context: "$50M in savings & social impact dashboard for data centers",
+    icon: Server,
+    iconLabel: "Data center optimization",
   },
-  { name: "Sony", context: "M&A for strategic pivot" },
+  {
+    name: "Sony",
+    context: "M&A for strategic pivot",
+    icon: Network,
+    iconLabel: "Strategic alliance work",
+  },
   {
     name: "Paramount",
     context: "14 years of de-risking record-breaking streaming events",
+    icon: Radio,
+    iconLabel: "Broadcast infrastructure",
   },
-  { name: "Intel", context: "Digital strategy & alliances research" },
-  { name: "Nike", context: "49% savings on high complexity retail front-end" },
+  {
+    name: "Intel",
+    context: "Digital strategy & alliances research",
+    icon: Cpu,
+    iconLabel: "Technology strategy",
+  },
+  {
+    name: "Nike",
+    context: "49% savings on high complexity retail front-end",
+    icon: Store,
+    iconLabel: "Retail infrastructure",
+  },
   {
     name: "Hearst",
     context: "Millions in savings reinvested in innovation fund we planned",
+    icon: Newspaper,
+    iconLabel: "Publishing innovation",
   },
-  { name: "Riot Games", context: "Supported rapid global expansion" },
+  {
+    name: "Riot Games",
+    context: "Supported rapid global expansion",
+    icon: Globe2,
+    iconLabel: "Global expansion",
+  },
 ];
 const tier2Clients = [
   { name: "Disney", context: "Best IT services deal during executive tenure" },
@@ -47,9 +89,24 @@ const tier2Clients = [
   { name: "Primedia", context: "Needs assessment in record time" },
 ];
 
-function ClientCard({ name, context }: { name: string; context: string }) {
+function ClientCard({
+  name,
+  context,
+  icon: Icon,
+  iconLabel,
+}: {
+  name: string;
+  context: string;
+  icon?: LucideIcon;
+  iconLabel?: string;
+}) {
   return (
     <div className="rr-client-ledger-card text-center px-3 py-4 sm:px-4 sm:py-5">
+      {Icon ? (
+        <span className="rr-client-ledger-icon" aria-label={iconLabel}>
+          <Icon size={16} strokeWidth={1.65} aria-hidden="true" />
+        </span>
+      ) : null}
       <h3 className="font-body text-[0.68rem] sm:text-xs font-bold tracking-[0.13em] uppercase text-white/80">
         {name}
       </h3>

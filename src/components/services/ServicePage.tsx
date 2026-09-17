@@ -27,6 +27,12 @@ export default function ServicePage({ service }: { service: ServiceOffering }) {
           <p className="font-mono text-[0.68rem] font-medium uppercase tracking-[0.22em] text-gold">
             {service.eyebrow}
           </p>
+          {service.legacyIdentity ? (
+            <p className="mt-4 font-mono text-[0.63rem] font-bold uppercase tracking-[0.16em] text-gold/80">
+              {service.legacyIdentity.name} ·{" "}
+              {service.legacyIdentity.description}
+            </p>
+          ) : null}
           <div className="mt-7 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.72fr)] lg:items-end">
             <div>
               <h1 className="max-w-4xl font-display text-5xl font-bold leading-[0.95] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">

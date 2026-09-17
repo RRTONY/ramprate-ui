@@ -65,9 +65,17 @@ export default function ServicesPage() {
               href={`/services/${service.slug}`}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:p-8"
             >
-              <span className="font-mono text-xs tracking-[0.18em] text-gold">
-                0{index + 1}
-              </span>
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-xs tracking-[0.18em] text-gold">
+                  0{index + 1}
+                </span>
+                {service.legacyIdentity ? (
+                  <span className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.14em] text-gold/80">
+                    {service.legacyIdentity.name} ·{" "}
+                    {service.legacyIdentity.description}
+                  </span>
+                ) : null}
+              </div>
               <h3 className="mt-10 max-w-md font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
                 {service.title}
               </h3>

@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 describe("shared public navigation contract", () => {
-  it("uses the approved plain-language Services taxonomy and excludes retired navigation labels", async () => {
+  it("uses the approved plain-language Services taxonomy with requested legacy identity markers", async () => {
     const source = await readFile(
       resolve(process.cwd(), "src/components/layout/Header.tsx"),
       "utf8",
@@ -17,6 +17,8 @@ describe("shared public navigation contract", () => {
     expect(source).toContain('label: "Contact Us"');
     expect(source).not.toContain('label: "Thinking"');
     expect(source).not.toContain('label: "Engage"');
-    expect(source).not.toContain('label: "Torque"');
+    expect(source).toContain('legacyLabel: "Torque"');
+    expect(source).toContain('legacyLabel: "Syzygy"');
+    expect(source).toContain("rr-header-service-identity");
   });
 });

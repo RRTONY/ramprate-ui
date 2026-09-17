@@ -232,7 +232,7 @@ export default function HomeContent() {
               <div className="home-blue-actions mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-bold text-[#071221] shadow-[0_8px_30px_rgba(214,173,66,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:scale-[0.97]"
+                  className="rr-booking-action font-body inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-bold shadow-[0_8px_30px_rgba(214,173,66,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:scale-[0.97]"
                 >
                   Book a Call <ArrowRight size={16} aria-hidden="true" />
                 </Link>
@@ -622,7 +622,7 @@ export default function HomeContent() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-dark shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+            className="rr-booking-action inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-gold shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           >
             Book a Call <ArrowRight size={16} aria-hidden="true" />
           </Link>

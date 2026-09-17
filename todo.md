@@ -13,13 +13,26 @@
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Audit the supplied Open Loyalty, Reelo, Inside Startups, and shadcn navigation references against the existing public homepage contracts before the visual refresh.
 - [x] Normalize public homepage typography to the approved Playfair Display and DM Sans system so shared chrome, hero, proof, and section content do not introduce competing font families.
+- [ ] Audit all non-Flow public routes for typography and color drift, then apply shared RampRate heading, body, label, surface, and accent primitives without changing public content, SEO, legal text, forms, CMS boundaries, or specialist-route behavior.
+- [ ] Correct Compensation-section surface contrast and audit shared Book a Call action text across public backgrounds and interaction states so all booking labels remain visibly readable.
+- [x] Replace visible LinkedIn and X footer text with accessible Lucide social icons while preserving their external destinations and labels.
+- [x] Review the reference-only master branch and restore valid Torque and Syzygy service entries, routes, and public navigation without changing master or displacing the canonical plain-language service taxonomy.
+- [ ] Inspect and restore the legacy Kumbaya public page with verified content, route behavior, and current RampRate public styling, without changing master or exposing private data.
 - [x] Rebuild the public header and responsive mobile navigation with an accessible grouped Services menu, consistent scroll treatment, and retained canonical destinations.
 - [x] Refresh the public homepage sections, including the “25 Years Inside the World’s Most Complex Enterprises” proof narrative, with a coherent navy, paper, and gold editorial system and retained calls to action.
 - [ ] Add rights-appropriate editorial imagery to the homepage Selected Engagements cards while retaining each verified engagement’s copy, evidence, link behavior, and responsive accessibility.
+- [x] Add a clear visual evidence layer to the homepage 25 Years client proof area, using accessible icons or approved imagery while retaining verified company records, outcomes, and the existing client expansion behavior.
 - [x] Reframe the homepage Why We’re Different section as a clear modern decision comparison, retaining the verified contrast claims and existing calls to action.
 - [x] Redesign the public footer to match the refreshed header and homepage system while retaining legal, service, and contact navigation.
 - [x] Improve the managed cinematic homepage hero video treatment and static reduced-motion fallback without committing local media bytes.
 - [x] Add a restrained accessible liquid-glass treatment to the public hero status pill and secondary CTA, guided by the supplied reference crops without reducing contrast or focus visibility.
+- [x] Remove the shared header Book a Call control while preserving Contact Us navigation, accessible menu behavior, and page-level booking actions.
+- [ ] Audit every public Book a Call variant route-by-route, correct remaining foreground/background inconsistencies, and add focused source coverage for non-home booking actions.
+- [x] Reconcile Torque and Syzygy displayed identities with their compatibility routes so legacy labels, canonical services, and `/torque` and `/growth` behavior point to coherent offerings.
+- [ ] Complete the Kumbaya page’s verified live-page contract, including B Lab and Sprout Social links plus the remaining relevant intake-detail fields, with focused route coverage.
+- [ ] Restore the remaining verified Kumbaya live-page content blocks and missing purpose path, including Bring purpose, mission, vision, values, and the example-output explanation.
+- [ ] Implement the Kumbaya venue photo or moodboard attachment workflow through approved storage and record only attachment metadata with the database-backed submission.
+- [ ] Extend Kumbaya regression coverage to protect the full live-page content, attachment, and intake-detail contract.
 - [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.

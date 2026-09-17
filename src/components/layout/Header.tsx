@@ -12,7 +12,8 @@ const services = [
   {
     label: "Relationship & Specialist Sourcing",
     href: "/services/relationship-specialist-sourcing",
-    desc: "Find the right partner",
+    desc: "Torque · Specialist sourcing",
+    legacyLabel: "Torque",
   },
   {
     label: "Deal & Partnership Structuring",
@@ -27,7 +28,8 @@ const services = [
   {
     label: "Growth Strategy & Fractional Execution",
     href: "/services/growth-strategy-fractional-execution",
-    desc: "Turn plans into progress",
+    desc: "Syzygy · Growth strategy",
+    legacyLabel: "Syzygy",
   },
 ];
 
@@ -151,6 +153,11 @@ export default function Header() {
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span>
+                        {service.legacyLabel ? (
+                          <span className="rr-header-service-identity">
+                            {service.legacyLabel}
+                          </span>
+                        ) : null}
                         <span className="rr-header-service-title">
                           {service.label}
                         </span>
@@ -179,9 +186,6 @@ export default function Header() {
           <div className="rr-public-header-utilities">
             <HeaderSearch scrolled={dark} />
             <SiteSearch scrolled={dark} />
-            <Link href="/contact" className="rr-header-cta">
-              Book a Call <ArrowRight size={14} aria-hidden="true" />
-            </Link>
           </div>
         </div>
 
@@ -228,6 +232,11 @@ export default function Header() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span>
+                    {service.legacyLabel ? (
+                      <span className="rr-header-service-identity">
+                        {service.legacyLabel}
+                      </span>
+                    ) : null}
                     <span className="rr-header-service-title">
                       {service.label}
                     </span>

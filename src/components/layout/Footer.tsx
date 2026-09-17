@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Linkedin, Twitter } from "lucide-react";
 import Logo from "@/components/shared/Logo";
 import { toTelHref } from "@/lib/utils";
 
@@ -142,11 +142,23 @@ export default function Footer({
               className="rr-footer-socials"
               aria-label="RampRate social links"
             >
-              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                LinkedIn <ArrowUpRight size={12} aria-hidden="true" />
+              <a
+                href={linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rr-footer-social-icon"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={17} strokeWidth={1.8} aria-hidden="true" />
               </a>
-              <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
-                X <ArrowUpRight size={12} aria-hidden="true" />
+              <a
+                href={twitterUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rr-footer-social-icon"
+                aria-label="X / Twitter"
+              >
+                <Twitter size={17} strokeWidth={1.8} aria-hidden="true" />
               </a>
             </div>
           </div>

@@ -7,6 +7,10 @@ export type ServiceOffering = {
   slug: string;
   title: string;
   navigationLabel: string;
+  legacyIdentity?: {
+    name: string;
+    description: string;
+  };
   eyebrow: string;
   summary: string;
   decision: string;
@@ -19,6 +23,10 @@ export const services: ServiceOffering[] = [
     slug: "relationship-specialist-sourcing",
     title: "Relationship & Specialist Sourcing",
     navigationLabel: "Relationship & Specialist Sourcing",
+    legacyIdentity: {
+      name: "Torque",
+      description: "Specialist Sourcing",
+    },
     eyebrow: "Services / Sourcing",
     summary:
       "Find the right technology, specialist, or strategic partner—and make the selection with clarity.",
@@ -76,6 +84,10 @@ export const services: ServiceOffering[] = [
     slug: "growth-strategy-fractional-execution",
     title: "Growth Strategy & Fractional Execution",
     navigationLabel: "Growth Strategy & Fractional Execution",
+    legacyIdentity: {
+      name: "Syzygy",
+      description: "Growth Strategy",
+    },
     eyebrow: "Services / Growth",
     summary:
       "Move from a growth decision to accountable delivery with senior, embedded support.",
