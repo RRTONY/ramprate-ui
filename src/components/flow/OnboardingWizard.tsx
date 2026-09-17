@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { useRouter } from "next/navigation";
@@ -19,6 +18,9 @@ import {
   Shield,
   Anchor,
   Radio,
+  Flame,
+  Target,
+  BarChart3,
   type LucideIcon,
 } from "lucide-react";
 
@@ -102,18 +104,8 @@ export default function OnboardingWizard({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-    >
-      <motion.div
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.9, y: 20 }}
-        className="w-full max-w-lg"
-      >
+    <div className="flow-onboarding-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="flow-onboarding-modal w-full max-w-lg">
         <Card className="border-2 border-black shadow-2xl overflow-hidden">
           {/* Progress bar */}
           <div className="flex gap-1 p-3 bg-gray-50">
@@ -128,167 +120,161 @@ export default function OnboardingWizard({
           </div>
 
           <CardContent className="p-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                {/* Step 0: Results Celebration */}
-                {step === 0 && (
-                  <>
-                    <div className="text-center space-y-4">
-                      <div className="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center mx-auto">
-                        <RoleIcon className="w-10 h-10" />
-                      </div>
-                      <div>
-                        <h2 className="text-2xl font-black">
-                          You&#39;re a {role}
-                        </h2>
-                        <p className="text-muted-foreground mt-1">
-                          Score: {score}% alignment with your natural operating
-                          energy
-                        </p>
-                      </div>
-                      <div className="p-4 bg-gray-50 rounded-xl text-sm leading-relaxed">
-                        <p>
-                          This isn&#39;t a personality label - it&#39;s your{" "}
-                          <strong>operational energy signature</strong>. It
-                          reveals how you naturally process information, make
-                          decisions, and contribute to teams.
-                        </p>
-                        <p className="mt-2 text-muted-foreground text-xs">
-                          Scroll down to see your full report with stress zones,
-                          combination profile, and growth insights.
-                        </p>
-                      </div>
+            <div key={step} className="flow-onboarding-step-enter space-y-6">
+              {/* Step 0: Results Celebration */}
+              {step === 0 && (
+                <>
+                  <div className="text-center space-y-4">
+                    <div className="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center mx-auto">
+                      <RoleIcon className="w-10 h-10" />
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg border border-amber-200">
-                      <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
-                      <p className="text-xs text-amber-700">
-                        <strong>
-                          Individual results are only 30% of the picture.
-                        </strong>{" "}
-                        The real insight comes from seeing how your energy
-                        interacts with your team&#39;s energy.
+                    <div>
+                      <h2 className="text-2xl font-black">
+                        You&#39;re a {role}
+                      </h2>
+                      <p className="text-muted-foreground mt-1">
+                        Score: {score}% alignment with your natural operating
+                        energy
                       </p>
                     </div>
-                  </>
-                )}
-
-                {/* Step 1: Invite Tribe */}
-                {step === 1 && (
-                  <>
-                    <div className="text-center space-y-4">
-                      <div className="w-20 h-20 rounded-full bg-blue-600 text-white flex items-center justify-center mx-auto">
-                        <Users className="w-10 h-10" />
-                      </div>
-                      <div>
-                        <h2 className="text-2xl font-black">
-                          Invite 3-5 Colleagues
-                        </h2>
-                        <p className="text-muted-foreground mt-1">
-                          Share this link with your team - it takes 5 minutes
-                        </p>
-                      </div>
+                    <div className="p-4 bg-gray-50 rounded-xl text-sm leading-relaxed">
+                      <p>
+                        This isn&#39;t a personality label - it&#39;s your{" "}
+                        <strong>operational energy signature</strong>. It
+                        reveals how you naturally process information, make
+                        decisions, and contribute to teams.
+                      </p>
+                      <p className="mt-2 text-muted-foreground text-xs">
+                        Scroll down to see your full report with stress zones,
+                        combination profile, and growth insights.
+                      </p>
                     </div>
-
-                    <div
-                      className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"
-                      onClick={copyInviteLink}
-                    >
-                      <code className="flex-1 text-xs truncate">
-                        {inviteLink}
-                      </code>
-                      {invitesCopied ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
-                      ) : (
-                        <Copy className="w-5 h-5 text-gray-400 shrink-0" />
-                      )}
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-                      {[
-                        { label: "5 min", desc: "to complete" },
-                        { label: "Free", desc: "for everyone" },
-                        { label: "Instant", desc: "team map" },
-                      ].map((item) => (
-                        <div
-                          key={item.label}
-                          className="p-3 bg-gray-50 rounded-lg"
-                        >
-                          <p className="font-black text-lg">{item.label}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {item.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <p className="text-xs text-center text-muted-foreground">
-                      When 3+ people from the same team complete the assessment,
-                      the Team Map unlocks automatically.
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                    <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
+                    <p className="text-xs text-amber-700">
+                      <strong>
+                        Individual results are only 30% of the picture.
+                      </strong>{" "}
+                      The real insight comes from seeing how your energy
+                      interacts with your team&#39;s energy.
                     </p>
-                  </>
-                )}
+                  </div>
+                </>
+              )}
 
-                {/* Step 2: Team Map Preview */}
-                {step === 2 && (
-                  <>
-                    <div className="text-center space-y-4">
-                      <div className="w-20 h-20 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto">
-                        <Map className="w-10 h-10" />
-                      </div>
-                      <div>
-                        <h2 className="text-2xl font-black">
-                          Your Team Map Awaits
-                        </h2>
-                        <p className="text-muted-foreground mt-1">
-                          See the invisible architecture of your team
+              {/* Step 1: Invite Tribe */}
+              {step === 1 && (
+                <>
+                  <div className="text-center space-y-4">
+                    <div className="w-20 h-20 rounded-full bg-blue-600 text-white flex items-center justify-center mx-auto">
+                      <Users className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-black">
+                        Invite 3-5 Colleagues
+                      </h2>
+                      <p className="text-muted-foreground mt-1">
+                        Share this link with your team - it takes 5 minutes
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"
+                    onClick={copyInviteLink}
+                  >
+                    <code className="flex-1 text-xs truncate">
+                      {inviteLink}
+                    </code>
+                    {invitesCopied ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
+                    ) : (
+                      <Copy className="w-5 h-5 text-gray-400 shrink-0" />
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                    {[
+                      { label: "5 min", desc: "to complete" },
+                      { label: "Free", desc: "for everyone" },
+                      { label: "Instant", desc: "team map" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className="p-3 bg-gray-50 rounded-lg"
+                      >
+                        <p className="font-black text-lg">{item.label}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.desc}
                         </p>
                       </div>
-                    </div>
+                    ))}
+                  </div>
 
-                    <div className="space-y-3">
-                      {[
-                        {
-                          icon: "⚡",
-                          text: "See who's the Spark, who's the Ground, and where the gaps are",
-                        },
-                        {
-                          icon: "🔥",
-                          text: "Identify friction pairs - who's being forced outside their natural role",
-                        },
-                        {
-                          icon: "🎯",
-                          text: "Get hiring recommendations based on missing energy types",
-                        },
-                        {
-                          icon: "📊",
-                          text: "Compare your team against aggregate norms across all teams",
-                        },
-                      ].map((item, i) => (
+                  <p className="text-xs text-center text-muted-foreground">
+                    When 3+ people from the same team complete the assessment,
+                    the Team Map unlocks automatically.
+                  </p>
+                </>
+              )}
+
+              {/* Step 2: Team Map Preview */}
+              {step === 2 && (
+                <>
+                  <div className="text-center space-y-4">
+                    <div className="w-20 h-20 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto">
+                      <Map className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-black">
+                        Your Team Map Awaits
+                      </h2>
+                      <p className="text-muted-foreground mt-1">
+                        See the invisible architecture of your team
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {[
+                      {
+                        icon: Zap,
+                        text: "See who's the Spark, who's the Ground, and where the gaps are",
+                      },
+                      {
+                        icon: Flame,
+                        text: "Identify friction pairs - who's being forced outside their natural role",
+                      },
+                      {
+                        icon: Target,
+                        text: "Get hiring recommendations based on missing energy types",
+                      },
+                      {
+                        icon: BarChart3,
+                        text: "Compare your team against aggregate norms across all teams",
+                      },
+                    ].map((item, i) => {
+                      const ItemIcon = item.icon;
+                      return (
                         <div
                           key={i}
                           className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
                         >
-                          <span className="text-lg">{item.icon}</span>
+                          <ItemIcon className="mt-0.5 h-4 w-4 shrink-0 text-gray-700" />
                           <p className="text-sm">{item.text}</p>
                         </div>
-                      ))}
-                    </div>
+                      );
+                    })}
+                  </div>
 
-                    <p className="text-xs text-center text-muted-foreground italic">
-                      &quot;Don&#39;t just merge balance sheets; merge nervous
-                      systems.&quot;
-                    </p>
-                  </>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                  <p className="text-xs text-center text-muted-foreground italic">
+                    &quot;Don&#39;t just merge balance sheets; merge nervous
+                    systems.&quot;
+                  </p>
+                </>
+              )}
+            </div>
 
             {/* Navigation */}
             <div className="flex items-center justify-between mt-8 pt-4 border-t">
@@ -325,7 +311,7 @@ export default function OnboardingWizard({
         >
           <X className="w-4 h-4 text-white" />
         </button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
