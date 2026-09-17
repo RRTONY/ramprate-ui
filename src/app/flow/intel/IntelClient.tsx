@@ -1,14 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Cpu,
-  Brain,
-  Globe,
-  Zap,
-  Database,
-} from "lucide-react";
+import { ArrowUpRight, Cpu, Brain, Globe, Zap, Database } from "lucide-react";
 import { Button } from "@/components/flow/ui/button";
 
 export default function IntelClient() {
@@ -119,11 +111,7 @@ export default function IntelClient() {
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-12">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-4xl mx-auto mb-16 text-center"
-        >
+        <div className="flow-intel-hero-enter max-w-4xl mx-auto mb-16 text-center">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
             MISSION CRITICAL INTEL
           </h1>
@@ -131,7 +119,7 @@ export default function IntelClient() {
             The signal in the noise. Foundational texts that bridge the gap
             between silicon and soul, compute and consciousness.
           </p>
-        </motion.div>
+        </div>
 
         {/* Assessment Intelligence Section */}
         <div className="mb-24">
@@ -145,12 +133,10 @@ export default function IntelClient() {
           </div>
           <div className="grid gap-8 max-w-5xl mx-auto">
             {assessmentNews.map((article, index) => (
-              <motion.div
+              <article
                 key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-secondary/5 backdrop-blur-sm border border-secondary/20 rounded-xl p-8 hover:border-secondary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/10"
+                className="flow-intel-article-enter group relative bg-secondary/5 backdrop-blur-sm border border-secondary/20 rounded-xl p-8 hover:border-secondary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/10"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <ArrowUpRight className="h-6 w-6 text-secondary" />
@@ -206,7 +192,7 @@ export default function IntelClient() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </article>
             ))}
           </div>
         </div>
@@ -222,12 +208,10 @@ export default function IntelClient() {
 
         <div className="grid gap-8 max-w-5xl mx-auto">
           {articles.map((article, index) => (
-            <motion.div
+            <article
               key={article.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10"
+              className="flow-intel-article-enter group relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <ArrowUpRight className="h-6 w-6 text-primary" />
@@ -283,7 +267,7 @@ export default function IntelClient() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </article>
           ))}
         </div>
       </div>

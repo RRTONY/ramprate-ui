@@ -624,3 +624,27 @@
     stroke-dashoffset: 0;
   }
 }
+
+@keyframes flow-intel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-intel-hero-enter,
+.flow-intel-article-enter {
+  animation: flow-intel-enter 280ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-intel-hero-enter,
+  .flow-intel-article-enter {
+    animation: none;
+  }
+}
