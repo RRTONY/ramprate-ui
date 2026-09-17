@@ -1211,3 +1211,84 @@
     transition: none;
   }
 }
+
+@keyframes flow-peer-intro-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-peer-complete-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-peer-question-enter {
+  from {
+    opacity: 0;
+    transform: translateX(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-peer-answer-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.625rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-peer-intro-enter {
+  animation: flow-peer-intro-enter 280ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-peer-complete-enter {
+  animation: flow-peer-complete-enter 240ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-peer-progress-bar {
+  transition: width 280ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.flow-peer-question-enter {
+  animation: flow-peer-question-enter 280ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-peer-answer-enter {
+  animation: flow-peer-answer-enter 220ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-peer-intro-enter,
+  .flow-peer-complete-enter,
+  .flow-peer-question-enter,
+  .flow-peer-answer-enter {
+    animation: none;
+  }
+
+  .flow-peer-progress-bar {
+    transition: none;
+  }
+}

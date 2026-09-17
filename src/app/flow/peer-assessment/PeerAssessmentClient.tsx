@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import {
@@ -155,11 +154,7 @@ export default function PeerAssessmentClient({
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
         <div className="peer-assessment-intro-texture absolute inset-0 opacity-20 pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl w-full text-center space-y-8 relative z-10"
-        >
+        <div className="flow-peer-intro-enter max-w-3xl w-full text-center space-y-8 relative z-10">
           <div className="flex justify-center mb-6">
             <div className="bg-blue-500 text-white p-4 rounded-full">
               <Eye className="w-12 h-12" />
@@ -211,7 +206,7 @@ export default function PeerAssessmentClient({
           >
             Start Observation <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -220,11 +215,7 @@ export default function PeerAssessmentClient({
   if (phase === "complete") {
     return (
       <div className="min-h-screen bg-white text-black flex flex-col items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center space-y-6 max-w-2xl"
-        >
+        <div className="flow-peer-complete-enter text-center space-y-6 max-w-2xl">
           <div className="flex justify-center">
             <CheckCircle2 className="w-24 h-24 text-blue-600" />
           </div>
@@ -246,7 +237,7 @@ export default function PeerAssessmentClient({
           >
             Done
           </Button>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -275,11 +266,9 @@ export default function PeerAssessmentClient({
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Progress Bar */}
       <div className="h-1.5 bg-gray-200 w-full">
-        <motion.div
-          className="h-full bg-blue-600"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.5 }}
+        <div
+          className="flow-peer-progress-bar h-full bg-blue-600"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
@@ -296,38 +285,29 @@ export default function PeerAssessmentClient({
           </div>
 
           {/* Question Text */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentQuestion.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h2 className="text-lg md:text-2xl font-bold leading-tight mb-4 md:mb-6">
-                {currentQuestion.text
-                  .replace(/\byour\b/gi, `${targetName}'s`)
-                  .replace(/\byou\b/gi, targetName)}
-              </h2>
+          <div key={currentQuestion.id} className="flow-peer-question-enter">
+            <h2 className="text-lg md:text-2xl font-bold leading-tight mb-4 md:mb-6">
+              {currentQuestion.text
+                .replace(/\byour\b/gi, `${targetName}'s`)
+                .replace(/\byou\b/gi, targetName)}
+            </h2>
 
-              <div className="grid gap-2 md:gap-3">
-                {currentQuestion.options.map((option) => (
-                  <motion.button
-                    key={option.role}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    onClick={() => handleAnswer(option.text)}
-                    className="group text-left py-3 px-4 border-2 border-gray-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 rounded-lg flex items-center justify-between"
-                  >
-                    <span className="text-sm md:text-base font-medium">
-                      {option.text}
-                    </span>
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            <div className="grid gap-2 md:gap-3">
+              {currentQuestion.options.map((option) => (
+                <button
+                  key={option.role}
+                  type="button"
+                  onClick={() => handleAnswer(option.text)}
+                  className="flow-peer-answer-enter group text-left py-3 px-4 border-2 border-gray-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 rounded-lg flex items-center justify-between"
+                >
+                  <span className="text-sm md:text-base font-medium">
+                    {option.text}
+                  </span>
+                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
