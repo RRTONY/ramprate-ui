@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useMemo, useState, type CSSProperties, type FormEvent } from "react";
 import { Button } from "@/components/flow/ui/button";
 import { trpc } from "@/lib/flow/trpc";
 import Link from "next/link";
@@ -557,37 +556,33 @@ export default function FamilyDynamic() {
             </div>
 
             {/* Zone labels in flow mode */}
-            <AnimatePresence>
-              {isFixed && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 pointer-events-none z-[4]"
-                >
-                  {Object.entries(roleZones).map(([role, pos]) => {
-                    const config = roleConfig[role];
-                    return (
-                      <div
-                        key={role}
-                        className="absolute text-center"
-                        style={{
-                          left: `${pos.cx}%`,
-                          top: `${pos.cy}%`,
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      >
-                        <div
-                          className={`text-[9px] font-bold uppercase tracking-wider ${config.textClass} opacity-40`}
-                        >
-                          {config.familyDescription.split("-")[0].trim()}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div
+              className={`flow-family-zone-labels absolute inset-0 pointer-events-none z-[4] ${
+                isFixed ? "flow-family-zone-labels-visible" : ""
+              }`}
+              aria-hidden={!isFixed}
+            >
+              {Object.entries(roleZones).map(([role, pos]) => {
+                const config = roleConfig[role];
+                return (
+                  <div
+                    key={role}
+                    className="absolute text-center"
+                    style={{
+                      left: `${pos.cx}%`,
+                      top: `${pos.cy}%`,
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  >
+                    <div
+                      className={`text-[9px] font-bold uppercase tracking-wider ${config.textClass} opacity-40`}
+                    >
+                      {config.familyDescription.split("-")[0].trim()}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
             {/* Family Nodes */}
             {familyMembers.map((member, index) => {
@@ -611,56 +606,56 @@ export default function FamilyDynamic() {
                     : 0.1;
 
               return (
-                <motion.div
+                <div
                   key={member.id}
-                  className="absolute z-10 flex flex-col items-center group"
-                  style={{ transform: "translate(-50%, -50%)" }}
-                  initial={false}
-                  animate={{
-                    left: isFixed ? `${member.flow.x}%` : `${member.chaos.x}%`,
-                    top: isFixed ? `${member.flow.y}%` : `${member.chaos.y}%`,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 40,
-                    damping: 15,
-                    mass: 1.2,
-                    delay: isFixed ? (index % 20) * 0.05 : 0,
-                  }}
-                  whileHover={{ scale: 1.15, zIndex: 50 }}
-                >
-                  <div
-                    className="absolute rounded-full"
-                    style={{
-                      width: ringSize,
-                      height: ringSize,
-                      backgroundColor: member.colorHex,
-                      opacity: ringOpacity,
-                      top: "50%",
-                      left: "50%",
+                  className="flow-family-node-position absolute z-10 flex flex-col items-center group"
+                  style={
+                    {
+                      left: isFixed
+                        ? `${member.flow.x}%`
+                        : `${member.chaos.x}%`,
+                      top: isFixed ? `${member.flow.y}%` : `${member.chaos.y}%`,
                       transform: "translate(-50%, -50%)",
-                      marginTop: "-6px",
-                    }}
-                  />
-                  <div
-                    className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-2 border-white cursor-pointer relative z-10"
-                    style={{ backgroundColor: member.colorHex }}
-                  >
-                    <span className="text-[10px] font-black">{initials}</span>
-                  </div>
-                  <div className="mt-0.5 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-bold text-gray-700 whitespace-nowrap shadow-sm max-w-[70px] truncate relative z-10">
-                    {member.name.split(" ")[0]}
-                  </div>
-                  <div className="absolute -top-14 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] font-bold px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl z-50 space-y-0.5">
-                    <div>{member.name}</div>
-                    <div className="text-gray-300">
-                      {member.comboLabel} -{" "}
-                      {roleConfig[member.role]?.familyDescription
-                        .split("-")[1]
-                        ?.trim() || member.role}
+                      "--flow-family-node-delay": isFixed
+                        ? `${(index % 20) * 50}ms`
+                        : "0ms",
+                    } as CSSProperties
+                  }
+                >
+                  <div className="flow-family-node-visual relative flex flex-col items-center">
+                    <div
+                      className="absolute rounded-full"
+                      style={{
+                        width: ringSize,
+                        height: ringSize,
+                        backgroundColor: member.colorHex,
+                        opacity: ringOpacity,
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        marginTop: "-6px",
+                      }}
+                    />
+                    <div
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-2 border-white cursor-pointer relative z-10"
+                      style={{ backgroundColor: member.colorHex }}
+                    >
+                      <span className="text-[10px] font-black">{initials}</span>
+                    </div>
+                    <div className="mt-0.5 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-bold text-gray-700 whitespace-nowrap shadow-sm max-w-[70px] truncate relative z-10">
+                      {member.name.split(" ")[0]}
+                    </div>
+                    <div className="absolute -top-14 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] font-bold px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl z-50 space-y-0.5">
+                      <div>{member.name}</div>
+                      <div className="text-gray-300">
+                        {member.comboLabel} -{" "}
+                        {roleConfig[member.role]?.familyDescription
+                          .split("-")[1]
+                          ?.trim() || member.role}
+                      </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
 
@@ -731,17 +726,15 @@ export default function FamilyDynamic() {
 
             <div className="space-y-4">
               {familyInsights.map((insight, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="p-5 md:p-6 rounded-2xl bg-rose-50 border-2 border-rose-200"
+                  className="flow-family-insight-enter p-5 md:p-6 rounded-2xl bg-rose-50 border-2 border-rose-200"
+                  style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <p className="text-gray-700 leading-relaxed text-pretty">
                     {insight}
                   </p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
