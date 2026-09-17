@@ -18,7 +18,7 @@
 - [x] Replace Flow Time Travel member-bar Framer Motion with reduced-motion-safe CSS while preserving animated playback, timeline controls, role colors, dynamic score heights, and active-member calculations.
 - [x] Replace Flow Research Opt-In confirmation Framer Motion with reduced-motion-safe CSS while preserving consent submission, pending state, local preference storage, and privacy messaging.
 - [x] Replace the Flow Research Dashboard’s domain-distribution Framer Motion bar with reduced-motion-safe CSS while preserving live research data, chart configuration, delayed bar feedback, and dynamic percentage widths.
-- [ ] Replace the Flow Team Dashboard role-distribution Framer Motion bars with reduced-motion-safe CSS while preserving team data, computed percentages, invite controls, and dashboard navigation.
+- [x] Replace the Flow Team Dashboard role-distribution Framer Motion bars with reduced-motion-safe CSS while preserving team data, computed percentages, invite controls, and dashboard navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
 - [x] Preserve the centered Conductor transform in the Flow Team Matrix by applying CSS entry feedback to a nested visual element rather than the dynamically positioned wrapper, with a focused regression assertion.
