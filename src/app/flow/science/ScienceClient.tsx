@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -49,10 +48,7 @@ export default function ScienceClient() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 mb-24 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className="flow-science-hero-enter">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-gray-400 mb-6">
               The Science Behind The Flow Circuit
             </p>
@@ -63,25 +59,15 @@ export default function ScienceClient() {
               <br />
               WHAT YOU <span className="line-through text-gray-300">KNOW</span>
             </h1>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty"
-          >
+          <p className="flow-science-copy-enter text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty">
             For decades, organizations have hired for skills, trained for
             knowledge, and promoted for experience. The data says they&#39;ve
             been optimizing the wrong variable.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
-          >
+          <div className="flow-science-actions-enter flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
               onClick={() => router.push("/flow/assessment")}
               size="lg"
@@ -103,7 +89,7 @@ export default function ScienceClient() {
               <BookOpen className="mr-2 h-5 w-5" />
               See the Evidence
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -112,22 +98,15 @@ export default function ScienceClient() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 mb-32 relative z-10">
         <div className="max-w-5xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-black tracking-tight text-center mb-16"
-          >
+          <h2 className="flow-science-section-enter text-3xl md:text-4xl font-black tracking-tight text-center mb-16">
             Three Truths That Change Everything
-          </motion.h2>
+          </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Pillar 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0 }}
+            <div
+              className="flow-science-card-enter"
+              style={{ "--flow-entry-delay": "0ms" } as React.CSSProperties}
             >
               <Card className="border-2 border-gray-100 h-full">
                 <CardContent className="p-8 space-y-4">
@@ -166,14 +145,12 @@ export default function ScienceClient() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
             {/* Pillar 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+            <div
+              className="flow-science-card-enter"
+              style={{ "--flow-entry-delay": "80ms" } as React.CSSProperties}
             >
               <Card className="border-2 border-gray-100 h-full">
                 <CardContent className="p-8 space-y-4">
@@ -201,14 +178,12 @@ export default function ScienceClient() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
             {/* Pillar 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+            <div
+              className="flow-science-card-enter"
+              style={{ "--flow-entry-delay": "160ms" } as React.CSSProperties}
             >
               <Card className="border-2 border-gray-100 h-full">
                 <CardContent className="p-8 space-y-4">
@@ -246,7 +221,7 @@ export default function ScienceClient() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -257,12 +232,7 @@ export default function ScienceClient() {
       <section className="w-full mb-32 bg-black text-white py-20 relative z-10">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
+            <div className="flow-science-section-enter text-center mb-16">
               <p className="text-sm font-bold uppercase tracking-[0.25em] text-gray-400 mb-4">
                 The Neuroscience
               </p>
@@ -280,14 +250,12 @@ export default function ScienceClient() {
                 cognition, and flow - they were not conducted on The Flow
                 Circuit assessment.
               </p>
-            </motion.div>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+              <div
+                className="flow-science-card-enter bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+                style={{ "--flow-entry-delay": "0ms" } as React.CSSProperties}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
@@ -316,13 +284,11 @@ export default function ScienceClient() {
                   </a>
                   )
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+              <div
+                className="flow-science-card-enter bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+                style={{ "--flow-entry-delay": "80ms" } as React.CSSProperties}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
@@ -349,14 +315,11 @@ export default function ScienceClient() {
                   </a>
                   )
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+              <div
+                className="flow-science-card-enter bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+                style={{ "--flow-entry-delay": "160ms" } as React.CSSProperties}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
@@ -375,14 +338,11 @@ export default function ScienceClient() {
                   Dietrich, 2004 - &quot;Neurocognitive mechanisms underlying
                   the experience of flow&quot;
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+              <div
+                className="flow-science-card-enter bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4"
+                style={{ "--flow-entry-delay": "240ms" } as React.CSSProperties}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
@@ -414,20 +374,15 @@ export default function ScienceClient() {
                   </a>
                   )
                 </p>
-              </motion.div>
+              </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mt-12"
-            >
+            <div className="flow-science-section-enter text-center mt-12">
               <p className="text-2xl md:text-3xl font-black text-yellow-400 italic text-balance">
                 &quot;Operating outside your nature doesn&#39;t just reduce
                 performance. It reduces your possibility as a human being.&quot;
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

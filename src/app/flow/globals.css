@@ -1107,3 +1107,42 @@
     transition: none;
   }
 }
+
+@keyframes flow-science-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.125rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-science-hero-enter,
+.flow-science-copy-enter,
+.flow-science-actions-enter,
+.flow-science-section-enter,
+.flow-science-card-enter {
+  animation: flow-science-enter 400ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) var(--flow-entry-delay, 0ms)
+    both;
+}
+
+.flow-science-copy-enter {
+  --flow-entry-delay: 80ms;
+}
+
+.flow-science-actions-enter {
+  --flow-entry-delay: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-science-hero-enter,
+  .flow-science-copy-enter,
+  .flow-science-actions-enter,
+  .flow-science-section-enter,
+  .flow-science-card-enter {
+    animation: none;
+  }
+}
