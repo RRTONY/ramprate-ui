@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion } from "framer-motion";
 import { trpc } from "@/lib/flow/trpc";
 import {
   Card,
@@ -558,14 +557,17 @@ export default function ResearchDashboardClient() {
                             </span>
                           </div>
                           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{
+                            <div
+                              className="h-full"
+                              style={{
                                 width: `${(d.count / (domainData[0]?.count || 1)) * 100}%`,
                               }}
-                              transition={{ duration: 0.8, delay: i * 0.1 }}
-                              className="h-full bg-sky-500 rounded-full"
-                            />
+                            >
+                              <div
+                                className="flow-research-domain-bar h-full bg-sky-500 rounded-full"
+                                style={{ animationDelay: `${i * 100}ms` }}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
