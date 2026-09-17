@@ -136,7 +136,7 @@ export const ADMIN_TOOLS = [
   {
     name: "check_code_quality",
     description:
-      "Check proposed file content BEFORE writing it: runs ESLint, checks Prettier formatting, and flags a few project-specific anti-patterns (raw hex colors, <img> instead of <Image>, framer-motion imports). Always call this on .ts/.tsx/.css content before github_write_file, and fix anything it flags first.",
+      "Check proposed file content BEFORE writing it: runs ESLint, checks Prettier formatting, and flags a few project-specific anti-patterns (raw hex colors and <img> instead of <Image>). Always call this on .ts/.tsx/.css content before github_write_file, and fix anything it flags first.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -581,7 +581,6 @@ export async function runAdminTool(
         };
       }
     }
-
 
     case "check_code_quality": {
       const path = normalizeRepoPath(input.path);

@@ -375,51 +375,16 @@ export default function TeamMapPage() {
         </div>
 
         {/* Energy scatter plot -- positions and names are computed from the real team members above */}
-        <div
-          className="tribe-map-container"
-          style={{
-            background: "#F4F0E8",
-            border: "1px solid #1C1410",
-            borderRadius: "4px",
-            padding: "24px",
-            margin: "24px 0",
-          }}
-        >
-          <div
-            style={{
-              textAlign: "center",
-              fontFamily: "'Cabinet Grotesk',sans-serif",
-              fontSize: "11px",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "#1C1410",
-              opacity: 0.4,
-              marginBottom: "8px",
-            }}
-          >
-            INNOVATION
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                writingMode: "vertical-rl",
-                transform: "rotate(180deg)",
-                fontFamily: "'Cabinet Grotesk',sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "#1C1410",
-                opacity: 0.4,
-                paddingRight: "8px",
-                whiteSpace: "nowrap",
-              }}
-            >
+        <div className="flow-team-map-scatter tribe-map-container">
+          <div className="flow-team-map-scatter-axis-label">INNOVATION</div>
+          <div className="flow-team-map-scatter-row">
+            <div className="flow-team-map-scatter-axis-label flow-team-map-scatter-axis-label--vertical">
               ANALYSIS
             </div>
             <svg
               viewBox="0 0 480 480"
               width="100%"
-              style={{ maxWidth: "540px", display: "block", margin: "0 auto" }}
+              className="flow-team-map-scatter-chart"
             >
               <line
                 x1="240"

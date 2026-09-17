@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Switch } from "@/components/flow/ui/switch";
 import { trpc } from "@/lib/flow/trpc";
@@ -335,11 +334,7 @@ function Section({
   const rest = visible.slice(2);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="group"
-    >
+    <div className="flow-soulprint-layer-entry group">
       <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.15] transition-all duration-500">
         <div
           className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${cfg.glowColor} blur-3xl -z-10`}
@@ -381,30 +376,22 @@ function Section({
           ))}
         </div>
 
-        <AnimatePresence>
-          {open && rest.length > 0 && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="overflow-hidden"
-            >
-              <div className="px-6 pb-6 space-y-5 border-t border-white/[0.06] pt-4">
-                {rest.map((block, i) => (
-                  <div key={block.id || i}>
-                    {block.title && (
-                      <h4 className="text-white/90 font-medium text-sm mb-1.5">
-                        {block.title}
-                      </h4>
-                    )}
-                    <BlockText block={block} />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {open && rest.length > 0 && (
+          <div className="flow-soulprint-layer-expand overflow-hidden">
+            <div className="px-6 pb-6 space-y-5 border-t border-white/[0.06] pt-4">
+              {rest.map((block, i) => (
+                <div key={block.id || i}>
+                  {block.title && (
+                    <h4 className="text-white/90 font-medium text-sm mb-1.5">
+                      {block.title}
+                    </h4>
+                  )}
+                  <BlockText block={block} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {!open && rest.length > 0 && (
           <div className="px-6 pb-4">
@@ -417,18 +404,14 @@ function Section({
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 // ─── Consent Dialog ────────────────────────────────────────────────────────
 function ConsentDialog({ onConsent }: { onConsent: () => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="min-h-screen bg-[#0a0a0f] flex items-center justify-center p-6"
-    >
+    <div className="flow-soulprint-layer-entry-scale min-h-screen bg-[#0a0a0f] flex items-center justify-center p-6">
       <div className="max-w-lg w-full">
         <div className="relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] p-8">
           {/* Ambient glow */}
@@ -481,7 +464,7 @@ function ConsentDialog({ onConsent }: { onConsent: () => void }) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -500,11 +483,7 @@ function CrossReferenceCard({
   const SecondaryIcon = roleIcons[mapping.secondaryRole] || Activity;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
-    >
+    <div className="flow-soulprint-layer-entry flow-soulprint-layer-delay-3">
       <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-violet-500/[0.08] to-cyan-500/[0.08] border border-white/[0.1] p-6">
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl" />
 
@@ -569,7 +548,7 @@ function CrossReferenceCard({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -650,12 +629,9 @@ export default function SoulPrintLayerClient({
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        >
+        <div className="flow-soulprint-layer-spinner">
           <Sparkles className="w-8 h-8 text-violet-400" />
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -711,11 +687,7 @@ export default function SoulPrintLayerClient({
 
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-20">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
+        <div className="flow-soulprint-layer-entry flow-soulprint-layer-entry--from-top text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] mb-6">
             <Eye className="w-4 h-4 text-violet-400" />
             <span className="text-white/60 text-xs font-medium tracking-wider uppercase">
@@ -734,15 +706,10 @@ export default function SoulPrintLayerClient({
             A deeper lens on who you are. This reading sits alongside your Flow
             Circuit profile - toggle it in or out at any time.
           </p>
-        </motion.div>
+        </div>
 
         {/* Toggle Controls */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-8"
-        >
+        <div className="flow-soulprint-layer-entry flow-soulprint-layer-delay-1 mb-8">
           <div className="rounded-2xl backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] p-5">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-4">
@@ -792,16 +759,11 @@ export default function SoulPrintLayerClient({
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Synthesis Overview */}
         {synthesis && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8"
-          >
+          <div className="flow-soulprint-layer-entry flow-soulprint-layer-delay-2 mb-8">
             <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08] p-6">
               <div className="absolute -top-16 -left-16 w-48 h-48 bg-violet-500/10 rounded-full blur-3xl" />
               <div className="relative z-10">
@@ -814,7 +776,7 @@ export default function SoulPrintLayerClient({
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* Cross-Reference Card */}
@@ -830,24 +792,18 @@ export default function SoulPrintLayerClient({
         {/* Topic Sections */}
         <div className="space-y-4 mb-12">
           {sections.map((section, i) => (
-            <motion.div
+            <div
               key={section.topic}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * (i + 3) }}
+              className="flow-soulprint-layer-entry"
+              style={{ animationDelay: `${100 * (i + 3)}ms` }}
             >
               <Section section={section} />
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Science & Evidence Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mb-12"
-        >
+        <div className="flow-soulprint-layer-entry flow-soulprint-layer-delay-5 mb-12">
           <div className="rounded-2xl backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
             <button
               onClick={() => setShowEvidence(!showEvidence)}
@@ -873,110 +829,95 @@ export default function SoulPrintLayerClient({
               </div>
             </button>
 
-            <AnimatePresence>
-              {showEvidence && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-6 pb-6 space-y-4">
-                    <p className="text-white/60 text-sm leading-relaxed">
-                      Consciousness-based personality frameworks are no longer
-                      fringe. Over 80% of Fortune 500 companies use personality
-                      assessments, and a growing number integrate deeper
-                      self-awareness practices - from the Enneagram to
-                      mindfulness programs - with measurable business results.
-                    </p>
+            {showEvidence && (
+              <div className="flow-soulprint-layer-expand overflow-hidden">
+                <div className="px-6 pb-6 space-y-4">
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    Consciousness-based personality frameworks are no longer
+                    fringe. Over 80% of Fortune 500 companies use personality
+                    assessments, and a growing number integrate deeper
+                    self-awareness practices - from the Enneagram to mindfulness
+                    programs - with measurable business results.
+                  </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {evidenceData.map((item, i) => {
-                        const Icon = item.icon;
-                        return (
-                          <div
-                            key={i}
-                            className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]"
-                          >
-                            <div className="flex items-center gap-2 mb-2">
-                              <Icon className="w-4 h-4 text-emerald-400" />
-                              <span className="text-white/90 text-sm font-semibold">
-                                {item.company}
-                              </span>
-                            </div>
-                            <p className="text-emerald-400 text-lg font-bold mb-1">
-                              {item.stat}
-                            </p>
-                            <p className="text-white/50 text-xs">
-                              {item.detail}
-                            </p>
-                            <p className="text-white/30 text-xs mt-1">
-                              {item.sourceUrl ? (
-                                <a
-                                  href={item.sourceUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="underline hover:text-white/60"
-                                >
-                                  {item.source}
-                                </a>
-                              ) : (
-                                item.source
-                              )}
-                            </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {evidenceData.map((item, i) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={i}
+                          className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]"
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <Icon className="w-4 h-4 text-emerald-400" />
+                            <span className="text-white/90 text-sm font-semibold">
+                              {item.company}
+                            </span>
                           </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
-                      <h4 className="text-white/80 text-sm font-medium mb-2">
-                        Honest Limitations
-                      </h4>
-                      <ul className="text-white/50 text-xs space-y-1.5">
-                        <li>
-                          The Enneagram has growing but mixed psychometric
-                          validation (Hook et al., 2021 - 104 samples)
-                        </li>
-                        <li>
-                          Astrology and numerology lack peer-reviewed empirical
-                          support for predictive accuracy
-                        </li>
-                        <li>
-                          Human Design combines multiple systems; scientific
-                          validation is limited
-                        </li>
-                        <li>
-                          These frameworks are best used as reflective tools,
-                          not diagnostic instruments
-                        </li>
-                        <li>
-                          The value lies in self-awareness and team dialogue,
-                          not in categorical truth
-                        </li>
-                      </ul>
-                    </div>
+                          <p className="text-emerald-400 text-lg font-bold mb-1">
+                            {item.stat}
+                          </p>
+                          <p className="text-white/50 text-xs">{item.detail}</p>
+                          <p className="text-white/30 text-xs mt-1">
+                            {item.sourceUrl ? (
+                              <a
+                                href={item.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-white/60"
+                              >
+                                {item.source}
+                              </a>
+                            ) : (
+                              item.source
+                            )}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+
+                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06]">
+                    <h4 className="text-white/80 text-sm font-medium mb-2">
+                      Honest Limitations
+                    </h4>
+                    <ul className="text-white/50 text-xs space-y-1.5">
+                      <li>
+                        The Enneagram has growing but mixed psychometric
+                        validation (Hook et al., 2021 - 104 samples)
+                      </li>
+                      <li>
+                        Astrology and numerology lack peer-reviewed empirical
+                        support for predictive accuracy
+                      </li>
+                      <li>
+                        Human Design combines multiple systems; scientific
+                        validation is limited
+                      </li>
+                      <li>
+                        These frameworks are best used as reflective tools, not
+                        diagnostic instruments
+                      </li>
+                      <li>
+                        The value lies in self-awareness and team dialogue, not
+                        in categorical truth
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="text-center pb-12"
-        >
+        <div className="flow-soulprint-layer-entry flow-soulprint-layer-delay-7 text-center pb-12">
           <p className="text-white/30 text-xs">
             SoulPrint data provided by TrueSelf. This reading is separate from
             your Flow Circuit assessment and can be toggled on or off at any
             time.
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

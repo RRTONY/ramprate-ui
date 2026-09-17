@@ -1588,3 +1588,227 @@
     transition: none;
   }
 }
+
+@keyframes flow-assessment-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-assessment-enter-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-assessment-question-enter {
+  from {
+    opacity: 0;
+    transform: translateX(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.flow-assessment-entry {
+  animation: flow-assessment-enter 300ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-assessment-entry-scale {
+  animation: flow-assessment-enter-scale 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-assessment-delay-1 {
+  animation-delay: 80ms;
+}
+
+.flow-assessment-delay-2 {
+  animation-delay: 160ms;
+}
+
+.flow-assessment-delay-3 {
+  animation-delay: 240ms;
+}
+
+.flow-assessment-delay-4 {
+  animation-delay: 320ms;
+}
+
+.flow-assessment-team-detect {
+  animation: flow-assessment-enter 220ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-assessment-progress-bar {
+  transition: width 300ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.flow-assessment-question-transition {
+  animation: flow-assessment-question-enter 300ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-assessment-texture--cubes {
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+}
+
+.flow-assessment-texture--stardust {
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-assessment-entry,
+  .flow-assessment-entry-scale,
+  .flow-assessment-team-detect,
+  .flow-assessment-question-transition {
+    animation: none;
+  }
+
+  .flow-assessment-progress-bar {
+    transition: none;
+  }
+}
+
+@keyframes flow-soulprint-layer-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-soulprint-layer-enter-from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-soulprint-layer-enter-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-soulprint-layer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flow-soulprint-layer-entry {
+  animation: flow-soulprint-layer-enter 300ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-soulprint-layer-entry--from-top {
+  animation-name: flow-soulprint-layer-enter-from-top;
+}
+
+.flow-soulprint-layer-entry-scale {
+  animation: flow-soulprint-layer-enter-scale 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-soulprint-layer-delay-1 {
+  animation-delay: 100ms;
+}
+
+.flow-soulprint-layer-delay-2 {
+  animation-delay: 200ms;
+}
+
+.flow-soulprint-layer-delay-3 {
+  animation-delay: 300ms;
+}
+
+.flow-soulprint-layer-delay-5 {
+  animation-delay: 500ms;
+}
+
+.flow-soulprint-layer-delay-7 {
+  animation-delay: 700ms;
+}
+
+.flow-soulprint-layer-expand {
+  animation: flow-soulprint-layer-enter 220ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-soulprint-layer-spinner {
+  animation: flow-soulprint-layer-spin 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-soulprint-layer-entry,
+  .flow-soulprint-layer-entry-scale,
+  .flow-soulprint-layer-expand,
+  .flow-soulprint-layer-spinner {
+    animation: none;
+  }
+}
+
+.flow-team-map-scatter {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid #1c1410;
+  border-radius: 0.25rem;
+  background: #f4f0e8;
+}
+
+.flow-team-map-scatter-row {
+  display: flex;
+  align-items: center;
+}
+
+.flow-team-map-scatter-axis-label {
+  margin-bottom: 0.5rem;
+  color: #1c1410;
+  font-family: var(--font-sans, "DM Sans", sans-serif);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.flow-team-map-scatter-axis-label--vertical {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+  padding-right: 0.5rem;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.flow-team-map-scatter-chart {
+  display: block;
+  max-width: 33.75rem;
+  margin: 0 auto;
+}

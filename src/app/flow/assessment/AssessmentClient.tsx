@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   BrainCircuit,
@@ -523,11 +522,7 @@ export default function Assessment() {
       <div className="min-h-screen bg-black text-white p-4 md:p-8">
         <div className="max-w-4xl mx-auto space-y-8 py-12">
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-4"
-          >
+          <div className="flow-assessment-entry text-center space-y-4">
             <p className="text-sm uppercase tracking-widest text-gray-400">
               Welcome back, {priorAssessment.name}
             </p>
@@ -545,15 +540,10 @@ export default function Assessment() {
               {roleDescMap[priorAssessment.role] ||
                 "Your natural energy role has been identified."}
             </p>
-          </motion.div>
+          </div>
 
           {/* Score Bars */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4"
-          >
+          <div className="flow-assessment-entry flow-assessment-delay-1 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
             <h2 className="text-lg font-bold text-white uppercase tracking-wider">
               Your Energy Distribution
             </h2>
@@ -581,14 +571,10 @@ export default function Assessment() {
                   </div>
                 </div>
               ))}
-          </motion.div>
+          </div>
 
           {/* 360 Feedback Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="flow-assessment-entry flow-assessment-delay-2">
             <ThreeSixtyLinkGenerator
               assessmentId={Number(priorAssessment.assessmentId)}
               subjectName={priorAssessment.name}
@@ -596,15 +582,10 @@ export default function Assessment() {
               selfScores={priorAssessment.scores}
               domain={priorAssessment.domain}
             />
-          </motion.div>
+          </div>
 
           {/* Share with Teammates */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4"
-          >
+          <div className="flow-assessment-entry flow-assessment-delay-3 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
             <h2 className="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
               <Share2 className="w-5 h-5 text-yellow-400" /> Share With Your
               Team
@@ -630,15 +611,10 @@ export default function Assessment() {
                 <Copy className="w-4 h-4 mr-1" /> Copy
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* View Full Results + Retake */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
-          >
+          <div className="flow-assessment-entry flow-assessment-delay-4 flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
               size="lg"
               className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold text-lg px-8"
@@ -656,7 +632,7 @@ export default function Assessment() {
             >
               Retake Assessment
             </Button>
-          </motion.div>
+          </div>
 
           {/* Completed date */}
           <p className="text-center text-sm text-gray-500">
@@ -676,19 +652,9 @@ export default function Assessment() {
   if (phase === "intro") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            backgroundImage:
-              "url('https://www.transparenttextures.com/patterns/cubes.png')",
-          }}
-        />
+        <div className="flow-assessment-texture flow-assessment-texture--cubes absolute inset-0 opacity-20 pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl w-full text-center space-y-8 relative z-10"
-        >
+        <div className="flow-assessment-entry max-w-3xl w-full text-center space-y-8 relative z-10">
           <div className="flex justify-center mb-4">
             <div className="bg-yellow-400 text-black p-4 rounded-full">
               <BrainCircuit className="w-12 h-12" />
@@ -915,7 +881,7 @@ export default function Assessment() {
           <p className="text-sm text-gray-600">
             No login required. Your data is used only for your report.
           </p>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -924,19 +890,9 @@ export default function Assessment() {
   if (phase === "name") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage:
-              "url('https://www.transparenttextures.com/patterns/stardust.png')",
-          }}
-        />
+        <div className="flow-assessment-texture flow-assessment-texture--stardust absolute inset-0 opacity-10 pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-lg w-full space-y-8 relative z-10"
-        >
+        <div className="flow-assessment-entry-scale max-w-lg w-full space-y-8 relative z-10">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
               Identity Lock
@@ -980,71 +936,62 @@ export default function Assessment() {
             </div>
 
             {/* Live domain detection banner */}
-            <AnimatePresence>
-              {(() => {
-                const emailMatch = guestEmail.match(/@([^\s@]+\.[^\s@]+)$/);
-                const detectedDomain = emailMatch
-                  ? emailMatch[1].toLowerCase()
-                  : null;
-                const freeEmailDomains = [
-                  "gmail.com",
-                  "yahoo.com",
-                  "hotmail.com",
-                  "outlook.com",
-                  "aol.com",
-                  "icloud.com",
-                  "protonmail.com",
-                  "mail.com",
-                  "zoho.com",
-                  "yandex.com",
-                ];
-                const isCompanyEmail =
-                  detectedDomain && !freeEmailDomains.includes(detectedDomain);
-                const companyName = isCompanyEmail
-                  ? detectedDomain.split(".")[0].charAt(0).toUpperCase() +
-                    detectedDomain.split(".")[0].slice(1)
-                  : null;
+            {(() => {
+              const emailMatch = guestEmail.match(/@([^\s@]+\.[^\s@]+)$/);
+              const detectedDomain = emailMatch
+                ? emailMatch[1].toLowerCase()
+                : null;
+              const freeEmailDomains = [
+                "gmail.com",
+                "yahoo.com",
+                "hotmail.com",
+                "outlook.com",
+                "aol.com",
+                "icloud.com",
+                "protonmail.com",
+                "mail.com",
+                "zoho.com",
+                "yandex.com",
+              ];
+              const isCompanyEmail =
+                detectedDomain && !freeEmailDomains.includes(detectedDomain);
+              const companyName = isCompanyEmail
+                ? detectedDomain.split(".")[0].charAt(0).toUpperCase() +
+                  detectedDomain.split(".")[0].slice(1)
+                : null;
 
-                if (!isCompanyEmail) return null;
+              if (!isCompanyEmail) return null;
 
-                return (
-                  <motion.div
-                    key="team-detect"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-4 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-yellow-400" />
-                        <span className="text-yellow-400 font-bold text-sm uppercase tracking-wider">
-                          {companyName} Detected
+              return (
+                <div className="flow-assessment-team-detect overflow-hidden">
+                  <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Building2 className="w-4 h-4 text-yellow-400" />
+                      <span className="text-yellow-400 font-bold text-sm uppercase tracking-wider">
+                        {companyName} Detected
+                      </span>
+                    </div>
+                    <p className="text-yellow-200/80 text-xs leading-relaxed">
+                      Your results will automatically join the{" "}
+                      <strong className="text-yellow-300">
+                        {companyName} Team Map
+                      </strong>
+                      . Everyone with an @{detectedDomain} email is mapped
+                      together - individual results stay private, but the
+                      team&#39;s energy distribution is visible to all members.
+                    </p>
+                    <div className="flex items-center gap-3 pt-1">
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-3.5 h-3.5 text-yellow-400/70" />
+                        <span className="text-[10px] text-yellow-300/70 uppercase tracking-wider">
+                          Individual + Team Assessment
                         </span>
                       </div>
-                      <p className="text-yellow-200/80 text-xs leading-relaxed">
-                        Your results will automatically join the{" "}
-                        <strong className="text-yellow-300">
-                          {companyName} Team Map
-                        </strong>
-                        . Everyone with an @{detectedDomain} email is mapped
-                        together - individual results stay private, but the
-                        team&#39;s energy distribution is visible to all
-                        members.
-                      </p>
-                      <div className="flex items-center gap-3 pt-1">
-                        <div className="flex items-center gap-1.5">
-                          <Users className="w-3.5 h-3.5 text-yellow-400/70" />
-                          <span className="text-[10px] text-yellow-300/70 uppercase tracking-wider">
-                            Individual + Team Assessment
-                          </span>
-                        </div>
-                      </div>
                     </div>
-                  </motion.div>
-                );
-              })()}
-            </AnimatePresence>
+                  </div>
+                </div>
+              );
+            })()}
 
             <Button
               onClick={() => setPhase("questions")}
@@ -1058,7 +1005,7 @@ export default function Assessment() {
               Proceed <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -1067,19 +1014,9 @@ export default function Assessment() {
   if (phase === "birth") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage:
-              "url('https://www.transparenttextures.com/patterns/stardust.png')",
-          }}
-        />
+        <div className="flow-assessment-texture flow-assessment-texture--stardust absolute inset-0 opacity-10 pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-2xl w-full space-y-8 relative z-10"
-        >
+        <div className="flow-assessment-entry-scale max-w-2xl w-full space-y-8 relative z-10">
           {/* Header - clearly optional */}
           <div className="text-center space-y-4">
             <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-400/30 px-4 py-1.5 rounded-full text-sm text-purple-300 font-medium">
@@ -1205,7 +1142,7 @@ export default function Assessment() {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -1214,11 +1151,7 @@ export default function Assessment() {
   if (phase === "submitting") {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center space-y-6"
-        >
+        <div className="flow-assessment-entry text-center space-y-6">
           <div className="w-16 h-16 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto" />
           <h2 className="text-2xl font-bold">
             Calculating your operational physics...
@@ -1226,7 +1159,7 @@ export default function Assessment() {
           <p className="text-gray-400">
             Syncing with the Flow Circuit database.
           </p>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -1269,19 +1202,9 @@ export default function Assessment() {
 
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage:
-              "url('https://www.transparenttextures.com/patterns/stardust.png')",
-          }}
-        />
+        <div className="flow-assessment-texture flow-assessment-texture--stardust absolute inset-0 opacity-10 pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-2xl w-full space-y-8 relative z-10"
-        >
+        <div className="flow-assessment-entry-scale max-w-2xl w-full space-y-8 relative z-10">
           <div className="text-center space-y-4">
             <CheckCircle2 className="w-16 h-16 text-green-400 mx-auto" />
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -1470,7 +1393,7 @@ export default function Assessment() {
               </Button>
             </div>
           )}
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -1502,11 +1425,7 @@ export default function Assessment() {
 
     return (
       <div className="min-h-screen bg-white text-black flex flex-col items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center space-y-6 max-w-2xl"
-        >
+        <div className="flow-assessment-entry-scale text-center space-y-6 max-w-2xl">
           <div className="flex justify-center">
             <CheckCircle2 className="w-24 h-24 text-green-600" />
           </div>
@@ -1521,12 +1440,7 @@ export default function Assessment() {
 
           {/* Company team auto-join confirmation */}
           {isCompanyEmail && companyName && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 text-left"
-            >
+            <div className="flow-assessment-team-detect flow-assessment-delay-3 bg-yellow-50 border border-yellow-200 rounded-xl p-5 text-left">
               <div className="flex items-center gap-2 mb-2">
                 <Building2 className="w-5 h-5 text-yellow-600" />
                 <span className="font-bold text-yellow-800">
@@ -1539,7 +1453,7 @@ export default function Assessment() {
                 straight to the <strong>{companyName} Team Map</strong> to see
                 how your team&#39;s energy is distributed.
               </p>
-            </motion.div>
+            </div>
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -1574,7 +1488,7 @@ export default function Assessment() {
               <strong>{effectiveDomain}</strong> team map.
             </p>
           )}
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -1584,11 +1498,9 @@ export default function Assessment() {
     <div className="min-h-screen bg-black text-white flex flex-col overflow-hidden">
       {/* Progress Bar */}
       <div className="h-1.5 bg-white/10 w-full flex-shrink-0">
-        <motion.div
-          className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.5 }}
+        <div
+          className="flow-assessment-progress-bar h-full bg-gradient-to-r from-yellow-400 to-yellow-500"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
@@ -1605,39 +1517,30 @@ export default function Assessment() {
           </div>
 
           {/* Question Text + Ranking */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentQuestion.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col flex-1"
-            >
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center text-balance">
-                {currentQuestion.text}
-              </h2>
+          <div
+            key={currentQuestion.id}
+            className="flow-assessment-question-transition flex flex-col flex-1"
+          >
+            <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black leading-[1.1] mb-4 md:mb-6 tracking-tight text-center text-balance">
+              {currentQuestion.text}
+            </h2>
 
-              <p className="text-center text-white/50 text-xs md:text-sm mb-4 md:mb-6 font-medium">
-                Rank from{" "}
-                <span className="text-emerald-400 font-bold">
-                  most like you
-                </span>{" "}
-                to{" "}
-                <span className="text-red-400 font-bold">least like you</span>
-              </p>
+            <p className="text-center text-white/50 text-xs md:text-sm mb-4 md:mb-6 font-medium">
+              Rank from{" "}
+              <span className="text-emerald-400 font-bold">most like you</span>{" "}
+              to <span className="text-red-400 font-bold">least like you</span>
+            </p>
 
-              <RankableQuestion
-                key={`rank-q-${currentQuestion.id}`}
-                questionId={currentQuestion.id}
-                questionText={currentQuestion.text}
-                options={currentQuestion.options}
-                onRankComplete={handleRankComplete}
-                questionNumber={currentQuestionIndex + 1}
-                totalQuestions={shuffledQuestions.length}
-              />
-            </motion.div>
-          </AnimatePresence>
+            <RankableQuestion
+              key={`rank-q-${currentQuestion.id}`}
+              questionId={currentQuestion.id}
+              questionText={currentQuestion.text}
+              options={currentQuestion.options}
+              onRankComplete={handleRankComplete}
+              questionNumber={currentQuestionIndex + 1}
+              totalQuestions={shuffledQuestions.length}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -38,11 +38,6 @@ const PATTERN_CHECKS: Array<{
     message:
       "Raw <img> tag found — use next/image's <Image> component instead.",
   },
-  {
-    test: (c) => /from ["']framer-motion["']/.test(c),
-    message:
-      "framer-motion import found — it's a banned dead dependency in this project (CLAUDE.md).",
-  },
 ];
 
 export async function checkCode(

@@ -362,10 +362,7 @@ export default function AlignmentResults() {
           <h1 className="text-3xl font-black mb-4 tracking-tight">
             No Assessment Data
           </h1>
-          <p
-            className="text-gray-600 mb-6 text-lg"
-            style={{ textWrap: "balance" }}
-          >
+          <p className="text-gray-600 mb-6 text-lg text-balance">
             Complete the 12-question assessment to unlock your Flow Circuit
             report.
           </p>
@@ -439,10 +436,7 @@ export default function AlignmentResults() {
                 <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-none mb-3">
                   {comboProfile ? comboProfile.label : description.title}
                 </h1>
-                <p
-                  className="text-lg md:text-2xl text-gray-600 max-w-2xl leading-relaxed"
-                  style={{ textWrap: "balance" }}
-                >
+                <p className="text-lg md:text-2xl text-gray-600 max-w-2xl leading-relaxed text-balance">
                   {insights.tagline}
                 </p>
               </div>
@@ -487,10 +481,7 @@ export default function AlignmentResults() {
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-500 mb-2">
               How to Read This Report
             </p>
-            <p
-              className="text-sm md:text-base text-gray-600 leading-relaxed"
-              style={{ textWrap: "pretty" }}
-            >
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed text-pretty">
               Your <strong>role</strong> ({dominant}) is where your energy
               naturally goes. <strong>Purity Score</strong> shows how
               concentrated that energy is in one role versus spread across
@@ -530,10 +521,7 @@ export default function AlignmentResults() {
                   <h3 className="font-bold text-base uppercase tracking-wide mb-2">
                     {step.title}
                   </h3>
-                  <p
-                    className="text-sm text-gray-700 leading-relaxed"
-                    style={{ textWrap: "pretty" }}
-                  >
+                  <p className="text-sm text-gray-700 leading-relaxed text-pretty">
                     {step.body}
                   </p>
                 </div>
@@ -568,10 +556,7 @@ export default function AlignmentResults() {
                 <span className="text-amber-400">who you are</span> than what
                 you know.
               </h2>
-              <p
-                className="text-gray-300 text-lg leading-relaxed max-w-3xl"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-gray-300 text-lg leading-relaxed max-w-3xl text-pretty">
                 Meredith Belbin&#39;s team-role research at Henley Management
                 College found that teams stacked with the &quot;smartest&quot;
                 individuals consistently underperformed teams with balanced role
@@ -617,10 +602,7 @@ export default function AlignmentResults() {
             <div
               className={`p-6 md:p-8 rounded-2xl ${colors.light} border-2 ${colors.border}`}
             >
-              <p
-                className="text-lg md:text-xl leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-lg md:text-xl leading-relaxed text-gray-800 text-pretty">
                 {comboProfile.description}
               </p>
             </div>
@@ -806,10 +788,7 @@ export default function AlignmentResults() {
                           label="Friction Level (Est.)"
                         />
 
-                        <p
-                          className="text-sm text-gray-600 leading-relaxed"
-                          style={{ textWrap: "pretty" }}
-                        >
+                        <p className="text-sm text-gray-600 leading-relaxed text-pretty">
                           {zone.description}
                         </p>
 
@@ -850,10 +829,7 @@ export default function AlignmentResults() {
                   Your Path to Your Best Self
                 </span>
               </div>
-              <p
-                className="text-lg md:text-xl leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-lg md:text-xl leading-relaxed text-gray-800 text-pretty">
                 {bestSelfInsight}
               </p>
             </div>
@@ -878,10 +854,7 @@ export default function AlignmentResults() {
               >
                 Your Superpower
               </h3>
-              <p
-                className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-base md:text-lg leading-relaxed text-gray-800 text-pretty">
                 {insights.superpower}
               </p>
             </div>
@@ -890,10 +863,7 @@ export default function AlignmentResults() {
               <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-red-600 mb-3">
                 Your Blind Spot
               </h3>
-              <p
-                className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-base md:text-lg leading-relaxed text-gray-800 text-pretty">
                 {insights.blindSpot}
               </p>
             </div>
@@ -902,10 +872,7 @@ export default function AlignmentResults() {
               <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-orange-600 mb-3">
                 Under Stress - What Happens When You&#39;re Forced Out
               </h3>
-              <p
-                className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-base md:text-lg leading-relaxed text-gray-800 text-pretty">
                 {insights.underStress}{" "}
                 <strong>
                   This is the cost of operating outside your nature - it
@@ -919,10 +886,7 @@ export default function AlignmentResults() {
               <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-600 mb-3">
                 Your Growth Edge
               </h3>
-              <p
-                className="text-base md:text-lg leading-relaxed text-gray-800"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-base md:text-lg leading-relaxed text-gray-800 text-pretty">
                 {insights.growthEdge}
               </p>
             </div>
@@ -944,10 +908,7 @@ export default function AlignmentResults() {
               <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">
                 What You Bring to the Team
               </h3>
-              <p
-                className="text-lg md:text-xl leading-relaxed text-gray-200"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-lg md:text-xl leading-relaxed text-gray-200 text-pretty">
                 {insights.teamValue}
               </p>
             </div>
@@ -1007,10 +968,7 @@ export default function AlignmentResults() {
               <p className="text-gray-300 text-sm mb-3">
                 How others should communicate with you:
               </p>
-              <div
-                className="text-gray-200 text-base leading-relaxed whitespace-pre-line"
-                style={{ textWrap: "pretty" }}
-              >
+              <div className="text-gray-200 text-base leading-relaxed whitespace-pre-line text-pretty">
                 {description.communicationGuide.trim()}
               </div>
             </div>
@@ -1028,8 +986,7 @@ export default function AlignmentResults() {
             Your Mantra
           </p>
           <p
-            className={`text-2xl md:text-4xl font-black italic ${colors.text}`}
-            style={{ textWrap: "balance" }}
+            className={`text-2xl md:text-4xl font-black italic text-balance ${colors.text}`}
           >
             {insights.mantra}
           </p>
@@ -1165,10 +1122,7 @@ export default function AlignmentResults() {
                 </div>
               </div>
 
-              <p
-                className="text-gray-700 leading-relaxed mb-4"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-gray-700 leading-relaxed mb-4 text-pretty">
                 Your Flow Circuit reveals <strong>what</strong> you do on a
                 team. Your Soulprint reveals <strong>why</strong> you do it that
                 way. It maps your birth data across 8+ personality frameworks -
@@ -1259,10 +1213,7 @@ export default function AlignmentResults() {
                       Recommended
                     </span>
                   </div>
-                  <p
-                    className="text-emerald-200 mt-1 text-base leading-relaxed"
-                    style={{ textWrap: "pretty" }}
-                  >
+                  <p className="text-emerald-200 mt-1 text-base leading-relaxed text-pretty">
                     Your Likert-based assessment captures your intuitive signal.
                     Deep Calibration uses forced-ranking, which tends to reduce
                     the &quot;rate everything high&quot; bias that Likert scales
@@ -1350,10 +1301,7 @@ export default function AlignmentResults() {
             >
               <Sparkles className="w-8 h-8 mb-3 text-amber-400 group-hover:text-amber-600 transition-colors" />
               <h3 className="font-bold text-lg mb-1">Share Your Card</h3>
-              <p
-                className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-sm text-gray-500 text-pretty">
                 Generate a visual card of your Flow Circuit role and share it on
                 LinkedIn.
               </p>
@@ -1371,10 +1319,7 @@ export default function AlignmentResults() {
               >
                 <Share2 className="w-8 h-8 mb-3 text-gray-400 group-hover:text-black transition-colors" />
                 <h3 className="font-bold text-lg mb-1">View Tribe Map</h3>
-                <p
-                  className="text-sm text-gray-500"
-                  style={{ textWrap: "pretty" }}
-                >
+                <p className="text-sm text-gray-500 text-pretty">
                   See how your tribe&#39;s energy is distributed across the Flow
                   Circuit.
                 </p>
@@ -1388,10 +1333,7 @@ export default function AlignmentResults() {
             >
               <Heart className="w-8 h-8 mb-3 text-gray-400 group-hover:text-purple-500 transition-colors" />
               <h3 className="font-bold text-lg mb-1">Family Circuit</h3>
-              <p
-                className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-sm text-gray-500 text-pretty">
                 Map your family&#39;s energy dynamics. Home is where you should
                 be yourself.
               </p>
@@ -1404,10 +1346,7 @@ export default function AlignmentResults() {
             >
               <Compass className="w-8 h-8 mb-3 text-indigo-400 group-hover:text-indigo-600 transition-colors" />
               <h3 className="font-bold text-lg mb-1">SoulPrint</h3>
-              <p
-                className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-sm text-gray-500 text-pretty">
                 Map your soul&#39;s blueprint. Combine it with your Flow Circuit
                 DNA for the full picture.
               </p>
@@ -1431,10 +1370,7 @@ export default function AlignmentResults() {
               <div className="relative z-10">
                 <Eye className="w-8 h-8 mb-3 text-violet-400 group-hover:text-violet-600 transition-colors" />
                 <h3 className="font-bold text-lg mb-1">Consciousness Layer</h3>
-                <p
-                  className="text-sm text-gray-500"
-                  style={{ textWrap: "pretty" }}
-                >
+                <p className="text-sm text-gray-500 text-pretty">
                   Toggle in your SoulPrint reading - Enneagram, Human Design,
                   Astrology - for a deeper lens on your Flow Circuit role.
                 </p>
@@ -1452,10 +1388,7 @@ export default function AlignmentResults() {
             >
               <ArrowRight className="w-8 h-8 mb-3 text-gray-400 group-hover:text-black transition-colors" />
               <h3 className="font-bold text-lg mb-1">Retake Assessment</h3>
-              <p
-                className="text-sm text-gray-500"
-                style={{ textWrap: "pretty" }}
-              >
+              <p className="text-sm text-gray-500 text-pretty">
                 Answer from a different context (work vs. family) to see how
                 your energy shifts.
               </p>
@@ -1468,10 +1401,7 @@ export default function AlignmentResults() {
             <h3 className="text-xl font-black uppercase tracking-tight mb-2">
               Find Your Me
             </h3>
-            <p
-              className="text-sm text-gray-500 mb-6"
-              style={{ textWrap: "pretty" }}
-            >
+            <p className="text-sm text-gray-500 mb-6 text-pretty">
               Your Flow Circuit role is one layer. Go deeper across the full
               ecosystem of self-discovery tools.
             </p>

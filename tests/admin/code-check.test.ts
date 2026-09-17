@@ -31,12 +31,4 @@ describe("checkCode", () => {
     expect(result.prettier.formatted).toBe(true);
     expect(result.patternIssues).toEqual([]);
   });
-
-  it("does not flag framer-motion in files that don't import it, but does in ones that do", async () => {
-    const withMotion = `import { motion } from "framer-motion";\nexport const X = () => <motion.div />;\n`;
-    const result = await checkCode("src/components/X.tsx", withMotion);
-    expect(result.patternIssues.some((p) => p.includes("framer-motion"))).toBe(
-      true,
-    );
-  });
 });

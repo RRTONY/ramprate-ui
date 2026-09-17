@@ -21,6 +21,9 @@ The inventory found inline styles across public, protected, and Flow product sur
 1. The protected AI ownership-brief gate now uses scoped CSS for fixed layers, typography, inputs, actions, and error feedback.
 2. The shared public Hero now uses semantic CSS classes for its fallback glow and gradient overlays.
 3. The public Process, Payments Advisory, BioChain, Values, ImpactSol, and shared marketing CTA work moved common styling into the unified global system and removed retired competing visual treatments.
+4. The root global-error boundary now uses a self-contained semantic stylesheet because it cannot rely on the root global CSS after a layout-level failure; its recovery control retains visible keyboard focus and an assertive accessible error announcement.
+5. Flow Assessment phase textures and Flow Alignment Results text wrapping now use scoped CSS or semantic Tailwind utilities. The remaining Flow inline styles are dynamic progress, geometry, visual-model colors, or calculated entry delays.
+6. The Open Graph image generator retains renderer-required inline layout declarations because it produces an image response rather than browser DOM; these values cannot be represented safely by static page classes.
 
 ## Guardrail
 

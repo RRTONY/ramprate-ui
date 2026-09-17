@@ -35,9 +35,15 @@
 - [ ] Extend Kumbaya regression coverage to protect the full live-page content, attachment, and intake-detail contract.
 - [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
-- [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
-- [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
-- [ ] Migrate the remaining Flow Framer Motion route imports to a shared reduced-motion-safe compatibility layer, verify supported variants and interactive props, then remove the unused dependency.
+- [ ] Continue the file-by-file audit and replacement of non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [x] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
+- [x] Migrate the remaining Flow Framer Motion route imports directly to scoped reduced-motion-safe CSS or native behavior, verify interactive props and route contracts, then remove the unused dependency.
+- [x] Replace primary Flow Assessment Framer Motion presentation wrappers with scoped reduced-motion-safe CSS while preserving returning-user results, question progression, dynamic progress, invite generation, birth-data flow, and submission states.
+- [x] Replace fixed Flow Assessment texture inline styles with scoped CSS classes while retaining phase-specific visual treatment and all assessment behavior.
+- [x] Replace Flow SoulPrint Layer Framer Motion presentation wrappers with scoped reduced-motion-safe CSS while preserving consent, profile toggles, accordions, scientific disclosure, source links, loading feedback, and reflective-framework limitations.
+- [x] Replace the global-error boundary’s fixed JSX inline styles with semantic shared CSS classes while preserving its safe recovery action and error-display accessibility.
+- [x] Replace Flow Alignment Results static text-wrap JSX styles with equivalent semantic utility classes while retaining all calculated result data, reports, links, and responsive text behavior.
+- [x] Move Flow Team Map scatter-plot fixed shell, axis-label, and SVG layout styles to scoped CSS while retaining calculated member positions, chart values, and interaction behavior.
 - [x] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
 - [x] Replace Flow Time Travel member-bar Framer Motion with reduced-motion-safe CSS while preserving animated playback, timeline controls, role colors, dynamic score heights, and active-member calculations.
 - [x] Replace Flow Research Opt-In confirmation Framer Motion with reduced-motion-safe CSS while preserving consent submission, pending state, local preference storage, and privacy messaging.
