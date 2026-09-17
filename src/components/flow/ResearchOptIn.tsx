@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { trpc } from "@/lib/flow/trpc";
 import { CheckCircle2, FlaskConical, BarChart3, Shield } from "lucide-react";
@@ -44,19 +43,13 @@ export default function ResearchOptIn({ assessmentId }: ResearchOptInProps) {
             Contributing to Research
           </h3>
         </div>
-        <AnimatePresence>
-          {justOptedIn && (
-            <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="text-sky-700 text-sm leading-relaxed mb-3"
-            >
-              Thank you! Your anonymized data is now part of the Flow Circuit
-              validation study. You&#39;re helping build the evidence base for a
-              more rigorous approach to team dynamics.
-            </motion.p>
-          )}
-        </AnimatePresence>
+        {justOptedIn && (
+          <p className="flow-research-opt-in-confirmation text-sky-700 text-sm leading-relaxed mb-3">
+            Thank you! Your anonymized data is now part of the Flow Circuit
+            validation study. You&#39;re helping build the evidence base for a
+            more rigorous approach to team dynamics.
+          </p>
+        )}
         <p className="text-sky-600 text-xs">
           Your data is anonymized - no names, emails, or identifying information
           are included in research datasets. You can opt out anytime from your
