@@ -23,7 +23,7 @@ const brandLinks = [
   {
     label: "Torque",
     href: "/torque",
-    desc: "Litigation Counsel Sourcing",
+    desc: "Critical Issue Management",
   },
 ];
 
