@@ -303,10 +303,9 @@ const differenceRows = [
 ];
 
 const boundaries = [
-  "Anything that requires a professional license we don't hold - drafting legal filings, appearing in court, or issuing a legal, financial, or investment opinion you'd rely on. We identify and manage the licensed professional the situation calls for; we don't take their place.",
+  "Anything that requires a professional license - drafting legal filings, appearing in court, or issuing a legal, financial, or investment opinion you'd rely on. We identify and manage the licensed professional the situation calls for; we don't take their place.",
   "Holding client funds or acting as fiduciary custodian of assets in dispute.",
   "Broker-dealer-adjacent structuring or anything resembling securities intermediation.",
-  "Criminal defense, standalone family law, personal injury, or immigration as a lead service - we can augment the professionals handling these, but we're not the primary point of contact.",
   "Purely verbal, undocumented claims against a counterparty with no identifiable assets.",
 ];
 
