@@ -49,11 +49,11 @@ const tier2Clients = [
 
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
-    <div className="text-center px-2 py-4">
-      <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white/60">
+    <div className="rr-client-ledger-card text-center px-3 py-4 sm:px-4 sm:py-5">
+      <h3 className="font-body text-[0.68rem] sm:text-xs font-bold tracking-[0.13em] uppercase text-white/80">
         {name}
       </h3>
-      <p className="font-body text-[11px] sm:text-xs mt-1 leading-snug text-white/50">
+      <p className="font-body text-[0.65rem] sm:text-[0.69rem] mt-2 leading-snug text-white/52">
         {context}
       </p>
     </div>
@@ -64,49 +64,78 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="home-client-wall section-sunset py-12 sm:py-16 relative overflow-hidden">
-      <div
-        className="glass-orb glass-orb-amber w-[420px] h-[420px] -top-48 -right-24"
-        style={{ animationDuration: "9s" }}
-      />
+    <section className="home-client-wall section-sunset relative overflow-hidden py-16 sm:py-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
-        <div className="text-center mb-10">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
-            25 Years Inside the World&apos;s Most
-            <br className="hidden sm:block" />
-            <span className="text-gold"> Complex Enterprises</span>
-          </h2>
-          <p className="font-body mt-3 text-sm text-white/50">
-            100+ engagements. $10B+ in decisions transacted. Names you know.
-          </p>
+        <div className="rr-client-wall-intro grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-14">
+          <div>
+            <p className="rr-proof-kicker">
+              A decision record, not a logo wall
+            </p>
+            <h2 className="rr-client-wall-title font-display mt-5 text-white leading-[0.94]">
+              25 Years Inside the World&apos;s Most{" "}
+              <span className="text-gold">Complex Enterprises.</span>
+            </h2>
+          </div>
+          <div className="rr-client-wall-proof">
+            <p className="font-body text-base leading-relaxed text-white/72 sm:text-lg">
+              100+ engagements. $10B+ in decisions transacted. Names you know.
+            </p>
+            <p className="font-body mt-3 text-sm leading-relaxed text-white/48">
+              The work is measured in agreements improved, infrastructure
+              stabilized, and decisions that held up under pressure.
+            </p>
+          </div>
         </div>
 
-        {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px rounded-lg overflow-hidden bg-white/4 border border-white/6">
-          {tier1Clients.map((c) => (
-            <div key={c.name} className="bg-[rgb(9,20,36)]">
-              <ClientCard name={c.name} context={c.context} />
-            </div>
+        <div
+          className="rr-client-wall-metrics"
+          aria-label="RampRate experience metrics"
+        >
+          <div>
+            <strong>25</strong>
+            <span>Years principal-led</span>
+          </div>
+          <div>
+            <strong>100+</strong>
+            <span>Complex engagements</span>
+          </div>
+          <div>
+            <strong>$10B+</strong>
+            <span>Decisions transacted</span>
+          </div>
+          <div>
+            <strong>80</strong>
+            <span>Countries advised</span>
+          </div>
+        </div>
+
+        <div className="rr-client-wall-ledger-heading">
+          <span>Selected engagements</span>
+          <span>What held up</span>
+        </div>
+
+        <div className="rr-client-wall-ledger grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8">
+          {tier1Clients.map((client) => (
+            <ClientCard key={client.name} {...client} />
           ))}
         </div>
 
-        {/* Tier 2 */}
-        {showAllClients && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-px rounded-lg overflow-hidden mt-3 bg-white/4 border border-white/6">
-            {tier2Clients.map((c) => (
-              <div key={c.name} className="bg-[rgb(9,20,36)]">
-                <ClientCard name={c.name} context={c.context} />
-              </div>
+        {showAllClients ? (
+          <div className="rr-client-wall-ledger mt-3 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5">
+            {tier2Clients.map((client) => (
+              <ClientCard key={client.name} {...client} />
             ))}
           </div>
-        )}
+        ) : null}
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-8">
           <button
-            onClick={() => setShowAllClients(!showAllClients)}
-            className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-white/70 text-white/50"
+            type="button"
+            onClick={() => setShowAllClients((showAll) => !showAll)}
+            aria-expanded={showAllClients}
+            className="rr-client-wall-toggle"
           >
-            {showAllClients ? "- Show Less" : "+ View All Clients"}
+            {showAllClients ? "Show fewer engagements" : "View all engagements"}
           </button>
         </div>
       </div>

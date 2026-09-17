@@ -37,7 +37,8 @@ describe("marketing header scroll state", () => {
     const { container } = render(createElement(Header));
     const navigation = container.querySelector("nav");
 
-    expect(navigation?.className).toContain("bg-transparent");
+    expect(navigation?.className).toContain("rr-public-header");
+    expect(navigation?.className).not.toContain("is-scrolled");
     expect(screen.queryByText("Tell Us What's Broken")).toBeNull();
     expect(screen.queryByText("Process")).toBeNull();
 
@@ -50,10 +51,7 @@ describe("marketing header scroll state", () => {
     fireEvent.scroll(window);
 
     await waitFor(() => {
-      expect(navigation?.className).toContain("bg-white");
-      expect(navigation?.className).not.toContain("bg-white/");
-      expect(navigation?.className).toContain("z-[100]");
-      expect(navigation?.className).toContain("border-b");
+      expect(navigation?.className).toContain("is-scrolled");
     });
   });
 });

@@ -7,6 +7,7 @@ const HERO_VIDEO = "/manus-storage/ramprate-cinematic-hero-loop_9982d784.mp4";
 
 export default function CinematicHeroMedia() {
   const [canAnimate, setCanAnimate] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     if (typeof window.matchMedia !== "function") {
@@ -34,7 +35,7 @@ export default function CinematicHeroMedia() {
       />
       {canAnimate ? (
         <video
-          className="rr-cinematic-hero-video"
+          className={`rr-cinematic-hero-video ${videoReady ? "is-ready" : ""}`}
           autoPlay
           muted
           loop
@@ -42,6 +43,8 @@ export default function CinematicHeroMedia() {
           poster="/hero.webp"
           preload="metadata"
           aria-hidden="true"
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => setVideoReady(false)}
         >
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>

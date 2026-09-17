@@ -1,0 +1,38 @@
+# Homepage Refresh Reference Notes
+
+## Scope and protected contracts
+
+The requested refresh applies to the **public** RampRate experience only. The independent database-backed CMS and the separate Flow product remain isolated. The canonical public navigation remains Services, Case Studies, About, Blog, and Contact Us; service routes, legal routes, current intake destinations, and compatibility redirects remain protected.
+
+## Initial reference findings
+
+| Reference                                                                            | Observed pattern                                                                                                                                                                                                            | Adaptation for RampRate                                                                                                                                                                                                                                                               |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Open Loyalty](https://www.openloyalty.io/)                                          | Public homepage reference supplied for a focused product narrative and strong shared navigation hierarchy.                                                                                                                  | Use a compact, editorial header with a visible primary action and a deliberate product/service menu instead of reproducing its layout or visual assets.                                                                                                                               |
+| [Reelo](https://reelo.io/)                                                           | Uses a clear top-level navigation grouping, a tightly structured hero with one primary and one secondary CTA, proof immediately below the message, and an extensive grouped footer.                                         | Retain RampRate’s navy/paper/gold identity while tightening the hero hierarchy, putting meaningful proof adjacent to the opening value proposition, and organizing footer destinations into readable groups.                                                                          |
+| [Inside Startups](https://www.inside-startups.com/)                                  | Uses an announcement band, low-density uppercase navigation, menu triggers with grouped destination lists, an editorial serif hero, concise dual actions, problem-led evidence cards, and a deliberately structured footer. | Use a quieter editorial rhythm: a compact services menu, one visual hierarchy for the hero, a proof narrative that reads as evidence rather than a generic metric card, and a practical multi-column footer. Do not copy its black-and-lime presentation, layout, assets, or content. |
+| [shadcn Navigation Menu](https://ui.shadcn.com/docs/components/base/navigation-menu) | Documents a semantic navigation pattern built around explicit menu items, triggers, links, and a grouped viewport; its underlying component reference is keyboard and focus aware.                                          | Implement the interaction principles—keyboard reachable Services trigger, grouped service links, visible focus, Escape dismissal, and a compact mobile alternative—within the existing public header. Do not add a dependency merely to recreate this small behavior.                 |
+
+## Initial design constraints
+
+The refreshed public interface will use **Playfair Display** for editorial display headings, **DM Sans** for navigation, body copy, controls, and evidence, and **JetBrains Mono** only for small labels or data markers. It will keep the existing managed hero media path and provide a static fallback plus reduced-motion handling; no local video bytes will be committed.
+
+## Reference synthesis
+
+The intended RampRate direction is an **editorial advisory system**, not a SaaS replica: a calm, fixed-height public header; a single controlled Services disclosure; high-contrast serif-led statements paired with disciplined sans-serif explanatory copy; immediate factual proof; and a footer that makes next destinations simple to scan. Motion will remain small, purposeful, and disabled for visitors who prefer reduced motion.
+
+## Liquid-glass reference findings
+
+The supplied status-pill reference uses a low-opacity midnight surface over hero photography, a fine cool-white outline, generous full-pill radius, a soft inset highlight, and understated wide-tracked uppercase text. A single gold dot gives the state a factual anchor. The RampRate implementation will interpret this as a **readability-first glass layer**: translucent navy rather than unbounded blur, a visible border, a stronger white text contrast, a gold state dot, and no essential information dependent on the background image.
+
+The supplied CTA reference pairs a warm gold primary control with an outlined secondary glass action. The gold surface remains opaque enough for dark text, while the secondary action uses a translucent deep-blue field, one crisp pale border, a subtle internal highlight, and white text. RampRate will preserve this hierarchy for **Book a Call** and **View Case Studies**, with 44px-plus tap targets, a visible focus ring, and understated hover movement.
+
+## Selected Engagements media review
+
+The engagement cards use managed editorial context images rather than unaudited third-party campus or trademark imagery. The actual company names, verified result statements, and explanatory evidence remain accessible HTML text, making the card’s proof explicit without suggesting that a generated visual is an official company photograph. The selected visuals represent broadcast infrastructure, data-center operations, and decentralized network infrastructure, respectively.
+
+Selected managed assets are stored outside the repository in the approved public asset workspace and referenced only by their managed paths: `/manus-storage/paramount-editorial_6bc75d56.jpg`, `/manus-storage/ebay-editorial_2f4aaef4.jpg`, and `/manus-storage/noia-editorial_7fa1f45a.jpg`. Each is deliberately darkened only enough to keep the company name, verified result statement, and engagement explanation readable.
+
+The completed editorial source files are present in the approved static-asset workspace. During local preview review, the legacy managed-path proxy returned blank media responses for both existing hero assets and new managed assets; this is a preview-proxy limitation rather than a source-path substitution. The component therefore uses the exact managed asset paths supplied at generation time with native `unoptimized` image delivery, and production verification remains required after checkpoint publication.
+
+The generated broadcast-infrastructure and enterprise-data-center scenes were reviewed at source resolution. Each has deliberate negative space on the left, credible high-stakes operational context, no company wordmark, and a visual hierarchy suitable for the verified HTML proof copy layered above it.

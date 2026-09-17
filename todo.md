@@ -11,6 +11,16 @@
 - [x] Run type checks, linting, automated tests, and manual responsive flow validation; resolve discovered issues.
 - [x] Prepare a concise completion report with changes, test evidence, branch details, and remaining credentials or deployment setup.
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
+- [x] Audit the supplied Open Loyalty, Reelo, Inside Startups, and shadcn navigation references against the existing public homepage contracts before the visual refresh.
+- [x] Normalize public homepage typography to the approved Playfair Display and DM Sans system so shared chrome, hero, proof, and section content do not introduce competing font families.
+- [x] Rebuild the public header and responsive mobile navigation with an accessible grouped Services menu, consistent scroll treatment, and retained canonical destinations.
+- [x] Refresh the public homepage sections, including the “25 Years Inside the World’s Most Complex Enterprises” proof narrative, with a coherent navy, paper, and gold editorial system and retained calls to action.
+- [ ] Add rights-appropriate editorial imagery to the homepage Selected Engagements cards while retaining each verified engagement’s copy, evidence, link behavior, and responsive accessibility.
+- [x] Reframe the homepage Why We’re Different section as a clear modern decision comparison, retaining the verified contrast claims and existing calls to action.
+- [x] Redesign the public footer to match the refreshed header and homepage system while retaining legal, service, and contact navigation.
+- [x] Improve the managed cinematic homepage hero video treatment and static reduced-motion fallback without committing local media bytes.
+- [x] Add a restrained accessible liquid-glass treatment to the public hero status pill and secondary CTA, guided by the supplied reference crops without reducing contrast or focus visibility.
+- [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.

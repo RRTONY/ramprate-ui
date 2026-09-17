@@ -1,5 +1,6 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import {
   ArrowRight,
   ArrowDown,
@@ -11,6 +12,7 @@ import {
   Shield,
   Database,
   DollarSign,
+  Check,
 } from "lucide-react";
 import { impactSolService, services } from "@/lib/service-catalog";
 import CinematicHeroMedia from "./CinematicHeroMedia";
@@ -30,6 +32,9 @@ const engagements = [
     detail:
       "From Viacom & CBS split in 2005 to reuniting in 2020, RampRate was there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
     accentClass: "bg-gold",
+    image: "/manus-storage/paramount-editorial_6bc75d56.jpg",
+    imageAlt:
+      "Editorial representation of high-stakes broadcast infrastructure",
   },
   {
     label: "eBay",
@@ -37,6 +42,8 @@ const engagements = [
     detail:
       "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
     accentClass: "bg-gold",
+    image: "/manus-storage/ebay-editorial_2f4aaef4.jpg",
+    imageAlt: "Editorial representation of enterprise data-center operations",
   },
   {
     label: "NOIA",
@@ -44,39 +51,42 @@ const engagements = [
     detail:
       "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
     accentClass: "bg-gold",
+    image: "/manus-storage/noia-editorial_7fa1f45a.jpg",
+    imageAlt:
+      "Editorial representation of decentralized network infrastructure",
   },
 ];
 
 /* ── WHY DIFFERENT ── */
 const diffRows = [
   {
-    trad: "Sells analysis",
-    broker: "Sells intros",
+    label: "Evidence before opinion",
+    conventional: "Sells analysis or introductions",
     ramp: "Benchmarks real contracts against 150K+ data points",
   },
   {
-    trad: "Bills time",
-    broker: "Takes commissions",
+    label: "Shared economics",
+    conventional: "Bills time or takes commissions",
     ramp: "Compensation aligned to value created",
   },
   {
-    trad: "Client executes",
-    broker: "Disappears after handshake",
+    label: "Accountability through execution",
+    conventional: "Hands the work back or disappears after the handshake",
     ramp: "Executes with principals end-to-end",
   },
   {
-    trad: "Junior layers",
-    broker: "Rolodex, no depth",
+    label: "Senior continuity",
+    conventional: "Junior layers or a Rolodex without depth",
     ramp: "Same senior team, 25 years, no staffing pyramid",
   },
   {
-    trad: "Forecasts ±30-40%",
-    broker: "No forecasts",
-    ramp: "Forecasts within 5-10%",
+    label: "A firmer forecast",
+    conventional: "Forecasts ±30–40% or no forecast at all",
+    ramp: "Forecasts within 5–10%",
   },
   {
-    trad: "Pays lip service to impact",
-    broker: "Sacrifices impact for profit",
+    label: "Profit and purpose",
+    conventional: "Treats impact as lip service or a trade-off",
     ramp: "Finds profit through purpose",
   },
 ];
@@ -251,7 +261,10 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="home-proof-section section-sunset py-16 sm:py-20">
+      <section
+        id="selected-engagements"
+        className="home-proof-section section-sunset py-16 sm:py-20"
+      >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
@@ -266,20 +279,31 @@ export default function HomeContent() {
             {engagements.map((eng) => (
               <div
                 key={eng.label}
-                className="home-proof-card rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
+                className="home-proof-card group relative overflow-hidden rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
               >
-                <div
-                  className={`home-proof-marker mb-6 h-10 w-1 rounded-full ${eng.accentClass}`}
+                <Image
+                  src={eng.image}
+                  alt={eng.imageAlt}
+                  fill
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                  unoptimized
+                  className="home-proof-card-image object-cover"
                 />
-                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
-                  {eng.label}
-                </p>
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
-                  {eng.stats}
-                </h3>
-                <p className="font-body text-sm leading-relaxed text-white/50">
-                  {eng.detail}
-                </p>
+                <div className="home-proof-card-overlay absolute inset-0" />
+                <div className="relative z-10">
+                  <div
+                    className={`home-proof-marker mb-6 h-10 w-1 rounded-full ${eng.accentClass}`}
+                  />
+                  <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/68">
+                    {eng.label}
+                  </p>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
+                    {eng.stats}
+                  </h3>
+                  <p className="font-body text-sm leading-relaxed text-white/72">
+                    {eng.detail}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -367,52 +391,48 @@ export default function HomeContent() {
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
       <section className="home-difference-section section-warm py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
-              Why We&apos;re Different
-            </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-ink">
-              Data-Driven. Objective. Impact-Oriented.
-            </h2>
+          <div className="rr-difference-intro grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <span className="rr-kicker">Why RampRate</span>
+              <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-[-0.04em] text-ink">
+                Data in the room.
+                <br />
+                <span className="text-gold">Principals at the table.</span>
+              </h2>
+            </div>
+            <p className="font-body max-w-xl text-base leading-relaxed text-ink-mid sm:text-lg">
+              Complex decisions need more than a presentation or an
+              introduction. We stay close to the work, the numbers, and the
+              people accountable for the outcome.
+            </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="home-difference-table w-full text-left border-collapse min-w-[560px]">
-              <thead>
-                <tr>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
-                    Traditional Consulting
-                  </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
-                    Traditional Middleman
-                  </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-[#8a5f0e] border-b-gold">
-                    RampRate
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {diffRows.map((row, i) => (
-                  <tr key={i} className="border-b border-black/5">
-                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
-                      {row.trad}
-                    </td>
-                    <td className="font-body py-4 pr-6 text-sm text-ink-mid">
-                      {row.broker}
-                    </td>
-                    <td className="font-body py-4 text-sm font-semibold text-ink">
-                      {row.ramp}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="rr-difference-legend" aria-hidden="true">
+            <span>Typical model</span>
+            <span>RampRate model</span>
           </div>
 
-          <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-ink">
-            You work with principals. No junior layering. No staffing pyramid.
-            <br className="hidden sm:block" />
-            The people accountable for the work stay close to the decision.
+          <div className="rr-difference-ledger">
+            {diffRows.map((row, index) => (
+              <article className="rr-difference-row" key={row.label}>
+                <span className="rr-difference-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="rr-difference-conventional">
+                  <h3>{row.label}</h3>
+                  <p>{row.conventional}</p>
+                </div>
+                <div className="rr-difference-ramp">
+                  <Check size={17} aria-hidden="true" />
+                  <p>{row.ramp}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="rr-difference-closing font-display">
+            You work with principals. No staffing pyramid. The people
+            accountable for the work stay close to the decision.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">

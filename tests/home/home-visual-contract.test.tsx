@@ -16,6 +16,7 @@ vi.mock("next/image", () => ({
     const imageProps = { ...props };
     delete imageProps.fill;
     delete imageProps.priority;
+    delete imageProps.unoptimized;
     return createElement("img", imageProps);
   },
 }));
@@ -82,13 +83,35 @@ describe("home visual contract", () => {
     expect(container.textContent).toContain("Paramount");
     expect(container.textContent).toContain("NOIA");
     expect(
+      container
+        .querySelector(
+          'img[src="/manus-storage/paramount-editorial_6bc75d56.jpg"]',
+        )
+        ?.getAttribute("alt"),
+    ).toBe("Editorial representation of high-stakes broadcast infrastructure");
+    expect(
+      container
+        .querySelector('img[src="/manus-storage/ebay-editorial_2f4aaef4.jpg"]')
+        ?.getAttribute("alt"),
+    ).toBe("Editorial representation of enterprise data-center operations");
+    expect(
+      container
+        .querySelector('img[src="/manus-storage/noia-editorial_7fa1f45a.jpg"]')
+        ?.getAttribute("alt"),
+    ).toBe("Editorial representation of decentralized network infrastructure");
+    expect(
       container.querySelector(
         'a[href="/services/deal-partnership-structuring"]',
       ),
     ).not.toBeNull();
     expect(container.querySelector('a[href="/impactsoul"]')).not.toBeNull();
+    expect(container.textContent).toContain("Data in the room.");
+    expect(container.textContent).toContain("Principals at the table.");
     expect(container.textContent).toContain(
-      "Data-Driven. Objective. Impact-Oriented.",
+      "Benchmarks real contracts against 150K+ data points",
+    );
+    expect(container.textContent).toContain(
+      "Compensation aligned to value created",
     );
   });
 
