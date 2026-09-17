@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -340,12 +339,14 @@ export default function TeamDashboardClient() {
                           <span>{getRolePercentage(role)}%</span>
                         </div>
                         <div className="h-2 bg-black/50 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${getRolePercentage(role)}%` }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className={`h-full ${getRoleColor(role as Role).replace("text-", "bg-")}`}
-                          />
+                          <div
+                            className="h-full"
+                            style={{ width: `${getRolePercentage(role)}%` }}
+                          >
+                            <div
+                              className={`flow-team-dashboard-role-bar h-full ${getRoleColor(role as Role).replace("text-", "bg-")}`}
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}

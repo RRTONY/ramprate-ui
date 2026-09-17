@@ -500,3 +500,26 @@
     animation: none;
   }
 }
+
+@keyframes flow-team-dashboard-role-bar-enter {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.flow-team-dashboard-role-bar {
+  animation: flow-team-dashboard-role-bar-enter 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-team-dashboard-role-bar {
+    animation: none;
+  }
+}
