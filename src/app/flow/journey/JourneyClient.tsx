@@ -1,11 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/flow/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, User, Users, Zap } from "lucide-react";
+import { ArrowRight, Check, User, Users, Zap } from "lucide-react";
 import Link from "next/link";
-import BlogBridge from '@/components/flow/BlogBridge';
+import BlogBridge from "@/components/flow/BlogBridge";
 
 export default function JourneyClient() {
   const steps = [
@@ -13,56 +17,54 @@ export default function JourneyClient() {
       phase: "Phase 1: The Mirror",
       title: "Individual Awakening",
       icon: <User className="h-12 w-12 text-primary" />,
-      description: "You cannot optimize what you do not understand. The journey begins with a deep dive into your own operating system.",
+      description:
+        "You cannot optimize what you do not understand. The journey begins with a deep dive into your own operating system.",
       actions: [
         "Take the Flow Circuit Assessment",
         "Discover your 'TrueSelf' Soulprint",
-        "Identify your Superpowers & Kryptonite"
+        "Identify your Superpowers & Kryptonite",
       ],
       link: "/team-builder",
-      cta: "Start Assessment"
+      cta: "Start Assessment",
     },
     {
       phase: "Phase 2: The Circuit",
       title: "Team Calibration",
       icon: <Users className="h-12 w-12 text-secondary" />,
-      description: "Individual brilliance means nothing if the connection is broken. We map your team to reveal the hidden friction.",
+      description:
+        "Individual brilliance means nothing if the connection is broken. We map your team to reveal the hidden friction.",
       actions: [
         "Map your team on the Flow Quadrant",
         "Identify 'Short Circuits' (Missing Roles)",
-        "Design your custom 'Handoff Protocol'"
+        "Design your custom 'Handoff Protocol'",
       ],
       link: "/team-builder",
-      cta: "Map Your Team"
+      cta: "Map Your Team",
     },
     {
       phase: "Phase 3: The Ritual",
       title: "Daily Integration",
       icon: <Zap className="h-12 w-12 text-accent" />,
-      description: "Flow isn't a workshop. It's a habit. We embed the protocol into your daily meetings, emails, and decisions.",
+      description:
+        "Flow isn't a workshop. It's a habit. We embed the protocol into your daily meetings, emails, and decisions.",
       actions: [
         "Implement 'The Conductor' in meetings",
         "Use 'Friction Scripts' for conflict",
-        "Track your team's cycle time to see the trend for yourself"
+        "Track your team's cycle time to see the trend for yourself",
       ],
       link: "/protocol",
-      cta: "View Protocol"
-    }
+      cta: "View Protocol",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-background text-foreground py-24">
       <div className="container mx-auto px-4 space-y-24">
-
         {/* Header */}
         <div className="text-center space-y-6 max-w-4xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent"
-          >
+          <h1 className="flow-journey-hero-enter text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent">
             THE JOURNEY
-          </motion.h1>
+          </h1>
           <p className="text-xl text-muted-foreground">
             From Chaos to Flow in Three Steps.
           </p>
@@ -75,12 +77,10 @@ export default function JourneyClient() {
 
           <div className="grid md:grid-cols-3 gap-12">
             {steps.map((step, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                viewport={{ once: true }}
+                className="flow-journey-step-enter"
+                style={{ animationDelay: `${index * 160}ms` }}
               >
                 <Card className="h-full bg-card/50 backdrop-blur border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-2 duration-300">
                   <CardHeader className="text-center space-y-4">
@@ -88,7 +88,9 @@ export default function JourneyClient() {
                       {step.icon}
                     </div>
                     <div className="space-y-2">
-                      <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{step.phase}</p>
+                      <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
+                        {step.phase}
+                      </p>
                       <CardTitle className="text-2xl">{step.title}</CardTitle>
                     </div>
                   </CardHeader>
@@ -99,7 +101,10 @@ export default function JourneyClient() {
                     <ul className="space-y-3 text-left bg-muted/30 p-6 rounded-xl">
                       {step.actions.map((action, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
-                          <span className="text-primary mt-1">✓</span>
+                          <Check
+                            aria-hidden="true"
+                            className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                          />
                           {action}
                         </li>
                       ))}
@@ -112,20 +117,26 @@ export default function JourneyClient() {
                     </Link>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* The Destination */}
         <div className="text-center space-y-8 bg-gradient-to-b from-transparent to-primary/5 p-12 rounded-3xl border border-primary/10">
-          <h2 className="text-3xl font-bold">The Destination: The Autotelic Team</h2>
+          <h2 className="text-3xl font-bold">
+            The Destination: The Autotelic Team
+          </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            An &quot;Autotelic Team&quot; is one that works for the sheer joy of the work itself.
-            The friction is gone. The politics are gone. All that remains is the pure velocity of creation.
+            An &quot;Autotelic Team&quot; is one that works for the sheer joy of
+            the work itself. The friction is gone. The politics are gone. All
+            that remains is the pure velocity of creation.
           </p>
           <Link href="/flow/team-builder">
-            <Button size="lg" className="text-lg px-12 py-6 rounded-full shadow-[0_0_30px_-10px_var(--primary)] hover:shadow-[0_0_50px_-10px_var(--primary)] transition-all">
+            <Button
+              size="lg"
+              className="text-lg px-12 py-6 rounded-full shadow-[0_0_30px_-10px_var(--primary)] hover:shadow-[0_0_50px_-10px_var(--primary)] transition-all"
+            >
               Begin Your Journey
             </Button>
           </Link>
