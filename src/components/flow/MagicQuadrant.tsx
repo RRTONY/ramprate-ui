@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, type CSSProperties } from "react";
 import { Button } from "@/components/flow/ui/button";
-import { ArrowRight, Play, RotateCcw, Users, Brain } from "lucide-react";
+import { ArrowRight, Play, RotateCcw, Users, Brain, X } from "lucide-react";
 import { Card } from "@/components/flow/ui/card";
 import {
   Tooltip,
@@ -267,80 +266,72 @@ export default function MagicQuadrant() {
 
           {/* Plot Points */}
           <div className="absolute inset-8 md:inset-16">
-            <AnimatePresence>
-              {filteredAssessments.map((item, index) => {
-                const isFlow = item.name === "Flow Circuit";
-                const isActive = activePhase === "kinetic";
+            {filteredAssessments.map((item, index) => {
+              const isFlow = item.name === "Flow Circuit";
+              const isActive = activePhase === "kinetic";
 
-                return (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      left: `${item.x}%`,
-                      top: `${100 - item.y}%`,
-                    }}
-                    exit={{ opacity: 0, scale: 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 20,
-                      delay: index * 0.1,
-                    }}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10"
-                    onClick={() => setSelectedItem(item)}
-                  >
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div className="relative group/node">
-                            {/* Node Circle */}
-                            <div
-                              className={`
+              return (
+                <div
+                  key={item.name}
+                  style={{ left: `${item.x}%`, top: `${100 - item.y}%` }}
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10"
+                  onClick={() => setSelectedItem(item)}
+                >
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div
+                          className="flow-magic-quadrant-point relative group/node"
+                          style={
+                            {
+                              "--flow-entry-delay": `${index * 100}ms`,
+                            } as CSSProperties
+                          }
+                        >
+                          {/* Node Circle */}
+                          <div
+                            className={`
                               w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 backdrop-blur-md transition-all duration-300
                               ${isFlow ? "bg-primary text-primary-foreground scale-125 z-20 ring-4 ring-primary/20" : "bg-white text-black hover:scale-110 hover:bg-gray-50"}
                               ${isActive && !isFlow ? "opacity-40 grayscale" : "opacity-100"}
                             `}
-                            >
-                              <span className="font-bold text-lg md:text-xl">
-                                {item.name[0]}
-                              </span>
+                          >
+                            <span className="font-bold text-lg md:text-xl">
+                              {item.name[0]}
+                            </span>
 
-                              {/* Pulse Effect for Flow */}
-                              {isFlow && (
-                                <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
-                              )}
-                            </div>
+                            {/* Pulse Effect for Flow */}
+                            {isFlow && (
+                              <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
+                            )}
+                          </div>
 
-                            {/* Label */}
-                            <div
-                              className={`
+                          {/* Label */}
+                          <div
+                            className={`
                               absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-black/5
                               ${isFlow ? "bg-black text-white" : "bg-white/80 text-black backdrop-blur-sm"}
                             `}
-                            >
-                              {item.name}
-                            </div>
+                          >
+                            {item.name}
                           </div>
-                        </TooltipTrigger>
-                        <TooltipContent
-                          side="top"
-                          className="max-w-[200px] p-4 bg-black/90 text-white border-none"
-                        >
-                          <p className="font-bold mb-1">{item.name}</p>
-                          <p className="text-xs opacity-80">{item.focus}</p>
-                          <div className="mt-2 text-xs font-mono text-primary-foreground bg-primary/20 px-2 py-1 rounded inline-block">
-                            Val: {item.validity}
-                          </div>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="top"
+                        className="max-w-[200px] p-4 bg-black/90 text-white border-none"
+                      >
+                        <p className="font-bold mb-1">{item.name}</p>
+                        <p className="text-xs opacity-80">{item.focus}</p>
+                        <div className="mt-2 text-xs font-mono text-primary-foreground bg-primary/20 px-2 py-1 rounded inline-block">
+                          Val: {item.validity}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              );
+            })}
 
             {/* Kinetic Connections */}
             {activePhase === "kinetic" && (
@@ -378,20 +369,20 @@ export default function MagicQuadrant() {
                 {filteredAssessments
                   .filter((a) => a.name !== "Flow Circuit")
                   .map((item, i) => (
-                    <motion.path
+                    <path
                       key={`line-${i}`}
                       d={`M ${item.x}% ${100 - item.y}% L 90% 10%`}
                       stroke="url(#flowGradient)"
                       strokeWidth="2"
                       fill="none"
                       markerEnd="url(#arrowhead)"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 1 }}
-                      transition={{
-                        duration: 1.5,
-                        delay: 0.5 + i * 0.1,
-                        ease: "easeInOut",
-                      }}
+                      pathLength={1}
+                      className="flow-magic-quadrant-connection"
+                      style={
+                        {
+                          "--flow-connection-delay": `${500 + i * 100}ms`,
+                        } as CSSProperties
+                      }
                     />
                   ))}
               </svg>
@@ -433,14 +424,12 @@ export default function MagicQuadrant() {
       </div>
 
       {/* Detail Modal / Overlay */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed inset-x-4 bottom-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-[500px]"
-          >
+      {selectedItem && (
+        <div
+          key={selectedItem.name}
+          className="fixed inset-x-4 bottom-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-[500px]"
+        >
+          <div className="flow-magic-quadrant-detail-enter">
             <Card className="p-6 shadow-2xl border-primary/20 bg-white/95 backdrop-blur-xl relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
               <Button
@@ -448,8 +437,9 @@ export default function MagicQuadrant() {
                 size="icon"
                 className="absolute top-2 right-2 hover:bg-black/5"
                 onClick={() => setSelectedItem(null)}
+                aria-label="Close assessment details"
               >
-                ×
+                <X aria-hidden="true" className="h-4 w-4" />
               </Button>
 
               <div className="space-y-4">
@@ -523,9 +513,9 @@ export default function MagicQuadrant() {
                 </Button>
               </div>
             </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
 
       {/* Backdrop for Modal */}
       {selectedItem && (

@@ -14,12 +14,13 @@
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
-- [ ] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
+- [x] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
 - [x] Replace Flow Time Travel member-bar Framer Motion with reduced-motion-safe CSS while preserving animated playback, timeline controls, role colors, dynamic score heights, and active-member calculations.
 - [x] Replace Flow Research Opt-In confirmation Framer Motion with reduced-motion-safe CSS while preserving consent submission, pending state, local preference storage, and privacy messaging.
 - [x] Replace the Flow Research Dashboard’s domain-distribution Framer Motion bar with reduced-motion-safe CSS while preserving live research data, chart configuration, delayed bar feedback, and dynamic percentage widths.
 - [x] Replace the Flow Team Dashboard role-distribution Framer Motion bars with reduced-motion-safe CSS while preserving team data, computed percentages, invite controls, and dashboard navigation.
 - [x] Replace Flow Investor Metrics Framer Motion entry wrappers with reduced-motion-safe CSS while preserving authenticated admin access, live metrics, role-distribution widths, and research charts.
+- [ ] Replace Flow Magic Quadrant Framer Motion with reduced-motion-safe CSS and SVG feedback while preserving dynamic point geometry, filter and activation controls, detail selection, tooltips, kinetic connections, and external links.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.

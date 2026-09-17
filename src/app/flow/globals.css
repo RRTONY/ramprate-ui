@@ -571,3 +571,56 @@
     animation: none;
   }
 }
+
+@keyframes flow-magic-quadrant-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-magic-quadrant-connection-draw {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+.flow-magic-quadrant-point,
+.flow-magic-quadrant-detail-enter {
+  animation: flow-magic-quadrant-enter 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-magic-quadrant-point {
+  animation-delay: var(--flow-entry-delay, 0ms);
+}
+
+.flow-magic-quadrant-connection {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: flow-magic-quadrant-connection-draw 800ms
+    var(--ease-in-out, cubic-bezier(0.77, 0, 0.175, 1)) both;
+  animation-delay: var(--flow-connection-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-magic-quadrant-point,
+  .flow-magic-quadrant-detail-enter,
+  .flow-magic-quadrant-connection {
+    animation: none;
+  }
+
+  .flow-magic-quadrant-connection {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
