@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import {
@@ -427,10 +426,7 @@ export default function Inspirations() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 mb-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className="flow-inspirations-hero-enter">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-gray-400 mb-6">
               Standing on the Shoulders of Giants
             </p>
@@ -441,14 +437,9 @@ export default function Inspirations() {
               <br />
               CIRCUIT
             </h1>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty"
-          >
+          <p className="flow-inspirations-copy-enter text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto text-pretty">
             The Flow Circuit didn&#39;t emerge from thin air. It was forged in
             the crucible of decades of research by people who dared to ask the
             uncomfortable question:
@@ -456,17 +447,12 @@ export default function Inspirations() {
               {" "}
               what if we&#39;ve been building teams wrong this entire time?
             </span>
-          </motion.p>
+          </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto italic"
-          >
+          <p className="flow-inspirations-copy-enter flow-inspirations-copy-enter--delayed text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto italic">
             These are the thinkers, researchers, and practitioners whose work
             made ours possible. We owe them everything. Buy their books.
-          </motion.p>
+          </p>
         </div>
       </section>
 
@@ -476,11 +462,10 @@ export default function Inspirations() {
       <section className="container mx-auto px-4 mb-24 relative z-10">
         <div className="max-w-5xl mx-auto space-y-8">
           {thinkers.map((thinker, index) => (
-            <motion.div
+            <div
               key={thinker.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 * index }}
+              className="flow-inspirations-thinker-enter"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               <Card className="bg-card/50 border-border/30 backdrop-blur-sm hover:border-border/60 transition-all duration-300 overflow-hidden">
                 <CardContent className="p-0">
@@ -580,7 +565,7 @@ export default function Inspirations() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -590,11 +575,7 @@ export default function Inspirations() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 mb-24 relative z-10">
         <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
+          <div className="flow-inspirations-section-enter text-center mb-12">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-gray-400 mb-4">
               The Evidence Base
             </p>
@@ -618,15 +599,14 @@ export default function Inspirations() {
               </Link>
               .
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid gap-4">
             {researchCitations.map((citation, index) => (
-              <motion.div
+              <div
                 key={citation.study}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 * index }}
+                className="flow-inspirations-citation-enter"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <Card className="bg-card/30 border-border/20 hover:border-primary/30 transition-all duration-300">
                   <CardContent className="p-5">
@@ -668,7 +648,7 @@ export default function Inspirations() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -679,10 +659,7 @@ export default function Inspirations() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 mb-16 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className="flow-inspirations-section-enter">
             <Card className="bg-card/30 border-border/20">
               <CardContent className="p-8 md:p-12 text-center">
                 <Code2 className="w-10 h-10 text-primary mx-auto mb-6" />
@@ -691,10 +668,10 @@ export default function Inspirations() {
                 </h3>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6 text-pretty">
                   The Flow Circuit is built with React, TypeScript, Tailwind
-                  CSS, Framer Motion, Recharts, and dozens of other open source
-                  projects maintained by developers who share their work freely
-                  with the world. We are grateful to every contributor who makes
-                  modern software possible.
+                  CSS, Recharts, and dozens of other open source projects
+                  maintained by developers who share their work freely with the
+                  world. We are grateful to every contributor who makes modern
+                  software possible.
                 </p>
                 <p className="text-sm text-muted-foreground/70 italic mb-8">
                   Special thanks to the open source community - the ultimate
@@ -720,7 +697,7 @@ export default function Inspirations() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -729,11 +706,7 @@ export default function Inspirations() {
       {/* ═══════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
+          <div className="flow-inspirations-section-enter space-y-6">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
               Ready to Find Your Role
               <br />
@@ -764,7 +737,7 @@ export default function Inspirations() {
                 </Button>
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
