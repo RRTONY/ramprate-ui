@@ -31,6 +31,7 @@
 - [x] Replace Flow Compute Core terminal Framer Motion feedback with reduced-motion-safe CSS while preserving the timed boot sequence, input focus, question progression, response history, and simulation exit controls.
 - [x] Replace Flow Testimonials display Framer Motion wrappers with reduced-motion-safe CSS while preserving approved testimonial content, community query behavior, reviewed submission flow, validation, and Journey navigation.
 - [x] Replace Flow Science Framer Motion display wrappers with reduced-motion-safe CSS while preserving research citations, validation disclosure, assessment controls, calculator behavior, downloads, donations, and external source links.
+- [x] Replace Flow home-route Framer Motion display wrappers with reduced-motion-safe CSS while preserving the assessment and science actions, role-card hover feedback, individual and team paths, domain submission, and calculator integration.
 - [x] Replace Flow Team Map Framer Motion with reduced-motion-safe CSS and native pointer handling while preserving chaotic and fixed team geometry, drag-to-fix controls, flow-path feedback, report capture, tooltips, and sound behavior.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.

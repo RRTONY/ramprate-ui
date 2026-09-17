@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import {
@@ -109,12 +108,7 @@ export default function HomeClient() {
           </div>
 
           <div className="relative z-20 container mx-auto px-4 text-center space-y-10 py-32">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
+            <div className="flow-home-hero-enter space-y-6">
               <p className="text-lg sm:text-xl md:text-2xl text-yellow-400/90 font-medium tracking-wide uppercase">
                 The Invisible Architecture of Performance
               </p>
@@ -128,14 +122,9 @@ export default function HomeClient() {
                 <br className="hidden md:block" />
                 You&#39;re burned out because you&#39;re in the wrong seat.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
+            <div className="flow-home-actions-enter flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/flow/assessment">
                 <Button
                   size="lg"
@@ -154,16 +143,11 @@ export default function HomeClient() {
                   The Science Behind It
                 </Button>
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ delay: 1, duration: 0.8 }}
-              className="text-sm text-white/50"
-            >
+            <p className="flow-home-note-enter text-sm text-white/50">
               12 questions. 5 minutes. One insight that changes how you work.
-            </motion.p>
+            </p>
           </div>
         </section>
 
@@ -248,10 +232,9 @@ export default function HomeClient() {
               {roles.map((role) => {
                 const Icon = role.icon;
                 return (
-                  <motion.div
+                  <div
                     key={role.name}
-                    whileHover={{ scale: 1.05, y: -4 }}
-                    className={`text-center space-y-3 p-4 rounded-2xl border ${role.border} ${role.bg} transition-all`}
+                    className={`flow-home-role-card text-center space-y-3 p-4 rounded-2xl border ${role.border} ${role.bg} transition-all`}
                   >
                     <div
                       className={`w-14 h-14 md:w-16 md:h-16 mx-auto rounded-full flex items-center justify-center bg-background/80 shadow-md`}
@@ -266,7 +249,7 @@ export default function HomeClient() {
                     <p className="text-sm text-muted-foreground leading-snug">
                       {role.desc}
                     </p>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
@@ -307,11 +290,7 @@ export default function HomeClient() {
 
             <div className="grid md:grid-cols-2 gap-8">
               {/* Individual */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <div className="flow-home-path-enter">
                 <Card className="h-full bg-card/80 backdrop-blur border-2 border-border hover:border-yellow-400/50 transition-all group">
                   <CardHeader className="text-center pb-4 pt-8">
                     <div className="w-16 h-16 mx-auto mb-4 bg-yellow-400/10 rounded-full flex items-center justify-center group-hover:bg-yellow-400/20 transition-colors">
@@ -347,15 +326,10 @@ export default function HomeClient() {
                     </Link>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
 
               {/* Team */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-              >
+              <div className="flow-home-path-enter flow-home-path-enter--delayed">
                 <Card className="h-full bg-card/80 backdrop-blur border-2 border-border hover:border-blue-400/50 transition-all group">
                   <CardHeader className="text-center pb-4 pt-8">
                     <div className="w-16 h-16 mx-auto mb-4 bg-blue-400/10 rounded-full flex items-center justify-center group-hover:bg-blue-400/20 transition-colors">
@@ -402,7 +376,7 @@ export default function HomeClient() {
                     </form>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
