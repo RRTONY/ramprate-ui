@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
@@ -164,6 +163,20 @@ export default function SoulPrintClient() {
 
   const selectedTierInfo = tiers.find((t) => t.id === selectedTier)!;
 
+  const scrollToOrder = () => {
+    const orderSection = document.getElementById("order");
+    if (!orderSection) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({
+      top: orderSection.getBoundingClientRect().top + window.scrollY,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* Hero */}
@@ -175,11 +188,7 @@ export default function SoulPrintClient() {
         </div>
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="flow-soulprint-hero-enter">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-purple-300 mb-8">
               <Sparkles className="w-4 h-4" />
               <span>Powered by TrueSelf &times; The Flow Circuit</span>
@@ -214,32 +223,22 @@ export default function SoulPrintClient() {
             </p>
 
             {isAlpha && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-full px-5 py-2 text-sm text-green-400 mb-8"
-              >
+              <div className="flow-soulprint-alpha-enter inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-full px-5 py-2 text-sm text-green-400 mb-8">
                 <Flame className="w-4 h-4 text-green-400" />
                 <span>
                   <strong>{alphaRemaining}</strong> free alpha spots remaining -
                   you&#39;re early
                 </span>
-              </motion.div>
+              </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Tier Selection */}
       <section className="relative py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-center mb-12"
-          >
+          <div className="flow-soulprint-section-enter text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-3">
               Choose Your Lens
             </h2>
@@ -247,15 +246,14 @@ export default function SoulPrintClient() {
               Same soul. Same data. Different language. Pick the framing that
               speaks to you.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, i) => (
-              <motion.div
+              <div
                 key={tier.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + i * 0.1 }}
+                className="flow-soulprint-tier-enter"
+                style={{ animationDelay: `${300 + i * 100}ms` }}
               >
                 <button
                   onClick={() => setSelectedTier(tier.id)}
@@ -303,7 +301,7 @@ export default function SoulPrintClient() {
                     ))}
                   </div>
                 </button>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -446,20 +444,17 @@ export default function SoulPrintClient() {
                 desc: "A 2,000+ word narrative synthesizing all 8 frameworks into one coherent life instruction.",
               },
             ].map((item, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="p-5 rounded-xl border border-white/10 bg-white/[0.02]"
+                className="flow-soulprint-reveal-enter p-5 rounded-xl border border-white/10 bg-white/[0.02]"
+                style={{ animationDelay: `${i * 50}ms` }}
               >
                 <div className="text-purple-400 mb-3">{item.icon}</div>
                 <h3 className="font-bold text-sm mb-1">{item.title}</h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
                   {item.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -468,11 +463,7 @@ export default function SoulPrintClient() {
       {/* Birth Data Form */}
       <section className="py-16 px-4" id="order">
         <div className="max-w-lg mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="flow-soulprint-order-enter">
             <Card className="bg-gradient-to-br from-gray-900 to-gray-950 border-white/10">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
@@ -636,7 +627,7 @@ export default function SoulPrintClient() {
                 </form>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -735,11 +726,7 @@ export default function SoulPrintClient() {
               : "Your SoulPrint is waiting. $44 is the cover charge. The value is priceless."}
           </p>
           <Button
-            onClick={() => {
-              document
-                .getElementById("order")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={scrollToOrder}
             className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 px-10 py-6 text-lg font-bold gap-2"
           >
             <Sparkles className="w-5 h-5" />
