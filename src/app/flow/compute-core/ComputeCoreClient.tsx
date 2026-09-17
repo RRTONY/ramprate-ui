@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Terminal, ShieldAlert, ArrowLeft } from "lucide-react";
 
@@ -109,20 +108,14 @@ export default function ComputeCoreClient() {
         {!isBooted ? (
           <div className="space-y-2">
             {bootSequence.map((line, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-sm md:text-base"
+                className="flow-compute-boot-line text-sm md:text-base"
               >
                 {line}
-              </motion.div>
+              </div>
             ))}
-            <motion.div
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="w-3 h-5 bg-green-500 inline-block ml-1"
-            />
+            <div className="flow-compute-cursor w-3 h-5 bg-green-500 inline-block ml-1" />
           </div>
         ) : (
           <div className="space-y-8">
@@ -144,10 +137,9 @@ export default function ComputeCoreClient() {
 
             {/* Current Question */}
             {currentQuestion < questions.length ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-6"
+              <div
+                key={currentQuestion}
+                className="flow-compute-question-enter space-y-6"
               >
                 <div className="text-lg md:text-xl leading-relaxed whitespace-pre-wrap">
                   <span className="animate-pulse">_</span>{" "}
@@ -168,13 +160,9 @@ export default function ComputeCoreClient() {
                     autoFocus
                   />
                 </form>
-              </motion.div>
+              </div>
             ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-8 text-center pt-12"
-              >
+              <div className="flow-compute-complete-enter space-y-8 text-center pt-12">
                 <ShieldAlert className="h-16 w-16 mx-auto text-red-500 animate-pulse" />
                 <h2 className="text-3xl font-bold text-red-500">
                   SYSTEM OVERRIDE DETECTED
@@ -193,7 +181,7 @@ export default function ComputeCoreClient() {
                 >
                   RETURN TO THE SIMULATION
                 </Button>
-              </motion.div>
+              </div>
             )}
           </div>
         )}

@@ -905,3 +905,57 @@
     animation: none;
   }
 }
+
+@keyframes flow-compute-boot-line {
+  from {
+    opacity: 0;
+    transform: translateX(-0.625rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-compute-cursor {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes flow-compute-fade-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.flow-compute-boot-line {
+  animation: flow-compute-boot-line 180ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-compute-cursor {
+  animation: flow-compute-cursor 800ms steps(1, end) infinite;
+}
+
+.flow-compute-question-enter,
+.flow-compute-complete-enter {
+  animation: flow-compute-fade-enter 180ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-compute-boot-line,
+  .flow-compute-cursor,
+  .flow-compute-question-enter,
+  .flow-compute-complete-enter {
+    animation: none;
+  }
+}
