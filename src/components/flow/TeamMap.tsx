@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, type PanInfo } from "framer-motion";
+import { useState, useRef, type CSSProperties } from "react";
 import { Button } from "@/components/flow/ui/button";
 import { Input } from "@/components/flow/ui/input";
 import {
@@ -124,6 +123,7 @@ export default function TeamMap() {
   const [role, setRole] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pointerStartX = useRef<number | null>(null);
 
   const playSound = () => {
     if (audioRef.current) {
@@ -137,11 +137,15 @@ export default function TeamMap() {
     setIsFixed(!isFixed);
   };
 
-  const handleDragEnd = (
-    _event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo,
-  ) => {
-    if (info.offset.x > 100) {
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    pointerStartX.current = event.clientX;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const startX = pointerStartX.current;
+    pointerStartX.current = null;
+    if (startX !== null && event.clientX - startX > 100) {
       handleFixTeam();
     }
   };
@@ -175,120 +179,96 @@ export default function TeamMap() {
       </div>
 
       {/* The Map Visualization */}
-      <motion.div
-        className="relative w-full aspect-[16/9] bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60 overflow-hidden shadow-2xl group touch-pan-y"
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        onDragEnd={handleDragEnd}
+      <div
+        className="flow-team-map-canvas relative w-full aspect-[16/9] bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60 overflow-hidden shadow-2xl group"
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => {
+          pointerStartX.current = null;
+        }}
       >
         {/* Grid Background */}
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        <div className="flow-team-map-grid absolute inset-0 opacity-30" />
 
         {/* Mobile Swipe Hint */}
-        <AnimatePresence>
-          {!isFixed && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none md:hidden z-30"
-            >
-              <div className="bg-black/80 text-white px-6 py-3 rounded-full flex items-center gap-2 animate-pulse">
-                <Hand className="h-5 w-5" /> Swipe to Fix
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!isFixed && (
+          <div className="flow-team-map-hint absolute inset-0 flex items-center justify-center pointer-events-none md:hidden z-30">
+            <div className="bg-black/80 text-white px-6 py-3 rounded-full flex items-center gap-2">
+              <Hand className="h-5 w-5" /> Swipe to Fix
+            </div>
+          </div>
+        )}
 
         {/* Axis Labels (Visible only in Flow mode for clarity) */}
-        <AnimatePresence>
-          {isFixed && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 pointer-events-none"
-            >
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-red-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
-                Ignition (Spark)
-              </div>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-blue-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
-                Solidification (Anchor)
-              </div>
-              <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-bold uppercase tracking-widest text-purple-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
-                Compression (Filter)
-              </div>
-              <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 text-xs font-bold uppercase tracking-widest text-yellow-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
-                Expansion (Amplifier)
-              </div>
+        {isFixed && (
+          <div className="flow-team-map-axis absolute inset-0 pointer-events-none">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-red-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+              Ignition (Spark)
+            </div>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-blue-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+              Solidification (Anchor)
+            </div>
+            <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-bold uppercase tracking-widest text-purple-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+              Compression (Filter)
+            </div>
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 text-xs font-bold uppercase tracking-widest text-yellow-600 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm">
+              Expansion (Amplifier)
+            </div>
 
-              {/* Flow Lines */}
-              <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
-                <defs>
-                  <linearGradient
-                    id="flowLineGradient"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="0%"
-                  >
-                    <stop offset="0%" stopColor="#ef4444" />
-                    <stop offset="33%" stopColor="#eab308" />
-                    <stop offset="66%" stopColor="#a855f7" />
-                    <stop offset="100%" stopColor="#3b82f6" />
-                  </linearGradient>
-                </defs>
-                <motion.path
-                  d="M 50% 15% Q 90% 15% 90% 50% T 50% 85% T 10% 50% T 50% 15%"
-                  fill="none"
-                  stroke="url(#flowLineGradient)"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 2, ease: "easeInOut" }}
-                />
-              </svg>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            {/* Flow Lines */}
+            <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
+              <defs>
+                <linearGradient
+                  id="flowLineGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="33%" stopColor="#eab308" />
+                  <stop offset="66%" stopColor="#a855f7" />
+                  <stop offset="100%" stopColor="#3b82f6" />
+                </linearGradient>
+              </defs>
+              <path
+                className="flow-team-map-flow-path"
+                d="M 50% 15% Q 90% 15% 90% 50% T 50% 85% T 10% 50% T 50% 15%"
+                fill="none"
+                stroke="url(#flowLineGradient)"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+        )}
 
         {/* Team Nodes */}
         {teamMembers.map((member) => {
           const Icon = member.icon;
+          const position = isFixed ? member.flow : member.chaos;
+          const nodeStyle = {
+            left: `${position.x}%`,
+            top: `${position.y}%`,
+            "--flow-team-map-delay": isFixed ? `${member.id * 50}ms` : "0ms",
+          } as CSSProperties;
           return (
-            <motion.div
+            <div
               key={member.id}
-              className={`absolute w-12 h-12 md:w-16 md:h-16 rounded-full ${member.color} flex items-center justify-center text-white font-bold shadow-lg cursor-pointer z-10 border-2 border-white/50`}
-              initial={false}
-              animate={{
-                left: isFixed ? `${member.flow.x}%` : `${member.chaos.x}%`,
-                top: isFixed ? `${member.flow.y}%` : `${member.chaos.y}%`,
-                scale: isFixed ? 1.1 : 1,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 40,
-                damping: 15,
-                mass: 1.2,
-                delay: isFixed ? member.id * 0.05 : 0, // Staggered animation
-              }}
-              whileHover={{ scale: 1.2, zIndex: 50 }}
+              className={`flow-team-map-node group absolute w-12 h-12 md:w-16 md:h-16 cursor-pointer z-10 ${isFixed ? "flow-team-map-node--fixed" : ""}`}
+              style={nodeStyle}
             >
-              <Icon className="w-6 h-6" />
+              <div
+                className={`flow-team-map-node-visual relative w-full h-full rounded-full ${member.color} flex items-center justify-center text-white font-bold shadow-lg border-2 border-white/50`}
+              >
+                <Icon className="w-6 h-6" />
+              </div>
 
               {/* Tooltip */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full opacity-0 hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl">
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity shadow-xl">
                 {member.name} • {member.role}
               </div>
-            </motion.div>
+            </div>
           );
         })}
 
@@ -310,7 +290,7 @@ export default function TeamMap() {
             )}
           </Button>
         </div>
-      </motion.div>
+      </div>
 
       {/* Role-Based Email Capture */}
       <Card className="bg-white/80 backdrop-blur-md border-black/5 shadow-xl overflow-hidden">
@@ -391,11 +371,7 @@ export default function TeamMap() {
                 </p>
               </form>
             ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-6 py-8"
-              >
+              <div className="flow-team-map-report-enter text-center space-y-6 py-8">
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
                   <CheckCircle2 className="h-10 w-10" />
                 </div>
@@ -416,7 +392,7 @@ export default function TeamMap() {
                 >
                   Send to another teammate
                 </Button>
-              </motion.div>
+              </div>
             )}
           </div>
         </CardContent>
