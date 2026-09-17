@@ -1292,3 +1292,75 @@
     transition: none;
   }
 }
+
+@keyframes flow-find-your-path-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-find-your-path-question-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-find-your-path-guidance-icon {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.flow-find-your-path-hero-enter,
+.flow-find-your-path-copy-enter,
+.flow-find-your-path-scroll-enter,
+.flow-find-your-path-portal-enter,
+.flow-find-your-path-portal-panel {
+  animation: flow-find-your-path-enter 300ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-find-your-path-copy-enter {
+  animation-delay: 80ms;
+}
+
+.flow-find-your-path-scroll-enter {
+  animation-delay: 160ms;
+}
+
+.flow-find-your-path-question-enter {
+  animation: flow-find-your-path-question-enter 280ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-find-your-path-guidance-icon {
+  animation: flow-find-your-path-guidance-icon 180ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-find-your-path-hero-enter,
+  .flow-find-your-path-copy-enter,
+  .flow-find-your-path-scroll-enter,
+  .flow-find-your-path-portal-enter,
+  .flow-find-your-path-question-enter,
+  .flow-find-your-path-guidance-icon,
+  .flow-find-your-path-portal-panel {
+    animation: none;
+  }
+}

@@ -33,6 +33,7 @@
 - [x] Replace Flow Science Framer Motion display wrappers with reduced-motion-safe CSS while preserving research citations, validation disclosure, assessment controls, calculator behavior, downloads, donations, and external source links.
 - [x] Replace Flow home-route Framer Motion display wrappers with reduced-motion-safe CSS while preserving the assessment and science actions, role-card hover feedback, individual and team paths, domain submission, and calculator integration.
 - [x] Replace Flow Peer Assessment Framer Motion presentation layers with reduced-motion-safe CSS while preserving invite retrieval, anonymous review submission, progress, question transitions, and answer controls.
+- [x] Replace Flow Find Your Path Framer Motion display layers with reduced-motion-safe CSS while preserving portal expansion, hover guidance, internal and external destinations, and content-driven icon colors.
 - [x] Replace Flow Team Map Framer Motion with reduced-motion-safe CSS and native pointer handling while preserving chaotic and fixed team geometry, drag-to-fix controls, flow-path feedback, report capture, tooltips, and sound behavior.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.

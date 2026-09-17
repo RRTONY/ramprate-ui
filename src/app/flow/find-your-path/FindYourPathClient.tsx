@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
 import Link from "next/link";
@@ -122,11 +121,7 @@ export default function FindYourPathClient() {
         </div>
 
         <div className="relative z-10 text-center max-w-4xl mx-auto space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="flow-find-your-path-hero-enter">
             <p className="text-xs font-bold uppercase tracking-[0.4em] text-violet-400 mb-6">
               The Greenberg Ecosystem
             </p>
@@ -137,29 +132,19 @@ export default function FindYourPathClient() {
                 FREQUENCY
               </span>
             </h1>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
-          >
+          <p className="flow-find-your-path-copy-enter text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
             Five portals into the same truth: you already know who you are. You
             just haven&#39;t had the language for it yet.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center justify-center gap-2 text-white/30"
-          >
+          <div className="flow-find-your-path-scroll-enter flex items-center justify-center gap-2 text-white/30">
             <Compass className="w-4 h-4 animate-[spin_8s_linear_infinite]" />
             <span className="text-xs uppercase tracking-widest">
               Scroll to begin
             </span>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -171,47 +156,39 @@ export default function FindYourPathClient() {
           </h2>
           <div className="space-y-3">
             {SYNTHESIS_QUESTIONS.map((sq, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
                 onMouseEnter={() => setHoveredQuestion(i)}
                 onMouseLeave={() => setHoveredQuestion(null)}
-                className="group cursor-pointer"
+                className="flow-find-your-path-question-enter group cursor-pointer"
+                style={{ animationDelay: `${i * 100}ms` }}
               >
                 <div className="flex items-center justify-between p-4 rounded-xl border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all">
                   <span className="text-white/80 group-hover:text-white transition-colors">
                     &quot;{sq.q}&quot;
                   </span>
                   <div className="flex items-center gap-2">
-                    <AnimatePresence>
-                      {hoveredQuestion === i &&
-                        sq.paths.map((pathId) => {
-                          const portal = PORTALS.find((p) => p.id === pathId);
-                          if (!portal) return null;
-                          return (
-                            <motion.div
-                              key={pathId}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              exit={{ opacity: 0, scale: 0.8 }}
-                              className="w-6 h-6 rounded-md flex items-center justify-center"
-                              style={{ backgroundColor: `${portal.color}30` }}
-                            >
-                              <portal.icon
-                                className="w-3 h-3"
-                                style={{ color: portal.color }}
-                              />
-                            </motion.div>
-                          );
-                        })}
-                    </AnimatePresence>
+                    {hoveredQuestion === i &&
+                      sq.paths.map((pathId) => {
+                        const portal = PORTALS.find((p) => p.id === pathId);
+                        if (!portal) return null;
+                        return (
+                          <div
+                            key={pathId}
+                            className="flow-find-your-path-guidance-icon w-6 h-6 rounded-md flex items-center justify-center"
+                            style={{ backgroundColor: `${portal.color}30` }}
+                          >
+                            <portal.icon
+                              className="w-3 h-3"
+                              style={{ color: portal.color }}
+                            />
+                          </div>
+                        );
+                      })}
                     <ChevronRight className="w-4 h-4 text-white/30 group-hover:text-white/60" />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -230,12 +207,10 @@ export default function FindYourPathClient() {
 
         <div className="space-y-6 max-w-4xl mx-auto">
           {PORTALS.map((portal, i) => (
-            <motion.div
+            <div
               key={portal.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              className="flow-find-your-path-portal-enter"
+              style={{ animationDelay: `${i * 100}ms` }}
             >
               <Card
                 className={`border border-white/10 bg-gradient-to-r ${portal.gradient} backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-white/30 hover:scale-[1.01] overflow-hidden`}
@@ -270,51 +245,41 @@ export default function FindYourPathClient() {
                         &quot;{portal.question}&quot;
                       </p>
 
-                      <AnimatePresence>
-                        {activePortal === portal.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <p className="text-sm text-white/60 leading-relaxed mb-5">
-                              {portal.description}
-                            </p>
-                            {portal.external ? (
-                              <a
-                                href={portal.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                      {activePortal === portal.id && (
+                        <div className="flow-find-your-path-portal-panel overflow-hidden">
+                          <p className="text-sm text-white/60 leading-relaxed mb-5">
+                            {portal.description}
+                          </p>
+                          {portal.external ? (
+                            <a
+                              href={portal.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Button
+                                className="gap-2"
+                                style={{ backgroundColor: portal.color }}
                               >
-                                <Button
-                                  className="gap-2"
-                                  style={{ backgroundColor: portal.color }}
-                                >
-                                  {portal.cta}{" "}
-                                  <ArrowRight className="w-4 h-4" />
-                                </Button>
-                              </a>
-                            ) : (
-                              <Link href={portal.link}>
-                                <Button
-                                  className="gap-2"
-                                  style={{ backgroundColor: portal.color }}
-                                >
-                                  {portal.cta}{" "}
-                                  <ArrowRight className="w-4 h-4" />
-                                </Button>
-                              </Link>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                                {portal.cta} <ArrowRight className="w-4 h-4" />
+                              </Button>
+                            </a>
+                          ) : (
+                            <Link href={portal.link}>
+                              <Button
+                                className="gap-2"
+                                style={{ backgroundColor: portal.color }}
+                              >
+                                {portal.cta} <ArrowRight className="w-4 h-4" />
+                              </Button>
+                            </Link>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
