@@ -15,6 +15,8 @@
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
 - [ ] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
+- [ ] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
+- [ ] Preserve the centered Conductor transform in the Flow Team Matrix by applying CSS entry feedback to a nested visual element rather than the dynamically positioned wrapper, with a focused regression assertion.
 - [x] Replace the Flow Friction Calculator’s two static Framer Motion entry wrappers with semantic reduced-motion-safe CSS while preserving its calculations and interactive controls.
 - [x] Replace the Flow Friction Dashboard’s static Framer Motion cost feedback wrapper with the shared keyed CSS feedback class while preserving calculated values, sliders, and chart behavior.
 - [x] Replace the Flow Friction Cost Calculator’s static Framer Motion cost feedback wrapper with the shared keyed CSS feedback class while preserving calculated cost, payroll result, and sliders.
