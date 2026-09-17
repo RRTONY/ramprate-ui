@@ -370,17 +370,28 @@ export default function TorquePage() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Sourcing the Counsel and{" "}
-              <span style={{ color: "var(--gold)" }}>Leverage You Need.</span>
+              Torque, by RampRate. The Force That{" "}
+              <span style={{ color: "var(--gold)" }}>
+                Gets a Stuck Matter Moving.
+              </span>
             </h1>
             <p
-              className="text-white/70 text-lg leading-relaxed mb-10"
+              className="text-white/70 text-lg leading-relaxed mb-6"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Pre-litigation or already in suit, Torque sources and coordinates
-              the specialists a high-stakes dispute requires - without ever
-              stepping into the privileged strategy conversations that belong to
-              your attorney.
+              When a matter is stuck, Torque sources and coordinates the
+              specialists a critical issue requires, aligned to one strategy and
+              moving at the pace the situation demands.
+            </p>
+            <p
+              className="text-white/50 text-base leading-relaxed mb-10"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              For 25 years, RampRate has been the fixer enterprises call when a
+              deal, a supplier relationship, or a critical decision needs
+              outside leverage to move. Torque brings that same sourcing
+              discipline to Critical Issue Management, finding and aligning the
+              right specialists under one coordinated strategy.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
