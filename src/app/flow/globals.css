@@ -523,3 +523,27 @@
     animation: none;
   }
 }
+
+@keyframes flow-investor-metrics-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-investor-metrics-hero-enter,
+.flow-investor-metrics-kpi-enter {
+  animation: flow-investor-metrics-enter 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-investor-metrics-hero-enter,
+  .flow-investor-metrics-kpi-enter {
+    animation: none;
+  }
+}
