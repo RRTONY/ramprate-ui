@@ -28,7 +28,7 @@
 - [x] Replace Flow Monroe Protocol Framer Motion disclosure, audio-progress, and quiz-result feedback with reduced-motion-safe CSS while preserving science disclaimers, playback controls, quiz state, and reset behavior.
 - [x] Replace Flow Tribe Trial Framer Motion entry wrappers with reduced-motion-safe CSS while preserving trial signup, validation, mutation feedback, pricing disclosure, and post-signup navigation.
 - [x] Replace Flow Coaching Framer Motion header, generated-prompt, and empty-state feedback with reduced-motion-safe CSS while preserving authentication, context controls, AI generation, prompt data, and reset behavior.
-- [ ] Replace Flow Compute Core terminal Framer Motion feedback with reduced-motion-safe CSS while preserving the timed boot sequence, input focus, question progression, response history, and simulation exit controls.
+- [x] Replace Flow Compute Core terminal Framer Motion feedback with reduced-motion-safe CSS while preserving the timed boot sequence, input focus, question progression, response history, and simulation exit controls.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
