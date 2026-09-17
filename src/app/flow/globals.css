@@ -410,3 +410,26 @@
     animation: none;
   }
 }
+
+@keyframes flow-time-travel-member-bar-enter {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+}
+
+.flow-time-travel-member-bar {
+  animation: flow-time-travel-member-bar-enter 220ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transform-origin: bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-time-travel-member-bar {
+    animation: none;
+  }
+}

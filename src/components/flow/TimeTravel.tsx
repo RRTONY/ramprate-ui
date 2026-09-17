@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -129,12 +128,10 @@ export default function TimeTravel({ members }: TimeTravelProps) {
 
         <div className="h-24 flex items-end gap-1 border-b border-white/10 pb-1 px-1">
           {activeMembers.map((m) => (
-            <motion.div
+            <div
               key={m.id}
-              layoutId={m.id}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: `${m.score}%`, opacity: 1 }}
-              className={`flex-1 rounded-t-sm ${getRoleColor(m.role).replace("text-", "bg-")} opacity-80 hover:opacity-100 transition-opacity`}
+              className={`flow-time-travel-member-bar flex-1 rounded-t-sm ${getRoleColor(m.role).replace("text-", "bg-")} opacity-80 hover:opacity-100 transition-opacity`}
+              style={{ height: `${m.score}%` }}
               title={`${m.name} (${m.role})`}
             />
           ))}
