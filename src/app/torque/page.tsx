@@ -303,10 +303,10 @@ const differenceRows = [
 ];
 
 const boundaries = [
-  "Anything requiring a law license - drafting pleadings, appearing in court, or giving a legal opinion you'd rely on. We find and manage the lawyer; we don't become one.",
+  "Anything that requires a professional license we don't hold - drafting legal filings, appearing in court, or issuing a legal, financial, or investment opinion you'd rely on. We identify and manage the licensed professional the situation calls for; we don't take their place.",
   "Holding client funds or acting as fiduciary custodian of assets in dispute.",
   "Broker-dealer-adjacent structuring or anything resembling securities intermediation.",
-  "Criminal defense, standalone family law, personal injury, or immigration as a lead service - we can augment the counsel handling these, but we're not the primary point of contact.",
+  "Criminal defense, standalone family law, personal injury, or immigration as a lead service - we can augment the professionals handling these, but we're not the primary point of contact.",
   "Purely verbal, undocumented claims against a counterparty with no identifiable assets.",
 ];
 
@@ -502,14 +502,14 @@ export default function TorquePage() {
             >
               Finding the right specialists - quickly, at better terms than
               you&apos;d negotiate alone - is a core part of what we do. Most
-              people in a high-stakes dispute find themselves managing a roster
+              people managing a critical issue find themselves handling a roster
               of specialists who are each excellent in their lane but not
               talking to each other, or realize too late that they need
               specialists they don&apos;t have a way to find. We close both
-              gaps: we source and negotiate counsel and investigators,
-              coordinate them against a single strategy, and handle everything
-              on the file that doesn&apos;t require a law license - so your
-              attention stays where it belongs.
+              gaps: we source and negotiate the specialists your situation
+              requires, coordinate them against a single strategy, and manage
+              everything else on the file, creating clarity at every stage so
+              your attention stays where it belongs.
             </p>
             <div
               className="rounded-xl p-7 border border-black/5"
@@ -536,7 +536,7 @@ export default function TorquePage() {
                   },
                   {
                     icon: engageIcons.handle,
-                    label: "Handle what doesn't require a law license",
+                    label: "Create clarity so you know what happens next",
                   },
                 ].map((item) => (
                   <li key={item.label} className="flex items-center gap-3">
@@ -893,6 +893,25 @@ export default function TorquePage() {
               </li>
             ))}
           </ul>
+          <p
+            className="mt-10 pt-8 border-t border-black/10 text-xs leading-relaxed"
+            style={{
+              color: "oklch(0.55 0.02 50)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            Torque, a RampRate service, is not a law firm, broker-dealer, or
+            investment adviser, and nothing on this page constitutes legal,
+            financial, or investment advice. Engaging Torque does not create an
+            attorney-client, fiduciary, or advisory relationship between you and
+            RampRate. Any licensed professionals we identify, negotiate with, or
+            coordinate act independently and are responsible for their own
+            advice, services, and professional obligations to you. Past results
+            referenced by any specialist we coordinate with are not a guarantee
+            of any future outcome. Please consult a qualified, licensed
+            professional about your specific situation before making any
+            decision.
+          </p>
         </div>
       </section>
 
