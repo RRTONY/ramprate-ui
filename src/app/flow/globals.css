@@ -808,3 +808,43 @@
     animation: none;
   }
 }
+
+@keyframes flow-tribe-trial-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.125rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-tribe-trial-success-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.flow-tribe-trial-enter {
+  animation: flow-tribe-trial-enter 260ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) var(--flow-entry-delay, 0ms)
+    both;
+}
+
+.flow-tribe-trial-success-enter {
+  animation: flow-tribe-trial-success-enter 240ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-tribe-trial-enter,
+  .flow-tribe-trial-success-enter {
+    animation: none;
+  }
+}

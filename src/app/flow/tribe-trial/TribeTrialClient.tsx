@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { trpc } from "@/lib/flow/trpc";
 import { Button } from "@/components/flow/ui/button";
 import { Card, CardContent } from "@/components/flow/ui/card";
@@ -70,11 +69,7 @@ export default function TribeTrial() {
   if (submitted) {
     return (
       <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center p-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-lg w-full text-center space-y-6"
-        >
+        <div className="flow-tribe-trial-success-enter max-w-lg w-full text-center space-y-6">
           <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-emerald-600" />
           </div>
@@ -109,7 +104,7 @@ export default function TribeTrial() {
               Take Assessment First
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -118,11 +113,7 @@ export default function TribeTrial() {
     <div className="min-h-screen bg-[#FAF8F5] py-12 px-4">
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="flow-tribe-trial-enter text-center space-y-4">
           <p className="text-sm uppercase tracking-widest text-[#2C1810]/50">
             30-Day Free Trial
           </p>
@@ -136,14 +127,12 @@ export default function TribeTrial() {
             you is the most actionable data you&#39;ll collect this quarter.
             Start free. No credit card required.
           </p>
-        </motion.div>
+        </div>
 
         {/* What you get */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        <div
+          className="flow-tribe-trial-enter grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          style={{ "--flow-entry-delay": "80ms" } as React.CSSProperties}
         >
           {[
             {
@@ -177,14 +166,12 @@ export default function TribeTrial() {
               </CardContent>
             </Card>
           ))}
-        </motion.div>
+        </div>
 
         {/* Signup Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="max-w-md mx-auto"
+        <div
+          className="flow-tribe-trial-enter max-w-md mx-auto"
+          style={{ "--flow-entry-delay": "160ms" } as React.CSSProperties}
         >
           <Card className="border-[#E8DDD3] shadow-lg">
             <CardContent className="p-8 space-y-6">
@@ -238,14 +225,12 @@ export default function TribeTrial() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* ROI Math */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="max-w-lg mx-auto text-center space-y-4"
+        <div
+          className="flow-tribe-trial-enter max-w-lg mx-auto text-center space-y-4"
+          style={{ "--flow-entry-delay": "240ms" } as React.CSSProperties}
         >
           <h3 className="font-bold text-[#2C1810] text-lg">The ROI Math</h3>
           <div className="bg-[#2C1810] rounded-xl p-6 text-white space-y-3">
@@ -268,7 +253,7 @@ export default function TribeTrial() {
               handoff doesn&#39;t happen.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Trial Terms */}
         <div className="max-w-md mx-auto text-center text-xs text-[#2C1810]/40 space-y-1">
