@@ -17,6 +17,7 @@
 - [ ] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
 - [x] Replace the Flow Friction Calculator’s two static Framer Motion entry wrappers with semantic reduced-motion-safe CSS while preserving its calculations and interactive controls.
 - [x] Replace the Flow Friction Dashboard’s static Framer Motion cost feedback wrapper with the shared keyed CSS feedback class while preserving calculated values, sliders, and chart behavior.
+- [x] Replace the Flow Friction Cost Calculator’s static Framer Motion cost feedback wrapper with the shared keyed CSS feedback class while preserving calculated cost, payroll result, and sliders.
 - [ ] Complete a file-by-file fixed inline-style remediation pass for high-count public and Flow components, converting all reusable fixed presentation into semantic CSS or Tailwind while preserving calculated geometry and interactive state styles.
 - [x] Move the shared public Hero fallback gradients into semantic CSS and replace its retired Expertise and Start a Conversation fallback actions with the approved Services and Book a Call destinations.
 - [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.

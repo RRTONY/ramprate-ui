@@ -9,7 +9,6 @@ import {
 import { Label } from "@/components/flow/ui/label";
 import { Slider } from "@/components/flow/ui/slider";
 import { Button } from "@/components/flow/ui/button";
-import { motion } from "framer-motion";
 import { DollarSign, Clock, Users, AlertTriangle } from "lucide-react";
 
 export default function FrictionCostCalculator() {
@@ -144,14 +143,12 @@ export default function FrictionCostCalculator() {
             <h3 className="text-sm uppercase tracking-widest text-muted-foreground mb-2">
               Annual Loss
             </h3>
-            <motion.div
+            <div
               key={annualFrictionCost}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-red-600"
+              className="flow-friction-cost-pop text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-red-600"
             >
               ${annualFrictionCost.toLocaleString()}
-            </motion.div>
+            </div>
           </div>
 
           <div className="text-center relative z-10">
