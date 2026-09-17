@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, type CSSProperties } from "react";
 import { Button } from "@/components/flow/ui/button";
 import { ArrowRight, Quote, Send, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -107,25 +106,15 @@ export default function TestimonialsClient() {
       <div className="relative z-10 container max-w-7xl mx-auto pt-32 pb-24 space-y-32">
         {/* Hero Section */}
         <section className="text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="inline-block"
-          >
+          <div className="flow-testimonials-title-enter inline-block">
             <h1 className="text-6xl md:text-9xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">
               THE PROOF
             </h1>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-xl md:text-3xl text-white/70 font-light max-w-4xl mx-auto leading-relaxed"
-          >
+          </div>
+          <p className="flow-testimonials-subtitle-enter text-xl md:text-3xl text-white/70 font-light max-w-4xl mx-auto leading-relaxed">
             We don&#39;t just talk about innovation. We engineer the outcomes
             that define industries.
-          </motion.p>
+          </p>
         </section>
 
         {/* Business Results Grid */}
@@ -142,13 +131,10 @@ export default function TestimonialsClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {businessTestimonials.map((item, i) => (
-              <motion.div
+              <article
                 key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="bg-zinc-900/50 border border-white/5 p-8 rounded-2xl hover:bg-zinc-900/80 transition-colors"
+                className="flow-testimonial-card-enter bg-zinc-900/50 border border-white/5 p-8 rounded-2xl hover:bg-zinc-900/80 transition-colors"
+                style={{ "--flow-entry-delay": `${i * 50}ms` } as CSSProperties}
               >
                 <div className="flex flex-col h-full justify-between space-y-6">
                   <p className="text-lg text-zinc-300 leading-relaxed">
@@ -164,7 +150,7 @@ export default function TestimonialsClient() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </article>
             ))}
           </div>
         </section>
@@ -224,13 +210,10 @@ function CommunityTestimonials() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {communityTestimonials.map((t, i) => (
-          <motion.div
+          <article
             key={t.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl"
+            className="flow-testimonial-card-enter bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl"
+            style={{ "--flow-entry-delay": `${i * 50}ms` } as CSSProperties}
           >
             <Quote className="w-5 h-5 text-primary/40 mb-3" />
             <p className="text-white/80 leading-relaxed mb-4">
@@ -257,7 +240,7 @@ function CommunityTestimonials() {
                 )}
               </div>
             </div>
-          </motion.div>
+          </article>
         ))}
       </div>
     </section>

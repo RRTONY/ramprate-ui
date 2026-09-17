@@ -959,3 +959,60 @@
     animation: none;
   }
 }
+
+@keyframes flow-testimonials-title-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-testimonials-subtitle-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-testimonial-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-testimonials-title-enter {
+  animation: flow-testimonials-title-enter 500ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-testimonials-subtitle-enter {
+  animation: flow-testimonials-subtitle-enter 420ms 120ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-testimonial-card-enter {
+  animation: flow-testimonial-card-enter 400ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) var(--flow-entry-delay, 0ms)
+    both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-testimonials-title-enter,
+  .flow-testimonials-subtitle-enter,
+  .flow-testimonial-card-enter {
+    animation: none;
+  }
+}
