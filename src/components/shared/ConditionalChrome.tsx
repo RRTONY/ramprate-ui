@@ -22,7 +22,8 @@ export function ConditionalChrome({
     segments[0] === "artifacts" &&
     segments.length === 2 &&
     segments[1] !== "admin";
-  const isStandalonePage = segments[0] === "biochain-partner-faq";
+  const isStandalonePage =
+    segments[0] === "biochain-partner-faq" || segments[0] === "kumbaya";
   const hideChrome =
     pathname?.startsWith("/flow") || isStandaloneArtifact || isStandalonePage;
 

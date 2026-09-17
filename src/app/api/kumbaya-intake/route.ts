@@ -215,40 +215,33 @@ export async function POST(req: NextRequest) {
     console.error("kumbaya-intake: ClickUp task creation failed:", err);
   }
 
+  // Slack and the team@ email both want to reference clickupTaskUrl (already
+  // resolved above), but don't depend on each other - running them
+  // concurrently instead of sequentially matters in practice: a real
+  // end-to-end test surfaced ~5.6s of pure serial latency here (two live
+  // Resend calls plus, in this test, a ClickUp retry) before the applicant
+  // ever saw a result.
   const slackChannel = process.env.SLACK_KUMBAYA_CHANNEL;
-  let slackDelivered = false;
-  let slackError = "";
-  if (slackChannel) {
-    try {
-      await withRetry(() =>
-        sendSlackMessage({
-          channel: slackChannel,
-          text: [
-            `${warning}Kumbaya submission received`,
-            `Event: ${eventName || "Unknown"}`,
-            `Date: ${eventDate || "Unknown"}`,
-            `Location: ${location || "Unknown"}`,
-            `Score: ${scoreLabel}`,
-            `Recommendation: ${recommendation || "Not provided"}`,
-            `Organizer: ${organizerName || "Unknown"}${organizerEmail ? ` (${organizerEmail})` : ""}`,
-            `ClickUp: ${clickupTaskUrl || "Not created (see webmaster alert)"}`,
-            `Submission ID: ${submissionId}`,
-          ].join("\n"),
-        }),
-      );
-      slackDelivered = true;
-    } catch (err) {
-      slackError = err instanceof Error ? err.message : "Slack delivery failed.";
-      console.error("kumbaya-intake: Slack notification failed:", err);
-    }
-  } else {
-    slackError = "SLACK_KUMBAYA_CHANNEL is not configured.";
-  }
-
-  let emailDelivered = false;
-  let emailError = "";
-  try {
-    await withRetry(() =>
+  const [slackSettled, emailSettled] = await Promise.allSettled([
+    slackChannel
+      ? withRetry(() =>
+          sendSlackMessage({
+            channel: slackChannel,
+            text: [
+              `${warning}Kumbaya submission received`,
+              `Event: ${eventName || "Unknown"}`,
+              `Date: ${eventDate || "Unknown"}`,
+              `Location: ${location || "Unknown"}`,
+              `Score: ${scoreLabel}`,
+              `Recommendation: ${recommendation || "Not provided"}`,
+              `Organizer: ${organizerName || "Unknown"}${organizerEmail ? ` (${organizerEmail})` : ""}`,
+              `ClickUp: ${clickupTaskUrl || "Not created (see webmaster alert)"}`,
+              `Submission ID: ${submissionId}`,
+            ].join("\n"),
+          }),
+        )
+      : Promise.reject(new Error("SLACK_KUMBAYA_CHANNEL is not configured.")),
+    withRetry(() =>
       sendEmail({
         to: KUMBAYA_STAFF_EMAIL,
         subject: `Kumbaya review: ${eventName || "Unknown event"} · ${eventDate || "no date"} · ${scoreLabel}`,
@@ -275,12 +268,26 @@ export async function POST(req: NextRequest) {
           .filter(Boolean)
           .join("\n"),
       }),
-    );
-    emailDelivered = true;
-  } catch (err) {
-    emailError = err instanceof Error ? err.message : "Email delivery failed.";
-    console.error("kumbaya-intake: team@ramprate.com email failed:", err);
-  }
+    ),
+  ]);
+
+  const slackDelivered = slackSettled.status === "fulfilled";
+  const slackError =
+    slackSettled.status === "rejected"
+      ? slackSettled.reason instanceof Error
+        ? slackSettled.reason.message
+        : "Slack delivery failed."
+      : "";
+  if (slackError) console.error("kumbaya-intake: Slack notification failed:", slackError);
+
+  const emailDelivered = emailSettled.status === "fulfilled";
+  const emailError =
+    emailSettled.status === "rejected"
+      ? emailSettled.reason instanceof Error
+        ? emailSettled.reason.message
+        : "Email delivery failed."
+      : "";
+  if (emailError) console.error("kumbaya-intake: team@ramprate.com email failed:", emailError);
 
   try {
     await writeClient
