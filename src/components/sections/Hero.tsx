@@ -31,29 +31,11 @@ export default function Hero({
           />
         ) : (
           /* Gradient placeholder when no image */
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at 70% 50%, rgba(212,168,67,0.08) 0%, transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(139,69,19,0.06) 0%, transparent 50%)",
-            }}
-          />
+          <div className="rr-hero-fallback-glow absolute inset-0" />
         )}
         {/* Gradient overlays to deepen the left side for text */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, var(--dark), rgba(10,15,26,0.85), transparent)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(10,15,26,0.9), transparent, rgba(10,15,26,0.4))",
-          }}
-        />
+        <div className="rr-hero-left-overlay absolute inset-0" />
+        <div className="rr-hero-bottom-overlay absolute inset-0" />
       </div>
 
       {/* Content */}
@@ -121,10 +103,10 @@ export default function Hero({
               </Link>
             ) : (
               <Link
-                href="/expertise"
+                href="/services"
                 className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 hover:opacity-90 bg-gold text-dark"
               >
-                Explore Our Work
+                Explore Services
                 <svg
                   width="16"
                   height="16"
@@ -143,7 +125,7 @@ export default function Hero({
               href="/contact"
               className="font-body inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-300"
             >
-              Start a Conversation
+              Book a Call
             </Link>
           </div>
 

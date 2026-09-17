@@ -13,6 +13,7 @@
 - [ ] Apply the supplied repository rules throughout: Next.js App Router conventions, Tailwind and shadcn/ui usage, Sanity content boundaries, no unnecessary dependencies, no inline styles, no Framer Motion, and mandatory type and lint validation.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [x] Move the shared public Hero fallback gradients into semantic CSS and replace its retired Expertise and Start a Conversation fallback actions with the approved Services and Book a Call destinations.
 - [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.
 - [x] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
 - [x] Add a representative public-route matrix contract covering shared shell inheritance, canonical service paths, intentional compatibility redirects, specialist public intake routes, and protected access-gate routes.

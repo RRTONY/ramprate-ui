@@ -1863,3 +1863,37 @@ body.ai-modal-open [data-hide-on-ai] {
     transform: none;
   }
 }
+
+/* Shared editorial Hero: fixed visual layers stay out of JSX so all managed
+   marketing-page fallbacks inherit the same accessible RampRate atmosphere. */
+.rr-hero-fallback-glow {
+  background:
+    radial-gradient(
+      ellipse at 70% 50%,
+      color-mix(in srgb, var(--rr-gold) 10%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 30% 80%,
+      color-mix(in srgb, var(--rr-navy-mid) 74%, transparent) 0%,
+      transparent 50%
+    );
+}
+
+.rr-hero-left-overlay {
+  background: linear-gradient(
+    to right,
+    var(--rr-navy),
+    color-mix(in srgb, var(--rr-navy) 88%, transparent),
+    transparent
+  );
+}
+
+.rr-hero-bottom-overlay {
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--rr-navy) 94%, transparent),
+    transparent,
+    color-mix(in srgb, var(--rr-navy) 42%, transparent)
+  );
+}
