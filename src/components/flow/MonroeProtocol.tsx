@@ -7,7 +7,6 @@ import {
 } from "@/components/flow/ui/card";
 import { Button } from "@/components/flow/ui/button";
 import { Play, Pause, Volume2, Brain, Activity, Waves } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function MonroeProtocol() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -95,58 +94,54 @@ export default function MonroeProtocol() {
         </Button>
       </div>
 
-      <AnimatePresence>
-        {showScience && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="grid md:grid-cols-3 gap-4 overflow-hidden"
-          >
-            <Card className="bg-primary/5 border-primary/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm flex items-center gap-2">
-                  <Waves className="h-4 w-4" /> Frequency Following Response
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-xs text-muted-foreground">
-                Brainwave entrainment to external rhythms (like binaural beats) is a real, studied
-                phenomenon, though its effect on subjective &quot;flow states&quot; specifically is not well
-                established. We use it here as an optional relaxation aid, not a proven performance
-                mechanism.
-              </CardContent>
-            </Card>
-            <Card className="bg-primary/5 border-primary/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm flex items-center gap-2">
-                  <Activity className="h-4 w-4" /> Gamma Activity
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-xs text-muted-foreground">
-                Some research associates high-performance cognitive states with Gamma-band (40Hz+)
-                EEG activity. This is an area of active, evolving research - not something we
-                measure or guarantee for you.
-              </CardContent>
-            </Card>
-            <Card className="bg-primary/5 border-primary/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm flex items-center gap-2">
-                  <Brain className="h-4 w-4" /> Hemi-Sync®
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-xs text-muted-foreground">
-                Hemi-Sync® is the Monroe Institute&#39;s proprietary audio technology, intended to
-                support a relaxed, focused state. We use their &quot;Spark/Filter working together&quot;
-                framing as a metaphor, not a claim about measured brain hemisphere activity.
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showScience && (
+        <div className="flow-monroe-science-enter grid md:grid-cols-3 gap-4 overflow-hidden">
+          <Card className="bg-primary/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Waves className="h-4 w-4" /> Frequency Following Response
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground">
+              Brainwave entrainment to external rhythms (like binaural beats) is
+              a real, studied phenomenon, though its effect on subjective
+              &quot;flow states&quot; specifically is not well established. We
+              use it here as an optional relaxation aid, not a proven
+              performance mechanism.
+            </CardContent>
+          </Card>
+          <Card className="bg-primary/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Activity className="h-4 w-4" /> Gamma Activity
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground">
+              Some research associates high-performance cognitive states with
+              Gamma-band (40Hz+) EEG activity. This is an area of active,
+              evolving research - not something we measure or guarantee for you.
+            </CardContent>
+          </Card>
+          <Card className="bg-primary/5 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Brain className="h-4 w-4" /> Hemi-Sync®
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground">
+              Hemi-Sync® is the Monroe Institute&#39;s proprietary audio
+              technology, intended to support a relaxed, focused state. We use
+              their &quot;Spark/Filter working together&quot; framing as a
+              metaphor, not a claim about measured brain hemisphere activity.
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto -mt-4">
-        The Monroe Institute&#39;s Focus levels are an experiential, self-reported framework - not a
-        peer-reviewed neuroscience model. Treat the descriptions below as evocative language for a
-        meditative state, not literal claims.
+        The Monroe Institute&#39;s Focus levels are an experiential,
+        self-reported framework - not a peer-reviewed neuroscience model. Treat
+        the descriptions below as evocative language for a meditative state, not
+        literal claims.
       </p>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -179,10 +174,10 @@ export default function MonroeProtocol() {
                 physical world.&quot;
               </p>
               <p>
-                &quot;Therefore, I deeply desire to Expand, to Experience; to Know,
-                to Understand; to Control, to Use such greater energies and
-                energy systems as may be beneficial and constructive to me and
-                to those who follow me.&quot;
+                &quot;Therefore, I deeply desire to Expand, to Experience; to
+                Know, to Understand; to Control, to Use such greater energies
+                and energy systems as may be beneficial and constructive to me
+                and to those who follow me.&quot;
               </p>
             </div>
 
@@ -194,12 +189,7 @@ export default function MonroeProtocol() {
                     Playing: Focus 10 Frequency (Pink Noise)
                   </div>
                   <div className="h-1 bg-primary/20 mt-2 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-primary"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 30, repeat: Infinity }}
-                    />
+                    <div className="flow-monroe-audio-progress h-full bg-primary" />
                   </div>
                 </div>
               </div>
@@ -222,80 +212,71 @@ export default function MonroeProtocol() {
             )}
           </div>
 
-          <AnimatePresence mode="wait">
-            {showQuiz ? (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="bg-card border border-border p-6 rounded-xl space-y-4"
-              >
-                <h4 className="font-bold">Quick Assessment</h4>
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">
-                    {quizQuestions[0].q}
-                  </p>
-                  <div className="grid gap-2">
-                    {quizQuestions[0].options.map((opt, i) => (
-                      <Button
-                        key={i}
-                        variant="outline"
-                        className="justify-start text-left h-auto py-2"
-                        onClick={() => handleQuizComplete(opt.result)}
-                      >
-                        {opt.text}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ) : quizResult ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-primary/10 border border-primary p-6 rounded-xl text-center space-y-2"
-              >
-                <div className="text-sm uppercase tracking-widest text-muted-foreground">
-                  Your Natural State
-                </div>
-                <div className="text-3xl font-bold text-primary">
-                  {quizResult}
-                </div>
-                <p className="text-sm">
-                  You naturally operate in this frequency. Use the audio to
-                  anchor it.
+          {showQuiz ? (
+            <div
+              key="quiz"
+              className="flow-monroe-quiz-enter bg-card border border-border p-6 rounded-xl space-y-4"
+            >
+              <h4 className="font-bold">Quick Assessment</h4>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {quizQuestions[0].q}
                 </p>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setQuizResult(null)}
-                >
-                  Reset
-                </Button>
-              </motion.div>
-            ) : (
-              <div className="grid gap-4">
-                {focusLevels.map((focus, index) => (
-                  <div
-                    key={index}
-                    className="p-4 rounded-lg bg-muted/10 border border-border/50 hover:bg-primary/5 transition-colors cursor-default group"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-bold text-primary group-hover:scale-110 transition-transform">
-                        {focus.level}
-                      </span>
-                      <span className="text-sm font-semibold">
-                        {focus.title}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {focus.desc}
-                    </p>
-                  </div>
-                ))}
+                <div className="grid gap-2">
+                  {quizQuestions[0].options.map((opt, i) => (
+                    <Button
+                      key={i}
+                      variant="outline"
+                      className="justify-start text-left h-auto py-2"
+                      onClick={() => handleQuizComplete(opt.result)}
+                    >
+                      {opt.text}
+                    </Button>
+                  ))}
+                </div>
               </div>
-            )}
-          </AnimatePresence>
+            </div>
+          ) : quizResult ? (
+            <div
+              key={quizResult}
+              className="flow-monroe-quiz-enter bg-primary/10 border border-primary p-6 rounded-xl text-center space-y-2"
+            >
+              <div className="text-sm uppercase tracking-widest text-muted-foreground">
+                Your Natural State
+              </div>
+              <div className="text-3xl font-bold text-primary">
+                {quizResult}
+              </div>
+              <p className="text-sm">
+                You naturally operate in this frequency. Use the audio to anchor
+                it.
+              </p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setQuizResult(null)}
+              >
+                Reset
+              </Button>
+            </div>
+          ) : (
+            <div className="grid gap-4">
+              {focusLevels.map((focus, index) => (
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-muted/10 border border-border/50 hover:bg-primary/5 transition-colors cursor-default group"
+                >
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-bold text-primary group-hover:scale-110 transition-transform">
+                      {focus.level}
+                    </span>
+                    <span className="text-sm font-semibold">{focus.title}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{focus.desc}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
