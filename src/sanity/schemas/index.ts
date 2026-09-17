@@ -11,6 +11,7 @@ import page from "./page";
 import pageSeo from "./pageSeo";
 import seo from "./seo";
 import artifact from "./artifact";
+import kumbayaSubmission from "./kumbayaSubmission";
 
 export const schemaTypes = [
   siteSettings,
@@ -26,4 +27,5 @@ export const schemaTypes = [
   clientLogo,
   confidentialTestimonial,
   artifact,
+  kumbayaSubmission,
 ];
