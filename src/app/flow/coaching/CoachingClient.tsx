@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/flow/ui/button";
 import {
   Card,
@@ -181,10 +180,7 @@ export default function Coaching() {
       {/* Header */}
       <section className="border-b">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className="flow-coaching-header-enter">
             <div className="flex items-center gap-2 mb-4">
               <Sparkles className="w-5 h-5 text-amber-500" />
               <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
@@ -201,7 +197,7 @@ export default function Coaching() {
               leverage your strengths, stretch your growth edge, and protect
               against burnout.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -275,89 +271,82 @@ export default function Coaching() {
       {/* Coaching Prompts */}
       <section className="py-12">
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <AnimatePresence mode="wait">
-            {prompts.length > 0 ? (
-              <motion.div
-                key="prompts"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-6"
-              >
-                {prompts.map(
-                  (
-                    prompt: { title: string; prompt: string; category: string },
-                    i: number,
-                  ) => {
-                    const cat =
-                      categoryConfig[prompt.category] ||
-                      categoryConfig.leverage;
-                    const Icon = cat.icon;
-                    return (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.15 }}
-                      >
-                        <Card className={`border-2 ${cat.bg}`}>
-                          <CardHeader className="pb-2">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Icon className={`w-5 h-5 ${cat.color}`} />
-                                <span
-                                  className={`text-xs font-bold uppercase tracking-wider ${cat.color}`}
-                                >
-                                  {cat.label}
-                                </span>
-                              </div>
-                              <span className="text-xs text-gray-400">
-                                Prompt {i + 1} of 3
+          {prompts.length > 0 ? (
+            <div key="prompts" className="flow-coaching-panel-enter space-y-6">
+              {prompts.map(
+                (
+                  prompt: { title: string; prompt: string; category: string },
+                  i: number,
+                ) => {
+                  const cat =
+                    categoryConfig[prompt.category] || categoryConfig.leverage;
+                  const Icon = cat.icon;
+                  return (
+                    <div
+                      key={i}
+                      className="flow-coaching-prompt-enter"
+                      style={
+                        {
+                          "--flow-entry-delay": `${i * 150}ms`,
+                        } as React.CSSProperties
+                      }
+                    >
+                      <Card className={`border-2 ${cat.bg}`}>
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Icon className={`w-5 h-5 ${cat.color}`} />
+                              <span
+                                className={`text-xs font-bold uppercase tracking-wider ${cat.color}`}
+                              >
+                                {cat.label}
                               </span>
                             </div>
-                            <CardTitle className="text-lg font-bold mt-1">
-                              {prompt.title}
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <p className="text-gray-700 leading-relaxed">
-                              {prompt.prompt}
-                            </p>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                    );
-                  },
-                )}
+                            <span className="text-xs text-gray-400">
+                              Prompt {i + 1} of 3
+                            </span>
+                          </div>
+                          <CardTitle className="text-lg font-bold mt-1">
+                            {prompt.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-gray-700 leading-relaxed">
+                            {prompt.prompt}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  );
+                },
+              )}
 
-                <div className="text-center pt-6 text-sm text-gray-500">
-                  <p>
-                    These prompts are tailored to your{" "}
-                    {combinationProfile.label} profile in a {context} context.
-                  </p>
-                  <p className="mt-1">
-                    Regenerate anytime for fresh perspective.
-                  </p>
-                </div>
-              </motion.div>
-            ) : !generateMutation.isPending ? (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-16"
-              >
-                <Brain className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <h3 className="text-xl font-bold text-gray-400 mb-2">
-                  Ready When You Are
-                </h3>
-                <p className="text-gray-500 max-w-md mx-auto">
-                  Click &quot;Generate This Week&#39;s Coaching&quot; above to
-                  get three personalized action prompts based on your Flow
-                  Circuit profile.
+              <div className="text-center pt-6 text-sm text-gray-500">
+                <p>
+                  These prompts are tailored to your {combinationProfile.label}{" "}
+                  profile in a {context} context.
                 </p>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+                <p className="mt-1">
+                  Regenerate anytime for fresh perspective.
+                </p>
+              </div>
+            </div>
+          ) : !generateMutation.isPending ? (
+            <div
+              key="empty"
+              className="flow-coaching-empty-enter text-center py-16"
+            >
+              <Brain className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+              <h3 className="text-xl font-bold text-gray-400 mb-2">
+                Ready When You Are
+              </h3>
+              <p className="text-gray-500 max-w-md mx-auto">
+                Click &quot;Generate This Week&#39;s Coaching&quot; above to get
+                three personalized action prompts based on your Flow Circuit
+                profile.
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
 

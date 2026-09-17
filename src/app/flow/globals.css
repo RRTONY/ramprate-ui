@@ -848,3 +848,60 @@
     animation: none;
   }
 }
+
+@keyframes flow-coaching-header-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.125rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flow-coaching-panel-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flow-coaching-prompt-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-coaching-header-enter {
+  animation: flow-coaching-header-enter 240ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-coaching-panel-enter,
+.flow-coaching-empty-enter {
+  animation: flow-coaching-panel-enter 180ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) both;
+}
+
+.flow-coaching-prompt-enter {
+  animation: flow-coaching-prompt-enter 240ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) var(--flow-entry-delay, 0ms)
+    both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-coaching-header-enter,
+  .flow-coaching-panel-enter,
+  .flow-coaching-empty-enter,
+  .flow-coaching-prompt-enter {
+    animation: none;
+  }
+}

@@ -27,6 +27,7 @@
 - [x] Replace Flow Onboarding Wizard Framer Motion modal and step transitions with reduced-motion-safe CSS and replace Unicode checklist marks with Lucide icons while preserving invitation copy, step navigation, team routing, and close behavior.
 - [x] Replace Flow Monroe Protocol Framer Motion disclosure, audio-progress, and quiz-result feedback with reduced-motion-safe CSS while preserving science disclaimers, playback controls, quiz state, and reset behavior.
 - [x] Replace Flow Tribe Trial Framer Motion entry wrappers with reduced-motion-safe CSS while preserving trial signup, validation, mutation feedback, pricing disclosure, and post-signup navigation.
+- [ ] Replace Flow Coaching Framer Motion header, generated-prompt, and empty-state feedback with reduced-motion-safe CSS while preserving authentication, context controls, AI generation, prompt data, and reset behavior.
 - [x] Replace Flow Journey Framer Motion entry wrappers and its Unicode checkmark with reduced-motion-safe CSS and Lucide iconography while preserving the three-step journey content and navigation.
 - [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
