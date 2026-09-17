@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  Playfair_Display,
+  DM_Sans,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from "next/font/google";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -22,6 +27,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-wordmark",
   display: "swap",
 });
 import Header from "@/components/layout/Header";
@@ -116,7 +128,7 @@ export default async function RootLayout({
       lang="en"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Google Analytics - only render when an ID exists (avoids id=undefined) */}
