@@ -14,7 +14,9 @@
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Audit and replace non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
 - [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
+- [ ] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
 - [x] Replace the Flow Friction Calculator’s two static Framer Motion entry wrappers with semantic reduced-motion-safe CSS while preserving its calculations and interactive controls.
+- [x] Replace the Flow Friction Dashboard’s static Framer Motion cost feedback wrapper with the shared keyed CSS feedback class while preserving calculated values, sliders, and chart behavior.
 - [ ] Complete a file-by-file fixed inline-style remediation pass for high-count public and Flow components, converting all reusable fixed presentation into semantic CSS or Tailwind while preserving calculated geometry and interactive state styles.
 - [x] Move the shared public Hero fallback gradients into semantic CSS and replace its retired Expertise and Start a Conversation fallback actions with the approved Services and Book a Call destinations.
 - [x] Move the restricted ownership-brief gate’s fixed backdrop, panel, input, typography, and action presentation into scoped CSS while keeping dynamic access feedback and restricted interaction behavior intact.

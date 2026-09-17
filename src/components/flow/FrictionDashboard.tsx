@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -129,14 +128,12 @@ export default function FrictionDashboard() {
               <h3 className="text-lg font-medium text-gray-400 uppercase tracking-widest">
                 Annual Friction Cost
               </h3>
-              <motion.div
+              <div
                 key={totalCost}
-                initial={{ scale: 0.9, opacity: 0.5 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="text-5xl md:text-6xl font-bold text-red-500 font-mono tracking-tighter"
+                className="flow-friction-cost-pop text-5xl md:text-6xl font-bold text-red-500 font-mono tracking-tighter"
               >
                 {formatCurrency(totalCost)}
-              </motion.div>
+              </div>
             </div>
 
             <div className="h-[250px] w-full relative">
