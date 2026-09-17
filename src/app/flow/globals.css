@@ -433,3 +433,25 @@
     animation: none;
   }
 }
+
+@keyframes flow-head-to-head-analysis-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-head-to-head-analysis {
+  animation: flow-head-to-head-analysis-enter 180ms
+    var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-head-to-head-analysis {
+    animation: none;
+  }
+}

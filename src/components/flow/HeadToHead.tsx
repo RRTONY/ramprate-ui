@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -138,59 +137,55 @@ export default function HeadToHead({ members }: HeadToHeadProps) {
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          {analysis && selectedA && selectedB && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="bg-black/30 border border-white/5 rounded-lg p-4 space-y-4"
-            >
-              <div className="flex items-center justify-between">
-                <div className="text-center">
-                  <div
-                    className={`text-xs font-bold ${getRoleColor(selectedA.role)}`}
-                  >
-                    {selectedA.role}
-                  </div>
-                  <div className="text-sm font-bold text-white">
-                    {selectedA.name}
-                  </div>
-                </div>
-                <div className="text-gray-500 font-mono text-xs">VS</div>
-                <div className="text-center">
-                  <div
-                    className={`text-xs font-bold ${getRoleColor(selectedB.role)}`}
-                  >
-                    {selectedB.role}
-                  </div>
-                  <div className="text-sm font-bold text-white">
-                    {selectedB.name}
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 pt-4">
+        {analysis && selectedA && selectedB && (
+          <div
+            key={`${memberA}-${memberB}`}
+            className="flow-head-to-head-analysis bg-black/30 border border-white/5 rounded-lg p-4 space-y-4"
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-center">
                 <div
-                  className={`text-lg font-black uppercase mb-1 ${analysis.color}`}
+                  className={`text-xs font-bold ${getRoleColor(selectedA.role)}`}
                 >
-                  {analysis.status}
+                  {selectedA.role}
                 </div>
-                <p className="text-sm text-gray-300 mb-3 leading-relaxed">
-                  {analysis.description}
-                </p>
-                <div className="bg-white/5 p-3 rounded border-l-2 border-white/20">
-                  <p className="text-xs text-gray-400 italic">
-                    <strong className="text-white not-italic">
-                      Manager&#39;s Tip:
-                    </strong>{" "}
-                    {analysis.tip}
-                  </p>
+                <div className="text-sm font-bold text-white">
+                  {selectedA.name}
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <div className="text-gray-500 font-mono text-xs">VS</div>
+              <div className="text-center">
+                <div
+                  className={`text-xs font-bold ${getRoleColor(selectedB.role)}`}
+                >
+                  {selectedB.role}
+                </div>
+                <div className="text-sm font-bold text-white">
+                  {selectedB.name}
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 pt-4">
+              <div
+                className={`text-lg font-black uppercase mb-1 ${analysis.color}`}
+              >
+                {analysis.status}
+              </div>
+              <p className="text-sm text-gray-300 mb-3 leading-relaxed">
+                {analysis.description}
+              </p>
+              <div className="bg-white/5 p-3 rounded border-l-2 border-white/20">
+                <p className="text-xs text-gray-400 italic">
+                  <strong className="text-white not-italic">
+                    Manager&#39;s Tip:
+                  </strong>{" "}
+                  {analysis.tip}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {!analysis && (
           <div className="text-center py-8 text-gray-500 text-sm italic">

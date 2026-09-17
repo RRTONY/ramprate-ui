@@ -16,6 +16,7 @@
 - [ ] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
 - [ ] Replace remaining low-complexity Flow Framer Motion wrappers in utility calculators and dashboards with reduced-motion-safe CSS, preserving computed values, controls, and external Flow data boundaries.
 - [x] Replace Flow Time Travel member-bar Framer Motion with reduced-motion-safe CSS while preserving animated playback, timeline controls, role colors, dynamic score heights, and active-member calculations.
+- [x] Replace the Flow Head-to-Head analysis Framer Motion transition with keyed reduced-motion-safe CSS while preserving member selection, comparison logic, role colors, and manager guidance.
 - [x] Replace the Flow Team Matrix member-entry wrappers with reduced-motion-safe CSS while preserving calculated member positions, role colors, tooltips, and PDF export behavior.
 - [x] Preserve the centered Conductor transform in the Flow Team Matrix by applying CSS entry feedback to a nested visual element rather than the dynamically positioned wrapper, with a focused regression assertion.
 - [x] Replace the Flow Friction Calculator’s two static Framer Motion entry wrappers with semantic reduced-motion-safe CSS while preserving its calculations and interactive controls.
