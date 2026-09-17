@@ -365,13 +365,27 @@ export default function TorquePage() {
             >
               Torque - RampRate
             </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Torque, by RampRate. The Force That{" "}
-              <span style={{ color: "var(--gold)" }}>
-                Gets a Stuck Matter Moving.
+            <h1 className="text-white mb-6 leading-tight">
+              <span
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold"
+                style={{ fontFamily: "var(--font-wordmark)" }}
+              >
+                Torque
+              </span>
+              <span
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                , by RampRate.
+              </span>
+              <span
+                className="block mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                The Force That{" "}
+                <span style={{ color: "var(--gold)" }}>
+                  Gets a Stuck Matter Moving.
+                </span>
               </span>
             </h1>
             <p
