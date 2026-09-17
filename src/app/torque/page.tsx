@@ -7,9 +7,9 @@ import JsonLd, {
   personJsonLd,
 } from "@/components/shared/JsonLd";
 
-const TITLE = "Torque | Litigation Counsel Sourcing | RampRate";
+const TITLE = "Torque | Critical Issue Management | RampRate";
 const DESCRIPTION =
-  "Torque, from RampRate: we source the litigation counsel and leverage you need — pre-suit or already in it.";
+  "Torque, from RampRate: we source the specialists and leverage a critical issue requires, whether it's just emerging or already underway.";
 
 const FALLBACK_METADATA: Metadata = {
   // absolute - TITLE already ends in "| RampRate", so a plain string would
@@ -17,12 +17,12 @@ const FALLBACK_METADATA: Metadata = {
   title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
-    "litigation counsel sourcing",
+    "critical issue management",
     "specialist sourcing and coordination",
     "equity dispute counsel sourcing",
     "creditor claim counsel sourcing",
     "asset protection specialist sourcing",
-    "litigation support coordination",
+    "critical issue coordination",
   ],
   alternates: { canonical: "/torque" },
   openGraph: {
@@ -99,7 +99,7 @@ const situations = [
     tag: "SITUATION A",
     title: "The Squeezed-Out Operator",
     hook: "Timing is everything - and it's rarely yours.",
-    desc: "A business partner or co-founder gets pushed out of equity they earned, timed to land right before the value becomes obvious - a raise, a sale, a big contract. We source and negotiate the right litigation counsel, manage that relationship and communication cadence, and keep your side of the file organized, while staying out of the privileged strategy conversations that belong to your attorney.",
+    desc: "A business partner or co-founder gets pushed out of equity they earned, timed to land right before the value becomes obvious - a raise, a sale, a big contract. We source and negotiate the right counsel, manage that relationship and communication cadence, and keep your side of the file organized, while staying out of the privileged strategy conversations that belong to your attorney.",
     structure: "Success fee - no recovery, no fee.",
     icon: (
       <svg
@@ -325,8 +325,7 @@ export default function TorquePage() {
           description:
             "Sources, vets, and coordinates the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, asset protection, and portfolio remediation.",
           url: "https://ramprate.com/torque",
-          serviceType:
-            "Litigation counsel sourcing and specialist coordination",
+          serviceType: "Critical Issue Management and specialist coordination",
         })}
       />
       <JsonLd
@@ -370,17 +369,28 @@ export default function TorquePage() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Sourcing the Counsel and{" "}
-              <span style={{ color: "var(--gold)" }}>Leverage You Need.</span>
+              Torque, by RampRate. The Force That{" "}
+              <span style={{ color: "var(--gold)" }}>
+                Gets a Stuck Matter Moving.
+              </span>
             </h1>
             <p
-              className="text-white/70 text-lg leading-relaxed mb-10"
+              className="text-white/70 text-lg leading-relaxed mb-6"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Pre-litigation or already in suit, Torque sources and coordinates
-              the specialists a high-stakes dispute requires - without ever
-              stepping into the privileged strategy conversations that belong to
-              your attorney.
+              When a matter is stuck, Torque sources and coordinates the
+              specialists a critical issue requires, aligned to one strategy and
+              moving at the pace the situation demands.
+            </p>
+            <p
+              className="text-white/50 text-base leading-relaxed mb-10"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              For 25 years, RampRate has been the fixer enterprises call when a
+              deal, a supplier relationship, or a critical decision needs
+              outside leverage to move. Torque brings that same sourcing
+              discipline to Critical Issue Management, finding and aligning the
+              right specialists under one coordinated strategy.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
