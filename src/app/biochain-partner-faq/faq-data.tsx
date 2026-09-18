@@ -189,36 +189,6 @@ export const programs = [
       </ul>
     ),
   },
-  {
-    num: "04",
-    title:
-      "We're a Manufacturing or Pharmacy Partner Who Needs More Supply or Capacity Ourselves — Does RampRate Only Send Us Buyers, or Can RampRate Source Things for Us Too?",
-    body: (
-      <>
-        <p>
-          Both, and they&rsquo;re separate engagements. Everything in the
-          section above describes RampRate finding buyers for what you already
-          produce.
-        </p>
-        <p>
-          But RampRate can just as easily work the other direction and act as
-          your buyer&rsquo;s agent to run the same sourcing process described
-          below to find you API, raw materials, outsourced compounding or
-          manufacturing capacity, or other inputs you need to grow, exactly the
-          way we do it for the clinics, research facilities, and distributors
-          described in the next section.
-        </p>
-        <p>
-          If you need both, help selling what you make, and help sourcing what
-          you need to make more of it, we&rsquo;d typically run them as two
-          parallel, independently-compensated engagements rather than one: a
-          referral or channel agreement on the sell side (under the terms
-          above), and a sourcing engagement on the buy side (under the terms in
-          the next section).
-        </p>
-      </>
-    ),
-  },
 ];
 
 const scorecardRows: [string, string, string][] = [
@@ -299,17 +269,50 @@ export const faqSections: {
           "what is ramprate's typical role in sourcing health products buyer's agent manufacturing pharmacy partner supply",
         a: (
           <p>
-            Think of us as the buyer&rsquo;s agent &mdash; and that applies
-            whether you&rsquo;re reading this because we&rsquo;re sourcing
-            buyers for you (as covered above), or because you need us to source
-            supply for you. RampRate works with the executive team and sourcing
-            professionals at clinics, research facilities, distributors, and
-            manufacturing or pharmacy partners to obtain the products they need
-            to do their work. Our goal is not to maximize commissions or push
-            any one supplier&rsquo;s product. It&rsquo;s to find the right fit
-            between supplier and buyer; remove friction; and create enough
-            efficiencies on both sides to justify our cut of the deal.
+            Think of us as the buyer&rsquo;s agent. RampRate works with the
+            executive team and sourcing professionals at manufacturing and
+            pharmacy partners, clinics, research facilities, and distributors to
+            obtain the products they need to do their work. Our goal is not to
+            maximize commissions or push any one supplier&rsquo;s product.
+            It&rsquo;s to find the right fit between supplier and buyer; remove
+            friction; and create enough efficiencies on both sides to justify
+            our cut of the deal.
           </p>
+        ),
+      },
+      {
+        q: "We're a manufacturing or pharmacy partner who needs more supply or capacity ourselves, does RampRate only send us buyers, or can RampRate source things for us too?",
+        searchText:
+          "manufacturing pharmacy partner needs more supply capacity ourselves buyers source things too reverse buyer's agent",
+        a: (
+          <>
+            <p>
+              Both, and they&rsquo;re separate engagements. &ldquo;Three Ways
+              RampRate Engages&rdquo; above is written from the other direction,
+              with RampRate finding buyers for what you produce. This section is
+              the reverse.
+            </p>
+            <p>
+              Like the sell side, it spans a range: connecting you with
+              potential suppliers we know in our network at the light end, and
+              actively running the full sourcing process on your behalf at the
+              other, including the RFP and scorecard evaluation, negotiation
+              support, and staying with the deal through close, whenever you
+              need more supply, raw materials, capacity, or outsourced
+              manufacturing or compounding capacity to grow.
+            </p>
+            <p>
+              A manufacturing or pharmacy partner can run this alongside a
+              referral or channel agreement on the sell side (per the terms
+              above) at the same time, with the two compensated independently.
+              The fuller, actively-managed engagement is compensated as
+              described in &ldquo;How are RampRate&rsquo;s sourcing services
+              compensated?&rdquo; A lighter, connection-only introduction works
+              the same way our own Buyer Introductions do: a referral fee paid
+              by the supplier side only if a deal actually closes, with nothing
+              owed if it doesn&rsquo;t.
+            </p>
+          </>
         ),
       },
       {
