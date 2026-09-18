@@ -182,21 +182,17 @@ export default function AttorneyRFIPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-4">
             <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.2em]"
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-body font-medium uppercase tracking-[0.2em]"
               style={{
                 border: "1px solid rgba(255,255,255,0.1)",
                 background: "rgba(255,255,255,0.05)",
                 color: "rgba(255,255,255,0.5)",
-                fontFamily: "var(--font-body)",
               }}
             >
               Attorney Network
             </span>
           </div>
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-3xl text-4xl font-display font-bold leading-tight text-white sm:text-5xl md:text-6xl">
             Partner With{" "}
             <span style={{ color: "oklch(0.82 0.15 75)" }}>
               RampRate&apos;s
@@ -204,10 +200,9 @@ export default function AttorneyRFIPage() {
             Legal Network
           </h1>
           <p
-            className="mt-6 text-base sm:text-lg leading-relaxed max-w-xl"
+            className="mt-6 max-w-xl text-base font-body leading-relaxed sm:text-lg"
             style={{
               color: "rgba(255,255,255,0.5)",
-              fontFamily: "var(--font-body)",
             }}
           >
             We&apos;re building a curated network of attorneys who share our
@@ -223,12 +218,11 @@ export default function AttorneyRFIPage() {
             ].map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium"
+                className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-body font-medium"
                 style={{
                   background: "rgba(255,255,255,0.07)",
                   color: "rgba(255,255,255,0.6)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  fontFamily: "var(--font-body)",
                 }}
               >
                 {tag}
@@ -273,10 +267,7 @@ export default function AttorneyRFIPage() {
                       <polyline points="22 4 12 14.01 9 11.01" />
                     </svg>
                   </div>
-                  <h3
-                    className="text-2xl font-bold mb-3"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h3 className="mb-3 text-2xl font-display font-bold">
                     Application Received
                   </h3>
                   <p
@@ -311,10 +302,7 @@ export default function AttorneyRFIPage() {
                   <input type="hidden" name="form-name" value="attorney-rfi" />
 
                   <div>
-                    <h3
-                      className="text-xl font-bold mb-1"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
+                    <h3 className="mb-1 text-xl font-display font-bold">
                       Attorney RFI Application
                     </h3>
                     <p
@@ -331,11 +319,10 @@ export default function AttorneyRFIPage() {
                   {/* Personal Info */}
                   <div>
                     <div
-                      className="text-xs font-bold uppercase tracking-widest mb-3 pb-2 border-b"
+                      className="mb-3 border-b pb-2 text-xs font-body font-bold uppercase tracking-widest"
                       style={{
                         color: "oklch(0.55 0.15 30)",
                         borderColor: "rgba(100,60,30,0.15)",
-                        fontFamily: "var(--font-body)",
                       }}
                     >
                       Personal Information
@@ -344,11 +331,8 @@ export default function AttorneyRFIPage() {
                       <div>
                         <label
                           htmlFor="rfi-name"
-                          className="block text-xs font-medium uppercase tracking-wider mb-2"
-                          style={{
-                            color: "oklch(0.4 0.02 50)",
-                            fontFamily: "var(--font-body)",
-                          }}
+                          className="mb-2 block text-xs font-body font-medium uppercase tracking-wider"
+                          style={{ color: "oklch(0.4 0.02 50)" }}
                         >
                           Full Name *
                         </label>
@@ -358,22 +342,18 @@ export default function AttorneyRFIPage() {
                           name="name"
                           required
                           placeholder="Jane Smith"
-                          className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
+                          className="w-full rounded-md border px-4 py-3 text-sm font-body focus:outline-none"
                           style={{
                             borderColor: "rgba(0,0,0,0.1)",
                             background: "oklch(0.97 0.01 80)",
-                            fontFamily: "var(--font-body)",
                           }}
                         />
                       </div>
                       <div>
                         <label
                           htmlFor="rfi-email"
-                          className="block text-xs font-medium uppercase tracking-wider mb-2"
-                          style={{
-                            color: "oklch(0.4 0.02 50)",
-                            fontFamily: "var(--font-body)",
-                          }}
+                          className="mb-2 block text-xs font-body font-medium uppercase tracking-wider"
+                          style={{ color: "oklch(0.4 0.02 50)" }}
                         >
                           Email *
                         </label>
@@ -383,22 +363,18 @@ export default function AttorneyRFIPage() {
                           name="email"
                           required
                           placeholder="jane@firm.com"
-                          className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
+                          className="w-full rounded-md border px-4 py-3 text-sm font-body focus:outline-none"
                           style={{
                             borderColor: "rgba(0,0,0,0.1)",
                             background: "oklch(0.97 0.01 80)",
-                            fontFamily: "var(--font-body)",
                           }}
                         />
                       </div>
                       <div>
                         <label
                           htmlFor="rfi-phone"
-                          className="block text-xs font-medium uppercase tracking-wider mb-2"
-                          style={{
-                            color: "oklch(0.4 0.02 50)",
-                            fontFamily: "var(--font-body)",
-                          }}
+                          className="mb-2 block text-xs font-body font-medium uppercase tracking-wider"
+                          style={{ color: "oklch(0.4 0.02 50)" }}
                         >
                           Phone
                         </label>
@@ -407,11 +383,10 @@ export default function AttorneyRFIPage() {
                           id="rfi-phone"
                           name="phone"
                           placeholder="+1 (555) 000-0000"
-                          className="w-full px-4 py-3 rounded-md border text-sm focus:outline-none"
+                          className="w-full rounded-md border px-4 py-3 text-sm font-body focus:outline-none"
                           style={{
                             borderColor: "rgba(0,0,0,0.1)",
                             background: "oklch(0.97 0.01 80)",
-                            fontFamily: "var(--font-body)",
                           }}
                         />
                       </div>
@@ -567,11 +542,10 @@ export default function AttorneyRFIPage() {
                   {/* Practice Areas */}
                   <div>
                     <div
-                      className="text-xs font-bold uppercase tracking-widest mb-3 pb-2 border-b"
+                      className="mb-3 border-b pb-2 text-xs font-body font-bold uppercase tracking-widest"
                       style={{
                         color: "oklch(0.55 0.15 30)",
                         borderColor: "rgba(100,60,30,0.15)",
-                        fontFamily: "var(--font-body)",
                       }}
                     >
                       Practice Areas (select all that apply)
@@ -584,7 +558,7 @@ export default function AttorneyRFIPage() {
                             key={area}
                             type="button"
                             onClick={() => togglePracticeArea(area)}
-                            className="text-left px-3 py-2.5 rounded-md text-xs font-medium transition-all border"
+                            className="rounded-md border px-3 py-2.5 text-left text-xs font-body font-medium transition-all"
                             style={{
                               background: checked
                                 ? "oklch(0.55 0.15 30)"
@@ -593,7 +567,6 @@ export default function AttorneyRFIPage() {
                               borderColor: checked
                                 ? "oklch(0.55 0.15 30)"
                                 : "rgba(0,0,0,0.1)",
-                              fontFamily: "var(--font-body)",
                             }}
                           >
                             {area}
@@ -660,7 +633,7 @@ export default function AttorneyRFIPage() {
                                 key={interest}
                                 type="button"
                                 onClick={() => toggleInterest(interest)}
-                                className="px-3 py-2 rounded-full text-xs font-medium transition-all border"
+                                className="rounded-full border px-3 py-2 text-xs font-body font-medium transition-all"
                                 style={{
                                   background: checked
                                     ? "oklch(0.55 0.15 30)"
@@ -671,7 +644,6 @@ export default function AttorneyRFIPage() {
                                   borderColor: checked
                                     ? "oklch(0.55 0.15 30)"
                                     : "rgba(0,0,0,0.1)",
-                                  fontFamily: "var(--font-body)",
                                 }}
                               >
                                 {interest}
@@ -767,10 +739,7 @@ export default function AttorneyRFIPage() {
             <div className="lg:col-span-2 space-y-6">
               {/* Why Partner */}
               <div className="bg-white rounded-xl p-7 border border-black/5 shadow-sm">
-                <h3
-                  className="text-lg font-bold mb-5"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="mb-5 text-lg font-display font-bold">
                   Why Partner With RampRate
                 </h3>
                 <div className="space-y-5">
@@ -815,10 +784,7 @@ export default function AttorneyRFIPage() {
                   borderColor: "rgba(100,60,30,0.1)",
                 }}
               >
-                <h4
-                  className="text-base font-bold mb-2"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h4 className="mb-2 text-base font-display font-bold">
                   About This Network
                 </h4>
                 <p
@@ -852,10 +818,7 @@ export default function AttorneyRFIPage() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
-                  <h4
-                    className="text-base font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h4 className="text-base font-display font-bold">
                     Prefer to Talk First?
                   </h4>
                 </div>
@@ -896,10 +859,7 @@ export default function AttorneyRFIPage() {
 
               {/* Explore Practice */}
               <div className="bg-white rounded-xl p-7 border border-black/5 shadow-sm">
-                <h4
-                  className="text-base font-bold mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h4 className="mb-3 text-base font-display font-bold">
                   Explore Our Practice
                 </h4>
                 <p
