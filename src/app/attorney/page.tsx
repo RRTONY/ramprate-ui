@@ -106,17 +106,11 @@ export default async function AttorneyPage() {
 
   return (
     <main className="min-h-screen pt-24 pb-20 px-5 bg-white text-black">
-      <div
-        className="max-w-[860px] mx-auto"
-        style={{ fontFamily: "var(--font-body)" }}
-      >
+      <div className="max-w-[860px] mx-auto font-body">
         {/* ── Letterhead ── */}
         <div className="flex justify-between items-start flex-wrap gap-4 pb-6 mb-9 border-b-2 border-black">
           <div>
-            <div
-              className="text-3xl sm:text-4xl font-bold leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <div className="text-3xl font-display font-bold leading-tight sm:text-4xl">
               Tony Greenberg
             </div>
             <div className="text-xs font-bold uppercase tracking-widest mt-1 text-gray-600">
@@ -143,10 +137,7 @@ export default async function AttorneyPage() {
 
         {/* ── Salutation + Opening ── */}
         <div className="mb-8">
-          <div
-            className="text-2xl sm:text-3xl font-bold mb-5"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <div className="mb-5 text-2xl font-display font-bold sm:text-3xl">
             Adam,
           </div>
           <p className="mb-4 leading-relaxed text-sm">
@@ -169,10 +160,7 @@ export default async function AttorneyPage() {
         <hr className="border-t border-gray-200 my-9" />
 
         {/* ── Immediate Actions ── */}
-        <div
-          className="mb-1 text-xl sm:text-2xl font-bold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <div className="mb-1 text-xl font-display font-bold sm:text-2xl">
           Immediate Actions - This Week
         </div>
         <div className="text-xs font-bold uppercase tracking-widest mb-5 text-gray-500">
@@ -207,10 +195,7 @@ export default async function AttorneyPage() {
         <hr className="border-t border-gray-200 my-9" />
 
         {/* ── Active Matter Log ── */}
-        <div
-          className="mb-1 text-xl sm:text-2xl font-bold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <div className="mb-1 text-xl font-display font-bold sm:text-2xl">
           Active Matter Log
         </div>
         <div className="text-xs font-bold uppercase tracking-widest mb-5 text-gray-500">
@@ -226,10 +211,7 @@ export default async function AttorneyPage() {
               <span className="inline-block text-xs font-bold uppercase tracking-wide px-2 py-1 rounded mb-3 bg-black text-white">
                 {m.track}
               </span>
-              <div
-                className="text-base font-bold mb-3"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <div className="mb-3 text-base font-display font-bold">
                 {m.title}
               </div>
               <ul className="space-y-1 mb-3">
@@ -253,10 +235,7 @@ export default async function AttorneyPage() {
         <hr className="border-t border-gray-200 my-9" />
 
         {/* ── Communication Protocol ── */}
-        <div
-          className="mb-1 text-xl sm:text-2xl font-bold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <div className="mb-1 text-xl font-display font-bold sm:text-2xl">
           Communication Protocol
         </div>
         <div className="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">
@@ -264,10 +243,7 @@ export default async function AttorneyPage() {
         </div>
 
         <div className="overflow-x-auto rounded border border-gray-300">
-          <table
-            className="w-full text-sm"
-            style={{ borderCollapse: "collapse" }}
-          >
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-black">
                 {["Element", "Standard", "Owner"].map((h) => (
@@ -304,10 +280,7 @@ export default async function AttorneyPage() {
         <hr className="border-t border-gray-200 my-9" />
 
         {/* ── Referral Consideration - Paula ── */}
-        <div
-          className="mb-1 text-xl sm:text-2xl font-bold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <div className="mb-1 text-xl font-display font-bold sm:text-2xl">
           Referral Consideration - Paula &amp; the Kodah Introduction
         </div>
         <div className="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">
@@ -353,10 +326,7 @@ export default async function AttorneyPage() {
         <hr className="border-t border-gray-200 my-9" />
 
         {/* ── Future Opportunity ── */}
-        <div
-          className="mb-1 text-xl sm:text-2xl font-bold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <div className="mb-1 text-xl font-display font-bold sm:text-2xl">
           Future Opportunity - Consumer Products
         </div>
         <div className="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">
@@ -390,10 +360,7 @@ export default async function AttorneyPage() {
             contact information, and send me a written response to each of the
             immediate action items above by Friday, March 20.
           </p>
-          <div
-            className="text-4xl sm:text-5xl font-bold leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <div className="text-4xl font-display font-bold leading-tight sm:text-5xl">
             Tony Greenberg
           </div>
           <div className="text-xs font-bold uppercase tracking-widest mt-2 text-gray-600">
