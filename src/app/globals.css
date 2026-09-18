@@ -3307,6 +3307,35 @@ body.ai-modal-open [data-hide-on-ai] {
   border-color: rgb(5 11 20 / 0.1) !important;
 }
 
+/* Compensation uses a dark value-alignment surface; keep every text layer
+   deliberately light rather than inheriting the earlier paper-section ink. */
+.home-compensation-section {
+  background:
+    radial-gradient(circle at 88% 8%, rgb(214 173 66 / 0.2), transparent 26rem),
+    linear-gradient(135deg, #071321 0%, #0d233d 100%) !important;
+  color: var(--rr-paper) !important;
+}
+
+.home-compensation-section h2,
+.home-compensation-section .font-display {
+  color: var(--rr-paper) !important;
+}
+
+.home-compensation-section p {
+  color: rgb(244 242 237 / 0.8) !important;
+}
+
+.home-compensation-section .home-compensation-panel {
+  background: rgb(255 255 255 / 0.08) !important;
+  border: 1px solid rgb(214 173 66 / 0.32) !important;
+  box-shadow: 0 16px 36px rgb(0 0 0 / 0.2) !important;
+}
+
+.home-compensation-section .home-compensation-panel > p {
+  color: var(--rr-paper) !important;
+  border-color: rgb(244 242 237 / 0.18) !important;
+}
+
 .home-final-cta {
   position: relative;
 }
