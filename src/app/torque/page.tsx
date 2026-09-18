@@ -349,22 +349,77 @@ export default function TorquePage() {
       {/* Hero */}
       <section
         className="relative pt-36 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
+        style={{
+          background:
+            "linear-gradient(160deg, var(--warm-light) 0%, var(--warm-bg) 100%)",
+        }}
       >
         <div className="glass-orb glass-orb-amber w-[420px] h-[420px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[260px] h-[260px] bottom-0 -left-32" />
+        {/* Subtle torque-wrench motif: a wrench applying rotational force to a
+            bolt - the literal mechanic behind "the force that gets a stuck
+            matter moving." Decorative, low-opacity, hidden below md so it
+            never competes with the copy on small screens. */}
+        <svg
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-[420px] lg:w-[560px] opacity-[0.07] pointer-events-none select-none hidden md:block"
+          viewBox="0 0 400 400"
+          fill="none"
+          aria-hidden="true"
+        >
+          <polygon
+            points="200,118 242,144 242,196 200,222 158,196 158,144"
+            stroke="var(--rust)"
+            strokeWidth="3"
+          />
+          <circle
+            cx="200"
+            cy="170"
+            r="92"
+            stroke="var(--rust)"
+            strokeWidth="3"
+          />
+          <path
+            d="M292 170 H372"
+            stroke="var(--rust)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <path
+            d="M352 150 L372 170 L352 190"
+            stroke="var(--rust)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M258 86 A 124 124 0 0 1 322 202"
+            stroke="var(--gold)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <path
+            d="M310 187 L322 202 L338 191"
+            stroke="var(--gold)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
             <span
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
               style={{
-                color: "var(--gold-light)",
+                color: "oklch(0.52 0.12 70)",
                 fontFamily: "var(--font-body)",
               }}
             >
               Torque - RampRate
             </span>
-            <h1 className="text-white mb-6 leading-tight">
+            <h1
+              className="mb-6 leading-tight"
+              style={{ color: "var(--text-dark)" }}
+            >
               <span
                 className="text-5xl sm:text-6xl lg:text-7xl font-bold"
                 style={{ fontFamily: "var(--font-wordmark)" }}
@@ -382,22 +437,28 @@ export default function TorquePage() {
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 The Force That{" "}
-                <span style={{ color: "var(--gold)" }}>
+                <span style={{ color: "oklch(0.52 0.12 70)" }}>
                   Gets a Stuck Matter Moving.
                 </span>
               </span>
             </h1>
             <p
-              className="text-white/70 text-lg leading-relaxed mb-6"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="text-lg leading-relaxed mb-6"
+              style={{
+                color: "var(--text-mid)",
+                fontFamily: "var(--font-body)",
+              }}
             >
               When a matter is stuck, Torque sources and coordinates the
               specialists a critical issue requires, aligned to one strategy and
               moving at the pace the situation demands.
             </p>
             <p
-              className="text-white/50 text-base leading-relaxed mb-10"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="text-base leading-relaxed mb-10"
+              style={{
+                color: "oklch(0.5 0.02 50)",
+                fontFamily: "var(--font-body)",
+              }}
             >
               For 25 years, RampRate has been the fixer enterprises call when a
               deal, a supplier relationship, or a critical decision needs
@@ -411,19 +472,22 @@ export default function TorquePage() {
                 { value: "$10B+", label: "in decisions transacted" },
                 { value: "B Corp", label: "Certified · Highest standards" },
               ].map((stat) => (
-                <div key={stat.label} className="glass-card p-4">
+                <div key={stat.label} className="glass-card-warm p-4">
                   <div
                     className="text-xl font-bold mb-1"
                     style={{
-                      color: "var(--gold)",
+                      color: "oklch(0.4 0.12 70)",
                       fontFamily: "var(--font-display)",
                     }}
                   >
                     {stat.value}
                   </div>
                   <div
-                    className="text-xs text-white/50"
-                    style={{ fontFamily: "var(--font-body)" }}
+                    className="text-xs"
+                    style={{
+                      color: "var(--text-mid)",
+                      fontFamily: "var(--font-body)",
+                    }}
                   >
                     {stat.label}
                   </div>
