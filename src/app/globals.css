@@ -3494,6 +3494,10 @@ button.bg-gold {
   background: var(--gold-light);
 }
 
+.rr-about-orb--deep-gold {
+  background: var(--rr-gold-deep);
+}
+
 .rr-about-kicker,
 .rr-about-label {
   color: var(--rr-gold-deep);

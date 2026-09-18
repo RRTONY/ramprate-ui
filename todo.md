@@ -38,7 +38,7 @@
 - [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Continue the file-by-file audit and replacement of non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
-- [ ] Move the About public route’s fixed typography, dark-surface, and gold-accent JSX styles into shared semantic classes while retaining managed content, advisors, team records, and journey links.
+- [x] Move the About public route’s fixed typography, dark-surface, and gold-accent JSX styles into shared semantic classes while retaining managed content, advisors, team records, and journey links.
 - [x] Move fixed JSX presentation styles from the About founder, structure, and corporate-facts sections into shared semantic public CSS while retaining verified content and all actions.
 - [x] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
 - [x] Migrate the remaining Flow Framer Motion route imports directly to scoped reduced-motion-safe CSS or native behavior, verify interactive props and route contracts, then remove the unused dependency.

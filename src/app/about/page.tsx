@@ -473,14 +473,8 @@ export default async function AboutPage() {
 
       {/* ═══ BOARD OF ADVISORS ═══ */}
       <section className="relative section-warm overflow-hidden py-20 sm:py-28">
-        <div
-          className="absolute -bottom-32 -right-32 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute top-10 -left-20 w-[180px] h-[180px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+        <div className="rr-about-orb rr-about-orb--deep-gold absolute -bottom-32 -right-32 h-[300px] w-[300px] rounded-full opacity-20 pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb--gold absolute -left-20 top-10 h-[180px] w-[180px] rounded-full opacity-15 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <h2 className="mb-12 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -515,10 +509,7 @@ export default async function AboutPage() {
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3
-                        className="text-base font-bold"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
+                      <h3 className="font-display text-base font-bold">
                         {m.name}
                       </h3>
                       <p className="rr-about-label mt-0.5 text-xs font-semibold">
@@ -634,20 +625,11 @@ export default async function AboutPage() {
 
       {/* ═══ VALUES ═══ */}
       <section className="relative section-warm overflow-hidden py-20 sm:py-28">
-        <div
-          className="absolute -bottom-32 -right-32 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute top-10 -left-20 w-[180px] h-[180px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+        <div className="rr-about-orb rr-about-orb--deep-gold absolute -bottom-32 -right-32 h-[300px] w-[300px] rounded-full opacity-20 pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb--gold absolute -left-20 top-10 h-[180px] w-[180px] rounded-full opacity-15 pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
             Our <span className="rr-about-highlight">Values</span> &amp;
             Principles
           </h2>
