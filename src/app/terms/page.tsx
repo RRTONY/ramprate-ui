@@ -87,10 +87,7 @@ export default function TermsPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-6">
-            <span
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-body">
               <span
                 className="w-1.5 h-1.5 rounded-full"
                 style={{ background: "oklch(0.55 0.22 260)" }}
@@ -101,16 +98,10 @@ export default function TermsPage() {
             </span>
           </div>
 
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-3xl text-4xl font-display font-bold leading-tight text-white sm:text-5xl md:text-6xl">
             Terms of Service
           </h1>
-          <p
-            className="mt-6 text-base sm:text-lg text-white/50 leading-relaxed max-w-2xl"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mt-6 max-w-2xl text-base font-body leading-relaxed text-white/50 sm:text-lg">
             Terms governing use of this website
           </p>
         </div>
@@ -119,26 +110,17 @@ export default function TermsPage() {
       {/* Content */}
       <section className="py-20" style={{ background: "#0d1117" }}>
         <div className="max-w-3xl mx-auto px-5 sm:px-8 space-y-10">
-          <p
-            className="text-sm text-white/40 uppercase tracking-widest"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
+          <p className="text-sm font-mono uppercase tracking-widest text-white/40">
             Last Updated: April 2026
           </p>
 
           {sections.map((s) => (
             <div key={s.title}>
-              <h2
-                className="text-2xl font-bold text-white mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mb-4 text-2xl font-display font-bold text-white">
                 {s.title}
               </h2>
               {s.contact ? (
-                <p
-                  className="text-white/70 text-base leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <p className="text-base font-body leading-relaxed text-white/70">
                   For questions about these terms, contact us at:{" "}
                   <a
                     href="mailto:legal@ramprate.com"
@@ -148,10 +130,7 @@ export default function TermsPage() {
                   </a>
                 </p>
               ) : (
-                <p
-                  className="text-white/70 text-base leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <p className="text-base font-body leading-relaxed text-white/70">
                   {s.body}
                 </p>
               )}
@@ -159,16 +138,12 @@ export default function TermsPage() {
           ))}
 
           <div className="pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p
-              className="text-white/30 text-sm"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="text-sm font-body text-white/30">
               RampRate, Inc. · Los Angeles, CA · Certified B Corporation
             </p>
             <Link
               href="/privacy"
-              className="text-sm font-semibold text-[oklch(0.82_0.15_75)] hover:underline"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="text-sm font-body font-semibold text-[oklch(0.82_0.15_75)] hover:underline"
             >
               Privacy Policy →
             </Link>
