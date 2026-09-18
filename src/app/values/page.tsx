@@ -179,66 +179,33 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── Founder's Story ─── */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{ background: "#f7f4f0" }}
-      >
-        <div
-          className="absolute -bottom-20 -right-20 w-[280px] h-[280px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "var(--gold)", filter: "blur(80px)" }}
-        />
+      <section className="relative overflow-hidden bg-[#f7f4f0] py-20 sm:py-28">
+        <div className="pointer-events-none absolute -right-20 -bottom-20 h-[280px] w-[280px] rounded-full bg-[var(--gold)] opacity-20 blur-[80px]" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start">
             {/* Left - label + heading */}
             <div className="lg:sticky lg:top-32">
-              <span
-                className="text-xs font-semibold tracking-[0.22em] uppercase mb-4 block"
-                style={{
-                  color: "var(--rr-gold-deep)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[var(--rr-gold-deep)]">
                 Founder&#39;s Story
               </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold leading-tight"
-                style={{
-                  color: "oklch(0.12 0.02 50)",
-                  fontFamily: "var(--font-display)",
-                }}
-              >
+              <h2 className="text-3xl font-display font-bold leading-tight text-[oklch(0.12_0.02_50)] sm:text-4xl">
                 Elevating the Way
                 <br />
-                <span style={{ color: "var(--rr-gold-deep)" }}>
+                <span className="text-[var(--rr-gold-deep)]">
                   Business Does
                   <br />
                   Business
                 </span>
               </h2>
-              <div
-                className="mt-6 w-12 h-1 rounded-full"
-                style={{ background: "oklch(0.82 0.15 75)" }}
-              />
-              <p
-                className="mt-5 text-sm font-medium"
-                style={{
-                  color: "var(--rr-gold-deep)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
+              <div className="mt-6 h-1 w-12 rounded-full bg-[oklch(0.82_0.15_75)]" />
+              <p className="mt-5 text-sm font-mono font-medium text-[var(--rr-gold-deep)]">
                 - Tony & Alex, Co-founders
               </p>
             </div>
 
             {/* Right - body */}
-            <div
-              className="space-y-5 text-base leading-relaxed"
-              style={{
-                color: "oklch(0.35 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <div className="space-y-5 text-base font-body leading-relaxed text-[oklch(0.35_0.02_50)]">
               <p>
                 Hi, we&#39;re Tony and Alex - we founded RampRate in 2000 on the
                 premise of elevating the way business does business. We could
@@ -269,68 +236,35 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── Our Vision ─── */}
-      <section className="py-20 sm:py-24" style={{ background: "#0d1117" }}>
+      <section className="bg-[#0d1117] py-20 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <span
-            className="text-xs font-semibold tracking-[0.22em] uppercase mb-4 block"
-            style={{
-              color: "oklch(0.82 0.15 75)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[oklch(0.82_0.15_75)]">
             Our Vision
           </span>
-          <blockquote
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-snug"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <blockquote className="text-2xl font-display font-bold leading-snug text-white sm:text-3xl lg:text-4xl">
             &quot;We build an Ecosystem of impact-preneurs and trailblazers
             powered by opportunities, resources, innovation and{" "}
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>human spirit.</span>
+            <span className="text-[oklch(0.82_0.15_75)]">human spirit.</span>
             &quot;
           </blockquote>
         </div>
       </section>
 
       {/* ─── Core Values & Principles ─── */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{ background: "#f7f4f0" }}
-      >
-        <div
-          className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full opacity-10 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+      <section className="relative overflow-hidden bg-[#f7f4f0] py-20 sm:py-28">
+        <div className="pointer-events-none absolute top-0 left-0 h-[300px] w-[300px] rounded-full bg-[oklch(0.82_0.15_75)] opacity-10 blur-[80px]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           {/* Section header */}
           <div className="mb-12">
-            <span
-              className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
-              style={{
-                color: "var(--rr-gold-deep)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[var(--rr-gold-deep)]">
               Principles of Engagement
             </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold mb-4 leading-tight"
-              style={{
-                color: "oklch(0.1 0.02 50)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
+            <h2 className="mb-4 text-3xl font-display font-bold leading-tight text-[oklch(0.1_0.02_50)] sm:text-4xl">
               Core Values &amp;{" "}
-              <span style={{ color: "var(--rr-gold-deep)" }}>Principles</span>
+              <span className="text-[var(--rr-gold-deep)]">Principles</span>
             </h2>
-            <p
-              className="text-sm sm:text-base max-w-2xl leading-relaxed"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="max-w-2xl text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)] sm:text-base">
               In order to meaningfully live our company values with our clients
               and in terms of our services and products, we must be agile,
               efficient, and entrepreneurial.
@@ -351,7 +285,7 @@ export default function ValuesPage() {
                 }}
               >
                 <span
-                  className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
+                  className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-mono font-bold"
                   style={{
                     background:
                       i % 2 === 0
@@ -361,18 +295,11 @@ export default function ValuesPage() {
                       i % 2 === 0
                         ? "oklch(0.55 0.12 75)"
                         : "var(--rr-gold-deep)",
-                    fontFamily: "var(--font-mono)",
                   }}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "oklch(0.3 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="text-sm font-body leading-relaxed text-[oklch(0.3_0.02_50)]">
                   {p}
                 </p>
               </div>
@@ -397,20 +324,11 @@ export default function ValuesPage() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           <div className="mb-12">
-            <span
-              className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
-              style={{
-                color: "oklch(0.82 0.15 75)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[oklch(0.82_0.15_75)]">
               Our Practice
             </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              What We <span style={{ color: "oklch(0.82 0.15 75)" }}>Do</span>
+            <h2 className="text-3xl font-display font-bold leading-tight text-white sm:text-4xl">
+              What We <span className="text-[oklch(0.82_0.15_75)]">Do</span>
             </h2>
           </div>
 
@@ -435,31 +353,21 @@ export default function ValuesPage() {
                   {/* Number + title row */}
                   <div className="flex items-start gap-4">
                     <span
-                      className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold"
+                      className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-mono font-bold"
                       style={{
                         background: `${item.color}22`,
                         color: item.color,
-                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       {String(idx + 1).padStart(2, "0")}
                     </span>
-                    <h3
-                      className="text-lg font-bold text-white leading-snug pt-1.5"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
+                    <h3 className="pt-1.5 text-lg font-display font-bold leading-snug text-white">
                       {item.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "rgba(255,255,255,0.5)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="text-sm font-body leading-relaxed text-white/50">
                     {item.desc}
                   </p>
 
@@ -471,12 +379,8 @@ export default function ValuesPage() {
                     >
                       {item.items.map((li) => (
                         <li
+                          className="flex items-start gap-2.5 text-xs font-body leading-relaxed text-white/60"
                           key={li}
-                          className="flex items-start gap-2.5 text-xs leading-relaxed"
-                          style={{
-                            color: "rgba(255,255,255,0.6)",
-                            fontFamily: "var(--font-body)",
-                          }}
                         >
                           <svg
                             className="shrink-0 mt-0.5"
@@ -517,23 +421,11 @@ export default function ValuesPage() {
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           {/* Section header */}
           <div className="mb-12">
-            <span
-              className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
-              style={{
-                color: "var(--rr-gold-deep)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[var(--rr-gold-deep)]">
               Methodology
             </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold leading-tight"
-              style={{
-                color: "oklch(0.1 0.02 50)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              How We <span style={{ color: "var(--rr-gold-deep)" }}>Do It</span>
+            <h2 className="text-3xl font-display font-bold leading-tight text-[oklch(0.1_0.02_50)] sm:text-4xl">
+              How We <span className="text-[var(--rr-gold-deep)]">Do It</span>
             </h2>
             <div
               className="mt-4 w-12 h-1 rounded-full"
@@ -558,35 +450,22 @@ export default function ValuesPage() {
                   style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-mono font-bold shrink-0"
                     style={{
                       background: "var(--rr-gold-deep)",
                       color: "white",
-                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <h3
-                    className="font-bold text-sm sm:text-base leading-snug"
-                    style={{
-                      color: "oklch(0.15 0.02 50)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+                  <h3 className="text-sm font-display font-bold leading-snug text-[oklch(0.15_0.02_50)] sm:text-base">
                     {item.title}
                   </h3>
                 </div>
 
                 {/* Card body */}
                 <div className="flex flex-col flex-1 px-6 py-5 gap-4">
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{
-                      color: "oklch(0.45 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                     {item.desc}
                   </p>
 
@@ -597,12 +476,8 @@ export default function ValuesPage() {
                     >
                       {item.items.map((tag) => (
                         <li
+                          className="flex items-start gap-2 text-xs font-body leading-relaxed text-[oklch(0.4_0.02_50)]"
                           key={tag}
-                          className="flex items-start gap-2 text-xs leading-relaxed"
-                          style={{
-                            color: "oklch(0.4 0.02 50)",
-                            fontFamily: "var(--font-body)",
-                          }}
                         >
                           <svg
                             className="shrink-0 mt-0.5"
@@ -644,19 +519,10 @@ export default function ValuesPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Why */}
             <div>
-              <span
-                className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[oklch(0.82_0.15_75)]">
                 Motivation
               </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold text-white mb-8 leading-tight"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mb-8 text-3xl font-display font-bold leading-tight text-white sm:text-4xl">
                 Why
               </h2>
               <ul className="space-y-4">
@@ -700,10 +566,7 @@ export default function ValuesPage() {
                       </svg>
                     </span>
                     <div>
-                      <p
-                        className="text-sm font-medium text-white/85 leading-snug"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
+                      <p className="text-sm font-body font-medium leading-snug text-white/85">
                         {item.t}
                       </p>
                       {item.sub && (
@@ -725,19 +588,10 @@ export default function ValuesPage() {
 
             {/* For Whom */}
             <div>
-              <span
-                className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
-                style={{
-                  color: "var(--rr-gold-deep)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[var(--rr-gold-deep)]">
                 Audience
               </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold text-white mb-8 leading-tight"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mb-8 text-3xl font-display font-bold leading-tight text-white sm:text-4xl">
                 For Whom
               </h2>
               <ul className="space-y-4">
@@ -780,10 +634,7 @@ export default function ValuesPage() {
                       </svg>
                     </span>
                     <div>
-                      <p
-                        className="text-sm font-medium text-white/85 leading-snug"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
+                      <p className="text-sm font-body font-medium leading-snug text-white/85">
                         {item.t}
                       </p>
                       {item.sub && (
@@ -809,26 +660,16 @@ export default function ValuesPage() {
       {/* ─── CTA ─── */}
       <section className="rr-public-cta py-20 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-5"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mb-5 text-3xl font-display font-bold text-white sm:text-4xl">
             Let&#39;s Build Something Different
           </h2>
-          <p
-            className="text-white/75 text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mx-auto mb-10 max-w-xl text-base font-body leading-relaxed text-white/75 sm:text-lg">
             Ready to align capital with purpose? Tell us what you&#39;re trying
             to change.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold bg-white shadow-lg transition-all hover:bg-white/90"
-            style={{
-              color: "var(--rr-navy)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="inline-flex items-center gap-2 rounded-md bg-white px-8 py-4 text-sm font-body font-bold text-[var(--rr-navy)] shadow-lg transition-all hover:bg-white/90"
           >
             Start a Conversation
             <ArrowRight />
