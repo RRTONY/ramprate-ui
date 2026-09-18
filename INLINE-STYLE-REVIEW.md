@@ -43,6 +43,7 @@ The inventory found inline styles across public, protected, and Flow product sur
 23. Privacy was reviewed at desktop and mobile breakpoints after the completed extraction. The legal heading hierarchy, long-form policy copy, metadata, privacy mail action, and responsive footer contact link remained readable and coherent.
 24. Attorney is a protected portal route, not a public marketing page. Its locked access check, `PortalGate`, confidential matter content, ClickUp links, and table semantics are protected. The letterhead, section headings, matter titles, signature, and table border-collapse declaration are fixed presentation suitable for utility extraction.
 25. Attorney now uses shared body and display utilities for all fixed letter presentation, and its table uses the semantic `border-collapse` utility. Source coverage confirms no inline presentation objects remain and verifies the `isPortalUnlocked("attorney")` and `PortalGate` boundary; no authenticated portal content was rendered for visual review.
+26. Values now uses utilities for the fixed What We Do, How We Do It, and Why & For Whom section surfaces, decorative glows, card shells, dividers, static icon accents, and supporting-copy typography. Remaining inline styles are limited to `whatWeDo` item colors and alternating principle colors that are mapped from their visible editorial sequences.
 
 ## Guardrail
 

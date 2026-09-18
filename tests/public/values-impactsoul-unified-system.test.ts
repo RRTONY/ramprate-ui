@@ -52,4 +52,22 @@ describe("Values and ImpactSol unified public system", () => {
     expect(impactSol).toContain('href="/process#flow-circuit"');
     expect(impactSol).toContain('href="/process#find-me"');
   });
+
+  it("keeps Values fixed practice and methodology presentation utility-based while retaining only mapped colors inline", async () => {
+    const values = await readFile(
+      resolve(process.cwd(), "src/app/values/page.tsx"),
+      "utf8",
+    );
+
+    expect(values).toContain("bg-[#0a0f1a]");
+    expect(values).toContain("bg-[#f7f4f0]");
+    expect(values).toContain("bg-[#0d1117]");
+    expect(values).toContain("border-white/8 bg-white/4");
+    expect(values).toContain("border-black/[0.07]");
+    expect(values).not.toContain('style={{ background: "#0a0f1a" }}');
+    expect(values).not.toContain('style={{ background: "#f7f4f0" }}');
+    expect(values).not.toContain('style={{ background: "#0d1117" }}');
+    expect(values).toContain("style={{ background: item.color }}");
+    expect(values).toContain("borderLeftColor:");
+  });
 });

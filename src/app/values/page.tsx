@@ -309,18 +309,9 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── What We Do ─── */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{ background: "#0a0f1a" }}
-      >
-        <div
-          className="absolute -top-40 -right-40 w-[400px] h-[400px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "var(--rr-navy-mid)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-75 h-75 rounded-full opacity-10 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+      <section className="relative overflow-hidden bg-[#0a0f1a] py-20 sm:py-28">
+        <div className="pointer-events-none absolute -top-40 -right-40 h-[400px] w-[400px] rounded-full bg-[var(--rr-navy-mid)] opacity-15 blur-[80px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-75 w-75 rounded-full bg-[oklch(0.82_0.15_75)] opacity-10 blur-[80px]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           <div className="mb-12">
@@ -337,11 +328,7 @@ export default function ValuesPage() {
             {whatWeDo.map((item, idx) => (
               <div
                 key={item.title}
-                className="relative rounded-2xl overflow-hidden flex flex-col"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-white/4"
               >
                 {/* Colored top accent bar */}
                 <div
@@ -373,10 +360,7 @@ export default function ValuesPage() {
 
                   {/* Checklist */}
                   {item.items.length > 0 && (
-                    <ul
-                      className="mt-auto space-y-2 pt-2"
-                      style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-                    >
+                    <ul className="mt-auto space-y-2 border-t border-white/6 pt-2">
                       {item.items.map((li) => (
                         <li
                           className="flex items-start gap-2.5 text-xs font-body leading-relaxed text-white/60"
@@ -409,14 +393,8 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── How We Do It ─── */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{ background: "#f7f4f0" }}
-      >
-        <div
-          className="absolute bottom-0 right-0 w-75 h-75 rounded-full opacity-15 pointer-events-none"
-          style={{ background: "var(--gold)", filter: "blur(80px)" }}
-        />
+      <section className="relative overflow-hidden bg-[#f7f4f0] py-20 sm:py-28">
+        <div className="pointer-events-none absolute bottom-0 right-0 h-75 w-75 rounded-full bg-[var(--gold)] opacity-15 blur-[80px]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           {/* Section header */}
@@ -427,10 +405,7 @@ export default function ValuesPage() {
             <h2 className="text-3xl font-display font-bold leading-tight text-[oklch(0.1_0.02_50)] sm:text-4xl">
               How We <span className="text-[var(--rr-gold-deep)]">Do It</span>
             </h2>
-            <div
-              className="mt-4 w-12 h-1 rounded-full"
-              style={{ background: "var(--gold)" }}
-            />
+            <div className="mt-4 h-1 w-12 rounded-full bg-[var(--gold)]" />
           </div>
 
           {/* 1 col → 2 col → 3 col grid */}
@@ -438,24 +413,11 @@ export default function ValuesPage() {
             {howWeDoIt.map((item, i) => (
               <div
                 key={item.title}
-                className="bg-white rounded-2xl flex flex-col overflow-hidden"
-                style={{
-                  border: "1px solid rgba(0,0,0,0.07)",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                }}
+                className="flex flex-col overflow-hidden rounded-2xl border border-black/[0.07] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.04)]"
               >
                 {/* Card header strip */}
-                <div
-                  className="flex items-center gap-3 px-6 pt-6 pb-4"
-                  style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-mono font-bold shrink-0"
-                    style={{
-                      background: "var(--rr-gold-deep)",
-                      color: "white",
-                    }}
-                  >
+                <div className="flex items-center gap-3 border-b border-black/[0.05] px-6 pb-4 pt-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--rr-gold-deep)] text-sm font-mono font-bold text-white">
                     {String(i + 1).padStart(2, "0")}
                   </div>
                   <h3 className="text-sm font-display font-bold leading-snug text-[oklch(0.15_0.02_50)] sm:text-base">
@@ -470,17 +432,14 @@ export default function ValuesPage() {
                   </p>
 
                   {item.items.length > 0 && (
-                    <ul
-                      className="space-y-2 mt-auto pt-3"
-                      style={{ borderTop: "1px solid rgba(0,0,0,0.05)" }}
-                    >
+                    <ul className="mt-auto space-y-2 border-t border-black/[0.05] pt-3">
                       {item.items.map((tag) => (
                         <li
                           className="flex items-start gap-2 text-xs font-body leading-relaxed text-[oklch(0.4_0.02_50)]"
                           key={tag}
                         >
                           <svg
-                            className="shrink-0 mt-0.5"
+                            className="mt-0.5 shrink-0 text-[var(--rr-gold-deep)]"
                             width="12"
                             height="12"
                             viewBox="0 0 24 24"
@@ -489,7 +448,6 @@ export default function ValuesPage() {
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            style={{ color: "var(--rr-gold-deep)" }}
                           >
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
@@ -506,14 +464,8 @@ export default function ValuesPage() {
       </section>
 
       {/* ─── Why & For Whom ─── */}
-      <section
-        className="relative py-20 sm:py-28 overflow-hidden"
-        style={{ background: "#0d1117" }}
-      >
-        <div
-          className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(100px)" }}
-        />
+      <section className="relative overflow-hidden bg-[#0d1117] py-20 sm:py-28">
+        <div className="pointer-events-none absolute top-0 left-0 h-[300px] w-[300px] rounded-full bg-[oklch(0.82_0.15_75)] opacity-15 blur-[100px]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
@@ -550,10 +502,7 @@ export default function ValuesPage() {
                   },
                 ].map((item) => (
                   <li key={item.t} className="flex gap-3">
-                    <span
-                      className="shrink-0 mt-1"
-                      style={{ color: "oklch(0.82 0.15 75)" }}
-                    >
+                    <span className="mt-1 shrink-0 text-[oklch(0.82_0.15_75)]">
                       <svg
                         width="14"
                         height="14"
@@ -618,10 +567,7 @@ export default function ValuesPage() {
                   },
                 ].map((item) => (
                   <li key={item.t} className="flex gap-3">
-                    <span
-                      className="shrink-0 mt-1"
-                      style={{ color: "var(--rr-gold-deep)" }}
-                    >
+                    <span className="mt-1 shrink-0 text-[var(--rr-gold-deep)]">
                       <svg
                         width="14"
                         height="14"

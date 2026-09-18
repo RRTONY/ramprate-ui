@@ -8,9 +8,9 @@ describe("Values public palette", () => {
       "utf8",
     );
 
-    expect(source).toContain('background: "var(--rr-navy-mid)"');
-    expect(source).toContain('color: "var(--rr-gold-deep)"');
-    expect(source).toContain('background: "var(--gold)"');
+    expect(source).toContain("bg-[var(--rr-navy-mid)]");
+    expect(source).toContain("text-[var(--rr-gold-deep)]");
+    expect(source).toContain("bg-[var(--gold)]");
     expect(source).not.toContain("oklch(0.55 0.15 30)");
     expect(source).not.toContain("oklch(0.55 0.22 260)");
     expect(source).toContain("Powering");
