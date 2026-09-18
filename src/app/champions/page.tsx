@@ -357,36 +357,15 @@ export default function ChampionsPage() {
       </section>
 
       {/* ═══ 01 HOW IT WORKS ═══ */}
-      <section
-        className="py-16 sm:py-24"
-        style={{ background: "var(--champion-paper)" }}
-      >
+      <section className="bg-[var(--champion-paper)] py-16 sm:py-24">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <p
-            className="text-sm font-semibold mb-3.5"
-            style={{
-              color: "var(--champion)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-3.5 text-sm font-body font-semibold text-[var(--champion)]">
             01 · How it works
           </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold"
-            style={{
-              color: "var(--champion-ink)",
-              fontFamily: "var(--font-display)",
-            }}
-          >
+          <h2 className="text-3xl font-display font-bold text-[var(--champion-ink)] sm:text-4xl">
             Four steps. Your part is the first one.
           </h2>
-          <p
-            className="mt-4 mb-12 text-lg leading-relaxed"
-            style={{
-              color: "var(--champion-body)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-4 mb-12 text-lg font-body leading-relaxed text-[var(--champion-body)]">
             Everything after the introduction is ours to carry. You stay
             informed, and you are never the one holding it together.
           </p>
@@ -394,45 +373,18 @@ export default function ChampionsPage() {
           <ol className="champion-steps">
             {STEPS.map((step) => (
               <li key={step.title} className="champion-step">
-                <h3
-                  className="text-xl font-bold pt-1.5 mb-2"
-                  style={{
-                    color: "var(--champion-ink)",
-                    fontFamily: "var(--font-display)",
-                  }}
-                >
+                <h3 className="mb-2 pt-1.5 text-xl font-display font-bold text-[var(--champion-ink)]">
                   {step.title}
                 </h3>
-                <p
-                  className="text-base leading-relaxed max-w-[58ch]"
-                  style={{
-                    color: "var(--champion-body)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="max-w-[58ch] text-base font-body leading-relaxed text-[var(--champion-body)]">
                   {step.body}
                 </p>
                 {step.payline && (
-                  <div
-                    className="mt-4 rounded-xl px-6 py-5 max-w-[58ch]"
-                    style={{ background: "var(--champion-faint)" }}
-                  >
-                    <b
-                      className="text-lg"
-                      style={{
-                        color: "var(--champion-ink)",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
+                  <div className="mt-4 max-w-[58ch] rounded-xl bg-[var(--champion-faint)] px-6 py-5">
+                    <b className="text-lg font-body text-[var(--champion-ink)]">
                       {step.payline.headline}
                     </b>
-                    <span
-                      className="block mt-1.5 text-[15px]"
-                      style={{
-                        color: "var(--champion-muted)",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
+                    <span className="mt-1.5 block text-[15px] font-body text-[var(--champion-muted)]">
                       {step.payline.note}
                     </span>
                   </div>
