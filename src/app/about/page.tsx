@@ -483,12 +483,8 @@ export default async function AboutPage() {
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold tracking-tight mb-12"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Board of{" "}
-            <span style={{ color: "oklch(0.55 0.15 30)" }}>Advisors</span>
+          <h2 className="mb-12 text-3xl font-bold tracking-tight sm:text-4xl">
+            Board of <span className="rr-about-highlight">Advisors</span>
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {displayAdvisors.map((m) => (
@@ -497,13 +493,7 @@ export default async function AboutPage() {
                 className="bg-white rounded-xl overflow-hidden border border-black/5"
               >
                 {m.img ? (
-                  <div
-                    className="relative overflow-hidden w-full"
-                    style={{
-                      aspectRatio: "1/1",
-                      background: "oklch(0.92 0.01 80)",
-                    }}
-                  >
+                  <div className="rr-about-advisor-image relative w-full overflow-hidden">
                     <Image
                       src={m.img}
                       alt={m.name}
@@ -513,20 +503,8 @@ export default async function AboutPage() {
                     />
                   </div>
                 ) : (
-                  <div
-                    className="overflow-hidden w-full flex items-center justify-center"
-                    style={{
-                      aspectRatio: "1/1",
-                      background: "oklch(0.92 0.01 80)",
-                    }}
-                  >
-                    <span
-                      className="text-4xl font-bold"
-                      style={{
-                        color: "rgba(100,60,30,0.2)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
+                  <div className="rr-about-advisor-image flex w-full items-center justify-center overflow-hidden">
+                    <span className="rr-about-profile-initial text-4xl font-bold">
                       {m.name
                         .split(" ")
                         .map((n) => n[0])
@@ -543,13 +521,7 @@ export default async function AboutPage() {
                       >
                         {m.name}
                       </h3>
-                      <p
-                        className="text-xs mt-0.5 font-semibold"
-                        style={{
-                          color: "oklch(0.55 0.15 30)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <p className="rr-about-label mt-0.5 text-xs font-semibold">
                         {m.role}
                       </p>
                     </div>
@@ -559,11 +531,7 @@ export default async function AboutPage() {
                           href={m.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
-                          style={{
-                            background: "rgba(100,60,30,0.1)",
-                            color: "oklch(0.55 0.15 30)",
-                          }}
+                          className="rr-about-social flex h-7 w-7 items-center justify-center rounded-full transition-colors"
                         >
                           <LinkedInIcon />
                         </a>
@@ -573,51 +541,22 @@ export default async function AboutPage() {
                           href={m.twitter}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
-                          style={{
-                            background: "rgba(100,60,30,0.1)",
-                            color: "oklch(0.55 0.15 30)",
-                          }}
+                          className="rr-about-social flex h-7 w-7 items-center justify-center rounded-full transition-colors"
                         >
                           <TwitterIcon />
                         </a>
                       )}
                     </div>
                   </div>
-                  <p
-                    className="mt-2 text-xs leading-relaxed line-clamp-4"
-                    style={{
-                      color: "oklch(0.45 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="rr-about-body mt-2 line-clamp-4 text-xs leading-relaxed">
                     {m.bio}
                   </p>
                   {m.whyAdvise && (
-                    <div
-                      className="mt-3 p-3 rounded-lg border"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(100,60,30,0.05), rgba(211,171,76,0.05))",
-                        borderColor: "rgba(100,60,30,0.1)",
-                      }}
-                    >
-                      <p
-                        className="text-[10px] font-semibold uppercase tracking-wider mb-1"
-                        style={{
-                          color: "oklch(0.55 0.15 30)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                    <div className="rr-about-advisor-note mt-3 rounded-lg border p-3">
+                      <p className="rr-about-label mb-1 text-[10px] font-semibold uppercase tracking-wider">
                         Why I Advise RampRate
                       </p>
-                      <p
-                        className="text-[11px] leading-relaxed italic"
-                        style={{
-                          color: "oklch(0.4 0.02 50)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <p className="rr-about-body text-[11px] italic leading-relaxed">
                         &ldquo;{m.whyAdvise}&rdquo;
                       </p>
                     </div>
@@ -629,11 +568,7 @@ export default async function AboutPage() {
           <div className="mt-10 text-center">
             <Link
               href="/impactsoul"
-              className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="rr-about-link inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             >
               See our ImpactSoul advisor network
               <svg

@@ -3537,6 +3537,11 @@ button.bg-gold {
   background: #f3f1e9;
 }
 
+.rr-about-advisor-image {
+  aspect-ratio: 1;
+  background: #f3f1e9;
+}
+
 .rr-about-profile-initial {
   color: rgb(122 84 41 / 0.3);
   font-family: var(--font-display), serif;
@@ -3545,6 +3550,20 @@ button.bg-gold {
 .rr-about-social {
   background: rgb(214 173 66 / 0.12);
   color: var(--rr-gold-deep);
+}
+
+.rr-about-advisor-note {
+  border-color: rgb(214 173 66 / 0.22);
+  background: linear-gradient(
+    135deg,
+    rgb(214 173 66 / 0.08),
+    rgb(240 210 128 / 0.08)
+  );
+}
+
+.rr-about-link {
+  color: var(--rr-gold-deep);
+  font-family: var(--font-body), sans-serif;
 }
 
 .rr-about-highlight {
