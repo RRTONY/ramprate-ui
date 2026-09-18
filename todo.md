@@ -271,3 +271,4 @@
 - [x] Create a cinematic shared RampRate motion system with scroll-led section reveals, restrained parallax, and reduced-motion fallbacks rather than page-by-page animated treatments.
 - [x] Add a performance-safe homepage video or motion-media scene with a static fallback, no audio autoplay, clear copy contrast, and accessibility controls where required.
 - [x] Rebuild priority public storytelling sections with visual sequencing, animation, and media rhythm informed by the supplied Inside Startups and Metalab references without copying their assets or layouts.
+- [ ] Standardize all public RampRate routes on the approved reference display and body font system, preserving Flow and CMS typography boundaries, readability, content, and existing interactions.

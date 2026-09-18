@@ -153,50 +153,23 @@ export default function ValuesPage() {
         ])}
       />
       {/* ─── Hero ─── */}
-      <section
-        className="relative pt-32 pb-24 overflow-hidden"
-        style={{ background: "oklch(0.09 0.02 250)" }}
-      >
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "var(--gold)", filter: "blur(100px)" }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full opacity-10 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+      <section className="relative overflow-hidden bg-[oklch(0.09_0.02_250)] pt-32 pb-24">
+        <div className="pointer-events-none absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-[var(--gold)] opacity-15 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-[350px] w-[350px] rounded-full bg-[oklch(0.82_0.15_75)] opacity-10 blur-[80px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.22em] uppercase mb-4 block"
-            style={{
-              color: "oklch(0.82 0.15 75)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.22em] text-[oklch(0.82_0.15_75)]">
             Our Values
           </span>
-          <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-3xl"
-            style={{
-              fontFamily: "var(--font-display)",
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <h1 className="mb-6 max-w-3xl text-4xl font-display font-bold leading-tight tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
             Powering
             <br />
-            <span style={{ color: "oklch(0.82 0.15 75)" }}>
+            <span className="text-[oklch(0.82_0.15_75)]">
               Purpose-driven
             </span>{" "}
             Innovation
           </h1>
-          <p
-            className="text-base sm:text-lg leading-relaxed max-w-2xl"
-            style={{
-              color: "rgba(255,255,255,0.55)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="max-w-2xl text-base font-body leading-relaxed text-white/55 sm:text-lg">
             There is a new model for doing business shaped and organized by a
             company&#39;s purpose, values and societal impact. Organizations
             understand that behavior, aligned with collective intention, is the

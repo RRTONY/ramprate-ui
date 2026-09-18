@@ -2403,7 +2403,7 @@ body.ai-modal-open [data-hide-on-ai] {
   max-width: 44rem;
   margin: 0.75rem 0 0;
   color: var(--rr-paper);
-  font-family: var(--font-playfair-display), Georgia, serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2rem, 4vw, 3.7rem);
   font-weight: 650;
   letter-spacing: -0.04em;
@@ -2893,7 +2893,7 @@ body.ai-modal-open [data-hide-on-ai] {
 
 .rr-client-wall-metrics strong {
   color: var(--rr-gold);
-  font-family: var(--font-playfair-display), Georgia, serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: clamp(1.65rem, 2.7vw, 2.35rem);
   font-weight: 650;
   letter-spacing: -0.045em;
