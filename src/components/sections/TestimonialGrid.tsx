@@ -47,8 +47,7 @@ export default function TestimonialGrid({
             >
               {/* Quote mark */}
               <div
-                className="text-5xl leading-none mb-4 select-none text-gold"
-                style={{ fontFamily: "Georgia, serif" }}
+                className="font-display text-5xl leading-none mb-4 select-none text-gold"
                 aria-hidden
               >
                 &ldquo;

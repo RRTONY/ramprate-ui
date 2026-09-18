@@ -41,6 +41,12 @@ The first production-domain check immediately after checkpoint publication was s
 
 A cache-busted production request after an additional propagation interval returned the same prior revision. The production domain will be rechecked after the next source-quality checkpoint; until the new revision is active, the homepage imagery item remains explicitly incomplete despite passing source, responsive-layout, type, test, lint, and build validation locally and in the feature checkout.
 
+## Production engagement-media verification
+
+On September 18, 2026, the direct production request for `/manus-storage/paramount-editorial_6bc75d56.jpg` resolved to the expected 1920×1080 managed editorial image. The production homepage at `https://ramprate-gtbtxkhg.manus.space/#selected-engagements` also rendered the refreshed **Results, Not Promises** section with visible Paramount, eBay, and NOIA editorial card imagery and readable verified HTML evidence. This closes the earlier local-preview proxy and deployment-propagation limitation for the Selected Engagements media mapping.
+
 ## Public consistency follow-up
 
 Desktop and mobile review confirmed the shared header now begins opaque with dark navigation on the light Kumbaya hero, preventing the former white-on-paper contrast failure. The Values route now uses the shared RampRate navy, paper, gold, and deep-gold palette rather than its prior rust and blue accent exceptions; its Playfair display hierarchy, DM Sans body copy, and JetBrains Mono labels remain consistent with the public system.
+
+Representative desktop review of Process, Sourcing Process, and BioChain Process confirmed their heroes now share the RampRate navy, white, and gold hierarchy despite legacy source literals still being present in data-bound SVG and decorative values. ImpactSol retains its intentionally distinct teal impact accent as the separately positioned RampRate brand; it is not treated as an uncorrected public palette outlier.
