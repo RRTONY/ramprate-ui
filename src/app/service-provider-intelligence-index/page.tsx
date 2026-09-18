@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CtaSection from "@/components/sections/CtaSection";
-import JsonLd, { serviceJsonLd, breadcrumbJsonLd } from "@/components/shared/JsonLd";
+import JsonLd, {
+  serviceJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Service Provider Intelligence Index (SPY Index)",
@@ -167,13 +170,7 @@ const outputItems = [
 
 export default function SpiiPage() {
   return (
-    <div
-      style={{
-        background: "var(--dark)",
-        color: "#fff",
-        fontFamily: "var(--font-body)",
-      }}
-    >
+    <div className="bg-[var(--dark)] font-body text-white">
       <JsonLd
         data={serviceJsonLd({
           name: "Service Provider Intelligence Index (SPY Index)",
@@ -200,36 +197,27 @@ export default function SpiiPage() {
         <div className="relative max-w-6xl mx-auto">
           <div className="mb-4">
             <span
-              className="text-xs font-semibold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full border"
+              className="rounded-full border px-3 py-1.5 text-xs font-mono font-semibold uppercase tracking-[0.25em]"
               style={{
                 color: "var(--gold)",
                 borderColor: "rgba(212,168,67,0.3)",
                 background: "rgba(212,168,67,0.08)",
-                fontFamily: "var(--font-mono)",
               }}
             >
               Data Intelligence Platform
             </span>
           </div>
 
-          <h1
-            className="font-bold text-white mb-3"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-              lineHeight: 1.1,
-            }}
-          >
+          <h1 className="mb-3 text-[clamp(2.5rem,6vw,4.5rem)] font-display font-bold leading-[1.1] text-white">
             Service Provider
             <br />
-            <span style={{ color: "var(--gold)" }}>Intelligence Index</span>
+            <span className="text-[var(--gold)]">Intelligence Index</span>
           </h1>
 
           <p
-            className="text-xs font-semibold uppercase tracking-[0.3em] mb-6"
+            className="mb-6 text-xs font-mono font-semibold uppercase tracking-[0.3em]"
             style={{
               color: "rgba(255,255,255,0.35)",
-              fontFamily: "var(--font-mono)",
             }}
           >
             The First Platform for IT Sourcing Decisions &amp; Planning
@@ -247,13 +235,7 @@ export default function SpiiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
             {heroStats.map((stat) => (
               <div key={stat.value} className="glass-card p-6">
-                <div
-                  className="text-4xl font-bold mb-2"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    color: "var(--gold)",
-                  }}
-                >
+                <div className="mb-2 text-4xl font-display font-bold text-[var(--gold)]">
                   {stat.value}
                 </div>
                 <div className="text-sm font-semibold text-white mb-2">
@@ -272,12 +254,7 @@ export default function SpiiPage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--gold)",
-                color: "#000",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--gold)] px-7 py-3.5 text-sm font-body font-semibold text-black transition-opacity hover:opacity-90"
             >
               Start a Conversation
               <svg
@@ -315,19 +292,10 @@ export default function SpiiPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <p
-                className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
-                style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
-              >
+              <p className="mb-3 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
                 Supplier-Neutral Matching Engine
               </p>
-              <h2
-                className="font-bold text-white mb-5 leading-tight"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-                }}
-              >
+              <h2 className="mb-5 text-[clamp(1.75rem,4vw,2.75rem)] font-display font-bold leading-tight text-white">
                 Risk Disappears &amp; Performance Increases
               </h2>
               <p
@@ -426,19 +394,10 @@ export default function SpiiPage() {
             </div>
 
             <div>
-              <p
-                className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
-                style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
-              >
+              <p className="mb-3 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
                 Deep Analysis Engine
               </p>
-              <h2
-                className="font-bold text-white mb-5 leading-tight"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-                }}
-              >
+              <h2 className="mb-5 text-[clamp(1.75rem,4vw,2.75rem)] font-display font-bold leading-tight text-white">
                 Timelines Are Drastically Cut. Costs Are Slashed.
               </h2>
               <p
@@ -467,10 +426,9 @@ export default function SpiiPage() {
 
               <div className="glass-card p-6">
                 <p
-                  className="text-xs font-semibold uppercase tracking-[0.25em] mb-4"
+                  className="mb-4 text-xs font-mono font-semibold uppercase tracking-[0.25em]"
                   style={{
                     color: "var(--gold)",
-                    fontFamily: "var(--font-mono)",
                   }}
                 >
                   Output Includes
@@ -511,20 +469,10 @@ export default function SpiiPage() {
       <section className="py-20 px-5 sm:px-8 section-warm">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <p
-              className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
-              style={{ color: "var(--rust)", fontFamily: "var(--font-mono)" }}
-            >
+            <p className="mb-3 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--rust)]">
               Five Data Sources
             </p>
-            <h2
-              className="font-bold"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-                color: "var(--text-dark)",
-              }}
-            >
+            <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-display font-bold text-[var(--text-dark)]">
               What Powers the SPY Index
             </h2>
             <p
@@ -553,24 +501,11 @@ export default function SpiiPage() {
                   >
                     {pillar.icon}
                   </div>
-                  <span
-                    className="text-xs font-bold"
-                    style={{
-                      color: "var(--rust)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="text-xs font-mono font-bold text-[var(--rust)]">
                     {pillar.num}
                   </span>
                 </div>
-                <h3
-                  className="font-bold mb-3"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    color: "var(--text-dark)",
-                    fontSize: "1.05rem",
-                  }}
-                >
+                <h3 className="mb-3 text-[1.05rem] font-display font-bold text-[var(--text-dark)]">
                   {pillar.title}
                 </h3>
                 <ul className="space-y-2">
@@ -612,19 +547,10 @@ export default function SpiiPage() {
       >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <p
-              className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
-              style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
-            >
+            <p className="mb-3 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
               Platform Scale
             </p>
-            <h2
-              className="font-bold text-white"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-              }}
-            >
+            <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-display font-bold text-white">
               The Numbers Behind the Index
             </h2>
             <p
@@ -646,23 +572,10 @@ export default function SpiiPage() {
                 className="flex flex-col items-center justify-center py-10 px-6 text-center"
                 style={{ background: "var(--dark)" }}
               >
-                <span
-                  className="font-bold mb-2"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(2rem, 4vw, 3rem)",
-                    color: "var(--gold)",
-                  }}
-                >
+                <span className="mb-2 text-[clamp(2rem,4vw,3rem)] font-display font-bold text-[var(--gold)]">
                   {stat.value}
                 </span>
-                <span
-                  className="text-xs uppercase tracking-widest leading-snug text-center"
-                  style={{
-                    color: "rgba(255,255,255,0.4)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <span className="text-center text-xs font-mono uppercase leading-snug tracking-widest text-white/40">
                   {stat.label}
                 </span>
               </div>
@@ -679,19 +592,10 @@ export default function SpiiPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-              <p
-                className="text-xs font-semibold uppercase tracking-[0.25em] mb-3"
-                style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
-              >
+              <p className="mb-3 text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
                 The Intelligence
               </p>
-              <h2
-                className="font-bold text-white mb-5 leading-tight"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-                }}
-              >
+              <h2 className="mb-5 text-[clamp(1.75rem,4vw,2.75rem)] font-display font-bold leading-tight text-white">
                 Intelligence That Drives <em>Better Deals</em>
               </h2>
               <p
@@ -742,10 +646,7 @@ export default function SpiiPage() {
                 },
               ].map((item) => (
                 <div key={item.title} className="glass-card p-5">
-                  <h3
-                    className="text-sm font-bold text-white mb-2"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h3 className="mb-2 text-sm font-display font-bold text-white">
                     {item.title}
                   </h3>
                   <p
