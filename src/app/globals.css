@@ -2076,8 +2076,10 @@ body.ai-modal-open [data-hide-on-ai] {
 /* ── RAMP RATE PUBLIC REFRESH: EDITORIAL CHROME & HOME ── */
 .rr-public-header {
   position: fixed;
-  z-index: 100;
+  z-index: 200;
   inset: 0 0 auto;
+  isolation: isolate;
+  pointer-events: auto;
   border-bottom: 1px solid transparent;
   color: var(--rr-paper);
   transition:
@@ -2102,6 +2104,13 @@ body.ai-modal-open [data-hide-on-ai] {
   width: min(100% - 2.5rem, 84rem);
   min-height: 5.25rem;
   margin: 0 auto;
+}
+
+.rr-public-header a,
+.rr-public-header button {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 .rr-public-header-logo {
