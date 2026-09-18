@@ -69,53 +69,32 @@ export default function PaymentsAdvisoryPage() {
         ])}
       />
       {/* Hero */}
-      <section
-        className="relative pt-32 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
+      <section className="relative overflow-hidden bg-[var(--dark)] pt-32 pb-20">
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[var(--gold-light)]">
             RampRate A-Team · B Corp Certified · $10B+ Transacted
           </span>
-          <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            We Write the RFP. <span style={{ color: gold }}>We Shop It.</span>{" "}
-            You Choose.
+          <h1 className="mb-6 text-4xl font-display font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            We Write the RFP.{" "}
+            <span className="text-[oklch(0.52_0.12_70)]">We Shop It.</span> You
+            Choose.
           </h1>
-          <p
-            className="text-white/70 text-lg leading-relaxed mb-4 max-w-2xl"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mb-4 max-w-2xl text-lg font-body leading-relaxed text-white/70">
             Tell us about your business. RampRate authors your payment
             processing RFP, takes it to our network of 25+ vetted processors,
             scores every response, and negotiates the contract - all on your
             behalf, at no cost to you.
           </p>
-          <p
-            className="text-sm mb-10 max-w-2xl"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-10 max-w-2xl text-sm font-body text-[var(--gold-light)]">
             We represent merchants processing $50M-$2B+ annually. Our model is
             long-term supplier relationships, not one-time placements.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
               href="/payments-advisory/intake"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold text-white transition-all shadow-lg"
-              style={{ background: gold, fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md bg-[oklch(0.52_0.12_70)] px-7 py-3.5 text-sm font-body font-semibold text-white shadow-lg transition-all"
             >
               Start Your Intake
               <svg
@@ -131,8 +110,7 @@ export default function PaymentsAdvisoryPage() {
             </Link>
             <Link
               href="/payments-advisory/intel"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-white/30 px-7 py-3.5 text-sm font-body font-semibold text-white transition-all hover:bg-white/10"
             >
               View Market Intel
             </Link>
@@ -152,22 +130,10 @@ export default function PaymentsAdvisoryPage() {
           ["5 Days", "Standard RFP Turnaround"],
         ].map(([n, l]) => (
           <div key={l} className="text-center">
-            <div
-              className="text-2xl font-bold"
-              style={{
-                fontFamily: "var(--font-display)",
-                color: "oklch(0.2 0.02 50)",
-              }}
-            >
+            <div className="text-2xl font-display font-bold text-[oklch(0.2_0.02_50)]">
               {n}
             </div>
-            <div
-              className="text-[11px] tracking-wide"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <div className="text-[11px] font-body tracking-wide text-[oklch(0.45_0.02_50)]">
               {l}
             </div>
           </div>
@@ -176,22 +142,10 @@ export default function PaymentsAdvisoryPage() {
           className="text-center border-l pl-8"
           style={{ borderColor: "oklch(0.7 0.05 70 / 0.4)" }}
         >
-          <div
-            className="text-base font-bold"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "oklch(0.2 0.02 50)",
-            }}
-          >
+          <div className="text-base font-display font-bold text-[oklch(0.2_0.02_50)]">
             Rush Available
           </div>
-          <div
-            className="text-[11px] leading-snug"
-            style={{
-              color: "oklch(0.45 0.1 60)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <div className="text-[11px] font-body leading-snug text-[oklch(0.45_0.1_60)]">
             Expedite on request, subject to availability
           </div>
         </div>
@@ -201,19 +155,10 @@ export default function PaymentsAdvisoryPage() {
       <section className="section-light py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 block"
-              style={{ color: gold, fontFamily: "var(--font-body)" }}
-            >
+            <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.52_0.12_70)]">
               The Process
             </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold"
-              style={{
-                fontFamily: "var(--font-display)",
-                color: "oklch(0.2 0.02 50)",
-              }}
-            >
+            <h2 className="text-3xl font-display font-bold text-[oklch(0.2_0.02_50)] sm:text-4xl">
               From Intake to Long-Term Partnership
             </h2>
           </div>
@@ -229,31 +174,18 @@ export default function PaymentsAdvisoryPage() {
                 }}
               >
                 <div
-                  className="text-4xl font-bold mb-3"
+                  className="mb-3 text-4xl font-display font-bold"
                   style={{
-                    fontFamily: "var(--font-display)",
                     color: gold,
                     opacity: 0.25,
                   }}
                 >
                   {s.n}
                 </div>
-                <h3
-                  className="text-lg font-bold mb-2"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    color: "oklch(0.2 0.02 50)",
-                  }}
-                >
+                <h3 className="mb-2 text-lg font-display font-bold text-[oklch(0.2_0.02_50)]">
                   {s.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "oklch(0.45 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                   {s.desc}
                 </p>
               </div>
@@ -266,25 +198,13 @@ export default function PaymentsAdvisoryPage() {
             style={{ background: "var(--dark)" }}
           >
             <div className="flex-1 min-w-[280px]">
-              <span
-                className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 block"
-                style={{
-                  color: "var(--gold-light)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[var(--gold-light)]">
                 ImpactSol Integration
               </span>
-              <h3
-                className="text-2xl font-bold text-white mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h3 className="mb-4 text-2xl font-display font-bold text-white">
                 Conscious Capital Meets Payment Infrastructure
               </h3>
-              <p
-                className="text-white/60 text-sm leading-relaxed"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <p className="text-sm font-body leading-relaxed text-white/60">
                 RampRate&apos;s payments advisory integrates with
                 ImpactSol&apos;s Impact Dollar / STBL rail - enabling clients to
                 optionally route a percentage of processing savings into
@@ -300,21 +220,15 @@ export default function PaymentsAdvisoryPage() {
               ].map(([v, l]) => (
                 <div key={l} className="flex items-center gap-4">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 text-xs font-display font-bold"
                     style={{
                       background: "oklch(0.6 0.15 170 / 0.15)",
                       color: "oklch(0.7 0.13 170)",
-                      fontFamily: "var(--font-display)",
                     }}
                   >
                     {v}
                   </div>
-                  <span
-                    className="text-white/70 text-sm"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {l}
-                  </span>
+                  <span className="text-sm font-body text-white/70">{l}</span>
                 </div>
               ))}
             </div>
@@ -329,22 +243,10 @@ export default function PaymentsAdvisoryPage() {
             }}
           >
             <div>
-              <h3
-                className="text-xl font-bold mb-2"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  color: "oklch(0.2 0.02 50)",
-                }}
-              >
+              <h3 className="mb-2 text-xl font-display font-bold text-[oklch(0.2_0.02_50)]">
                 Who We Work With
               </h3>
-              <p
-                className="text-sm leading-relaxed max-w-2xl"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="max-w-2xl text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                 Merchants with <strong>$1M minimum</strong> annual revenue -
                 target is <strong>$50M and above</strong>. 25 industry verticals
                 including regulated, high-risk, and complex global businesses.
@@ -354,8 +256,7 @@ export default function PaymentsAdvisoryPage() {
             </div>
             <Link
               href="/payments-advisory/intake"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold text-white transition-all shadow-lg shrink-0"
-              style={{ background: gold, fontFamily: "var(--font-body)" }}
+              className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[oklch(0.52_0.12_70)] px-7 py-3.5 text-sm font-body font-semibold text-white shadow-lg transition-all"
             >
               Start Intake
               <svg

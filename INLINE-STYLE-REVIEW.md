@@ -31,6 +31,7 @@ The inventory found inline styles across public, protected, and Flow product sur
 11. Desktop review confirmed that the shared public display token renders legibly in the homepage footer reference heading and Values hero. The ongoing typography pass will retain Playfair Display for editorial headings, DM Sans for body and interface text, and JetBrains Mono only for compact labels, without altering separate Flow or CMS typography.
 12. BioChain overview contains 163 inline-style sites, including 129 explicit typography values, alongside product-map, supplier-evaluation, and comparison visualization styling. Its data colors, calculated layout, and specialized route behavior require a separate component-level classification rather than mechanical replacement.
 13. The Search route’s fixed shell, hero, result headings, labels, and empty-state typography are suitable for utility extraction. Query text, result counts, category data, and route-dependent badge color states remain dynamic. Desktop review confirmed the approved display heading and shared label treatment remain legible.
+14. Payments Advisory now uses the shared public display and body typography utilities across its hero, statistics, process, integration, qualification, and intake actions. Content values and public intake destinations remain unchanged; its remaining inline values are bounded presentation or static compatibility values for a later fixed-style pass.
 
 ## Guardrail
 
