@@ -38,4 +38,16 @@ describe("Champions unified public system", () => {
     );
     expect(hero).not.toContain("style={{");
   });
+
+  it("keeps only mapped divider and spacing geometry inline after fixed presentation extraction", async () => {
+    const page = await readFile(
+      resolve(process.cwd(), "src/app/champions/page.tsx"),
+      "utf8",
+    );
+
+    expect(page.match(/style=\{\{/g) ?? []).toHaveLength(4);
+    expect(page).toContain("index === 0");
+    expect(page).toContain("rowIndex === 0");
+    expect(page).not.toContain("fontFamily:");
+  });
 });

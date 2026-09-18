@@ -398,45 +398,23 @@ export default function ChampionsPage() {
       {/* ═══ 02 WHAT QUALIFIES ═══ */}
       <section
         id="qualifies"
-        className="py-16 sm:py-24 scroll-mt-20"
-        style={{
-          background: "var(--champion-paper)",
-          borderTop: "1px solid var(--champion-line)",
-        }}
+        className="scroll-mt-20 border-t border-[var(--champion-line)] bg-[var(--champion-paper)] py-16 sm:py-24"
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <p
-            className="text-sm font-semibold mb-3.5"
-            style={{
-              color: "var(--champion)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-3.5 text-sm font-body font-semibold text-[var(--champion)]">
             02 · What qualifies
           </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold"
-            style={{
-              color: "var(--champion-ink)",
-              fontFamily: "var(--font-display)",
-            }}
-          >
+          <h2 className="text-3xl font-display font-bold text-[var(--champion-ink)] sm:text-4xl">
             Real thresholds, not guidance.
           </h2>
-          <p
-            className="mt-4 mb-12 text-lg leading-relaxed max-w-[60ch]"
-            style={{
-              color: "var(--champion-body)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-4 mb-12 max-w-[60ch] text-lg font-body leading-relaxed text-[var(--champion-body)]">
             Below these lines we will say no, and we would rather you knew that
             before you spend a relationship on it. Screen against this list and
             your first introduction is far more likely to become your first
             payment.
           </p>
 
-          <div style={{ borderTop: "2px solid var(--champion-ink)" }}>
+          <div className="border-t-2 border-[var(--champion-ink)]">
             {PRACTICES.map((practice, index) => (
               <div
                 key={`${practice.tag}-${practice.title}`}
@@ -451,41 +429,18 @@ export default function ChampionsPage() {
                 }}
               >
                 <div>
-                  <span
-                    className="inline-block text-[13px] font-semibold rounded px-2.5 py-0.5 mb-2.5"
-                    style={{
-                      color: "var(--champion)",
-                      background: "var(--champion-faint)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <span className="mb-2.5 inline-block rounded bg-[var(--champion-faint)] px-2.5 py-0.5 text-[13px] font-body font-semibold text-[var(--champion)]">
                     {practice.tag}
                   </span>
-                  <h3
-                    className="text-xl font-bold mb-2"
-                    style={{
-                      color: "var(--champion-ink)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+                  <h3 className="mb-2 text-xl font-display font-bold text-[var(--champion-ink)]">
                     {practice.title}
                   </h3>
-                  <p
-                    className="text-[15px] leading-relaxed mb-2.5"
-                    style={{
-                      color: "var(--champion-muted)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="mb-2.5 text-[15px] font-body leading-relaxed text-[var(--champion-muted)]">
                     {practice.blurb}
                   </p>
                   <Link
                     href={practice.href}
-                    className="text-[15px] font-semibold hover:underline"
-                    style={{
-                      color: "var(--champion)",
-                      fontFamily: "var(--font-body)",
-                    }}
+                    className="text-[15px] font-body font-semibold text-[var(--champion)] hover:underline"
                   >
                     {practice.linkLabel}
                   </Link>
@@ -495,22 +450,14 @@ export default function ChampionsPage() {
                   {practice.rows.map((row, rowIndex) => (
                     <div key={row.term}>
                       <dt
-                        className="text-[13px] font-bold"
+                        className="text-[13px] font-body font-bold text-[var(--champion-ink)]"
                         style={{
-                          color: "var(--champion-ink)",
                           paddingTop: rowIndex === 0 ? 0 : "16px",
-                          fontFamily: "var(--font-body)",
                         }}
                       >
                         {row.term}
                       </dt>
-                      <dd
-                        className="mt-1.5 ml-0 text-base leading-relaxed"
-                        style={{
-                          color: "var(--champion-body)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <dd className="mt-1.5 ml-0 text-base font-body leading-relaxed text-[var(--champion-body)]">
                         {row.items ? (
                           <ul className="list-disc pl-5 space-y-1.5">
                             {row.items.map((item) => (
@@ -524,14 +471,7 @@ export default function ChampionsPage() {
                     </div>
                   ))}
                   {practice.notFit && (
-                    <dd
-                      className="mt-5 ml-0 pl-3.5 text-[15px] leading-relaxed"
-                      style={{
-                        color: "var(--champion-muted)",
-                        borderLeft: "3px solid var(--champion-line-strong)",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
+                    <dd className="mt-5 ml-0 border-l-[3px] border-[var(--champion-line-strong)] pl-3.5 text-[15px] font-body leading-relaxed text-[var(--champion-muted)]">
                       {practice.notFit}
                     </dd>
                   )}
@@ -543,36 +483,15 @@ export default function ChampionsPage() {
       </section>
 
       {/* ═══ 03 WHAT DOES NOT QUALIFY ═══ */}
-      <section
-        className="py-16 sm:py-24"
-        style={{ background: "var(--champion-tint)" }}
-      >
+      <section className="bg-[var(--champion-tint)] py-16 sm:py-24">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <p
-            className="text-sm font-semibold mb-3.5"
-            style={{
-              color: "var(--champion)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-3.5 text-sm font-body font-semibold text-[var(--champion)]">
             03 · What does not qualify
           </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold"
-            style={{
-              color: "var(--champion-ink)",
-              fontFamily: "var(--font-display)",
-            }}
-          >
+          <h2 className="text-3xl font-display font-bold text-[var(--champion-ink)] sm:text-4xl">
             We will say no to these.
           </h2>
-          <p
-            className="mt-4 mb-10 text-lg leading-relaxed"
-            style={{
-              color: "var(--champion-body)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-4 mb-10 text-lg font-body leading-relaxed text-[var(--champion-body)]">
             Please do not spend your relationship capital on them. A referral we
             decline costs you more than it costs us.
           </p>
@@ -580,17 +499,9 @@ export default function ChampionsPage() {
             {EXCLUSIONS.map((item) => (
               <li
                 key={item}
-                className="relative py-5 pl-7 text-base leading-relaxed max-w-[64ch]"
-                style={{
-                  borderTop: "1px solid var(--champion-line)",
-                  color: "var(--champion-body)",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="relative max-w-[64ch] border-t border-[var(--champion-line)] py-5 pl-7 text-base font-body leading-relaxed text-[var(--champion-body)]"
               >
-                <span
-                  className="absolute left-0 top-8 w-3.5 h-0.5"
-                  style={{ background: "var(--champion)" }}
-                />
+                <span className="absolute left-0 top-8 h-0.5 w-3.5 bg-[var(--champion)]" />
                 {item}
               </li>
             ))}
@@ -599,36 +510,15 @@ export default function ChampionsPage() {
       </section>
 
       {/* ═══ 04 WHAT YOU GET ═══ */}
-      <section
-        className="py-16 sm:py-24"
-        style={{ background: "var(--champion-paper)" }}
-      >
+      <section className="bg-[var(--champion-paper)] py-16 sm:py-24">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <p
-            className="text-sm font-semibold mb-3.5"
-            style={{
-              color: "var(--champion)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-3.5 text-sm font-body font-semibold text-[var(--champion)]">
             04 · What you get
           </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold"
-            style={{
-              color: "var(--champion-ink)",
-              fontFamily: "var(--font-display)",
-            }}
-          >
+          <h2 className="text-3xl font-display font-bold text-[var(--champion-ink)] sm:text-4xl">
             The introduction is the easy part.
           </h2>
-          <p
-            className="mt-4 mb-10 text-lg leading-relaxed"
-            style={{
-              color: "var(--champion-body)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-4 mb-10 text-lg font-body leading-relaxed text-[var(--champion-body)]">
             Everything below exists so that you are never guessing about what
             happened to it.
           </p>
@@ -643,22 +533,10 @@ export default function ChampionsPage() {
                   borderBottom: "1px solid var(--champion-line)",
                 }}
               >
-                <strong
-                  className="block text-lg mb-1"
-                  style={{
-                    color: "var(--champion-ink)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <strong className="mb-1 block text-lg font-body text-[var(--champion-ink)]">
                   {item.title}
                 </strong>
-                <span
-                  className="text-base leading-relaxed"
-                  style={{
-                    color: "var(--champion-body)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <span className="text-base font-body leading-relaxed text-[var(--champion-body)]">
                   {item.body}
                 </span>
               </li>
@@ -670,63 +548,33 @@ export default function ChampionsPage() {
       {/* ═══ 05 APPLY ═══ */}
       <section
         id="apply"
-        className="py-16 sm:py-24 scroll-mt-20"
-        style={{ background: "var(--champion-tint)" }}
+        className="scroll-mt-20 bg-[var(--champion-tint)] py-16 sm:py-24"
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div>
-            <p
-              className="text-sm font-semibold mb-3.5"
-              style={{
-                color: "var(--champion)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="mb-3.5 text-sm font-body font-semibold text-[var(--champion)]">
               05 · Apply
             </p>
-            <h2
-              className="text-3xl sm:text-4xl font-bold"
-              style={{
-                color: "var(--champion-ink)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
+            <h2 className="text-3xl font-display font-bold text-[var(--champion-ink)] sm:text-4xl">
               One signature, and you are in.
             </h2>
-            <p
-              className="mt-4 mb-8 text-lg leading-relaxed"
-              style={{
-                color: "var(--champion-body)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="mt-4 mb-8 text-lg font-body leading-relaxed text-[var(--champion-body)]">
               The agreement and the confidentiality terms arrive as a single
               document, already signed on our side. You get a countersigned copy
               back the moment you sign.
             </p>
-            <dl
-              className="pt-6"
-              style={{ borderTop: "1px solid var(--champion-line-strong)" }}
-            >
+            <dl className="border-t border-[var(--champion-line-strong)] pt-6">
               {TERMS.map((item, index) => (
                 <div key={item.term}>
                   <dt
-                    className="text-[13px] font-bold"
+                    className="text-[13px] font-body font-bold text-[var(--champion-ink)]"
                     style={{
-                      color: "var(--champion-ink)",
                       paddingTop: index === 0 ? 0 : "16px",
-                      fontFamily: "var(--font-body)",
                     }}
                   >
                     {item.term}
                   </dt>
-                  <dd
-                    className="mt-1 ml-0 text-base"
-                    style={{
-                      color: "var(--champion-body)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <dd className="mt-1 ml-0 text-base font-body text-[var(--champion-body)]">
                     {item.text}
                   </dd>
                 </div>
@@ -739,48 +587,25 @@ export default function ChampionsPage() {
       </section>
 
       {/* ═══ CLOSER ═══ */}
-      <section
-        className="py-16 sm:py-24"
-        style={{
-          background:
-            "linear-gradient(160deg, var(--champion-night-2) 0%, var(--champion-night) 70%)",
-        }}
-      >
+      <section className="bg-[linear-gradient(160deg,var(--champion-night-2)_0%,var(--champion-night)_70%)] py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white max-w-[22ch]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="max-w-[22ch] text-3xl font-display font-bold text-white sm:text-4xl">
             Not sure if your contact qualifies?
           </h2>
-          <p
-            className="mt-5 mb-8 text-lg leading-relaxed max-w-[54ch]"
-            style={{
-              color: "var(--champion-hero-text)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-5 mb-8 max-w-[54ch] text-lg font-body leading-relaxed text-[var(--champion-hero-text)]">
             Send it anyway. A no inside 48 hours costs you nothing. Guessing
             costs you the introduction.
           </p>
           <div className="flex flex-wrap gap-3.5">
             <Link
               href="#apply"
-              className="inline-block rounded-lg px-8 py-4 text-base font-semibold text-white transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--champion)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-block rounded-lg bg-[var(--champion)] px-8 py-4 text-base font-body font-semibold text-white transition-opacity hover:opacity-90"
             >
               Apply to become a Champion
             </Link>
             <Link
               href="/contact"
-              className="inline-block rounded-lg px-7 py-4 text-base font-semibold text-white transition-colors"
-              style={{
-                border: "1px solid rgba(255,255,255,0.3)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-block rounded-lg border border-white/30 px-7 py-4 text-base font-body font-semibold text-white transition-colors"
             >
               Talk to us first
             </Link>
