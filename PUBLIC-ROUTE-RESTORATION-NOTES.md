@@ -19,3 +19,7 @@ The restored Kumbaya page begins on a light paper hero, so the shared header now
 ## Kumbaya venue-image control review
 
 The optional venue photo or moodboard image input was reviewed inside the four-step Kumbaya form at desktop and mobile widths. It remains legible within the existing desktop form grid, exposes its image-type and file-size guidance, and retains the mobile route’s single-column, touch-friendly form progression. The route itself rendered successfully in both checks. Local preview retries may return a stale 404 for unrelated homepage managed images after a checkpoint restart; direct production delivery of those engagement assets was separately verified.
+
+## About fixed-style extraction review
+
+The About founder story, principals, and corporate facts region was checked at desktop and mobile widths after its fixed JSX typography, surface, stat-card, chip, and action styles moved to shared semantic classes. Both presentations retained readable paper and navy surfaces, controlled-gold emphasis, and the existing responsive content sequence. Managed team and advisor records, journey navigation, and external profiles were not changed; the remaining later About sections remain in the file-by-file audit queue.

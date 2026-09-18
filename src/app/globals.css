@@ -3480,6 +3480,79 @@ button.bg-gold {
   line-height: 1.5;
 }
 
+/* About: fixed public presentation stays in CSS so managed team and advisor
+   data can remain the only dynamic concern in the route component. */
+.rr-about-orb {
+  filter: blur(80px);
+}
+
+.rr-about-orb--deep {
+  background: var(--rr-gold-deep);
+}
+
+.rr-about-orb--gold {
+  background: var(--gold-light);
+}
+
+.rr-about-kicker,
+.rr-about-label {
+  color: var(--rr-gold-deep);
+  font-family: var(--font-body), sans-serif;
+}
+
+.rr-about-kicker--light {
+  color: var(--gold-light);
+}
+
+.rr-about-body {
+  color: #44546a;
+  font-family: var(--font-body), sans-serif;
+}
+
+.rr-about-body--light {
+  color: rgb(255 255 255 / 0.68);
+}
+
+.rr-about-principals {
+  background: var(--rr-navy-mid);
+}
+
+.rr-about-stat {
+  border-color: rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.045);
+}
+
+.rr-about-stat-value {
+  color: var(--gold-light);
+  font-family: var(--font-mono), monospace;
+}
+
+.rr-about-stat-label {
+  color: rgb(255 255 255 / 0.56);
+  font-family: var(--font-body), sans-serif;
+}
+
+.rr-about-highlight {
+  color: var(--rr-gold-deep);
+}
+
+.rr-about-chip {
+  background: rgb(214 173 66 / 0.12);
+  color: var(--rr-gold-deep);
+  font-family: var(--font-body), sans-serif;
+}
+
+.rr-about-primary-link {
+  background: var(--rr-gold-deep);
+  font-family: var(--font-body), sans-serif;
+}
+
+.rr-about-secondary-link {
+  border-color: rgb(214 173 66 / 0.46);
+  color: var(--rr-gold-deep);
+  font-family: var(--font-body), sans-serif;
+}
+
 .kumbaya-review {
   margin-top: 2rem;
 }

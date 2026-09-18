@@ -216,39 +216,18 @@ export default async function AboutPage() {
       </section>
 
       {/* ═══ FOUNDER'S STORY ═══ */}
-      <section className="relative section-warm overflow-hidden py-20 sm:py-28">
-        <div
-          className="absolute -bottom-32 -right-32 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute top-10 -left-20 w-[180px] h-[180px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+      <section className="rr-about-founder relative section-warm overflow-hidden py-20 sm:py-28">
+        <div className="rr-about-orb rr-about-orb--deep absolute -bottom-32 -right-32 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb--gold absolute top-10 -left-20 w-[180px] h-[180px] rounded-full opacity-15 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{
-              color: "oklch(0.55 0.15 30)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="rr-about-kicker text-xs font-semibold tracking-[0.2em] uppercase">
             Founder&apos;s Story
           </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">
             Elevating the Way Business Does Business
           </h2>
-          <div
-            className="mt-8 space-y-5 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <div className="rr-about-body mt-8 space-y-5 text-base leading-relaxed">
             <p>
               Hi, We&apos;re Tony and Alex, we founded RampRate in 2000 on the
               premise of elevating the way business does business. We could take
@@ -278,30 +257,15 @@ export default async function AboutPage() {
       </section>
 
       {/* ═══ PRINCIPALS, NOT PYRAMIDS ═══ */}
-      <section className="py-20 sm:py-28" style={{ background: "#0d1117" }}>
+      <section className="rr-about-principals py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{
-              color: "oklch(0.82 0.15 75)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="rr-about-kicker rr-about-kicker--light text-xs font-semibold tracking-[0.2em] uppercase">
             Our Structure
           </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
             Principals, Not Pyramids.
           </h2>
-          <p
-            className="mt-6 text-base sm:text-lg leading-relaxed max-w-3xl"
-            style={{
-              color: "rgba(255,255,255,0.6)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="rr-about-body rr-about-body--light mt-6 max-w-3xl text-base leading-relaxed sm:text-lg">
             Every engagement is led by the same senior team that has been
             serving Fortune 500 companies for 25 years. No junior associates. No
             handoff to unknown delivery teams. The people whose names are on the
@@ -315,28 +279,12 @@ export default async function AboutPage() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="rounded-lg px-6 py-4 border"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  borderColor: "rgba(255,255,255,0.08)",
-                }}
+                className="rr-about-stat rounded-lg border px-6 py-4"
               >
-                <div
-                  className="text-2xl font-bold"
-                  style={{
-                    color: "oklch(0.82 0.15 75)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <div className="rr-about-stat-value text-2xl font-bold">
                   {s.value}
                 </div>
-                <div
-                  className="text-xs mt-1"
-                  style={{
-                    color: "rgba(255,255,255,0.4)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <div className="rr-about-stat-label mt-1 text-xs">
                   {s.label}
                 </div>
               </div>
@@ -348,12 +296,8 @@ export default async function AboutPage() {
       {/* ═══ CORPORATE FACTS ═══ */}
       <section className="relative section-light overflow-hidden py-16 sm:py-20">
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight mb-8"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Corporate{" "}
-            <span style={{ color: "oklch(0.55 0.15 30)" }}>Facts</span>
+          <h2 className="mb-8 text-2xl font-bold tracking-tight sm:text-3xl">
+            Corporate <span className="rr-about-highlight">Facts</span>
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {corporateFacts.map((f) => (
@@ -361,35 +305,15 @@ export default async function AboutPage() {
                 key={f.label}
                 className="bg-white rounded-lg p-5 border border-black/5"
               >
-                <div
-                  className="text-xs font-semibold tracking-[0.15em] uppercase mb-1"
-                  style={{
-                    color: "oklch(0.55 0.15 30)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <div className="rr-about-label mb-1 text-xs font-semibold tracking-[0.15em] uppercase">
                   {f.label}
                 </div>
-                <div
-                  className="text-sm"
-                  style={{
-                    color: "oklch(0.3 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {f.value}
-                </div>
+                <div className="rr-about-body text-sm">{f.value}</div>
               </div>
             ))}
           </div>
           <div className="mt-6 p-5 bg-white rounded-lg border border-black/5">
-            <div
-              className="text-xs font-semibold tracking-[0.15em] uppercase mb-2"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <div className="rr-about-label mb-2 text-xs font-semibold tracking-[0.15em] uppercase">
               Areas of Expertise
             </div>
             <div className="flex flex-wrap gap-2">
@@ -403,12 +327,7 @@ export default async function AboutPage() {
               ].map((a) => (
                 <span
                   key={a}
-                  className="px-3 py-1 text-xs rounded-full"
-                  style={{
-                    background: "rgba(100,60,30,0.1)",
-                    color: "oklch(0.45 0.1 30)",
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="rr-about-chip rounded-full px-3 py-1 text-xs"
                 >
                   {a}
                 </span>
@@ -418,22 +337,13 @@ export default async function AboutPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/process"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-bold text-white transition-all hover:opacity-90"
-              style={{
-                background: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="rr-about-primary-link inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-xs font-bold text-white transition-all hover:opacity-90"
             >
               Flow Circuit Assessment
             </Link>
             <Link
               href="/process"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-bold border transition-all hover:opacity-90"
-              style={{
-                borderColor: "rgba(96,60,180,0.3)",
-                color: "oklch(0.6 0.2 280)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="rr-about-secondary-link inline-flex items-center gap-2 rounded-md border px-5 py-2.5 text-xs font-bold transition-all hover:opacity-90"
             >
               Find Your Me / Way / Our
             </Link>

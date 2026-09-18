@@ -15,5 +15,19 @@ describe("About journey public contract", () => {
     expect(source).toContain('className="text-gold"');
     expect(source).toContain("teamMembersQuery");
     expect(source).toContain("boardAdvisorsQuery");
+    expect(source).toContain("rr-about-founder");
+    expect(source).toContain("rr-about-principals");
+    expect(source).toContain("rr-about-stat");
+    expect(source).toContain("rr-about-chip");
+    expect(source).toContain("rr-about-primary-link");
+    expect(source).toContain("rr-about-secondary-link");
+    const convertedRegion = source.slice(
+      source.indexOf("FOUNDER'S STORY"),
+      source.indexOf("TIMELINE"),
+    );
+    expect(convertedRegion).not.toContain('style={{ background: "#0d1117" }}');
+    expect(convertedRegion).not.toContain(
+      'style={{ fontFamily: "var(--font-display)" }}',
+    );
   });
 });
