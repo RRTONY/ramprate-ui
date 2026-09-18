@@ -312,36 +312,15 @@ export default function ChampionsPage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section
-        className="relative pt-32 pb-20 sm:pt-36 sm:pb-24 overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(120% 90% at 10% 0%, rgba(29,77,125,0.42) 0%, rgba(7,18,33,0) 60%), linear-gradient(160deg, var(--champion-night-2) 0%, var(--champion-night) 68%)",
-        }}
-      >
+      <section className="relative overflow-hidden bg-[radial-gradient(120%_90%_at_10%_0%,rgba(29,77,125,0.42)_0%,rgba(7,18,33,0)_60%),linear-gradient(160deg,var(--champion-night-2)_0%,var(--champion-night)_68%)] pt-32 pb-20 sm:pt-36 sm:pb-24">
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
-          <p
-            className="text-sm font-semibold mb-5"
-            style={{
-              color: "var(--champion-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-5 text-sm font-body font-semibold text-[var(--champion-light)]">
             Champion Program
           </p>
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight max-w-3xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-3xl text-4xl font-display font-bold leading-tight text-white sm:text-5xl md:text-6xl">
             You know who needs us. We do the rest.
           </h1>
-          <p
-            className="mt-6 text-lg sm:text-xl leading-relaxed max-w-2xl"
-            style={{
-              color: "var(--champion-hero-text)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mt-6 max-w-2xl text-lg font-body leading-relaxed text-[var(--champion-hero-text)] sm:text-xl">
             Introduce one company. We qualify it, run it, and pay you when it
             closes. No selling, no managing the relationship, no chasing us for
             updates.
@@ -350,45 +329,25 @@ export default function ChampionsPage() {
           <div className="mt-9 flex flex-wrap gap-3.5">
             <Link
               href="#apply"
-              className="inline-block rounded-lg px-8 py-4 text-base font-semibold text-white transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--champion)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-block rounded-lg bg-[var(--champion)] px-8 py-4 text-base font-body font-semibold text-white transition-opacity hover:opacity-90"
             >
               Apply to become a Champion
             </Link>
             <Link
               href="#qualifies"
-              className="inline-block rounded-lg px-7 py-4 text-base font-semibold text-white transition-colors"
-              style={{
-                border: "1px solid rgba(255,255,255,0.3)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-block rounded-lg border border-white/30 px-7 py-4 text-base font-body font-semibold text-white transition-colors"
             >
               See what qualifies
             </Link>
           </div>
 
-          <div
-            className="mt-14 pt-8 flex flex-wrap gap-8 sm:gap-12"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }}
-          >
+          <div className="mt-14 flex flex-wrap gap-8 border-t border-white/15 pt-8 sm:gap-12">
             {HERO_STATS.map((stat) => (
               <div key={stat.label} className="min-w-[130px]">
-                <div
-                  className="text-2xl sm:text-3xl font-bold text-white leading-tight"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
+                <div className="text-2xl font-mono font-bold leading-tight text-white sm:text-3xl">
                   {stat.value}
                 </div>
-                <div
-                  className="mt-1 text-sm"
-                  style={{
-                    color: "var(--champion-hero-label)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <div className="mt-1 text-sm font-body text-[var(--champion-hero-label)]">
                   {stat.label}
                 </div>
               </div>

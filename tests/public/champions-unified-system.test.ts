@@ -20,4 +20,22 @@ describe("Champions unified public system", () => {
     expect(css).toContain("--champion: #b88716;");
     expect(css).not.toContain("--champion: #7728cc;");
   });
+
+  it("uses utilities for the fixed hero surface and typography while retaining program actions", async () => {
+    const page = await readFile(
+      resolve(process.cwd(), "src/app/champions/page.tsx"),
+      "utf8",
+    );
+
+    expect(page).toContain("bg-[radial-gradient");
+    expect(page).toContain("font-display");
+    expect(page).toContain("font-mono");
+    expect(page).toContain('href="#apply"');
+    expect(page).toContain('href="#qualifies"');
+    const hero = page.slice(
+      page.indexOf("{/* ═══ HERO ═══ */}"),
+      page.indexOf("{/* ═══ 01 HOW IT WORKS ═══ */}"),
+    );
+    expect(hero).not.toContain("style={{");
+  });
 });
