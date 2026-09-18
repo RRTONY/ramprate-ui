@@ -223,36 +223,37 @@ export default function HomeContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-[1.35] saturate-[1.3] contrast-[1.05]"
+            className="object-cover object-right brightness-[1.45] saturate-[1.55] contrast-[1.08]"
           />
           {/* Layered light washes over the photo - same treatment as the Manus
-              reference build, re-hued to the brand gold/amber/rust palette. */}
+              reference build, re-hued to the brand gold/amber/rust palette.
+              Pushed warmer/more saturated for a more vivid sunset glow. */}
           <div
             className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "linear-gradient(135deg, oklch(0.55 0.15 30 / 0.22) 0%, oklch(0.62 0.16 45 / 0.15) 20%, oklch(0.78 0.16 70 / 0.08) 40%, transparent 55%, oklch(0.5 0.13 35 / 0.12) 75%, oklch(0.4 0.1 40 / 0.18) 100%)",
+                "linear-gradient(135deg, oklch(0.58 0.18 35 / 0.30) 0%, oklch(0.68 0.19 50 / 0.22) 20%, oklch(0.82 0.18 72 / 0.14) 40%, transparent 55%, oklch(0.55 0.16 38 / 0.18) 75%, oklch(0.42 0.12 42 / 0.24) 100%)",
             }}
           />
           <div
             className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "radial-gradient(ellipse at 60% 45%, oklch(0.82 0.15 75 / 0.2) 0%, oklch(0.7 0.16 55 / 0.12) 25%, oklch(0.58 0.14 40 / 0.06) 45%, transparent 65%)",
+                "radial-gradient(ellipse at 60% 40%, oklch(0.86 0.18 68 / 0.32) 0%, oklch(0.74 0.19 55 / 0.2) 28%, oklch(0.6 0.16 42 / 0.1) 48%, transparent 68%)",
             }}
           />
           <div
             className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "radial-gradient(ellipse at 85% 15%, oklch(0.72 0.14 60 / 0.16) 0%, oklch(0.55 0.12 45 / 0.08) 30%, transparent 50%), radial-gradient(ellipse at 5% 75%, oklch(0.5 0.13 35 / 0.14) 0%, oklch(0.42 0.1 40 / 0.06) 25%, transparent 45%)",
+                "radial-gradient(ellipse at 85% 12%, oklch(0.8 0.18 62 / 0.26) 0%, oklch(0.6 0.15 46 / 0.14) 32%, transparent 52%), radial-gradient(ellipse at 5% 75%, oklch(0.56 0.17 36 / 0.22) 0%, oklch(0.46 0.13 40 / 0.1) 28%, transparent 48%)",
             }}
           />
           <div
             className="absolute inset-0 mix-blend-color-dodge"
             style={{
               background:
-                "linear-gradient(180deg, oklch(0.5 0.13 40 / 0.18) 0%, oklch(0.6 0.14 55 / 0.1) 20%, transparent 45%)",
+                "linear-gradient(180deg, oklch(0.56 0.17 42 / 0.24) 0%, oklch(0.68 0.18 58 / 0.15) 20%, transparent 45%)",
             }}
           />
           {/* Navy grounding fades keep the seam and scroll cue on solid dark. */}
