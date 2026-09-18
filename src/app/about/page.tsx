@@ -588,22 +588,12 @@ export default async function AboutPage() {
 
       {/* ═══ CONCENTRIC MODEL ═══ */}
       <section className="relative section-dark overflow-hidden py-20 sm:py-28">
-        <div
-          className="absolute -top-40 -right-40 w-[350px] h-[350px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.22 260)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-20 -left-20 w-[200px] h-[200px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+        <div className="rr-about-orb rr-about-orb--deep absolute -top-40 -right-40 w-[350px] h-[350px] rounded-full opacity-20 pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb--gold absolute bottom-20 -left-20 w-[200px] h-[200px] rounded-full opacity-15 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-12"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            The <span style={{ color: "oklch(0.55 0.15 30)" }}>Concentric</span>{" "}
-            Model
+          <h2 className="mb-12 text-3xl font-bold text-white sm:text-4xl">
+            The <span className="rr-about-highlight">Concentric</span> Model
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -625,37 +615,15 @@ export default async function AboutPage() {
             ].map((r) => (
               <div
                 key={r.ring}
-                className="rounded-xl p-7 border text-center"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  borderColor: "rgba(255,255,255,0.1)",
-                }}
+                className="rr-about-ring rounded-xl border p-7 text-center"
               >
-                <div
-                  className="text-3xl font-bold mb-2"
-                  style={{
-                    color: "oklch(0.55 0.15 30)",
-                    fontFamily: "var(--font-display)",
-                  }}
-                >
+                <div className="rr-about-stat-value mb-2 text-3xl font-bold">
                   {r.ring}
                 </div>
-                <div
-                  className="text-sm mb-4"
-                  style={{
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <div className="rr-about-ring-count mb-4 text-sm">
                   {r.count}
                 </div>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "rgba(255,255,255,0.6)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="rr-about-body rr-about-body--light text-sm leading-relaxed">
                   {r.desc}
                 </p>
               </div>
@@ -680,16 +648,10 @@ export default async function AboutPage() {
             className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Our <span style={{ color: "oklch(0.55 0.15 30)" }}>Values</span>{" "}
-            &amp; Principles
+            Our <span className="rr-about-highlight">Values</span> &amp;
+            Principles
           </h2>
-          <p
-            className="text-base mb-10 max-w-2xl"
-            style={{
-              color: "oklch(0.45 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="rr-about-body mb-10 max-w-2xl text-base">
             We build an ecosystem of impact-preneurs and trailblazers powered by
             opportunities, resources, innovation and human spirit.
           </p>
@@ -699,15 +661,7 @@ export default async function AboutPage() {
                 key={i}
                 className="bg-white rounded-lg p-6 border border-black/5 shadow-sm"
               >
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "oklch(0.4 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {v}
-                </p>
+                <p className="rr-about-body text-sm leading-relaxed">{v}</p>
               </div>
             ))}
           </div>

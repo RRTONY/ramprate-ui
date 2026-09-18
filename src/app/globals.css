@@ -3566,6 +3566,16 @@ button.bg-gold {
   font-family: var(--font-body), sans-serif;
 }
 
+.rr-about-ring {
+  border-color: rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.05);
+}
+
+.rr-about-ring-count {
+  color: rgb(255 255 255 / 0.5);
+  font-family: var(--font-mono), monospace;
+}
+
 .rr-about-highlight {
   color: var(--rr-gold-deep);
 }
