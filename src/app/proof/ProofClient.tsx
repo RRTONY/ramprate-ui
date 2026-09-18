@@ -235,31 +235,19 @@ export default function ProofClient({
   return (
     <main>
       {/* Hero */}
-      <section
-        className="relative pt-32 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
+      <section className="relative bg-[var(--dark)] pt-32 pb-20 overflow-hidden">
         <div className="glass-orb glass-orb-rust w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)] mb-4 block"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.82_0.15_75)]">
               Proof
             </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h1 className="mb-6 text-4xl font-display font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
               24 Years of <span className="text-gold">Trajectory-Changing</span>{" "}
               Results
             </h1>
-            <p
-              className="text-white/70 text-lg leading-relaxed mb-10"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="mb-10 text-lg font-body leading-relaxed text-white/70">
               Don&#39;t take our word for it. Here&#39;s what our clients say
               about working with RampRate - and why they keep coming back.
             </p>
@@ -271,16 +259,10 @@ export default function ProofClient({
                 { value: "24yrs", label: "Track Record" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div
-                    className="text-2xl font-bold text-[oklch(0.82_0.15_75)] mb-1"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <div className="mb-1 text-2xl font-display font-bold text-[oklch(0.82_0.15_75)]">
                     {stat.value}
                   </div>
-                  <div
-                    className="text-xs text-white/50"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <div className="text-xs font-body text-white/50">
                     {stat.label}
                   </div>
                 </div>
@@ -297,16 +279,10 @@ export default function ProofClient({
           <div className="glass-orb glass-orb-amber w-[200px] h-[200px] bottom-10 -left-20" />
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
             <div className="mb-14">
-              <span
-                className="text-xs font-semibold tracking-[0.2em] uppercase text-[#9b7417]"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <span className="text-xs font-body font-semibold uppercase tracking-[0.2em] text-[#9b7417]">
                 Case Studies
               </span>
-              <h2
-                className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mt-4 text-3xl font-display font-bold tracking-tight sm:text-4xl">
                 Enterprise-Grade <span className="text-gold">Results</span>
               </h2>
             </div>
@@ -317,10 +293,7 @@ export default function ProofClient({
                   className="glass-card-warm p-7 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ background: "rgba(214, 173, 66, 0.14)" }}
-                    >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[rgba(214,173,66,0.14)]">
                       <svg
                         width="18"
                         height="18"
@@ -335,36 +308,23 @@ export default function ProofClient({
                         <polyline points="9 22 9 12 15 12 15 22" />
                       </svg>
                     </div>
-                    <h3
-                      className="text-sm font-bold leading-tight"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
+                    <h3 className="text-sm font-display font-bold leading-tight">
                       {cs.title}
                     </h3>
                   </div>
-                  <div
-                    className="mb-4 px-3 py-2 rounded-md"
-                    style={{ background: "rgba(214, 173, 66, 0.1)" }}
-                  >
-                    <span
-                      className="text-sm font-bold text-[#765910]"
-                      style={{ fontFamily: "var(--font-mono)" }}
-                    >
+                  <div className="mb-4 rounded-md bg-[rgba(214,173,66,0.1)] px-3 py-2">
+                    <span className="text-sm font-mono font-bold text-[#765910]">
                       {cs.result}
                     </span>
                   </div>
-                  <p
-                    className="text-sm text-[oklch(0.4_0.02_50)] leading-relaxed mb-4"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <p className="mb-4 text-sm font-body leading-relaxed text-[oklch(0.4_0.02_50)]">
                     {cs.desc}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {(cs.metrics || []).map((m) => (
                       <span
                         key={m}
-                        className="text-xs px-2 py-1 rounded-full bg-[oklch(0.94_0.03_80)] text-[oklch(0.45_0.02_50)] font-medium"
-                        style={{ fontFamily: "var(--font-body)" }}
+                        className="rounded-full bg-[oklch(0.94_0.03_80)] px-2 py-1 text-xs font-body font-medium text-[oklch(0.45_0.02_50)]"
                       >
                         {m}
                       </span>
@@ -380,13 +340,7 @@ export default function ProofClient({
       {/* Client Logos - from Sanity (121 logos) */}
       <section className="section-light py-16">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <h3
-            className="text-center text-xs font-semibold tracking-[0.2em] uppercase mb-10"
-            style={{
-              color: "oklch(0.5 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <h3 className="mb-10 text-center text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.5_0.02_50)]">
             Trusted by Industry Leaders
           </h3>
           {clientLogos.length > 0 ? (
@@ -405,15 +359,7 @@ export default function ProofClient({
                     {featuredLogos.map((logo) => (
                       <div
                         key={logo._id}
-                        className="flex items-center justify-center transition-all duration-200 hover:scale-105"
-                        style={{
-                          background: "oklch(0.94 0.02 75)",
-                          borderRadius: "10px",
-                          padding: "12px 20px",
-                          minWidth: "100px",
-                          minHeight: "56px",
-                          boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
-                        }}
+                        className="flex min-h-14 min-w-[100px] items-center justify-center rounded-[10px] bg-[oklch(0.94_0.02_75)] px-5 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-200 hover:scale-105"
                       >
                         {logo.url ? (
                           <a
@@ -427,12 +373,7 @@ export default function ProofClient({
                               alt={logo.name}
                               width={100}
                               height={28}
-                              className="object-contain"
-                              style={{
-                                height: "28px",
-                                maxWidth: "100px",
-                                width: "auto",
-                              }}
+                              className="h-7 w-auto max-w-[100px] object-contain"
                               unoptimized
                             />
                           </a>
@@ -442,12 +383,7 @@ export default function ProofClient({
                             alt={logo.name}
                             width={100}
                             height={28}
-                            className="object-contain"
-                            style={{
-                              height: "28px",
-                              maxWidth: "100px",
-                              width: "auto",
-                            }}
+                            className="h-7 w-auto max-w-[100px] object-contain"
                             unoptimized
                           />
                         )}
@@ -459,11 +395,7 @@ export default function ProofClient({
                       {textNames.map((name) => (
                         <span
                           key={name}
-                          className="text-xs font-medium"
-                          style={{
-                            color: "oklch(0.55 0.02 50)",
-                            fontFamily: "var(--font-body)",
-                          }}
+                          className="text-xs font-body font-medium text-[oklch(0.55_0.02_50)]"
                         >
                           {name}
                         </span>
@@ -474,13 +406,7 @@ export default function ProofClient({
               );
             })()
           ) : (
-            <p
-              className="text-center text-sm"
-              style={{
-                color: "oklch(0.5 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="text-center text-sm font-body text-[oklch(0.5_0.02_50)]">
               250+ enterprise clients across 50+ countries.
             </p>
           )}
@@ -492,19 +418,13 @@ export default function ProofClient({
         <section className="relative section-dark py-16 sm:py-20 overflow-hidden">
           <div className="glass-orb glass-orb-rust w-[200px] h-[200px] top-0 -left-20" />
           <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white mb-8"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="mb-8 text-2xl font-display font-bold text-white sm:text-3xl">
               Board of <span className="text-gold">Advisors</span>
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {boardAdvisors.map((m) => (
                 <div key={m._id} className="text-center">
-                  <div
-                    className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-3"
-                    style={{ background: "rgba(255,255,255,0.1)" }}
-                  >
+                  <div className="mx-auto mb-3 h-20 w-20 overflow-hidden rounded-full bg-white/10">
                     {m.photo ? (
                       <Image
                         src={urlFor(m.photo)
@@ -531,23 +451,16 @@ export default function ProofClient({
                       href={m.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-white transition-colors hover:text-gold"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-sm font-body font-semibold text-white transition-colors hover:text-gold"
                     >
                       {m.name}
                     </a>
                   ) : (
-                    <span
-                      className="text-sm font-semibold text-white"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
+                    <span className="text-sm font-body font-semibold text-white">
                       {m.name}
                     </span>
                   )}
-                  <div
-                    className="text-xs text-white/50 mt-0.5"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <div className="mt-0.5 text-xs font-body text-white/50">
                     {m.role}
                   </div>
                   {m.linkedin && (
@@ -555,8 +468,7 @@ export default function ProofClient({
                       href={m.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex mt-1.5 w-5 h-5 rounded-full items-center justify-center hover:bg-white/20 transition-colors"
-                      style={{ background: "rgba(255,255,255,0.1)" }}
+                      className="mt-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
                     >
                       <svg
                         width="10"
@@ -580,27 +492,13 @@ export default function ProofClient({
       {/* B Corp Badge */}
       <section className="section-light py-12">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <div
-            className="inline-flex items-center gap-4 px-8 py-5 rounded-xl border border-black/5"
-            style={{ background: "oklch(0.97 0.01 80)" }}
-          >
-            <div
-              className="text-3xl font-bold text-gold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              B
-            </div>
+          <div className="inline-flex items-center gap-4 rounded-xl border border-black/5 bg-[oklch(0.97_0.01_80)] px-8 py-5">
+            <div className="text-3xl font-display font-bold text-gold">B</div>
             <div className="text-left">
-              <div
-                className="text-sm font-bold"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <div className="text-sm font-body font-bold">
                 Certified B Corporation
               </div>
-              <div
-                className="text-xs text-[oklch(0.5_0.02_50)]"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <div className="text-xs font-body text-[oklch(0.5_0.02_50)]">
                 Meeting the highest standards of social and environmental
                 performance
               </div>
@@ -616,16 +514,10 @@ export default function ProofClient({
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
-              <h2
-                className="text-3xl sm:text-4xl font-bold tracking-tight mb-2"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mb-2 text-3xl font-display font-bold tracking-tight sm:text-4xl">
                 What Our <span className="text-gold">Clients</span> Say
               </h2>
-              <p
-                className="text-sm text-[oklch(0.5_0.02_50)]"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <p className="text-sm font-body text-[oklch(0.5_0.02_50)]">
                 {activeFilter === "All"
                   ? `${testimonials.length} voices. Two decades. One consistent thread: Tony and his team deliver.`
                   : `${filteredTestimonials.length} ${activeFilter} testimonials.`}
@@ -649,26 +541,14 @@ export default function ProofClient({
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
-                  className="text-xs px-3 py-2 rounded-full font-semibold tracking-wide transition-all shadow-sm"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    background:
-                      activeFilter === cat ? "#d6ad42" : "oklch(0.94 0.03 80)",
-                    color: activeFilter === cat ? "#071221" : "#344254",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeFilter !== cat)
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        "#eee2bd";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeFilter !== cat)
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        "#fbfaf7";
-                  }}
+                  className={`rounded-full px-3 py-2 text-xs font-mono font-semibold tracking-wide transition-colors ${
+                    activeFilter === cat
+                      ? "bg-gold text-[#071221]"
+                      : "bg-[#fbfaf7] text-[#344254] hover:bg-[#eee2bd]"
+                  }`}
                 >
                   {cat}{" "}
-                  <span style={{ opacity: 0.6, marginLeft: "2px" }}>
+                  <span className="ml-0.5 opacity-60">
                     ({counts[cat] || 0})
                   </span>
                 </button>
@@ -679,17 +559,11 @@ export default function ProofClient({
             {filteredTestimonials.map((t, i) => (
               <div
                 key={i}
-                className="break-inside-avoid rounded-xl p-7 border hover:shadow-md transition-shadow"
-                style={{
-                  background:
-                    t.tier === "principal"
-                      ? "oklch(0.97 0.02 30)"
-                      : "oklch(0.97 0.01 80)",
-                  borderColor:
-                    t.tier === "principal"
-                      ? "rgba(214, 173, 66, 0.28)"
-                      : "rgba(0,0,0,0.05)",
-                }}
+                className={`break-inside-avoid rounded-xl border p-7 transition-shadow hover:shadow-md ${
+                  t.tier === "principal"
+                    ? "border-[rgba(214,173,66,0.28)] bg-[oklch(0.97_0.02_30)]"
+                    : "border-black/5 bg-[oklch(0.97_0.01_80)]"
+                }`}
               >
                 <div className="flex items-center justify-between mb-4">
                   <svg
@@ -702,55 +576,26 @@ export default function ProofClient({
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                   <div className="flex items-center gap-2">
-                    <span
-                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        background: "oklch(0.94 0.03 80)",
-                        color: "oklch(0.45 0.02 50)",
-                      }}
-                    >
+                    <span className="rounded-full bg-[oklch(0.94_0.03_80)] px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wide text-[oklch(0.45_0.02_50)]">
                       {t.tag}
                     </span>
                     {t.tier === "principal" && (
-                      <span
-                        className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          background: "rgba(214, 173, 66, 0.14)",
-                          color: "#765910",
-                        }}
-                      >
+                      <span className="rounded-full bg-[rgba(214,173,66,0.14)] px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wide text-[#765910]">
                         Principal
                       </span>
                     )}
                   </div>
                 </div>
-                <p
-                  className="text-sm leading-relaxed mb-5 italic"
-                  style={{
-                    color: "oklch(0.35 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="mb-5 text-sm font-body italic leading-relaxed text-[oklch(0.35_0.02_50)]">
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <div className="border-t border-black/5 pt-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div
-                        className="text-sm font-semibold"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
+                      <div className="text-sm font-body font-semibold">
                         {t.personName}
                       </div>
-                      <div
-                        className="text-xs"
-                        style={{
-                          color: "oklch(0.5 0.02 50)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <div className="text-xs font-body text-[oklch(0.5_0.02_50)]">
                         {t.role}
                         {t.company ? `, ${t.company}` : ""}
                       </div>
@@ -762,8 +607,7 @@ export default function ProofClient({
                             href={t.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors"
-                            style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                            className="flex h-6 w-6 items-center justify-center rounded-full bg-[oklch(0.55_0.15_30_/_0.1)] transition-colors hover:bg-[oklch(0.55_0.15_30)]/20"
                           >
                             <svg
                               width="11"
@@ -781,8 +625,7 @@ export default function ProofClient({
                             href={t.twitter}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[oklch(0.55_0.15_30)]/20 transition-colors"
-                            style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
+                            className="flex h-6 w-6 items-center justify-center rounded-full bg-[oklch(0.55_0.15_30_/_0.1)] transition-colors hover:bg-[oklch(0.55_0.15_30)]/20"
                           >
                             <svg
                               width="11"
@@ -823,27 +666,18 @@ export default function ProofClient({
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0110 0v4" />
                 </svg>
-                <span
-                  className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.82_0.15_75)]"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <span className="text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.82_0.15_75)]">
                   Confidential Engagements
                 </span>
               </div>
-              <h2
-                className="text-3xl sm:text-4xl font-bold text-white mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
                 What Our{" "}
                 <span className="text-[oklch(0.82_0.15_75)]">
                   Confidential Clients
                 </span>{" "}
                 Say
               </h2>
-              <p
-                className="text-sm text-white/50 max-w-2xl mx-auto leading-relaxed italic"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <p className="mx-auto max-w-2xl text-sm font-body italic leading-relaxed text-white/50">
                 Many of our most impactful engagements are protected by NDA.
                 We&#39;ve shared these with permission, with identifying details
                 removed. References are available to qualified prospects upon
@@ -867,9 +701,8 @@ export default function ProofClient({
                       <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                     </svg>
                     <span
-                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase"
+                      className="rounded-full px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wide"
                       style={{
-                        fontFamily: "var(--font-mono)",
                         background: `color-mix(in oklch, ${divisionColors[t.division] ?? "oklch(0.82 0.15 75)"}, transparent 85%)`,
                         color:
                           divisionColors[t.division] ?? "oklch(0.82 0.15 75)",
@@ -878,10 +711,7 @@ export default function ProofClient({
                       {t.division}
                     </span>
                   </div>
-                  <p
-                    className="text-sm text-white/70 leading-relaxed mb-5 italic"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <p className="mb-5 text-sm font-body italic leading-relaxed text-white/70">
                     &quot;{t.quote}&quot;
                   </p>
                   <div className="border-t border-white/[0.06] pt-4">
@@ -905,10 +735,7 @@ export default function ProofClient({
                         />
                         <path d="M7 11V7a5 5 0 0110 0v4" />
                       </svg>
-                      <span
-                        className="text-xs text-white/40 italic"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
+                      <span className="text-xs font-body italic text-white/40">
                         {t.attribution}
                       </span>
                     </div>
@@ -919,13 +746,7 @@ export default function ProofClient({
             <div className="text-center mt-12">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-all shadow-lg"
-                style={{
-                  background: "oklch(0.82 0.15 75)",
-                  color: "oklch(0.15 0.02 75)",
-                  fontFamily: "var(--font-body)",
-                  boxShadow: "0 10px 30px oklch(0.82 0.15 75 / 0.2)",
-                }}
+                className="inline-flex items-center gap-2 rounded-md bg-[oklch(0.82_0.15_75)] px-7 py-3.5 text-sm font-body font-semibold text-[oklch(0.15_0.02_75)] shadow-[0_10px_30px_oklch(0.82_0.15_75_/_0.2)] transition-all"
               >
                 Request References
                 <svg
@@ -939,10 +760,7 @@ export default function ProofClient({
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p
-                className="text-xs text-white/30 mt-4"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
+              <p className="mt-4 text-xs font-body text-white/30">
                 References available to qualified prospects under NDA
               </p>
             </div>
@@ -953,26 +771,16 @@ export default function ProofClient({
       {/* CTA */}
       <section className="rr-public-surface py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
             Ready to Write Your Own Success Story?
           </h2>
-          <p
-            className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mx-auto mb-8 max-w-2xl text-base font-body leading-relaxed text-white/80 sm:text-lg">
             The audit is free. The ROI guarantee is real. Let&#39;s talk.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
-              style={{
-                color: "#071221",
-                fontFamily: "var(--font-body)",
-              }}
+              className="inline-flex items-center gap-2 rounded-md bg-white px-7 py-3.5 text-sm font-body font-semibold text-[#071221] shadow-lg transition-all hover:bg-white/90"
             >
               Start a Conversation
               <svg
@@ -988,8 +796,7 @@ export default function ProofClient({
             </Link>
             <Link
               href="/process#flow-circuit"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-white/30 px-7 py-3.5 text-sm font-body font-semibold text-white transition-all hover:bg-white/10"
             >
               <svg
                 width="14"
@@ -1005,8 +812,7 @@ export default function ProofClient({
             </Link>
             <Link
               href="/process#find-me"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-white/30 px-7 py-3.5 text-sm font-body font-semibold text-white transition-all hover:bg-white/10"
             >
               <svg
                 width="14"

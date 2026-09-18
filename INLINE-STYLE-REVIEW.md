@@ -24,6 +24,7 @@ The inventory found inline styles across public, protected, and Flow product sur
 4. The root global-error boundary now uses a self-contained semantic stylesheet because it cannot rely on the root global CSS after a layout-level failure; its recovery control retains visible keyboard focus and an assertive accessible error announcement.
 5. Flow Assessment phase textures and Flow Alignment Results text wrapping now use scoped CSS or semantic Tailwind utilities. The remaining Flow inline styles are dynamic progress, geometry, visual-model colors, or calculated entry delays.
 6. The Open Graph image generator retains renderer-required inline layout declarations because it produces an image response rather than browser DOM; these values cannot be represented safely by static page classes.
+7. The public Proof route now uses shared RampRate typography utilities and static Tailwind presentation tokens for its hero, client proof, advisors, filter controls, testimonial cards, confidential CTA, and closing actions. Its single remaining JSX style object derives a confidential-testimonial badge background and foreground from the managed `division` value.
 
 ## Guardrail
 

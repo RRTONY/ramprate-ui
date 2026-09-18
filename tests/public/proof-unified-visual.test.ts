@@ -16,4 +16,22 @@ describe("Case Studies unified visual system", () => {
       'style={{ background: "oklch(0.55 0.15 30)" }}',
     );
   });
+
+  it("keeps reusable Proof presentation in classes while retaining only division-derived colors inline", async () => {
+    const source = await readFile(
+      resolve(process.cwd(), "src/app/proof/ProofClient.tsx"),
+      "utf8",
+    );
+
+    expect(source).toContain("font-display");
+    expect(source).toContain("font-body");
+    expect(source).toContain("font-mono");
+    expect(source).toContain('href="/process#flow-circuit"');
+    expect(source).toContain('href="/process#find-me"');
+    expect(source).toContain("divisionColors[t.division]");
+    expect(source.match(/style=\{\{/g) ?? []).toHaveLength(1);
+    expect(source).not.toContain("fontFamily:");
+    expect(source).not.toContain("onMouseEnter=");
+    expect(source).not.toContain("onMouseLeave=");
+  });
 });
