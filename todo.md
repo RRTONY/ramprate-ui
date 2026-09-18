@@ -88,6 +88,7 @@
 - [x] Add or extend public-route contract coverage for the remaining marketing pages and verify representative desktop and mobile rendering states.
 - [x] Add a representative public-route matrix contract covering shared shell inheritance, canonical service paths, intentional compatibility redirects, specialist public intake routes, and protected access-gate routes.
 - [x] Replace residual legacy Sanity import paths in public routes with the active managed-database content modules and validate equivalent behavior.
+- [x] Refresh the homepage hero with a brighter vibrant-sunset office illustration, illuminated people approaching the workplace, and a B Lab Certified credential treatment that replaces the current oval badge without changing hero messaging or actions.
 - [x] Add a repository-level `typecheck` command and a webpack production-build fallback to address the managed build toolchain failure.
 - [x] Replace credential-form textual loading indicators with the required accessible Lucide spinner treatment.
 - [x] Replace the remote Flow authentication proxy with a direct Supabase cookie-session implementation after explicit dependency approval and secure runtime credentials are available. Superseded by the later decision to preserve the existing backend.

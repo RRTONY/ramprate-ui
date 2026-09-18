@@ -38,8 +38,12 @@ describe("home visual contract", () => {
 
     expect(hero).not.toBeNull();
     expect(
-      hero?.querySelector('img[src="/hero.webp"]')?.getAttribute("alt"),
-    ).toBe("Technology advisory team collaborating in a modern office");
+      hero
+        ?.querySelector('img[src*="VFawfsbNshYpRmcd.png"]')
+        ?.getAttribute("alt"),
+    ).toBe(
+      "Professionals walking toward an illuminated modern office at sunset",
+    );
     expect(hero?.textContent).toMatch(
       /make complex technology decisions pay off/i,
     );

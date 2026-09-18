@@ -199,20 +199,23 @@ export default function HomeContent() {
           <div className="home-blue-hero-copy max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
             <div className="max-w-2xl">
               <div className="home-blue-eyebrow mb-8">
-                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
-                    <a
-                      href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:text-white transition-colors"
-                    >
-                      B Lab Certified
-                    </a>{" "}
-                    · Since 2000
+                <a
+                  href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="home-blue-certification"
+                >
+                  <span
+                    className="home-blue-certification-mark"
+                    aria-hidden="true"
+                  >
+                    B
                   </span>
-                </span>
+                  <span className="home-blue-certification-copy">
+                    <span>B Lab Certified</span>
+                    <span>Since 2000</span>
+                  </span>
+                </a>
               </div>
 
               <h1 className="home-blue-title max-w-3xl font-display text-[clamp(3.1rem,7vw,5.7rem)] font-bold leading-[0.94] tracking-[-0.035em] text-white">

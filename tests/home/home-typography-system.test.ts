@@ -21,7 +21,8 @@ describe("homepage typography and accent system", () => {
     expect(styles).toContain(
       ".rr-kicker {\n  color: var(--gold);\n  font-family: var(--font-body);",
     );
-    expect(styles).toContain("rgb(3 9 20 / 0.93) 0%");
+    expect(styles).toContain("rgb(3 9 20 / 0.82) 0%");
+    expect(styles).toContain(".home-blue-certification {");
     expect(styles).not.toContain(
       ".home-blue .glass-orb-pink {\n  background: #7260c7;",
     );

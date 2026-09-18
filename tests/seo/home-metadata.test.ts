@@ -41,8 +41,9 @@ describe("home page SEO metadata", () => {
       "utf8",
     );
 
-    expect(heroMedia).toMatch(
-      /src="\/hero\.webp"\s+alt="Technology advisory team collaborating in a modern office"/,
+    expect(heroMedia).toContain("VFawfsbNshYpRmcd.png");
+    expect(heroMedia).toContain(
+      'alt="Professionals walking toward an illuminated modern office at sunset"',
     );
   });
 
@@ -58,7 +59,7 @@ describe("home page SEO metadata", () => {
     ]);
     const renderedImageAlternatives = [
       imageAlternative(logo, "/ramprate-logo.png"),
-      imageAlternative(heroMedia, "/hero.webp"),
+      heroMedia.match(/alt="([^"]+)"/)?.[1],
       imageAlternative(logo, "/ramprate-logo.png"),
     ];
 

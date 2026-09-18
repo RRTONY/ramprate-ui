@@ -62,13 +62,13 @@ describe("public homepage refresh contract", () => {
     expect(home).toContain("noia-editorial_7fa1f45a.jpg");
     expect(home).toContain("home-proof-card-image");
     expect(home).toContain("rr-booking-action");
-    expect(media).toContain("/hero.webp");
+    expect(media).toContain("VFawfsbNshYpRmcd.png");
     expect(media).toContain("ramprate-cinematic-hero-loop_9982d784.mp4");
     expect(media).toContain("onCanPlay={() => setVideoReady(true)}");
     expect(media).toContain('"is-ready"');
     expect(styles).toContain(".rr-public-header {");
     expect(styles).toContain(".rr-public-footer {");
-    expect(styles).toContain(".home-blue-eyebrow > span,");
+    expect(styles).toContain(".home-blue-certification {");
     expect(styles).toContain("backdrop-filter: blur(16px) saturate(125%)");
     expect(styles).toContain(".home-blue-actions > a:last-child {");
     expect(styles).toContain(".rr-client-wall-ledger {");

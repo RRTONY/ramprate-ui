@@ -21,10 +21,12 @@ describe("cinematic homepage hero media", () => {
     expect(media).toContain("autoPlay");
     expect(media).toContain("muted");
     expect(media).toContain("loop");
-    expect(media).toContain('src="/hero.webp"');
+    expect(media).toContain("VFawfsbNshYpRmcd.png");
+    expect(media).toContain("illuminated modern office at sunset");
     expect(media).toContain("ramprate-cinematic-hero-loop_9982d784.mp4");
     expect(css).toContain("rr-cinematic-hero-scroll");
     expect(css).toContain("animation-timeline: scroll(root)");
     expect(css).toContain("prefers-reduced-motion: reduce");
+    expect(css).toContain(".home-blue-certification");
   });
 });

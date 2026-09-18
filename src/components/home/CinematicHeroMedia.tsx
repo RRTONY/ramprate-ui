@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const HERO_VIDEO = "/manus-storage/ramprate-cinematic-hero-loop_9982d784.mp4";
+const HERO_IMAGE =
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663947056547/VFawfsbNshYpRmcd.png";
 
 export default function CinematicHeroMedia() {
   const [canAnimate, setCanAnimate] = useState(false);
@@ -26,8 +28,8 @@ export default function CinematicHeroMedia() {
   return (
     <>
       <Image
-        src="/hero.webp"
-        alt="Technology advisory team collaborating in a modern office"
+        src={HERO_IMAGE}
+        alt="Professionals walking toward an illuminated modern office at sunset"
         fill
         priority
         sizes="100vw"
@@ -40,7 +42,7 @@ export default function CinematicHeroMedia() {
           muted
           loop
           playsInline
-          poster="/hero.webp"
+          poster={HERO_IMAGE}
           preload="metadata"
           aria-hidden="true"
           onCanPlay={() => setVideoReady(true)}
