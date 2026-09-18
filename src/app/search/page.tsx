@@ -101,7 +101,7 @@ export default async function SearchPage({
   };
 
   return (
-    <div style={{ background: "var(--dark)", minHeight: "100vh" }}>
+    <div className="min-h-screen bg-[var(--dark)]">
       <JsonLd data={searchJsonLd} />
 
       {/* ── HERO ── */}
@@ -111,24 +111,15 @@ export default async function SearchPage({
 
         {/* max-w-7xl matches the header and results section so left edges align */}
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 sm:mb-4 block"
-            style={{ color: "var(--gold)", fontFamily: "var(--font-body)" }}
-          >
+          <span className="mb-3 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[var(--gold)] sm:mb-4">
             Search
           </span>
 
-          <h1
-            className="font-bold text-white mb-5 sm:mb-8 leading-tight"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2rem, 5vw, 3.5rem)",
-            }}
-          >
+          <h1 className="mb-5 text-[clamp(2rem,5vw,3.5rem)] font-display font-bold leading-tight text-white sm:mb-8">
             {q ? (
               <>
                 Results for{" "}
-                <span style={{ color: "oklch(0.82 0.15 75)" }}>
+                <span className="text-[oklch(0.82_0.15_75)]">
                   &ldquo;{q}&rdquo;
                 </span>
               </>
@@ -143,13 +134,7 @@ export default async function SearchPage({
           </div>
 
           {q && totalCount > 0 && (
-            <p
-              className="mt-4 text-sm"
-              style={{
-                color: "rgba(255,255,255,0.35)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="mt-4 text-sm font-body text-white/35">
               {totalCount} result{totalCount !== 1 ? "s" : ""} found
             </p>
           )}
@@ -165,10 +150,7 @@ export default async function SearchPage({
         {pageMatches.length > 0 && (
           <section className="mb-16">
             <div className="flex items-center justify-between mb-6">
-              <h2
-                className="text-lg sm:text-xl font-bold text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="text-lg font-display font-bold text-white sm:text-xl">
                 Pages
                 <span
                   className="ml-2 text-sm font-normal"
@@ -190,10 +172,7 @@ export default async function SearchPage({
         {blogPosts.length > 0 && (
           <section className="mb-16">
             <div className="flex items-center justify-between mb-6">
-              <h2
-                className="text-lg sm:text-xl font-bold text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="text-lg font-display font-bold text-white sm:text-xl">
                 Blog Posts
                 <span
                   className="ml-2 text-sm font-normal"
@@ -204,8 +183,7 @@ export default async function SearchPage({
               </h2>
               <Link
                 href="/blog"
-                className="text-xs font-medium transition-opacity hover:opacity-70"
-                style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
+                className="text-xs font-mono font-medium text-[var(--gold)] transition-opacity hover:opacity-70"
               >
                 View all →
               </Link>
@@ -222,10 +200,7 @@ export default async function SearchPage({
         {thinkingPosts.length > 0 && (
           <section className="mb-16">
             <div className="flex items-center justify-between mb-6">
-              <h2
-                className="text-lg sm:text-xl font-bold text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h2 className="text-lg font-display font-bold text-white sm:text-xl">
                 Thinking
                 <span
                   className="ml-2 text-sm font-normal"
@@ -236,8 +211,7 @@ export default async function SearchPage({
               </h2>
               <Link
                 href="/thinking"
-                className="text-xs font-medium transition-opacity hover:opacity-70"
-                style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
+                className="text-xs font-mono font-medium text-[var(--gold)] transition-opacity hover:opacity-70"
               >
                 View all →
               </Link>
@@ -270,29 +244,19 @@ function SearchPageCard({ page }: { page: SitePage }) {
       }}
     >
       <span
-        className="inline-block text-[9px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full mb-3"
+        className="inline-block mb-3 rounded-full px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-[0.2em]"
         style={{
           background: "rgba(212,168,67,0.10)",
           color: "var(--gold)",
           border: "1px solid rgba(212,168,67,0.18)",
-          fontFamily: "var(--font-mono)",
         }}
       >
         {page.type === "practice" ? "Practice" : "Page"}
       </span>
-      <h3
-        className="text-base font-bold text-white mb-2 leading-snug hover:opacity-80 transition-opacity"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <h3 className="mb-2 text-base font-display font-bold leading-snug text-white transition-opacity hover:opacity-80">
         {page.title}
       </h3>
-      <p
-        className="text-sm leading-relaxed"
-        style={{
-          color: "rgba(255,255,255,0.45)",
-          fontFamily: "var(--font-body)",
-        }}
-      >
+      <p className="text-sm font-body leading-relaxed text-white/45">
         {page.description}
       </p>
     </Link>
@@ -361,12 +325,11 @@ function SearchPostCard({
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <span
-              className="text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full"
+              className="rounded-full px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.25em]"
               style={{
                 background: "rgba(212,168,67,0.12)",
                 color: "oklch(0.82 0.15 75)",
                 border: "1px solid rgba(212,168,67,0.2)",
-                fontFamily: "var(--font-mono)",
               }}
             >
               {post.categories?.[0]?.title ?? "RampRate"}
@@ -415,37 +378,20 @@ function SearchPostCard({
           ))}
         </div>
 
-        <h3
-          className="text-base font-bold text-white mb-2 leading-snug"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <h3 className="mb-2 text-base font-display font-bold leading-snug text-white">
           <Link href={href} className="hover:opacity-80 transition-opacity">
             {post.title}
           </Link>
         </h3>
 
         {post.excerpt && (
-          <p
-            className="text-sm mb-4 line-clamp-3 leading-relaxed"
-            style={{
-              color: "rgba(255,255,255,0.45)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="mb-4 line-clamp-3 text-sm font-body leading-relaxed text-white/45">
             {post.excerpt}
           </p>
         )}
 
         {date && (
-          <p
-            className="text-xs font-medium"
-            style={{
-              color: "rgba(255,255,255,0.25)",
-              fontFamily: "var(--font-mono)",
-            }}
-          >
-            {date}
-          </p>
+          <p className="text-xs font-mono font-medium text-white/25">{date}</p>
         )}
       </div>
     </article>
@@ -490,19 +436,10 @@ function EmptyQuery() {
           <path d="m21 21-4.35-4.35" />
         </svg>
       </div>
-      <h2
-        className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-3"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <h2 className="mb-2 text-lg font-display font-bold text-white sm:mb-3 sm:text-2xl">
         What are you looking for?
       </h2>
-      <p
-        className="text-sm max-w-sm leading-relaxed mb-4 sm:mb-8"
-        style={{
-          color: "rgba(255,255,255,0.4)",
-          fontFamily: "var(--font-body)",
-        }}
-      >
+      <p className="mb-4 max-w-sm text-sm font-body leading-relaxed text-white/40 sm:mb-8">
         Search pages, blog posts, and insights across RampRate - enterprise IT
         sourcing, cloud infrastructure, Web3, BioChain Sourcing, and more.
       </p>
@@ -552,19 +489,10 @@ function NoResults({ query }: { query: string }) {
           <path d="m21 21-4.35-4.35" />
         </svg>
       </div>
-      <h2
-        className="text-xl sm:text-2xl font-bold text-white mb-3"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <h2 className="mb-3 text-xl font-display font-bold text-white sm:text-2xl">
         No results for &ldquo;{query}&rdquo;
       </h2>
-      <p
-        className="text-sm max-w-sm leading-relaxed mb-8"
-        style={{
-          color: "rgba(255,255,255,0.4)",
-          fontFamily: "var(--font-body)",
-        }}
-      >
+      <p className="mb-8 max-w-sm text-sm font-body leading-relaxed text-white/40">
         Try different or shorter keywords, or browse our content directly.
       </p>
       <div className="flex gap-3 flex-wrap justify-center">

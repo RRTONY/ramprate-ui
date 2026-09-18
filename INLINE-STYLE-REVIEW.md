@@ -29,6 +29,8 @@ The inventory found inline styles across public, protected, and Flow product sur
 9. The completed Champions route was reviewed at desktop and mobile breakpoints. The qualification list, application form, anchored actions, contrast, and closing controls retained their responsive hierarchy after semantic style extraction.
 10. The Values route has predominantly fixed palette, typography, texture, card, and CTA styles that are suitable for a later semantic extraction. Its three `item.color` uses are data-derived from managed service-card records and must remain inline; mapped index-driven alternation requires separate review.
 11. Desktop review confirmed that the shared public display token renders legibly in the homepage footer reference heading and Values hero. The ongoing typography pass will retain Playfair Display for editorial headings, DM Sans for body and interface text, and JetBrains Mono only for compact labels, without altering separate Flow or CMS typography.
+12. BioChain overview contains 163 inline-style sites, including 129 explicit typography values, alongside product-map, supplier-evaluation, and comparison visualization styling. Its data colors, calculated layout, and specialized route behavior require a separate component-level classification rather than mechanical replacement.
+13. The Search route’s fixed shell, hero, result headings, labels, and empty-state typography are suitable for utility extraction. Query text, result counts, category data, and route-dependent badge color states remain dynamic. Desktop review confirmed the approved display heading and shared label treatment remain legible.
 
 ## Guardrail
 
