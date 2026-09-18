@@ -26,27 +26,15 @@ export default function PaymentsIntelPage() {
           },
         ])}
       />
-      <section className="pt-32 pb-14" style={{ background: "var(--dark)" }}>
+      <section className="bg-[var(--dark)] pt-32 pb-14">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[var(--gold-light)]">
             Market Intelligence
           </span>
-          <h1
-            className="text-3xl sm:text-4xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
             Industry Classifications &amp; Processor Intelligence
           </h1>
-          <p
-            className="text-white/60 text-base"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="text-base font-body text-white/60">
             Click any industry card to see matched processor recommendations.
           </p>
         </div>
@@ -54,24 +42,12 @@ export default function PaymentsIntelPage() {
 
       <section className="section-light py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-xl font-bold mb-6"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "oklch(0.2 0.02 50)",
-            }}
-          >
+          <h2 className="mb-6 text-xl font-display font-bold text-[oklch(0.2_0.02_50)]">
             25 Industry Verticals
           </h2>
           <IndustryGrid />
 
-          <h2
-            className="text-xl font-bold mb-6 mt-16"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "oklch(0.2 0.02 50)",
-            }}
-          >
+          <h2 className="mt-16 mb-6 text-xl font-display font-bold text-[oklch(0.2_0.02_50)]">
             25 Payment Processors &amp; Gateways
           </h2>
           <div
@@ -85,10 +61,9 @@ export default function PaymentsIntelPage() {
                     (h) => (
                       <th
                         key={h}
-                        className="text-left px-4 py-3 text-[11px] uppercase tracking-wide whitespace-nowrap"
+                        className="whitespace-nowrap px-4 py-3 text-left text-[11px] font-mono uppercase tracking-wide"
                         style={{
                           color: "white",
-                          fontFamily: "var(--font-mono)",
                         }}
                       >
                         {h}
@@ -107,40 +82,16 @@ export default function PaymentsIntelPage() {
                       borderBottom: "1px solid oklch(0.9 0.01 70)",
                     }}
                   >
-                    <td
-                      className="px-4 py-3 font-bold"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        color: "oklch(0.52 0.12 70)",
-                      }}
-                    >
+                    <td className="px-4 py-3 font-display font-bold text-[oklch(0.52_0.12_70)]">
                       {p.name}
                     </td>
-                    <td
-                      className="px-4 py-3"
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        color: "oklch(0.2 0.02 50)",
-                      }}
-                    >
+                    <td className="px-4 py-3 font-body text-[oklch(0.2_0.02_50)]">
                       {p.bestFor}
                     </td>
-                    <td
-                      className="px-4 py-3 whitespace-nowrap"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        color: "oklch(0.45 0.02 50)",
-                      }}
-                    >
+                    <td className="whitespace-nowrap px-4 py-3 font-mono text-[oklch(0.45_0.02_50)]">
                       {p.avgRate}
                     </td>
-                    <td
-                      className="px-4 py-3"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        color: "oklch(0.45 0.02 50)",
-                      }}
-                    >
+                    <td className="px-4 py-3 font-mono text-[oklch(0.45_0.02_50)]">
                       {p.minVolume}
                     </td>
                   </tr>

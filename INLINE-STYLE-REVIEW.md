@@ -35,6 +35,7 @@ The inventory found inline styles across public, protected, and Flow product sur
 15. Service Provider Intelligence now uses the approved public body, mono, and display typography utilities throughout its hero, analysis panels, data pillars, platform scale, and comparison cards. Supplier metrics and intelligence content remain unchanged; no inline font-family declarations remain on the route.
 16. Attorney RFI mixes fixed public typography with interactive form controls and selected-state colors. Its form value, selection, and submission behavior must remain isolated from future source-quality extraction; only confirmed fixed typography and surface declarations are candidates for migration.
 17. Terms now uses the approved public display, body, and mono typography utilities across its hero, legal-content headings and copy, metadata, and privacy action. Legal content and navigation remain unchanged; no inline font-family declarations remain on the route.
+18. Payments Advisory Intel now uses the approved public display, body, and mono utilities for its market-intelligence hero, section headings, and processor benchmark table. Processor data and table behavior remain unchanged; no inline font-family declarations remain on the route.
 
 ## Guardrail
 
