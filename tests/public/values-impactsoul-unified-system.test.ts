@@ -34,4 +34,22 @@ describe("Values and ImpactSol unified public system", () => {
     expect(impactSol).toContain("ImpactSol - Since 2024");
     expect(impactSol).toContain('className="rr-public-cta py-16 sm:py-20"');
   });
+
+  it("uses public font utilities for fixed ImpactSol typography while retaining only accent and methodology-derived inline colors", async () => {
+    const impactSol = await readFile(
+      resolve(process.cwd(), "src/app/impactsoul/page.tsx"),
+      "utf8",
+    );
+
+    expect(impactSol).toContain("font-display");
+    expect(impactSol).toContain("font-body");
+    expect(impactSol).toContain("font-mono");
+    expect(impactSol).not.toContain("fontFamily:");
+    expect(impactSol).toContain("var(--impactsol-accent)");
+    expect(impactSol).toContain("step.color.replace");
+    expect(impactSol).toContain("style={{ color: step.color }}");
+    expect(impactSol).toContain('href="/contact"');
+    expect(impactSol).toContain('href="/process#flow-circuit"');
+    expect(impactSol).toContain('href="/process#find-me"');
+  });
 });

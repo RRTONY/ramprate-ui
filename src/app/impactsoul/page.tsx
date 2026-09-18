@@ -274,36 +274,21 @@ export default function ImpactSoulPage() {
         ])}
       />
       {/* Hero */}
-      <section
-        className="relative pt-32 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
+      <section className="relative overflow-hidden bg-[var(--dark)] pt-32 pb-20">
         <div className="glass-orb glass-orb-rust w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-              style={{
-                color: "oklch(0.82 0.15 75)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="mb-4 block text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.82_0.15_75)]">
               ImpactSol - Since 2024
             </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h1 className="mb-6 text-4xl font-display font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
               Tokenize Assets to Rally{" "}
               <span style={{ color: "var(--impactsol-accent)" }}>
                 Impact Movements
               </span>
             </h1>
-            <p
-              className="text-white/70 text-lg leading-relaxed mb-10"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="mb-10 text-lg font-body leading-relaxed text-white/70">
               Turn cultural treasures and purpose into powerful economic
               engines. For NGOs & Stewards of Art & Artifacts.
             </p>
@@ -314,19 +299,10 @@ export default function ImpactSoulPage() {
                 { value: "Comp", label: "7.5% of asset equity to launch" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div
-                    className="text-xl font-bold mb-1"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+                  <div className="mb-1 text-xl font-display font-bold text-[oklch(0.82_0.15_75)]">
                     {stat.value}
                   </div>
-                  <div
-                    className="text-xs text-white/50"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <div className="text-xs font-body text-white/50">
                     {stat.label}
                   </div>
                 </div>
@@ -341,28 +317,13 @@ export default function ImpactSoulPage() {
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{
-              color: "oklch(0.55 0.15 30)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.55_0.15_30)]">
             The Mission
           </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mt-4 text-3xl font-display font-bold tracking-tight sm:text-4xl">
             Millions for Impact. 3× Revenue. Up to 10× Value.
           </h2>
-          <div
-            className="mt-8 space-y-5 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <div className="mt-8 space-y-5 text-base font-body leading-relaxed text-[oklch(0.4_0.02_50)]">
             <p>
               ImpactSoul exists at the intersection of purpose and economics. We
               help NGOs, cultural institutions, and impact-driven organizations
@@ -385,28 +346,13 @@ export default function ImpactSoulPage() {
         <div className="glass-orb glass-orb-rust w-[160px] h-[160px] top-20 -right-20" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.55_0.15_30)]">
               Syzygy Methodology
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="mt-4 text-3xl font-display font-bold tracking-tight sm:text-4xl">
               Impact DNA™
             </h2>
-            <p
-              className="mt-4 text-base max-w-2xl mx-auto leading-relaxed"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="mx-auto mt-4 max-w-2xl text-base font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
               A three-step process to align your organization&apos;s values with
               its actions - and turn that alignment into economic advantage.
             </p>
@@ -417,10 +363,7 @@ export default function ImpactSoulPage() {
                 key={step.num}
                 className="bg-white rounded-xl p-7 border border-black/5 relative overflow-hidden"
               >
-                <div
-                  className="absolute top-4 right-4 text-5xl font-black text-black/[0.04]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
+                <div className="absolute top-4 right-4 text-5xl font-mono font-black text-black/[0.04]">
                   {step.num}
                 </div>
                 <div
@@ -431,34 +374,17 @@ export default function ImpactSoulPage() {
                 >
                   <span style={{ color: step.color }}>{dnaIcons[i]}</span>
                 </div>
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="mb-3 text-xl font-display font-bold">
                   {step.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "oklch(0.45 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                   {step.desc}
                 </p>
               </div>
             ))}
           </div>
-          <div
-            className="rounded-xl p-8 border border-black/5"
-            style={{ background: "oklch(0.97 0.01 80)" }}
-          >
-            <h3
-              className="text-lg font-bold mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Outcomes
-            </h3>
+          <div className="rounded-xl border border-black/5 bg-[oklch(0.97_0.01_80)] p-8">
+            <h3 className="mb-5 text-lg font-display font-bold">Outcomes</h3>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
               {dnaOutcomes.map((outcome) => (
                 <div key={outcome} className="flex items-center gap-3">
@@ -476,13 +402,7 @@ export default function ImpactSoulPage() {
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
-                  <span
-                    className="text-sm"
-                    style={{
-                      color: "oklch(0.4 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <span className="text-sm font-body text-[oklch(0.4_0.02_50)]">
                     {outcome}
                   </span>
                 </div>
@@ -502,30 +422,15 @@ export default function ImpactSoulPage() {
               className="w-20 h-20 shrink-0 rounded-full border-4 flex items-center justify-center"
               style={{ borderColor: "oklch(0.55 0.15 30)" }}
             >
-              <span
-                className="text-3xl font-bold"
-                style={{
-                  color: "oklch(0.55 0.15 30)",
-                  fontFamily: "var(--font-display)",
-                }}
-              >
+              <span className="text-3xl font-display font-bold text-[oklch(0.55_0.15_30)]">
                 B
               </span>
             </div>
             <div>
-              <h3
-                className="text-xl font-bold mb-2"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
+              <h3 className="mb-2 text-xl font-display font-bold">
                 Certified B Corporation
               </h3>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                 RampRate is a Certified B Corp - meeting the highest standards
                 of verified social and environmental performance, public
                 transparency, and legal accountability. We don&apos;t just
@@ -542,10 +447,7 @@ export default function ImpactSoulPage() {
         <div className="glass-orb glass-orb-rust w-[160px] h-[160px] top-20 -right-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <h2
-              className="text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="text-3xl font-display font-bold tracking-tight sm:text-4xl">
               How We Create{" "}
               <span style={{ color: "oklch(0.55 0.15 30)" }}>Impact</span>
             </h2>
@@ -554,8 +456,7 @@ export default function ImpactSoulPage() {
             {services.map((s, i) => (
               <div
                 key={s.title}
-                className="rounded-xl p-7 border border-black/5 hover:shadow-md transition-shadow"
-                style={{ background: "oklch(0.97 0.01 80)" }}
+                className="rounded-xl border border-black/5 bg-[oklch(0.97_0.01_80)] p-7 transition-shadow hover:shadow-md"
               >
                 <div
                   className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
@@ -563,19 +464,10 @@ export default function ImpactSoulPage() {
                 >
                   {serviceIcons[i]}
                 </div>
-                <h3
-                  className="text-lg font-bold mb-3"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="mb-3 text-lg font-display font-bold">
                   {s.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{
-                    color: "oklch(0.45 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="text-sm font-body leading-relaxed text-[oklch(0.45_0.02_50)]">
                   {s.desc}
                 </p>
               </div>
@@ -589,25 +481,13 @@ export default function ImpactSoulPage() {
         <div className="glass-orb glass-orb-blue w-[350px] h-[350px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-amber w-[200px] h-[200px] bottom-20 -left-20" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 text-center">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{
-              color: "oklch(0.55 0.15 30)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="text-xs font-body font-semibold uppercase tracking-[0.2em] text-[oklch(0.55_0.15_30)]">
             Our Commitment
           </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold text-white"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mt-4 text-3xl font-display font-bold text-white sm:text-4xl">
             A Fan Club at Worst. A Global Brand at Peak.
           </h2>
-          <p
-            className="mt-6 text-lg text-white/60 leading-relaxed max-w-2xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mx-auto mt-6 max-w-2xl text-lg font-body leading-relaxed text-white/60">
             7.5% of asset equity to launch a movement. We don&apos;t charge
             upfront - we invest alongside you and earn when you succeed.
           </p>
@@ -631,16 +511,10 @@ export default function ImpactSoulPage() {
                 className="rounded-xl p-6 border border-white/10"
                 style={{ background: "rgba(255,255,255,0.05)" }}
               >
-                <div
-                  className="text-xs text-white/40 uppercase tracking-wider mb-2"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <div className="mb-2 text-xs font-body uppercase tracking-wider text-white/40">
                   {item.label}
                 </div>
-                <div
-                  className="text-sm text-white/80 leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <div className="text-sm font-body leading-relaxed text-white/80">
                   {item.value}
                 </div>
               </div>
@@ -654,10 +528,7 @@ export default function ImpactSoulPage() {
         <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold mb-10"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mb-10 text-3xl font-display font-bold sm:text-4xl">
             Impact{" "}
             <span style={{ color: "oklch(0.55 0.15 30)" }}>Insights</span>
           </h2>
@@ -679,28 +550,13 @@ export default function ImpactSoulPage() {
                 >
                   {post.tag}
                 </span>
-                <h3
-                  className="mt-3 text-lg font-bold tracking-tight transition-colors"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="mt-3 text-lg font-display font-bold tracking-tight transition-colors">
                   {post.title}
                 </h3>
-                <div
-                  className="mt-2 text-xs"
-                  style={{
-                    color: "oklch(0.5 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <div className="mt-2 text-xs font-body text-[oklch(0.5_0.02_50)]">
                   {post.date}
                 </div>
-                <span
-                  className="inline-flex items-center gap-1 mt-4 text-xs font-semibold"
-                  style={{
-                    color: "oklch(0.55 0.15 30)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-body font-semibold text-[oklch(0.55_0.15_30)]">
                   Read on ramprate.com
                   <svg
                     width="12"
@@ -722,25 +578,18 @@ export default function ImpactSoulPage() {
       {/* CTA */}
       <section className="rr-public-cta py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
             Trust Us With What You Hate to Do
           </h2>
-          <p
-            className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mx-auto mb-8 max-w-2xl text-base font-body leading-relaxed text-white/80 sm:text-lg">
             And focus on the change you want to create in the world.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 rounded-md bg-white px-7 py-3.5 text-sm font-body font-semibold transition-all shadow-lg hover:bg-white/90"
               style={{
                 color: "var(--rr-navy)",
-                fontFamily: "var(--font-body)",
               }}
             >
               Start a Conversation
@@ -757,8 +606,7 @@ export default function ImpactSoulPage() {
             </Link>
             <Link
               href="/process#flow-circuit"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-white/30 px-7 py-3.5 text-sm font-body font-semibold text-white transition-all hover:bg-white/10"
             >
               <svg
                 width="14"
@@ -774,8 +622,7 @@ export default function ImpactSoulPage() {
             </Link>
             <Link
               href="/process#find-me"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-white/30 px-7 py-3.5 text-sm font-body font-semibold text-white transition-all hover:bg-white/10"
             >
               <svg
                 width="14"

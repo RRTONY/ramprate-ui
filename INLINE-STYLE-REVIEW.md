@@ -37,6 +37,8 @@ The inventory found inline styles across public, protected, and Flow product sur
 17. Terms now uses the approved public display, body, and mono typography utilities across its hero, legal-content headings and copy, metadata, and privacy action. Legal content and navigation remain unchanged; no inline font-family declarations remain on the route.
 18. Payments Advisory Intel now uses the approved public display, body, and mono utilities for its market-intelligence hero, section headings, and processor benchmark table. Processor data and table behavior remain unchanged; no inline font-family declarations remain on the route.
 19. Attorney RFI was reviewed at desktop and mobile breakpoints after the bounded typography extraction. The hero hierarchy, application fields, selectable practice and interest controls, sidebar actions, and closing footer remained readable and vertically coherent; the responsive form flow and contact actions remained usable.
+20. ImpactSol now uses the approved shared display, body, and mono utilities throughout its hero, mission, methodology, B Corp, services, commitment, insights, and CTA. Its distinct intentional green accent remains protected. The only retained data-derived inline treatment is the `dnaSteps` color value and derived icon-background; remaining static accent and surface declarations are tracked separately for later presentation cleanup.
+21. ImpactSol was reviewed at desktop and mobile breakpoints after the typography extraction. The intentional accent, editorial hierarchy, methodology sequence, service cards, insight links, and stacked mobile CTA controls remained readable and coherent.
 
 ## Guardrail
 
