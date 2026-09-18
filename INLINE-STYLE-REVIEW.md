@@ -39,6 +39,8 @@ The inventory found inline styles across public, protected, and Flow product sur
 19. Attorney RFI was reviewed at desktop and mobile breakpoints after the bounded typography extraction. The hero hierarchy, application fields, selectable practice and interest controls, sidebar actions, and closing footer remained readable and vertically coherent; the responsive form flow and contact actions remained usable.
 20. ImpactSol now uses the approved shared display, body, and mono utilities throughout its hero, mission, methodology, B Corp, services, commitment, insights, and CTA. Its distinct intentional green accent remains protected. The only retained data-derived inline treatment is the `dnaSteps` color value and derived icon-background; remaining static accent and surface declarations are tracked separately for later presentation cleanup.
 21. ImpactSol was reviewed at desktop and mobile breakpoints after the typography extraction. The intentional accent, editorial hierarchy, methodology sequence, service cards, insight links, and stacked mobile CTA controls remained readable and coherent.
+22. Privacy is a low-risk legal-content route: its hero, legal metadata, headings, body text, surfaces, and footer action are fixed presentation suitable for utility extraction. The policy content, last-updated copy, canonical metadata, and privacy contact action are protected contracts and require no behavior change.
+23. Privacy was reviewed at desktop and mobile breakpoints after the completed extraction. The legal heading hierarchy, long-form policy copy, metadata, privacy mail action, and responsive footer contact link remained readable and coherent.
 
 ## Guardrail
 
