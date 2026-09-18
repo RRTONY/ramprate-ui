@@ -10,8 +10,12 @@ The live site currently exposes **Syzygy** as Growth Strategy and **Torque** as 
 
 ## Kumbaya venue-image attachment
 
-The current Next project persists structured submissions through `storeFormSubmission`, which safely stores attachment metadata when an upstream upload path supplies it. The project does not currently contain the documented runtime `storagePut` helper or another configured server-side managed-storage adapter. The existing `client-intake` route forwards attachment metadata to an external endpoint but does not upload bytes. Kumbaya can therefore not truthfully claim file-upload support until a managed runtime storage adapter is available; venue and moodboard URLs remain supported in the current form.
+The current Next project persists structured submissions through `storeFormSubmission`, which safely stores attachment metadata when an upstream upload path supplies it. Kumbaya now has a project-local server-only `storagePut` helper that requests a managed presigned upload URL through the injected platform runtime, uploads only JPG, PNG, or WebP bytes up to 8 MB, and returns a `/manus-storage/` reference. The regular intake endpoint validates and persists only the resulting key, path, name, MIME type, and byte size; it never stores image bytes in the database. Venue and moodboard URLs remain supported as optional alternatives.
 
 ## Kumbaya shared-header contrast
 
 The restored Kumbaya page begins on a light paper hero, so the shared header now treats `/kumbaya` as a light route and uses the opaque surface with dark navigation from first render. Desktop and mobile visual review confirmed the header, search control, menu trigger, hierarchy, and first hero block remain readable without changing the page’s public intake behavior.
+
+## Kumbaya venue-image control review
+
+The optional venue photo or moodboard image input was reviewed inside the four-step Kumbaya form at desktop and mobile widths. It remains legible within the existing desktop form grid, exposes its image-type and file-size guidance, and retains the mobile route’s single-column, touch-friendly form progression. The route itself rendered successfully in both checks. Local preview retries may return a stale 404 for unrelated homepage managed images after a checkpoint restart; direct production delivery of those engagement assets was separately verified.

@@ -11,6 +11,32 @@ const optionalUrl = yup
     (value) => !value || /^https:\/\/.+/.test(value),
   );
 
+const venueAttachmentSchema = yup
+  .object({
+    key: yup
+      .string()
+      .trim()
+      .matches(/^kumbaya\/venue\//)
+      .required(),
+    name: yup.string().trim().max(255).required(),
+    size: yup
+      .number()
+      .integer()
+      .min(1)
+      .max(8 * 1024 * 1024)
+      .required(),
+    type: yup
+      .string()
+      .oneOf(["image/jpeg", "image/png", "image/webp"])
+      .required(),
+    url: yup
+      .string()
+      .trim()
+      .matches(/^\/manus-storage\//)
+      .required(),
+  })
+  .noUnknown();
+
 const kumbayaSchema = yup.object({
   companyWebsite: optionalUrl,
   event: yup.string().trim().min(2).max(180).required(),
@@ -26,6 +52,7 @@ const kumbayaSchema = yup.object({
   audience: yup.string().trim().min(10).max(4000).required(),
   eventStage: yup.string().trim().max(160).required(),
   moodboardUrl: optionalUrl,
+  venueAttachment: venueAttachmentSchema.optional(),
   priority: yup.string().trim().min(12).max(4000).required(),
   opportunity: yup.string().trim().min(12).max(4000).required(),
 });

@@ -33,11 +33,12 @@
 - [x] Reconcile Torque and Syzygy displayed identities with their compatibility routes so legacy labels, canonical services, and `/torque` and `/growth` behavior point to coherent offerings.
 - [x] Complete the Kumbaya page’s verified live-page contract, including B Lab and Sprout Social links plus the remaining relevant intake-detail fields, with focused route coverage.
 - [x] Restore the remaining verified Kumbaya live-page content blocks and missing purpose path, including Bring purpose, mission, vision, values, and the example-output explanation.
-- [ ] Implement the Kumbaya venue photo or moodboard attachment workflow through approved storage and record only attachment metadata with the database-backed submission.
-- [ ] Extend Kumbaya regression coverage to protect the full live-page content, attachment, and intake-detail contract.
+- [x] Implement the Kumbaya venue photo or moodboard attachment workflow through approved storage and record only attachment metadata with the database-backed submission.
+- [x] Extend Kumbaya regression coverage to protect the full live-page content, attachment, and intake-detail contract.
 - [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Continue the file-by-file audit and replacement of non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [ ] Move the About public route’s fixed typography, dark-surface, and gold-accent JSX styles into shared semantic classes while retaining managed content, advisors, team records, and journey links.
 - [x] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.
 - [x] Migrate the remaining Flow Framer Motion route imports directly to scoped reduced-motion-safe CSS or native behavior, verify interactive props and route contracts, then remove the unused dependency.
 - [x] Replace primary Flow Assessment Framer Motion presentation wrappers with scoped reduced-motion-safe CSS while preserving returning-user results, question progression, dynamic progress, invite generation, birth-data flow, and submission states.

@@ -7,12 +7,15 @@ const readSource = (path: string) =>
 
 describe("Kumbaya shared-upside intake", () => {
   it("keeps the public route, values, accessible four-step intake, and canonical metadata", async () => {
-    const [page, form, route, sitePages] = await Promise.all([
-      readSource("src/app/kumbaya/page.tsx"),
-      readSource("src/components/kumbaya/KumbayaIntakeForm.tsx"),
-      readSource("src/app/api/kumbaya-intake/route.ts"),
-      readSource("src/lib/site-pages.ts"),
-    ]);
+    const [page, form, route, attachmentRoute, storage, sitePages] =
+      await Promise.all([
+        readSource("src/app/kumbaya/page.tsx"),
+        readSource("src/components/kumbaya/KumbayaIntakeForm.tsx"),
+        readSource("src/app/api/kumbaya-intake/route.ts"),
+        readSource("src/app/api/kumbaya-intake/attachment/route.ts"),
+        readSource("src/lib/storage.ts"),
+        readSource("src/lib/site-pages.ts"),
+      ]);
 
     expect(page).toContain('canonical: "/kumbaya"');
     expect(page).toContain("The Shared Upside Protocol");
@@ -40,10 +43,20 @@ describe("Kumbaya shared-upside intake", () => {
     expect(form).toContain('type="date"');
     expect(form).toContain('label="Event details"');
     expect(form).toContain('label="Venue link"');
+    expect(form).toContain('label="Venue photo or moodboard image"');
+    expect(form).toContain('fetch("/api/kumbaya-intake/attachment"');
+    expect(form).toContain('accept="image/jpeg,image/png,image/webp"');
     expect(form).toContain('role="alert"');
     expect(route).toContain('formType: "kumbaya-shared-upside-intake"');
     expect(route).toContain("kumbayaSchema.validate");
     expect(route).toContain("stripUnknown: true");
+    expect(route).toContain("venueAttachmentSchema");
+    expect(attachmentRoute).toContain("MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024");
+    expect(attachmentRoute).toContain("allowedImageTypes");
+    expect(attachmentRoute).toContain("storagePut");
+    expect(attachmentRoute).toContain("safeFileName");
+    expect(storage).toContain("v1/storage/presign/put");
+    expect(storage).toContain("url: `/manus-storage/${key}`");
     expect(sitePages).toContain('path: "/kumbaya"');
     expect(sitePages).toContain("The Shared Upside Protocol");
   });

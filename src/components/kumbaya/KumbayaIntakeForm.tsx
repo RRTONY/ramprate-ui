@@ -21,6 +21,15 @@ type KumbayaFormData = {
   moodboardUrl: string;
   priority: string;
   opportunity: string;
+  venueAttachment?: VenueAttachment;
+};
+
+type VenueAttachment = {
+  key: string;
+  name: string;
+  size: number;
+  type: string;
+  url: string;
 };
 
 type FieldName = keyof KumbayaFormData;
@@ -113,6 +122,10 @@ export default function KumbayaIntakeForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [venueAttachmentFile, setVenueAttachmentFile] = useState<File | null>(
+    null,
+  );
+  const [venueAttachmentError, setVenueAttachmentError] = useState("");
 
   const updateValue = (field: FieldName, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -139,12 +152,41 @@ export default function KumbayaIntakeForm() {
 
   const submit = async () => {
     setSubmitError("");
+    setVenueAttachmentError("");
     setSubmitting(true);
     try {
+      let venueAttachment = values.venueAttachment;
+      if (venueAttachmentFile) {
+        const uploadData = new FormData();
+        uploadData.set("file", venueAttachmentFile);
+        const uploadResponse = await fetch("/api/kumbaya-intake/attachment", {
+          body: uploadData,
+          method: "POST",
+        });
+        const uploadResult = (await uploadResponse.json()) as {
+          attachment?: VenueAttachment;
+          error?: string;
+          ok?: boolean;
+        };
+
+        if (
+          !uploadResponse.ok ||
+          !uploadResult.ok ||
+          !uploadResult.attachment
+        ) {
+          const errorMessage =
+            uploadResult.error || "We could not upload the venue image.";
+          setVenueAttachmentError(errorMessage);
+          throw new Error(errorMessage);
+        }
+
+        venueAttachment = uploadResult.attachment;
+      }
+
       const response = await fetch("/api/kumbaya-intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, venueAttachment }),
       });
       const result = (await response.json()) as {
         error?: string;
@@ -397,6 +439,25 @@ export default function KumbayaIntakeForm() {
                 placeholder="https://"
               />
             </Field>
+            <Field
+              label="Venue photo or moodboard image"
+              hint="Optional · JPG, PNG, or WebP up to 8 MB"
+              error={venueAttachmentError}
+            >
+              <input
+                accept="image/jpeg,image/png,image/webp"
+                onChange={(event) => {
+                  setVenueAttachmentFile(event.target.files?.[0] ?? null);
+                  setVenueAttachmentError("");
+                }}
+                type="file"
+              />
+            </Field>
+            {venueAttachmentFile ? (
+              <p className="kumbaya-file-note" aria-live="polite">
+                Image ready to upload: {venueAttachmentFile.name}
+              </p>
+            ) : null}
           </div>
         </fieldset>
       ) : null}

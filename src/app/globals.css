@@ -3471,6 +3471,15 @@ button.bg-gold {
   line-height: 1.4;
 }
 
+.kumbaya-file-note {
+  grid-column: 1 / -1;
+  margin: -0.25rem 0 0;
+  color: #526278;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .kumbaya-review {
   margin-top: 2rem;
 }
