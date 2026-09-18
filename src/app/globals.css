@@ -913,6 +913,103 @@
   color: var(--rr-ink);
 }
 
+.rr-process-hero {
+  background: var(--dark);
+}
+.rr-process-kicker,
+.rr-process-stat,
+.rr-process-highlight {
+  color: var(--gold);
+}
+.rr-process-kicker {
+  font-family: var(--font-body), sans-serif;
+}
+.rr-process-stat {
+  font-family: var(--font-display), Georgia, serif;
+}
+.rr-process-anchor {
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
+}
+.rr-process-callout {
+  border-color: var(--gold);
+  background: rgb(255 255 255 / 0.03);
+}
+
+.rr-process-phase-icon {
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
+}
+.rr-process-phase-icon--blue {
+  background: oklch(0.55 0.2 190 / 0.1);
+}
+.rr-process-phase-icon--gold {
+  background: oklch(0.82 0.15 75 / 0.1);
+}
+.rr-process-phase-icon--green {
+  background: oklch(0.55 0.2 160 / 0.1);
+}
+.rr-process-icon-blue,
+.rr-process-phase-index--blue {
+  color: oklch(0.55 0.2 190);
+}
+.rr-process-icon-gold {
+  color: oklch(0.82 0.15 75);
+}
+.rr-process-icon-green,
+.rr-process-phase-index--green {
+  color: oklch(0.55 0.2 160);
+}
+.rr-process-phase-index {
+  color: var(--gold);
+  font-family: var(--font-mono), monospace;
+}
+.rr-process-phase-copy {
+  color: var(--rr-ink-muted);
+}
+
+.rr-process-role-label {
+  font-family: var(--font-display), Georgia, serif;
+}
+.rr-process-role-sub,
+.rr-process-friction-copy {
+  color: var(--rr-ink-muted);
+}
+.rr-process-circuit-heading {
+  color: oklch(0.45 0.02 50);
+  font-family: var(--font-body), Arial, sans-serif;
+}
+.rr-process-guarantee {
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
+  border-color: color-mix(in srgb, var(--gold) 20%, transparent);
+}
+.rr-process-guarantee-copy,
+.rr-process-economics {
+  color: var(--rr-ink);
+}
+.rr-process-cta-surface {
+  background: linear-gradient(
+    to bottom right,
+    var(--rr-navy-mid),
+    var(--rr-navy)
+  );
+}
+.rr-process-booking {
+  color: var(--rr-navy);
+}
+.rr-process-divider-dot {
+  color: color-mix(in srgb, var(--rr-ink-muted) 75%, white 25%);
+}
+.rr-process-map-node {
+  background: oklch(0.55 0.2 190);
+  font-family: var(--font-mono), monospace;
+}
+.rr-process-map-label {
+  font-family: var(--font-body), Arial, sans-serif;
+}
+.rr-process-map-connector {
+  background: oklch(0.55 0.2 190 / 0.4);
+}
+
 .rr-process-surface .glass-orb-blue,
 .rr-process-surface .glass-orb-rust {
   background: #315f8a;

@@ -38,6 +38,10 @@
 - [x] Add or extend public visual and route contracts, then verify refreshed desktop and mobile homepage states before publication.
 - [x] Replace the next bounded set of static Framer Motion entry effects with existing reduced-motion-safe CSS utilities and remove their unused dependencies.
 - [ ] Continue the file-by-file audit and replacement of non-data-driven inline-style presentation rules with semantic CSS or Tailwind classes while retaining necessary dynamic data visualizations.
+- [x] Move the Process public route’s fixed hero, typography, surface, and accent JSX styles into shared semantic classes while retaining all journey content, anchors, and calls to action.
+- [x] Finish the remaining Process fixed JSX presentation extraction for static icon shells, accent strokes, repeated phase-card presentation, and other non-data-driven style objects, retaining only dynamic values inline.
+- [x] Extend the focused Process regression to protect every completed semantic presentation group and prevent fixed JSX presentation styles from returning in the remaining converted regions.
+- [x] Expand the Process source contract to assert every semantic helper used by the converted hero, phase cards, circuit heading, guarantee, economics, map, and CTA regions while documenting allowed data-driven inline styles.
 - [x] Move the About public route’s fixed typography, dark-surface, and gold-accent JSX styles into shared semantic classes while retaining managed content, advisors, team records, and journey links.
 - [x] Move fixed JSX presentation styles from the About founder, structure, and corporate-facts sections into shared semantic public CSS while retaining verified content and all actions.
 - [x] Remove or replace remaining Framer Motion usage in the separate Flow product with reduced-motion-safe CSS or documented behavior-preserving alternatives, without changing its authentication or external data boundaries.

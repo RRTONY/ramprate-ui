@@ -107,35 +107,20 @@ export default function ProcessPage() {
   return (
     <main className="rr-process-surface">
       {/* Hero */}
-      <section
-        className="relative pt-32 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
+      <section className="rr-process-hero relative overflow-hidden pb-20 pt-32">
         <div className="glass-orb glass-orb-blue w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-amber w-[300px] h-[300px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-              style={{
-                color: "oklch(0.82 0.15 75)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="rr-process-kicker mb-4 block text-xs font-semibold uppercase tracking-[0.2em]">
               How We Work
             </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h1 className="mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
               From First Call to{" "}
-              <span style={{ color: "var(--gold)" }}>Closed Deals</span> in 90
+              <span className="rr-process-highlight">Closed Deals</span> in 90
               Days.
             </h1>
-            <p
-              className="text-white/70 text-lg leading-relaxed mb-8"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="mb-8 text-lg leading-relaxed text-white/70">
               First you find your Me. Then your Way. Then your Our. 25 years.
               250+ enterprises. It&apos;s never not worked.
             </p>
@@ -146,33 +131,17 @@ export default function ProcessPage() {
                 { value: "25", label: "Years refined" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card p-4">
-                  <div
-                    className="text-2xl font-bold mb-1"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+                  <div className="rr-process-stat mb-1 text-2xl font-bold">
                     {stat.value}
                   </div>
-                  <div
-                    className="text-xs text-white/50"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {stat.label}
-                  </div>
+                  <div className="text-xs text-white/50">{stat.label}</div>
                 </div>
               ))}
             </div>
             <div className="flex flex-wrap gap-4">
               <a
                 href="#find-me"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "var(--gold)",
-                  background:
-                    "color-mix(in srgb, var(--gold) 10%, transparent)",
-                }}
+                className="rr-process-anchor group inline-flex gap-3 rounded-lg border-2 px-6 py-3.5 transition-all hover:bg-white/10"
               >
                 <svg
                   width="18"
@@ -185,21 +154,13 @@ export default function ProcessPage() {
                   <circle cx="12" cy="8" r="5" />
                   <path d="M20 21a8 8 0 10-16 0" />
                 </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your <span style={{ color: "var(--gold)" }}>Me</span>
+                <span className="text-sm font-bold tracking-wider uppercase text-white">
+                  Find Your <span className="rr-process-highlight">Me</span>
                 </span>
               </a>
               <a
                 href="#find-way"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "var(--gold)",
-                  background:
-                    "color-mix(in srgb, var(--gold) 10%, transparent)",
-                }}
+                className="rr-process-anchor group inline-flex items-center gap-3 rounded-lg border-2 px-6 py-3.5 transition-all hover:bg-white/10"
               >
                 <svg
                   width="18"
@@ -212,21 +173,13 @@ export default function ProcessPage() {
                   <circle cx="12" cy="12" r="10" />
                   <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
                 </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your <span style={{ color: "var(--gold)" }}>Way</span>
+                <span className="text-sm font-bold uppercase tracking-wider text-white">
+                  Find Your <span className="rr-process-highlight">Way</span>
                 </span>
               </a>
               <a
                 href="#find-our"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "var(--gold)",
-                  background:
-                    "color-mix(in srgb, var(--gold) 10%, transparent)",
-                }}
+                className="rr-process-anchor group inline-flex items-center gap-3 rounded-lg border-2 px-6 py-3.5 transition-all hover:bg-white/10"
               >
                 <svg
                   width="18"
@@ -241,11 +194,8 @@ export default function ProcessPage() {
                   <path d="M23 21v-2a4 4 0 00-3-3.87" />
                   <path d="M16 3.13a4 4 0 010 7.75" />
                 </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your <span style={{ color: "var(--gold)" }}>Our</span>
+                <span className="text-sm font-bold tracking-wider uppercase text-white">
+                  Find Your <span className="rr-process-highlight">Our</span>
                 </span>
               </a>
             </div>
@@ -262,25 +212,14 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-amber w-[200px] h-[200px] bottom-20 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
-            <span
-              className="text-xs tracking-[0.3em] uppercase text-white/40 mb-4 block"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <span className="mb-4 block text-xs uppercase tracking-[0.3em] text-white/40">
               The Journey
             </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
               Before We Fix the Business,{" "}
-              <span style={{ color: "oklch(0.55 0.2 190)" }}>
-                We Fix the Signal.
-              </span>
+              <span className="rr-process-highlight">We Fix the Signal.</span>
             </h2>
-            <p
-              className="mt-5 text-base sm:text-lg text-white/50 max-w-2xl mx-auto"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="mx-auto mt-5 max-w-2xl text-base text-white/50 sm:text-lg">
               Sometimes you have to look inside yourself first.
             </p>
           </div>
@@ -297,19 +236,13 @@ export default function ProcessPage() {
                 />
                 <div className="flex items-center justify-between mb-6">
                   <h3
-                    className="text-4xl font-bold"
-                    style={{
-                      color: item.color,
-                      fontFamily: "var(--font-display)",
-                    }}
+                    className="font-display text-4xl font-bold"
+                    style={{ color: item.color }}
                   >
                     {item.label}
                   </h3>
                 </div>
-                <h4
-                  className="text-sm font-bold uppercase tracking-wider text-white mb-5"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <h4 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">
                   {item.title}
                 </h4>
                 <ul className="space-y-3">
@@ -317,7 +250,6 @@ export default function ProcessPage() {
                     <li
                       key={j}
                       className="flex items-start gap-2.5 text-sm text-white/60"
-                      style={{ fontFamily: "var(--font-body)" }}
                     >
                       <span className="text-white/20 mt-0.5">-</span>
                       <span>{p}</span>
@@ -327,25 +259,13 @@ export default function ProcessPage() {
               </div>
             ))}
           </div>
-          <div
-            className="mt-10 p-5 rounded-lg border-l-4"
-            style={{
-              borderColor: "oklch(0.82 0.15 75)",
-              background: "rgba(255,255,255,0.03)",
-            }}
-          >
-            <p
-              className="text-sm sm:text-base text-white/70 italic"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+          <div className="rr-process-callout mt-10 rounded-lg border-l-4 p-5">
+            <p className="text-sm italic text-white/70 sm:text-base">
               Our role: find the friction, connect the dots, fix the team, build
               the process. Not the big idea - the right idea.
             </p>
           </div>
-          <p
-            className="mt-6 text-center text-xs text-white/30 tracking-widest"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
+          <p className="mt-6 text-center font-mono text-xs tracking-widest text-white/30">
             ME → WAY → OUR &nbsp;|&nbsp; The word YOUR contains OUR.
           </p>
         </div>
@@ -360,78 +280,42 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="rr-process-kicker text-xs font-semibold uppercase tracking-[0.2em]">
               Phase 1 - Diagnose
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
               Find the real problem -{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>
-                not the symptom.
-              </span>
+              <span className="rr-process-highlight">not the symptom.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="glass-card-warm p-7">
               <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.55 0.2 190 / 0.1)" }}
-                >
+                <div className="rr-process-phase-icon rr-process-phase-icon--blue flex h-10 w-10 items-center justify-center rounded-lg">
                   <svg
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="oklch(0.55 0.2 190)"
+                    stroke="currentColor"
                     strokeWidth="2"
+                    className="rr-process-icon-blue"
                   >
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.68a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 11.5a16 16 0 006.29 6.29l1.14-1.14a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
                   </svg>
                 </div>
                 <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.2 190)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index rr-process-phase-index--blue text-xs font-bold tracking-wider">
                     01
                   </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    The Call
-                  </h3>
+                  <h3 className="font-display text-lg font-bold">The Call</h3>
                 </div>
               </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy mb-4 text-sm leading-relaxed">
                 You tell us what&apos;s broken. We listen. We diagnose in 48
                 hours.
               </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy text-sm leading-relaxed">
                 Could be a missing role. A wrong market. A broken handoff. A
                 stalled fundraise. Whatever the problem, there&apos;s always a
                 solution.
@@ -439,69 +323,40 @@ export default function ProcessPage() {
             </div>
             <div className="glass-card-warm p-7">
               <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.82 0.15 75 / 0.1)" }}
-                >
+                <div className="rr-process-phase-icon rr-process-phase-icon--gold flex h-10 w-10 items-center justify-center rounded-lg">
                   <svg
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="oklch(0.82 0.15 75)"
+                    stroke="currentColor"
                     strokeWidth="2"
+                    className="rr-process-icon-gold"
                   >
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                   </svg>
                 </div>
                 <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index text-xs font-bold tracking-wider">
                     02
                   </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h3 className="font-display text-lg font-bold">
                     Flow Circuit Assessment
                   </h3>
                 </div>
               </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy mb-4 text-sm leading-relaxed">
                 Map your team&apos;s invisible architecture. Who&apos;s the
                 Spark? Amplifier? Filter? Ground?
               </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy text-sm leading-relaxed">
                 Identify where energy is blocked. Calculate friction cost. See
                 the team you have vs. the team you need.
               </p>
             </div>
           </div>
           <div className="mt-10">
-            <h4
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-5"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <h4 className="rr-process-circuit-heading mb-5 text-xs font-bold uppercase tracking-[0.2em]">
               The Circuit Roles
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -514,21 +369,12 @@ export default function ProcessPage() {
                   }}
                 >
                   <div
-                    className="text-sm font-bold"
-                    style={{
-                      color: role.color,
-                      fontFamily: "var(--font-display)",
-                    }}
+                    className="rr-process-role-label text-sm font-bold"
+                    style={{ color: role.color }}
                   >
                     {role.name}
                   </div>
-                  <div
-                    className="text-xs mt-0.5"
-                    style={{
-                      color: "oklch(0.45 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <div className="rr-process-role-sub mt-0.5 text-xs">
                     {role.sub}
                   </div>
                 </div>
@@ -536,24 +382,14 @@ export default function ProcessPage() {
             </div>
           </div>
           <div className="mt-10">
-            <h4
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-4"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <h4 className="rr-process-role-sub mb-4 text-xs font-bold uppercase tracking-[0.2em]">
               Common Friction Points We Find
             </h4>
             <div className="grid sm:grid-cols-2 gap-3">
               {frictionPoints.map((fp) => (
                 <div
                   key={fp}
-                  className="flex items-center gap-2.5 text-sm"
-                  style={{
-                    color: "oklch(0.35 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
+                  className="rr-process-friction-copy flex items-center gap-2.5 text-sm"
                 >
                   <svg
                     width="14"
@@ -581,20 +417,12 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-rust w-[200px] h-[200px] -bottom-20 left-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span
-              className="text-xs tracking-[0.3em] uppercase text-white/40 mb-4 block"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <span className="rr-process-kicker mb-4 block text-xs uppercase tracking-[0.3em] text-white/40">
               Phase 2 - Activate
             </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
               Build the team. Name the wishes.{" "}
-              <span style={{ color: "oklch(0.55 0.2 190)" }}>
-                Set the targets.
-              </span>
+              <span className="rr-process-highlight">Set the targets.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -620,32 +448,17 @@ export default function ProcessPage() {
             ].map((item) => (
               <div key={item.num} className="glass-card p-7">
                 <div className="flex items-center justify-between mb-5">
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.2 190)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index text-xs font-bold tracking-wider">
                     {item.num}
                   </span>
                 </div>
-                <h3
-                  className="text-lg font-bold text-white mb-4"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <h3 className="font-display mb-4 text-lg font-bold text-white">
                   {item.title}
                 </h3>
-                <p
-                  className="text-sm text-white/60 leading-relaxed mb-4"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <p className="mb-4 text-sm leading-relaxed text-white/60">
                   {item.p1}
                 </p>
-                <p
-                  className="text-sm text-white/50 leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <p className="text-sm leading-relaxed text-white/50">
                   {item.p2}
                 </p>
               </div>
@@ -660,21 +473,12 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-rust w-[180px] h-[180px] bottom-20 right-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <span className="rr-process-kicker text-xs font-semibold uppercase tracking-[0.2em]">
               Phase 3 - Execute & Deliver
             </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
               Process over inspiration.{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>
+              <span className="rr-process-highlight">
                 Execution over strategy.
               </span>
             </h2>
@@ -682,149 +486,85 @@ export default function ProcessPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="glass-card-warm p-7">
               <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.55 0.2 190 / 0.1)" }}
-                >
+                <div className="rr-process-phase-icon rr-process-phase-icon--blue flex h-10 w-10 items-center justify-center rounded-lg">
                   <svg
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="oklch(0.55 0.2 190)"
+                    stroke="currentColor"
                     strokeWidth="2"
+                    className="rr-process-icon-blue"
                   >
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
                   </svg>
                 </div>
                 <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.2 190)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index rr-process-phase-index--blue text-xs font-bold tracking-wider">
                     06
                   </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h3 className="font-display text-lg font-bold">
                     Sign & Execute
                   </h3>
                 </div>
               </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy mb-4 text-sm leading-relaxed">
                 We go live. Introductions. Negotiations. Deals closed.
                 Principals on every call. Weekly progress reports.
               </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy text-sm leading-relaxed">
                 Innovation management - not big bets. We test, iterate, close.
                 Process over inspiration. Execution over strategy.
               </p>
             </div>
             <div className="glass-card-warm p-7">
               <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.55 0.2 160 / 0.1)" }}
-                >
+                <div className="rr-process-phase-icon rr-process-phase-icon--green flex h-10 w-10 items-center justify-center rounded-lg">
                   <svg
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="oklch(0.55 0.2 160)"
+                    stroke="currentColor"
                     strokeWidth="2"
+                    className="rr-process-icon-green"
                   >
                     <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
                     <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
                   </svg>
                 </div>
                 <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.2 160)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index rr-process-phase-index--green text-xs font-bold tracking-wider">
                     07
                   </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
+                  <h3 className="font-display text-lg font-bold">
                     90-Day Checkpoint
                   </h3>
                 </div>
               </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy mb-4 text-sm leading-relaxed">
                 If we haven&apos;t delivered measurable results in 90 days, you
                 can walk. No penalty. No hard feelings. No lock-in.
               </p>
-              <p
-                className="text-sm leading-relaxed font-medium"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
+              <p className="rr-process-phase-copy text-sm font-medium leading-relaxed">
                 In 25 years, no one has ever exercised this option.
               </p>
             </div>
           </div>
-          <div
-            className="mt-10 flex items-center gap-4 p-5 rounded-xl border"
-            style={{
-              background: "oklch(0.82 0.15 75 / 0.1)",
-              borderColor: "oklch(0.82 0.15 75 / 0.2)",
-            }}
-          >
+          <div className="rr-process-guarantee mt-10 flex items-center gap-4 rounded-xl border p-5">
             <svg
               width="28"
               height="28"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="oklch(0.82 0.15 75)"
+              stroke="currentColor"
               strokeWidth="2"
-              className="shrink-0"
+              className="rr-process-icon-gold shrink-0"
             >
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <p
-              className="text-sm sm:text-base font-semibold"
-              style={{
-                color: "oklch(0.25 0.03 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              <span
-                className="uppercase tracking-wider text-xs mr-2"
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
+            <p className="rr-process-guarantee-copy text-sm font-semibold sm:text-base">
+              <span className="rr-process-phase-index mr-2 text-xs uppercase tracking-wider">
                 The Guarantee:
               </span>
               90 days. If we don&apos;t deliver, you walk. It&apos;s never
@@ -832,30 +572,18 @@ export default function ProcessPage() {
             </p>
           </div>
           <div className="mt-6">
-            <p
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <p className="rr-process-kicker mb-3 text-xs font-bold uppercase tracking-[0.2em]">
               The Economics
             </p>
-            <div
-              className="flex flex-wrap gap-x-6 gap-y-2 text-sm"
-              style={{
-                color: "oklch(0.35 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
+            <div className="rr-process-economics flex flex-wrap gap-x-6 gap-y-2 text-sm">
               <span>$15K–$50K/month</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
+              <span className="rr-process-divider-dot">·</span>
               <span>Equity-forward available</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
+              <span className="rr-process-divider-dot">·</span>
               <span>Vertical mastermind ~20% of fee</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
+              <span className="rr-process-divider-dot">·</span>
               <span>Clawbacks</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
+              <span className="rr-process-divider-dot">·</span>
               <span>Historical: 20X multiplier</span>
             </div>
           </div>
@@ -868,10 +596,7 @@ export default function ProcessPage() {
         <div className="glass-orb glass-orb-blue w-[200px] h-[200px] top-20 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-14">
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
               The Complete Map
             </h2>
           </div>
@@ -879,27 +604,15 @@ export default function ProcessPage() {
             {steps.map((step, i) => (
               <div key={step.num} className="flex items-center">
                 <div className="flex flex-col items-center">
-                  <div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                    style={{
-                      background: "oklch(0.55 0.2 190)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
+                  <div className="rr-process-map-node flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold text-white sm:h-14 sm:w-14">
                     {step.num}
                   </div>
-                  <span
-                    className="mt-2 text-[10px] sm:text-xs text-white/50 text-center uppercase tracking-wider max-w-[80px]"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  <span className="rr-process-map-label mt-2 max-w-[80px] text-center text-[10px] uppercase tracking-wider text-white/50 sm:text-xs">
                     {step.label}
                   </span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div
-                    className="hidden sm:block w-8 md:w-12 h-px mt-[-16px]"
-                    style={{ background: "oklch(0.55 0.2 190 / 0.4)" }}
-                  />
+                  <div className="rr-process-map-connector mt-[-16px] hidden h-px w-8 sm:block md:w-12" />
                 )}
               </div>
             ))}
@@ -911,20 +624,11 @@ export default function ProcessPage() {
                 className="glass-card flex flex-col sm:flex-row gap-4 sm:gap-8 p-5"
               >
                 <div className="sm:w-44 shrink-0">
-                  <span
-                    className="text-xs font-bold uppercase tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.2 190)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <span className="rr-process-phase-index text-xs font-bold uppercase tracking-wider">
                     {row.label}
                   </span>
                 </div>
-                <p
-                  className="text-sm text-white/60 leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <p className="text-sm leading-relaxed text-white/60">
                   {row.text}
                 </p>
               </div>
@@ -935,35 +639,19 @@ export default function ProcessPage() {
 
       {/* CTA */}
       <section className="rr-process-cta rr-public-cta relative py-24 sm:py-32 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom right, oklch(0.45 0.22 260), oklch(0.35 0.18 280))",
-          }}
-        />
+        <div className="rr-process-cta-surface absolute inset-0" />
         <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
             Start with a clearer next move.
           </h2>
-          <p
-            className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="mx-auto mt-6 max-w-xl text-base text-white/70 sm:text-lg">
             Principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
           <div className="mt-10">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm sm:text-base font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
-              style={{
-                color: "oklch(0.25 0.15 260)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="rr-process-booking inline-flex items-center gap-2 rounded-md bg-white px-8 py-4 text-sm font-semibold shadow-lg transition-all hover:bg-white/90 sm:text-base"
             >
               Book a Call
               <svg
