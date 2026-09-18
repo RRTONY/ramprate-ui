@@ -102,7 +102,7 @@ export default function PortalGate({
               alt="RampRate"
               width={150}
               height={36}
-              className="w-[130px] h-auto invert mb-8"
+              className="w-[130px] h-auto brightness-0 invert mb-8"
             />
             <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-3">
               RampRate BioChain Network

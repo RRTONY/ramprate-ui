@@ -19,22 +19,21 @@ export const programs = [
     body: (
       <ul className="list-disc pl-5 space-y-2 marker:text-gold">
         <li>
-          RampRate identifies a qualified buyer in its network that is ready
-          to transact immediately.
+          RampRate identifies a qualified buyer in its network that is ready to
+          transact immediately.
         </li>
         <li>
-          RampRate makes the buyer ready for the purchase, identifying
-          realistic needs, constraints, and uncertainties; and building a
-          decision scorecard that fairly accounts for quality and reliability
-          rather than a race to the bottom on price with questionable
-          suppliers.
+          RampRate makes the buyer ready for the purchase, identifying realistic
+          needs, constraints, and uncertainties; and building a decision
+          scorecard that fairly accounts for quality and reliability rather than
+          a race to the bottom on price with questionable suppliers.
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>
-              These services are either paid for up front by the buyer, with
-              the consulting fee rebated from supplier referral payments; or,
-              in specific high-trust situations, collected directly from
-              supplier payments, with the buyer owing us a cancellation fee if
-              they don&rsquo;t transact.
+              These services are either paid for up front by the buyer, with the
+              consulting fee rebated from supplier referral payments; or, in
+              specific high-trust situations, collected directly from supplier
+              payments, with the buyer owing us a cancellation fee if they
+              don&rsquo;t transact.
             </li>
           </ul>
         </li>
@@ -44,39 +43,40 @@ export const programs = [
           disadvantaged unfairly. Generally the rates for peptides are:
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>Retail / direct-to-consumer - 20%</li>
-            <li>Wholesale - 5% - 7.5% depending on the deal scale and margin</li>
+            <li>
+              Wholesale - 5% - 7.5% depending on the deal scale and margin
+            </li>
           </ul>
         </li>
         <li>
-          RampRate operates a quote analysis process that helps clients make
-          an objective decision based on all the different dimensions of
-          value in addition to price and down-select to a few finalists.
+          RampRate operates a quote analysis process that helps clients make an
+          objective decision based on all the different dimensions of value in
+          addition to price and down-select to a few finalists.
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>
-              At the time the finalists are selected, RampRate reviews
-              referral fee parity as well - if a supplier is exempted (e.g.
-              due to being an incumbent), RampRate ensures that the
-              client&rsquo;s own unrebated consulting costs are included in
-              the analysis so there is parity for all participants in the
-              process.
+              At the time the finalists are selected, RampRate reviews referral
+              fee parity as well - if a supplier is exempted (e.g. due to being
+              an incumbent), RampRate ensures that the client&rsquo;s own
+              unrebated consulting costs are included in the analysis so there
+              is parity for all participants in the process.
             </li>
             <li>
-              If this still does not create a level playing field for
-              suppliers, RampRate will meet with them individually to adjust
-              the referral fee percentage in full transparency.
+              If this still does not create a level playing field for suppliers,
+              RampRate will meet with them individually to adjust the referral
+              fee percentage in full transparency.
             </li>
           </ul>
         </li>
         <li>
-          Fees are generally paid only on receipt of actual revenue from
-          clients - not introductions or signed contracts alone. If any
-          acceleration is needed to refund the client&rsquo;s professional
-          services fee up front, this will be disclosed at lead registration
-          and applied uniformly to all participants.
+          Fees are generally paid only on receipt of actual revenue from clients
+          - not introductions or signed contracts alone. If any acceleration is
+          needed to refund the client&rsquo;s professional services fee up
+          front, this will be disclosed at lead registration and applied
+          uniformly to all participants.
         </li>
         <li>
-          Terms are fully bilateral - suppliers can send us clients on the
-          same terms as we send them leads.
+          Terms are fully bilateral - suppliers can send us clients on the same
+          terms as we send them leads.
         </li>
         <li>
           This is not a reseller agreement - we do not take inventory or
@@ -106,15 +106,15 @@ export const programs = [
               supplier&rsquo;s revenue
             </li>
             <li>
-              Audit fees to validate initial claims if the market track
-              record is particularly thin
+              Audit fees to validate initial claims if the market track record
+              is particularly thin
             </li>
           </ul>
         </li>
         <li>
           In exchange for these provisions, we also typically provide some
-          guidance on value proposition, target customer segments, and
-          marketing materials based on our market knowledge &amp; experience.
+          guidance on value proposition, target customer segments, and marketing
+          materials based on our market knowledge &amp; experience.
         </li>
       </ul>
     ),
@@ -126,36 +126,35 @@ export const programs = [
       <ul className="list-disc pl-5 space-y-2 marker:text-gold">
         <li>
           These agreements are highly customized to each individual
-          partner&rsquo;s needs. In our enterprise tech practice, for
-          example, AT&amp;T and Verizon asked us to write their price books.
-          Level 3 asked us to develop contract terms and service level
-          guarantees. Microsoft asked us to vet their partnership strategies
-          and help develop sales channels.
+          partner&rsquo;s needs. In our enterprise tech practice, for example,
+          AT&amp;T and Verizon asked us to write their price books. Level 3
+          asked us to develop contract terms and service level guarantees.
+          Microsoft asked us to vet their partnership strategies and help
+          develop sales channels.
         </li>
         <li>
-          <strong>Example:</strong> Channel Development &amp; Deal
-          Management: Based on our initial discussions, this is where we
-          believe an initial engagement will add the most value in this
-          market: building out the channel and indirect-sales capability
-          without cannibalizing existing direct relationships.
+          <strong>Example:</strong> Channel Development &amp; Deal Management:
+          Based on our initial discussions, this is where we believe an initial
+          engagement will add the most value in this market: building out the
+          channel and indirect-sales capability without cannibalizing existing
+          direct relationships.
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>
               At the lighter end, this includes setting up pricing frameworks
-              and sales calculators so the partner understands its own
-              margins deal-by-deal, running an objective vendor-comparison
-              process to help win business away from an underperforming
-              incumbent, defining deal-qualification criteria to filter out
-              unready leads, and coordinating operational work such as
-              inventory or order-system integrations.
+              and sales calculators so the partner understands its own margins
+              deal-by-deal, running an objective vendor-comparison process to
+              help win business away from an underperforming incumbent, defining
+              deal-qualification criteria to filter out unready leads, and
+              coordinating operational work such as inventory or order-system
+              integrations.
             </li>
             <li>
-              At the deeper end, it extends to designing and standing up
-              entire distribution channels on the partner&rsquo;s behalf, for
-              example employer benefit/EAP programs, capitated-healthcare
-              risk pools, or technology- and device-distributed consumer
-              channels, bringing RampRate&rsquo;s own data, audience
-              relationships, and technology partnerships into the
-              arrangement rather than only its process.
+              At the deeper end, it extends to designing and standing up entire
+              distribution channels on the partner&rsquo;s behalf, for example
+              employer benefit/EAP programs, capitated-healthcare risk pools, or
+              technology- and device-distributed consumer channels, bringing
+              RampRate&rsquo;s own data, audience relationships, and technology
+              partnerships into the arrangement rather than only its process.
             </li>
           </ul>
         </li>
@@ -164,22 +163,21 @@ export const programs = [
           broadly.
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>
-              Typical advisory agreements run for 3-12 months with a
-              recurring monthly fee if the scope includes multiple areas of
-              collaboration and evolves over time; or a flat project fee if
-              the activities are more discrete and fixed (e.g. a research
-              project).
+              Typical advisory agreements run for 3-12 months with a recurring
+              monthly fee if the scope includes multiple areas of collaboration
+              and evolves over time; or a flat project fee if the activities are
+              more discrete and fixed (e.g. a research project).
             </li>
             <li>
-              Additionally, milestone-based compensation (typically in
-              equity) can apply for specific difficult tasks achieved on the
+              Additionally, milestone-based compensation (typically in equity)
+              can apply for specific difficult tasks achieved on the
               client&rsquo;s behalf.
             </li>
             <li>
               Channel development fees can include a small overlay on the
-              channel partner&rsquo;s revenue, to be discussed during the
-              deal formalization; otherwise referral fees are the same as
-              with the referral agreement structure.
+              channel partner&rsquo;s revenue, to be discussed during the deal
+              formalization; otherwise referral fees are the same as with the
+              referral agreement structure.
             </li>
             <li>
               All advisory relationships include a social impact measurement
@@ -224,13 +222,13 @@ const scorecardRows: [string, string, string][] = [
 function Scorecard() {
   return (
     <div className="overflow-x-auto rounded-xl border border-black/10 my-4">
-      <table className="w-full min-w-[560px] border-collapse text-sm">
+      <table className="w-full table-fixed border-collapse text-sm">
         <thead>
           <tr>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3">
+            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[34%]">
               Criterion
             </th>
-            <th className="bg-dark text-warm-bg text-center font-mono text-[11px] uppercase px-3 py-3 w-[90px]">
+            <th className="bg-dark text-warm-bg text-center font-mono text-[11px] uppercase px-3 py-3 w-[70px]">
               Weight
             </th>
             <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3">
@@ -241,9 +239,9 @@ function Scorecard() {
         <tbody>
           {scorecardRows.map((row, i) => (
             <tr key={i} className="border-t border-black/10 align-top">
-              <td className="px-3 py-3 font-semibold">{row[0]}</td>
+              <td className="px-3 py-3 font-semibold break-words">{row[0]}</td>
               <td className="px-3 py-3 text-center">{row[1]}</td>
-              <td className="px-3 py-3 text-ink-mid">{row[2]}</td>
+              <td className="px-3 py-3 text-ink-mid break-words">{row[2]}</td>
             </tr>
           ))}
         </tbody>
@@ -261,24 +259,60 @@ export const faqSections: {
 }[] = [
   {
     id: "section-1",
-    kicker: "03 / FAQ",
+    kicker: "03 / Sourcing",
     title: "RampRate's Sourcing Process: What It Is and How to Ace It",
     dark: false,
     items: [
       {
         q: "What is RampRate's typical role in sourcing health products?",
         searchText:
-          "what is ramprate's typical role in sourcing health products buyer's agent",
+          "what is ramprate's typical role in sourcing health products buyer's agent manufacturing pharmacy partner supply",
         a: (
           <p>
             Think of us as the buyer&rsquo;s agent. RampRate works with the
-            executive team and sourcing professionals at clinics, research
-            facilities, and distributors to obtain the products they need to
-            do their work. Our goal is not to maximize commissions or push
-            any one supplier&rsquo;s product. It&rsquo;s to find the right
-            fit between supplier and buyer; remove friction; and create
-            enough efficiencies on both sides to justify our cut of the deal.
+            executive team and sourcing professionals at manufacturing and
+            pharmacy partners, clinics, research facilities, and distributors to
+            obtain the products they need to do their work. Our goal is not to
+            maximize commissions or push any one supplier&rsquo;s product.
+            It&rsquo;s to find the right fit between supplier and buyer; remove
+            friction; and create enough efficiencies on both sides to justify
+            our cut of the deal.
           </p>
+        ),
+      },
+      {
+        q: "We're a manufacturing or pharmacy partner who needs more supply or capacity ourselves, does RampRate only send us buyers, or can RampRate source things for us too?",
+        searchText:
+          "manufacturing pharmacy partner needs more supply capacity ourselves buyers source things too reverse buyer's agent",
+        a: (
+          <>
+            <p>
+              Both, and they&rsquo;re separate engagements. &ldquo;Three Ways
+              RampRate Engages&rdquo; above is written from the other direction,
+              with RampRate finding buyers for what you produce. This section is
+              the reverse.
+            </p>
+            <p>
+              Like the sell side, it spans a range: connecting you with
+              potential suppliers we know in our network at the light end, and
+              actively running the full sourcing process on your behalf at the
+              other, including the RFP and scorecard evaluation, negotiation
+              support, and staying with the deal through close, whenever you
+              need more supply, raw materials, capacity, or outsourced
+              manufacturing or compounding capacity to grow.
+            </p>
+            <p>
+              A manufacturing or pharmacy partner can run this alongside a
+              referral or channel agreement on the sell side (per the terms
+              above) at the same time, with the two compensated independently.
+              The fuller, actively-managed engagement is compensated as
+              described in &ldquo;How are RampRate&rsquo;s sourcing services
+              compensated?&rdquo; A lighter, connection-only introduction works
+              the same way our own Buyer Introductions do: a referral fee paid
+              by the supplier side only if a deal actually closes, with nothing
+              owed if it doesn&rsquo;t.
+            </p>
+          </>
         ),
       },
       {
@@ -288,17 +322,17 @@ export const faqSections: {
         a: (
           <>
             <p>
-              Only time buys trust. RampRate&rsquo;s business is predicated
-              on building long-term, trusted relationships with buyers of
-              health products. This means that we prioritize our success
-              metrics in the following order:
+              Only time buys trust. RampRate&rsquo;s business is predicated on
+              building long-term, trusted relationships with buyers of health
+              products. This means that we prioritize our success metrics in the
+              following order:
             </p>
             <ul className="list-disc">
               <li>
-                99% reduction in risk of early termination. Across 25+ years
-                and billions in spend managed, RampRate&rsquo;s early
-                termination rate is &lt;1%, compared to an industry-wide
-                failure rate in excess of 50%.
+                99% reduction in risk of early termination. Across 25+ years and
+                billions in spend managed, RampRate&rsquo;s early termination
+                rate is &lt;1%, compared to an industry-wide failure rate in
+                excess of 50%.
                 <ul className="list-disc">
                   <li>
                     We ensure clients prioritize quality and reliability over
@@ -319,17 +353,17 @@ export const faqSections: {
               </li>
               <li>
                 80% faster time to building a supply relationship. This is a
-                core source of efficiency. We dramatically reduce the time
-                that suppliers spend on sales and buyers spend on finding a
-                match.
+                core source of efficiency. We dramatically reduce the time that
+                suppliers spend on sales and buyers spend on finding a match.
                 <ul className="list-disc">
                   <li>
                     Our process is quantitative and tracks across multiple
-                    transactions so that you never have to write a long
-                    bespoke RFP response, but only update your profile and
-                    deal pricing.
+                    transactions so that you never have to write a long bespoke
+                    RFP response, but only update your profile and deal pricing.
                   </li>
-                  <li>Our pre-built price targets reduce negotiation cycles.</li>
+                  <li>
+                    Our pre-built price targets reduce negotiation cycles.
+                  </li>
                   <li>
                     Our coordination of information and decision making means
                     less pursuit time and faster closing.
@@ -341,12 +375,11 @@ export const faqSections: {
                 </ul>
               </li>
               <li>
-                All-in cost reduction. This is never based on just the
-                nominal cost, but weighted against risk, time, and quality.
-                That said, we expect suppliers to provide their best price
-                first time out, and will provide specific guidance on the
-                expected price levels in every deal to ensure you know what
-                it takes to win a deal.
+                All-in cost reduction. This is never based on just the nominal
+                cost, but weighted against risk, time, and quality. That said,
+                we expect suppliers to provide their best price first time out,
+                and will provide specific guidance on the expected price levels
+                in every deal to ensure you know what it takes to win a deal.
               </li>
             </ul>
           </>
@@ -364,12 +397,12 @@ export const faqSections: {
             </p>
             <ul className="list-disc">
               <li>
-                You never get tire kicking or general information pursuits.
-                If you hear from us, someone is buying
+                You never get tire kicking or general information pursuits. If
+                you hear from us, someone is buying
               </li>
               <li>
-                Instead of prospecting, you get pre-qualified inbound leads
-                in your inbox to accept or reject
+                Instead of prospecting, you get pre-qualified inbound leads in
+                your inbox to accept or reject
               </li>
               <li>
                 Instead of a salesperson, we only need a sales engineer or
@@ -381,13 +414,13 @@ export const faqSections: {
               </li>
               <li>
                 Instead of visiting prospects where you&rsquo;re one of 10
-                options, we only ask you to make an appearance once
-                you&rsquo;re one of 1-3 finalists in a deal
+                options, we only ask you to make an appearance once you&rsquo;re
+                one of 1-3 finalists in a deal
               </li>
               <li>
                 We even pre-recommend financial and contract terms needed to
-                close a deal. All you have to do is say &ldquo;yes&rdquo; and
-                we will make the deal happen
+                close a deal. All you have to do is say &ldquo;yes&rdquo; and we
+                will make the deal happen
               </li>
               <li>
                 We prevent buyers from wasting your time with unreasonable or
@@ -401,22 +434,21 @@ export const faqSections: {
               </li>
             </ul>
             <p>
-              Second, we provide real-time market intelligence. In addition
-              to having specific targets based on actual competitive offers,
-              not poker-playing, each deal is closed out with detailed
-              supplier feedback on how you performed across each dimension of
-              evaluation, so you understand where you&rsquo;re ahead of the
-              curve and where more work is needed (Sales Advisory projects
-              can then fill in the gaps as to how to repair these
-              disadvantages).
+              Second, we provide real-time market intelligence. In addition to
+              having specific targets based on actual competitive offers, not
+              poker-playing, each deal is closed out with detailed supplier
+              feedback on how you performed across each dimension of evaluation,
+              so you understand where you&rsquo;re ahead of the curve and where
+              more work is needed (Sales Advisory projects can then fill in the
+              gaps as to how to repair these disadvantages).
             </p>
             <p>
-              Third, we&rsquo;re replacing marketing spend. Normally you have
-              to perform well, then get the client&rsquo;s permission to
-              write a case study; then spend to have that case study seen in
-              the world. We serve as the reputation layer for the industry to
-              shortcut that cycle - do well for your clients and the market
-              will know through our supplier index.
+              Third, we&rsquo;re replacing marketing spend. Normally you have to
+              perform well, then get the client&rsquo;s permission to write a
+              case study; then spend to have that case study seen in the world.
+              We serve as the reputation layer for the industry to shortcut that
+              cycle - do well for your clients and the market will know through
+              our supplier index.
             </p>
           </>
         ),
@@ -429,12 +461,12 @@ export const faqSections: {
           <>
             <p>
               Our recommendations are 100% objective, quantitative, and
-              transparent. This is what allows us to be paid by both sides in
-              a transaction without loss of trust. Each customer has its own
+              transparent. This is what allows us to be paid by both sides in a
+              transaction without loss of trust. Each customer has its own
               selection criteria. Our job is to translate those criteria into
-              quantifiable metrics and assess supplier performance against
-              them on a level playing field. Here is an example scorecard
-              used in a mid-size recent deal.
+              quantifiable metrics and assess supplier performance against them
+              on a level playing field. Here is an example scorecard used in a
+              mid-size recent deal.
             </p>
             <Scorecard />
           </>
@@ -446,12 +478,11 @@ export const faqSections: {
           "how important is price to the final decision surprisingly little",
         a: (
           <p>
-            Surprisingly little. Our aggregate across tech and health deals
-            for the last 20 years is 20% price, 19% reliability of services
+            Surprisingly little. Our aggregate across tech and health deals for
+            the last 20 years is 20% price, 19% reliability of services
             provided, 13% scalability, 11% contract terms; 11% fit to client
-            needs; 11% supplier scale &amp; stability; 8% breadth of
-            offerings; and 7% sustainability and experience in client&rsquo;s
-            vertical.
+            needs; 11% supplier scale &amp; stability; 8% breadth of offerings;
+            and 7% sustainability and experience in client&rsquo;s vertical.
           </p>
         ),
       },
@@ -461,12 +492,12 @@ export const faqSections: {
           "what if i can't meet a price target should i walk away no-bid",
         a: (
           <p>
-            Our evaluations are holistic and in some cases, price targets can
-            be adjusted. The suppliers that set the standard for price may
-            fail other due diligence, and no-bidding would lose a valuable
+            Our evaluations are holistic and in some cases, price targets can be
+            adjusted. The suppliers that set the standard for price may fail
+            other due diligence, and no-bidding would lose a valuable
             opportunity. If something feels impossible tell us why and maybe
-            we&rsquo;ll uncover an error or misstatement by competitors who
-            did promise it.
+            we&rsquo;ll uncover an error or misstatement by competitors who did
+            promise it.
           </p>
         ),
       },
@@ -476,14 +507,14 @@ export const faqSections: {
           "what if our unique value is not represented in the scorecard variables",
         a: (
           <p>
-            We are always happy to learn more about new dimensions of value
-            to clients. If you believe that our RFPs do not reflect your
-            areas of strength and unique differentiation, let us know what we
-            should have asked; and we&rsquo;ll ensure that future processes
-            include this additional detail. This is not a guarantee that
-            clients will value these dimensions, but we strive to be as
-            comprehensive as possible in giving them the option to say
-            &ldquo;yes, this is actually useful.&rdquo;
+            We are always happy to learn more about new dimensions of value to
+            clients. If you believe that our RFPs do not reflect your areas of
+            strength and unique differentiation, let us know what we should have
+            asked; and we&rsquo;ll ensure that future processes include this
+            additional detail. This is not a guarantee that clients will value
+            these dimensions, but we strive to be as comprehensive as possible
+            in giving them the option to say &ldquo;yes, this is actually
+            useful.&rdquo;
           </p>
         ),
       },
@@ -495,19 +526,17 @@ export const faqSections: {
           <>
             <p>
               RampRate is paid by both sides in a way that optimally supports
-              objectivity and balance between all the parties to a
-              transaction:
+              objectivity and balance between all the parties to a transaction:
             </p>
             <ul className="list-disc">
               <li>
-                A buyer pays us a professional services fee (project fee) to
-                run the sourcing process
+                A buyer pays us a professional services fee (project fee) to run
+                the sourcing process
                 <ul className="list-disc">
                   <li>
-                    If there is an existing spend baseline, that project fee
-                    can be reduced by substituting a performance-based
-                    success fee tied to reducing costs or improving
-                    performance
+                    If there is an existing spend baseline, that project fee can
+                    be reduced by substituting a performance-based success fee
+                    tied to reducing costs or improving performance
                   </li>
                 </ul>
               </li>
@@ -539,16 +568,14 @@ export const faqSections: {
                 Client deal structure
                 <ul className="list-disc">
                   <li>
-                    Referral fees from suppliers are always disclosed to
-                    buyers.
+                    Referral fees from suppliers are always disclosed to buyers.
                   </li>
                   <li>
                     In a standard agreement, we are appointed as an exclusive
-                    agent of the buyer (this is different than exclusivity
-                    with a supplier, which we don&rsquo;t do), and all
-                    suppliers must operate within the process, including
-                    incumbents. No one gets to cut the line and go directly
-                    to the client.
+                    agent of the buyer (this is different than exclusivity with
+                    a supplier, which we don&rsquo;t do), and all suppliers must
+                    operate within the process, including incumbents. No one
+                    gets to cut the line and go directly to the client.
                   </li>
                   <li>
                     In addition to the contractual commitment, there are
@@ -556,9 +583,9 @@ export const faqSections: {
                     circumvent this exclusivity and our sourcing process.
                     <ul className="list-disc">
                       <li>
-                        Most of the time, this is a project fee is paid up
-                        front by the client, which is then rebated after
-                        receipt of referral fees.
+                        Most of the time, this is a project fee is paid up front
+                        by the client, which is then rebated after receipt of
+                        referral fees.
                       </li>
                       <li>
                         Sometimes, a cancellation fee applies instead if they
@@ -573,10 +600,10 @@ export const faqSections: {
                     achieved vs. baseline).
                     <ul className="list-disc">
                       <li>
-                        This means that regardless of the fee percentage,
-                        buyers can be confident that a dollar retained by the
-                        client is more profitable than a dollar sent to any
-                        specific supplier.
+                        This means that regardless of the fee percentage, buyers
+                        can be confident that a dollar retained by the client is
+                        more profitable than a dollar sent to any specific
+                        supplier.
                       </li>
                       <li>
                         However, since these fees are only paid if the
@@ -586,10 +613,9 @@ export const faqSections: {
                     </ul>
                   </li>
                   <li>
-                    If they still have concerns about objectivity, all
-                    clients have the option to block supplier referral fees
-                    completely by paying an additional professional services
-                    project fee.
+                    If they still have concerns about objectivity, all clients
+                    have the option to block supplier referral fees completely
+                    by paying an additional professional services project fee.
                   </li>
                 </ul>
               </li>
@@ -609,9 +635,8 @@ export const faqSections: {
                 Delivery team evaluation &amp; incentives
                 <ul className="list-disc">
                   <li>
-                    The sourcing analysis team is evaluated on objectivity
-                    and customer satisfaction, not supplier referral fee
-                    revenue.
+                    The sourcing analysis team is evaluated on objectivity and
+                    customer satisfaction, not supplier referral fee revenue.
                   </li>
                   <li>
                     The sourcing delivery team receives no commissions or
@@ -624,17 +649,16 @@ export const faqSections: {
                 <ul className="list-disc">
                   <li>
                     After downselection to finalists, the RampRate executive
-                    team reviews any discrepancies in supplier referral fees.
-                    If anyone is unfairly disadvantaged, they can override the
-                    fee structure.
+                    team reviews any discrepancies in supplier referral fees. If
+                    anyone is unfairly disadvantaged, they can override the fee
+                    structure.
                   </li>
                   <li>
                     For example, in some past tech deals, incumbent suppliers
-                    did not pay referral fees and client project fees were
-                    not enough to offset the difference. To level the playing
-                    field, RampRate reduced its referral fees for other
-                    participants to exactly equal the un-rebated client
-                    project fee.
+                    did not pay referral fees and client project fees were not
+                    enough to offset the difference. To level the playing field,
+                    RampRate reduced its referral fees for other participants to
+                    exactly equal the un-rebated client project fee.
                   </li>
                 </ul>
               </li>
@@ -648,16 +672,16 @@ export const faqSections: {
           "why don't you just charge the buyer and we'll reduce our prices by the amount of the referral fee budget",
         a: (
           <p>
-            Some buyers choose to do exactly that - raise our project fees
-            and block us from collecting referral fees. Most do not.
-            Here&rsquo;s why: a sourcing advisory professional service is not
-            something that they have a budget line item for. The products or
-            services we&rsquo;re sourcing, on the other hand, are already
-            budgeted for. So by not charging a large amount up front, but
-            taking savings fees for cost reduction or supplier referral fees
-            that offset the initial professional services investment,
-            we&rsquo;re helping the buyer present more reasonable budgets to
-            their management, exec team, or board.
+            Some buyers choose to do exactly that - raise our project fees and
+            block us from collecting referral fees. Most do not. Here&rsquo;s
+            why: a sourcing advisory professional service is not something that
+            they have a budget line item for. The products or services
+            we&rsquo;re sourcing, on the other hand, are already budgeted for.
+            So by not charging a large amount up front, but taking savings fees
+            for cost reduction or supplier referral fees that offset the initial
+            professional services investment, we&rsquo;re helping the buyer
+            present more reasonable budgets to their management, exec team, or
+            board.
           </p>
         ),
       },
@@ -667,12 +691,11 @@ export const faqSections: {
           "how do we know you're actually authorized to represent a client letter of agency",
         a: (
           <p>
-            Clients typically sign a letter of agency authorizing us to act
-            on their behalf and share their requirements. If you want to
-            confirm a specific engagement is real before sharing pricing or
-            committing time, ask us for that authorization letter (it will
-            usually be provided at lead registration or during the RFQ
-            process).
+            Clients typically sign a letter of agency authorizing us to act on
+            their behalf and share their requirements. If you want to confirm a
+            specific engagement is real before sharing pricing or committing
+            time, ask us for that authorization letter (it will usually be
+            provided at lead registration or during the RFQ process).
           </p>
         ),
       },
@@ -683,14 +706,14 @@ export const faqSections: {
         a: (
           <p>
             During the initial sourcing process we&rsquo;re paid to be a
-            gatekeeper that keeps our clients in their zone of genius while
-            we handle the initial filtering. Once we get to the finalist
-            stage, contact begins in a controlled environment, with direct
-            meetings we mediate to hash out final terms and relationship
-            dynamics. Once the contract is signed, the relationship is fully
-            turned over to the client, and our role becomes secondary for
-            tasks like troubleshooting, dispute mediation, verification of
-            commitments, etc.
+            gatekeeper that keeps our clients in their zone of genius while we
+            handle the initial filtering. Once we get to the finalist stage,
+            contact begins in a controlled environment, with direct meetings we
+            mediate to hash out final terms and relationship dynamics. Once the
+            contract is signed, the relationship is fully turned over to the
+            client, and our role becomes secondary for tasks like
+            troubleshooting, dispute mediation, verification of commitments,
+            etc.
           </p>
         ),
       },
@@ -701,11 +724,10 @@ export const faqSections: {
         a: (
           <p>
             Generally speaking we avoid this due to the legal obligations
-            involved in holding inventory of these products; lack of
-            physical facilities appropriate for material inventory
-            quantities; and objectivity concerns. We don&rsquo;t want our
-            guidance to the client be based on sunk costs, but only on what
-            the right fit for them is.
+            involved in holding inventory of these products; lack of physical
+            facilities appropriate for material inventory quantities; and
+            objectivity concerns. We don&rsquo;t want our guidance to the client
+            be based on sunk costs, but only on what the right fit for them is.
           </p>
         ),
       },
@@ -713,7 +735,7 @@ export const faqSections: {
   },
   {
     id: "section-2",
-    kicker: "04 / FAQ",
+    kicker: "04 / Core Terms",
     title: "Core Referral Terms",
     dark: true,
     items: [
@@ -723,15 +745,15 @@ export const faqSections: {
           "how does lead registration work opportunity registration document accept reject",
         a: (
           <p>
-            We send you an opportunity registration document (typically
-            e-mail, though we can discuss directly interacting with your
-            CRM) that names the client and overviews the opportunity. You
-            have 1-2 weeks to accept or reject it. You do not need to give us
-            a reason for rejection; however, if you reject a lead and we
-            find that you have sold something to that client subsequently,
-            you will need to demonstrate to us that you had a prior
-            relationship with that client to avoid this sale being
-            considered a circumvention of our agreement.
+            We send you an opportunity registration document (typically e-mail,
+            though we can discuss directly interacting with your CRM) that names
+            the client and overviews the opportunity. You have 1-2 weeks to
+            accept or reject it. You do not need to give us a reason for
+            rejection; however, if you reject a lead and we find that you have
+            sold something to that client subsequently, you will need to
+            demonstrate to us that you had a prior relationship with that client
+            to avoid this sale being considered a circumvention of our
+            agreement.
           </p>
         ),
       },
@@ -742,12 +764,11 @@ export const faqSections: {
         a: (
           <p>
             You can reject the lead, and as long as that pre-existing
-            relationship is demonstrated, the non-circumvention provisions
-            will not trigger. However, you may not be included in the
-            specific opportunities we&rsquo;re sourcing for as an exclusive
-            client representative, since the clients rely on supplier
-            referral fees to offset their up-front investment in our
-            professional services.
+            relationship is demonstrated, the non-circumvention provisions will
+            not trigger. However, you may not be included in the specific
+            opportunities we&rsquo;re sourcing for as an exclusive client
+            representative, since the clients rely on supplier referral fees to
+            offset their up-front investment in our professional services.
           </p>
         ),
       },
@@ -757,11 +778,11 @@ export const faqSections: {
           "why do you register corporate parents when sourcing for a division or subsidiary good deals spread",
         a: (
           <p>
-            Good deals spread. Typically we build contracts that our clients
-            are proud of and share up the reporting chain. It&rsquo;s not
-            uncommon for a deal we did with a small division of Sony,
-            Microsoft, or Hearst to become corporate-wide ones in a couple of
-            years. The same will inevitably apply to health products.
+            Good deals spread. Typically we build contracts that our clients are
+            proud of and share up the reporting chain. It&rsquo;s not uncommon
+            for a deal we did with a small division of Sony, Microsoft, or
+            Hearst to become corporate-wide ones in a couple of years. The same
+            will inevitably apply to health products.
           </p>
         ),
       },
@@ -771,11 +792,10 @@ export const faqSections: {
           "how long does a fee obligation last once a deal is registered 5 years",
         a: (
           <p>
-            5 years from the date of the first transaction if a deal is
-            managed by RampRate, including any follow-on orders / renewals
-            not in the initial RFP scope. If no referred transaction or
-            active conversation with a prospect happens for 1 year, the lead
-            expires.
+            5 years from the date of the first transaction if a deal is managed
+            by RampRate, including any follow-on orders / renewals not in the
+            initial RFP scope. If no referred transaction or active conversation
+            with a prospect happens for 1 year, the lead expires.
           </p>
         ),
       },
@@ -785,11 +805,11 @@ export const faqSections: {
           "what transactions do you get paid on registered buyer supplier",
         a: (
           <p>
-            We get paid on all the transactions between a registered buyer
-            and supplier during the term of the registration. This includes
-            initial orders, subsequent orders, products, services, renewals,
-            expansions, extensions, etc. If revenue comes in from a client
-            that&rsquo;s registered, we get paid.
+            We get paid on all the transactions between a registered buyer and
+            supplier during the term of the registration. This includes initial
+            orders, subsequent orders, products, services, renewals, expansions,
+            extensions, etc. If revenue comes in from a client that&rsquo;s
+            registered, we get paid.
           </p>
         ),
       },
@@ -800,12 +820,11 @@ export const faqSections: {
         a: (
           <p>
             We can exclude only direct passthrough costs that go to third
-            parties and you don&rsquo;t charge a markup (e.g. shipping fees
-            can be excluded; but internal handling costs are not). We do not
-            exclude payment processing fees, your amortized costs of tech,
-            staff, or distribution. Taxes are excluded if you charge sales
-            tax on behalf of the consumer; not your own payroll or income
-            taxes.
+            parties and you don&rsquo;t charge a markup (e.g. shipping fees can
+            be excluded; but internal handling costs are not). We do not exclude
+            payment processing fees, your amortized costs of tech, staff, or
+            distribution. Taxes are excluded if you charge sales tax on behalf
+            of the consumer; not your own payroll or income taxes.
           </p>
         ),
       },
@@ -815,11 +834,11 @@ export const faqSections: {
           "what if parts of my offerings don't support the top-line referral fee percentage we agreed on multiple services",
         a: (
           <p>
-            Our agreements generally have room for multiple services
-            compensated at different percentages. For instance, retail sales
-            can be compensated at 20% due to their higher margins, while
-            wholesale ones are compensated at 5%-7.5%. We prefer to negotiate
-            these up front, but can amend an existing agreement where needed.
+            Our agreements generally have room for multiple services compensated
+            at different percentages. For instance, retail sales can be
+            compensated at 20% due to their higher margins, while wholesale ones
+            are compensated at 5%-7.5%. We prefer to negotiate these up front,
+            but can amend an existing agreement where needed.
           </p>
         ),
       },
@@ -827,7 +846,7 @@ export const faqSections: {
   },
   {
     id: "section-3",
-    kicker: "05 / FAQ",
+    kicker: "05 / Startup Terms",
     title: "Early Stage Startup / Elevate Referral Terms",
     dark: false,
     items: [
@@ -838,17 +857,17 @@ export const faqSections: {
         a: (
           <>
             <p>
-              Our standard bilateral agreement, the one we use with
-              established suppliers, pays referral fees in cash only. The
-              unilateral version we use with earlier-stage partners builds in
-              optionality: when a fee comes due, we can take it in cash, take
-              it in equity, or defer the decision and revisit later.
+              Our standard bilateral agreement, the one we use with established
+              suppliers, pays referral fees in cash only. The unilateral version
+              we use with earlier-stage partners builds in optionality: when a
+              fee comes due, we can take it in cash, take it in equity, or defer
+              the decision and revisit later.
             </p>
             <p>
-              This isn&rsquo;t something we ask for by default &mdash; it
-              shows up specifically where RampRate is helping a company land
-              its first anchor clients rather than adding incremental volume
-              to an already-established book of business.
+              This isn&rsquo;t something we ask for by default &mdash; it shows
+              up specifically where RampRate is helping a company land its first
+              anchor clients rather than adding incremental volume to an
+              already-established book of business.
             </p>
           </>
         ),
@@ -859,14 +878,13 @@ export const faqSections: {
           "how is the equity valued if you elect that option valuation signing payable",
         a: (
           <p>
-            We use whichever is lower: the company&rsquo;s valuation at
-            signing, or its valuation at the time the fee becomes payable.
-            That protects us if a funding round happens in between and
-            pushes the price up &mdash; it doesn&rsquo;t run the other way,
-            so a lower valuation at payout is the number that applies.
-            There&rsquo;s also a hard cap on how much of the company&rsquo;s
-            total equity we can end up holding through this mechanism
-            combined with the bonus provision below.
+            We use whichever is lower: the company&rsquo;s valuation at signing,
+            or its valuation at the time the fee becomes payable. That protects
+            us if a funding round happens in between and pushes the price up
+            &mdash; it doesn&rsquo;t run the other way, so a lower valuation at
+            payout is the number that applies. There&rsquo;s also a hard cap on
+            how much of the company&rsquo;s total equity we can end up holding
+            through this mechanism combined with the bonus provision below.
           </p>
         ),
       },
@@ -877,14 +895,13 @@ export const faqSections: {
         a: (
           <p>
             About a year in, if RampRate turns out to be responsible for a
-            meaningful share of the company&rsquo;s total revenue,
-            we&rsquo;re entitled to an additional bonus equity allocation on
-            top of whatever we&rsquo;ve already earned in ordinary referral
-            fees. It&rsquo;s meant to recognize the difference between being
-            one of several lead sources and being the reason a company got
-            its footing. It only applies at that scale, and only in the
-            unilateral form &mdash; never in the standard bilateral
-            agreement.
+            meaningful share of the company&rsquo;s total revenue, we&rsquo;re
+            entitled to an additional bonus equity allocation on top of whatever
+            we&rsquo;ve already earned in ordinary referral fees. It&rsquo;s
+            meant to recognize the difference between being one of several lead
+            sources and being the reason a company got its footing. It only
+            applies at that scale, and only in the unilateral form &mdash; never
+            in the standard bilateral agreement.
           </p>
         ),
       },
@@ -892,7 +909,7 @@ export const faqSections: {
   },
   {
     id: "section-4",
-    kicker: "06 / FAQ",
+    kicker: "06 / Leads",
     title: "You Can Send Us Leads Too",
     dark: true,
     items: [
@@ -905,26 +922,25 @@ export const faqSections: {
             <p>Three main reasons:</p>
             <ul className="list-disc">
               <li>
-                You have a dead lead. For example because the products they
-                need are not ones you are currently providing; or because you
-                don&rsquo;t operate in the right geographic region. Sending
-                the opportunity to us enables you to still make money from
-                this lead.
+                You have a dead lead. For example because the products they need
+                are not ones you are currently providing; or because you
+                don&rsquo;t operate in the right geographic region. Sending the
+                opportunity to us enables you to still make money from this
+                lead.
               </li>
               <li>
-                You can&rsquo;t get a fair shake in a deal. For example, a
-                large incumbent seems to be entrenched and your proposals are
-                only used for leverage even though you have a better
-                product. Engaging RampRate forces the buyer to be more
-                objective and operate less on the basis of &ldquo;no one gets
-                fired for buying IBM&rdquo;
+                You can&rsquo;t get a fair shake in a deal. For example, a large
+                incumbent seems to be entrenched and your proposals are only
+                used for leverage even though you have a better product.
+                Engaging RampRate forces the buyer to be more objective and
+                operate less on the basis of &ldquo;no one gets fired for buying
+                IBM&rdquo;
               </li>
               <li>
-                You want to build a better rapport with the client. What
-                better way to prove that you&rsquo;re not just a replaceable
-                vendor but a long-term partner than by solving their other
-                sourcing needs where you&rsquo;re not competing for
-                business?
+                You want to build a better rapport with the client. What better
+                way to prove that you&rsquo;re not just a replaceable vendor but
+                a long-term partner than by solving their other sourcing needs
+                where you&rsquo;re not competing for business?
               </li>
             </ul>
           </>
@@ -935,8 +951,8 @@ export const faqSections: {
         searchText: "how much do you pay us same as your own referral fee 7.5%",
         a: (
           <p>
-            Same as your own referral fee for professional services -
-            typically 7.5% of cash compensation.
+            Same as your own referral fee for professional services - typically
+            7.5% of cash compensation.
           </p>
         ),
       },
@@ -948,19 +964,19 @@ export const faqSections: {
           <>
             <p>
               Not if you are the ones that refer us into that client. If you
-              bring us into a client relationship, you get to decide whether
-              or not we help source the categories where you compete (e.g.
-              if you can&rsquo;t get a fair shake); or you want us to stay
-              away and only pitch the categories / regions where you&rsquo;re
-              not present today. We will not negotiate your deal on behalf of
-              the client unless you authorize us to.
+              bring us into a client relationship, you get to decide whether or
+              not we help source the categories where you compete (e.g. if you
+              can&rsquo;t get a fair shake); or you want us to stay away and
+              only pitch the categories / regions where you&rsquo;re not present
+              today. We will not negotiate your deal on behalf of the client
+              unless you authorize us to.
             </p>
             <p>
-              If we come across your clients on our own, though, everything
-              is fair game. We will not accept an exclusions list where
-              we&rsquo;re not allowed to provide services to your clients or
-              lead them to other suppliers except where you are the entity
-              that introduced us to that client.
+              If we come across your clients on our own, though, everything is
+              fair game. We will not accept an exclusions list where we&rsquo;re
+              not allowed to provide services to your clients or lead them to
+              other suppliers except where you are the entity that introduced us
+              to that client.
             </p>
           </>
         ),
@@ -971,11 +987,11 @@ export const faqSections: {
           "what's the paperwork needed bilateral custom agreements parallel agreement",
         a: (
           <p>
-            Many of our agreements for established suppliers are fully
-            bilateral at signing. Earlier stage partners and advisory clients
-            may have more custom agreements (e.g. with equity conversion and
-            incentive packages) that are not bilateral, but we are happy to
-            execute a parallel agreement for sending leads to us.
+            Many of our agreements for established suppliers are fully bilateral
+            at signing. Earlier stage partners and advisory clients may have
+            more custom agreements (e.g. with equity conversion and incentive
+            packages) that are not bilateral, but we are happy to execute a
+            parallel agreement for sending leads to us.
           </p>
         ),
       },
@@ -983,7 +999,7 @@ export const faqSections: {
   },
   {
     id: "section-5",
-    kicker: "07 / FAQ",
+    kicker: "07 / Other",
     title: "Overarching Agreement Structure Beyond the Core Referral Terms",
     dark: false,
     items: [
@@ -995,11 +1011,11 @@ export const faqSections: {
           <p>
             They continue regardless. Fees on registered Buyer Introductions,
             and on revenue generated through Channel Development &amp; Deal
-            Management work, run for the full 5-year term from the date each
-            was registered or generated, whether or not the broader
-            partnership between RampRate and the manufacturing partner is
-            still in place. In short, we don&rsquo;t want short-sighted ideas
-            about terminating our agreement to save on referral fees.
+            Management work, run for the full 5-year term from the date each was
+            registered or generated, whether or not the broader partnership
+            between RampRate and the manufacturing partner is still in place. In
+            short, we don&rsquo;t want short-sighted ideas about terminating our
+            agreement to save on referral fees.
           </p>
         ),
       },
@@ -1010,9 +1026,9 @@ export const faqSections: {
         a: (
           <p>
             Monthly in arrears, 30 days after we receive payment from the
-            customer, is standard. Quarterly works if needed for
-            administrative or deal size reasons. Annual is fine if an
-            estimated amount is paid up front and reconciled over the year.
+            customer, is standard. Quarterly works if needed for administrative
+            or deal size reasons. Annual is fine if an estimated amount is paid
+            up front and reconciled over the year.
           </p>
         ),
       },
@@ -1022,8 +1038,8 @@ export const faqSections: {
           "do we have to route every reorder through you or can the client order directly from us afterward direct is fine",
         a: (
           <p>
-            Direct is fine &mdash; the goal is simply to get you and the
-            client connected, not to sit in the middle of every transaction.
+            Direct is fine &mdash; the goal is simply to get you and the client
+            connected, not to sit in the middle of every transaction.
           </p>
         ),
       },
@@ -1034,9 +1050,8 @@ export const faqSections: {
         a: (
           <p>
             Every payment comes with a written breakdown of the qualifying
-            revenue behind it. If something looks off, we can request
-            supporting records. Audit rights are present, but rarely if ever
-            invoked.
+            revenue behind it. If something looks off, we can request supporting
+            records. Audit rights are present, but rarely if ever invoked.
           </p>
         ),
       },
@@ -1047,49 +1062,47 @@ export const faqSections: {
         a: (
           <>
             <p>
-              RampRate is generally flexible on legal terms, with the
-              following exceptions:
+              RampRate is generally flexible on legal terms, with the following
+              exceptions:
             </p>
             <ul className="list-disc">
               <li>
-                Any confidentiality restrictions cannot block us from
-                disclosing the referral arrangement to buyers. We need to be
-                able to tell them you&rsquo;re paying us and how much
-                you&rsquo;re paying us to maintain our reputation.
+                Any confidentiality restrictions cannot block us from disclosing
+                the referral arrangement to buyers. We need to be able to tell
+                them you&rsquo;re paying us and how much you&rsquo;re paying us
+                to maintain our reputation.
               </li>
               <li>
-                We will not accept any form of exclusivity or non-compete in
-                a referral agreement. Our services to buyers rely on creating
-                a competitive bidding process among multiple partners.
+                We will not accept any form of exclusivity or non-compete in a
+                referral agreement. Our services to buyers rely on creating a
+                competitive bidding process among multiple partners.
               </li>
               <li>
-                We will not accept any non-disparagement clauses that fall
-                short of the legal standard for libel (i.e. untrue, known to
-                us to be untrue and not just an honest error or
-                misinformation, etc.) This is because our responsibility to
-                our buyer clients is to deliver full unvarnished facts about
-                all suppliers. If one of your past clients alleges
-                wrongdoing, we need to report it. If a news story is
-                negative, we need to relay that. You can dispute the veracity
-                of these reports and we&rsquo;ll be happy to make your side
-                of the story heard. You can&rsquo;t sue us for merely
+                We will not accept any non-disparagement clauses that fall short
+                of the legal standard for libel (i.e. untrue, known to us to be
+                untrue and not just an honest error or misinformation, etc.)
+                This is because our responsibility to our buyer clients is to
+                deliver full unvarnished facts about all suppliers. If one of
+                your past clients alleges wrongdoing, we need to report it. If a
+                news story is negative, we need to relay that. You can dispute
+                the veracity of these reports and we&rsquo;ll be happy to make
+                your side of the story heard. You can&rsquo;t sue us for merely
                 reporting.
               </li>
               <li>
-                We will not accept uncapped liability (a year&rsquo;s worth
-                of fees is typically reasonable).
+                We will not accept uncapped liability (a year&rsquo;s worth of
+                fees is typically reasonable).
               </li>
               <li>
-                Generally we don&rsquo;t have much indemnification language.
-                If needed, it should only cover against third-party claims
-                arising from the indemnifying party&rsquo;s own gross
-                negligence, willful misconduct, or intentional
-                misrepresentation of your prices or services &mdash; not
-                ordinary disputes between us.
+                Generally we don&rsquo;t have much indemnification language. If
+                needed, it should only cover against third-party claims arising
+                from the indemnifying party&rsquo;s own gross negligence,
+                willful misconduct, or intentional misrepresentation of your
+                prices or services &mdash; not ordinary disputes between us.
               </li>
               <li>
-                Any custom protections a partner requests need to be mutual,
-                not one-sided.
+                Any custom protections a partner requests need to be mutual, not
+                one-sided.
               </li>
             </ul>
             <p>
@@ -1105,11 +1118,11 @@ export const faqSections: {
           "what are the confidentiality guidelines this is governed by mini-nda supplier price index",
         a: (
           <p>
-            There is a mini-NDA embedded in our agreements or we can execute
-            a separate one. We also execute one with our clients. Your quotes
-            and offers are governed by these protections. However, unless you
-            opt out explicitly, we reserve the right to anonymize your offer
-            details in our supplier and price index.
+            There is a mini-NDA embedded in our agreements or we can execute a
+            separate one. We also execute one with our clients. Your quotes and
+            offers are governed by these protections. However, unless you opt
+            out explicitly, we reserve the right to anonymize your offer details
+            in our supplier and price index.
           </p>
         ),
       },
@@ -1119,13 +1132,12 @@ export const faqSections: {
           "why would i allow my pricing and offer terms to be in your index opt out",
         a: (
           <p>
-            You have the right to opt out at any time. We recommend not
-            opting out, as the index can indicate to a buyer who is skeptical
-            that better options exist that they should evaluate new options.
-            If they believe that no one can sell them a product below $X, but
-            you just did so for one of their peers, it&rsquo;s better for us
-            to be able to share the fact that their pricing is not in fact
-            best in class.
+            You have the right to opt out at any time. We recommend not opting
+            out, as the index can indicate to a buyer who is skeptical that
+            better options exist that they should evaluate new options. If they
+            believe that no one can sell them a product below $X, but you just
+            did so for one of their peers, it&rsquo;s better for us to be able
+            to share the fact that their pricing is not in fact best in class.
           </p>
         ),
       },
@@ -1135,9 +1147,8 @@ export const faqSections: {
           "who should a prospective partner's legal team contact with questions tony greenberg alex veytsel rob holmes",
         a: (
           <p>
-            Tony Greenberg (Founder/CEO), Alex Veytsel (CSO), and Rob Holmes
-            (BD lead). Direct any questions on these terms to them before
-            signing.
+            Tony Greenberg (Founder/CEO), Alex Veytsel (CSO), and Rob Holmes (BD
+            lead). Direct any questions on these terms to them before signing.
           </p>
         ),
       },

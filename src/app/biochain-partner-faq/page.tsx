@@ -6,12 +6,12 @@ import { overviewCards, programs, faqSections } from "./faq-data";
 
 const navLinks = [
   { href: "#overview", label: "Overview" },
-  { href: "#engagement", label: "Three Ways" },
+  { href: "#engagement", label: "Engagement" },
   { href: "#section-1", label: "Sourcing" },
   { href: "#section-2", label: "Core Terms" },
-  { href: "#section-3", label: "Elevate" },
-  { href: "#section-4", label: "Send Leads" },
-  { href: "#section-5", label: "Agreement" },
+  { href: "#section-3", label: "Startup Terms" },
+  { href: "#section-4", label: "Leads" },
+  { href: "#section-5", label: "Other" },
 ];
 
 export default async function BioChainPartnerFaqPage() {
@@ -37,7 +37,7 @@ export default async function BioChainPartnerFaqPage() {
             alt="RampRate"
             width={110}
             height={26}
-            className="w-[110px] h-auto invert"
+            className="w-[110px] h-auto brightness-0 invert"
           />
           <div className="ml-auto flex gap-4 overflow-x-auto no-scrollbar">
             {navLinks.map((l) => (
@@ -70,7 +70,7 @@ export default async function BioChainPartnerFaqPage() {
             alt="RampRate"
             width={150}
             height={36}
-            className="w-[150px] h-auto invert mb-8"
+            className="w-[150px] h-auto brightness-0 invert mb-8"
           />
           <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-3">
             RampRate BioChain Network
@@ -209,7 +209,7 @@ export default async function BioChainPartnerFaqPage() {
             alt="RampRate"
             width={130}
             height={31}
-            className="w-[130px] h-auto invert"
+            className="w-[130px] h-auto brightness-0 invert"
           />
         </div>
       </section>
@@ -221,7 +221,7 @@ export default async function BioChainPartnerFaqPage() {
             alt="RampRate"
             width={130}
             height={31}
-            className="w-[130px] h-auto invert"
+            className="w-[130px] h-auto brightness-0 invert"
           />
           <div className="text-[11px] font-mono text-white/40 text-right">
             RampRate BioChain Network
