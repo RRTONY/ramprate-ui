@@ -23,6 +23,7 @@ export default async function BioChainPartnerFaqPage() {
         portalId="biochain-partner-faq"
         title="Supplier Partner FAQ"
         subtitle="Enter the password to view this confidential RampRate BioChain reference."
+        variant="biochain"
       />
     );
   }
