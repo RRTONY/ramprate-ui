@@ -11,3 +11,7 @@ The live site currently exposes **Syzygy** as Growth Strategy and **Torque** as 
 ## Kumbaya venue-image attachment
 
 The current Next project persists structured submissions through `storeFormSubmission`, which safely stores attachment metadata when an upstream upload path supplies it. The project does not currently contain the documented runtime `storagePut` helper or another configured server-side managed-storage adapter. The existing `client-intake` route forwards attachment metadata to an external endpoint but does not upload bytes. Kumbaya can therefore not truthfully claim file-upload support until a managed runtime storage adapter is available; venue and moodboard URLs remain supported in the current form.
+
+## Kumbaya shared-header contrast
+
+The restored Kumbaya page begins on a light paper hero, so the shared header now treats `/kumbaya` as a light route and uses the opaque surface with dark navigation from first render. Desktop and mobile visual review confirmed the header, search control, menu trigger, hierarchy, and first hero block remain readable without changing the page’s public intake behavior.

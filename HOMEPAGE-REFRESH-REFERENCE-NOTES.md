@@ -40,3 +40,7 @@ The generated broadcast-infrastructure and enterprise-data-center scenes were re
 The first production-domain check immediately after checkpoint publication was still served from the prior homepage revision: it retained the previous comparison copy and did not expose the new managed editorial card image paths. This is recorded as deployment propagation evidence, not as successful production-image verification; the imagery tracker item remains open until the published revision is available and reviewed.
 
 A cache-busted production request after an additional propagation interval returned the same prior revision. The production domain will be rechecked after the next source-quality checkpoint; until the new revision is active, the homepage imagery item remains explicitly incomplete despite passing source, responsive-layout, type, test, lint, and build validation locally and in the feature checkout.
+
+## Public consistency follow-up
+
+Desktop and mobile review confirmed the shared header now begins opaque with dark navigation on the light Kumbaya hero, preventing the former white-on-paper contrast failure. The Values route now uses the shared RampRate navy, paper, gold, and deep-gold palette rather than its prior rust and blue accent exceptions; its Playfair display hierarchy, DM Sans body copy, and JetBrains Mono labels remain consistent with the public system.

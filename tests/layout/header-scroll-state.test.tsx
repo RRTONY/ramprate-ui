@@ -1,6 +1,12 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -9,8 +15,10 @@ vi.mock("next/link", () => ({
     createElement("a", props, children),
 }));
 
+let mockedPathname = "/";
+
 vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
+  usePathname: () => mockedPathname,
 }));
 
 vi.mock("@/components/shared/Logo", () => ({
@@ -29,7 +37,9 @@ import Header from "../../src/components/layout/Header";
 
 describe("marketing header scroll state", () => {
   afterEach(() => {
+    cleanup();
     Object.defineProperty(window, "scrollY", { value: 0, configurable: true });
+    mockedPathname = "/";
   });
 
   it("starts transparent over the home hero and becomes an opaque white surface after scrolling", async () => {
@@ -54,5 +64,15 @@ describe("marketing header scroll state", () => {
     await waitFor(() => {
       expect(navigation?.className).toContain("is-scrolled");
     });
+  });
+
+  it("starts opaque on the light Kumbaya hero so navigation remains readable", () => {
+    mockedPathname = "/kumbaya";
+    const { container } = render(createElement(Header));
+
+    expect(container.querySelector("nav")?.className).toContain("is-scrolled");
+    expect(
+      screen.getByRole("button", { name: /services/i }).className,
+    ).toContain("text-[#152337]");
   });
 });

@@ -78,7 +78,7 @@ export default function Header() {
     "/josh-bykowski",
     "/legal-master",
   ];
-  const lightBgExactPaths = ["/biochain", "/biochain-sourcing"];
+  const lightBgExactPaths = ["/biochain", "/biochain-sourcing", "/kumbaya"];
   const isLightPage =
     lightBgPaths.some((path) => pathname.startsWith(path)) ||
     lightBgExactPaths.includes(pathname);

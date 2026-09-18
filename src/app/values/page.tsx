@@ -212,7 +212,7 @@ export default function ValuesPage() {
       >
         <div
           className="absolute -bottom-20 -right-20 w-[280px] h-[280px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
+          style={{ background: "var(--gold)", filter: "blur(80px)" }}
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
@@ -222,7 +222,7 @@ export default function ValuesPage() {
               <span
                 className="text-xs font-semibold tracking-[0.22em] uppercase mb-4 block"
                 style={{
-                  color: "oklch(0.55 0.15 30)",
+                  color: "var(--rr-gold-deep)",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -237,7 +237,7 @@ export default function ValuesPage() {
               >
                 Elevating the Way
                 <br />
-                <span style={{ color: "oklch(0.55 0.15 30)" }}>
+                <span style={{ color: "var(--rr-gold-deep)" }}>
                   Business Does
                   <br />
                   Business
@@ -250,7 +250,7 @@ export default function ValuesPage() {
               <p
                 className="mt-5 text-sm font-medium"
                 style={{
-                  color: "oklch(0.55 0.15 30)",
+                  color: "var(--rr-gold-deep)",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -335,7 +335,7 @@ export default function ValuesPage() {
             <span
               className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
               style={{
-                color: "oklch(0.55 0.15 30)",
+                color: "var(--rr-gold-deep)",
                 fontFamily: "var(--font-body)",
               }}
             >
@@ -349,7 +349,7 @@ export default function ValuesPage() {
               }}
             >
               Core Values &amp;{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>Principles</span>
+              <span style={{ color: "var(--rr-gold-deep)" }}>Principles</span>
             </h2>
             <p
               className="text-sm sm:text-base max-w-2xl leading-relaxed"
@@ -371,7 +371,7 @@ export default function ValuesPage() {
                 className="bg-white rounded-xl p-6 border-l-4 shadow-sm flex gap-4 items-start"
                 style={{
                   borderLeftColor:
-                    i % 2 === 0 ? "oklch(0.82 0.15 75)" : "oklch(0.55 0.15 30)",
+                    i % 2 === 0 ? "var(--gold)" : "var(--rr-gold-deep)",
                   borderTop: "1px solid rgba(0,0,0,0.05)",
                   borderRight: "1px solid rgba(0,0,0,0.05)",
                   borderBottom: "1px solid rgba(0,0,0,0.05)",
@@ -383,11 +383,11 @@ export default function ValuesPage() {
                     background:
                       i % 2 === 0
                         ? "oklch(0.82 0.15 75 / 0.12)"
-                        : "oklch(0.55 0.15 30 / 0.1)",
+                        : "color-mix(in srgb, var(--rr-gold-deep) 10%, transparent)",
                     color:
                       i % 2 === 0
                         ? "oklch(0.55 0.12 75)"
-                        : "oklch(0.55 0.15 30)",
+                        : "var(--rr-gold-deep)",
                     fontFamily: "var(--font-mono)",
                   }}
                 >
@@ -415,7 +415,7 @@ export default function ValuesPage() {
       >
         <div
           className="absolute -top-40 -right-40 w-[400px] h-[400px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.55 0.22 260)", filter: "blur(80px)" }}
+          style={{ background: "var(--rr-navy-mid)", filter: "blur(80px)" }}
         />
         <div
           className="absolute bottom-0 left-0 w-75 h-75 rounded-full opacity-10 pointer-events-none"
@@ -538,7 +538,7 @@ export default function ValuesPage() {
       >
         <div
           className="absolute bottom-0 right-0 w-75 h-75 rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.55 0.15 30)", filter: "blur(80px)" }}
+          style={{ background: "var(--gold)", filter: "blur(80px)" }}
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
@@ -547,7 +547,7 @@ export default function ValuesPage() {
             <span
               className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
               style={{
-                color: "oklch(0.55 0.15 30)",
+                color: "var(--rr-gold-deep)",
                 fontFamily: "var(--font-body)",
               }}
             >
@@ -560,11 +560,11 @@ export default function ValuesPage() {
                 fontFamily: "var(--font-display)",
               }}
             >
-              How We <span style={{ color: "oklch(0.55 0.15 30)" }}>Do It</span>
+              How We <span style={{ color: "var(--rr-gold-deep)" }}>Do It</span>
             </h2>
             <div
               className="mt-4 w-12 h-1 rounded-full"
-              style={{ background: "oklch(0.55 0.15 30)" }}
+              style={{ background: "var(--gold)" }}
             />
           </div>
 
@@ -587,7 +587,7 @@ export default function ValuesPage() {
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
                     style={{
-                      background: "oklch(0.55 0.15 30)",
+                      background: "var(--rr-gold-deep)",
                       color: "white",
                       fontFamily: "var(--font-mono)",
                     }}
@@ -641,7 +641,7 @@ export default function ValuesPage() {
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            style={{ color: "oklch(0.55 0.15 30)" }}
+                            style={{ color: "var(--rr-gold-deep)" }}
                           >
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
@@ -755,7 +755,7 @@ export default function ValuesPage() {
               <span
                 className="text-xs font-semibold tracking-[0.22em] uppercase mb-3 block"
                 style={{
-                  color: "oklch(0.55 0.15 30)",
+                  color: "var(--rr-gold-deep)",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -793,7 +793,7 @@ export default function ValuesPage() {
                   <li key={item.t} className="flex gap-3">
                     <span
                       className="shrink-0 mt-1"
-                      style={{ color: "oklch(0.55 0.15 30)" }}
+                      style={{ color: "var(--rr-gold-deep)" }}
                     >
                       <svg
                         width="14"
