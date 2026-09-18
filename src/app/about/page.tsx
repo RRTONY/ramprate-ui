@@ -356,21 +356,12 @@ export default async function AboutPage() {
         id="journey"
         className="rr-public-surface relative overflow-hidden py-20 sm:py-28"
       >
-        <div
-          className="absolute -top-40 -right-40 w-[350px] h-[350px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "oklch(0.55 0.22 260)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-20 -left-20 w-[200px] h-[200px] rounded-full opacity-15 pointer-events-none"
-          style={{ background: "oklch(0.82 0.15 75)", filter: "blur(80px)" }}
-        />
+        <div className="rr-about-orb rr-about-orb--deep absolute -top-40 -right-40 w-[350px] h-[350px] rounded-full opacity-20 pointer-events-none" />
+        <div className="rr-about-orb rr-about-orb--gold absolute bottom-20 -left-20 w-[200px] h-[200px] rounded-full opacity-15 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-12"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Our <span style={{ color: "oklch(0.55 0.15 30)" }}>Journey</span>
+          <h2 className="mb-12 text-3xl font-bold text-white sm:text-4xl">
+            Our <span className="rr-about-highlight">Journey</span>
           </h2>
           <div className="space-y-0">
             {timeline.map((t) => (
@@ -378,22 +369,10 @@ export default async function AboutPage() {
                 key={t.year}
                 className="flex gap-3 sm:gap-6 py-5 border-b border-white/10 last:border-0"
               >
-                <div
-                  className="text-xl sm:text-2xl font-bold shrink-0 w-14 sm:w-16"
-                  style={{
-                    color: "oklch(0.55 0.15 30)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <div className="rr-about-stat-value w-14 shrink-0 text-xl font-bold sm:w-16 sm:text-2xl">
                   {t.year}
                 </div>
-                <p
-                  className="text-sm leading-relaxed pt-1"
-                  style={{
-                    color: "rgba(255,255,255,0.7)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <p className="rr-about-body rr-about-body--light pt-1 text-sm leading-relaxed">
                   {t.event}
                 </p>
               </div>
@@ -405,19 +384,10 @@ export default async function AboutPage() {
       {/* ═══ CORE TEAM ═══ */}
       <section className="relative section-light overflow-hidden py-20 sm:py-28">
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <h2
-            className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Core <span style={{ color: "oklch(0.55 0.15 30)" }}>Team</span>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            Core <span className="rr-about-highlight">Team</span>
           </h2>
-          <p
-            className="text-base mb-12 max-w-2xl"
-            style={{
-              color: "oklch(0.45 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <p className="rr-about-body mb-12 max-w-2xl text-base">
             We deploy time-dependent configurations. Principals stay. Advisors
             guide. Specialists rotate.
           </p>
@@ -439,13 +409,7 @@ export default async function AboutPage() {
                 className="bg-white rounded-xl overflow-hidden border border-black/5 shadow-sm flex flex-col scroll-mt-24"
               >
                 {m.img ? (
-                  <div
-                    className="relative overflow-hidden w-full"
-                    style={{
-                      aspectRatio: "4/3",
-                      background: "oklch(0.92 0.01 80)",
-                    }}
-                  >
+                  <div className="rr-about-profile-image relative w-full overflow-hidden">
                     <Image
                       src={m.img}
                       alt={m.name}
@@ -455,20 +419,8 @@ export default async function AboutPage() {
                     />
                   </div>
                 ) : (
-                  <div
-                    className="overflow-hidden w-full flex items-center justify-center"
-                    style={{
-                      aspectRatio: "4/3",
-                      background: "oklch(0.92 0.01 80)",
-                    }}
-                  >
-                    <span
-                      className="text-5xl font-bold"
-                      style={{
-                        color: "rgba(100,60,30,0.2)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
+                  <div className="rr-about-profile-image flex w-full items-center justify-center overflow-hidden">
+                    <span className="rr-about-profile-initial text-5xl font-bold">
                       {m.name
                         .split(" ")
                         .map((n) => n[0])
@@ -479,19 +431,10 @@ export default async function AboutPage() {
                 <div className="p-6">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3
-                        className="text-lg font-bold"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
+                      <h3 className="font-display text-lg font-bold">
                         {m.name}
                       </h3>
-                      <p
-                        className="text-xs font-semibold mt-1 tracking-wide uppercase"
-                        style={{
-                          color: "oklch(0.55 0.15 30)",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
+                      <p className="rr-about-label mt-1 text-xs font-semibold tracking-wide uppercase">
                         {m.role}
                       </p>
                     </div>
@@ -501,11 +444,7 @@ export default async function AboutPage() {
                           href={m.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-                          style={{
-                            background: "rgba(100,60,30,0.1)",
-                            color: "oklch(0.55 0.15 30)",
-                          }}
+                          className="rr-about-social flex h-8 w-8 items-center justify-center rounded-full transition-colors"
                         >
                           <LinkedInIcon />
                         </a>
@@ -515,24 +454,14 @@ export default async function AboutPage() {
                           href={m.twitter}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-                          style={{
-                            background: "rgba(100,60,30,0.1)",
-                            color: "oklch(0.55 0.15 30)",
-                          }}
+                          className="rr-about-social flex h-8 w-8 items-center justify-center rounded-full transition-colors"
                         >
                           <TwitterIcon />
                         </a>
                       )}
                     </div>
                   </div>
-                  <p
-                    className="mt-3 text-sm leading-relaxed flex-1"
-                    style={{
-                      color: "oklch(0.45 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
+                  <p className="rr-about-body mt-3 flex-1 text-sm leading-relaxed">
                     {m.bio}
                   </p>
                 </div>

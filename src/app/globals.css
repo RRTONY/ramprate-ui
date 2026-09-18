@@ -3532,6 +3532,21 @@ button.bg-gold {
   font-family: var(--font-body), sans-serif;
 }
 
+.rr-about-profile-image {
+  aspect-ratio: 4 / 3;
+  background: #f3f1e9;
+}
+
+.rr-about-profile-initial {
+  color: rgb(122 84 41 / 0.3);
+  font-family: var(--font-display), serif;
+}
+
+.rr-about-social {
+  background: rgb(214 173 66 / 0.12);
+  color: var(--rr-gold-deep);
+}
+
 .rr-about-highlight {
   color: var(--rr-gold-deep);
 }
