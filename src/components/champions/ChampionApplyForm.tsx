@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { trackEvent } from "@/lib/analytics/track";
 
 // Adobe Sign embedded widget for the Champion Agreement. The agreement is
 // already signed on RampRate's side, so this is the countersignature step.
@@ -70,6 +71,10 @@ export default function ChampionApplyForm() {
     };
   }, [agreementOpen]);
 
+  useEffect(() => {
+    trackEvent("form_start", { form: "champions" });
+  }, []);
+
   const togglePractice = useCallback((value: string) => {
     setPractices((current) =>
       current.includes(value)
@@ -107,6 +112,7 @@ export default function ChampionApplyForm() {
         throw new Error(json.error || "Submission failed.");
       }
 
+      trackEvent("form_complete", { form: "champions" });
       setStatus("idle");
       setCameFromForm(true);
       setMode("signing");

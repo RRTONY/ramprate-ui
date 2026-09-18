@@ -1,6 +1,7 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import {trackEvent} from '@/lib/analytics/track'
 
 const roleOptions = [
   'Founder or operator',
@@ -47,6 +48,10 @@ export default function EngagementIntakeForm({initialQ1 = ''}: {initialQ1?: stri
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    trackEvent('form_start', {form: 'talk_to_us'})
+  }, [])
 
   function toggle(list: string[], setList: (v: string[]) => void, value: string) {
     if (list.includes(value)) {
@@ -99,6 +104,7 @@ export default function EngagementIntakeForm({initialQ1 = ''}: {initialQ1?: stri
         body: JSON.stringify(payload),
       })
       if (!res.ok) throw new Error('failed')
+      trackEvent('form_complete', {form: 'talk_to_us'})
       setSubmitted(true)
     } catch {
       setSubmitError(true)

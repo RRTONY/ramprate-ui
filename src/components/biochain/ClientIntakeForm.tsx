@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ComponentType } from "react";
 import { useFormik, type FormikProps } from "formik";
 import * as Yup from "yup";
+import { trackEvent } from "@/lib/analytics/track";
 import {
   Check,
   ArrowLeft,
@@ -1644,6 +1645,10 @@ export default function ClientIntakeForm() {
   // by the real button's own click can't be raced that way.
   const intentionalSubmitRef = useRef(false);
 
+  useEffect(() => {
+    trackEvent("form_start", { form: "biochain_buyer_intake" });
+  }, []);
+
   const formik = useFormik<FormValues>({
     initialValues: {},
     validationSchema,
@@ -1670,6 +1675,7 @@ export default function ClientIntakeForm() {
         const result = await res.json().catch(() => ({ ok: res.ok }));
         if (!res.ok || result.ok === false)
           throw new Error(result.error || "Submission failed");
+        trackEvent("form_complete", { form: "biochain_buyer_intake" });
         setSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (err) {

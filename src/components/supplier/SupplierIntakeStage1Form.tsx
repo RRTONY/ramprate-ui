@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
+import { trackEvent } from "@/lib/analytics/track";
 import { Check, ArrowLeft, ArrowRight, Building2, Package, Gauge } from "lucide-react";
 import { STAGE1_STEPS, STAGE1_REQUIRED_FIELD_COUNT } from "@/lib/supplier-intake-fields";
 import {
@@ -26,6 +27,10 @@ export default function SupplierIntakeStage1Form() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    trackEvent("form_start", { form: "biochain_supplier_intake" });
+  }, []);
 
   const formik = useFormik<FormValues>({
     initialValues: {},
@@ -54,6 +59,7 @@ export default function SupplierIntakeStage1Form() {
         });
 
         if (!res.ok) throw new Error("Submission failed");
+        trackEvent("form_complete", { form: "biochain_supplier_intake" });
         setSubmitted(true);
       } catch {
         setError(

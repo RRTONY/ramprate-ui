@@ -40,6 +40,7 @@ export const SANITY_EDITABLE_TYPES = [
   "caseStudy",
   "clientLogo",
   "confidentialTestimonial",
+  "reportRun",
 ] as const;
 
 export type SanityEditableType = (typeof SANITY_EDITABLE_TYPES)[number];

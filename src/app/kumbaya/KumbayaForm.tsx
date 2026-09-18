@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { trackEvent } from "@/lib/analytics/track";
 import {
   KUMBAYA_ALL_FIELD_KEYS,
   KUMBAYA_ASKS_DISPLAY_LABEL,
@@ -84,6 +85,10 @@ export function KumbayaForm() {
   const [copied, setCopied] = useState(false);
   const venueInputRef = useRef<HTMLInputElement | null>(null);
 
+  useEffect(() => {
+    trackEvent("form_start", { form: "kumbaya" });
+  }, []);
+
   const formik = useFormik<KumbayaFormValues>({
     initialValues: INITIAL_VALUES,
     validationSchema,
@@ -123,6 +128,8 @@ export function KumbayaForm() {
 
         const res = await fetch("/api/kumbaya-intake", { method: "POST", body });
         if (!res.ok) throw new Error("request failed");
+        trackEvent("form_complete", { form: "kumbaya" });
+        trackEvent("prototype_generated", { form: "kumbaya" });
         setStep(4);
       } catch {
         setSubmitError(
@@ -169,6 +176,7 @@ export function KumbayaForm() {
   async function copyPrototype() {
     try {
       await navigator.clipboard.writeText(prototypeText);
+      trackEvent("copy_prototype", { form: "kumbaya" });
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {

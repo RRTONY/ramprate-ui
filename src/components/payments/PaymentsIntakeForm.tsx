@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik, type FormikProps } from "formik";
 import * as Yup from "yup";
 import { Check, ArrowLeft, ArrowRight, Download } from "lucide-react";
+import { trackEvent } from "@/lib/analytics/track";
 import {
   PAYMENTS_INDUSTRIES,
   PAYMENTS_SECTIONS,
@@ -1351,6 +1352,10 @@ export default function PaymentsIntakeForm() {
   const [rfpText, setRfpText] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
 
+  useEffect(() => {
+    trackEvent("form_start", { form: "payments_advisory_intake" });
+  }, []);
+
   const formik = useFormik<FormValues>({
     initialValues: {},
     validationSchema,
@@ -1375,6 +1380,7 @@ export default function PaymentsIntakeForm() {
           body: JSON.stringify({ formData: values }),
         });
         const data = await res.json();
+        trackEvent("form_complete", { form: "payments_advisory_intake" });
         setRfpText(
           data.rfp ||
             "We couldn't generate a preview right now. Your RampRate advisor will draft your RFP directly.",
