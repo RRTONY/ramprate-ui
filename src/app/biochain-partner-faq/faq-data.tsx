@@ -645,8 +645,8 @@ export const faqSections: FaqSection[] = [
                 receipt of funds.
                 <ul className="list-disc">
                   <li>
-                    These referral fees are shared with the client to rebate
-                    their project fee
+                    These referral fees are shared with the client (the buyer)
+                    to rebate their project fee
                   </li>
                 </ul>
               </li>
