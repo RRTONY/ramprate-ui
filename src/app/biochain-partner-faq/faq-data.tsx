@@ -144,10 +144,6 @@ export const sellerPrograms = [
         </li>
         <li>
           <strong>Example:</strong> Channel Development &amp; Deal Management:
-          Based on our initial discussions, this is where we believe an initial
-          engagement will add the most value in this market: building out the
-          channel and indirect-sales capability without cannibalizing existing
-          direct relationships.
           <ul className="list-disc pl-5 mt-2 space-y-1.5 opacity-80">
             <li>
               At the lighter end, this includes setting up pricing frameworks
