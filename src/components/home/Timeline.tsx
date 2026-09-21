@@ -26,12 +26,12 @@ export default function Timeline({ timeline }: { timeline: TimelineItem[] }) {
           {timeline.map((item) => (
             <div key={item.year} className="flex-shrink-0 w-[200px] relative">
               <div className="flex flex-col items-center">
-                <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-gold" />
-                <div className="absolute top-1.5 left-1/2 w-full h-px bg-white/10" />
-                <span className="font-mono text-lg font-bold mb-2 text-gold">
+                <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-rust" />
+                <div className="absolute top-1.5 left-1/2 w-full h-px bg-black/10" />
+                <span className="font-mono text-lg font-bold mb-2 text-rust">
                   {item.year}
                 </span>
-                <p className="font-body text-xs text-center leading-relaxed px-3 text-white/50">
+                <p className="font-body text-xs text-center leading-relaxed px-3 text-ink-mid">
                   {item.event}
                 </p>
               </div>
@@ -44,7 +44,7 @@ export default function Timeline({ timeline }: { timeline: TimelineItem[] }) {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll timeline left"
-            className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/60 transition-colors hover:text-white hover:border-white/30"
+            className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center text-ink-mid transition-colors hover:text-ink hover:border-black/30"
           >
             <ChevronLeft size={16} />
           </button>
@@ -52,7 +52,7 @@ export default function Timeline({ timeline }: { timeline: TimelineItem[] }) {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll timeline right"
-            className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/60 transition-colors hover:text-white hover:border-white/30"
+            className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center text-ink-mid transition-colors hover:text-ink hover:border-black/30"
           >
             <ChevronRight size={16} />
           </button>
@@ -64,16 +64,16 @@ export default function Timeline({ timeline }: { timeline: TimelineItem[] }) {
         {timeline.map((item, i) => (
           <div key={item.year} className="flex gap-5 relative">
             <div className="flex flex-col items-center">
-              <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-gold" />
+              <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-rust" />
               {i < timeline.length - 1 && (
-                <div className="w-px flex-1 mt-1 bg-white/10" />
+                <div className="w-px flex-1 mt-1 bg-black/10" />
               )}
             </div>
             <div className="pb-8">
-              <span className="font-mono text-sm font-bold text-gold">
+              <span className="font-mono text-sm font-bold text-rust">
                 {item.year}
               </span>
-              <p className="font-body text-sm mt-1 leading-relaxed text-white/50">
+              <p className="font-body text-sm mt-1 leading-relaxed text-ink-mid">
                 {item.event}
               </p>
             </div>
