@@ -2,16 +2,42 @@ import Image from "next/image";
 import { isPortalUnlocked } from "@/lib/portal-auth";
 import PortalGate from "@/components/portal/PortalGate";
 import PartnerFaqSection from "@/components/biochain/PartnerFaqSection";
-import { overviewCards, programs, faqSections } from "./faq-data";
+import {
+  overviewCards,
+  sellerPrograms,
+  buyerPrograms,
+  buyerRowIntro,
+  faqSections,
+  buySideFaqSections,
+} from "./faq-data";
 
-const navLinks = [
-  { href: "#overview", label: "Overview" },
-  { href: "#engagement", label: "Engagement" },
-  { href: "#section-1", label: "Sourcing" },
-  { href: "#section-2", label: "Core Terms" },
-  { href: "#section-3", label: "Startup Terms" },
-  { href: "#section-4", label: "Leads" },
-  { href: "#section-5", label: "Other" },
+const navGroups = [
+  {
+    label: null,
+    links: [
+      { href: "#overview", label: "Overview" },
+      { href: "#engagement", label: "Engagement" },
+    ],
+  },
+  {
+    label: "Sell-Side",
+    links: [
+      { href: "#section-1", label: "Sourcing" },
+      { href: "#section-2", label: "Core Terms" },
+      { href: "#section-3", label: "Startup Terms" },
+      { href: "#section-4", label: "Leads" },
+      { href: "#section-5", label: "Other" },
+    ],
+  },
+  {
+    label: "Buy-Side",
+    links: [
+      { href: "#buy-section-1", label: "Process" },
+      { href: "#buy-section-2", label: "Contract" },
+      { href: "#buy-section-3", label: "Fees" },
+      { href: "#buy-section-4", label: "Legal" },
+    ],
+  },
 ];
 
 export default async function BioChainPartnerFaqPage() {
@@ -39,15 +65,24 @@ export default async function BioChainPartnerFaqPage() {
             height={26}
             className="w-[110px] h-auto brightness-0 invert"
           />
-          <div className="ml-auto flex gap-4 overflow-x-auto no-scrollbar">
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-[11px] font-mono uppercase tracking-wide text-white/60 hover:text-gold-light whitespace-nowrap"
-              >
-                {l.label}
-              </a>
+          <div className="ml-auto flex items-center gap-4 overflow-x-auto no-scrollbar">
+            {navGroups.map((group, gi) => (
+              <div key={gi} className="flex items-center gap-4">
+                {group.label && (
+                  <span className="text-[10px] font-mono uppercase tracking-wide text-gold/70 pl-3 border-l border-white/15 whitespace-nowrap">
+                    {group.label}
+                  </span>
+                )}
+                {group.links.map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    className="text-[11px] font-mono uppercase tracking-wide text-white/60 hover:text-gold-light whitespace-nowrap"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -119,24 +154,59 @@ export default async function BioChainPartnerFaqPage() {
 
       <section className="bg-dark py-20" id="engagement">
         <div className="max-w-[1180px] mx-auto px-7">
-          <div className="grid sm:grid-cols-[180px_1fr] gap-8 mb-8">
+          <div className="grid sm:grid-cols-[180px_1fr] gap-8 mb-10">
             <div className="text-xs font-mono uppercase tracking-wide text-gold">
               02 / Engagement
             </div>
             <div>
               <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-3 font-display">
-                Three Ways RampRate Engages
+                How RampRate Engages
               </h2>
               <p className="text-white/70 text-lg">
                 <strong className="text-white">
-                  What are the three levels of engagement, and why does it
-                  matter for compensation?
+                  Five ways to work with RampRate, depending on whether
+                  you&rsquo;re selling, buying, or both.
                 </strong>
               </p>
             </div>
           </div>
+
+          <div className="text-[11px] font-mono uppercase tracking-wide text-gold-light mb-4">
+            As a Seller
+          </div>
           <div className="grid sm:grid-cols-3 gap-4 items-start">
-            {programs.map((p) => (
+            {sellerPrograms.map((p) => (
+              <details
+                key={p.num}
+                className="rounded-2xl border border-white/10 bg-dark-mid overflow-hidden group"
+              >
+                <summary className="relative cursor-pointer list-none px-6 py-6 pr-10 [&::-webkit-details-marker]:hidden">
+                  <div className="text-[11px] font-mono text-gold-light mb-3">
+                    {p.num}
+                  </div>
+                  <h3 className="text-[21px] leading-tight font-bold text-white font-display">
+                    {p.title}
+                  </h3>
+                  <span className="absolute right-5 bottom-5 text-2xl text-gold group-open:hidden">
+                    +
+                  </span>
+                  <span className="absolute right-5 bottom-5 text-2xl text-gold hidden group-open:inline">
+                    &ndash;
+                  </span>
+                </summary>
+                <div className="px-6 pb-6 text-[15px] leading-relaxed text-white/70">
+                  {p.body}
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <div className="text-[11px] font-mono uppercase tracking-wide text-gold-light mb-4 mt-10">
+            As a Buyer, Too
+          </div>
+          <div className="mb-6">{buyerRowIntro}</div>
+          <div className="grid sm:grid-cols-2 gap-4 items-start">
+            {buyerPrograms.map((p) => (
               <details
                 key={p.num}
                 className="rounded-2xl border border-white/10 bg-dark-mid overflow-hidden group"
@@ -164,6 +234,19 @@ export default async function BioChainPartnerFaqPage() {
         </div>
       </section>
 
+      <section className="bg-dark py-14 border-y border-white/10">
+        <div className="max-w-[1180px] mx-auto px-7 text-center">
+          <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-2">
+            Sell-Side FAQ
+          </div>
+          <p className="text-white/60 text-sm max-w-xl mx-auto">
+            The sections below cover referral and channel terms for what you
+            sell into the BioChain network. Sourcing supply for your own
+            production instead? Jump to the Buy-Side FAQ further down.
+          </p>
+        </div>
+      </section>
+
       {faqSections.map((section) => (
         <section
           key={section.id}
@@ -179,13 +262,61 @@ export default async function BioChainPartnerFaqPage() {
               >
                 {section.kicker}
               </div>
-              <h2
-                className={`text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display ${
-                  section.dark ? "text-white" : "text-ink"
+              <div>
+                <h2
+                  className={`text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display ${
+                    section.dark ? "text-white" : "text-ink"
+                  }`}
+                >
+                  {section.title}
+                </h2>
+                {section.intro && <div className="mt-3">{section.intro}</div>}
+              </div>
+            </div>
+            <div className={section.dark ? "text-white" : "text-ink"}>
+              <PartnerFaqSection items={section.items} dark={section.dark} />
+            </div>
+          </div>
+        </section>
+      ))}
+
+      <section className="bg-dark py-14 border-y border-white/10">
+        <div className="max-w-[1180px] mx-auto px-7 text-center">
+          <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-2">
+            Buy-Side FAQ
+          </div>
+          <p className="text-white/60 text-sm max-w-xl mx-auto">
+            The sections below cover sourcing the products, raw materials, or
+            capacity you need through RampRate &mdash; as a buyer, not a seller.
+          </p>
+        </div>
+      </section>
+
+      {buySideFaqSections.map((section) => (
+        <section
+          key={section.id}
+          id={section.id}
+          className={`py-20 ${section.dark ? "bg-dark" : "bg-warm-light"}`}
+        >
+          <div className="max-w-[1180px] mx-auto px-7">
+            <div className="grid sm:grid-cols-[180px_1fr] gap-8 mb-6">
+              <div
+                className={`text-xs font-mono uppercase tracking-wide ${
+                  section.dark ? "text-gold" : "text-[oklch(0.5_0.1_70)]"
                 }`}
               >
-                {section.title}
-              </h2>
+                {section.kicker}
+              </div>
+              <div>
+                <h2
+                  className={`text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display ${
+                    section.dark ? "text-white" : "text-ink"
+                  }`}
+                >
+                  {section.title}
+                </h2>
+                {section.intro && <div className="mt-3">{section.intro}</div>}
+              </div>
             </div>
             <div className={section.dark ? "text-white" : "text-ink"}>
               <PartnerFaqSection items={section.items} dark={section.dark} />
