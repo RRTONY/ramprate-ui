@@ -169,10 +169,17 @@ function buildRow(data) {
   row['Top Initiatives (Next 12 Months)'] = priorities.initiatives || '';
   row['If 10-20% of Spend Were Freed Up'] = priorities.savingsUse || '';
 
+  // FIXED (found via a real end-to-end test 2026-09-21): this used to
+  // interpolate the client's own free-text otherLabel straight into the
+  // column header ('Priority: ' + otherLabel), so every submission with
+  // different custom "Other" text created a brand-new Sheet column instead
+  // of reusing one - confirmed live, two test submissions with different
+  // otherLabel text produced two separate columns. Column header is now
+  // always fixed; the free text goes in its own column below instead.
   PRIORITY_ITEMS.forEach(function (item) {
-    const label = item.key === 'other' && priorities.otherLabel ? priorities.otherLabel : item.label;
-    row['Priority: ' + label] = ranks[item.key] !== undefined ? ranks[item.key] : '';
+    row['Priority: ' + item.label] = ranks[item.key] !== undefined ? ranks[item.key] : '';
   });
+  row['Priority: Other - Description'] = priorities.otherLabel || '';
 
   row['Supplier Count'] = suppliers.length;
   row['Suppliers'] = suppliers.map(formatSupplierBlock).join('\n\n---\n\n');

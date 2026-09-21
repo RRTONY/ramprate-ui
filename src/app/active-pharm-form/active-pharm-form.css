@@ -185,12 +185,47 @@
   transition: border-color .15s, box-shadow .15s;
 }
 .apf-root textarea { resize: vertical; min-height: 72px; }
+
+/* Explicit placeholder color/opacity - without this, "$"-prefixed number
+   fields relied on the browser's own default placeholder styling, which
+   wasn't reliably visible against this dark input background (confirmed via
+   a real screenshot: the "0" placeholder was effectively invisible next to
+   the "$" prefix, while longer placeholders like "optional note" happened to
+   still be legible at the same low contrast). Firefox also defaults
+   placeholder opacity below 1, which this overrides explicitly. */
+.apf-root input::placeholder, .apf-root textarea::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
+}
+
+/* Native number-input spin buttons looked out of place next to the "$"
+   prefix (confirmed via screenshot) and weren't part of the original
+   design's aesthetic (already suppressed on range/select above) - hidden
+   the same way here for visual consistency. */
+.apf-root input[type="number"] {
+  -moz-appearance: textfield;
+}
+.apf-root input[type="number"]::-webkit-outer-spin-button,
+.apf-root input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .apf-root input:focus-visible, .apf-root select:focus-visible, .apf-root textarea:focus-visible,
 .apf-root button:focus-visible { outline: 2px solid var(--violet-500); outline-offset: 2px; }
 .apf-root input:focus, .apf-root select:focus, .apf-root textarea:focus { border-color: var(--violet-500); }
 
 .apf-money-field { position: relative; }
-.apf-money-field input { padding-left: 26px; }
+/* Prefixed with .apf-root to outrank the base input[type] rule above (which
+   is itself .apf-root-prefixed) - found via a real screenshot + DOM inspection
+   that without this, the base rule's `padding: 10px 12px` shorthand won on
+   specificity and silently overrode this padding-left back to 12px, so the
+   "$" prefix (positioned at left:12px) sat exactly on top of the input's
+   text/placeholder start position instead of before it, making the "0"
+   placeholder invisible underneath/behind the "$". The original unscoped
+   prototype this page is based on avoided this only by coincidence (equal
+   specificity there, decided by source order); adding .apf-root for scoping
+   changed that balance. */
+.apf-root .apf-money-field input { padding-left: 26px; }
 .apf-money-field::before {
   content: "$"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
   color: var(--ink-faint); font-size: 14px;
@@ -233,7 +268,9 @@
    text - styled to still read as a label (no box) with a dashed underline as
    the only edit affordance, so it doesn't look like a boxed form field among
    the plain-text rows around it. */
-input.apf-priority-label {
+/* Same specificity fix as .apf-money-field input above - this must outrank
+   the base .apf-root input[type="text"] rule to actually apply. */
+.apf-root input.apf-priority-label {
   border: none;
   border-bottom: 1px dashed var(--line-strong);
   border-radius: 0;
@@ -241,7 +278,7 @@ input.apf-priority-label {
   background: transparent;
   width: auto;
 }
-input.apf-priority-label:focus { border-bottom-color: var(--violet-500); }
+.apf-root input.apf-priority-label:focus { border-bottom-color: var(--violet-500); }
 
 .apf-root input[type="range"] {
   -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
