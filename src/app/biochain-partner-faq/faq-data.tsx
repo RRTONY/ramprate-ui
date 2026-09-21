@@ -1,4 +1,14 @@
+import type { ReactNode } from "react";
 import type { FaqItem } from "@/components/biochain/PartnerFaqSection";
+
+export type FaqSection = {
+  id: string;
+  kicker: string;
+  title: string;
+  dark: boolean;
+  intro?: ReactNode;
+  items: FaqItem[];
+};
 
 export const overviewCards = [
   {
@@ -11,7 +21,7 @@ export const overviewCards = [
   },
 ];
 
-export const programs = [
+export const sellerPrograms = [
   {
     num: "01",
     title:
@@ -191,6 +201,132 @@ export const programs = [
   },
 ];
 
+export const buyerRowIntro = (
+  <p className="text-white/70 text-[15px] leading-relaxed max-w-3xl">
+    Manufacturing and pharmacy partners aren&rsquo;t only sellers in the
+    BioChain network. When you need APIs, raw materials, blended actives, or
+    outsourced compounding or manufacturing capacity to grow, RampRate can run
+    the same sourcing process on your behalf that we run for clinics, research
+    facilities, and distributors.
+  </p>
+);
+
+export const buyerPrograms = [
+  {
+    num: "04",
+    title: "Lightweight Sourcing - Warm Introduction to a Vetted Supplier",
+    body: (
+      <ul className="list-disc pl-5 space-y-2 marker:text-gold">
+        <li>
+          RampRate connects you to a supplier or partner we already have a
+          referral agreement with.
+        </li>
+        <li>
+          If they derive revenue from the relationship, they pay us a commission
+          on it. If you derive revenue from selling to them instead,
+          that&rsquo;s covered under our referral agreement with you as a seller
+          (see the row above), not this one.
+        </li>
+        <li>
+          We don&rsquo;t vet their specific products or services, run an RFP, or
+          manage the process on your behalf &mdash; this is a warm introduction,
+          not a managed engagement.
+        </li>
+        <li>
+          Best when you already have a specific target relationship in mind
+          that&rsquo;s already vetted &mdash; for example, an established name
+          already in our BioChain Index.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    num: "05",
+    title: "Full Sourcing - Managed Buyer's Agent Engagement",
+    body: (
+      <ul className="list-disc pl-5 space-y-2 marker:text-gold">
+        <li>
+          RampRate reviews and documents your current and future needs, then
+          builds a strategy for obtaining favorable terms and supplier attention
+          &mdash; emphasizing not just what you need today but the growth
+          potential you bring.
+        </li>
+        <li>
+          We build a structured quote process that reduces supplier sales costs
+          and passes the savings on to you, and perform deep due diligence with
+          you on every finalist.
+        </li>
+        <li>
+          We negotiate prices and contract terms on your behalf, with you
+          holding final decision power, and provide supplier feedback on your
+          behalf throughout.
+        </li>
+        <li>
+          We stay with the deal for its entire lifetime, mediating any problems
+          and providing a reputational backstop: if you&rsquo;re not treated
+          well as a buyer, it goes on the supplier&rsquo;s permanent record in
+          the BioChain Index.
+        </li>
+      </ul>
+    ),
+  },
+];
+
+const projectFeeRows: [string, string, string][] = [
+  ["$1,000,000", "$5,000,000", "3%"],
+  ["$5,000,000", "$10,000,000", "2%"],
+  ["$10,000,000", "$25,000,000", "1%"],
+  ["$25,000,000", "$50,000,000", "0.75%"],
+  ["$50,000,000", "$150,000,000", "0.50%"],
+  ["$150,000,000", "$350,000,000", "0.35%"],
+  ["$350,000,000", "and up", "0.25%"],
+];
+
+const savingsFeeRows: [string, string, string][] = [
+  ["$1,000,000", "$50,000,000", "30%"],
+  ["$50,000,000", "$100,000,000", "25%"],
+  ["$100,000,000", "$200,000,000", "20%"],
+  ["$200,000,000", "$400,000,000", "18%"],
+  ["$400,000,000", "and up", "16%"],
+];
+
+function FeeTable({
+  rows,
+  valueLabel,
+}: {
+  rows: [string, string, string][];
+  valueLabel: string;
+}) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-black/10 my-4">
+      <table className="w-full table-fixed border-collapse text-sm">
+        <thead>
+          <tr>
+            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
+              From
+            </th>
+            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
+              To Less Than
+            </th>
+            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3">
+              {valueLabel}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} className="border-t border-black/10 align-top">
+              <td className="px-3 py-3 break-words">{row[0]}</td>
+              <td className="px-3 py-3 break-words">{row[1]}</td>
+              <td className="px-3 py-3 font-semibold break-words">{row[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 const scorecardRows: [string, string, string][] = [
   [
     "Price vs. benchmark",
@@ -250,18 +386,21 @@ function Scorecard() {
   );
 }
 
-export const faqSections: {
-  id: string;
-  kicker: string;
-  title: string;
-  dark: boolean;
-  items: FaqItem[];
-}[] = [
+export const faqSections: FaqSection[] = [
   {
     id: "section-1",
     kicker: "03 / Sourcing",
     title: "RampRate's Sourcing Process: What It Is and How to Ace It",
     dark: false,
+    intro: (
+      <p className="text-ink-mid text-[15px] leading-relaxed mb-2">
+        This section walks through RampRate&rsquo;s sourcing process as it
+        applies to you as a supplier &mdash; i.e. when RampRate&rsquo;s buyer
+        clients are sourcing from you. If you&rsquo;re the one looking to source
+        supply, raw materials, or capacity for your own production instead, see
+        the Buy-Side FAQ below.
+      </p>
+    ),
     items: [
       {
         q: "What is RampRate's typical role in sourcing health products?",
@@ -278,41 +417,6 @@ export const faqSections: {
             friction; and create enough efficiencies on both sides to justify
             our cut of the deal.
           </p>
-        ),
-      },
-      {
-        q: "We're a manufacturing or pharmacy partner who needs more supply or capacity ourselves, does RampRate only send us buyers, or can RampRate source things for us too?",
-        searchText:
-          "manufacturing pharmacy partner needs more supply capacity ourselves buyers source things too reverse buyer's agent",
-        a: (
-          <>
-            <p>
-              Both, and they&rsquo;re separate engagements. &ldquo;Three Ways
-              RampRate Engages&rdquo; above is written from the other direction,
-              with RampRate finding buyers for what you produce. This section is
-              the reverse.
-            </p>
-            <p>
-              Like the sell side, it spans a range: connecting you with
-              potential suppliers we know in our network at the light end, and
-              actively running the full sourcing process on your behalf at the
-              other, including the RFP and scorecard evaluation, negotiation
-              support, and staying with the deal through close, whenever you
-              need more supply, raw materials, capacity, or outsourced
-              manufacturing or compounding capacity to grow.
-            </p>
-            <p>
-              A manufacturing or pharmacy partner can run this alongside a
-              referral or channel agreement on the sell side (per the terms
-              above) at the same time, with the two compensated independently.
-              The fuller, actively-managed engagement is compensated as
-              described in &ldquo;How are RampRate&rsquo;s sourcing services
-              compensated?&rdquo; A lighter, connection-only introduction works
-              the same way our own Buyer Introductions do: a referral fee paid
-              by the supplier side only if a deal actually closes, with nothing
-              owed if it doesn&rsquo;t.
-            </p>
-          </>
         ),
       },
       {
@@ -448,7 +552,7 @@ export const faqSections: {
               case study; then spend to have that case study seen in the world.
               We serve as the reputation layer for the industry to shortcut that
               cycle - do well for your clients and the market will know through
-              our supplier index.
+              our BioChain Index.
             </p>
           </>
         ),
@@ -1115,29 +1219,30 @@ export const faqSections: {
       {
         q: "What are the confidentiality guidelines this is governed by?",
         searchText:
-          "what are the confidentiality guidelines this is governed by mini-nda supplier price index",
+          "what are the confidentiality guidelines this is governed by mini-nda biochain index",
         a: (
           <p>
             There is a mini-NDA embedded in our agreements or we can execute a
             separate one. We also execute one with our clients. Your quotes and
             offers are governed by these protections. However, unless you opt
             out explicitly, we reserve the right to anonymize your offer details
-            in our supplier and price index.
+            in our BioChain Index.
           </p>
         ),
       },
       {
-        q: "Why would I allow my pricing and offer terms to be in your index?",
+        q: "Why would I allow my pricing and offer terms to be in the BioChain Index?",
         searchText:
-          "why would i allow my pricing and offer terms to be in your index opt out",
+          "why would i allow my pricing and offer terms to be in the biochain index opt out",
         a: (
           <p>
             You have the right to opt out at any time. We recommend not opting
-            out, as the index can indicate to a buyer who is skeptical that
-            better options exist that they should evaluate new options. If they
-            believe that no one can sell them a product below $X, but you just
-            did so for one of their peers, it&rsquo;s better for us to be able
-            to share the fact that their pricing is not in fact best in class.
+            out, as the BioChain Index can indicate to a buyer who is skeptical
+            that better options exist that they should evaluate new options. If
+            they believe that no one can sell them a product below $X, but you
+            just did so for one of their peers, it&rsquo;s better for us to be
+            able to share the fact that their pricing is not in fact best in
+            class.
           </p>
         ),
       },
@@ -1150,6 +1255,577 @@ export const faqSections: {
             Tony Greenberg (Founder/CEO), Alex Veytsel (CSO), and Rob Holmes (BD
             lead). Direct any questions on these terms to them before signing.
           </p>
+        ),
+      },
+    ],
+  },
+];
+
+export const buySideFaqSections: FaqSection[] = [
+  {
+    id: "buy-section-1",
+    kicker: "08 / Process Options",
+    title: "How RampRate Sources For You",
+    dark: true,
+    intro: (
+      <p className="text-white/70 text-[15px] leading-relaxed mb-2">
+        This section is written from your side as a buyer &mdash; sourcing the
+        products, raw materials, or capacity you need, rather than selling what
+        you already produce.
+      </p>
+    ),
+    items: [
+      {
+        q: "What's the lightweight option for sourcing?",
+        searchText:
+          "what's the lightweight option for sourcing warm introduction referral agreement",
+        a: (
+          <p>
+            We connect you to suppliers or partners we already have an existing
+            referral agreement with. If they derive revenue from the
+            relationship, they pay us a commission on it; if you derive revenue
+            from selling to them, that&rsquo;s covered under our referral
+            agreement with you as a seller instead (see above). We don&rsquo;t
+            vet their specific products or services, or manage the process.
+          </p>
+        ),
+      },
+      {
+        q: "What's the full option for sourcing?",
+        searchText:
+          "what's the full option for sourcing managed buyer's agent engagement",
+        a: (
+          <p>
+            RampRate reviews and documents your current and future needs. We
+            develop a strategy for obtaining favorable terms and supplier
+            attention by emphasizing not just your current needs but the growth
+            potential you bring. We build a structured quote process to reduce
+            supplier sales costs and pass the savings on to you, and perform
+            deep due diligence with you. We negotiate prices and contract terms
+            on your behalf, with you holding final decision power, and provide
+            feedback to suppliers on your behalf. We stay with the deal for its
+            entire lifetime, mediating any problems and providing a reputational
+            backstop &mdash; if you&rsquo;re not treated well as a buyer, it
+            goes on the supplier&rsquo;s permanent record in the BioChain Index.
+          </p>
+        ),
+      },
+      {
+        q: "When would I want to use one option over the other?",
+        searchText:
+          "when would i want to use one option over the other lightweight full",
+        a: (
+          <p>
+            Lightweight, when you have a specific target relationship
+            that&rsquo;s already vetted &mdash; for example, an established name
+            already in our BioChain Index. Full, when you&rsquo;re establishing
+            a pipeline of new products and want to consider the entire universe
+            of suppliers &mdash; including those already in our BioChain Index
+            and new specialty ones we find specifically for your needs.
+          </p>
+        ),
+      },
+      {
+        q: "How does RampRate stay objective when it's sourcing on our behalf?",
+        searchText:
+          "how does ramprate stay objective when it's sourcing on our behalf safeguards opt out",
+        a: (
+          <>
+            <p>
+              As a firm with the flexibility to be paid by buyers alone or by
+              both sides, we&rsquo;ve built in several safeguards so our
+              recommendations stay 100% objective:
+            </p>
+            <ul className="list-disc">
+              <li>
+                You can opt out of any or all supplier fees, funding our
+                services entirely through project and savings fees instead.
+              </li>
+              <li>
+                Our savings fees are always higher than our supplier referral
+                fees, so we&rsquo;re incented to put each incremental dollar in
+                your pocket rather than a supplier&rsquo;s.
+              </li>
+              <li>
+                Evaluation models are transparent and auditable &mdash; you can
+                drill into any part of a supplier&rsquo;s score, down to a
+                single line-item response.
+              </li>
+              <li>
+                The evaluation criteria and their weights are yours: aggregated
+                from your own decision makers and subject matter experts, not
+                ours.
+              </li>
+              <li>
+                All supplier fees are fully disclosed, so you can compare them
+                against our recommendations yourself.
+              </li>
+              <li>
+                Supplier fees are uniform within a category &mdash; we
+                can&rsquo;t accept an unusually high or low fee from any one
+                supplier.
+              </li>
+              <li>
+                The analysts making sourcing recommendations have no
+                compensation tied to supplier referral revenue, and don&rsquo;t
+                negotiate supplier fees themselves &mdash; that&rsquo;s a
+                separate team.
+              </li>
+              <li>
+                You retain final decision-making power throughout; we provide
+                information and recommendations, never commitments on your
+                behalf.
+              </li>
+              <li>
+                You can interface directly with any participating supplier at
+                any point, and we encourage on-site visits with finalists.
+              </li>
+            </ul>
+            <p>
+              In practice, this means RampRate is built to reduce your cost,
+              your time to transact, and your relationship risk all at once
+              &mdash; where brokers are typically incented only to close
+              quickly, and traditional sourcing advisors are typically paid by
+              the hour regardless of outcome.
+            </p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: "buy-section-2",
+    kicker: "09 / Contract Framework",
+    title: "Contract Framework for Full Sourcing Engagements",
+    dark: false,
+    items: [
+      {
+        q: "What's included in RampRate's contract package?",
+        searchText:
+          "what's included in ramprate's contract package msa sow nda letter of agency",
+        a: (
+          <p>
+            RampRate uses a Master Services Agreement, which governs one or more
+            Statements of Work. We also sign a mutual NDA, and, in most cases, a
+            letter of agency authorizing your suppliers to work with RampRate on
+            your behalf. Where required, some of these can be built on your own
+            templates; for fastest delivery, we prefer to start from ours and
+            incorporate your specific requests.
+          </p>
+        ),
+      },
+      {
+        q: "What's the structure of a RampRate Statement of Work?",
+        searchText:
+          "what's the structure of a ramprate statement of work sow components",
+        a: (
+          <p>
+            Every SOW contains the same major components: an overview of your
+            need and the project scope; a detailed step-by-step description of
+            our process; responsibilities on both sides during the project and
+            afterward; a process for amending the SOW; the fee structure; and
+            miscellaneous legal terms.
+          </p>
+        ),
+      },
+      {
+        q: "What should I know about the Summary and Scope section?",
+        searchText:
+          "what should i know about the summary and scope section change order",
+        a: (
+          <p>
+            This section locks down the initial scope of the project and the fee
+            structure. The SOW is designed to stay flexible, but this section is
+            what tells both sides when a change order is needed. Your goal here
+            is to make sure every product or service you want RampRate to work
+            on is enumerated.
+          </p>
+        ),
+      },
+      {
+        q: "What should I know about the Process Description?",
+        searchText:
+          "what should i know about the process description milestones deliverables checkpoints",
+        a: (
+          <p>
+            This section gives you visibility into RampRate&rsquo;s default
+            process, milestones, and deliverables. It includes multiple
+            checkpoints where we ask for your input, and we&rsquo;re flexible
+            about changing course as the project evolves. Your goal is to make
+            sure the process is clear and matches what you expect.
+          </p>
+        ),
+      },
+      {
+        q: "What should I know about the Company Responsibilities and Rules of Engagement sections?",
+        searchText:
+          "what should i know about the company responsibilities and rules of engagement sections commitments",
+        a: (
+          <p>
+            These sections set out what each side commits to during the project
+            &mdash; the data and access you provide us, the checkpoints where we
+            need your input, and how we&rsquo;ll engage your suppliers or
+            prospective suppliers on your behalf. As with the process
+            description, we build in flexibility to adjust as things evolve, but
+            your goal is to confirm the commitments on both sides match your
+            expectations.
+          </p>
+        ),
+      },
+      {
+        q: "What should I know about the Change Order process?",
+        searchText:
+          "what should i know about the change order process scope timeline",
+        a: (
+          <p>
+            This section sets clear expectations for what happens to
+            RampRate&rsquo;s process or fee structure if products or services
+            are added to scope, removed from scope, the timeline slips, or other
+            material changes happen. The goal is that every reasonable scenario
+            is foreseen up front, so your team always knows what happens next.
+          </p>
+        ),
+      },
+    ],
+  },
+  {
+    id: "buy-section-3",
+    kicker: "10 / Fee Structure",
+    title: "Fee Structure for Full Sourcing Engagements",
+    dark: true,
+    items: [
+      {
+        q: "What should I know about the fee structure?",
+        searchText:
+          "what should i know about the fee structure project fee success fee refund",
+        a: (
+          <p>
+            RampRate is paid primarily based on performance. Our fee model has
+            three parts: a fixed project fee, a variable success fee, and
+            several provisions for partial or complete refund of the project
+            fee. That makes this section more involved than a typical
+            professional services engagement, but it&rsquo;s what lets us
+            deliver a top-tier service with minimal up-front investment required
+            from you.
+          </p>
+        ),
+      },
+      {
+        q: "Can we use simpler billing models, like time and materials?",
+        searchText:
+          "can we use simpler billing models like time and materials platform fee flat project fee",
+        a: (
+          <p>
+            Most of our clients don&rsquo;t have a dedicated budget line for
+            sourcing advisory services, and delivering on any individual project
+            requires us to draw on a significant base of data, software tools,
+            and supplier relationships &mdash; which makes our nominal hourly
+            rate much higher than what&rsquo;s typically budgeted for
+            professional services. That said, two simpler options exist if
+            that&rsquo;s important to you: a monthly platform fee for use of our
+            data and tools plus an industry-standard hourly rate, or a flat
+            project fee (typically 10&ndash;15% of annual spend, versus the
+            0.5&ndash;3% project fee when it&rsquo;s paired with a success fee).
+            Ask your RampRate contact for an alternative proposal outline if
+            either is a better fit.
+          </p>
+        ),
+      },
+      {
+        q: "How does the project fee work?",
+        searchText:
+          "how does the project fee work annual contract value table true up",
+        a: (
+          <>
+            <p>
+              The project fee is an up-front investment that gives you skin in
+              the game and funds our immediate project costs &mdash; data,
+              subject matter expertise, and the like. It&rsquo;s based on the
+              volume of spend we&rsquo;re optimizing:
+            </p>
+            <FeeTable
+              rows={projectFeeRows}
+              valueLabel="Project Fee % of the ACV Increment"
+            />
+            <p>
+              The total project fee is the sum of the increments &mdash; for
+              example, 3% of the first $5M, plus 2% of the next $5M, plus 1% of
+              the next $15M, and so on. Any change to the annual contract value
+              triggers a true-up adjustment.
+            </p>
+          </>
+        ),
+      },
+      {
+        q: "How does the success / savings fee work?",
+        searchText:
+          "how does the success savings fee work unit-based savings teamwork fairness",
+        a: (
+          <>
+            <p>
+              The success fee &mdash; usually tied to financial savings, in
+              which case we call it a savings fee &mdash; shares the upside of
+              the project with us and ties our pay to actually delivering on our
+              commitments. It typically runs 25&ndash;30% of actual savings
+              achieved over the contract term, and 40% for recovery of amounts
+              you already overpaid. A few guiding principles:
+            </p>
+            <ul className="list-disc">
+              <li>
+                Savings are calculated per unit (e.g. per mg or per vial), not
+                off the total bill &mdash; otherwise buying twice the volume at
+                the same price would look like zero savings, and a seasonal
+                usage dip would look like savings we didn&rsquo;t earn.
+              </li>
+              <li>
+                Removing unused capacity counts too, if we identified it and
+                helped get it off your bill.
+              </li>
+              <li>
+                Savings count regardless of who&rsquo;s actually at the
+                negotiating table once we&rsquo;ve shared our data and
+                methodology &mdash; including savings achieved after a
+                termination for convenience.
+              </li>
+              <li>
+                You always get to review how we calculate baselines and our
+                impact reports before they&rsquo;re final.
+              </li>
+              <li>
+                We won&rsquo;t claim credit for savings we didn&rsquo;t help
+                deliver. If your team independently cuts spend without us
+                recommending or facilitating it, it doesn&rsquo;t count toward
+                our fee.
+              </li>
+            </ul>
+            <p>
+              In some engagements, success fees are tied to other metrics like
+              service performance or specific contract terms instead &mdash; in
+              which case the SOW spells out the methodology and amount clearly.
+            </p>
+          </>
+        ),
+      },
+      {
+        q: "How do rebates or credits against the project fee work?",
+        searchText:
+          "how do rebates or credits against the project fee work savings guarantee 300%",
+        a: (
+          <>
+            <p>There are two ways your project fee can come back to you:</p>
+            <ul className="list-disc">
+              <li>A refund if we miss our savings guarantee.</li>
+              <li>
+                A credit for referral fees RampRate receives from suppliers.
+              </li>
+            </ul>
+            <p>
+              On pre-benchmarked, savings-driven engagements, we may offer a
+              300% savings guarantee: for every dollar of project fee, we commit
+              to producing $3 in measurable savings. If we fall short, we refund
+              a prorated portion of the fee so the guarantee is met. For
+              example, on a $100K project fee with a $300K target, if we only
+              deliver $150K in savings, you keep $50K and we refund the rest.
+              The guarantee applies as long as we&rsquo;re able to complete the
+              full process (i.e. it&rsquo;s not terminated for convenience), and
+              is measured across all spend areas together, not tower by tower.
+            </p>
+          </>
+        ),
+      },
+      {
+        q: "How do supplier referral fees work?",
+        searchText:
+          "how do supplier referral fees work channel partner credit 50%",
+        a: (
+          <p>
+            If you&rsquo;re engaging RampRate to buy new products or services,
+            or to migrate from one supplier to another, you can benefit from our
+            referral relationships to reduce your own project costs. Suppliers
+            set aside budget for sales &mdash; direct or channel &mdash; and
+            RampRate acts as a channel partner across the major suppliers in our
+            key verticals, then splits the resulting referral fees back with our
+            clients so the project fee is effectively funded by both sides. This
+            is fully transparent: you&rsquo;ll know which suppliers pay us, how
+            much, and how much of a credit you can expect. Referral fees
+            generally don&rsquo;t apply to incumbents or mid-contract
+            restructuring (though we&rsquo;ll try, with your support), and you
+            can always opt out entirely, in which case we won&rsquo;t collect a
+            fee or credit anything back. The standard credit is 50% of supplier
+            fees received, up to 50% of your total project fee.
+          </p>
+        ),
+      },
+      {
+        q: "How does RampRate stay objective if it takes supplier fees?",
+        searchText:
+          "how does ramprate stay objective if it takes supplier fees uniform disclosed data driven",
+        a: (
+          <p>
+            The short version: fees are uniform across a category, fully
+            disclosed to you, and driven by data-based scores with weightings
+            your own team sets. Recommendations are made by analysts who
+            aren&rsquo;t involved in negotiating or collecting supplier fees,
+            and who aren&rsquo;t incented by referral revenue. And you can
+            always opt out if you&rsquo;d rather we not collect supplier fees at
+            all. See the objectivity question in Process Options above for the
+            fuller picture.
+          </p>
+        ),
+      },
+      {
+        q: "Can you show a worked example of the fee structure?",
+        searchText:
+          "can you show a worked example of the fee structure savings fee table audit recovery",
+        a: (
+          <>
+            <p>
+              Here&rsquo;s how the pieces fit together on a sample engagement.
+              The savings fee itself scales down as the deal gets larger:
+            </p>
+            <FeeTable
+              rows={savingsFeeRows}
+              valueLabel="Savings Fee as % of Actual Savings"
+            />
+            <p>
+              Savings fees for projected usage are invoiced in advance at the
+              start of each contract year; at year-end we true up the difference
+              between projected and actual savings, invoicing or crediting
+              accordingly &mdash; and refunding promptly if we invoiced for
+              savings that didn&rsquo;t materialize.
+            </p>
+            <p>
+              Two more pieces round out the model: an audit recovery fee equal
+              to 40% of any amount you overpaid a supplier that&rsquo;s later
+              credited or refunded to you, and a supplier referral fee credit
+              &mdash; if you sign with a new supplier that pays us a referral
+              fee, 50% of what we receive is credited back to you.
+            </p>
+          </>
+        ),
+      },
+      {
+        q: "What should I know about the termination fee?",
+        searchText:
+          "what should i know about the termination fee early convenience flat fee",
+        a: (
+          <p>
+            Our guidance to our own investors is that total revenue from a given
+            project should land around 6&ndash;10% of each dollar processed
+            &mdash; and since most deals run 2&ndash;3 years, that works out to
+            roughly 12&ndash;20% of your annual spend over the term. If a
+            project ends early without any breach on our part, we expect
+            compensation beyond the smaller up-front project fee, and the
+            termination fee is designed to calculate that fairly. Early in a
+            project, it&rsquo;s generally a flat fee tied to total in-scope
+            spend; later on, once we&rsquo;ve equipped your team to keep
+            achieving similar savings on your own, we retain the savings fees we
+            would otherwise have earned.
+          </p>
+        ),
+      },
+    ],
+  },
+  {
+    id: "buy-section-4",
+    kicker: "11 / Confidentiality & Legal",
+    title: "Confidentiality and Misc Legal Terms",
+    dark: false,
+    items: [
+      {
+        q: "What should I know about confidentiality protections?",
+        searchText:
+          "what should i know about confidentiality protections mutual nda",
+        a: (
+          <p>
+            Both sides have sensitive data at stake in these projects, and both
+            are protected by a mutual NDA. We don&rsquo;t want our own
+            proprietary data published or reused outside the project, and
+            you&rsquo;ll want the same for your usage and spend information,
+            plus your suppliers&rsquo; confidential data.
+          </p>
+        ),
+      },
+      {
+        q: "How can we share our suppliers' confidential data with RampRate without violating our NDAs?",
+        searchText:
+          "how can we share our suppliers' confidential data with ramprate without violating our ndas agent contractor need-to-know",
+        a: (
+          <p>
+            RampRate acts as your agent and contractor during the project, and
+            both roles are exempted from most well-written NDA provisions as
+            long as information is shared on a need-to-know basis and protected
+            by an equally restrictive NDA of our own &mdash; otherwise,
+            industries like outsourced procurement and spend management, worth
+            billions, simply couldn&rsquo;t function. In our 25+ years in
+            business, not one of our 100+ customers has been sued or threatened
+            over disclosure of a contract to us as an authorized agent under
+            NDA.
+          </p>
+        ),
+      },
+      {
+        q: "How confidential is our confidential data?",
+        searchText:
+          "how confidential is our confidential data billing contracts budgets usage forecasts secure",
+        a: (
+          <p>
+            We generally don&rsquo;t access your financials, employee records,
+            customer records, or other personally identifiable information, nor
+            your R&amp;D or business plans. What we typically need is billing
+            records, contracts, budgets, and usage forecasts. Most clients are
+            comfortable sharing these by e-mail or a secure document repository;
+            for exceptional cases, we also offer a high-security option built to
+            standards accepted by financial institutions, though it can add time
+            to the project due to more complex access procedures.
+          </p>
+        ),
+      },
+      {
+        q: "What should I know about general legal terms?",
+        searchText:
+          "what should i know about general legal terms uncapped liability mutual protections",
+        a: (
+          <p>
+            We&rsquo;re generally flexible on legal terms, with two exceptions:
+            we won&rsquo;t accept uncapped liability in our agreements as a
+            matter of policy, even though we&rsquo;ve never been sued by a
+            client; and any custom protections you ask for need to run both
+            ways.
+          </p>
+        ),
+      },
+      {
+        q: "What data privacy and security protections does RampRate offer?",
+        searchText:
+          "what data privacy and security protections does ramprate offer biochain index aggregate encrypted",
+        a: (
+          <>
+            <p>
+              Beyond the NDA and our agency status covered above, two more
+              layers protect your data. First, anything RampRate aggregates from
+              projects across clients &mdash; rates, pricing, quotes, contract
+              terms, and the like &mdash; only ever surfaces in the BioChain
+              Index in anonymized, aggregate form: grouped by category, never
+              tied to a specific supplier or buyer name, with no way to trace a
+              deal term back to the parties involved. If you consider a specific
+              relationship a competitive advantage worth protecting even in
+              aggregate, you can opt it out of the Index entirely at any point
+              &mdash; just tell your RampRate account team which terms and under
+              what model, and you&rsquo;ll get confirmation within two business
+              days.
+            </p>
+            <p>
+              Second, for handling the data itself, we offer a Standard Secured
+              Service (encrypted upload/download, client-isolated storage
+              partitions, deleted at project close) for most engagements, and a
+              Premium Encrypted Service for clients who need more &mdash; fully
+              isolated per-client environments, end-to-end encrypted transport
+              and storage, and a full audit log of who accessed what and when.
+              Files and accounts are removed at project close either way, with a
+              deletion affidavit available on request for the Premium tier.
+            </p>
+          </>
         ),
       },
     ],
