@@ -23,7 +23,9 @@ export function ConditionalChrome({
     segments.length === 2 &&
     segments[1] !== "admin";
   const isStandalonePage =
-    segments[0] === "biochain-partner-faq" || segments[0] === "kumbaya";
+    segments[0] === "biochain-partner-faq" ||
+    segments[0] === "kumbaya" ||
+    segments[0] === "active-pharm-form";
   const hideChrome =
     pathname?.startsWith("/flow") || isStandaloneArtifact || isStandalonePage;
 
