@@ -392,9 +392,7 @@ export const faqSections: FaqSection[] = [
       <p className="text-ink-mid text-[15px] leading-relaxed mb-2">
         This section walks through RampRate&rsquo;s sourcing process as it
         applies to you as a supplier &mdash; i.e. when RampRate&rsquo;s buyer
-        clients are sourcing from you. If you&rsquo;re the one looking to source
-        supply, raw materials, or capacity for your own production instead, see
-        the Buy-Side FAQ below.
+        clients are sourcing from you.
       </p>
     ),
     items: [
