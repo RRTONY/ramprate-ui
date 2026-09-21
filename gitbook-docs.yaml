@@ -1,0 +1,102 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: America, Unbundled — Review Room
+  structure:
+    - type: section
+      key: section-1
+      title: America, Unbundled — Review Room
+      path: america-unbundled-review-room
+      default: true
+      children:
+        - type: space
+          key: space-1
+          title: America, Unbundled — Review Room
+          path: america-unbundled-review-room
+          default: true
+          content:
+            directory: ./america-unbundled-review-room
+    - type: section
+      key: section-2
+      title: Home
+      path: home
+      description: Purpose of the review room
+      children:
+        - type: space
+          key: space-2
+          title: Home
+          path: home
+          default: true
+          content:
+            directory: ./home
+    - type: section
+      key: section-3
+      title: AI Does Not Have a Candidate
+      path: ai-does-not-have-a-candidate
+      children:
+        - type: space
+          key: space-3
+          title: AI Does Not Have a Candidate
+          path: ai-does-not-have-a-candidate
+          default: true
+          content:
+            directory: ./ai-does-not-have-a-candidate
+    - type: section
+      key: section-4
+      title: America, Unbundled
+      path: america-unbundled
+      children:
+        - type: space
+          key: space-4
+          title: America, Unbundled
+          path: america-unbundled
+          default: true
+          content:
+            directory: ./america-unbundled
+    - type: section
+      key: section-5
+      title: Review questions
+      path: review-questions
+      children:
+        - type: space
+          key: space-5
+          title: Review questions
+          path: review-questions
+          default: true
+          content:
+            directory: ./review-questions
+    - type: section
+      key: section-6
+      title: Quotes and suggested sources
+      path: quotes-and-suggested-sources
+      children:
+        - type: space
+          key: space-6
+          title: Quotes and suggested sources
+          path: quotes-and-suggested-sources
+          default: true
+          content:
+            directory: ./quotes-and-suggested-sources
+    - type: section
+      key: section-7
+      title: " Fact / Inference / Proposal ledger"
+      path: fact-inference-proposal-ledger
+      children:
+        - type: space
+          key: space-7
+          title: Fact / Inference / Proposal ledger
+          path: fact-inference-proposal-ledger
+          default: true
+          content:
+            directory: ./fact-inference-proposal-ledger
+    - type: section
+      key: section-8
+      title: Change log
+      path: change-log
+      children:
+        - type: space
+          key: space-8
+          title: Change log
+          path: change-log
+          default: true
+          content:
+            directory: ./change-log
