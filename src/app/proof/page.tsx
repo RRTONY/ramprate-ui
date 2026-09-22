@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { sanityFetch } from "@/lib/sanity/client";
-import { clientLogosQuery } from "@/lib/sanity/queries";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
-
-interface SanityLogo {
-  _id: string;
-  name: string;
-  url: string | null;
-  logoUrl: string | null;
-}
 
 const TITLE = "Proof of Judgment Under Pressure | RampRate";
 const DESCRIPTION =
@@ -191,6 +182,33 @@ const LEGACY_RESULTS = [
   },
 ];
 
+const LOGOS = [
+  { name: "Microsoft", file: "microsoft.png" },
+  { name: "Goldman Sachs", file: "goldman-sachs.svg" },
+  { name: "Nike", file: "nike.svg" },
+  { name: "Sony", file: "sony.svg" },
+  { name: "Intel", file: "intel.svg" },
+  { name: "PayPal", file: "paypal.svg" },
+  { name: "Verizon", file: "verizon.svg" },
+  { name: "AT&T", file: "at-t.png" },
+  { name: "Citigroup", file: "citigroup.png" },
+  { name: "eBay", file: "ebay.png" },
+  { name: "Accenture", file: "accenture.png" },
+  { name: "Bain & Company", file: "bain.png" },
+  { name: "McKinsey & Company", file: "mckinsey.png" },
+  { name: "Bridgewater", file: "bridgewater.png" },
+  { name: "Broadcom", file: "broadcom.png" },
+  { name: "Blizzard Entertainment", file: "blizzard.png" },
+  { name: "Audible", file: "audible.png" },
+  { name: "Expedia", file: "expedia.png" },
+  { name: "JPMorgan Chase", file: "jpmorgan.png" },
+  { name: "Fidelity", file: "fidelity.png" },
+  { name: "FOX", file: "fox.svg" },
+  { name: "NBC", file: "nbc.svg" },
+  { name: "Yahoo", file: "yahoo.png" },
+  { name: "Vodafone", file: "vodafone.svg" },
+];
+
 const NAME_CLOUD = [
   "AOL",
   "Aon",
@@ -244,8 +262,14 @@ const VOICES = [
   },
 ];
 
-const eyebrowClass =
-  "text-xs font-semibold tracking-[0.2em] uppercase text-gold font-body";
+// Palette matches the original content handoff (forest green / mint /
+// violet editorial design), scoped to this page only via arbitrary oklch
+// values - same pattern /champions and /impactsoul use for their own
+// distinct identity rather than the site's default gold accent.
+const eyebrowViolet =
+  "text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.43_0.14_298)] font-body";
+const eyebrowMint =
+  "text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body";
 
 function CaseLink({
   link,
@@ -266,14 +290,14 @@ function CaseLink({
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gold hover:text-gold-light underline underline-offset-2"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
         >
           {link.label}
         </a>
       ) : (
         <Link
           href={link.href}
-          className="text-gold hover:text-gold-light underline underline-offset-2"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
         >
           {link.label}
         </Link>
@@ -283,22 +307,7 @@ function CaseLink({
   );
 }
 
-export default async function ProofPage() {
-  const clientLogos =
-    (await sanityFetch<SanityLogo[]>({
-      query: clientLogosQuery,
-      tags: ["clientLogo"],
-    })) ?? [];
-
-  const withImage = clientLogos.filter((l) => l.logoUrl);
-  const featuredLogos = withImage.slice(0, 24);
-  const remainingWithImage = withImage.slice(24);
-  const noImage = clientLogos.filter((l) => !l.logoUrl);
-  const textNames = [
-    ...remainingWithImage.map((l) => l.name),
-    ...noImage.map((l) => l.name),
-  ];
-
+export default function ProofPage() {
   return (
     <main>
       <JsonLd
@@ -309,7 +318,7 @@ export default async function ProofPage() {
       />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-dark">
+      <section className="relative pt-32 pb-20 overflow-hidden bg-[oklch(0.28_0.04_178)]">
         <div className="absolute inset-0">
           <Image
             src="/proof/hero.webp"
@@ -319,19 +328,17 @@ export default async function ProofPage() {
             sizes="100vw"
             className="object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.28_0.04_178)] via-[oklch(0.28_0.04_178)]/90 to-[oklch(0.28_0.04_178)]/50" />
         </div>
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[260px] h-[260px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className={`${eyebrowClass} mb-4 block`}>
+            <span className={`${eyebrowMint} mb-4 block`}>
               Proof of Judgment Under Pressure
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-display">
               We solve the problems that do not fit in a box.
             </h1>
-            <p className="text-white/85 text-lg sm:text-xl leading-relaxed mb-4 font-display italic">
+            <p className="text-[oklch(0.94_0.03_162)] text-lg sm:text-xl leading-relaxed mb-4 font-display italic">
               For 25 years, leaders have called RampRate when the decision was
               expensive, the facts were incomplete and the consequences were
               real.
@@ -345,13 +352,13 @@ export default async function ProofPage() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#recent"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-gold text-dark hover:bg-gold-light transition-all font-body"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.88_0.08_162)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.94_0.05_162)] transition-all font-body"
               >
                 See Recent Use Cases
               </a>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all font-body"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.88_0.08_162)]/50 text-white hover:bg-white/10 transition-all font-body"
               >
                 Tell Us What Is Broken
               </Link>
@@ -361,7 +368,10 @@ export default async function ProofPage() {
       </section>
 
       {/* Signal stats bar */}
-      <section aria-label="RampRate at a glance" className="section-light">
+      <section
+        aria-label="RampRate at a glance"
+        className="bg-[oklch(0.99_0.01_89)] border-b border-[oklch(0.88_0.01_117)]"
+      >
         <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4">
           {STATS.map((stat, i) => {
             const rightAtMobile = i % 2 === 0; // not the last column of a 2-col row
@@ -369,14 +379,14 @@ export default async function ProofPage() {
             return (
               <div
                 key={stat.label}
-                className={`text-center px-3 py-6 border-b sm:border-b-0 border-black/10 ${
+                className={`text-center px-3 py-6 border-b sm:border-b-0 border-[oklch(0.88_0.01_117)] ${
                   rightAtMobile ? "border-r" : ""
                 } ${rightAtDesktop ? "sm:border-r" : ""}`}
               >
-                <div className="text-xl sm:text-2xl font-bold text-ink font-display">
+                <div className="text-xl sm:text-2xl font-bold text-[oklch(0.28_0.04_178)] font-display">
                   {stat.value}
                 </div>
-                <div className="mt-2 text-xs text-ink-mid font-body">
+                <div className="mt-2 text-xs text-[oklch(0.42_0.02_168)] font-body">
                   {stat.label}
                 </div>
               </div>
@@ -388,33 +398,33 @@ export default async function ProofPage() {
       {/* Six Recent Use Cases */}
       <section
         id="recent"
-        className="relative section-warm overflow-hidden py-20 sm:py-28"
+        className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.95_0.01_85)]"
       >
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -right-32" />
-        <div className="glass-orb glass-orb-rust w-[180px] h-[180px] bottom-10 -left-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl mb-6">
-            <span className={eyebrowClass}>Six Recent Use Cases</span>
-            <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display">
+            <span className={eyebrowViolet}>Six Recent Use Cases</span>
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
               The last year was not a return to sourcing. It was a return to
               solving consequential problems.
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-ink-mid font-body">
+            <p className="mt-6 text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
               Much of this work remains protected by confidentiality, active
               negotiations or legal privilege. The client names and full case
               records will be published as permissions clear. The work below is
               described at the level we can responsibly disclose today.
             </p>
           </div>
-          <p className="pb-6 mb-10 border-y border-black/10 py-4 text-sm text-ink-mid font-body">
-            <strong className="text-ink">Confidential engagements.</strong>{" "}
+          <p className="pb-6 mb-10 border-y border-[oklch(0.88_0.01_117)] py-4 text-sm text-[oklch(0.42_0.02_168)] font-body">
+            <strong className="text-[oklch(0.24_0.02_172)]">
+              Confidential engagements.
+            </strong>{" "}
             &ldquo;Results to date&rdquo; identifies completed work products and
             verified operating milestones, not speculative final outcomes.
           </p>
           <div className="grid md:grid-cols-2 gap-x-10 gap-y-14">
             {CASES.map((c) => (
               <article key={c.num}>
-                <div className="relative aspect-[3/2] mb-5 rounded-lg overflow-hidden bg-dark">
+                <div className="relative aspect-[3/2] mb-5 rounded-lg overflow-hidden bg-[oklch(0.28_0.04_178)]">
                   <Image
                     src={c.image}
                     alt={c.alt}
@@ -424,29 +434,29 @@ export default async function ProofPage() {
                   />
                 </div>
                 <div className="flex gap-4">
-                  <span className="text-xs font-bold text-gold pt-1 shrink-0 font-mono">
+                  <span className="text-xs font-bold text-[oklch(0.43_0.14_298)] pt-1 shrink-0 font-mono">
                     {c.num}
                   </span>
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-bold leading-snug font-display">
+                    <h3 className="text-xl sm:text-2xl font-bold leading-snug font-display text-[oklch(0.24_0.02_172)]">
                       <CaseLink link={c.link}>{c.title}</CaseLink>
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-ink-mid font-body">
+                    <p className="mt-3 text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
                       {c.desc}
                     </p>
                     <div className="flex flex-wrap gap-2 mt-4">
                       {c.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 bg-gold/10 text-[oklch(0.4_0.12_70)] text-[11px] font-bold uppercase tracking-wide font-mono"
+                          className="px-2.5 py-1 bg-[oklch(0.94_0.02_303)] text-[oklch(0.43_0.14_298)] text-[11px] font-bold uppercase tracking-wide font-mono"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <p className="mt-4 text-[13px] font-semibold text-ink font-body">
+                    <p className="mt-4 text-[13px] font-semibold text-[oklch(0.24_0.02_172)] font-body">
                       <span
-                        className="text-[oklch(0.55_0.18_150)] mr-2"
+                        className="text-[oklch(0.69_0.15_160)] mr-2"
                         aria-hidden="true"
                       >
                         ●
@@ -462,11 +472,9 @@ export default async function ProofPage() {
       </section>
 
       {/* Method */}
-      <section className="relative section-dark overflow-hidden py-20 sm:py-28">
-        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] bottom-20 -left-20" />
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.28_0.04_178)]">
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowClass}>One Method, Several Practices</span>
+          <span className={eyebrowMint}>One Method, Several Practices</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white font-display">
             Research. Blueprint. Activate.
           </h2>
@@ -476,57 +484,65 @@ export default async function ProofPage() {
             the result real.
           </p>
           <div className="mt-12 space-y-4">
-            {METHOD_STEPS.map((step) => (
-              <div
-                key={step.n}
-                className="relative grid sm:grid-cols-2 min-h-[220px] sm:min-h-[270px] rounded-xl overflow-hidden"
-              >
-                <div className="relative min-h-[176px] sm:min-h-full">
-                  <Image
-                    src={step.image}
-                    alt={step.alt}
-                    fill
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="bg-dark-card flex flex-col justify-center p-8 sm:p-10">
-                  <div className="text-xs font-bold tracking-[0.12em] text-amber font-mono">
-                    {step.n}
+            {METHOD_STEPS.map((step, i) => {
+              const reversed = i % 2 === 1;
+              return (
+                <div
+                  key={step.n}
+                  className="relative grid sm:grid-cols-2 min-h-[220px] sm:min-h-[270px] rounded-xl overflow-hidden"
+                >
+                  <div
+                    className={`relative min-h-[176px] sm:min-h-full order-1 ${reversed ? "sm:order-2" : "sm:order-1"}`}
+                  >
+                    <Image
+                      src={step.image}
+                      alt={step.alt}
+                      fill
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className="object-cover"
+                    />
                   </div>
-                  <h3 className="mt-4 text-2xl sm:text-3xl font-bold text-white font-display">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/80 font-body">
-                    {step.desc}
-                  </p>
+                  <div
+                    className={`bg-[oklch(0.33_0.05_177)] flex flex-col justify-center p-8 sm:p-10 order-2 ${reversed ? "sm:order-1" : "sm:order-2"}`}
+                  >
+                    <div className="text-xs font-bold tracking-[0.12em] text-[oklch(0.88_0.08_162)] font-mono">
+                      {step.n}
+                    </div>
+                    <h3 className="mt-4 text-2xl sm:text-3xl font-bold text-white font-display">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/80 font-body">
+                      {step.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 25-Year Foundation */}
-      <section className="relative section-light overflow-hidden py-20 sm:py-28">
-        <div className="glass-orb glass-orb-amber w-[280px] h-[280px] -bottom-32 -left-32" />
-        <div className="glass-orb glass-orb-rust w-[160px] h-[160px] top-20 -right-20" />
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.99_0.01_89)]">
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowClass}>The 25-Year Foundation</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display">
+          <span className={eyebrowViolet}>The 25-Year Foundation</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             New categories. Old discipline.
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-mid font-body">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
             The recent work is credible because it sits on decades of measurable
             results inside complex enterprises.
           </p>
           <div className="mt-12 grid sm:grid-cols-3 gap-x-8 gap-y-8">
             {LEGACY_RESULTS.map((r) => (
-              <div key={r.value} className="pt-6 border-t border-black/10">
-                <div className="text-xl font-bold text-ink font-display">
+              <div
+                key={r.value}
+                className="pt-6 border-t border-[oklch(0.88_0.01_117)]"
+              >
+                <div className="text-xl font-bold text-[oklch(0.24_0.02_172)] font-display">
                   {r.value}
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-ink-mid font-body">
+                <p className="mt-2 text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
                   {r.desc}
                 </p>
               </div>
@@ -536,77 +552,47 @@ export default async function ProofPage() {
       </section>
 
       {/* Client Trust Wall */}
-      <section id="clients" className="relative section-warm py-20 sm:py-28">
+      <section
+        id="clients"
+        className="relative py-20 sm:py-28 bg-[oklch(0.93_0.01_89)]"
+      >
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowClass}>The Relationship Constellation</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display">
+          <span className={eyebrowViolet}>The Relationship Constellation</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             Trusted by leaders who could not afford theater.
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-mid font-body">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
             A selection of organizations represented in RampRate&apos;s public
             client record. Logos remain the property of their respective owners.
           </p>
-          {featuredLogos.length > 0 && (
-            <div className="mt-12 flex flex-wrap justify-center items-center gap-4">
-              {featuredLogos.map((logo) => {
-                const img = (
-                  <Image
-                    src={logo.logoUrl!}
-                    alt={logo.name}
-                    width={100}
-                    height={28}
-                    className="object-contain brightness-0 invert opacity-80 transition-opacity group-hover:opacity-100"
-                    style={{ height: "28px", maxWidth: "100px", width: "auto" }}
-                    unoptimized
-                  />
-                );
-                return (
-                  <div
-                    key={logo._id}
-                    className="group flex items-center justify-center bg-dark-card rounded-[10px] px-5 py-3 min-w-[100px] min-h-[56px] transition-transform hover:scale-105"
-                  >
-                    {logo.url ? (
-                      <a
-                        href={logo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center"
-                      >
-                        {img}
-                      </a>
-                    ) : (
-                      img
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {textNames.length > 0 && (
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              {textNames.map((name) => (
-                <span
-                  key={name}
-                  className="px-2.5 py-1.5 bg-white text-[oklch(0.3_0.02_50)] text-[11px] font-bold tracking-wide font-mono"
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-          )}
-          {clientLogos.length === 0 && NAME_CLOUD.length > 0 && (
-            <div className="mt-12 flex flex-wrap justify-center gap-2">
-              {NAME_CLOUD.map((name) => (
-                <span
-                  key={name}
-                  className="px-2.5 py-1.5 bg-white text-[oklch(0.3_0.02_50)] text-[11px] font-bold tracking-wide font-mono"
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-          )}
-          <p className="mt-8 text-center text-xs text-ink-mid font-body">
+          <div className="mt-12 grid grid-cols-3 sm:grid-cols-6 border-t border-l border-[oklch(0.85_0.01_100)]">
+            {LOGOS.map((logo) => (
+              <div
+                key={logo.name}
+                className="flex items-center justify-center bg-white border-r border-b border-[oklch(0.85_0.01_100)] p-4 min-h-[70px] sm:min-h-[82px]"
+              >
+                <Image
+                  src={`/proof/logos/${logo.file}`}
+                  alt={logo.name}
+                  width={132}
+                  height={50}
+                  className="object-contain w-full h-auto max-w-[132px] max-h-[50px]"
+                  unoptimized={logo.file.endsWith(".svg")}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {NAME_CLOUD.map((name) => (
+              <span
+                key={name}
+                className="px-2.5 py-1.5 bg-white text-[oklch(0.24_0.02_172)] text-[11px] font-bold tracking-wide font-mono"
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-xs text-[oklch(0.42_0.02_168)] font-body">
             The full historical client record contains more than 100
             organizations. A logo indicates a past or present working
             relationship, not necessarily a current endorsement. Confidential
@@ -616,23 +602,28 @@ export default async function ProofPage() {
       </section>
 
       {/* Voices */}
-      <section id="voices" className="relative section-light py-20 sm:py-28">
+      <section
+        id="voices"
+        className="relative py-20 sm:py-28 bg-[oklch(0.95_0.01_85)]"
+      >
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowClass}>In Their Words</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display">
+          <span className={eyebrowViolet}>In Their Words</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             Trust is what remains after the engagement ends.
           </h2>
           <div className="mt-12 grid sm:grid-cols-3 gap-8">
             {VOICES.map((v) => (
               <blockquote
                 key={v.name}
-                className="pt-6 border-t border-black/10"
+                className="pt-6 border-t border-[oklch(0.88_0.01_117)]"
               >
-                <p className="text-lg leading-relaxed font-display">
+                <p className="text-lg leading-relaxed font-display text-[oklch(0.24_0.02_172)]">
                   &ldquo;{v.quote}&rdquo;
                 </p>
-                <footer className="mt-4 text-sm text-ink-mid font-body">
-                  <strong className="block text-ink">{v.name}</strong>
+                <footer className="mt-4 text-sm text-[oklch(0.42_0.02_168)] font-body">
+                  <strong className="block text-[oklch(0.24_0.02_172)]">
+                    {v.name}
+                  </strong>
                   {v.role}
                 </footer>
               </blockquote>
@@ -642,30 +633,28 @@ export default async function ProofPage() {
       </section>
 
       {/* B Corp / Impact */}
-      <section className="relative section-warm overflow-hidden py-16 sm:py-20">
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
-        <div className="glass-orb glass-orb-rust w-[180px] h-[180px] top-10 -left-20" />
+      <section className="relative overflow-hidden py-16 sm:py-20 bg-gradient-to-br from-[oklch(0.94_0.02_303)] to-[oklch(0.95_0.01_85)]">
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <div className="bg-white rounded-2xl p-8 sm:p-10 shadow-sm border border-black/5 flex flex-col sm:flex-row items-center gap-8">
+          <div className="bg-white rounded-2xl p-8 sm:p-10 shadow-sm flex flex-col sm:flex-row items-center gap-8">
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-[130px] h-[130px] shrink-0 rounded-full bg-gold flex flex-col items-center justify-center text-center gap-1"
+              className="w-[130px] h-[130px] shrink-0 rounded-full bg-[oklch(0.43_0.14_298)] flex flex-col items-center justify-center text-center gap-1"
             >
-              <span className="text-dark text-xs font-bold tracking-wide uppercase font-mono">
+              <span className="text-white text-xs font-bold tracking-wide uppercase font-mono">
                 Certified
               </span>
-              <span className="text-dark text-sm font-bold tracking-wide uppercase font-mono">
+              <span className="text-white text-sm font-bold tracking-wide uppercase font-mono">
                 B Corporation
               </span>
-              <span className="text-dark text-xs font-mono">115.6</span>
+              <span className="text-white text-xs font-mono">115.6</span>
             </a>
             <div>
-              <h3 className="text-xl font-bold mb-2 font-display">
+              <h3 className="text-xl font-bold mb-2 font-display text-[oklch(0.24_0.02_172)]">
                 Commercial discipline, pointed somewhere worth going.
               </h3>
-              <p className="text-sm leading-relaxed text-ink-mid font-body">
+              <p className="text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
                 RampRate is a Certified B Corporation. B Lab reports an overall
                 B Impact Score of 115.6, compared with a qualifying score of 80.
                 That proof matters because{" "}
@@ -673,7 +662,7 @@ export default async function ProofPage() {
                   href="https://impactsoul.is/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gold hover:text-gold-light underline underline-offset-2"
+                  className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2 font-semibold"
                 >
                   ImpactSoul
                 </a>{" "}
@@ -687,12 +676,12 @@ export default async function ProofPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-gold">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-dark mb-4 font-display">
+      <section className="py-16 sm:py-20 text-center bg-[oklch(0.28_0.04_178)]">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-display">
             Tell us what is broken.
           </h2>
-          <p className="text-dark/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
+          <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
             The first conversation is free. A principal responds. If we can
             create leverage, we will show you where. If we cannot, we will tell
             you quickly.
@@ -700,13 +689,13 @@ export default async function ProofPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-dark hover:bg-dark-mid text-white transition-all shadow-lg font-body"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.88_0.08_162)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.94_0.05_162)] transition-all shadow-lg font-body"
             >
               Start a Conversation
             </Link>
             <Link
               href="/process"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-dark/30 text-dark hover:bg-dark/10 transition-all font-body"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.88_0.08_162)]/50 text-white hover:bg-white/10 transition-all font-body"
             >
               See How We Work
             </Link>
