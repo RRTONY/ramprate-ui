@@ -640,15 +640,19 @@ export default function ProofPage() {
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-[130px] h-[130px] shrink-0 rounded-full bg-[oklch(0.43_0.14_298)] flex flex-col items-center justify-center text-center gap-1"
+              className="shrink-0 flex flex-col items-center gap-3"
             >
-              <span className="text-white text-xs font-bold tracking-wide uppercase font-mono">
-                Certified
+              <Image
+                src="/bcorp-logo.svg"
+                alt="Certified B Corporation"
+                width={110}
+                height={161}
+                className="h-[140px] w-auto"
+                unoptimized
+              />
+              <span className="text-[oklch(0.43_0.14_298)] text-xs font-bold tracking-wide font-mono">
+                B Impact Score: 115.6
               </span>
-              <span className="text-white text-sm font-bold tracking-wide uppercase font-mono">
-                B Corporation
-              </span>
-              <span className="text-white text-xs font-mono">115.6</span>
             </a>
             <div>
               <h3 className="text-xl font-bold mb-2 font-display text-[oklch(0.24_0.02_172)]">
