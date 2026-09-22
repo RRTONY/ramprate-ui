@@ -71,22 +71,14 @@ export default function TestimonialsCarousel() {
     setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="bg-dark text-white py-28 sm:py-36 overflow-hidden relative">
-      <div
-        className="glass-orb glass-orb-pink w-[380px] h-[380px] -top-40 left-1/4"
-        style={{ animationDuration: "11s" }}
-      />
-      <div
-        className="glass-orb glass-orb-pink w-[260px] h-[260px] bottom-0 -right-20"
-        style={{ animationDuration: "9s" }}
-      />
+    <section className="section-warm py-24 sm:py-32 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
-        <div className="text-center mb-14">
-          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
+        <div className="text-center mb-16">
+          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
             What Executives Say
           </span>
-          <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white">
-            In Their Words.
+          <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold text-ink">
+            In their words.
           </h2>
         </div>
 
@@ -99,14 +91,14 @@ export default function TestimonialsCarousel() {
               return (
                 <div
                   key={`${idx}-${active}`}
-                  className="rounded-xl p-8 flex flex-col bg-white/4 border border-white/8"
+                  className="glass-card-warm p-8 flex flex-col"
                 >
                   <svg
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="mb-4 shrink-0 text-gold/40"
+                    className="mb-4 shrink-0 text-rust/50"
                   >
                     <path
                       d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
@@ -117,14 +109,14 @@ export default function TestimonialsCarousel() {
                       fill="currentColor"
                     />
                   </svg>
-                  <p className="font-body text-sm leading-relaxed italic flex-1 text-white/70">
+                  <p className="font-body text-sm leading-relaxed italic flex-1 text-ink-mid">
                     &ldquo;{t.quote}&rdquo;
                   </p>
-                  <div className="mt-6 pt-4 border-t border-white/6">
-                    <p className="font-display text-sm font-bold text-white">
+                  <div className="mt-6 pt-4 border-t border-black/10">
+                    <p className="font-display text-sm font-bold text-ink">
                       {t.name}
                     </p>
-                    <p className="font-body text-xs mt-0.5 text-white/50">
+                    <p className="font-body text-xs mt-0.5 text-ink-mid">
                       {t.title}
                     </p>
                   </div>
@@ -133,11 +125,11 @@ export default function TestimonialsCarousel() {
             })}
           </div>
 
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex justify-center gap-4 mt-10">
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-black/30 hover:text-ink text-ink-mid border border-black/15"
             >
               <ChevronLeft size={18} />
             </button>
@@ -151,7 +143,7 @@ export default function TestimonialsCarousel() {
                 >
                   <span
                     className={`block h-2 rounded-full transition-all ${
-                      i === active ? "w-6 bg-gold" : "w-2 bg-white/20"
+                      i === active ? "w-6 bg-rust" : "w-2 bg-black/15"
                     }`}
                   />
                 </button>
@@ -160,7 +152,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-white/30 hover:text-white text-white/40 border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:border-black/30 hover:text-ink text-ink-mid border border-black/15"
             >
               <ChevronRight size={18} />
             </button>
@@ -169,18 +161,15 @@ export default function TestimonialsCarousel() {
 
         {/* Mobile: single card */}
         <div className="lg:hidden">
-          <div
-            key={active}
-            className="rounded-xl p-7 bg-white/4 border border-white/8"
-          >
-            <p className="font-body text-sm leading-relaxed italic text-white/70">
+          <div key={active} className="glass-card-warm p-7">
+            <p className="font-body text-sm leading-relaxed italic text-ink-mid">
               &ldquo;{testimonials[active].quote}&rdquo;
             </p>
-            <div className="mt-5 pt-4 border-t border-white/6">
-              <p className="font-display text-sm font-bold text-white">
+            <div className="mt-5 pt-4 border-t border-black/10">
+              <p className="font-display text-sm font-bold text-ink">
                 {testimonials[active].name}
               </p>
-              <p className="font-body text-xs mt-0.5 text-white/50">
+              <p className="font-body text-xs mt-0.5 text-ink-mid">
                 {testimonials[active].title}
               </p>
             </div>
@@ -190,7 +179,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-ink-mid hover:text-ink transition-all border border-black/15"
             >
               <ChevronLeft size={18} />
             </button>
@@ -204,7 +193,7 @@ export default function TestimonialsCarousel() {
                 >
                   <span
                     className={`block h-2 rounded-full transition-all ${
-                      i === active ? "w-5 bg-gold" : "w-2 bg-white/20"
+                      i === active ? "w-5 bg-rust" : "w-2 bg-black/15"
                     }`}
                   />
                 </button>
@@ -213,7 +202,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all border border-white/10"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-ink-mid hover:text-ink transition-all border border-black/15"
             >
               <ChevronRight size={18} />
             </button>

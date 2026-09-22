@@ -26,22 +26,22 @@ const engagements = [
     label: "Paramount",
     stats: "16 years of eliminating risk",
     detail:
-      "From Viacom & CBS split in 2005 to reuniting in 2020, RampRate was there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
-    accent: "oklch(0.82 0.15 75)",
+      "From the Viacom/CBS split in 2005 to reuniting in 2020, we were there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
+    accent: "oklch(0.6 0.14 40)",
   },
   {
     label: "eBay",
     stats: "$50M in savings while strengthening relationships",
     detail:
-      "Global data center optimization. Designed data center impact dashboard (DSE). Millions in ongoing value. Supplier relationships stronger than before.",
-    accent: "oklch(0.6 0.2 280)",
+      "Global data center optimization. We designed the impact dashboard behind it. Millions in ongoing value - and supplier relationships stronger than before.",
+    accent: "oklch(0.55 0.16 250)",
   },
   {
     label: "NOIA",
     stats: "US market penetration in months",
     detail:
-      "4+ year daily advisory. Accelerated growth by years. Enterprise partnerships converted to next-stage momentum. Recruited 80% of advisory board and 80% of strategic investors.",
-    accent: "oklch(0.65 0.2 150)",
+      "Four-plus years of daily advisory. Growth accelerated by years. We recruited 80% of the advisory board and 80% of the strategic investors.",
+    accent: "oklch(0.55 0.13 160)",
   },
 ];
 
@@ -133,21 +133,21 @@ const operateSteps = [
   {
     num: "01",
     title: "Deep Research",
-    desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers. 80 countries. Forecasts within 5-10% of outcome.",
+    desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers across 80 countries. We forecast within 5-10% of outcome.",
     Icon: Database,
     link: { label: "Our Process", href: "/process" },
   },
   {
     num: "02",
     title: "Strategic Blueprint",
-    desc: "Pressure-test positioning, supplier structures, GTM, revenue pathways against real market data. Not theory.",
+    desc: "We pressure-test positioning, supplier structures, and revenue pathways against real market data - not theory.",
     Icon: Target,
     link: { label: "See How We Think", href: "/thinking" },
   },
   {
     num: "03",
     title: "Relationship Activation",
-    desc: "25 years of enterprise trust. When we call, doors open. Not pitch. History. 99% of intros convert to contracts.",
+    desc: "25 years of enterprise trust. When we call, doors open. Not a pitch - a history. 99% of intros convert to contracts.",
     Icon: Users,
     link: { label: "See Results", href: "/proof" },
   },
@@ -162,7 +162,7 @@ const brands = [
       "Advisory built for founders navigating growth, fundraising, and the decisions that define a company's trajectory.",
     href: "/growth",
     iconKind: "syzygy" as const,
-    accentColor: "oklch(0.65 0.2 150)",
+    accentColor: "oklch(0.55 0.13 160)",
   },
   {
     name: "Stratum",
@@ -171,7 +171,7 @@ const brands = [
       "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure and rails.",
     href: "/web3",
     iconKind: "stratum" as const,
-    accentColor: "oklch(0.65 0.2 280)",
+    accentColor: "oklch(0.55 0.16 265)",
   },
   {
     name: "Sourcing",
@@ -180,7 +180,7 @@ const brands = [
       "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement decisions.",
     href: "/sourcing",
     iconKind: "sourcing" as const,
-    accentColor: "oklch(0.82 0.15 75)",
+    accentColor: "var(--gold)",
   },
   {
     name: "BioChain",
@@ -189,7 +189,7 @@ const brands = [
       "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, and chain-of-custody tracking on every shipment.",
     href: "/biochain",
     iconKind: "biochain" as const,
-    accentColor: "oklch(0.62 0.12 190)",
+    accentColor: "oklch(0.55 0.1 195)",
   },
   {
     name: "ImpactSoul",
@@ -198,22 +198,22 @@ const brands = [
       "Impact-focused advisory for NGOs and mission-driven organizations building sustainable, fundable operating models.",
     href: "/impactsoul",
     iconKind: "impact" as const,
-    accentColor: "oklch(0.7 0.18 30)",
+    accentColor: "var(--rust)",
   },
   {
     name: "Torque",
     tag: "Executive",
     description:
-      "Helping founders and execs resolve disputes & battle unscrupulous practices without calling in outside lawyers.",
+      "Helping founders and execs resolve disputes and push back on bad-faith tactics without calling in outside lawyers.",
     href: "/torque",
     iconKind: "advisory" as const,
-    accentColor: "oklch(0.65 0.12 70)",
+    accentColor: "oklch(0.5 0.1 60)",
   },
 ];
 
 export default function HomeContent() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-warm-light">
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
         <div className="absolute inset-0">
@@ -223,88 +223,30 @@ export default function HomeContent() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-[1.45] saturate-[1.55] contrast-[1.08]"
-          />
-          {/* Layered light washes over the photo - same treatment as the Manus
-              reference build, re-hued to the brand gold/amber/rust palette.
-              Pushed warmer/more saturated for a more vivid sunset glow. */}
-          <div
-            className="absolute inset-0 mix-blend-screen"
-            style={{
-              background:
-                "linear-gradient(135deg, oklch(0.58 0.18 35 / 0.30) 0%, oklch(0.68 0.19 50 / 0.22) 20%, oklch(0.82 0.18 72 / 0.14) 40%, transparent 55%, oklch(0.55 0.16 38 / 0.18) 75%, oklch(0.42 0.12 42 / 0.24) 100%)",
-            }}
+            className="object-cover object-right brightness-[1.3] saturate-[1.25] contrast-[1.03]"
           />
           <div
             className="absolute inset-0 mix-blend-screen"
             style={{
               background:
-                "radial-gradient(ellipse at 60% 40%, oklch(0.86 0.18 68 / 0.32) 0%, oklch(0.74 0.19 55 / 0.2) 28%, oklch(0.6 0.16 42 / 0.1) 48%, transparent 68%)",
+                "linear-gradient(135deg, oklch(0.58 0.18 35 / 0.24) 0%, oklch(0.82 0.18 72 / 0.12) 40%, transparent 60%)",
             }}
           />
-          <div
-            className="absolute inset-0 mix-blend-screen"
-            style={{
-              background:
-                "radial-gradient(ellipse at 85% 12%, oklch(0.8 0.18 62 / 0.26) 0%, oklch(0.6 0.15 46 / 0.14) 32%, transparent 52%), radial-gradient(ellipse at 5% 75%, oklch(0.56 0.17 36 / 0.22) 0%, oklch(0.46 0.13 40 / 0.1) 28%, transparent 48%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-color-dodge"
-            style={{
-              background:
-                "linear-gradient(180deg, oklch(0.56 0.17 42 / 0.24) 0%, oklch(0.68 0.18 58 / 0.15) 20%, transparent 45%)",
-            }}
-          />
-          {/* Navy grounding fades keep the seam and scroll cue on solid dark. */}
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/80 via-dark/45 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/75 via-dark/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
         </div>
 
-        {/* Ambient glow orbs - decorative, brand gold/amber/rust. */}
         <div
-          className="pointer-events-none absolute -top-32 -right-10 z-[1] h-[800px] w-[800px] rounded-full opacity-40 animate-pulse [animation-duration:9s] motion-reduce:animate-none"
+          className="pointer-events-none absolute -top-32 -right-10 z-[1] h-[700px] w-[700px] rounded-full opacity-30"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.72 0.16 60 / 0.22) 0%, oklch(0.55 0.15 35 / 0.12) 30%, oklch(0.8 0.12 75 / 0.06) 55%, transparent 75%)",
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute bottom-0 left-[10%] z-[1] hidden h-[550px] w-[550px] rounded-full opacity-35 animate-pulse [animation-duration:13s] motion-reduce:animate-none sm:block"
-          style={{
-            background:
-              "radial-gradient(circle, oklch(0.6 0.16 40 / 0.2) 0%, oklch(0.5 0.14 30 / 0.1) 35%, transparent 60%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute right-[25%] top-[15%] z-[1] hidden h-[400px] w-[400px] rounded-full opacity-35 animate-pulse [animation-duration:11s] motion-reduce:animate-none sm:block"
-          style={{
-            background:
-              "radial-gradient(circle, oklch(0.88 0.13 78 / 0.22) 0%, oklch(0.78 0.14 55 / 0.1) 40%, transparent 65%)",
-            filter: "blur(45px)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute right-[5%] top-1/2 z-[1] h-[500px] w-[500px] rounded-full opacity-30 animate-pulse [animation-duration:15s] motion-reduce:animate-none"
-          style={{
-            background:
-              "radial-gradient(circle, oklch(0.5 0.14 35 / 0.2) 0%, oklch(0.4 0.11 40 / 0.08) 40%, transparent 65%)",
+              "radial-gradient(circle, oklch(0.72 0.16 60 / 0.2) 0%, oklch(0.8 0.12 75 / 0.06) 55%, transparent 75%)",
             filter: "blur(70px)",
-          }}
-        />
-        {/* Left-side scrim above the orbs so the headline keeps its contrast. */}
-        <div
-          className="pointer-events-none absolute inset-0 z-[2]"
-          style={{
-            background:
-              "linear-gradient(90deg, oklch(0.13 0.015 250 / 0.72) 0%, oklch(0.14 0.02 255 / 0.42) 30%, oklch(0.16 0.02 260 / 0.15) 55%, transparent 80%)",
           }}
         />
 
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-16">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
             <div className="max-w-2xl">
               <div className="mb-8">
                 <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
@@ -323,19 +265,16 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(2.75rem,7vw,4.5rem)]">
+              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
                 Where Relationships
                 <br />
                 Become <span className="text-gold">Revenue.</span>
               </h1>
 
-              <p className="font-mono mt-6 text-sm sm:text-base font-semibold tracking-[0.15em] uppercase text-white/50">
-                Founder advisory, product strategy, mission-critical sourcing —
-                $10B+ managed since 2000.
-              </p>
-
-              <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-xl text-white/65">
-                We don&apos;t advise from the sidelines - we execute.
+              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white/70">
+                We don&apos;t advise from the sidelines - we execute. Founder
+                advisory, product strategy, and mission-critical sourcing,
+                backed by $10B+ managed since 2000.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -356,7 +295,7 @@ export default function HomeContent() {
           </div>
         </div>
 
-        <div className="relative z-10 pb-8 flex justify-center">
+        <div className="relative z-10 pb-10 flex justify-center">
           <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
@@ -370,34 +309,31 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="bg-dark text-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
+      <section className="section-warm py-24 sm:py-32">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <div className="mb-16 max-w-2xl">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Selected Engagements
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-white">
-              Results, Not Promises.
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold text-ink">
+              Results, not promises.
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-x-10 gap-y-14">
             {engagements.map((eng) => (
-              <div
-                key={eng.label}
-                className="rounded-xl p-8 transition-all duration-300 bg-white/3 border border-white/6"
-              >
+              <div key={eng.label}>
                 <div
-                  className="w-1 h-10 rounded-full mb-6"
+                  className="w-10 h-1 rounded-full mb-6"
                   style={{ backgroundColor: eng.accent }}
                 />
-                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-white/50">
+                <p className="font-body text-xs uppercase tracking-[0.15em] mb-3 text-ink-mid">
                   {eng.label}
                 </p>
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-4">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-ink mb-4 leading-snug">
                   {eng.stats}
                 </h3>
-                <p className="font-body text-sm leading-relaxed text-white/50">
+                <p className="font-body text-base leading-relaxed text-ink-mid">
                   {eng.detail}
                 </p>
               </div>
@@ -407,66 +343,58 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="bg-dark-mid text-white py-16 sm:py-20">
+      <section id="brands" className="section-light py-24 sm:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-white/50">
-              01 - Our Practices
+          <div className="text-center mb-20 max-w-2xl mx-auto">
+            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-ink-mid">
+              Our Practices
             </span>
-            <p className="font-body text-sm sm:text-base font-semibold uppercase tracking-[0.1em] mb-3 text-gold">
-              One discipline — trust networks for profit through purpose —
-              applied across six practices:
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              Six practices. One coalition.
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight">
+              Six practices.
               <br />
-              Pick the one that fits you.
+              One coalition.
             </h2>
-            <p className="font-body mt-5 text-base sm:text-lg max-w-2xl mx-auto text-white/50">
-              Each practice is purpose-built for a distinct audience - but they
-              share the same team of superstars behind the scenes.
+            <p className="font-body mt-6 text-base sm:text-lg text-ink-mid">
+              One discipline - trust turned into revenue - applied across six
+              audiences. Each practice is purpose-built, but every one draws on
+              the same senior team.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {brands.map((brand, i) => (
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="group relative block basis-full sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)] max-w-105 rounded-xl border p-7 transition-all duration-400 ease-out bg-[rgba(255,255,255,0.035)] border-[rgba(255,255,255,0.08)] hover:-translate-y-2 hover:bg-[color-mix(in_oklch,var(--accent)_7%,rgba(255,255,255,0.035))] hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:shadow-[0_25px_55px_-20px_var(--accent)]"
+                className="group relative block rounded-xl border p-8 transition-all duration-300 bg-white border-black/5 hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:-translate-y-1"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-7 right-7 text-[11px] tracking-[0.2em] text-white/50">
+                <span className="font-mono absolute top-8 right-8 text-[11px] tracking-[0.2em] text-ink-mid/60">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
-                <div className="relative w-12 h-12 mb-5">
-                  <div
-                    className="absolute -inset-2 rounded-full blur-lg opacity-0 transition-opacity duration-500 group-hover:opacity-40"
-                    style={{ background: brand.accentColor }}
+                <div
+                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
+                  style={{
+                    background: `color-mix(in oklch, ${brand.accentColor} 12%, transparent)`,
+                  }}
+                >
+                  <PracticeIcon
+                    kind={brand.iconKind}
+                    color={brand.accentColor}
                   />
-                  <div
-                    className="relative w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-400 group-hover:scale-110 group-hover:rounded-xl"
-                    style={{
-                      background: `color-mix(in oklch, ${brand.accentColor} 15%, transparent)`,
-                    }}
-                  >
-                    <PracticeIcon
-                      kind={brand.iconKind}
-                      color={brand.accentColor}
-                    />
-                  </div>
                 </div>
+
                 <p
                   className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
                   style={{ color: brand.accentColor }}
                 >
                   {brand.tag}
                 </p>
-                <h3 className="font-display text-xl font-bold text-white mb-3">
+                <h3 className="font-display text-xl font-bold text-ink mb-3">
                   {brand.name}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-white/60">
+                <p className="font-body text-sm leading-relaxed mb-6 text-ink-mid">
                   {brand.description}
                 </p>
                 <span
@@ -483,14 +411,14 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="bg-dark-card text-white py-16 sm:py-20">
+      <section className="section-warm py-24 sm:py-32">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
+          <div className="text-center mb-16">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Why We&apos;re Different
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Data-Driven. Objective. Impact-Oriented.
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+              Data-driven. Objective. Impact-oriented.
             </h2>
           </div>
 
@@ -498,27 +426,27 @@ export default function HomeContent() {
             <table className="w-full text-left border-collapse min-w-[560px]">
               <thead>
                 <tr>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-white/10 text-white/50">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
                     Traditional Consulting
                   </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-white/10 text-white/50">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-semibold border-b border-black/10 text-ink-mid">
                     Traditional Middleman
                   </th>
-                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-gold border-b-gold">
+                  <th className="font-body pb-4 text-xs uppercase tracking-[0.15em] font-bold border-b-2 text-rust border-b-rust">
                     RampRate
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {diffRows.map((row, i) => (
-                  <tr key={i} className="border-b border-white/8">
-                    <td className="font-body py-4 pr-6 text-sm text-white/50">
+                  <tr key={i} className="border-b border-black/8">
+                    <td className="font-body py-5 pr-6 text-sm text-ink-mid">
                       {row.trad}
                     </td>
-                    <td className="font-body py-4 pr-6 text-sm text-white/50">
+                    <td className="font-body py-5 pr-6 text-sm text-ink-mid">
                       {row.broker}
                     </td>
-                    <td className="font-body py-4 text-sm font-semibold text-white">
+                    <td className="font-body py-5 text-sm font-semibold text-ink">
                       {row.ramp}
                     </td>
                   </tr>
@@ -527,59 +455,37 @@ export default function HomeContent() {
             </table>
           </div>
 
-          <p className="font-display mt-10 text-base sm:text-lg font-bold text-center leading-relaxed text-white">
+          <p className="font-display mt-12 text-lg sm:text-xl font-bold text-center leading-relaxed text-ink">
             You work with principals. No junior layering. No staffing pyramid.
             <br className="hidden sm:block" />
             The people on the testimonials are the people who serve you.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/process"
-              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-gold text-dark"
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-rust text-white"
             >
               Take the Flow Circuit Assessment
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight size={14} />
             </Link>
             <Link
               href="/process"
-              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/20 text-white/80 hover:bg-white/5"
+              className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-black/15 text-ink hover:bg-black/3"
             >
               Find Your Me / Way / Our
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight size={14} />
             </Link>
           </div>
         </div>
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="bg-dark text-white py-16 sm:py-20 overflow-hidden">
+      <section className="section-light py-24 sm:py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-              25 Years. <span className="text-gold">One Standard.</span>
+          <div className="text-center mb-20">
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink">
+              25 years. <span className="text-rust">One standard.</span>
             </h2>
           </div>
 
@@ -591,40 +497,37 @@ export default function HomeContent() {
       <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="bg-dark-mid text-white py-16 sm:py-20">
+      <section className="section-light py-24 sm:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-14">
-            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
+          <div className="mb-16 max-w-2xl">
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Our Approach
             </span>
-            <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Research. Blueprint. <span className="text-gold">Activate.</span>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+              Research. Blueprint. Activate.
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10 md:gap-14">
             {operateSteps.map((step) => (
-              <div
-                key={step.num}
-                className="rounded-xl p-8 bg-white/4 border border-white/8"
-              >
-                <div className="flex items-center gap-3 mb-5">
+              <div key={step.num}>
+                <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gold/10">
-                    <step.Icon size={22} className="text-gold" />
+                    <step.Icon size={22} className="text-rust" />
                   </div>
-                  <span className="font-mono text-3xl font-bold text-gold/90">
+                  <span className="font-mono text-3xl font-bold text-ink-mid/40">
                     {step.num}
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold mb-3 text-white">
+                <h3 className="font-display text-xl font-bold mb-3 text-ink">
                   {step.title}
                 </h3>
-                <p className="font-body text-sm leading-relaxed mb-4 text-white/60">
+                <p className="font-body text-base leading-relaxed mb-5 text-ink-mid">
                   {step.desc}
                 </p>
                 <Link
                   href={step.link.href}
-                  className="font-body inline-flex items-center gap-1.5 text-xs font-semibold transition-all hover:gap-2.5 hover:opacity-70 text-gold"
+                  className="font-body inline-flex items-center gap-1.5 text-sm font-semibold transition-all hover:gap-2.5 text-rust"
                 >
                   {step.link.label}
                   <ArrowRight size={12} />
@@ -636,62 +539,59 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="bg-dark-card text-white py-16 sm:py-20">
+      <section className="section-warm py-24 sm:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold">
+              <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
                 Compensation
               </span>
-              <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-white">
-                We Align Compensation{" "}
-                <span className="text-gold">With Value Created.</span>
+              <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+                We align compensation with value created.
               </h2>
-              <p className="font-body mt-5 leading-relaxed text-white/60 text-base">
+              <p className="font-body mt-6 leading-relaxed text-ink-mid text-base sm:text-lg">
                 No retainers held hostage. No billable hours divorced from
                 results. We eat what we hunt - and we have a 25-year track
                 record to prove it.
               </p>
             </div>
 
-            <div className="rounded-xl p-8 bg-white/4 border border-white/8">
-              <div className="space-y-5">
-                <div className="flex items-start gap-4">
-                  <DollarSign size={20} className="shrink-0 mt-0.5 text-gold" />
-                  <div>
-                    <div className="font-display text-base font-bold mb-1 text-white">
-                      $15K–$50K/month
-                    </div>
-                    <p className="font-body text-sm text-white/60">
-                      Depending on scope. Equity-forward available.
-                    </p>
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <DollarSign size={20} className="shrink-0 mt-0.5 text-rust" />
+                <div>
+                  <div className="font-display text-lg font-bold mb-1 text-ink">
+                    $15K-$50K/month
                   </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <Shield size={20} className="shrink-0 mt-0.5 text-gold" />
-                  <div>
-                    <div className="font-display text-base font-bold mb-1 text-white">
-                      Performance Accountability
-                    </div>
-                    <p className="font-body text-sm text-white/60">
-                      Clawbacks where appropriate. Historical multiplier: 20X.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <Target size={20} className="shrink-0 mt-0.5 text-gold" />
-                  <div>
-                    <div className="font-display text-base font-bold mb-1 text-white">
-                      Every Engagement Is Custom
-                    </div>
-                    <p className="font-body text-sm text-white/60">
-                      The only way to know the number is to tell us what&apos;s
-                      broken.
-                    </p>
-                  </div>
+                  <p className="font-body text-sm text-ink-mid">
+                    Depending on scope. Equity-forward available.
+                  </p>
                 </div>
               </div>
-              <p className="font-body mt-8 pt-6 text-sm font-semibold italic text-white border-t border-white/10">
+              <div className="flex items-start gap-4">
+                <Shield size={20} className="shrink-0 mt-0.5 text-rust" />
+                <div>
+                  <div className="font-display text-lg font-bold mb-1 text-ink">
+                    Performance accountability
+                  </div>
+                  <p className="font-body text-sm text-ink-mid">
+                    Clawbacks where appropriate. Historical multiplier: 20x.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <Target size={20} className="shrink-0 mt-0.5 text-rust" />
+                <div>
+                  <div className="font-display text-lg font-bold mb-1 text-ink">
+                    Every engagement is custom
+                  </div>
+                  <p className="font-body text-sm text-ink-mid">
+                    The only way to know the number is to tell us what&apos;s
+                    broken.
+                  </p>
+                </div>
+              </div>
+              <p className="font-body pt-6 text-sm font-semibold italic text-ink border-t border-black/10">
                 We have never invoiced and disappeared. In 25 years.
               </p>
             </div>
@@ -703,22 +603,28 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section className="font-body py-16 sm:py-20 text-center text-white bg-[oklch(0.55_0.15_30)]">
+      <section
+        className="font-body py-24 sm:py-32 text-center text-white"
+        style={{
+          background:
+            "linear-gradient(135deg, var(--rust) 0%, oklch(0.5 0.13 45) 100%)",
+        }}
+      >
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            Tell Us What&apos;s Broken.
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+            Tell us what&apos;s broken.
           </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto text-white/70">
-            Principal responds within 24 hours. No associates. No filters. No
+          <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
+            A principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p className="text-sm leading-relaxed mb-10 max-w-xl mx-auto text-white/70">
+          <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-white/80">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-[oklch(0.35_0.1_30)] shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-lg"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>

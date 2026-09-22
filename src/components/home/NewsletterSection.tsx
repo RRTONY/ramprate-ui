@@ -30,21 +30,21 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-dark-mid text-white py-20 sm:py-24">
+    <section className="section-light py-20 sm:py-28">
       <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center">
-        <div className="font-body inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5 bg-gold/10 text-gold">
+        <div className="font-body inline-block text-xs font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full mb-5 bg-gold/15 text-rust">
           Intelligence Brief
         </div>
-        <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-white">
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-ink">
           Join 13,000+ IT Leaders
         </h2>
-        <p className="font-body text-base leading-relaxed mb-8 max-w-lg mx-auto text-white/60">
+        <p className="font-body text-base leading-relaxed mb-8 max-w-lg mx-auto text-ink-mid">
           Get RampRate&apos;s take on enterprise tech, sourcing, and market
           shifts - straight from principals. No fluff.
         </p>
 
         {status === "done" ? (
-          <p className="font-body text-base font-semibold text-gold">
+          <p className="font-body text-base font-semibold text-rust">
             You&apos;re in. Welcome to the list.
           </p>
         ) : (
@@ -59,12 +59,12 @@ export default function NewsletterSection() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
-              className="font-body flex-1 px-4 py-3 rounded-md border text-sm text-white placeholder:text-white/35 bg-white/5 border-white/15 focus:outline-none focus:ring-2 focus:ring-gold/40"
+              className="font-body flex-1 px-4 py-3 rounded-md border text-sm text-ink placeholder:text-ink-mid/50 bg-white border-black/15 focus:outline-none focus:ring-2 focus:ring-gold/40"
             />
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="font-body px-6 py-3 rounded-md text-sm font-bold transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap bg-gold text-dark"
+              className="font-body px-6 py-3 rounded-md text-sm font-bold transition-opacity hover:opacity-90 disabled:opacity-60 whitespace-nowrap bg-rust text-white"
             >
               {status === "submitting" ? "Subscribing…" : "Subscribe"}
             </button>
@@ -72,12 +72,12 @@ export default function NewsletterSection() {
         )}
 
         {status === "error" && (
-          <p className="font-body mt-3 text-xs text-[oklch(0.7_0.16_25)]">
+          <p className="font-body mt-3 text-xs text-[oklch(0.55_0.18_25)]">
             Something went wrong. Try again or email us directly.
           </p>
         )}
 
-        <p className="font-body mt-4 text-xs text-white/40">
+        <p className="font-body mt-4 text-xs text-ink-mid/70">
           No spam. Unsubscribe anytime.
         </p>
       </div>
