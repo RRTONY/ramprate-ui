@@ -428,7 +428,7 @@ export default function ProofPage() {
       />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden bg-[oklch(0.98_0.01_81)]">
+      <section className="relative pt-32 pb-16 overflow-hidden bg-[oklch(0.28_0.04_178)]">
         <div className="absolute inset-0">
           <Image
             src="/proof/hero.webp"
@@ -436,24 +436,24 @@ export default function ProofPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right opacity-25"
+            className="object-cover object-right opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.98_0.01_81)] via-[oklch(0.98_0.01_81)]/90 to-[oklch(0.98_0.01_81)]/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.28_0.04_178)] via-[oklch(0.28_0.04_178)]/90 to-[oklch(0.28_0.04_178)]/50" />
         </div>
         <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className={`${eyebrowClass} mb-4 block`}>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body mb-4 block">
               Proof of Judgment Under Pressure
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[oklch(0.24_0.02_172)] mb-6 leading-tight font-display">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-display">
               We solve the problems that do not fit in a box.
             </h1>
-            <p className="text-[oklch(0.24_0.02_172)] text-lg sm:text-xl leading-relaxed mb-4 font-display italic">
+            <p className="text-[oklch(0.94_0.03_162)] text-lg sm:text-xl leading-relaxed mb-4 font-display italic">
               For 25 years, leaders have called RampRate when the decision was
               expensive, the facts were incomplete and the consequences were
               real.
             </p>
-            <p className="text-[oklch(0.37_0.02_167)] text-base leading-relaxed mb-10 font-body">
+            <p className="text-white/70 text-base leading-relaxed mb-10 font-body">
               The work now spans critical situations, governance, recovery,
               regenerative health, digital assets and infrastructure. Different
               doors. The same instrument: research deeply, find the leverage,
@@ -462,13 +462,13 @@ export default function ProofPage() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#recent"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.28_0.04_178)] text-white hover:bg-[oklch(0.43_0.14_298)] transition-all font-body"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.88_0.08_162)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.94_0.05_162)] transition-all font-body"
               >
                 See Recent Use Cases
               </a>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.28_0.04_178)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.92_0.01_82)] transition-all font-body"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.88_0.08_162)]/50 text-white hover:bg-white/10 transition-all font-body"
               >
                 Tell Us What Is Broken
               </Link>
@@ -624,13 +624,15 @@ export default function ProofPage() {
       </section>
 
       {/* Method */}
-      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.98_0.01_81)]">
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.28_0.04_178)]">
         <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
-          <span className={eyebrowClass}>One Method, Several Practices</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-[oklch(0.24_0.02_172)] font-display">
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body">
+            One Method, Several Practices
+          </span>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white font-display">
             Research. Blueprint. Activate.
           </h2>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 font-body">
             We do not sell a generic consulting product. We build the
             configuration the problem requires, then stay close enough to make
             the result real.
@@ -639,7 +641,7 @@ export default function ProofPage() {
             {METHOD_STEPS.map((step) => (
               <div
                 key={step.n}
-                className="rounded-xl overflow-hidden border border-[oklch(0.88_0.01_117)] bg-[oklch(0.98_0.01_81)]"
+                className="rounded-xl overflow-hidden bg-[oklch(0.33_0.05_177)]"
               >
                 <div className="relative h-44">
                   <Image
@@ -651,13 +653,13 @@ export default function ProofPage() {
                   />
                 </div>
                 <div className="p-6">
-                  <div className="text-xs font-bold tracking-[0.12em] text-[oklch(0.43_0.14_298)] font-mono">
+                  <div className="text-xs font-bold tracking-[0.12em] text-[oklch(0.88_0.08_162)] font-mono">
                     {step.n}
                   </div>
-                  <h3 className="mt-3 text-xl font-bold text-[oklch(0.24_0.02_172)] font-display">
+                  <h3 className="mt-3 text-xl font-bold text-white font-display">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[oklch(0.37_0.02_167)] font-body">
+                  <p className="mt-2 text-sm leading-relaxed text-white/80 font-body">
                     {step.desc}
                   </p>
                 </div>
@@ -923,12 +925,12 @@ export default function ProofPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 text-center bg-[oklch(0.98_0.01_81)] border-t border-[oklch(0.88_0.01_117)]">
+      <section className="py-16 sm:py-20 text-center bg-[oklch(0.28_0.04_178)]">
         <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[oklch(0.24_0.02_172)] mb-4 font-display">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-display">
             Bring us the knot. In the first hour, we find the thread.
           </h2>
-          <p className="text-[oklch(0.37_0.02_167)] text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
+          <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
             Bring us the crisis, the stalled goal or the opportunity you cannot
             yet frame. In our first conversation, we illuminate what is actually
             holding it in place, identify where leverage lives and decide
@@ -937,13 +939,13 @@ export default function ProofPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.28_0.04_178)] text-white hover:bg-[oklch(0.43_0.14_298)] transition-all shadow-lg font-body"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.88_0.08_162)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.94_0.05_162)] transition-all shadow-lg font-body"
             >
               Start With the First Hour
             </Link>
             <Link
               href="/process"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.28_0.04_178)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.92_0.01_82)] transition-all font-body"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-[oklch(0.88_0.08_162)]/50 text-white hover:bg-white/10 transition-all font-body"
             >
               See How We Work
             </Link>
