@@ -432,7 +432,7 @@ export default function ProofPage() {
         <div className="absolute inset-0">
           <Image
             src="/proof/hero.webp"
-            alt="Wild mountain streams pass through a hand-built lock into one calm channel."
+            alt="A glowing bridge spans a misty canyon between waterfalls and snow-capped mountains at dusk, reached by a winding lit path."
             fill
             priority
             sizes="100vw"
@@ -531,15 +531,22 @@ export default function ProofPage() {
             &ldquo;Results to date&rdquo; means completed work and verified
             operating milestones, never speculative outcomes.
           </p>
-          <div className="grid md:grid-cols-2 gap-x-10 gap-y-14">
-            {CASES.map((c) => (
-              <article key={c.num}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {CASES.map((c, i) => (
+              <article
+                key={c.num}
+                className={
+                  i % 3 !== 0
+                    ? "lg:border-l lg:border-[oklch(0.88_0.01_117)] lg:pl-8"
+                    : ""
+                }
+              >
                 <div className="relative aspect-[3/2] mb-5 rounded-lg overflow-hidden bg-[oklch(0.28_0.04_178)]">
                   <Image
                     src={c.image}
                     alt={c.alt}
                     fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover"
                   />
                 </div>
