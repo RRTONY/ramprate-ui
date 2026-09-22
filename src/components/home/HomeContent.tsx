@@ -231,7 +231,7 @@ export default function HomeContent() {
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
               <div className="mb-8">
                 <a
                   href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
