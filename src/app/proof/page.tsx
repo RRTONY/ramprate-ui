@@ -43,7 +43,11 @@ const STATS = [
   { value: "Since 2000", label: "Trusted through multiple market cycles" },
   { value: "$10B+", label: "Decisions transacted" },
   { value: "50+", label: "Countries reached" },
-  { value: "115.6", label: "B Impact Score" },
+  {
+    value: "115.6",
+    growth: "+37.1%",
+    label: "Verified B Impact Score growth since 2022",
+  },
 ];
 
 const CASES = [
@@ -130,6 +134,53 @@ const CASES = [
       "Results to date: public platform launched, partner ecosystem assembled and confidential asset and movement structures in development. Individual cases will publish as permissions clear.",
   },
 ];
+
+const WORK_NOTES = [
+  {
+    title: "Advisory boards & partners",
+    desc: "Clarify which expertise and decision rights are missing, prepare a credible proposition for prospective advisors, and align the people who must carry it into the market. An introduction is a starting point; the terms, roles and follow-through make it useful.",
+  },
+  {
+    title: "Disputes & governance",
+    desc: (
+      <>
+        In{" "}
+        <Link
+          href="/torque"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+        >
+          TORQUE
+        </Link>{" "}
+        work, map the parties and their incentives, assemble counsel and
+        specialists, organize evidence, and design a route to negotiation or
+        recovery. We do not present a pending resolution as a completed win.
+      </>
+    ),
+  },
+  {
+    title: "Go-to-market plans",
+    desc: (
+      <>
+        Test the proposition against customer and partner needs, prioritize
+        verticals and geographies, build a practical rollout plan, and stay
+        involved when the first conversation becomes a negotiation.{" "}
+        <Link
+          href="/biochain"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+        >
+          BioChain
+        </Link>{" "}
+        applies that discipline to qualified health supply and cross-border
+        commercial pathways.
+      </>
+    ),
+  },
+];
+
+const CONFIDENTIAL_WORK_NOTE = {
+  title: "Distributed infrastructure · confidential",
+  desc: "A further advisory relationship supported a distributed data-center venture through board-level positioning, partner alignment and a route to market. The business was subsequently sold. Its identity, transaction terms and our precise contribution to the sale remain confidential; this is not a claim that RampRate brokered or caused the sale.",
+};
 
 const METHOD_STEPS = [
   {
@@ -243,33 +294,92 @@ const NAME_CLOUD = [
 
 const VOICES = [
   {
+    kind: "Product strategy",
     quote:
-      "They helped me significantly reduce my cost structure through several major outsourcing deals worth deep eight figures. They made me look like a hero to my executive management. They are a secret weapon.",
-    name: "Peter Borner",
-    role: "Former Head of IT, Sony Music",
-  },
-  {
-    quote:
-      "RampRate was a risk-free proposition money-wise. They hit 27% savings and the relationships are stronger than ever.",
-    name: "Paul Santana",
-    role: "Manager of Data Center Operations, eBay",
-  },
-  {
-    quote:
-      "Over 50 digital media, IT and product studies. Their access, granular approach and understanding of our corporate strategy differentiate their offering.",
+      "Their access, granular approach and understanding of our corporate strategy differentiate their offering.",
     name: "Gary Share",
     role: "Windows Marketing and Product, Microsoft",
+    link: null as { href: string; label: string } | null,
+  },
+  {
+    kind: "Long-term partnership",
+    quote:
+      "They saved us millions, created agility and new budget out of thin air with each engagement.",
+    name: "Phil Wiser",
+    role: "EVP & CTO, ViacomCBS",
+    link: { href: "/", label: "Public testimonial" },
+  },
+  {
+    kind: "Commercial leverage",
+    quote: "They hit 27% savings and the relationships are stronger than ever.",
+    name: "Paul Santana",
+    role: "Manager of Data Center Operations, eBay",
+    link: { href: "/sourcing", label: "Public testimonial" },
   },
 ];
 
-// Palette matches the original content handoff (forest green / mint /
-// violet editorial design), scoped to this page only via arbitrary oklch
-// values - same pattern /champions and /impactsoul use for their own
-// distinct identity rather than the site's default gold accent.
-const eyebrowViolet =
+const PROOF_NOTES = [
+  {
+    title: "Founder growth",
+    desc: (
+      <>
+        Four-plus years of advisory for NOIA, including enterprise partnerships
+        and board and investor recruitment.{" "}
+        <Link
+          href="/"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+        >
+          See public record
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    title: "Open-source funding",
+    desc: (
+      <>
+        RampRate publicly reports managing more than $3 million in grant funding
+        for XPRIZE.{" "}
+        <Link
+          href="/"
+          className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+        >
+          See public record
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    title: "Impact accountability",
+    desc: (
+      <a
+        href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+      >
+        B Lab lists RampRate&apos;s 115.6 B Impact Score, up from 84.3 in 2022.
+      </a>
+    ),
+  },
+];
+
+const SCORE_PROOF = [
+  {
+    value: "Top 9%",
+    label: "approximate score rank in B Lab's last public company dataset",
+  },
+  {
+    value: "Top 3.6%",
+    label: "approximate recertification improvement rate",
+  },
+  { value: "2.27×", label: "the 50.9 ordinary-business median" },
+];
+
+const eyebrowClass =
   "text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.43_0.14_298)] font-body";
-const eyebrowMint =
-  "text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body";
 
 function CaseLink({
   link,
@@ -318,21 +428,21 @@ export default function ProofPage() {
       />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-[oklch(0.28_0.04_178)]">
+      <section className="relative pt-32 pb-16 overflow-hidden bg-[oklch(0.28_0.04_178)]">
         <div className="absolute inset-0">
           <Image
             src="/proof/hero.webp"
-            alt="Wild mountain streams pass through a hand-built lock into one calm channel."
+            alt="A glowing bridge spans a misty canyon between waterfalls and snow-capped mountains at dusk, reached by a winding lit path."
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-30"
+            className="object-cover object-right opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.28_0.04_178)] via-[oklch(0.28_0.04_178)]/90 to-[oklch(0.28_0.04_178)]/50" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span className={`${eyebrowMint} mb-4 block`}>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body mb-4 block">
               Proof of Judgment Under Pressure
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-display">
@@ -370,9 +480,9 @@ export default function ProofPage() {
       {/* Signal stats bar */}
       <section
         aria-label="RampRate at a glance"
-        className="bg-[oklch(0.99_0.01_89)] border-b border-[oklch(0.88_0.01_117)]"
+        className="bg-[oklch(0.98_0.01_81)] border-b border-[oklch(0.88_0.01_117)]"
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4">
+        <div className="max-w-[1180px] mx-auto grid grid-cols-2 sm:grid-cols-4">
           {STATS.map((stat, i) => {
             const rightAtMobile = i % 2 === 0; // not the last column of a 2-col row
             const rightAtDesktop = i !== STATS.length - 1; // not the last of 4
@@ -385,6 +495,11 @@ export default function ProofPage() {
               >
                 <div className="text-xl sm:text-2xl font-bold text-[oklch(0.28_0.04_178)] font-display">
                   {stat.value}
+                  {stat.growth && (
+                    <span className="ml-1.5 text-[oklch(0.43_0.14_298)] text-xs font-bold font-mono align-middle">
+                      {stat.growth}
+                    </span>
+                  )}
                 </div>
                 <div className="mt-2 text-xs text-[oklch(0.42_0.02_168)] font-body">
                   {stat.label}
@@ -395,41 +510,43 @@ export default function ProofPage() {
         </div>
       </section>
 
-      {/* Six Recent Use Cases */}
+      {/* Recent Use Cases */}
       <section
         id="recent"
-        className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.95_0.01_85)]"
+        className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]"
       >
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="max-w-3xl mb-6">
-            <span className={eyebrowViolet}>Six Recent Use Cases</span>
+            <span className={eyebrowClass}>Recent Use Cases</span>
             <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
               The last year was not a return to sourcing. It was a return to
               solving consequential problems.
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
-              Much of this work remains protected by confidentiality, active
-              negotiations or legal privilege. The client names and full case
-              records will be published as permissions clear. The work below is
-              described at the level we can responsibly disclose today.
-            </p>
           </div>
           <p className="pb-6 mb-10 border-y border-[oklch(0.88_0.01_117)] py-4 text-sm text-[oklch(0.42_0.02_168)] font-body">
             <strong className="text-[oklch(0.24_0.02_172)]">
               Confidential engagements.
             </strong>{" "}
-            &ldquo;Results to date&rdquo; identifies completed work products and
-            verified operating milestones, not speculative final outcomes.
+            Names and full case records will be published as permissions clear.
+            &ldquo;Results to date&rdquo; means completed work and verified
+            operating milestones, never speculative outcomes.
           </p>
-          <div className="grid md:grid-cols-2 gap-x-10 gap-y-14">
-            {CASES.map((c) => (
-              <article key={c.num}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {CASES.map((c, i) => (
+              <article
+                key={c.num}
+                className={
+                  i % 3 !== 0
+                    ? "lg:border-l lg:border-[oklch(0.88_0.01_117)] lg:pl-8"
+                    : ""
+                }
+              >
                 <div className="relative aspect-[3/2] mb-5 rounded-lg overflow-hidden bg-[oklch(0.28_0.04_178)]">
                   <Image
                     src={c.image}
                     alt={c.alt}
                     fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover"
                   />
                 </div>
@@ -468,13 +585,50 @@ export default function ProofPage() {
               </article>
             ))}
           </div>
+
+          {/* Work behind the headline */}
+          <div className="mt-20 pt-10 border-t-2 border-[oklch(0.28_0.04_178)]">
+            <h3 className="text-2xl sm:text-3xl font-bold font-display text-[oklch(0.24_0.02_172)]">
+              The work behind the headline
+            </h3>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+              The outcomes come from decisions made before an introduction, and
+              work carried through after it. Recent engagements draw on the same
+              disciplines documented in our advisory practice.
+            </p>
+            <div className="mt-6">
+              {WORK_NOTES.map((note) => (
+                <div
+                  key={note.title}
+                  className="grid sm:grid-cols-[27%_1fr] gap-2 sm:gap-8 py-5 border-t border-[oklch(0.88_0.01_117)]"
+                >
+                  <h4 className="text-xs font-bold uppercase tracking-wide text-[oklch(0.43_0.14_298)] font-mono">
+                    {note.title}
+                  </h4>
+                  <p className="text-sm leading-relaxed text-[oklch(0.24_0.02_172)] font-body">
+                    {note.desc}
+                  </p>
+                </div>
+              ))}
+              <div className="grid sm:grid-cols-[27%_1fr] gap-2 sm:gap-8 py-5 mt-1 px-4 -mx-4 bg-[oklch(0.43_0.14_298)]/5 border-t border-[oklch(0.43_0.14_298)]">
+                <h4 className="text-xs font-bold uppercase tracking-wide text-[oklch(0.43_0.14_298)] font-mono">
+                  {CONFIDENTIAL_WORK_NOTE.title}
+                </h4>
+                <p className="text-sm leading-relaxed text-[oklch(0.24_0.02_172)] font-body">
+                  {CONFIDENTIAL_WORK_NOTE.desc}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Method */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.28_0.04_178)]">
-        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowMint}>One Method, Several Practices</span>
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.88_0.08_162)] font-body">
+            One Method, Several Practices
+          </span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white font-display">
             Research. Blueprint. Activate.
           </h2>
@@ -483,49 +637,42 @@ export default function ProofPage() {
             configuration the problem requires, then stay close enough to make
             the result real.
           </p>
-          <div className="mt-12 space-y-4">
-            {METHOD_STEPS.map((step, i) => {
-              const reversed = i % 2 === 1;
-              return (
-                <div
-                  key={step.n}
-                  className="relative grid sm:grid-cols-2 min-h-[220px] sm:min-h-[270px] rounded-xl overflow-hidden"
-                >
-                  <div
-                    className={`relative min-h-[176px] sm:min-h-full order-1 ${reversed ? "sm:order-2" : "sm:order-1"}`}
-                  >
-                    <Image
-                      src={step.image}
-                      alt={step.alt}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div
-                    className={`bg-[oklch(0.33_0.05_177)] flex flex-col justify-center p-8 sm:p-10 order-2 ${reversed ? "sm:order-1" : "sm:order-2"}`}
-                  >
-                    <div className="text-xs font-bold tracking-[0.12em] text-[oklch(0.88_0.08_162)] font-mono">
-                      {step.n}
-                    </div>
-                    <h3 className="mt-4 text-2xl sm:text-3xl font-bold text-white font-display">
-                      {step.title}
-                    </h3>
-                    <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/80 font-body">
-                      {step.desc}
-                    </p>
-                  </div>
+          <div className="mt-12 grid sm:grid-cols-3 gap-4">
+            {METHOD_STEPS.map((step) => (
+              <div
+                key={step.n}
+                className="rounded-xl overflow-hidden bg-[oklch(0.33_0.05_177)]"
+              >
+                <div className="relative h-44">
+                  <Image
+                    src={step.image}
+                    alt={step.alt}
+                    fill
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
-              );
-            })}
+                <div className="p-6">
+                  <div className="text-xs font-bold tracking-[0.12em] text-[oklch(0.88_0.08_162)] font-mono">
+                    {step.n}
+                  </div>
+                  <h3 className="mt-3 text-xl font-bold text-white font-display">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/80 font-body">
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 25-Year Foundation */}
-      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.99_0.01_89)]">
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowViolet}>The 25-Year Foundation</span>
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
+          <span className={eyebrowClass}>The 25-Year Foundation</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             New categories. Old discipline.
           </h2>
@@ -533,11 +680,13 @@ export default function ProofPage() {
             The recent work is credible because it sits on decades of measurable
             results inside complex enterprises.
           </p>
-          <div className="mt-12 grid sm:grid-cols-3 gap-x-8 gap-y-8">
-            {LEGACY_RESULTS.map((r) => (
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-6 border-t border-[oklch(0.88_0.01_117)]">
+            {LEGACY_RESULTS.map((r, i) => (
               <div
                 key={r.value}
-                className="pt-6 border-t border-[oklch(0.88_0.01_117)]"
+                className={`pt-6 pb-2 border-[oklch(0.88_0.01_117)] ${
+                  i % 2 !== 0 ? "sm:border-l sm:pl-6" : ""
+                } ${i !== 0 ? "lg:border-l lg:pl-6" : ""}`}
               >
                 <div className="text-xl font-bold text-[oklch(0.24_0.02_172)] font-display">
                   {r.value}
@@ -554,10 +703,10 @@ export default function ProofPage() {
       {/* Client Trust Wall */}
       <section
         id="clients"
-        className="relative py-20 sm:py-28 bg-[oklch(0.93_0.01_89)]"
+        className="relative py-20 sm:py-28 bg-[oklch(0.98_0.01_81)]"
       >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowViolet}>The Relationship Constellation</span>
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <span className={eyebrowClass}>The Relationship Constellation</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             Trusted by leaders who could not afford theater.
           </h2>
@@ -582,16 +731,21 @@ export default function ProofPage() {
               </div>
             ))}
           </div>
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {NAME_CLOUD.map((name) => (
-              <span
-                key={name}
-                className="px-2.5 py-1.5 bg-white text-[oklch(0.24_0.02_172)] text-[11px] font-bold tracking-wide font-mono"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
+          <details className="mt-6 border-t border-b border-[oklch(0.85_0.01_100)]">
+            <summary className="cursor-pointer min-h-11 flex items-center text-xs font-bold uppercase tracking-wide text-[oklch(0.28_0.04_178)] font-mono">
+              See {NAME_CLOUD.length} more public client names
+            </summary>
+            <div className="flex flex-wrap gap-2 pb-4">
+              {NAME_CLOUD.map((name) => (
+                <span
+                  key={name}
+                  className="px-2.5 py-1.5 bg-white text-[oklch(0.24_0.02_172)] text-[11px] font-bold tracking-wide font-mono"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          </details>
           <p className="mt-8 text-center text-xs text-[oklch(0.42_0.02_168)] font-body">
             The full historical client record contains more than 100
             organizations. A logo indicates a past or present working
@@ -604,19 +758,28 @@ export default function ProofPage() {
       {/* Voices */}
       <section
         id="voices"
-        className="relative py-20 sm:py-28 bg-[oklch(0.95_0.01_85)]"
+        className="relative py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]"
       >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <span className={eyebrowViolet}>In Their Words</span>
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <span className={eyebrowClass}>The People and the Record</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
-            Trust is what remains after the engagement ends.
+            More than a sourcing story.
           </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+            The published voices speak to product judgment, staying power and
+            measurable economics. The newer practices have public work to show,
+            but confidential partners do not become quoted endorsers without
+            permission.
+          </p>
           <div className="mt-12 grid sm:grid-cols-3 gap-8">
             {VOICES.map((v) => (
               <blockquote
                 key={v.name}
                 className="pt-6 border-t border-[oklch(0.88_0.01_117)]"
               >
+                <span className="block text-[oklch(0.43_0.14_298)] text-xs font-bold mb-2.5">
+                  {v.kind}
+                </span>
                 <p className="text-lg leading-relaxed font-display text-[oklch(0.24_0.02_172)]">
                   &ldquo;{v.quote}&rdquo;
                 </p>
@@ -625,43 +788,101 @@ export default function ProofPage() {
                     {v.name}
                   </strong>
                   {v.role}
+                  {v.link && (
+                    <>
+                      {" · "}
+                      <Link
+                        href={v.link.href}
+                        className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+                      >
+                        {v.link.label}
+                      </Link>
+                    </>
+                  )}
                 </footer>
               </blockquote>
             ))}
           </div>
+          <div className="mt-14 grid sm:grid-cols-3 gap-8 sm:gap-6">
+            {PROOF_NOTES.map((note) => (
+              <div key={note.title}>
+                <div className="text-base font-bold font-display text-[oklch(0.24_0.02_172)]">
+                  {note.title}
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+                  {note.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-10 text-xs leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+            The three statements above are public work and independent
+            certification, not client testimonials. We will add attributed
+            voices from newer practices when those partners approve publication.
+          </p>
         </div>
       </section>
 
       {/* B Corp / Impact */}
-      <section className="relative overflow-hidden py-16 sm:py-20 bg-gradient-to-br from-[oklch(0.94_0.02_303)] to-[oklch(0.95_0.01_85)]">
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <div className="bg-white rounded-2xl p-8 sm:p-10 shadow-sm flex flex-col sm:flex-row items-center gap-8">
+      <section className="relative overflow-hidden py-16 sm:py-20 bg-[oklch(0.94_0.02_305)]">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
+          <div className="grid sm:grid-cols-[190px_1fr] gap-8 items-start">
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 flex flex-col items-center gap-3"
+              className="flex flex-row sm:flex-col items-center gap-4 sm:gap-2 text-[oklch(0.28_0.04_178)]"
             >
               <Image
                 src="/bcorp-logo.svg"
                 alt="Certified B Corporation"
-                width={110}
-                height={161}
-                className="h-[140px] w-auto"
+                width={88}
+                height={129}
+                className="h-16 sm:h-[110px] w-auto shrink-0"
                 unoptimized
               />
-              <span className="text-[oklch(0.43_0.14_298)] text-xs font-bold tracking-wide font-mono">
-                B Impact Score: 115.6
+              <span className="text-xs font-bold uppercase tracking-wide text-center font-mono">
+                View our verified
+                <br />B Lab profile
               </span>
             </a>
             <div>
-              <h3 className="text-xl font-bold mb-2 font-display text-[oklch(0.24_0.02_172)]">
-                Commercial discipline, pointed somewhere worth going.
-              </h3>
-              <p className="text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
-                RampRate is a Certified B Corporation. B Lab reports an overall
-                B Impact Score of 115.6, compared with a qualifying score of 80.
-                That proof matters because{" "}
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
+                A rare score. A rarer climb.
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+                <a
+                  href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+                >
+                  B Lab verifies
+                </a>{" "}
+                RampRate&apos;s Overall B Impact Score at{" "}
+                <strong className="text-[oklch(0.24_0.02_172)]">115.6</strong>,
+                up from{" "}
+                <strong className="text-[oklch(0.24_0.02_172)]">84.3</strong> in
+                2022. The 31.3-point gain is a{" "}
+                <strong className="text-[oklch(0.24_0.02_172)]">
+                  37.1% increase
+                </strong>
+                .
+              </p>
+              <div className="mt-6 grid grid-cols-3 gap-px bg-[oklch(0.43_0.14_298)]/20 border border-[oklch(0.43_0.14_298)]/20">
+                {SCORE_PROOF.map((s) => (
+                  <div key={s.value} className="p-3 sm:p-4 bg-white/70">
+                    <strong className="block text-[oklch(0.28_0.04_178)] font-display text-lg sm:text-xl">
+                      {s.value}
+                    </strong>
+                    <span className="mt-1 block text-[11px] leading-tight text-[oklch(0.42_0.02_168)] font-body">
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-sm leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+                That is commercial discipline aligned with{" "}
                 <a
                   href="https://impactsoul.is/"
                   target="_blank"
@@ -669,10 +890,34 @@ export default function ProofPage() {
                   className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2 font-semibold"
                 >
                   ImpactSoul
-                </a>{" "}
-                is not a decorative promise attached to the work. It is the
-                regenerative test applied to where our intelligence,
+                </a>
+                : the regenerative test for where our intelligence,
                 relationships and future profits go next.
+              </p>
+              <p className="mt-4 text-[11px] leading-relaxed text-[oklch(0.42_0.02_168)] font-body">
+                Rarity is a RampRate calculation from B Lab&apos;s archival
+                public company-level data: 7,039 current-certified companies for
+                score rank and 2,967 companies with consecutive assessments for
+                improvement rate. It is a historical benchmark, not a current
+                percentile issued by B Lab.{" "}
+                <a
+                  href="https://www.bcorporation.net/news/blog/research-fellowship-call-for-proposals-2024/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+                >
+                  B Lab describes the dataset
+                </a>
+                .{" "}
+                <a
+                  href="https://www.kaggle.com/datasets/thedevastator/b-corporation-impact-data"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[oklch(0.43_0.14_298)] hover:text-[oklch(0.53_0.14_298)] underline underline-offset-2"
+                >
+                  View the archived data mirror
+                </a>
+                .
               </p>
             </div>
           </div>
@@ -681,21 +926,22 @@ export default function ProofPage() {
 
       {/* CTA */}
       <section className="py-16 sm:py-20 text-center bg-[oklch(0.28_0.04_178)]">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-display">
-            Tell us what is broken.
+            Bring us the knot. In the first hour, we find the thread.
           </h2>
           <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
-            The first conversation is free. A principal responds. If we can
-            create leverage, we will show you where. If we cannot, we will tell
-            you quickly.
+            Bring us the crisis, the stalled goal or the opportunity you cannot
+            yet frame. In our first conversation, we illuminate what is actually
+            holding it in place, identify where leverage lives and decide
+            whether we are the right people to move it.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-[oklch(0.88_0.08_162)] text-[oklch(0.28_0.04_178)] hover:bg-[oklch(0.94_0.05_162)] transition-all shadow-lg font-body"
             >
-              Start a Conversation
+              Start With the First Hour
             </Link>
             <Link
               href="/process"
