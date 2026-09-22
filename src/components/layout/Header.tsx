@@ -55,15 +55,16 @@ export default function Header() {
     lightBgPaths.some((p) => pathname.startsWith(p)) ||
     lightBgExactPaths.includes(pathname);
 
-  // The homepage hero (public/hero-sunlit.webp) is a bright sunrise photo,
-  // not a dark hero, so its logo/nav need dark ink from initial load - but
-  // unlike the true no-hero light pages above, the nav bar itself should
-  // stay transparent over the photo until scrolled, matching the reference
-  // design where the wordmark sits directly on the image with no bar behind
-  // it. Solid-bar and text-color are tracked separately so this page can
-  // have one without the other.
-  const isHomepage = pathname === "/";
-  const dark = scrolled || isLightPage || isHomepage;
+  // Pages whose hero is a bright/light photo (homepage's hero-sunlit.webp,
+  // /proof's own light hero) rather than a dark one, so the logo/nav need
+  // dark ink from initial load - but unlike the true no-hero light pages
+  // above, the nav bar itself should stay transparent over the photo until
+  // scrolled, matching the reference design where the wordmark sits
+  // directly on the image with no bar behind it. Solid-bar and text-color
+  // are tracked separately so these pages can have one without the other.
+  const lightHeroPaths = ["/", "/proof"];
+  const hasLightHero = lightHeroPaths.includes(pathname);
+  const dark = scrolled || isLightPage || hasLightHero;
   const solidBar = scrolled || isLightPage;
 
   const navLinkClass = dark
