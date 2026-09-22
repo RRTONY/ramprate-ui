@@ -233,20 +233,24 @@ export default function HomeContent() {
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
             <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="glass-card-warm inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.48_0.13_30)]" />
+                <a
+                  href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-card-warm inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full hover:opacity-80 transition-opacity"
+                >
+                  <Image
+                    src="/bcorp-logo.svg"
+                    alt=""
+                    width={11}
+                    height={16}
+                    className="h-4 w-auto"
+                    unoptimized
+                  />
                   <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-ink-mid">
-                    <a
-                      href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:text-ink transition-colors"
-                    >
-                      B Lab Certified
-                    </a>{" "}
-                    · Since 2000
+                    B Lab Certified · Since 2000
                   </span>
-                </span>
+                </a>
               </div>
 
               <h1 className="font-display font-bold text-ink leading-[1.05] tracking-tight text-[clamp(2.25rem,9vw,5.25rem)]">
