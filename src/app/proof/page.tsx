@@ -542,7 +542,7 @@ export default async function ProofPage() {
                     alt={logo.name}
                     width={100}
                     height={28}
-                    className="object-contain"
+                    className="object-contain brightness-0 invert opacity-80 transition-opacity group-hover:opacity-100"
                     style={{ height: "28px", maxWidth: "100px", width: "auto" }}
                     unoptimized
                   />
@@ -550,7 +550,7 @@ export default async function ProofPage() {
                 return (
                   <div
                     key={logo._id}
-                    className="flex items-center justify-center bg-[oklch(0.94_0.02_75)] rounded-[10px] px-5 py-3 min-w-[100px] min-h-[56px] shadow-sm transition-transform hover:scale-105"
+                    className="group flex items-center justify-center bg-dark-card rounded-[10px] px-5 py-3 min-w-[100px] min-h-[56px] transition-transform hover:scale-105"
                   >
                     {logo.url ? (
                       <a
