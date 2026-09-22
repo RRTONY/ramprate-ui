@@ -237,18 +237,23 @@ export default function HomeContent() {
                   href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                   target="_blank"
                   rel="noreferrer"
-                  className="glass-card-warm inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full hover:opacity-80 transition-opacity"
+                  className="glass-card-warm inline-flex items-center gap-3 pl-3 pr-4 py-2 rounded-full hover:opacity-80 transition-opacity"
                 >
                   <Image
                     src="/bcorp-logo.svg"
                     alt=""
-                    width={11}
-                    height={16}
-                    className="h-4 w-auto"
+                    width={16}
+                    height={23}
+                    className="h-5 w-auto shrink-0"
                     unoptimized
                   />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-ink-mid">
-                    B Lab Certified · Since 2000
+                  <span className="font-body text-[10px] font-bold leading-[1.3] tracking-[0.1em] uppercase text-ink-mid">
+                    Certified
+                    <br />B Corporation
+                  </span>
+                  <span className="w-px self-stretch bg-ink/15" />
+                  <span className="font-body text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase text-ink-mid">
+                    Since 2000
                   </span>
                 </a>
               </div>
@@ -259,10 +264,13 @@ export default function HomeContent() {
                 <span className="text-[oklch(0.48_0.13_30)]">Revenue.</span>
               </h1>
 
-              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-ink-mid">
-                We don&apos;t advise from the sidelines - we execute. Founder
-                advisory, product strategy, and mission-critical sourcing,
-                backed by $10B+ managed since 2000.
+              <p className="font-mono mt-8 text-xs sm:text-sm font-semibold leading-relaxed tracking-[0.08em] uppercase max-w-lg text-ink-mid">
+                Founder advisory, product strategy, mission-critical sourcing -
+                $10B+ managed since 2000.
+              </p>
+
+              <p className="font-body mt-4 text-lg sm:text-xl leading-relaxed max-w-xl text-ink-mid">
+                We don&apos;t advise from the sidelines - we execute.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
