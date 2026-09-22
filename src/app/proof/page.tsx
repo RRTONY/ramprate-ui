@@ -74,7 +74,11 @@ const CASES = [
     title: "XPRIZE and DEVxDAO: designing capital for breakthrough work",
     link: { href: "https://www.xprize.org/", label: "XPRIZE", external: true },
     desc: "Innovation funding can drown in fragmented review, opaque governance and grants that reward applications instead of outcomes. RampRate helped connect mission, community and funding architecture so capital could reach builders and measurable work.",
-    tags: ["Public relationship", "Grant architecture", "Decentralized governance"],
+    tags: [
+      "Public relationship",
+      "Grant architecture",
+      "Decentralized governance",
+    ],
     status:
       "Public record: more than $3 million in grant funding managed, with the broader program described across RampRate and ImpactSoul's public history.",
   },
@@ -96,7 +100,11 @@ const CASES = [
     title: "BioChain: building trust into regenerative-health supply chains",
     link: { href: "/biochain", label: "BioChain" },
     desc: "Peptides, APIs and clinical products move through fragmented markets where price is visible but provenance often is not. RampRate adapted its intelligence engine to qualification, documentation, chain of custody, cross-border supply and commercial fit.",
-    tags: ["Live public practice", "Supplier intelligence", "Regenerative health"],
+    tags: [
+      "Live public practice",
+      "Supplier intelligence",
+      "Regenerative health",
+    ],
     status:
       "Results to date: qualification framework, international supplier relationships, product pathways and a live reseller pilot. Additional client cases will publish as approvals clear.",
   },
@@ -116,9 +124,17 @@ const CASES = [
     image: "/proof/case-impactsoul.webp",
     alt: "A circular watershed nourishes wetlands, orchards, workshops and homes before returning to the river.",
     title: "ImpactSoul: making regenerative value economically legible",
-    link: { href: "https://impactsoul.is/", label: "ImpactSoul", external: true },
+    link: {
+      href: "https://impactsoul.is/",
+      label: "ImpactSoul",
+      external: true,
+    },
     desc: "Impact work is often treated as a cost center or a donation request. ImpactSoul brings asset design, community economics, verifiable outcomes and RampRate's relationship engine together so purpose can attract capital without surrendering its soul.",
-    tags: ["Live public platform", "Regenerative capital", "Asset-backed impact"],
+    tags: [
+      "Live public platform",
+      "Regenerative capital",
+      "Asset-backed impact",
+    ],
     status:
       "Results to date: public platform launched, partner ecosystem assembled and confidential asset and movement structures in development. Individual cases will publish as permissions clear.",
   },
@@ -176,11 +192,35 @@ const LEGACY_RESULTS = [
 ];
 
 const NAME_CLOUD = [
-  "AOL", "Aon", "Arch", "Archon", "BlackLine", "Catalina", "CCP Games",
-  "Commonwealth Bank", "Constant Contact", "Credit.com", "Cushman & Wakefield",
-  "DRW", "EOS", "Hearst", "McGraw Hill", "Miramax", "MTV", "NHL", "NPR",
-  "Riot Games", "San Francisco Chronicle", "Snapchat", "Sony Music", "StubHub",
-  "Sun Microsystems", "Technicolor", "Ticketmaster", "Virgin", "Zurich",
+  "AOL",
+  "Aon",
+  "Arch",
+  "Archon",
+  "BlackLine",
+  "Catalina",
+  "CCP Games",
+  "Commonwealth Bank",
+  "Constant Contact",
+  "Credit.com",
+  "Cushman & Wakefield",
+  "DRW",
+  "EOS",
+  "Hearst",
+  "McGraw Hill",
+  "Miramax",
+  "MTV",
+  "NHL",
+  "NPR",
+  "Riot Games",
+  "San Francisco Chronicle",
+  "Snapchat",
+  "Sony Music",
+  "StubHub",
+  "Sun Microsystems",
+  "Technicolor",
+  "Ticketmaster",
+  "Virgin",
+  "Zurich",
 ];
 
 const VOICES = [
@@ -292,16 +332,15 @@ export default async function ProofPage() {
               We solve the problems that do not fit in a box.
             </h1>
             <p className="text-white/85 text-lg sm:text-xl leading-relaxed mb-4 font-display italic">
-              For 25 years, leaders have called RampRate when the decision
-              was expensive, the facts were incomplete and the consequences
-              were real.
+              For 25 years, leaders have called RampRate when the decision was
+              expensive, the facts were incomplete and the consequences were
+              real.
             </p>
             <p className="text-white/70 text-base leading-relaxed mb-10 font-body">
               The work now spans critical situations, governance, recovery,
-              regenerative health, digital assets and infrastructure.
-              Different doors. The same instrument: research deeply, find the
-              leverage, assemble the right people and carry the outcome
-              through.
+              regenerative health, digital assets and infrastructure. Different
+              doors. The same instrument: research deeply, find the leverage,
+              assemble the right people and carry the outcome through.
             </p>
             <div className="flex flex-wrap gap-4 mb-10">
               <a
@@ -350,15 +389,14 @@ export default async function ProofPage() {
             <p className="mt-6 text-base leading-relaxed text-ink-mid font-body">
               Much of this work remains protected by confidentiality, active
               negotiations or legal privilege. The client names and full case
-              records will be published as permissions clear. The work below
-              is described at the level we can responsibly disclose today.
+              records will be published as permissions clear. The work below is
+              described at the level we can responsibly disclose today.
             </p>
           </div>
           <p className="pb-6 mb-10 border-y border-black/10 py-4 text-sm text-ink-mid font-body">
             <strong className="text-ink">Confidential engagements.</strong>{" "}
-            &ldquo;Results to date&rdquo; identifies completed work products
-            and verified operating milestones, not speculative final
-            outcomes.
+            &ldquo;Results to date&rdquo; identifies completed work products and
+            verified operating milestones, not speculative final outcomes.
           </p>
           <div className="grid md:grid-cols-2 gap-x-10 gap-y-14">
             {CASES.map((c) => (
@@ -421,8 +459,8 @@ export default async function ProofPage() {
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 font-body">
             We do not sell a generic consulting product. We build the
-            configuration the problem requires, then stay close enough to
-            make the result real.
+            configuration the problem requires, then stay close enough to make
+            the result real.
           </p>
           <div className="mt-12 space-y-4">
             {METHOD_STEPS.map((step) => (
@@ -466,8 +504,8 @@ export default async function ProofPage() {
             New categories. Old discipline.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-mid font-body">
-            The recent work is credible because it sits on decades of
-            measurable results inside complex enterprises.
+            The recent work is credible because it sits on decades of measurable
+            results inside complex enterprises.
           </p>
           <div className="mt-12 grid sm:grid-cols-3 gap-x-8 gap-y-8">
             {LEGACY_RESULTS.map((r) => (
@@ -492,9 +530,8 @@ export default async function ProofPage() {
             Trusted by leaders who could not afford theater.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-mid font-body">
-            A selection of organizations represented in RampRate&apos;s
-            public client record. Logos remain the property of their
-            respective owners.
+            A selection of organizations represented in RampRate&apos;s public
+            client record. Logos remain the property of their respective owners.
           </p>
           {featuredLogos.length > 0 && (
             <div className="mt-12 flex flex-wrap justify-center items-center gap-4">
@@ -574,7 +611,10 @@ export default async function ProofPage() {
           </h2>
           <div className="mt-12 grid sm:grid-cols-3 gap-8">
             {VOICES.map((v) => (
-              <blockquote key={v.name} className="pt-6 border-t border-black/10">
+              <blockquote
+                key={v.name}
+                className="pt-6 border-t border-black/10"
+              >
                 <p className="text-lg leading-relaxed font-display">
                   &ldquo;{v.quote}&rdquo;
                 </p>
@@ -612,9 +652,9 @@ export default async function ProofPage() {
                 Commercial discipline, pointed somewhere worth going.
               </h3>
               <p className="text-sm leading-relaxed text-ink-mid font-body">
-                RampRate is a Certified B Corporation. B Lab reports an
-                overall B Impact Score of 115.6, compared with a qualifying
-                score of 80. That proof matters because{" "}
+                RampRate is a Certified B Corporation. B Lab reports an overall
+                B Impact Score of 115.6, compared with a qualifying score of 80.
+                That proof matters because{" "}
                 <a
                   href="https://impactsoul.is/"
                   target="_blank"
@@ -640,8 +680,8 @@ export default async function ProofPage() {
           </h2>
           <p className="text-dark/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto font-body">
             The first conversation is free. A principal responds. If we can
-            create leverage, we will show you where. If we cannot, we will
-            tell you quickly.
+            create leverage, we will show you where. If we cannot, we will tell
+            you quickly.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
