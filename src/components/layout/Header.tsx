@@ -54,13 +54,18 @@ export default function Header() {
   const isLightPage =
     lightBgPaths.some((p) => pathname.startsWith(p)) ||
     lightBgExactPaths.includes(pathname);
-  const dark = scrolled || isLightPage;
 
-  // Un-scrolled state sits over the hero, which still carries a genuinely
-  // deep indigo/magenta scrim on its left side (where the logo/nav live) even
-  // after the bright-sunset rebrand, so nav text there stays white - same
-  // logic as before, just no longer assuming every background is uniformly
-  // bright. Only the scrolled/opaque-white-bar state uses dark ink.
+  // The homepage hero (public/hero-sunlit.webp) is a bright sunrise photo,
+  // not a dark hero, so its logo/nav need dark ink from initial load - but
+  // unlike the true no-hero light pages above, the nav bar itself should
+  // stay transparent over the photo until scrolled, matching the reference
+  // design where the wordmark sits directly on the image with no bar behind
+  // it. Solid-bar and text-color are tracked separately so this page can
+  // have one without the other.
+  const isHomepage = pathname === "/";
+  const dark = scrolled || isLightPage || isHomepage;
+  const solidBar = scrolled || isLightPage;
+
   const navLinkClass = dark
     ? "text-[oklch(0.35_0.03_50)] hover:text-[oklch(0.18_0.03_50)]"
     : "text-white/85 hover:text-white";
@@ -69,7 +74,7 @@ export default function Header() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        dark
+        solidBar
           ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-black/5"
           : "bg-transparent"
       }`}

@@ -215,48 +215,32 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen bg-warm-light">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-warm-light">
         <div className="absolute inset-0">
           <Image
-            src="/hero.webp"
+            src="/hero-sunlit.webp"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-[1.3] saturate-[1.25] contrast-[1.03]"
+            className="object-cover"
           />
-          <div
-            className="absolute inset-0 mix-blend-screen"
-            style={{
-              background:
-                "linear-gradient(135deg, oklch(0.58 0.18 35 / 0.24) 0%, oklch(0.82 0.18 72 / 0.12) 40%, transparent 60%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/75 via-dark/35 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-warm-light/92 via-warm-light/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-warm-light/35 via-transparent to-transparent" />
         </div>
-
-        <div
-          className="pointer-events-none absolute -top-32 -right-10 z-[1] h-[700px] w-[700px] rounded-full opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle, oklch(0.72 0.16 60 / 0.2) 0%, oklch(0.8 0.12 75 / 0.06) 55%, transparent 75%)",
-            filter: "blur(70px)",
-          }}
-        />
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
             <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
+                <span className="glass-card-warm inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.48_0.13_30)]" />
+                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-ink-mid">
                     <a
                       href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:text-white transition-colors"
+                      className="hover:text-ink transition-colors"
                     >
                       B Lab Certified
                     </a>{" "}
@@ -265,13 +249,14 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
+              <h1 className="font-display font-bold text-ink leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
                 Where Relationships
                 <br />
-                Become <span className="text-gold">Revenue.</span>
+                Become{" "}
+                <span className="text-[oklch(0.48_0.13_30)]">Revenue.</span>
               </h1>
 
-              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white/70">
+              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-ink-mid">
                 We don&apos;t advise from the sidelines - we execute. Founder
                 advisory, product strategy, and mission-critical sourcing,
                 backed by $10B+ managed since 2000.
@@ -280,13 +265,13 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-[oklch(0.48_0.13_30)] text-white shadow-[0_8px_30px_rgba(132,46,38,0.25)]"
                 >
                   Tell Us What&apos;s Broken <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border-2 border-ink/20 text-ink hover:bg-ink/5 transition-all"
                 >
                   See Case Results
                 </Link>
@@ -296,7 +281,7 @@ export default function HomeContent() {
         </div>
 
         <div className="relative z-10 pb-10 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-white/50">
+          <div className="flex flex-col items-center gap-2 text-ink-mid/70">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
