@@ -249,9 +249,8 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-ink leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
-                Where Relationships
-                <br />
+              <h1 className="font-display font-bold text-ink leading-[1.05] tracking-tight text-[clamp(2.25rem,9vw,5.25rem)]">
+                Where Relationships <br className="hidden sm:block" />
                 Become{" "}
                 <span className="text-[oklch(0.48_0.13_30)]">Revenue.</span>
               </h1>
