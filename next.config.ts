@@ -69,6 +69,19 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return {
+      // Serve the reviewed, self-contained proof artifact directly from the
+      // canonical public URL while retaining the existing /proof address.
+      // `beforeFiles` takes precedence over the legacy App Router route.
+      beforeFiles: [
+        {
+          source: "/proof",
+          destination: "/RampRate_Proof.html",
+        },
+      ],
+    };
+  },
   async redirects() {
     return [
       {
