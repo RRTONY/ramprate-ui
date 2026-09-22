@@ -317,9 +317,9 @@ export default async function ProofPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-40"
+            className="object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/85 to-dark/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/50" />
         </div>
         <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
         <div className="glass-orb glass-orb-rust w-[260px] h-[260px] bottom-0 -left-32" />
@@ -342,7 +342,7 @@ export default async function ProofPage() {
               doors. The same instrument: research deeply, find the leverage,
               assemble the right people and carry the outcome through.
             </p>
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-4">
               <a
                 href="#recent"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold bg-gold text-dark hover:bg-gold-light transition-all font-body"
@@ -356,19 +356,32 @@ export default async function ProofPage() {
                 Tell Us What Is Broken
               </Link>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {STATS.map((stat) => (
-                <div key={stat.label} className="glass-card p-4">
-                  <div className="text-xl font-bold mb-1 text-amber font-display">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-white/50 font-body">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Signal stats bar */}
+      <section aria-label="RampRate at a glance" className="section-light">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4">
+          {STATS.map((stat, i) => {
+            const rightAtMobile = i % 2 === 0; // not the last column of a 2-col row
+            const rightAtDesktop = i !== STATS.length - 1; // not the last of 4
+            return (
+              <div
+                key={stat.label}
+                className={`text-center px-3 py-6 border-b sm:border-b-0 border-black/10 ${
+                  rightAtMobile ? "border-r" : ""
+                } ${rightAtDesktop ? "sm:border-r" : ""}`}
+              >
+                <div className="text-xl sm:text-2xl font-bold text-ink font-display">
+                  {stat.value}
+                </div>
+                <div className="mt-2 text-xs text-ink-mid font-body">
+                  {stat.label}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -638,14 +651,15 @@ export default async function ProofPage() {
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-28 h-28 shrink-0 rounded-full border-4 border-gold flex flex-col items-center justify-center text-center"
+              className="w-[130px] h-[130px] shrink-0 rounded-full bg-gold flex flex-col items-center justify-center text-center gap-1"
             >
-              <span className="text-2xl font-bold text-gold font-display">
-                B
+              <span className="text-dark text-xs font-bold tracking-wide uppercase font-mono">
+                Certified
               </span>
-              <span className="text-[10px] font-bold text-gold font-mono">
-                115.6
+              <span className="text-dark text-sm font-bold tracking-wide uppercase font-mono">
+                B Corporation
               </span>
+              <span className="text-dark text-xs font-mono">115.6</span>
             </a>
             <div>
               <h3 className="text-xl font-bold mb-2 font-display">
