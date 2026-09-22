@@ -229,8 +229,8 @@ export default function HomeContent() {
           <div className="absolute inset-0 bg-gradient-to-t from-warm-light/35 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
+        <div className="relative z-10 flex-1 flex items-center min-w-0">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full min-w-0 pt-32 pb-20">
             <div className="max-w-3xl">
               <div className="mb-8">
                 <a
