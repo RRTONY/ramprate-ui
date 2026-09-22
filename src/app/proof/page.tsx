@@ -440,7 +440,7 @@ export default function ProofPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.98_0.01_81)] via-[oklch(0.98_0.01_81)]/90 to-[oklch(0.98_0.01_81)]/30" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
             <span className={`${eyebrowClass} mb-4 block`}>
               Proof of Judgment Under Pressure
@@ -482,7 +482,7 @@ export default function ProofPage() {
         aria-label="RampRate at a glance"
         className="bg-[oklch(0.98_0.01_81)] border-b border-[oklch(0.88_0.01_117)]"
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4">
+        <div className="max-w-[1180px] mx-auto grid grid-cols-2 sm:grid-cols-4">
           {STATS.map((stat, i) => {
             const rightAtMobile = i % 2 === 0; // not the last column of a 2-col row
             const rightAtDesktop = i !== STATS.length - 1; // not the last of 4
@@ -515,7 +515,7 @@ export default function ProofPage() {
         id="recent"
         className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]"
       >
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="max-w-3xl mb-6">
             <span className={eyebrowClass}>Recent Use Cases</span>
             <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
@@ -625,7 +625,7 @@ export default function ProofPage() {
 
       {/* Method */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.98_0.01_81)]">
-        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <span className={eyebrowClass}>One Method, Several Practices</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-[oklch(0.24_0.02_172)] font-display">
             Research. Blueprint. Activate.
@@ -669,7 +669,7 @@ export default function ProofPage() {
 
       {/* 25-Year Foundation */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]">
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <span className={eyebrowClass}>The 25-Year Foundation</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             New categories. Old discipline.
@@ -678,11 +678,13 @@ export default function ProofPage() {
             The recent work is credible because it sits on decades of measurable
             results inside complex enterprises.
           </p>
-          <div className="mt-12 grid sm:grid-cols-3 gap-x-8 gap-y-8">
-            {LEGACY_RESULTS.map((r) => (
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-6 border-t border-[oklch(0.88_0.01_117)]">
+            {LEGACY_RESULTS.map((r, i) => (
               <div
                 key={r.value}
-                className="pt-6 border-t border-[oklch(0.88_0.01_117)]"
+                className={`pt-6 pb-2 border-[oklch(0.88_0.01_117)] ${
+                  i % 2 !== 0 ? "sm:border-l sm:pl-6" : ""
+                } ${i !== 0 ? "lg:border-l lg:pl-6" : ""}`}
               >
                 <div className="text-xl font-bold text-[oklch(0.24_0.02_172)] font-display">
                   {r.value}
@@ -701,7 +703,7 @@ export default function ProofPage() {
         id="clients"
         className="relative py-20 sm:py-28 bg-[oklch(0.98_0.01_81)]"
       >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
           <span className={eyebrowClass}>The Relationship Constellation</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             Trusted by leaders who could not afford theater.
@@ -756,7 +758,7 @@ export default function ProofPage() {
         id="voices"
         className="relative py-20 sm:py-28 bg-[oklch(0.96_0.01_80)]"
       >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
           <span className={eyebrowClass}>The People and the Record</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight font-display text-[oklch(0.24_0.02_172)]">
             More than a sourcing story.
@@ -821,7 +823,7 @@ export default function ProofPage() {
 
       {/* B Corp / Impact */}
       <section className="relative overflow-hidden py-16 sm:py-20 bg-[oklch(0.94_0.02_305)]">
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-8">
           <div className="grid sm:grid-cols-[190px_1fr] gap-8 items-start">
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
@@ -922,7 +924,7 @@ export default function ProofPage() {
 
       {/* CTA */}
       <section className="py-16 sm:py-20 text-center bg-[oklch(0.98_0.01_81)] border-t border-[oklch(0.88_0.01_117)]">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-[oklch(0.24_0.02_172)] mb-4 font-display">
             Bring us the knot. In the first hour, we find the thread.
           </h2>
