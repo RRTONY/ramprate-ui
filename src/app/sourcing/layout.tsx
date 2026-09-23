@@ -15,10 +15,12 @@ const FALLBACK_METADATA: Metadata = {
   // inheritance for child routes under /sourcing that rely on it (verified
   // via a real build: /sourcing/process lost its "| RampRate" suffix
   // entirely when this was `absolute`) - a plain string is the safe fix.
-  title: "Enterprise IT Infrastructure Consulting Services",
+  title: "RampRate Advisory — Enterprise IT Infrastructure Consulting",
   description:
-    "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
+    "RampRate Advisory: independent enterprise technology advisory for data center, cloud, and GPU compute decisions. We benchmark pricing and negotiate SLAs to cut infrastructure spend.",
   keywords: [
+    "Enterprise Technology Advisory",
+    "RampRate Advisory",
     "IT Infrastructure Consulting",
     "Digital Infrastructure Advisory",
     "Infrastructure Advisory Services",
@@ -28,18 +30,20 @@ const FALLBACK_METADATA: Metadata = {
   ],
   alternates: { canonical: "/sourcing" },
   openGraph: {
-    title: "Enterprise IT Infrastructure Consulting Services | RampRate",
+    title:
+      "RampRate Advisory — Enterprise IT Infrastructure Consulting | RampRate",
     description:
-      "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
+      "RampRate Advisory: independent enterprise technology advisory for data center, cloud, and GPU compute decisions. We benchmark pricing and negotiate SLAs to cut infrastructure spend.",
     url: "https://ramprate.com/sourcing",
     type: "website",
     images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Enterprise IT Infrastructure Consulting Services | RampRate",
+    title:
+      "RampRate Advisory — Enterprise IT Infrastructure Consulting | RampRate",
     description:
-      "Independent IT Infrastructure Consulting Services for data center, cloud, and GPU compute. RampRate benchmarks pricing and negotiates SLAs to cut infrastructure spend.",
+      "RampRate Advisory: independent enterprise technology advisory for data center, cloud, and GPU compute decisions. We benchmark pricing and negotiate SLAs to cut infrastructure spend.",
     images: ["/og.png"],
   },
 };
@@ -58,11 +62,11 @@ export default function SourcingLayout({
     <>
       <JsonLd
         data={serviceJsonLd({
-          name: "Enterprise IT Infrastructure Consulting Services",
+          name: "RampRate Advisory — Enterprise IT Infrastructure Consulting",
           description:
-            "Independent IT infrastructure consulting for data center, cloud, GPU compute, and network - benchmarking pricing, negotiating SLAs, and reducing enterprise technology spend.",
+            "Independent enterprise technology advisory for data center, cloud, GPU compute, and network - benchmarking pricing, negotiating SLAs, and reducing enterprise technology spend.",
           url: "https://ramprate.com/sourcing",
-          serviceType: "IT infrastructure consulting services",
+          serviceType: "IT infrastructure advisory services",
           reviews: testimonials.map((t) => ({
             author: t.name,
             reviewBody: t.quote,
@@ -72,7 +76,7 @@ export default function SourcingLayout({
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
-          { name: "Sourcing", url: "https://ramprate.com/sourcing" },
+          { name: "Advisory", url: "https://ramprate.com/sourcing" },
         ])}
       />
       <JsonLd
