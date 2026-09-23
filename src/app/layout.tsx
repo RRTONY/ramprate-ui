@@ -131,14 +131,20 @@ export default async function RootLayout({
       className={`${playfairDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        {/* Google Analytics - only render when an ID exists (avoids id=undefined) */}
+        {/* Google Analytics - only render when an ID exists (avoids id=undefined).
+            strategy="beforeInteractive" is required (not the default
+            "afterInteractive") so the snippet is present in the raw
+            server-rendered <head> markup — Search Console's "Google Analytics"
+            ownership-verification method fetches the page without executing
+            JS and fails with "tracking code is in the wrong location" if the
+            script is only injected client-side after hydration. */}
         {gaId && (
           <>
             <Script
-              strategy="afterInteractive"
+              strategy="beforeInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
             />
-            <Script id="ga4-init" strategy="afterInteractive">
+            <Script id="ga4-init" strategy="beforeInteractive">
               {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
