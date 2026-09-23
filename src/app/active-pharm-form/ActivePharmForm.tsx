@@ -188,19 +188,33 @@ export function ActivePharmForm() {
           </p>
 
           <ol className="apf-steps" aria-label="Form progress">
-            {STEP_NAMES.map((name, i) => (
-              <li
-                key={name}
-                className={`apf-step-item ${i === step ? "is-active" : ""} ${i < step ? "is-done" : ""}`}
-                aria-current={i === step ? "step" : undefined}
-              >
-                <span className="apf-step-badge">{i + 1}</span>
-                <span className="apf-step-text">
-                  <div className="apf-step-title">{name}</div>
-                  <div className="apf-step-sub">{STEP_SUBS[i]}</div>
-                </span>
-              </li>
-            ))}
+            {STEP_NAMES.map((name, i) => {
+              const isDone = i < step;
+              const isActive = i === step;
+              const reachable = i <= step;
+              return (
+                <li
+                  key={name}
+                  className={`apf-step-item ${isActive ? "is-active" : ""} ${isDone ? "is-done" : ""}`}
+                  aria-current={isActive ? "step" : undefined}
+                >
+                  <button
+                    type="button"
+                    className="apf-step-btn"
+                    disabled={!reachable}
+                    aria-disabled={!reachable}
+                    aria-label={`${reachable ? "Go to" : "Not yet reached:"} ${name}`}
+                    onClick={() => reachable && goToStep(i)}
+                  >
+                    <span className="apf-step-badge">{i + 1}</span>
+                    <span className="apf-step-text">
+                      <div className="apf-step-title">{name}</div>
+                      <div className="apf-step-sub">{STEP_SUBS[i]}</div>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ol>
 
           <div className="apf-rail-footer">
