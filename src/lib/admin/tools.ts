@@ -1,6 +1,10 @@
 import prettier from "prettier";
 import * as gh from "@/lib/admin/github-client";
-import { isPathDenied, isSanityTypeAllowed } from "@/lib/admin/guardrails";
+import {
+  isPathDenied,
+  isPathReadDenied,
+  isSanityTypeAllowed,
+} from "@/lib/admin/guardrails";
 import { client as sanityReadClient } from "@/lib/sanity/client";
 import {
   createDraft,
@@ -18,6 +22,17 @@ import {
 } from "@/lib/admin/clickup-client";
 import { generateReportPdf, type ReportSection } from "@/lib/admin/report-pdf";
 import { getAnalyticsSummary } from "@/lib/admin/ga4-client";
+import {
+  deleteSitemap,
+  getSearchPerformance,
+  GSC_DIMENSIONS,
+  GSC_FILTER_OPERATORS,
+  GSC_SEARCH_TYPES,
+  inspectUrls,
+  listSitemaps,
+  listSites,
+  submitSitemap,
+} from "@/lib/admin/gsc-client";
 import { sendEmail } from "@/lib/admin/resend-client";
 
 // Every connected MCP client writes code in whatever style it happens to
@@ -341,6 +356,114 @@ export const ADMIN_TOOLS = [
     },
   },
   {
+    name: "search_console_sites",
+    description:
+      "List every Google Search Console property the site's service account can access (ramprate.com and any other site it has been added to), with its permission level. Read-only. If a site is missing, a human must add the service account as a user on that property in Search Console (Settings -> Users and permissions).",
+    input_schema: {
+      type: "object" as const,
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: "search_console_performance",
+    description:
+      "Real Google Search Console search performance: clicks, impressions, CTR (%) and average position, overall and broken down by query, page, country, device, date and/or search appearance, with optional filters and a period-over-period comparison. Read-only. Use it for: top keywords, top pages, which queries a page ranks for, ranking drops, CTR opportunities (high impressions, low CTR), traffic by country/device, daily trends. Data lags ~2-3 days. Defaults: ramprate.com, last 28 days, by query, 25 rows, web search.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        site: {
+          type: "string",
+          description:
+            'Property or domain, e.g. "ramprate.com", "sc-domain:ramprate.com" or "https://ramprate.com/". Defaults to ramprate.com.',
+        },
+        days: {
+          type: "number",
+          description:
+            "Lookback window in days ending ~3 days ago. Default 28. Ignored if startDate is given. Search Console keeps 16 months.",
+        },
+        startDate: { type: "string", description: "YYYY-MM-DD (optional)." },
+        endDate: { type: "string", description: "YYYY-MM-DD (optional)." },
+        dimensions: {
+          type: "array",
+          items: { type: "string", enum: [...GSC_DIMENSIONS] },
+          description:
+            'Breakdown, e.g. ["query"], ["page"], ["page","query"], ["date"]. Default ["query"].',
+        },
+        filters: {
+          type: "array",
+          description:
+            'Narrow results, e.g. [{"dimension":"page","operator":"contains","expression":"/sourcing"}] or [{"dimension":"country","operator":"equals","expression":"usa"}] (country = ISO 3166-1 alpha-3, lowercase; device = DESKTOP|MOBILE|TABLET).',
+          items: {
+            type: "object",
+            properties: {
+              dimension: { type: "string", enum: [...GSC_DIMENSIONS] },
+              operator: { type: "string", enum: [...GSC_FILTER_OPERATORS] },
+              expression: { type: "string" },
+            },
+            required: ["dimension", "expression"],
+          },
+        },
+        rowLimit: {
+          type: "number",
+          description: "Rows to return, 1-1000. Default 25.",
+        },
+        searchType: {
+          type: "string",
+          enum: [...GSC_SEARCH_TYPES],
+          description: "Default web.",
+        },
+        compare: {
+          type: "boolean",
+          description:
+            "Also fetch the previous period of the same length and return a `change` per row (position change is positive when ranking improved).",
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: "search_console_inspect_url",
+    description:
+      "Google Search Console URL Inspection for up to 20 page URLs: whether Google has indexed each page and why not, last crawl time, robots.txt/fetch status, Google-chosen vs declared canonical (flags mismatches), sitemaps and referring URLs, mobile usability, rich results and their issues. Read-only. Note: this API cannot request indexing - that button exists only in the Search Console website.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        urls: {
+          type: "array",
+          items: { type: "string" },
+          description: "Full page URLs, e.g. https://ramprate.com/sourcing",
+        },
+        site: {
+          type: "string",
+          description: "Property the URLs belong to. Defaults to ramprate.com.",
+        },
+      },
+      required: ["urls"],
+    },
+  },
+  {
+    name: "search_console_sitemaps",
+    description:
+      'Manage sitemaps in Google Search Console. action "list" (default, read-only): every submitted sitemap with last submitted/downloaded dates, pending state, error and warning counts, URLs submitted. action "submit": submit or resubmit a sitemap URL so Google re-reads it (safe; do it after a big content change). action "delete": remove a sitemap from Search Console - this is a live change, so confirm the exact sitemap URL with the admin before calling it unless they explicitly asked for the delete.',
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        action: { type: "string", enum: ["list", "submit", "delete"] },
+        sitemapUrl: {
+          type: "string",
+          description:
+            'Full sitemap URL for submit/delete, e.g. "https://ramprate.com/sitemap.xml".',
+        },
+        site: {
+          type: "string",
+          description: "Property. Defaults to ramprate.com.",
+        },
+      },
+      required: [],
+    },
+  },
+  {
     name: "send_email",
     description:
       "Send a real email via Resend, from a verified @ramprate.com sender. This is a live send, not a draft — confirm the recipient and content with the admin before calling this, unless they've explicitly asked for a test send.",
@@ -446,6 +569,25 @@ export interface ToolCallResult {
   isError?: boolean;
 }
 
+function optionalString(value: unknown): string | undefined {
+  const s = typeof value === "string" ? value.trim() : "";
+  return s || undefined;
+}
+
+async function gscCall(fn: () => Promise<unknown>): Promise<ToolCallResult> {
+  try {
+    return { output: await fn() };
+  } catch (err) {
+    return {
+      output: {
+        error:
+          err instanceof Error ? err.message : "Search Console call failed",
+      },
+      isError: true,
+    };
+  }
+}
+
 function denied(path: string): ToolCallResult {
   return {
     output: {
@@ -534,7 +676,7 @@ export async function runAdminTool(
     case "github_read_file": {
       const path = normalizeRepoPath(input.path);
       if (!path) return pathRequired();
-      if (isPathDenied(path)) return denied(path);
+      if (isPathReadDenied(path)) return denied(path);
       const file = await gh.getFile(path, ctx.getReadBranch());
       if (!file)
         return { output: { error: `${path} does not exist` }, isError: true };
@@ -848,6 +990,59 @@ export async function runAdminTool(
           isError: true,
         };
       }
+    }
+
+    case "search_console_sites":
+      return gscCall(async () => ({ sites: await listSites() }));
+
+    case "search_console_performance":
+      return gscCall(() =>
+        getSearchPerformance({
+          site: optionalString(input.site),
+          days: input.days === undefined ? undefined : Number(input.days),
+          startDate: optionalString(input.startDate),
+          endDate: optionalString(input.endDate),
+          dimensions: Array.isArray(input.dimensions)
+            ? input.dimensions.map(String)
+            : undefined,
+          rowLimit:
+            input.rowLimit === undefined ? undefined : Number(input.rowLimit),
+          searchType: optionalString(input.searchType),
+          filters: Array.isArray(input.filters)
+            ? (input.filters as Array<Record<string, unknown>>).map((f) => ({
+                dimension: String(f?.dimension ?? ""),
+                operator: optionalString(f?.operator),
+                expression: String(f?.expression ?? ""),
+              }))
+            : undefined,
+          compare: input.compare === true,
+        }),
+      );
+
+    case "search_console_inspect_url": {
+      const urls = Array.isArray(input.urls)
+        ? input.urls.map(String)
+        : input.url
+          ? [String(input.url)]
+          : [];
+      if (!urls.length) {
+        return {
+          output: { error: "Pass `urls` (an array of full page URLs)." },
+          isError: true,
+        };
+      }
+      return gscCall(() => inspectUrls(optionalString(input.site), urls));
+    }
+
+    case "search_console_sitemaps": {
+      const action = String(input.action ?? "list");
+      const site = optionalString(input.site);
+      const sitemapUrl = String(input.sitemapUrl ?? "");
+      if (action === "submit")
+        return gscCall(() => submitSitemap(site, sitemapUrl));
+      if (action === "delete")
+        return gscCall(() => deleteSitemap(site, sitemapUrl));
+      return gscCall(() => listSitemaps(site));
     }
 
     case "send_email": {

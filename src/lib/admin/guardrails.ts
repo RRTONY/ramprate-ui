@@ -20,9 +20,32 @@ const DENYLIST_PATTERNS: RegExp[] = [
   /^src\/app\/api\/mcp\//i,
 ];
 
+// Denylisted files that hold no secrets, so the agent may read (never write)
+// them - lets a connected Claude/ChatGPT/Manus session see build, deploy and
+// CI settings for inventory and debugging without being able to change them.
+const READ_ONLY_PATTERNS: RegExp[] = [
+  /^package\.json$/i,
+  /^netlify\.toml$/i,
+  /^\.github\/workflows\/[^/]+\.ya?ml$/i,
+  /^middleware\.ts$/i,
+  /^src\/middleware\.ts$/i,
+];
+
+function normalizePath(path: string): string {
+  return path.replace(/^\/+/, "");
+}
+
 export function isPathDenied(path: string): boolean {
-  const normalized = path.replace(/^\/+/, "");
+  const normalized = normalizePath(path);
   return DENYLIST_PATTERNS.some((pattern) => pattern.test(normalized));
+}
+
+export function isPathReadDenied(path: string): boolean {
+  const normalized = normalizePath(path);
+  return (
+    isPathDenied(normalized) &&
+    !READ_ONLY_PATTERNS.some((pattern) => pattern.test(normalized))
+  );
 }
 
 // Sanity document types the admin chat is allowed to create/patch. Excludes
