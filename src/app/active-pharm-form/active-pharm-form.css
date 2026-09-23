@@ -525,42 +525,90 @@
   border-bottom-color: var(--gold);
 }
 
+/* Ranking slider: a thin bar + plain filled circle read as a radio/checkbox
+   dot in testing, not something to drag. Track is now a visible "groove"
+   (inset shadow, real height) and the thumb is an elongated pill (not a
+   circle) with grip lines and a lifted drop shadow, so it reads as a
+   physical handle you slide - grab/grabbing cursor and a hover/focus scale
+   reinforce that. */
 .apf-root input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 4px;
-  border-radius: 2px;
+  height: 8px;
+  border-radius: 999px;
   background: linear-gradient(
     to right,
     var(--gold) var(--apf-fill, 50%),
-    var(--line-strong) var(--apf-fill, 50%)
+    var(--line) var(--apf-fill, 50%)
   );
+  box-shadow: inset 0 1px 2px rgba(42, 31, 20, 0.12);
+  cursor: grab;
+}
+.apf-root input[type="range"]:active {
+  cursor: grabbing;
 }
 .apf-root input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--gold);
+  width: 14px;
+  height: 26px;
+  border-radius: 6px;
+  background-color: var(--gold);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.85) 0,
+    rgba(255, 255, 255, 0.85) 1.5px,
+    transparent 1.5px,
+    transparent 4px
+  );
+  background-position: center;
+  background-repeat: no-repeat;
   border: 2px solid var(--paper-raised);
-  box-shadow: 0 0 0 1px var(--gold-deep);
-  cursor: pointer;
-  margin-top: -7px;
+  box-shadow:
+    0 0 0 1px var(--gold-deep),
+    0 2px 5px rgba(42, 31, 20, 0.35);
+  cursor: grab;
+  margin-top: -9px;
+  transition: transform 0.12s ease;
+}
+.apf-root input[type="range"]:hover::-webkit-slider-thumb,
+.apf-root input[type="range"]:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.08);
+}
+.apf-root input[type="range"]:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  transform: scale(1.04);
 }
 .apf-root input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--gold);
+  width: 12px;
+  height: 24px;
+  border-radius: 6px;
+  background-color: var(--gold);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.85) 0,
+    rgba(255, 255, 255, 0.85) 1.5px,
+    transparent 1.5px,
+    transparent 4px
+  );
+  background-position: center;
+  background-repeat: no-repeat;
   border: 2px solid var(--paper-raised);
-  box-shadow: 0 0 0 1px var(--gold-deep);
-  cursor: pointer;
+  box-shadow:
+    0 0 0 1px var(--gold-deep),
+    0 2px 5px rgba(42, 31, 20, 0.35);
+  cursor: grab;
 }
 .apf-root input[type="range"]::-moz-range-track {
-  height: 4px;
-  border-radius: 2px;
-  background: var(--line-strong);
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  box-shadow: inset 0 1px 2px rgba(42, 31, 20, 0.12);
+}
+.apf-root input[type="range"]::-moz-range-progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--gold);
 }
 
 .apf-priority-value {
