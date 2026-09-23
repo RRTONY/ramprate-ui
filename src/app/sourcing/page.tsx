@@ -268,7 +268,7 @@ export default function SourcingPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              RampRate - Transaction Architects
+              RampRate Advisory · Transaction Architects
             </span>
           </div>
 
@@ -276,9 +276,9 @@ export default function SourcingPage() {
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Enterprise IT Infrastructure{" "}
+            Enterprise Technology{" "}
             <span style={{ color: "oklch(0.82 0.15 75)" }}>
-              Consulting Services
+              Advisory & Sourcing
             </span>
           </h1>
 
@@ -289,9 +289,10 @@ export default function SourcingPage() {
               fontFamily: "var(--font-body)",
             }}
           >
-            Edge, compute, and AI data center intelligence - powered by 24 years
-            of transaction data and validated by people who closed the same deal
-            in the last 90 days. Find the leverage. Get the deal you deserve.
+            RampRate Advisory brings edge, compute, and AI data center
+            intelligence - powered by 24 years of transaction data and validated
+            by advisors who closed the same deal in the last 90 days. Find the
+            leverage. Get the deal you deserve.
           </p>
 
           {/* Stats */}
@@ -595,13 +596,13 @@ export default function SourcingPage() {
               },
               {
                 step: "02",
-                title: "Humans Validate the Strategy",
+                title: "Advisors Validate the Strategy",
                 desc: "We connect you with enterprise buyers who closed the same deal in the last 90 days. Real people. Real outcomes. No theoretical frameworks - just battle-tested intelligence.",
               },
               {
                 step: "03",
                 title: "Transaction Architects Close the Deal",
-                desc: "Our team finds the leverage, structures the negotiation, and gets you the deal you deserve. We've brokered $10B+ in IT decisions. We know where every provider's margin lives.",
+                desc: "Our advisory team finds the leverage, structures the negotiation, and gets you the deal you deserve. We've brokered $10B+ in IT decisions. We know where every provider's margin lives.",
               },
             ].map((step, i) => (
               <div key={step.step} className="relative">
@@ -685,7 +686,7 @@ export default function SourcingPage() {
               className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Transaction Architecture for{" "}
+              Advisory Architecture for{" "}
               <span style={{ color: "oklch(0.55 0.15 30)" }}>
                 Every Deal Type
               </span>
@@ -871,7 +872,7 @@ export default function SourcingPage() {
         </div>
       </section>
 
-      {/* ═══ WHAT WE SOURCE ═══ */}
+      {/* ═══ WHAT WE ADVISE ON ═══ */}
       <section className="relative section-warm overflow-hidden py-20 sm:py-28">
         <div
           className="absolute -bottom-32 -right-32 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none"
@@ -898,7 +899,7 @@ export default function SourcingPage() {
               style={{ fontFamily: "var(--font-display)" }}
             >
               What We{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>Source</span>
+              <span style={{ color: "oklch(0.55 0.15 30)" }}>Advise On</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1016,7 +1017,7 @@ export default function SourcingPage() {
             style={{ fontFamily: "var(--font-body)" }}
           >
             The audit is always free. If we don&apos;t deliver 300%+ ROI on our
-            sourcing engagements, you don&apos;t pay. We put skin in the game
+            advisory engagements, you don&apos;t pay. We put skin in the game
             because we believe in what we do.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

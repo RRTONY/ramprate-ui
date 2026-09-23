@@ -8,7 +8,7 @@ import SiteSearch from "@/components/shared/SiteSearch";
 import HeaderSearch from "@/components/shared/HeaderSearch";
 
 const practices = [
-  { label: "Sourcing", href: "/sourcing", desc: "Enterprise IT" },
+  { label: "Advisory", href: "/sourcing", desc: "Enterprise IT" },
   { label: "Syzygy", href: "/growth", desc: "Founders" },
   { label: "Stratum", href: "/web3", desc: "Web3" },
   { label: "BioChain", href: "/biochain", desc: "Bio-Sourcing" },
