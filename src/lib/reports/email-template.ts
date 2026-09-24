@@ -1,6 +1,6 @@
 // Minimal, email-client-safe HTML helpers (table-based layout, inline
 // styles only - no flexbox/grid, no external CSS) for the traffic report
-// emails. Uses the site's own gold/navy brand colors (see CLAUDE.md's CSS
+// emails. Uses the site's own gold/navy brand colors (see AGENTS.md's CSS
 // Design System) rather than inventing new ones, matching the same palette
 // scripts/report-template/ uses for PDF reports.
 

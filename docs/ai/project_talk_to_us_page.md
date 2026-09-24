@@ -1,0 +1,9 @@
+# Talk To Us Page
+
+> New /talk-to-us Engagement Intake page (2026-08-19) replicating a standalone Google Apps Script form natively on-site; posts to same Apps Script sheet
+
+Built `/talk-to-us` (src/app/talk-to-us/page.tsx + src/components/engage/EngagementIntakeForm.tsx) — a native recreation of a pre-existing standalone "RampRate — Engagement Intake" Google Apps Script web app (role pills, optimizing-theme pills, intent radio, contact fields, 3 short-answer questions). Submits via `/api/engagement-intake` (server proxy) to `ENGAGEMENT_INTAKE_SCRIPT_URL` env var — a brand-new Apps Script/Sheet, separate from the existing `GOOGLE_APPS_SCRIPT_URL` used by supplier/buyer/client intake.
+
+**Why:** The blog post "The Tollbooth and the Alternative" (`the-tollbooth-and-the-alternative`, Sanity doc id `Bm1B6752Pe1RCQ6DWn8Wrg`) had 3 closing CTA links pointing directly at the raw Google-hosted Apps Script form (ugly UX, off-brand styling, opens `_blank`). Patched those 3 link markDefs (`link1`/`link2`/`link3` in body blocks `k99msyy547x`/`k103msyy547x`/`k107msyy547x`) to point at `/talk-to-us?ref=manufacturer|fintech|philanthropist` instead, `blank: false`. The page reads `?ref=` and prefills the "What brought you here?" (q1) textarea with segment-specific context — no new Sheet columns needed, payload shape kept identical to the working script's expected fields (name, email, organization, website, phone, intent, theme, role, q1, q2, q3, page_url).
+
+**How to apply:** Still pending from the user: a banner/hero image link for the /talk-to-us page (was told "I'll send it" but never arrived — check before considering this fully done). `ENGAGEMENT_INTAKE_SCRIPT_URL` was only added to local `.env` — must also be added to Netlify env vars before this works in production. See [reference_sanity_write_pattern](reference_sanity_write_pattern.md) for how the blog CTA links were patched despite no Sanity write client existing in the codebase.

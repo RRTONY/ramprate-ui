@@ -19,7 +19,7 @@ export interface CodeCheckResult {
   patternIssues: string[];
 }
 
-// A handful of this project's own house rules (CLAUDE.md) that are cheap to
+// A handful of this project's own house rules (AGENTS.md) that are cheap to
 // check mechanically, on top of whatever generic ESLint/Prettier catch.
 const PATTERN_CHECKS: Array<{
   test: (content: string, filePath: string) => boolean;
@@ -39,9 +39,11 @@ const PATTERN_CHECKS: Array<{
       "Raw <img> tag found — use next/image's <Image> component instead.",
   },
   {
-    test: (c) => /from ["']framer-motion["']/.test(c),
+    test: (c, f) =>
+      !/src\/(app|components)\/flow\//.test(f) &&
+      /from ["']framer-motion["']/.test(c),
     message:
-      "framer-motion import found — it's a banned dead dependency in this project (CLAUDE.md).",
+      "framer-motion import found — not allowed on the main marketing site (~140KB); it is only used inside the /flow product (AGENTS.md).",
   },
 ];
 

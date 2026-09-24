@@ -4,6 +4,9 @@
 # Usage:
 #   ./generate-report.sh "<title>" "<subtitle>" "<date>" <body-html-file> <output.pdf>
 #
+# Optional env vars: EYEBROW (cover label, default "RampRate Report") and
+# PREPARED_BY (footer credit, default "Claude").
+#
 # <body-html-file> should contain one or more <section><h2>...</h2>...</section>
 # blocks (see report-template.html's CSS for the .callout/table styles available).
 #
@@ -42,7 +45,14 @@ with open(template_path) as f:
     tpl = f.read()
 with open(body_path) as f:
     body = f.read()
+import os
+eyebrow = os.environ.get("EYEBROW", "RampRate Report")
+prepared_by = os.environ.get("PREPARED_BY", "Claude")
+footer_title = title.replace("\\", "\\\\").replace('"', '\\"')
 out = (tpl
+       .replace("{{FOOTER_TITLE}}", footer_title)
+       .replace("{{EYEBROW}}", eyebrow)
+       .replace("{{PREPARED_BY}}", prepared_by)
        .replace("{{TITLE}}", title)
        .replace("{{SUBTITLE}}", subtitle)
        .replace("{{DATE}}", date)

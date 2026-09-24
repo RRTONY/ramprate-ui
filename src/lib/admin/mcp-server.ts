@@ -11,6 +11,16 @@ import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
 import {
+  RULES_GATED_TOOLS,
+  RULES_PATH,
+  RULES_VERSION_PARAM,
+  getProjectGuides,
+  getProjectRules,
+  listKnowledgeBase,
+  rulesVersionError,
+  withRulesVersionParam,
+} from "@/lib/admin/project-rules";
+import {
   PENDING_CHANGES_HTML,
   PENDING_CHANGES_UI_URI,
 } from "@/lib/admin/mcp-ui-widgets";
@@ -28,6 +38,12 @@ const EXCLUDED_FROM_MCP = new Set(["get_attachment", "create_download"]);
 const CHAT_TOOLS = ADMIN_TOOLS.filter((t) => !EXCLUDED_FROM_MCP.has(t.name));
 
 const SESSION_TOOLS = [
+  {
+    name: "get_project_rules",
+    description:
+      "CALL THIS FIRST, before anything else in a conversation. Returns RampRate's project rules (AGENTS.md: workflow, plain-language style, coding patterns, code review checklist, testing rules, and the Status Report format every reply must end with), a task guide (which kind of request goes where, what can't be done via this server, what needs a yes), a project structure map (where every page, form and system lives), the list of background notes in docs/ai/, and a rulesVersion. Every tool that changes the site, content, or sends email requires that rulesVersion as its rules_version argument and refuses to run without it. Read the rules fully and follow them for the rest of the conversation.",
+    input_schema: { type: "object" as const, properties: {}, required: [] },
+  },
   {
     name: "list_pending_changes",
     description:
@@ -142,37 +158,29 @@ async function publishChanges() {
 }
 
 // Sent to every connecting client during the MCP handshake and meant to act
-// like a system-prompt hint (per the MCP spec) — the one place a quality bar
-// reaches EVERY client equally, including a Claude.ai/ChatGPT session with
-// no access to this repo's actual CLAUDE.md. Deliberately does not restate
-// CLAUDE.md's project-specific rules (design tokens, page patterns, accent
-// colors, etc.) here — those live in exactly one place and change over
-// time; duplicating them risks drifting out of sync. Read the real file
-// instead. This is the general engineering bar that applies regardless.
+// like a system-prompt hint (per the MCP spec). The real rules live in one
+// place, AGENTS.md on the default branch, served by get_project_rules - not
+// duplicated here, so they can't drift. Some clients ignore these
+// instructions, which is why the write tools are also hard-gated on
+// rules_version (see project-rules.ts).
 const ADMIN_SERVER_INSTRUCTIONS = `This server lets you edit the RampRate marketing site's code and Sanity content.
 
-Before writing or changing anything, read CLAUDE.md (github_read_file "CLAUDE.md") if you
-haven't already this session — it's the authoritative source for this project's actual design
-system, coding rules, and page patterns. Don't assume generic web defaults where CLAUDE.md is
-specific: e.g. this site's "theme" is per-section fixed backgrounds (.section-dark / .section-warm
-/ .section-light per CLAUDE.md), not a user-toggleable light/dark mode — match the existing
-section pattern rather than inventing a toggle.
+STEP 1, EVERY CONVERSATION: call get_project_rules before anything else, read the rules it
+returns in full, and follow them for the rest of the conversation. They override your defaults.
+Every tool that changes the site, its content, or sends email requires the rulesVersion it
+returns as the rules_version argument, and refuses to run without it.
 
-General bar for any change, beyond just making the requested thing appear to work:
-- Responsive at every breakpoint (mobile-first): no horizontal scroll, no overflow or cropped
-  content, touch-friendly targets, readable type sizes.
-- Visual consistency: reuse existing components/classes/tokens before introducing new ones.
-- Accessibility: semantic HTML, correct heading order, meaningful alt text, real keyboard/focus
-  support, sufficient contrast, never color alone to convey information.
-- Performance: no new dependency without asking first, next/image for anything user-visible,
-  avoid layout shift, don't ship unused code.
-- SEO (public pages): unique title/meta description via this repo's existing seo/pageSeo pattern,
-  canonical URL, OG/Twitter tags, real H1/heading structure, noindex when a page shouldn't be
-  indexed.
-- Security: never write secrets/tokens into site code or commit messages; validate real user input.
-- Cover loading, empty, error, and success states for anything dynamic — not just the happy path.
-- Before calling this done: run check_code_quality on changed files, then check_pr_status, and
-  remove dead code/unused imports you introduced along the way.`;
+The rules cover, among other things:
+- Plain, short, jargon-free replies (the day-to-day user is non-technical), no em dashes.
+- This site's design system and coding patterns (Tailwind tokens, oklch colors, next/image,
+  server components, per-section fixed backgrounds rather than a light/dark toggle).
+- A code review checklist and testing steps to run before calling anything done
+  (check_code_quality on changed files, then check_pr_status and the preview link).
+- Confirming with the person before publish_changes or anything outward-facing.
+- Ending every reply that did work with the Status Report format in section 7 of the rules.
+
+Background notes for each feature are in docs/ai/ (listed by get_project_rules). Read the
+relevant one with github_read_file before changing that feature.`;
 
 // One fresh Server per request (see api/mcp/route.ts) — cheap to construct,
 // and keeps this stateless like everything else the admin tools touch.
@@ -188,8 +196,12 @@ export function createAdminMcpServer(): Server {
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: MCP_TOOLS.map((t) => ({
       name: t.name,
-      description: t.description,
-      inputSchema: t.input_schema,
+      description: RULES_GATED_TOOLS.has(t.name)
+        ? `${t.description} Requires ${RULES_VERSION_PARAM} from get_project_rules.`
+        : t.description,
+      inputSchema: RULES_GATED_TOOLS.has(t.name)
+        ? withRulesVersionParam(t.input_schema)
+        : t.input_schema,
       ...("_meta" in t ? { _meta: t._meta } : {}),
     })),
   }));
@@ -222,7 +234,40 @@ export function createAdminMcpServer(): Server {
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: rawArgs } = request.params;
-    const input = (rawArgs ?? {}) as Record<string, unknown>;
+    const { [RULES_VERSION_PARAM]: rulesVersion, ...input } = (rawArgs ??
+      {}) as Record<string, unknown>;
+
+    if (name === "get_project_rules") {
+      const [rules, guides, knowledgeBase] = await Promise.all([
+        getProjectRules(),
+        getProjectGuides(),
+        listKnowledgeBase().catch(() => []),
+      ]);
+      return toResult({
+        rulesVersion: rules.version,
+        howToUse: `Follow every rule below for the rest of this conversation. For each request, first use taskGuide to decide what kind of task it is, where it lives (most page text is in code, not Sanity) and whether it needs a yes, and projectStructure to find the files. Pass "${rules.version}" as ${RULES_VERSION_PARAM} on every tool that changes something. End every reply that did work with the Status Report from section 7. Before touching a feature, read its note from knowledgeBase with github_read_file.`,
+        rules: rules.content,
+        taskGuide: guides.taskGuide,
+        projectStructure: guides.projectStructure,
+        knowledgeBase,
+      });
+    }
+
+    if (RULES_GATED_TOOLS.has(name)) {
+      let current: string;
+      try {
+        current = (await getProjectRules()).version;
+      } catch (err) {
+        return toResult(
+          {
+            error: `Could not load ${RULES_PATH} to check the rules version, so this change was not made: ${String(err)}`,
+          },
+          true,
+        );
+      }
+      const blocked = rulesVersionError(rulesVersion, current);
+      if (blocked) return toResult({ error: blocked }, true);
+    }
 
     if (name === "list_pending_changes") {
       return toResult(await listPendingChanges());

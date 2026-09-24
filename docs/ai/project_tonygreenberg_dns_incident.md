@@ -1,0 +1,11 @@
+# Tonygreenberg Dns Incident
+
+> 2026-08-26 tonygreenberg.com apex DNS pointed at Netlify prematurely, causing 'Site not found'; reverted to Manus pending real cutover sign-off
+
+**Incident (2026-08-26):** `tonygreenberg.com` apex `A` record was pointing to `75.2.60.5` (Netlify's shared load balancer IP), but no Netlify site had the domain added as a custom domain — so it served Netlify's generic "Site not found" page. `www.tonygreenberg.com` CNAME was still correctly on `cname.manus.space` (Manus), and Manus's own dashboard still showed both `tonygreenberg.com` and `www.tonygreenberg.com` as connected/verified there.
+
+**Why:** Per [project_tonygreenberg_migration](project_tonygreenberg_migration.md), real cutover (DNS apex → Netlify) was supposed to be gated on Tony/Darryl/Kimberly's test sign-off on the preview site, which had not been confirmed. The apex record got changed ahead of that approval — split-brain state (apex → Netlify unclaimed, www → Manus working).
+
+**Resolution:** zone already fixed correctly — apex `@` uses an `ALIAS` record (CNAME-at-root, supported by this DNS host) pointing to `cname.manus.space`, same target as `www`. Confirmed via cross-resolver check: Cloudflare (1.1.1.1) already resolves apex to Manus's real IPs (`104.19.168.112`/`104.19.169.112`, matching `cname.manus.space` directly); Google (8.8.8.8) was still serving a stale cached copy of the old direct `A 75.2.60.5` (Netlify) record, TTL 14400s. This was pure propagation lag, not a live misconfiguration — no further DNS change needed, resolved itself as caches expired. DNS is hosted via nameservers `ns1/ns2.dns-parking.com`; zone also has a `flow` CNAME to `jolly-travesseiro-c2faf8.netlify.app` (the Netlify rebuild preview) and a `legacy` A record (`156.67.75.198`), both separate from the apex/www Manus routing.
+
+**How to apply:** Do not treat "the migration is done" claims for tonygreenberg.com at face value — always verify apex vs www DNS state with `dig` before assuming cutover status. When apex/www disagree across resolvers, check propagation lag (query 1.1.1.1 and 8.8.8.8 separately, compare against the record's TTL) before assuming the zone itself is wrong. Real cutover to Netlify should only happen after explicit test sign-off per [project_tonygreenberg_migration](project_tonygreenberg_migration.md).

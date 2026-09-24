@@ -36,12 +36,13 @@ yarn-error.log*
 # vercel
 .vercel
 
-# local .gs reference copy carries a hardcoded live Slack bot token - never commit
-/scripts/supplier-intake-apps-script.gs
-
-# clasp-managed clone of the live Apps Script project (see scripts/gs-tool.sh)
-# - not a secret itself, but it's a local dev-tool workspace, not source
-/scripts/supplier-intake-gs-project/.clasp-deployment-id
+# Local scripts and Apps Script copies (Sheet/Drive IDs, deploy tooling) stay
+# out of git. Files git already tracked here before this rule keep being
+# tracked until removed with `git rm --cached`. The report template is the
+# exception: it's shared tooling (see AGENTS.md "PDF Report Template") and
+# the source design for the MCP create_report tool.
+/scripts/*
+!/scripts/report-template/
 
 # typescript
 *.tsbuildinfo
@@ -49,3 +50,5 @@ next-env.d.ts
 package-lock.json
 yarn.lock
 
+# personal Claude Code settings (the shared agents in .claude/agents/ ARE committed)
+/.claude/settings.local.json

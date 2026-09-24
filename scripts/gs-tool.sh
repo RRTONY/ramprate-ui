@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Thin wrapper around clasp (Google's Apps Script CLI, run via npx so it's
-# never added as a project dependency - see CLAUDE.md's "no new dependencies"
+# never added as a project dependency - see AGENTS.md's "no new dependencies"
 # rule) so supplier-intake-apps-script.gs can be pushed/deployed/watched from
 # the terminal instead of copy-pasting into the Apps Script web editor by hand.
 #

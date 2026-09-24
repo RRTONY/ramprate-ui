@@ -39,4 +39,14 @@ describe("checkCode", () => {
       true,
     );
   });
+
+  it("allows framer-motion inside the /flow product", async () => {
+    const withMotion = `import { motion } from "framer-motion";\nexport const X = () => <motion.div />;\n`;
+    for (const file of ["src/app/flow/page.tsx", "src/components/flow/X.tsx"]) {
+      const result = await checkCode(file, withMotion);
+      expect(
+        result.patternIssues.some((p) => p.includes("framer-motion")),
+      ).toBe(false);
+    }
+  });
 });

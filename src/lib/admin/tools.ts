@@ -20,7 +20,11 @@ import {
   deleteClickupTask,
   type ClickupTaskFields,
 } from "@/lib/admin/clickup-client";
-import { generateReportPdf, type ReportSection } from "@/lib/admin/report-pdf";
+import {
+  generateReportPdf,
+  type ReportDocumentInfo,
+  type ReportSection,
+} from "@/lib/admin/report-pdf";
 import { getAnalyticsSummary } from "@/lib/admin/ga4-client";
 import {
   deleteSitemap,
@@ -489,7 +493,7 @@ export const ADMIN_TOOLS = [
   {
     name: "create_report",
     description:
-      "Generate a branded RampRate PDF report (dark cover with logo, gold accents, callouts, tables) and email it as an attachment via Resend. Always fixed to the site's own gold/dark-navy/warm-cream palette — never use other colors. Give it structured sections (heading + paragraphs/callout/table), not raw HTML.",
+      "Generate a branded RampRate PDF report (dark cover with logo, gold accents, page numbers on every page, optional document-info + contents page, paragraphs, bullet lists, numbered steps, callouts, tables) and email it as an attachment via Resend. Confirm the recipients with the person before calling, since this sends an email. Always fixed to the site's own gold/dark-navy/warm-cream palette — never use other colors. Give it structured sections (heading + paragraphs/callout/table), not raw HTML.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -510,6 +514,16 @@ export const ADMIN_TOOLS = [
             properties: {
               heading: { type: "string" },
               paragraphs: { type: "array", items: { type: "string" } },
+              bullets: {
+                type: "array",
+                items: { type: "string" },
+                description: "Bulleted list items.",
+              },
+              steps: {
+                type: "array",
+                items: { type: "string" },
+                description: "Numbered steps, in order.",
+              },
               callout: { type: "string" },
               table: {
                 type: "object",
@@ -523,6 +537,30 @@ export const ADMIN_TOOLS = [
               },
             },
             required: ["heading"],
+          },
+        },
+        eyebrow: {
+          type: "string",
+          description:
+            'Small gold label above the cover title, e.g. "Internal Guide" or "Standard Operating Procedure". Defaults to "RampRate Report".',
+        },
+        preparedBy: {
+          type: "string",
+          description: 'Footer credit. Defaults to "RampRate Web Team".',
+        },
+        documentInfo: {
+          type: "object",
+          description:
+            "Optional. When given, adds a Document information page and a numbered Contents list after the cover (use for manuals, SOPs, guides).",
+          properties: {
+            version: { type: "string" },
+            owner: { type: "string" },
+            audience: { type: "string" },
+            purpose: { type: "string" },
+            classification: {
+              type: "string",
+              description: 'e.g. "Internal use only".',
+            },
           },
         },
         recipients: {
@@ -1102,6 +1140,12 @@ export async function runAdminTool(
           subtitle,
           date,
           sections,
+          eyebrow: input.eyebrow ? String(input.eyebrow) : undefined,
+          preparedBy: input.preparedBy ? String(input.preparedBy) : undefined,
+          documentInfo:
+            input.documentInfo && typeof input.documentInfo === "object"
+              ? (input.documentInfo as ReportDocumentInfo)
+              : undefined,
         });
         const filename = `${title.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "")}.pdf`;
         const result = await sendEmail({

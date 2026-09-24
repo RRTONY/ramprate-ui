@@ -1,7 +1,7 @@
 // Lightweight same-origin uptime/latency/broken-asset checker. Deliberately
 // not a full Lighthouse crawl (that stays on the existing admin
 // lighthouse_check_page tool, which hits PageSpeed Insights against the live
-// site per CLAUDE.md's Audit Methodology section) - this just answers "did
+// site per AGENTS.md's Audit Methodology section) - this just answers "did
 // the page load, how long did it take, and are its own images/scripts/
 // stylesheets actually reachable" for every registered URL, cheaply enough
 // to run before every report.
