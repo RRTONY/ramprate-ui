@@ -556,6 +556,14 @@ infrastructure to maintain.
   `src/app/.well-known/`, `src/app/api/oauth/`, `src/app/oauth/authorize/page.tsx` (all
   denylisted for the MCP agent). Tests: `tests/admin/mcp-oauth.test.ts`. Personal tokens in
   `MCP_ADMIN_USERS` still work for header-only clients (Claude Code, the Claude.ai org connector).
+- **How apps register (both supported, 2026-09-26):** (1) **Client ID metadata document (CIMD)**,
+  ChatGPT's preferred way: its `client_id` is `https://chatgpt.com/oauth/client.json`; we fetch that
+  document (only from trusted ChatGPT/Claude hosts, `resolveClient`), use its redirect URIs, and
+  verify its **`private_key_jwt`** client assertion (RS256, against its `jwks_uri`, checking
+  iss/sub/aud/exp) at the token endpoint. Without this, ChatGPT failed with "Couldn't create MCP
+  app". (2) **Dynamic client registration** (`/api/oauth/register`), used by Claude; a client that
+  asks for `client_secret_basic`/`client_secret_post` gets a derived secret that the token endpoint
+  checks. Metadata advertises both, plus `authorization_response_iss_parameter_supported`.
 - **Team-member access (added 2026-09-26):** every request is tied to one person from
   `MCP_ADMIN_USERS` by their own token (header or token-in-URL, same check). The server only lists
   the tools that person's role allows and refuses the rest even if called directly; logs

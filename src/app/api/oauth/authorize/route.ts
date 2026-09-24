@@ -16,7 +16,7 @@ export async function POST(req: Request): Promise<Response> {
   const form = Object.fromEntries(
     new URLSearchParams(await req.text()).entries(),
   );
-  const checked = validateAuthorizeRequest(form);
+  const checked = await validateAuthorizeRequest(form);
   const origin = publicOrigin(req);
   if ("error" in checked) {
     return Response.redirect(

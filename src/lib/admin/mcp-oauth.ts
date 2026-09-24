@@ -1,4 +1,11 @@
-import { createHash, createHmac, timingSafeEqual } from "crypto";
+import {
+  createHash,
+  createHmac,
+  createPublicKey,
+  timingSafeEqual,
+  verify as verifySignature,
+  type JsonWebKey as CryptoJwk,
+} from "crypto";
 import {
   authenticateMcpToken,
   findMcpUserByEmail,
@@ -97,6 +104,14 @@ const ALLOWED_REDIRECT_HOSTS = [
   "claude.com",
 ];
 
+function trustedHosts(): string[] {
+  const extra = (process.env.MCP_OAUTH_REDIRECT_HOSTS ?? "")
+    .split(",")
+    .map((h) => h.trim().toLowerCase())
+    .filter(Boolean);
+  return [...ALLOWED_REDIRECT_HOSTS, ...extra];
+}
+
 export function isAllowedRedirectUri(uri: string): boolean {
   let url: URL;
   try {
@@ -113,11 +128,7 @@ export function isAllowedRedirectUri(uri: string): boolean {
     return true;
   }
   if (url.protocol !== "https:") return false;
-  const extra = (process.env.MCP_OAUTH_REDIRECT_HOSTS ?? "")
-    .split(",")
-    .map((h) => h.trim().toLowerCase())
-    .filter(Boolean);
-  return [...ALLOWED_REDIRECT_HOSTS, ...extra].includes(host);
+  return trustedHosts().includes(host);
 }
 
 export function appNameForRedirect(uri: string): string {
@@ -136,12 +147,14 @@ export function appNameForRedirect(uri: string): string {
 // --- Dynamic client registration -------------------------------------------
 
 export type ClientAuthMethod =
-  "none" | "client_secret_basic" | "client_secret_post";
+  "none" | "client_secret_basic" | "client_secret_post" | "private_key_jwt";
 
 export interface RegisteredClient {
   redirectUris: string[];
   name: string;
   authMethod: ClientAuthMethod;
+  // Only for client-metadata-document clients using private_key_jwt.
+  jwksUri?: string;
 }
 
 // Clients that register asking for a secret (ChatGPT can) get one. It is
@@ -213,6 +226,163 @@ export function readClient(clientId: unknown): RegisteredClient | null {
   return { redirectUris: p.r, name: p.n ?? "", authMethod: p.a ?? "none" };
 }
 
+// --- Client ID metadata documents (CIMD) ----------------------------------
+// ChatGPT's preferred registration: its client_id IS a URL
+// (https://chatgpt.com/oauth/client.json) pointing at a JSON document with
+// its redirect URIs and signing keys, instead of calling our
+// registration_endpoint. We only fetch such documents from the same
+// trusted hosts allowed as sign-in callbacks, and the document's own
+// redirect_uris still have to pass isAllowedRedirectUri.
+
+const REMOTE_TTL_MS = 10 * 60 * 1000;
+const cimdCache = new Map<
+  string,
+  { client: RegisteredClient | null; at: number }
+>();
+const jwksCache = new Map<string, { keys: CryptoJwk[]; at: number }>();
+
+function isTrustedHttpsUrl(value: string): boolean {
+  try {
+    const u = new URL(value);
+    return (
+      u.protocol === "https:" &&
+      !u.hash &&
+      trustedHosts().includes(u.hostname.toLowerCase())
+    );
+  } catch {
+    return false;
+  }
+}
+
+async function fetchJson(url: string): Promise<unknown> {
+  try {
+    const res = await fetch(url, {
+      headers: { accept: "application/json" },
+      redirect: "error",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export function clearRemoteClientCachesForTests(): void {
+  cimdCache.clear();
+  jwksCache.clear();
+}
+
+async function readClientDocument(
+  url: string,
+): Promise<RegisteredClient | null> {
+  const hit = cimdCache.get(url);
+  if (hit && Date.now() - hit.at < REMOTE_TTL_MS) return hit.client;
+
+  const doc = (await fetchJson(url)) as Record<string, unknown> | null;
+  let client: RegisteredClient | null = null;
+  if (doc && doc.client_id === url && Array.isArray(doc.redirect_uris)) {
+    const uris = doc.redirect_uris.filter(
+      (u): u is string => typeof u === "string" && isAllowedRedirectUri(u),
+    );
+    const method = doc.token_endpoint_auth_method;
+    const jwksUri = typeof doc.jwks_uri === "string" ? doc.jwks_uri : "";
+    const methodOk =
+      method === undefined ||
+      method === "none" ||
+      (method === "private_key_jwt" && isTrustedHttpsUrl(jwksUri));
+    if (uris.length > 0 && methodOk) {
+      client = {
+        redirectUris: uris,
+        name:
+          typeof doc.client_name === "string"
+            ? doc.client_name.slice(0, 100)
+            : "",
+        authMethod: method === "private_key_jwt" ? "private_key_jwt" : "none",
+        ...(method === "private_key_jwt" ? { jwksUri } : {}),
+      };
+    }
+  }
+  // Only cache successes, so a one-off network blip doesn't lock the
+  // client out for ten minutes.
+  if (client) cimdCache.set(url, { client, at: Date.now() });
+  return client;
+}
+
+// Registered (signed-blob) client or a trusted client metadata document.
+export async function resolveClient(
+  clientId: unknown,
+): Promise<RegisteredClient | null> {
+  if (typeof clientId === "string" && clientId.startsWith("https://")) {
+    return isTrustedHttpsUrl(clientId) ? readClientDocument(clientId) : null;
+  }
+  return readClient(clientId);
+}
+
+async function jwksFor(uri: string, fresh = false): Promise<CryptoJwk[]> {
+  const hit = jwksCache.get(uri);
+  if (!fresh && hit && Date.now() - hit.at < REMOTE_TTL_MS) return hit.keys;
+  const body = (await fetchJson(uri)) as { keys?: CryptoJwk[] } | null;
+  const keys = Array.isArray(body?.keys) ? body.keys : [];
+  if (keys.length) jwksCache.set(uri, { keys, at: Date.now() });
+  return keys;
+}
+
+const JWT_BEARER = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+
+// private_key_jwt (RFC 7523): the client signs a short-lived JWT with its
+// own key; we check it against the keys it publishes at jwks_uri.
+export async function verifyClientAssertion(
+  clientId: string,
+  jwksUri: string,
+  assertion: string | undefined,
+  audiences: string[],
+): Promise<boolean> {
+  if (!assertion) return false;
+  const parts = assertion.split(".");
+  if (parts.length !== 3) return false;
+  let header: { alg?: string; kid?: string };
+  let claims: Record<string, unknown>;
+  try {
+    header = JSON.parse(Buffer.from(parts[0], "base64url").toString("utf8"));
+    claims = JSON.parse(Buffer.from(parts[1], "base64url").toString("utf8"));
+  } catch {
+    return false;
+  }
+  if (header.alg !== "RS256") return false;
+
+  const pick = (keys: CryptoJwk[]) =>
+    keys.find((k) => (k as { kid?: string }).kid === header.kid) ??
+    (keys.length === 1 && !header.kid ? keys[0] : undefined);
+  let jwk = pick(await jwksFor(jwksUri));
+  if (!jwk) jwk = pick(await jwksFor(jwksUri, true)); // key rotation
+  if (!jwk || jwk.kty !== "RSA") return false;
+
+  let signatureOk = false;
+  try {
+    signatureOk = verifySignature(
+      "RSA-SHA256",
+      Buffer.from(`${parts[0]}.${parts[1]}`),
+      createPublicKey({ key: jwk, format: "jwk" }),
+      Buffer.from(parts[2], "base64url"),
+    );
+  } catch {
+    return false;
+  }
+  if (!signatureOk) return false;
+
+  const t = now();
+  const aud = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
+  return (
+    claims.iss === clientId &&
+    claims.sub === clientId &&
+    aud.some((a) => typeof a === "string" && audiences.includes(a)) &&
+    typeof claims.exp === "number" &&
+    claims.exp > t - 60 &&
+    (typeof claims.nbf !== "number" || claims.nbf <= t + 60)
+  );
+}
+
 // --- Authorization request --------------------------------------------------
 
 export interface AuthorizeParams {
@@ -227,12 +397,12 @@ export interface AuthorizeParams {
 // Validates everything that doesn't depend on who is signing in. When this
 // fails we must NOT redirect back to redirect_uri (it may be the problem),
 // so callers show an error page instead.
-export function validateAuthorizeRequest(
+export async function validateAuthorizeRequest(
   q: Record<string, string | undefined>,
-): { params: AuthorizeParams; appName: string } | { error: string } {
+): Promise<{ params: AuthorizeParams; appName: string } | { error: string }> {
   if (q.response_type !== "code")
     return { error: "Unsupported response_type (expected code)." };
-  const client = readClient(q.client_id);
+  const client = await resolveClient(q.client_id);
   if (!client)
     return {
       error:
@@ -340,12 +510,13 @@ export function pkceMatches(verifier: string, challenge: string): boolean {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-export function exchangeToken(
+export async function exchangeToken(
   form: Record<string, string | undefined>,
-): TokenResult {
+  opts: { origin?: string } = {},
+): Promise<TokenResult> {
   const grant = form.grant_type;
   const clientId = form.client_id ?? "";
-  const client = readClient(clientId);
+  const client = await resolveClient(clientId);
   if (!client) {
     return {
       ok: false,
@@ -353,7 +524,24 @@ export function exchangeToken(
       description: "Unknown client_id",
     };
   }
-  if (
+  if (client.authMethod === "private_key_jwt") {
+    const origin = opts.origin ?? "";
+    const valid =
+      form.client_assertion_type === JWT_BEARER &&
+      (await verifyClientAssertion(
+        clientId,
+        client.jwksUri ?? "",
+        form.client_assertion,
+        [`${origin}/api/oauth/token`, origin].filter(Boolean),
+      ));
+    if (!valid) {
+      return {
+        ok: false,
+        error: "invalid_client",
+        description: "Client assertion missing or invalid",
+      };
+    }
+  } else if (
     client.authMethod !== "none" &&
     !secretMatches(clientId, form.client_secret)
   ) {
@@ -483,14 +671,15 @@ export function authorizationServerMetadata(origin: string) {
       "none",
       "client_secret_basic",
       "client_secret_post",
+      "private_key_jwt",
     ],
+    token_endpoint_auth_signing_alg_values_supported: ["RS256"],
     scopes_supported: ["mcp"],
-    // We send iss back on the sign-in redirect (RFC 9207), and clients
-    // register via registration_endpoint rather than a client metadata
-    // document - both stated explicitly because ChatGPT picks its flow
-    // from these flags.
+    // We send iss back on the sign-in redirect (RFC 9207) and accept
+    // client metadata documents (ChatGPT's preferred registration) as
+    // well as registration_endpoint - ChatGPT picks its flow from these.
     authorization_response_iss_parameter_supported: true,
-    client_id_metadata_document_supported: false,
+    client_id_metadata_document_supported: true,
   };
 }
 

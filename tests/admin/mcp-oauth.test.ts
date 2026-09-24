@@ -37,8 +37,12 @@ function register(uri = CHATGPT_CB) {
   return r.clientId;
 }
 
-function authorize(clientId: string, challenge: string, uri = CHATGPT_CB) {
-  const v = validateAuthorizeRequest({
+async function authorize(
+  clientId: string,
+  challenge: string,
+  uri = CHATGPT_CB,
+) {
+  const v = await validateAuthorizeRequest({
     response_type: "code",
     client_id: clientId,
     redirect_uri: uri,
@@ -51,12 +55,12 @@ function authorize(clientId: string, challenge: string, uri = CHATGPT_CB) {
   return v;
 }
 
-function fullSignIn(email = "jane@ramprate.com") {
+async function fullSignIn(email = "jane@ramprate.com") {
   const clientId = register();
   const { verifier, challenge } = pkce();
-  const { params } = authorize(clientId, challenge);
+  const { params } = await authorize(clientId, challenge);
   const code = issueAuthCode(params, email);
-  const res = exchangeToken({
+  const res = await exchangeToken({
     grant_type: "authorization_code",
     code,
     code_verifier: verifier,
@@ -74,7 +78,7 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe("redirect allowlist", () => {
-  it("accepts ChatGPT, Claude and localhost apps", () => {
+  it("accepts ChatGPT, Claude and localhost apps", async () => {
     expect(isAllowedRedirectUri(CHATGPT_CB)).toBe(true);
     expect(
       isAllowedRedirectUri("https://claude.ai/api/mcp/auth_callback"),
@@ -85,7 +89,7 @@ describe("redirect allowlist", () => {
     expect(isAllowedRedirectUri("http://localhost:33418/callback")).toBe(true);
     expect(isAllowedRedirectUri("http://127.0.0.1:5000/cb")).toBe(true);
   });
-  it("rejects look-alike and insecure addresses", () => {
+  it("rejects look-alike and insecure addresses", async () => {
     expect(isAllowedRedirectUri("https://evil.com/cb")).toBe(false);
     expect(isAllowedRedirectUri("https://chatgpt.com.evil.com/cb")).toBe(false);
     expect(isAllowedRedirectUri("http://chatgpt.com/cb")).toBe(false);
@@ -97,21 +101,21 @@ describe("redirect allowlist", () => {
 });
 
 describe("sign-in", () => {
-  it("needs a team email AND the password (email is case-insensitive)", () => {
+  it("needs a team email AND the password (email is case-insensitive)", async () => {
     expect(login("jane@ramprate.com", PASSWORD)?.name).toBe("Jane");
     expect(login("BOB@ramprate.com", PASSWORD)?.role).toBe("read");
     expect(login("jane@ramprate.com", "wrong")).toBeNull();
     expect(login("stranger@ramprate.com", PASSWORD)).toBeNull();
     expect(login("", PASSWORD)).toBeNull();
   });
-  it("fails closed when no password is configured", () => {
+  it("fails closed when no password is configured", async () => {
     setEnv(TEAM, "");
     expect(login("jane@ramprate.com", "")).toBeNull();
   });
 });
 
 describe("authorize request validation", () => {
-  it("rejects a redirect the client didn't register, and non-PKCE requests", () => {
+  it("rejects a redirect the client didn't register, and non-PKCE requests", async () => {
     const clientId = register();
     const { challenge } = pkce();
     const base = {
@@ -121,37 +125,39 @@ describe("authorize request validation", () => {
       code_challenge_method: "S256",
     };
     expect(
-      validateAuthorizeRequest({
+      await validateAuthorizeRequest({
         ...base,
         redirect_uri: "https://claude.ai/api/mcp/auth_callback",
       }),
     ).toHaveProperty("error");
     expect(
-      validateAuthorizeRequest({
+      await validateAuthorizeRequest({
         ...base,
         redirect_uri: CHATGPT_CB,
         code_challenge_method: "plain",
       }),
     ).toHaveProperty("error");
     expect(
-      validateAuthorizeRequest({
+      await validateAuthorizeRequest({
         ...base,
         redirect_uri: CHATGPT_CB,
         client_id: "forged",
       }),
     ).toHaveProperty("error");
     expect(
-      validateAuthorizeRequest({
-        ...base,
-        redirect_uri: CHATGPT_CB,
-      }).hasOwnProperty("params"),
+      (
+        await validateAuthorizeRequest({
+          ...base,
+          redirect_uri: CHATGPT_CB,
+        })
+      ).hasOwnProperty("params"),
     ).toBe(true);
   });
 });
 
 describe("full flow", () => {
-  it("sign in -> code -> tokens -> the MCP server knows who it is", () => {
-    const { tokens } = fullSignIn();
+  it("sign in -> code -> tokens -> the MCP server knows who it is", async () => {
+    const { tokens } = await fullSignIn();
     expect(tokens.token_type).toBe("Bearer");
     expect(authenticateMcpBearer(tokens.access_token)).toEqual({
       name: "Jane",
@@ -160,9 +166,9 @@ describe("full flow", () => {
     });
   });
 
-  it("refresh gives a new working access token", () => {
-    const { clientId, tokens } = fullSignIn();
-    const res = exchangeToken({
+  it("refresh gives a new working access token", async () => {
+    const { clientId, tokens } = await fullSignIn();
+    const res = await exchangeToken({
       grant_type: "refresh_token",
       refresh_token: tokens.refresh_token,
       client_id: clientId,
@@ -172,32 +178,36 @@ describe("full flow", () => {
       expect(authenticateMcpBearer(res.body.access_token)?.name).toBe("Jane");
   });
 
-  it("removing someone from the team list cuts them off immediately", () => {
-    const { clientId, tokens } = fullSignIn();
+  it("removing someone from the team list cuts them off immediately", async () => {
+    const { clientId, tokens } = await fullSignIn();
     setEnv([TEAM[1]]);
     expect(authenticateMcpBearer(tokens.access_token)).toBeNull();
     expect(
-      exchangeToken({
-        grant_type: "refresh_token",
-        refresh_token: tokens.refresh_token,
-        client_id: clientId,
-      }).ok,
+      (
+        await exchangeToken({
+          grant_type: "refresh_token",
+          refresh_token: tokens.refresh_token,
+          client_id: clientId,
+        })
+      ).ok,
     ).toBe(false);
   });
 
-  it("changing the password signs everyone out, but keeps app registrations", () => {
-    const { clientId, tokens } = fullSignIn();
+  it("changing the password signs everyone out, but keeps app registrations", async () => {
+    const { clientId, tokens } = await fullSignIn();
     setEnv(TEAM, "a-new-password");
     expect(authenticateMcpBearer(tokens.access_token)).toBeNull();
     expect(
-      exchangeToken({
-        grant_type: "refresh_token",
-        refresh_token: tokens.refresh_token,
-        client_id: clientId,
-      }).ok,
+      (
+        await exchangeToken({
+          grant_type: "refresh_token",
+          refresh_token: tokens.refresh_token,
+          client_id: clientId,
+        })
+      ).ok,
     ).toBe(false);
     expect(
-      validateAuthorizeRequest({
+      await validateAuthorizeRequest({
         response_type: "code",
         client_id: clientId,
         redirect_uri: CHATGPT_CB,
@@ -209,14 +219,14 @@ describe("full flow", () => {
 });
 
 describe("code exchange attacks", () => {
-  it("a stolen code is useless without the PKCE verifier", () => {
+  it("a stolen code is useless without the PKCE verifier", async () => {
     const clientId = register();
     const { challenge } = pkce();
     const code = issueAuthCode(
-      authorize(clientId, challenge).params,
+      (await authorize(clientId, challenge)).params,
       "jane@ramprate.com",
     );
-    const res = exchangeToken({
+    const res = await exchangeToken({
       grant_type: "authorization_code",
       code,
       code_verifier: pkce().verifier,
@@ -226,35 +236,39 @@ describe("code exchange attacks", () => {
     expect(res.ok).toBe(false);
   });
 
-  it("a code can't be redeemed by a different client or redirect", () => {
+  it("a code can't be redeemed by a different client or redirect", async () => {
     const clientId = register();
     const other = register("https://claude.ai/api/mcp/auth_callback");
     const { verifier, challenge } = pkce();
     const code = issueAuthCode(
-      authorize(clientId, challenge).params,
+      (await authorize(clientId, challenge)).params,
       "jane@ramprate.com",
     );
     expect(
-      exchangeToken({
-        grant_type: "authorization_code",
-        code,
-        code_verifier: verifier,
-        redirect_uri: CHATGPT_CB,
-        client_id: other,
-      }).ok,
+      (
+        await exchangeToken({
+          grant_type: "authorization_code",
+          code,
+          code_verifier: verifier,
+          redirect_uri: CHATGPT_CB,
+          client_id: other,
+        })
+      ).ok,
     ).toBe(false);
     expect(
-      exchangeToken({
-        grant_type: "authorization_code",
-        code,
-        code_verifier: verifier,
-        redirect_uri: "https://claude.ai/api/mcp/auth_callback",
-        client_id: clientId,
-      }).ok,
+      (
+        await exchangeToken({
+          grant_type: "authorization_code",
+          code,
+          code_verifier: verifier,
+          redirect_uri: "https://claude.ai/api/mcp/auth_callback",
+          client_id: clientId,
+        })
+      ).ok,
     ).toBe(false);
   });
 
-  it("an expired code is rejected", () => {
+  it("an expired code is rejected", async () => {
     const clientId = register();
     const { verifier, challenge } = pkce();
     const code = signBlob("code", {
@@ -265,18 +279,20 @@ describe("code exchange attacks", () => {
       exp: 1,
     });
     expect(
-      exchangeToken({
-        grant_type: "authorization_code",
-        code,
-        code_verifier: verifier,
-        redirect_uri: CHATGPT_CB,
-        client_id: clientId,
-      }).ok,
+      (
+        await exchangeToken({
+          grant_type: "authorization_code",
+          code,
+          code_verifier: verifier,
+          redirect_uri: CHATGPT_CB,
+          client_id: clientId,
+        })
+      ).ok,
     ).toBe(false);
   });
 
-  it("one kind of token can't be passed off as another", () => {
-    const { tokens } = fullSignIn();
+  it("one kind of token can't be passed off as another", async () => {
+    const { tokens } = await fullSignIn();
     expect(authenticateMcpBearer(tokens.refresh_token)).toBeNull();
     const clientId = register();
     expect(authenticateMcpBearer(clientId)).toBeNull();
@@ -396,7 +412,7 @@ describe("HTTP routes", () => {
     const clientId = register();
     const { verifier, challenge } = pkce();
     const code = issueAuthCode(
-      authorize(clientId, challenge).params,
+      (await authorize(clientId, challenge)).params,
       "jane@ramprate.com",
     );
     const res = await POST(
@@ -493,16 +509,16 @@ describe("clients that register asking for a secret (ChatGPT can)", () => {
     if ("error" in r) throw new Error(r.error);
     return r;
   }
-  function codeFor(clientId: string) {
+  async function codeFor(clientId: string) {
     const { verifier, challenge } = pkce();
     const code = issueAuthCode(
-      authorize(clientId, challenge).params,
+      (await authorize(clientId, challenge)).params,
       "jane@ramprate.com",
     );
     return { code, verifier };
   }
 
-  it("gets a secret back, and 'none' clients still get none", () => {
+  it("gets a secret back, and 'none' clients still get none", async () => {
     expect(registerWith("client_secret_post").clientSecret).toBeTruthy();
     expect(registerWith("client_secret_basic").client.authMethod).toBe(
       "client_secret_basic",
@@ -511,11 +527,11 @@ describe("clients that register asking for a secret (ChatGPT can)", () => {
     expect(registerWith("something_else").client.authMethod).toBe("none");
   });
 
-  it("must present the right secret to exchange a code", () => {
+  it("must present the right secret to exchange a code", async () => {
     const r = registerWith("client_secret_post");
-    const base = (secret?: string) => {
-      const { code, verifier } = codeFor(r.clientId);
-      return exchangeToken({
+    const base = async (secret?: string) => {
+      const { code, verifier } = await codeFor(r.clientId);
+      return await exchangeToken({
         grant_type: "authorization_code",
         code,
         code_verifier: verifier,
@@ -524,15 +540,15 @@ describe("clients that register asking for a secret (ChatGPT can)", () => {
         ...(secret ? { client_secret: secret } : {}),
       });
     };
-    expect(base().ok).toBe(false);
-    expect(base("wrong-secret").ok).toBe(false);
-    expect(base(r.clientSecret).ok).toBe(true);
+    expect((await base()).ok).toBe(false);
+    expect((await base("wrong-secret")).ok).toBe(false);
+    expect((await base(r.clientSecret)).ok).toBe(true);
   });
 
   it("token endpoint accepts the secret as HTTP Basic credentials", async () => {
     const { POST } = await import("@/app/api/oauth/token/route");
     const r = registerWith("client_secret_basic");
-    const { code, verifier } = codeFor(r.clientId);
+    const { code, verifier } = await codeFor(r.clientId);
     const basic = Buffer.from(
       `${encodeURIComponent(r.clientId)}:${encodeURIComponent(r.clientSecret!)}`,
     ).toString("base64");
@@ -584,8 +600,186 @@ describe("clients that register asking for a secret (ChatGPT can)", () => {
       "none",
       "client_secret_basic",
       "client_secret_post",
+      "private_key_jwt",
     ]);
     expect(meta.authorization_response_iss_parameter_supported).toBe(true);
-    expect(meta.client_id_metadata_document_supported).toBe(false);
+    expect(meta.client_id_metadata_document_supported).toBe(true);
+  });
+});
+
+describe("ChatGPT's client metadata document + private_key_jwt", () => {
+  const CIMD = "https://chatgpt.com/oauth/client.json";
+  const JWKS = "https://chatgpt.com/oauth/jwks.json";
+  const TOKEN_URL = "https://ramprate.com/api/oauth/token";
+  let privateKey: import("crypto").KeyObject;
+  let docOverride: Record<string, unknown> | null = null;
+
+  beforeEach(async () => {
+    const { generateKeyPairSync } = await import("crypto");
+    const pair = generateKeyPairSync("rsa", { modulusLength: 2048 });
+    privateKey = pair.privateKey;
+    const jwk = {
+      ...pair.publicKey.export({ format: "jwk" }),
+      kid: "k1",
+      alg: "RS256",
+      use: "sig",
+    };
+    const { clearRemoteClientCachesForTests } =
+      await import("@/lib/admin/mcp-oauth");
+    clearRemoteClientCachesForTests();
+    docOverride = null;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        if (url === CIMD) {
+          return Response.json(
+            docOverride ?? {
+              client_id: CIMD,
+              redirect_uris: [CHATGPT_CB],
+              token_endpoint_auth_method: "private_key_jwt",
+              jwks_uri: JWKS,
+              client_name: "ChatGPT",
+            },
+          );
+        }
+        if (url === JWKS) return Response.json({ keys: [jwk] });
+        return new Response("not found", { status: 404 });
+      }),
+    );
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  async function assertion(claims: Record<string, unknown> = {}, kid = "k1") {
+    const { sign } = await import("crypto");
+    const t = Math.floor(Date.now() / 1000);
+    const h = Buffer.from(
+      JSON.stringify({ alg: "RS256", typ: "JWT", kid }),
+    ).toString("base64url");
+    const p = Buffer.from(
+      JSON.stringify({
+        iss: CIMD,
+        sub: CIMD,
+        aud: TOKEN_URL,
+        exp: t + 60,
+        iat: t,
+        jti: "x",
+        ...claims,
+      }),
+    ).toString("base64url");
+    return `${h}.${p}.${sign("RSA-SHA256", Buffer.from(`${h}.${p}`), privateKey).toString("base64url")}`;
+  }
+
+  async function signInCode() {
+    const { verifier, challenge } = pkce();
+    const v = await validateAuthorizeRequest({
+      response_type: "code",
+      client_id: CIMD,
+      redirect_uri: CHATGPT_CB,
+      code_challenge: challenge,
+      code_challenge_method: "S256",
+    });
+    if ("error" in v) throw new Error(v.error);
+    expect(v.appName).toBe("ChatGPT");
+    return { code: issueAuthCode(v.params, "jane@ramprate.com"), verifier };
+  }
+
+  const exchange = async (
+    code: string,
+    verifier: string,
+    extra: Record<string, string>,
+  ) =>
+    exchangeToken(
+      {
+        grant_type: "authorization_code",
+        code,
+        code_verifier: verifier,
+        redirect_uri: CHATGPT_CB,
+        client_id: CIMD,
+        client_assertion_type:
+          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        ...extra,
+      },
+      { origin: "https://ramprate.com" },
+    );
+
+  it("full sign-in with a valid signed assertion works and identifies the person", async () => {
+    const { code, verifier } = await signInCode();
+    const res = await exchange(code, verifier, {
+      client_assertion: await assertion(),
+    });
+    expect(res.ok).toBe(true);
+    if (res.ok)
+      expect(authenticateMcpBearer(res.body.access_token)?.name).toBe("Jane");
+  });
+
+  it("refresh also needs a valid assertion", async () => {
+    const { code, verifier } = await signInCode();
+    const first = await exchange(code, verifier, {
+      client_assertion: await assertion(),
+    });
+    if (!first.ok) throw new Error("setup");
+    const base = {
+      grant_type: "refresh_token",
+      refresh_token: first.body.refresh_token,
+      client_id: CIMD,
+      client_assertion_type:
+        "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+    };
+    expect(
+      (await exchangeToken(base, { origin: "https://ramprate.com" })).ok,
+    ).toBe(false);
+    expect(
+      (
+        await exchangeToken(
+          { ...base, client_assertion: await assertion() },
+          { origin: "https://ramprate.com" },
+        )
+      ).ok,
+    ).toBe(true);
+  });
+
+  it("rejects missing, forged, wrong-audience, expired or wrong-issuer assertions", async () => {
+    const { code, verifier } = await signInCode();
+    const good = await assertion();
+    const forged =
+      good.slice(0, -4) + (good.endsWith("AAAA") ? "BBBB" : "AAAA");
+    for (const bad of [
+      "",
+      forged,
+      await assertion({ aud: "https://evil.example/token" }),
+      await assertion({ exp: Math.floor(Date.now() / 1000) - 3600 }),
+      await assertion({
+        iss: "https://evil.example",
+        sub: "https://evil.example",
+      }),
+      await assertion({}, "unknown-kid"),
+    ]) {
+      expect(
+        (await exchange(code, verifier, bad ? { client_assertion: bad } : {}))
+          .ok,
+      ).toBe(false);
+    }
+  });
+
+  it("only trusts client documents from ChatGPT/Claude hosts, with matching id and allowed callbacks", async () => {
+    const { resolveClient } = await import("@/lib/admin/mcp-oauth");
+    expect(await resolveClient("https://evil.example/client.json")).toBeNull();
+    expect(await resolveClient(CIMD)).not.toBeNull();
+
+    const { clearRemoteClientCachesForTests } =
+      await import("@/lib/admin/mcp-oauth");
+    clearRemoteClientCachesForTests();
+    docOverride = {
+      client_id: "https://chatgpt.com/other.json",
+      redirect_uris: [CHATGPT_CB],
+    };
+    expect(await resolveClient(CIMD)).toBeNull();
+
+    clearRemoteClientCachesForTests();
+    docOverride = {
+      client_id: CIMD,
+      redirect_uris: ["https://evil.example/cb"],
+    };
+    expect(await resolveClient(CIMD)).toBeNull();
   });
 });

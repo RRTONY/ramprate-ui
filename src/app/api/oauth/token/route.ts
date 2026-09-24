@@ -1,4 +1,8 @@
-import { CORS_HEADERS, exchangeToken } from "@/lib/admin/mcp-oauth";
+import {
+  CORS_HEADERS,
+  exchangeToken,
+  publicOrigin,
+} from "@/lib/admin/mcp-oauth";
 
 async function readForm(req: Request): Promise<Record<string, string>> {
   const type = req.headers.get("content-type") ?? "";
@@ -36,7 +40,7 @@ export async function POST(req: Request): Promise<Response> {
   const basic = basicCredentials(req);
   if (!form.client_id && basic.id) form.client_id = basic.id;
   if (!form.client_secret && basic.secret) form.client_secret = basic.secret;
-  const result = exchangeToken(form);
+  const result = await exchangeToken(form, { origin: publicOrigin(req) });
   const headers = {
     ...CORS_HEADERS,
     "cache-control": "no-store",

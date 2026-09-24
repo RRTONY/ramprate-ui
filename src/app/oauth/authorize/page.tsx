@@ -49,7 +49,7 @@ export default async function AuthorizePage({
 
   const checked = q.invalid
     ? { error: q.invalid }
-    : validateAuthorizeRequest(q);
+    : await validateAuthorizeRequest(q);
 
   if ("error" in checked) {
     return (
