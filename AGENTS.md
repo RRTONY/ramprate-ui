@@ -513,6 +513,7 @@ not just locally, or `/api/mcp` will 500 in production:**
 | `GITHUB_TOKEN` | Fine-grained PAT scoped to only this repo, Contents + Pull requests = Read and write. Not the token in the git remote URL. |
 | `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
 | `MCP_ADMIN_USERS` | **Team-member access list** for `/api/mcp` (JSON array, one entry per person): `[{"name":"Jane Doe","email":"jane@ramprate.com","token":"<openssl rand -hex 32>","role":"write"}]`. Roles: `read` (look only), `edit` (prepare pending changes, no publish/email/delete), `write` (everything; `admin` = `write`). Only people on this list can use the server (the old shared `MCP_ADMIN_TOKEN` was removed 2026-09-26 and is never accepted). Remove a person = delete their entry and redeploy. Code: `src/lib/admin/mcp-auth.ts`. |
+| `MCP_PUBLIC_ORIGIN` | Optional, `https://ramprate.com`. The public address the MCP sign-in metadata advertises. Without it the server works it out from the request, falling back to Netlify's `URL`. It must never be the internal `master--ramprate.netlify.app` address, or ChatGPT/Claude refuse to connect (they require the metadata's resource to match the URL they were given; this exact bug shipped once, fixed 2026-09-26 in `publicOrigin()`). |
 | `MCP_LOGIN_PASSWORD` | Password for the MCP sign-in page (`/oauth/authorize`), used together with a team email from `MCP_ADMIN_USERS`. One password for the whole team, by the owner's choice (2026-09-26). **Changing it signs everyone out** (all sign-in tokens are keyed to it). Never write the value into code or docs. |
 | `GOOGLE_API_KEY` | Used by `lighthouse_check_page` (`src/lib/admin/lighthouse-check.ts`) for Google's PageSpeed Insights API. Required, not optional — the anonymous quota for this API is 0, confirmed via a real 429 response, not just "low." Restrict this key to the PageSpeed Insights API only in Google Cloud Console (Credentials → the key → API restrictions) — don't widen it "just in case" for other Google APIs without deciding that deliberately. |
 | `CLICKUP_API_TOKEN` | Personal ClickUp API token, used by `create_clickup_task`/`update_clickup_task`/`delete_clickup_task` (`src/lib/admin/clickup-client.ts`). A personal token authenticates as whoever generated it — currently Darryl Dsouza — not a app-level integration; ClickUp task writes show up as created/edited by that person. |
@@ -591,6 +592,19 @@ infrastructure to maintain.
   `src/app/api/mcp/[token]/route.ts` (token in the URL, "No authentication") still exists for a
   client that truly can't do OAuth, using a personal token from `MCP_ADMIN_USERS`; prefer sign-in,
   since URLs land in logs and browser history more easily than headers.
+- **ChatGPT widget rules (updated 2026-09-26, per OpenAI's current "Add UI to your MCP server" +
+  UI guidelines docs):** ChatGPT renders the open MCP Apps standard (`_meta.ui.resourceUri`,
+  `text/html;profile=mcp-app`); we also send its extras: `openai/outputTemplate`,
+  `openai/toolInvocation/invoking|invoked`, `openai/widgetAccessible` (the card may call
+  `publish_changes`), `ui.prefersBorder`, `openai/widgetDescription`. The card reads
+  `structuredContent` (every tool result now carries it) and follows ChatGPT's card rules: host
+  theme/fonts/colours via `applyDocumentTheme`/`applyHostStyleVariables`/`applyHostFonts`, brand gold
+  only on the one primary button, max two actions, no inner scrolling, plain words, everything
+  HTML-escaped. **Publish from the card sends `rules_version`**, which the server puts in the
+  `list_pending_changes` result's `_meta` (passed to the card, not the model), and the button is
+  hidden for roles that can't publish (`youCanPublish`). Every tool also has `annotations`
+  (`readOnlyHint`/`destructiveHint`/`openWorldHint`) so hosts ask for confirmation before changes.
+  Tests: `tests/admin/mcp-widget.test.ts`.
 - **Interactive widget (MCP Apps):** `list_pending_changes` declares `_meta.ui.resourceUri` pointing
   at a small HTML status card (`src/lib/admin/mcp-ui-widgets.ts`) — hosts that support the MCP Apps
   extension (Claude, ChatGPT; launched as an open standard 2026-01-26, see mcpui.dev) render it

@@ -418,3 +418,67 @@ describe("HTTP routes", () => {
     expect(res.headers.get("cache-control")).toBe("no-store");
   });
 });
+
+describe("publicOrigin (the address advertised to ChatGPT/Claude)", () => {
+  const internal = "https://master--ramprate.netlify.app/api/mcp";
+
+  it("uses the real host the visitor asked for, not Netlify's internal address", async () => {
+    const { publicOrigin } = await import("@/lib/admin/mcp-oauth");
+    vi.stubEnv("MCP_PUBLIC_ORIGIN", "");
+    const req = new Request(internal, {
+      headers: {
+        "x-forwarded-host": "ramprate.com",
+        "x-forwarded-proto": "https",
+      },
+    });
+    expect(publicOrigin(req)).toBe("https://ramprate.com");
+  });
+
+  it("falls back to Netlify's main site URL when only the internal address is known", async () => {
+    const { publicOrigin } = await import("@/lib/admin/mcp-oauth");
+    vi.stubEnv("MCP_PUBLIC_ORIGIN", "");
+    vi.stubEnv("URL", "https://ramprate.com");
+    expect(publicOrigin(new Request(internal))).toBe("https://ramprate.com");
+  });
+
+  it("an explicit MCP_PUBLIC_ORIGIN always wins", async () => {
+    const { publicOrigin } = await import("@/lib/admin/mcp-oauth");
+    vi.stubEnv("MCP_PUBLIC_ORIGIN", "https://ramprate.com/");
+    expect(publicOrigin(new Request("http://localhost:3000/x"))).toBe(
+      "https://ramprate.com",
+    );
+  });
+
+  it("keeps localhost for local testing and ignores a malformed host header", async () => {
+    const { publicOrigin } = await import("@/lib/admin/mcp-oauth");
+    vi.stubEnv("MCP_PUBLIC_ORIGIN", "");
+    vi.stubEnv("URL", "");
+    expect(publicOrigin(new Request("http://localhost:3107/api/mcp"))).toBe(
+      "http://localhost:3107",
+    );
+    const bad = new Request("https://ramprate.com/api/mcp", {
+      headers: { "x-forwarded-host": 'evil.com/"><script>' },
+    });
+    expect(publicOrigin(bad)).toBe("https://ramprate.com");
+  });
+
+  it("the 401 and metadata use the public address even behind Netlify", async () => {
+    vi.stubEnv("MCP_PUBLIC_ORIGIN", "");
+    vi.stubEnv("URL", "https://ramprate.com");
+    const { POST } = await import("@/app/api/mcp/route");
+    const res = await POST(
+      new Request(internal, { method: "POST", body: "{}" }),
+    );
+    expect(res.headers.get("www-authenticate")).toContain(
+      "https://ramprate.com/.well-known/oauth-protected-resource/api/mcp",
+    );
+    const pr = await (
+      await import("@/app/.well-known/oauth-protected-resource/[[...path]]/route")
+    ).GET(
+      new Request(
+        "https://master--ramprate.netlify.app/.well-known/oauth-protected-resource/api/mcp",
+      ),
+    );
+    expect((await pr.json()).resource).toBe("https://ramprate.com/api/mcp");
+  });
+});

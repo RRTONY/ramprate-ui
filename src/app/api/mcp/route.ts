@@ -3,6 +3,7 @@ import { jsonError, respondToMcp } from "@/lib/admin/mcp-handler";
 import {
   authenticateMcpBearer,
   wwwAuthenticateHeader,
+  publicOrigin,
 } from "@/lib/admin/mcp-oauth";
 
 export const dynamic = "force-dynamic";
@@ -23,7 +24,7 @@ async function handle(req: Request): Promise<Response> {
       status: 401,
       headers: {
         "content-type": "application/json",
-        "www-authenticate": wwwAuthenticateHeader(new URL(req.url).origin),
+        "www-authenticate": wwwAuthenticateHeader(publicOrigin(req)),
       },
     });
   }

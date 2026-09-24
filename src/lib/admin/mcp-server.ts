@@ -11,7 +11,11 @@ import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
-import { canUseTool, type McpUser } from "@/lib/admin/mcp-auth";
+import {
+  READ_ONLY_TOOLS,
+  canUseTool,
+  type McpUser,
+} from "@/lib/admin/mcp-auth";
 import {
   RULES_GATED_TOOLS,
   RULES_PATH,
@@ -68,12 +72,71 @@ const SESSION_TOOLS = [
 
 const MCP_TOOLS = [...CHAT_TOOLS, ...SESSION_TOOLS];
 
+// structuredContent is what MCP Apps hosts (ChatGPT, Claude) hand to a UI
+// card; the text block stays for hosts and models that only read text.
 function toResult(output: unknown, isError = false) {
+  const isObject =
+    !!output && typeof output === "object" && !Array.isArray(output);
   return {
     content: [{ type: "text" as const, text: JSON.stringify(output, null, 2) }],
+    ...(isObject && !isError
+      ? { structuredContent: output as Record<string, unknown> }
+      : {}),
     isError,
   };
 }
+
+// Tool hints ChatGPT and Claude use to decide when to ask the person to
+// confirm before running a tool (read-only tools run straight away; tools
+// that change things, delete, or reach outside RampRate get a prompt).
+const DESTRUCTIVE_TOOLS = new Set([
+  "github_delete_file",
+  "delete_clickup_task",
+  "publish_changes",
+]);
+const OPEN_WORLD_TOOLS = new Set([
+  "send_email",
+  "create_report",
+  "create_clickup_task",
+  "update_clickup_task",
+  "delete_clickup_task",
+  "publish_changes",
+]);
+
+function toolAnnotations(name: string) {
+  const readOnly = READ_ONLY_TOOLS.has(name);
+  return {
+    title: name
+      .split("_")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" "),
+    readOnlyHint: readOnly,
+    destructiveHint: !readOnly && DESTRUCTIVE_TOOLS.has(name),
+    openWorldHint: OPEN_WORLD_TOOLS.has(name),
+  };
+}
+
+// ChatGPT-specific extras on top of the MCP Apps standard keys: the legacy
+// outputTemplate alias, the short "working / done" status lines shown while
+// a tool runs, and widgetAccessible so the card's Publish button may call
+// publish_changes.
+const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
+  list_pending_changes: {
+    "openai/outputTemplate": PENDING_CHANGES_UI_URI,
+    "openai/toolInvocation/invoking": "Checking pending website changes…",
+    "openai/toolInvocation/invoked": "Pending changes ready",
+    "openai/widgetAccessible": true,
+  },
+  publish_changes: {
+    "openai/toolInvocation/invoking": "Publishing to the live site…",
+    "openai/toolInvocation/invoked": "Publish finished",
+    "openai/widgetAccessible": true,
+  },
+  get_project_rules: {
+    "openai/toolInvocation/invoking": "Loading RampRate's rules…",
+    "openai/toolInvocation/invoked": "Rules loaded",
+  },
+};
 
 async function listPendingChanges() {
   const drafts = await listPendingDrafts();
@@ -213,7 +276,15 @@ export function createAdminMcpServer(user: McpUser): Server {
       inputSchema: RULES_GATED_TOOLS.has(t.name)
         ? withRulesVersionParam(t.input_schema)
         : t.input_schema,
-      ...("_meta" in t ? { _meta: t._meta } : {}),
+      annotations: toolAnnotations(t.name),
+      ...("_meta" in t || CHATGPT_TOOL_META[t.name]
+        ? {
+            _meta: {
+              ...("_meta" in t ? t._meta : {}),
+              ...CHATGPT_TOOL_META[t.name],
+            },
+          }
+        : {}),
     })),
   }));
 
@@ -244,7 +315,15 @@ export function createAdminMcpServer(user: McpUser): Server {
           uri: PENDING_CHANGES_UI_URI,
           mimeType: MCP_APP_MIME_TYPE,
           text: PENDING_CHANGES_HTML,
-          _meta: { ui: { csp: { resourceDomains: ["https://esm.sh"] } } },
+          _meta: {
+            ui: {
+              prefersBorder: true,
+              csp: { resourceDomains: ["https://esm.sh"] },
+            },
+            "openai/widgetDescription":
+              "Shows the website changes waiting to go live, whether the site check passed, a preview link, and a Publish button.",
+            "openai/widgetPrefersBorder": true,
+          },
         },
       ],
     };
@@ -317,7 +396,25 @@ export function createAdminMcpServer(user: McpUser): Server {
     }
 
     if (name === "list_pending_changes") {
-      return toResult(await listPendingChanges());
+      // The card's Publish button needs the current rules version (publish
+      // is rules-gated) and to know whether this person may publish at all,
+      // so it can hide the button instead of letting a click fail.
+
+      const pending = await listPendingChanges();
+      const rulesVersion = await getProjectRules()
+        .then((r) => r.version)
+        .catch(() => null);
+      // rulesVersion goes in the result's _meta, which hosts pass to the UI
+      // card but not to the model - so the model still has to call
+      // get_project_rules itself before it can publish.
+      return {
+        ...toResult({
+          ...pending,
+          youCanPublish: canUseTool(user.role, "publish_changes"),
+          you: { name: user.name, role: user.role },
+        }),
+        _meta: { rulesVersion },
+      };
     }
     if (name === "publish_changes") {
       return toResult(await publishChanges());

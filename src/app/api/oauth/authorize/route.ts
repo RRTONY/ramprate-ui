@@ -5,6 +5,7 @@ import {
   login,
   recordLoginFailure,
   validateAuthorizeRequest,
+  publicOrigin,
 } from "@/lib/admin/mcp-oauth";
 
 // The sign-in form on /oauth/authorize posts here. On success the browser
@@ -16,7 +17,7 @@ export async function POST(req: Request): Promise<Response> {
     new URLSearchParams(await req.text()).entries(),
   );
   const checked = validateAuthorizeRequest(form);
-  const origin = new URL(req.url).origin;
+  const origin = publicOrigin(req);
   if ("error" in checked) {
     return Response.redirect(
       `${origin}/oauth/authorize?invalid=${encodeURIComponent(checked.error)}`,

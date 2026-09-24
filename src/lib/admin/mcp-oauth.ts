@@ -473,6 +473,44 @@ export function clientIp(req: Request): string {
   );
 }
 
+// The address people actually use (https://ramprate.com), not the one the
+// function sees. On Netlify, req.url is the internal deploy address
+// (https://master--ramprate.netlify.app), so metadata built from it
+// advertised the wrong server and ChatGPT/Claude refused to connect: they
+// require the resource in the metadata to match the URL they were given.
+// Order: explicit MCP_PUBLIC_ORIGIN, then the forwarded/Host header, and if
+// that is still a *.netlify.app address, Netlify's own main-site URL.
+const HOST_RE = /^[a-z0-9.-]+(:\d+)?$/i;
+
+export function publicOrigin(req: Request): string {
+  const configured = process.env.MCP_PUBLIC_ORIGIN?.trim();
+  if (configured) return configured.replace(/\/+$/, "");
+
+  const reqUrl = new URL(req.url);
+  const host = (
+    req.headers.get("x-forwarded-host") ??
+    req.headers.get("host") ??
+    reqUrl.host
+  )
+    .split(",")[0]
+    .trim();
+  const proto = (
+    req.headers.get("x-forwarded-proto") ?? reqUrl.protocol.replace(":", "")
+  )
+    .split(",")[0]
+    .trim();
+  const origin =
+    HOST_RE.test(host) && (proto === "https" || proto === "http")
+      ? `${proto}://${host}`
+      : reqUrl.origin;
+
+  const netlifyMain = process.env.URL?.trim();
+  if (new URL(origin).hostname.endsWith(".netlify.app") && netlifyMain) {
+    return netlifyMain.replace(/\/+$/, "");
+  }
+  return origin;
+}
+
 export const CORS_HEADERS = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, OPTIONS",
