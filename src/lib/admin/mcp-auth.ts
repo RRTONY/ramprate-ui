@@ -11,11 +11,9 @@ import { timingSafeEqual } from "crypto";
 // header (e.g. Claude Code, the Claude.ai org connector).
 // Roles: "read" (look only), "edit" (make pending changes, but not publish,
 // email or delete), "write" (everything). "admin" is accepted as "write".
-// Once MCP_ADMIN_USERS has at least one valid entry, ONLY those personal
-// tokens work - the old shared MCP_ADMIN_TOKEN is ignored, so removing a
-// person (or a leaked shared token) is one env var edit. Without it, the
-// shared token still works as a single "write" user so nothing breaks
-// before the list is set up.
+// Only people on this list can use the server. Removing someone is one
+// env var edit. (The old single shared MCP_ADMIN_TOKEN was removed
+// 2026-09-26.)
 
 export type McpRole = "read" | "edit" | "write";
 
@@ -83,10 +81,7 @@ function tokensMatch(candidate: string, expected: string): boolean {
 }
 
 export function isMcpAuthConfigured(): boolean {
-  return (
-    parseMcpUsers(process.env.MCP_ADMIN_USERS).length > 0 ||
-    !!process.env.MCP_ADMIN_TOKEN
-  );
+  return parseMcpUsers(process.env.MCP_ADMIN_USERS).length > 0;
 }
 
 export function authenticateMcpToken(
@@ -96,23 +91,15 @@ export function authenticateMcpToken(
   if (!token) return null;
 
   const users = parseMcpUsers(process.env.MCP_ADMIN_USERS);
-  if (users.length > 0) {
-    // Check every entry (no early exit) so response time doesn't reveal
-    // which position in the list matched.
-    let match: McpUserEntry | null = null;
-    for (const user of users) {
-      if (user.token && tokensMatch(token, user.token) && !match) match = user;
-    }
-    return match
-      ? { name: match.name, email: match.email, role: match.role }
-      : null;
+  // Check every entry (no early exit) so response time doesn't reveal
+  // which position in the list matched.
+  let match: McpUserEntry | null = null;
+  for (const user of users) {
+    if (user.token && tokensMatch(token, user.token) && !match) match = user;
   }
-
-  const shared = process.env.MCP_ADMIN_TOKEN;
-  if (shared && tokensMatch(token, shared)) {
-    return { name: "Shared token", email: "", role: "write" };
-  }
-  return null;
+  return match
+    ? { name: match.name, email: match.email, role: match.role }
+    : null;
 }
 
 export function findMcpUserByEmail(email: string): McpUser | null {

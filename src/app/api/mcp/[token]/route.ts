@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 // (this is ChatGPT's current connector setup: OAuth, no-auth, or a mix of
 // the two — no static header option). The secret still has to travel
 // somewhere, so it travels in the URL instead; this is functionally the
-// same secret as MCP_ADMIN_TOKEN; only its transport differs. Slightly
+// same personal token from MCP_ADMIN_USERS; only its transport differs. Slightly
 // weaker than a header in one respect (URLs are more likely than headers to
 // end up in a proxy access log or browser history), so prefer
 // /api/mcp (header auth) for any client that supports it — this route
@@ -21,10 +21,7 @@ async function handle(
   { params }: { params: Promise<{ token: string }> },
 ): Promise<Response> {
   if (!isMcpAuthConfigured()) {
-    return jsonError(
-      500,
-      "MCP_ADMIN_USERS / MCP_ADMIN_TOKEN is not configured",
-    );
+    return jsonError(500, "MCP_ADMIN_USERS is not configured");
   }
   const { token } = await params;
   const user = authenticateMcpToken(token);

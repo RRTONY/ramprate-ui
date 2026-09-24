@@ -2,10 +2,7 @@
   "mcpServers": {
     "ramprate-admin": {
       "type": "http",
-      "url": "https://ramprate.com/api/mcp",
-      "headers": {
-        "Authorization": "Bearer ${MCP_ADMIN_TOKEN}"
-      }
+      "url": "https://ramprate.com/api/mcp"
     }
   }
 }

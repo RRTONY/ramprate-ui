@@ -362,3 +362,5 @@ locally.
   `/contents` (no trailing segment) for the repo root instead of `/contents/`. Tool schema
   description for `github_list_dir.path` updated to tell the model to use `""` (not quotes/`.`/`/`)
   for root. All green: tsc, eslint, prettier, vitest (14), `yarn build`.
+
+**Update 2026-09-26: `MCP_ADMIN_TOKEN` removed.** The single shared token described above leaked in a screen share and was replaced by per-person access (`MCP_ADMIN_USERS`, roles read/edit/write) plus a RampRate sign-in page (OAuth, `src/lib/admin/mcp-oauth.ts`). The server never accepts `MCP_ADMIN_TOKEN` now; `.mcp.json` holds only the URL and Claude Code signs in through the browser. See AGENTS.md "MCP server".

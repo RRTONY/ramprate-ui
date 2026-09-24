@@ -15,10 +15,7 @@ export const dynamic = "force-dynamic";
 // Claude discover they should open the RampRate sign-in page.
 async function handle(req: Request): Promise<Response> {
   if (!isMcpAuthConfigured()) {
-    return jsonError(
-      500,
-      "MCP_ADMIN_USERS / MCP_ADMIN_TOKEN is not configured",
-    );
+    return jsonError(500, "MCP_ADMIN_USERS is not configured");
   }
   const user = authenticateMcpBearer(bearerFromRequest(req));
   if (!user) {

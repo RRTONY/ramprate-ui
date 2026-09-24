@@ -66,24 +66,20 @@ describe("authenticateMcpToken", () => {
     expect(authenticateMcpToken("")).toBeNull();
   });
 
-  it("ignores the old shared token once team members are set up", () => {
+  it("never accepts the removed shared MCP_ADMIN_TOKEN, with or without a team list", () => {
+    vi.stubEnv("MCP_ADMIN_TOKEN", SHARED);
     vi.stubEnv("MCP_ADMIN_USERS", users);
-    vi.stubEnv("MCP_ADMIN_TOKEN", SHARED);
     expect(authenticateMcpToken(SHARED)).toBeNull();
-  });
-
-  it("falls back to the shared token only when no team list exists", () => {
     vi.stubEnv("MCP_ADMIN_USERS", "");
-    vi.stubEnv("MCP_ADMIN_TOKEN", SHARED);
-    expect(authenticateMcpToken(SHARED)?.role).toBe("write");
-    expect(isMcpAuthConfigured()).toBe(true);
-  });
-
-  it("reports not configured when neither is set", () => {
-    vi.stubEnv("MCP_ADMIN_USERS", "");
-    vi.stubEnv("MCP_ADMIN_TOKEN", "");
+    expect(authenticateMcpToken(SHARED)).toBeNull();
     expect(isMcpAuthConfigured()).toBe(false);
-    expect(authenticateMcpToken(SHARED)).toBeNull();
+  });
+
+  it("is configured only when the team list has someone on it", () => {
+    vi.stubEnv("MCP_ADMIN_USERS", "");
+    expect(isMcpAuthConfigured()).toBe(false);
+    vi.stubEnv("MCP_ADMIN_USERS", users);
+    expect(isMcpAuthConfigured()).toBe(true);
   });
 
   it("reads the Bearer header", () => {

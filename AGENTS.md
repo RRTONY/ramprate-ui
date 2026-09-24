@@ -512,9 +512,8 @@ not just locally, or `/api/mcp` will 500 in production:**
 | --- | --- |
 | `GITHUB_TOKEN` | Fine-grained PAT scoped to only this repo, Contents + Pull requests = Read and write. Not the token in the git remote URL. |
 | `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
-| `MCP_ADMIN_USERS` | **Team-member access list** for `/api/mcp` (JSON array, one entry per person): `[{"name":"Jane Doe","email":"jane@ramprate.com","token":"<openssl rand -hex 32>","role":"write"}]`. Roles: `read` (look only), `edit` (prepare pending changes, no publish/email/delete), `write` (everything; `admin` = `write`). Once it has one valid entry, **only these personal tokens work** and the shared `MCP_ADMIN_TOKEN` is ignored. Remove a person = delete their entry and redeploy. Code: `src/lib/admin/mcp-auth.ts`. |
+| `MCP_ADMIN_USERS` | **Team-member access list** for `/api/mcp` (JSON array, one entry per person): `[{"name":"Jane Doe","email":"jane@ramprate.com","token":"<openssl rand -hex 32>","role":"write"}]`. Roles: `read` (look only), `edit` (prepare pending changes, no publish/email/delete), `write` (everything; `admin` = `write`). Only people on this list can use the server (the old shared `MCP_ADMIN_TOKEN` was removed 2026-09-26 and is never accepted). Remove a person = delete their entry and redeploy. Code: `src/lib/admin/mcp-auth.ts`. |
 | `MCP_LOGIN_PASSWORD` | Password for the MCP sign-in page (`/oauth/authorize`), used together with a team email from `MCP_ADMIN_USERS`. One password for the whole team, by the owner's choice (2026-09-26). **Changing it signs everyone out** (all sign-in tokens are keyed to it). Never write the value into code or docs. |
-| `MCP_ADMIN_TOKEN` | Old single shared token. Only used while `MCP_ADMIN_USERS` is empty; retire it once the team list is set. |
 | `GOOGLE_API_KEY` | Used by `lighthouse_check_page` (`src/lib/admin/lighthouse-check.ts`) for Google's PageSpeed Insights API. Required, not optional — the anonymous quota for this API is 0, confirmed via a real 429 response, not just "low." Restrict this key to the PageSpeed Insights API only in Google Cloud Console (Credentials → the key → API restrictions) — don't widen it "just in case" for other Google APIs without deciding that deliberately. |
 | `CLICKUP_API_TOKEN` | Personal ClickUp API token, used by `create_clickup_task`/`update_clickup_task`/`delete_clickup_task` (`src/lib/admin/clickup-client.ts`). A personal token authenticates as whoever generated it — currently Darryl Dsouza — not a app-level integration; ClickUp task writes show up as created/edited by that person. |
 
@@ -562,10 +561,11 @@ infrastructure to maintain.
   `[mcp] <name> (<role>) called <tool>` to Netlify function logs; stamps `[by <name>]` onto commit
   messages; and tells the connected AI who it is working for (`you` in `get_project_rules`). A
   Claude.ai Team org connector uses one token for the whole workspace, so give it its own entry
-  (e.g. "Claude.ai Team connector"); ChatGPT and Claude Code users each get a personal token.
+  (e.g. "Claude.ai Team connector"). Everyone else signs in (ChatGPT, Claude, Claude Code).
   Tests: `tests/admin/mcp-auth.test.ts`.
-- **Auth:** `Authorization: Bearer <MCP_ADMIN_TOKEN>` header — checked in
-  `src/lib/admin/mcp-auth.ts`. Not the portal password; a separate secret.
+- **Auth:** `Authorization: Bearer <token>`, where the token is either a sign-in (OAuth) access
+  token or a personal token from `MCP_ADMIN_USERS` - checked in `src/lib/admin/mcp-oauth.ts`
+  (`authenticateMcpBearer`) and `src/lib/admin/mcp-auth.ts`. Not the portal password.
 - **Stateless by design:** built with the SDK's `WebStandardStreamableHTTPServerTransport` in
   stateless mode (`sessionIdGenerator: undefined`) — a fresh `Server` per HTTP request, matching
   Netlify Functions' actual no-memory-between-invocations behavior. Instead of a session cookie,
@@ -576,29 +576,21 @@ infrastructure to maintain.
   again (GitHub only lets you query *open PRs* by branch prefix, not branches with no PR), and would
   silently fork a new orphan branch per call. Verified against a real GitHub PR during this build,
   not just by inspection.
-- **Connecting Claude Code (per-repo, team-wide):** `.mcp.json` at the repo root already declares
-  this server (`type: "http"`, url + `Authorization: Bearer ${MCP_ADMIN_TOKEN}`) — the token is NOT
-  in that file, only the `${MCP_ADMIN_TOKEN}` reference, so it's safe to commit. Anyone who opens
-  this repo in Claude Code is prompted to approve the server on first use, and it reads the token
-  from their own local `MCP_ADMIN_TOKEN` env var — share the actual token value with teammates out
-  of band (not by putting it in this file or in chat/commit history).
+- **Connecting Claude Code (per-repo, team-wide):** `.mcp.json` at the repo root declares this
+  server by URL only (no token, safe to commit). On first use Claude Code asks to approve it; then
+  run `/mcp` → `ramprate-admin` → Authenticate, which opens the RampRate sign-in page in the browser
+  (Claude Code listens on localhost, an allowed sign-in callback).
 - **Connecting Claude.ai Team/Enterprise (org-wide, no per-person setup):** an org admin can add
   this as a custom connector once — Admin settings → Connectors → Add → Custom — with the same URL
   and an `Authorization: Bearer <token>` request header (Anthropic's header-based auth for custom
   connectors, currently in beta on some orgs; no OAuth needed). Once added, it shows up for every
   workspace member automatically (they just connect it under Customize → Connectors). Requires Team
   or Enterprise — not available on Pro/Free.
-- **Connecting ChatGPT:** ChatGPT's connector UI (Settings → Connectors → Advanced → Developer
-  Mode → Create connector, Plus/Pro/Team+ only, not Free) only offers OAuth or "No Authentication"
-  for a custom remote MCP server — no static-bearer-header option like Claude's. So there's a
-  second route, `src/app/api/mcp/[token]/route.ts`, that takes the same `MCP_ADMIN_TOKEN` as a URL
-  path segment instead of a header (`https://ramprate.com/api/mcp/<token>`) — paste that full URL
-  as the server URL and pick "No Authentication" in ChatGPT's setup. Same secret, same
-  `isValidMcpToken()` check either way (`src/lib/admin/mcp-auth.ts`); only the transport differs.
-  Slightly weaker than a header (URLs are more likely to land in a proxy/access log or browser
-  history than headers), so prefer the header route (`/api/mcp`) for any client that supports it —
-  this one exists only because ChatGPT currently leaves no other option short of standing up a full
-  OAuth server.
+- **Connecting ChatGPT:** Settings → Apps & Connectors → Advanced → Developer mode → Create →
+  Server URL `https://ramprate.com/api/mcp`, Authentication **OAuth** → sign in on the RampRate page.
+  `src/app/api/mcp/[token]/route.ts` (token in the URL, "No authentication") still exists for a
+  client that truly can't do OAuth, using a personal token from `MCP_ADMIN_USERS`; prefer sign-in,
+  since URLs land in logs and browser history more easily than headers.
 - **Interactive widget (MCP Apps):** `list_pending_changes` declares `_meta.ui.resourceUri` pointing
   at a small HTML status card (`src/lib/admin/mcp-ui-widgets.ts`) — hosts that support the MCP Apps
   extension (Claude, ChatGPT; launched as an open standard 2026-01-26, see mcpui.dev) render it

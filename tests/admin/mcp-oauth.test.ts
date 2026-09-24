@@ -23,7 +23,6 @@ function setEnv(team = TEAM, password = PASSWORD) {
   vi.stubEnv("PORTAL_AUTH_SECRET", "unit-test-secret");
   vi.stubEnv("MCP_LOGIN_PASSWORD", password);
   vi.stubEnv("MCP_ADMIN_USERS", JSON.stringify(team));
-  vi.stubEnv("MCP_ADMIN_TOKEN", "");
 }
 
 function pkce() {
