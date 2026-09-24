@@ -11,6 +11,7 @@ import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
 import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
+import { canUseTool, type McpUser } from "@/lib/admin/mcp-auth";
 import {
   RULES_GATED_TOOLS,
   RULES_PATH,
@@ -185,7 +186,16 @@ relevant one with github_read_file before changing that feature.`;
 
 // One fresh Server per request (see api/mcp/route.ts) — cheap to construct,
 // and keeps this stateless like everything else the admin tools touch.
-export function createAdminMcpServer(): Server {
+// Commit messages on the admin branch carry who asked for the change, so
+// git history shows which team member did what (every commit is otherwise
+// authored by the one GitHub token).
+const ATTRIBUTED_MESSAGE_TOOLS = new Set([
+  "github_write_file",
+  "github_write_binary_file",
+  "github_delete_file",
+]);
+
+export function createAdminMcpServer(user: McpUser): Server {
   const server = new Server(
     { name: "ramprate-admin", version: "1.0.0" },
     {
@@ -195,7 +205,7 @@ export function createAdminMcpServer(): Server {
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: MCP_TOOLS.map((t) => ({
+    tools: MCP_TOOLS.filter((t) => canUseTool(user.role, t.name)).map((t) => ({
       name: t.name,
       description: RULES_GATED_TOOLS.has(t.name)
         ? `${t.description} Requires ${RULES_VERSION_PARAM} from get_project_rules.`
@@ -245,6 +255,25 @@ export function createAdminMcpServer(): Server {
     const { [RULES_VERSION_PARAM]: rulesVersion, ...input } = (rawArgs ??
       {}) as Record<string, unknown>;
 
+    console.log(
+      `[mcp] ${user.name}${user.email ? ` <${user.email}>` : ""} (${user.role}) called ${name}`,
+    );
+    if (!canUseTool(user.role, name)) {
+      return toResult(
+        {
+          error: `${user.name}'s access level (${user.role}) doesn't allow ${name}. Ask the webmaster if you need it.`,
+        },
+        true,
+      );
+    }
+    if (
+      ATTRIBUTED_MESSAGE_TOOLS.has(name) &&
+      typeof input.message === "string" &&
+      user.name
+    ) {
+      input.message = `${input.message} [by ${user.name}]`;
+    }
+
     if (name === "get_project_rules") {
       const [rules, guides, knowledgeBase] = await Promise.all([
         getProjectRules(),
@@ -253,6 +282,16 @@ export function createAdminMcpServer(): Server {
       ]);
       return toResult({
         rulesVersion: rules.version,
+        you: {
+          name: user.name,
+          role: user.role,
+          note:
+            user.role === "read"
+              ? "Look-only access: you can read, check and report, not change anything."
+              : user.role === "edit"
+                ? "You can prepare changes (they wait as pending), but a team member with write access must publish them. You can't send email or delete."
+                : "Full access, including publishing.",
+        },
         howToUse: `Follow every rule below for the rest of this conversation. For each request, first use taskGuide to decide what kind of task it is, where it lives (most page text is in code, not Sanity) and whether it needs a yes, and projectStructure to find the files. Pass "${rules.version}" as ${RULES_VERSION_PARAM} on every tool that changes something. End every reply that did work with the Status Report from section 7. Before touching a feature, read its note from knowledgeBase with github_read_file.`,
         rules: rules.content,
         taskGuide: guides.taskGuide,

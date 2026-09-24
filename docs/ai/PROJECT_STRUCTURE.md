@@ -118,6 +118,7 @@ Form fields are defined once in a field file (`src/lib/*-fields.ts`) and rendere
 | `/api/payments-rfp` | Payments Advisory RFP generator |
 | `/api/cron/daily-report`, `/weekly-report`, `/alert-check` | Called by `netlify/functions/` on a schedule |
 | `/api/mcp`, `/api/mcp/[token]` | MCP admin server (Claude Desktop/Code, Claude.ai, ChatGPT) |
+| `/oauth/authorize` (page), `/api/oauth/authorize`, `/api/oauth/token`, `/api/oauth/register`, `/.well-known/oauth-*` | Team sign-in for the MCP server (OAuth). See AGENTS.md |
 
 ## MCP admin server (`src/lib/admin/`)
 

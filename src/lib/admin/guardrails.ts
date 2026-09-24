@@ -18,6 +18,11 @@ const DENYLIST_PATTERNS: RegExp[] = [
   /^src\/lib\/admin\//i,
   /^src\/lib\/sanity\/write-client\.ts$/i,
   /^src\/app\/api\/mcp\//i,
+  // The MCP server's own sign-in (OAuth) - an agent must never be able to
+  // weaken who can sign in.
+  /^src\/app\/api\/oauth\//i,
+  /^src\/app\/oauth\//i,
+  /^src\/app\/\.well-known\//i,
 ];
 
 // Denylisted files that hold no secrets, so the agent may read (never write)

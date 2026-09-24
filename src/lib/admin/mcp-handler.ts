@@ -1,4 +1,5 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import type { McpUser } from "@/lib/admin/mcp-auth";
 import { createAdminMcpServer } from "@/lib/admin/mcp-server";
 
 export function jsonError(status: number, error: string): Response {
@@ -15,7 +16,10 @@ export function jsonError(status: number, error: string): Response {
 // none — the same constraint that forced the admin chat's cookie-threaded
 // session design through several rounds of bugs. Callers must authenticate
 // the request themselves before calling this — it does no auth of its own.
-export async function respondToMcp(req: Request): Promise<Response> {
+export async function respondToMcp(
+  req: Request,
+  user: McpUser,
+): Promise<Response> {
   // Stateless means no standalone server-to-client stream (GET) and no
   // sessions to end (DELETE). Without this, GET opened an event stream that
   // never sent anything and never closed, so clients that probe it during
@@ -35,7 +39,7 @@ export async function respondToMcp(req: Request): Promise<Response> {
       },
     );
   }
-  const server = createAdminMcpServer();
+  const server = createAdminMcpServer(user);
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: true,

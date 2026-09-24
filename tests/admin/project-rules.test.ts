@@ -10,6 +10,11 @@ import {
 
 const RULES_SHA = "abc123def4567890";
 const RULES_VERSION = versionFromSha(RULES_SHA);
+const WRITER = {
+  name: "Test Writer",
+  email: "w@ramprate.com",
+  role: "write" as const,
+};
 
 vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/admin/github-client")>()),
@@ -97,7 +102,7 @@ describe("MCP server rules gate", () => {
     const { createAdminMcpServer } = await import("@/lib/admin/mcp-server");
     const [clientTransport, serverTransport] =
       InMemoryTransport.createLinkedPair();
-    await createAdminMcpServer().connect(serverTransport);
+    await createAdminMcpServer(WRITER).connect(serverTransport);
     client = new Client({ name: "test", version: "1.0.0" });
     await client.connect(clientTransport);
   });
@@ -183,6 +188,23 @@ describe("MCP server rules gate", () => {
     expect(input).toEqual({ path: "src/app/x.tsx", content: "x" });
   });
 
+  it("stamps who made the change onto the commit message", async () => {
+    await client.callTool({
+      name: "github_write_file",
+      arguments: {
+        path: "src/app/x.tsx",
+        content: "x",
+        message: "Update hero copy",
+        rules_version: RULES_VERSION,
+      },
+    });
+    const [, input] = runAdminTool.mock.calls[0] as unknown as [
+      string,
+      Record<string, unknown>,
+    ];
+    expect(input.message).toBe("Update hero copy [by Test Writer]");
+  });
+
   it("does not gate read-only tools", async () => {
     const result = await client.callTool({
       name: "github_read_file",
@@ -202,6 +224,7 @@ describe("MCP transport behaviour for strict clients", () => {
           method,
           headers: { accept: "text/event-stream" },
         }),
+        WRITER,
       );
       expect(res.status).toBe(405);
       expect(res.headers.get("allow")).toBe("POST");
@@ -228,6 +251,7 @@ describe("MCP transport behaviour for strict clients", () => {
           },
         }),
       }),
+      WRITER,
     );
     expect(res.status).toBe(200);
     const body = await res.json();
@@ -238,7 +262,7 @@ describe("MCP transport behaviour for strict clients", () => {
     const { createAdminMcpServer } = await import("@/lib/admin/mcp-server");
     const [clientTransport, serverTransport] =
       InMemoryTransport.createLinkedPair();
-    await createAdminMcpServer().connect(serverTransport);
+    await createAdminMcpServer(WRITER).connect(serverTransport);
     const c = new Client({ name: "t", version: "1" });
     await c.connect(clientTransport);
     const res = await c.listResourceTemplates();
@@ -250,7 +274,7 @@ describe("MCP transport behaviour for strict clients", () => {
     const { createAdminMcpServer } = await import("@/lib/admin/mcp-server");
     const [clientTransport, serverTransport] =
       InMemoryTransport.createLinkedPair();
-    await createAdminMcpServer().connect(serverTransport);
+    await createAdminMcpServer(WRITER).connect(serverTransport);
     const c = new Client({ name: "t", version: "1" });
     await c.connect(clientTransport);
     const { tools } = await c.listTools();

@@ -512,7 +512,9 @@ not just locally, or `/api/mcp` will 500 in production:**
 | --- | --- |
 | `GITHUB_TOKEN` | Fine-grained PAT scoped to only this repo, Contents + Pull requests = Read and write. Not the token in the git remote URL. |
 | `SANITY_API_TOKEN` | Must be an **Editor**-role token (write access) — the existing value may be read-only |
-| `MCP_ADMIN_TOKEN` | Bearer token for `/api/mcp` — a long random secret (not a memorable password; see below) |
+| `MCP_ADMIN_USERS` | **Team-member access list** for `/api/mcp` (JSON array, one entry per person): `[{"name":"Jane Doe","email":"jane@ramprate.com","token":"<openssl rand -hex 32>","role":"write"}]`. Roles: `read` (look only), `edit` (prepare pending changes, no publish/email/delete), `write` (everything; `admin` = `write`). Once it has one valid entry, **only these personal tokens work** and the shared `MCP_ADMIN_TOKEN` is ignored. Remove a person = delete their entry and redeploy. Code: `src/lib/admin/mcp-auth.ts`. |
+| `MCP_LOGIN_PASSWORD` | Password for the MCP sign-in page (`/oauth/authorize`), used together with a team email from `MCP_ADMIN_USERS`. One password for the whole team, by the owner's choice (2026-09-26). **Changing it signs everyone out** (all sign-in tokens are keyed to it). Never write the value into code or docs. |
+| `MCP_ADMIN_TOKEN` | Old single shared token. Only used while `MCP_ADMIN_USERS` is empty; retire it once the team list is set. |
 | `GOOGLE_API_KEY` | Used by `lighthouse_check_page` (`src/lib/admin/lighthouse-check.ts`) for Google's PageSpeed Insights API. Required, not optional — the anonymous quota for this API is 0, confirmed via a real 429 response, not just "low." Restrict this key to the PageSpeed Insights API only in Google Cloud Console (Credentials → the key → API restrictions) — don't widen it "just in case" for other Google APIs without deciding that deliberately. |
 | `CLICKUP_API_TOKEN` | Personal ClickUp API token, used by `create_clickup_task`/`update_clickup_task`/`delete_clickup_task` (`src/lib/admin/clickup-client.ts`). A personal token authenticates as whoever generated it — currently Darryl Dsouza — not a app-level integration; ClickUp task writes show up as created/edited by that person. |
 
@@ -538,6 +540,30 @@ infrastructure to maintain.
   instructions. Stateless: the proof travels with each call. Code: `src/lib/admin/project-rules.ts`,
   tests: `tests/admin/project-rules.test.ts`. Editing this file through the MCP server changes the
   version once merged, so connected sessions re-read the rules automatically.
+- **Sign-in (OAuth, added 2026-09-26) is the normal way to connect.** A team member adds just
+  `https://ramprate.com/api/mcp` in ChatGPT or Claude and picks OAuth. The app finds our sign-in
+  page on its own (401 + `WWW-Authenticate` → `/.well-known/oauth-protected-resource/api/mcp` →
+  `/.well-known/oauth-authorization-server`), registers itself (`/api/oauth/register`), opens
+  `/oauth/authorize` where they sign in with their team email + `MCP_LOGIN_PASSWORD`, then trades
+  the one-time code for tokens (`/api/oauth/token`, PKCE S256 required; access token 1 hour,
+  refresh 30 days). Stateless: every client id, code and token is an HMAC-signed blob
+  (`PORTAL_AUTH_SECRET`), no database. Only ChatGPT/Claude callbacks and localhost apps may
+  receive a code (`isAllowedRedirectUri`; add hosts via `MCP_OAUTH_REDIRECT_HOSTS`), so a fake
+  "connector" can't use our real page to collect someone's access. The heading's app name comes
+  from that callback, not the app's own claim. Wrong passwords are limited per IP and per email.
+  Removing someone from `MCP_ADMIN_USERS` cuts them off on their next request; changing
+  `MCP_LOGIN_PASSWORD` signs everyone out. Code: `src/lib/admin/mcp-oauth.ts`,
+  `src/app/.well-known/`, `src/app/api/oauth/`, `src/app/oauth/authorize/page.tsx` (all
+  denylisted for the MCP agent). Tests: `tests/admin/mcp-oauth.test.ts`. Personal tokens in
+  `MCP_ADMIN_USERS` still work for header-only clients (Claude Code, the Claude.ai org connector).
+- **Team-member access (added 2026-09-26):** every request is tied to one person from
+  `MCP_ADMIN_USERS` by their own token (header or token-in-URL, same check). The server only lists
+  the tools that person's role allows and refuses the rest even if called directly; logs
+  `[mcp] <name> (<role>) called <tool>` to Netlify function logs; stamps `[by <name>]` onto commit
+  messages; and tells the connected AI who it is working for (`you` in `get_project_rules`). A
+  Claude.ai Team org connector uses one token for the whole workspace, so give it its own entry
+  (e.g. "Claude.ai Team connector"); ChatGPT and Claude Code users each get a personal token.
+  Tests: `tests/admin/mcp-auth.test.ts`.
 - **Auth:** `Authorization: Bearer <MCP_ADMIN_TOKEN>` header — checked in
   `src/lib/admin/mcp-auth.ts`. Not the portal password; a separate secret.
 - **Stateless by design:** built with the SDK's `WebStandardStreamableHTTPServerTransport` in

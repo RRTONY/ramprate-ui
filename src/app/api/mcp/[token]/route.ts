@@ -1,4 +1,7 @@
-import { isValidMcpToken } from "@/lib/admin/mcp-auth";
+import {
+  authenticateMcpToken,
+  isMcpAuthConfigured,
+} from "@/lib/admin/mcp-auth";
 import { jsonError, respondToMcp } from "@/lib/admin/mcp-handler";
 
 export const dynamic = "force-dynamic";
@@ -17,14 +20,18 @@ async function handle(
   req: Request,
   { params }: { params: Promise<{ token: string }> },
 ): Promise<Response> {
-  if (!process.env.MCP_ADMIN_TOKEN) {
-    return jsonError(500, "MCP_ADMIN_TOKEN is not configured");
+  if (!isMcpAuthConfigured()) {
+    return jsonError(
+      500,
+      "MCP_ADMIN_USERS / MCP_ADMIN_TOKEN is not configured",
+    );
   }
   const { token } = await params;
-  if (!isValidMcpToken(token)) {
+  const user = authenticateMcpToken(token);
+  if (!user) {
     return jsonError(401, "Unauthorized");
   }
-  return respondToMcp(req);
+  return respondToMcp(req, user);
 }
 
 export const GET = handle;
