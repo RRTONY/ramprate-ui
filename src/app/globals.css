@@ -212,19 +212,32 @@
   background-color: oklch(0.45 0.22 260);
   color: oklch(0.98 0 0);
 }
-/* Homepage-only deep-navy section background. Kept as a very shallow gradient
-   rather than a flat fill so stacked sections don't band visibly where they
-   meet. Tuned to sit against the hero's rgb(5,14,26) base. Front page only -
-   other pages keep the standard .section-dark per the site's fixed
-   per-section theme. */
+/* Homepage-only deep-sunset section background. Kept as a very shallow
+   gradient rather than a flat fill so stacked sections don't band visibly
+   where they meet. Tuned to sit against the hero's warm oklch(0.13 0.05 25)
+   base. Front page only - other pages keep the standard .section-dark per
+   the site's fixed per-section theme. */
 .section-sunset {
   background: linear-gradient(
     150deg,
-    rgb(5, 14, 26) 0%,
-    rgb(7, 18, 33) 50%,
-    rgb(9, 22, 40) 100%
+    oklch(0.14 0.05 25) 0%,
+    oklch(0.19 0.07 40) 50%,
+    oklch(0.23 0.08 55) 100%
   );
-  color: oklch(0.95 0.01 250);
+  color: oklch(0.96 0.02 70);
+}
+/* Lighter/richer alternate for the homepage's dark-section rhythm - swaps in
+   for what used to be bg-dark-mid/bg-dark-card so consecutive sections read
+   as depth variation within one sunset gradient rather than three
+   near-identical blacks. Front page only, same as .section-sunset above. */
+.section-sunset-warm {
+  background: linear-gradient(
+    150deg,
+    oklch(0.19 0.06 30) 0%,
+    oklch(0.24 0.08 45) 50%,
+    oklch(0.29 0.09 58) 100%
+  );
+  color: oklch(0.97 0.02 70);
 }
 
 /* ── CHAMPION PROGRAM: NUMBERED STEPS ── */
@@ -318,11 +331,9 @@
 .glass-orb-rust {
   background: oklch(0.55 0.15 30);
 }
-/* Cool navy accent orb for the homepage. Named -pink for historical reasons
-   (it was a rose afterglow under the old sunset palette) and kept under that
-   name so the homepage components don't need touching to swap the hue. */
+/* Warm rose/coral afterglow orb for the homepage's deep-sunset sections. */
 .glass-orb-pink {
-  background: oklch(0.45 0.1 250);
+  background: oklch(0.72 0.17 30);
 }
 
 /* Hide floating elements while the AI modal is open */
