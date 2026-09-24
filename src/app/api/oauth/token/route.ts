@@ -12,18 +12,20 @@ async function readForm(req: Request): Promise<Record<string, string>> {
   return Object.fromEntries(form.entries());
 }
 
-// Some clients send their client_id as HTTP Basic credentials instead of a
-// form field (allowed by OAuth even for public clients, with an empty
-// secret). Accept either, preferring the form field.
-function basicClientId(req: Request): string | undefined {
+// Clients may send client_id (and client_secret, if they registered for
+// one) as HTTP Basic credentials instead of form fields. Accept either,
+// preferring the form fields.
+function basicCredentials(req: Request): { id?: string; secret?: string } {
   const header = req.headers.get("authorization") ?? "";
-  if (!header.startsWith("Basic ")) return undefined;
+  if (!header.startsWith("Basic ")) return {};
   try {
     const decoded = Buffer.from(header.slice(6), "base64").toString("utf8");
-    const id = decodeURIComponent(decoded.split(":")[0] ?? "");
-    return id || undefined;
+    const i = decoded.indexOf(":");
+    const id = decodeURIComponent(i === -1 ? decoded : decoded.slice(0, i));
+    const secret = i === -1 ? "" : decodeURIComponent(decoded.slice(i + 1));
+    return { id: id || undefined, secret: secret || undefined };
   } catch {
-    return undefined;
+    return {};
   }
 }
 
@@ -31,10 +33,9 @@ function basicClientId(req: Request): string | undefined {
 // a fresh access token.
 export async function POST(req: Request): Promise<Response> {
   const form = await readForm(req);
-  if (!form.client_id) {
-    const fromBasic = basicClientId(req);
-    if (fromBasic) form.client_id = fromBasic;
-  }
+  const basic = basicCredentials(req);
+  if (!form.client_id && basic.id) form.client_id = basic.id;
+  if (!form.client_secret && basic.secret) form.client_secret = basic.secret;
   const result = exchangeToken(form);
   const headers = {
     ...CORS_HEADERS,

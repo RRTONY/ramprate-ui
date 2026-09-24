@@ -135,15 +135,44 @@ export function appNameForRedirect(uri: string): string {
 
 // --- Dynamic client registration -------------------------------------------
 
+export type ClientAuthMethod =
+  "none" | "client_secret_basic" | "client_secret_post";
+
 export interface RegisteredClient {
   redirectUris: string[];
   name: string;
+  authMethod: ClientAuthMethod;
+}
+
+// Clients that register asking for a secret (ChatGPT can) get one. It is
+// derived from the client id rather than stored - still stateless - and is
+// checked at the token endpoint. Answering "none" to a client that asked
+// for a secret made ChatGPT abandon setup ("Couldn't create MCP app").
+export function clientSecretFor(clientId: string): string {
+  const secret = process.env.PORTAL_AUTH_SECRET;
+  if (!secret) throw new Error("PORTAL_AUTH_SECRET is not set");
+  return createHmac("sha256", secret)
+    .update(`mcp-oauth:client-secret:${clientId}`)
+    .digest("base64url");
+}
+
+function secretMatches(
+  clientId: string,
+  provided: string | undefined,
+): boolean {
+  if (!provided) return false;
+  const a = Buffer.from(provided);
+  const b = Buffer.from(clientSecretFor(clientId));
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 export function registerClient(input: {
   redirect_uris?: unknown;
   client_name?: unknown;
-}): { clientId: string; client: RegisteredClient } | { error: string } {
+  token_endpoint_auth_method?: unknown;
+}):
+  | { clientId: string; client: RegisteredClient; clientSecret?: string }
+  | { error: string } {
   const uris = Array.isArray(input.redirect_uris)
     ? input.redirect_uris.filter((u): u is string => typeof u === "string")
     : [];
@@ -154,17 +183,34 @@ export function registerClient(input: {
     typeof input.client_name === "string"
       ? input.client_name.slice(0, 100)
       : "";
-  const client = { redirectUris: uris, name };
+  const requested = input.token_endpoint_auth_method;
+  const authMethod: ClientAuthMethod =
+    requested === "client_secret_basic" || requested === "client_secret_post"
+      ? requested
+      : "none";
+  const client: RegisteredClient = { redirectUris: uris, name, authMethod };
+  const clientId = signBlob("client", {
+    r: uris,
+    n: name,
+    a: authMethod,
+    iat: now(),
+  });
   return {
-    clientId: signBlob("client", { r: uris, n: name, iat: now() }),
+    clientId,
     client,
+    ...(authMethod === "none"
+      ? {}
+      : { clientSecret: clientSecretFor(clientId) }),
   };
 }
 
 export function readClient(clientId: unknown): RegisteredClient | null {
-  const p = verifyBlob<{ r: string[]; n: string }>("client", clientId);
+  const p = verifyBlob<{ r: string[]; n: string; a?: ClientAuthMethod }>(
+    "client",
+    clientId,
+  );
   if (!p || !Array.isArray(p.r)) return null;
-  return { redirectUris: p.r, name: p.n ?? "" };
+  return { redirectUris: p.r, name: p.n ?? "", authMethod: p.a ?? "none" };
 }
 
 // --- Authorization request --------------------------------------------------
@@ -299,11 +345,22 @@ export function exchangeToken(
 ): TokenResult {
   const grant = form.grant_type;
   const clientId = form.client_id ?? "";
-  if (!readClient(clientId)) {
+  const client = readClient(clientId);
+  if (!client) {
     return {
       ok: false,
       error: "invalid_client",
       description: "Unknown client_id",
+    };
+  }
+  if (
+    client.authMethod !== "none" &&
+    !secretMatches(clientId, form.client_secret)
+  ) {
+    return {
+      ok: false,
+      error: "invalid_client",
+      description: "Client secret missing or wrong",
     };
   }
 
@@ -422,8 +479,18 @@ export function authorizationServerMetadata(origin: string) {
     response_types_supported: ["code"],
     grant_types_supported: ["authorization_code", "refresh_token"],
     code_challenge_methods_supported: ["S256"],
-    token_endpoint_auth_methods_supported: ["none"],
+    token_endpoint_auth_methods_supported: [
+      "none",
+      "client_secret_basic",
+      "client_secret_post",
+    ],
     scopes_supported: ["mcp"],
+    // We send iss back on the sign-in redirect (RFC 9207), and clients
+    // register via registration_endpoint rather than a client metadata
+    // document - both stated explicitly because ChatGPT picks its flow
+    // from these flags.
+    authorization_response_iss_parameter_supported: true,
+    client_id_metadata_document_supported: false,
   };
 }
 

@@ -482,3 +482,110 @@ describe("publicOrigin (the address advertised to ChatGPT/Claude)", () => {
     expect((await pr.json()).resource).toBe("https://ramprate.com/api/mcp");
   });
 });
+
+describe("clients that register asking for a secret (ChatGPT can)", () => {
+  function registerWith(method: string) {
+    const r = registerClient({
+      redirect_uris: [CHATGPT_CB],
+      client_name: "ChatGPT",
+      token_endpoint_auth_method: method,
+    });
+    if ("error" in r) throw new Error(r.error);
+    return r;
+  }
+  function codeFor(clientId: string) {
+    const { verifier, challenge } = pkce();
+    const code = issueAuthCode(
+      authorize(clientId, challenge).params,
+      "jane@ramprate.com",
+    );
+    return { code, verifier };
+  }
+
+  it("gets a secret back, and 'none' clients still get none", () => {
+    expect(registerWith("client_secret_post").clientSecret).toBeTruthy();
+    expect(registerWith("client_secret_basic").client.authMethod).toBe(
+      "client_secret_basic",
+    );
+    expect(registerWith("none").clientSecret).toBeUndefined();
+    expect(registerWith("something_else").client.authMethod).toBe("none");
+  });
+
+  it("must present the right secret to exchange a code", () => {
+    const r = registerWith("client_secret_post");
+    const base = (secret?: string) => {
+      const { code, verifier } = codeFor(r.clientId);
+      return exchangeToken({
+        grant_type: "authorization_code",
+        code,
+        code_verifier: verifier,
+        redirect_uri: CHATGPT_CB,
+        client_id: r.clientId,
+        ...(secret ? { client_secret: secret } : {}),
+      });
+    };
+    expect(base().ok).toBe(false);
+    expect(base("wrong-secret").ok).toBe(false);
+    expect(base(r.clientSecret).ok).toBe(true);
+  });
+
+  it("token endpoint accepts the secret as HTTP Basic credentials", async () => {
+    const { POST } = await import("@/app/api/oauth/token/route");
+    const r = registerWith("client_secret_basic");
+    const { code, verifier } = codeFor(r.clientId);
+    const basic = Buffer.from(
+      `${encodeURIComponent(r.clientId)}:${encodeURIComponent(r.clientSecret!)}`,
+    ).toString("base64");
+    const res = await POST(
+      new Request("https://ramprate.com/api/oauth/token", {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          authorization: `Basic ${basic}`,
+        },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          code,
+          code_verifier: verifier,
+          redirect_uri: CHATGPT_CB,
+        }).toString(),
+      }),
+    );
+    expect(res.status).toBe(200);
+    expect((await res.json()).access_token).toMatch(/^rmcp_at\./);
+  });
+
+  it("registration endpoint returns the secret and metadata lists the methods", async () => {
+    const { POST } = await import("@/app/api/oauth/register/route");
+    const res = await POST(
+      new Request("https://ramprate.com/api/oauth/register", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          redirect_uris: [CHATGPT_CB],
+          token_endpoint_auth_method: "client_secret_basic",
+        }),
+      }),
+    );
+    const body = await res.json();
+    expect(res.status).toBe(201);
+    expect(body.token_endpoint_auth_method).toBe("client_secret_basic");
+    expect(body.client_secret).toBeTruthy();
+    expect(body.client_secret_expires_at).toBe(0);
+    const as = await (
+      await import("@/app/.well-known/oauth-authorization-server/[[...path]]/route")
+    ).GET(
+      new Request(
+        "https://ramprate.com/.well-known/oauth-authorization-server",
+      ),
+    );
+    const meta = await as.json();
+    expect(meta.token_endpoint_auth_methods_supported).toEqual([
+      "none",
+      "client_secret_basic",
+      "client_secret_post",
+    ]);
+    expect(meta.authorization_response_iss_parameter_supported).toBe(true);
+    expect(meta.client_id_metadata_document_supported).toBe(false);
+  });
+});

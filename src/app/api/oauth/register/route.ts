@@ -20,7 +20,10 @@ export async function POST(req: Request): Promise<Response> {
       redirect_uris: result.client.redirectUris,
       grant_types: ["authorization_code", "refresh_token"],
       response_types: ["code"],
-      token_endpoint_auth_method: "none",
+      token_endpoint_auth_method: result.client.authMethod,
+      ...(result.clientSecret
+        ? { client_secret: result.clientSecret, client_secret_expires_at: 0 }
+        : {}),
     },
     { status: 201, headers: CORS_HEADERS },
   );
