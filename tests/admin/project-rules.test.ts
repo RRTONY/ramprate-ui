@@ -192,3 +192,79 @@ describe("MCP server rules gate", () => {
     expect(runAdminTool).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("MCP transport behaviour for strict clients", () => {
+  it("answers GET and DELETE with 405 instead of opening a never-ending stream", async () => {
+    const { respondToMcp } = await import("@/lib/admin/mcp-handler");
+    for (const method of ["GET", "DELETE"]) {
+      const res = await respondToMcp(
+        new Request("https://ramprate.com/api/mcp", {
+          method,
+          headers: { accept: "text/event-stream" },
+        }),
+      );
+      expect(res.status).toBe(405);
+      expect(res.headers.get("allow")).toBe("POST");
+    }
+  });
+
+  it("still answers a POST initialize normally", async () => {
+    const { respondToMcp } = await import("@/lib/admin/mcp-handler");
+    const res = await respondToMcp(
+      new Request("https://ramprate.com/api/mcp", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json, text/event-stream",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "initialize",
+          params: {
+            protocolVersion: "2025-06-18",
+            capabilities: {},
+            clientInfo: { name: "t", version: "1" },
+          },
+        }),
+      }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.result.serverInfo.name).toBe("ramprate-admin");
+  });
+
+  it("lists resource templates (empty) instead of 'method not found'", async () => {
+    const { createAdminMcpServer } = await import("@/lib/admin/mcp-server");
+    const [clientTransport, serverTransport] =
+      InMemoryTransport.createLinkedPair();
+    await createAdminMcpServer().connect(serverTransport);
+    const c = new Client({ name: "t", version: "1" });
+    await c.connect(clientTransport);
+    const res = await c.listResourceTemplates();
+    expect(res.resourceTemplates).toEqual([]);
+    await c.close();
+  });
+
+  it("marks free-form object inputs as accepting any fields", async () => {
+    const { createAdminMcpServer } = await import("@/lib/admin/mcp-server");
+    const [clientTransport, serverTransport] =
+      InMemoryTransport.createLinkedPair();
+    await createAdminMcpServer().connect(serverTransport);
+    const c = new Client({ name: "t", version: "1" });
+    await c.connect(clientTransport);
+    const { tools } = await c.listTools();
+    const props = (name: string) =>
+      tools.find((t) => t.name === name)?.inputSchema.properties as Record<
+        string,
+        { additionalProperties?: boolean }
+      >;
+    expect(props("sanity_patch_document").patch.additionalProperties).toBe(
+      true,
+    );
+    expect(props("sanity_create_document").fields.additionalProperties).toBe(
+      true,
+    );
+    await c.close();
+  });
+});

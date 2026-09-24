@@ -2,6 +2,7 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
+  ListResourceTemplatesRequestSchema,
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
@@ -214,6 +215,13 @@ export function createAdminMcpServer(): Server {
         mimeType: MCP_APP_MIME_TYPE,
       },
     ],
+  }));
+
+  // Declaring the resources capability means clients may also ask for
+  // templates; answering "method not found" there made some clients abort
+  // setup. There are none, so say so.
+  server.setRequestHandler(ListResourceTemplatesRequestSchema, async () => ({
+    resourceTemplates: [],
   }));
 
   server.setRequestHandler(ReadResourceRequestSchema, async (request) => {

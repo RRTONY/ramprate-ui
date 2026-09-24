@@ -264,6 +264,7 @@ export const ADMIN_TOOLS = [
         patch: {
           type: "object",
           description: "Fields to set on the document.",
+          additionalProperties: true,
         },
       },
       required: ["id", "patch"],
@@ -277,7 +278,11 @@ export const ADMIN_TOOLS = [
       type: "object" as const,
       properties: {
         docType: { type: "string", description: "Sanity document _type." },
-        fields: { type: "object" },
+        fields: {
+          type: "object",
+          description: "The new document's fields.",
+          additionalProperties: true,
+        },
       },
       required: ["docType", "fields"],
     },

@@ -16,6 +16,25 @@ export function jsonError(status: number, error: string): Response {
 // session design through several rounds of bugs. Callers must authenticate
 // the request themselves before calling this — it does no auth of its own.
 export async function respondToMcp(req: Request): Promise<Response> {
+  // Stateless means no standalone server-to-client stream (GET) and no
+  // sessions to end (DELETE). Without this, GET opened an event stream that
+  // never sent anything and never closed, so clients that probe it during
+  // setup (ChatGPT's "Create MCP app") hung until they gave up. 405 is the
+  // spec's answer for "this server doesn't offer that stream"; clients then
+  // just use POST.
+  if (req.method === "GET" || req.method === "DELETE") {
+    return new Response(
+      JSON.stringify({
+        jsonrpc: "2.0",
+        error: { code: -32000, message: "Method not allowed: use POST" },
+        id: null,
+      }),
+      {
+        status: 405,
+        headers: { "content-type": "application/json", allow: "POST" },
+      },
+    );
+  }
   const server = createAdminMcpServer();
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
