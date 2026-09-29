@@ -1,12 +1,8 @@
 import { isPortalUnlocked } from "@/lib/portal-auth";
-import type { PortalId } from "@/lib/portal-auth";
 import PortalGate from "@/components/portal/PortalGate";
 import { TSI_PROPOSAL_HTML } from "./proposal-content";
 
-// "tsi-proposal" is not yet a registered portal id: src/lib/portal-auth.ts (off-limits to this
-// tool) needs a matching entry + password env var added before this actually unlocks. See the
-// handoff note left for the team. Cast is temporary, remove once that's wired up.
-const PORTAL_ID = "tsi-proposal" as PortalId;
+const PORTAL_ID = "tsi-proposal";
 
 export const metadata = {
   title: "TSI Group — Channel Strategy Proposal",
