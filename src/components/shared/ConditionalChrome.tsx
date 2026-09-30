@@ -26,7 +26,11 @@ export function ConditionalChrome({
     segments[0] === "biochain-partner-faq" ||
     segments[0] === "kumbaya" ||
     segments[0] === "active-pharm-form" ||
-    segments[0] === "oauth";
+    segments[0] === "oauth" ||
+    // tsi-proposal renders its own full-page iframe (a self-contained
+    // proposal doc with its own sticky top bar) - the site's global nav
+    // would otherwise overlap it the same way it would on biochain-partner-faq.
+    segments[0] === "tsi-proposal";
   const hideChrome =
     pathname?.startsWith("/flow") || isStandaloneArtifact || isStandalonePage;
 
