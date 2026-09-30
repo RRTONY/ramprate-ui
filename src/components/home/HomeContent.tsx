@@ -266,9 +266,7 @@ export default function HomeContent() {
               </div>
 
               <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
-                Where Relationships
-                <br />
-                Become <span className="text-gold">Revenue.</span>
+                Welcome to Ramprate
               </h1>
 
               <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white/70">
