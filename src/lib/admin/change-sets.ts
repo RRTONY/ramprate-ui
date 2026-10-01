@@ -457,6 +457,77 @@ export async function pendingOverview(
   };
 }
 
+// Keeps records and GitHub in step when someone acts in GitHub directly:
+// a change merged there is marked Published, one closed there is marked
+// Discarded (its content drafts thrown away, as with Discard), and any
+// leftover AI branch with no open pull request and no waiting change is
+// deleted. Runs when waiting changes are listed (a person's action), never
+// on a timer. Failures are swallowed: tidying must never block a review.
+export async function reconcileWithGitHub(
+  open: ChangeSet[],
+): Promise<ChangeSet[]> {
+  const stillOpen: ChangeSet[] = [];
+  for (const change of open) {
+    if (!change.prNumber) {
+      stillOpen.push(change);
+      continue;
+    }
+    try {
+      const pr = await gh.getPRState(change.prNumber);
+      if (pr.open) {
+        stillOpen.push(change);
+      } else if (pr.merged) {
+        await patchChangeSet(change.key, {
+          status: "published",
+          publishedAt: new Date().toISOString(),
+          publishedBy: "Merged directly in GitHub",
+          mergeSha: pr.mergeSha,
+          publishNote: (change.content ?? []).length
+            ? "The code was merged directly in GitHub, so this change's content edits were not published. Ask again for them."
+            : null,
+        });
+        for (const entry of change.content ?? []) {
+          if (entry.action === "save") {
+            await writeClient.delete(draftId(entry.id)).catch(() => {});
+          }
+        }
+        await gh.deleteBranch(branchForChange(change.key)).catch(() => {});
+      } else {
+        for (const entry of change.content ?? []) {
+          if (entry.action === "save") {
+            await writeClient.delete(draftId(entry.id)).catch(() => {});
+          }
+        }
+        await patchChangeSet(change.key, {
+          status: "discarded",
+          discardedAt: new Date().toISOString(),
+          discardedBy: "Closed directly in GitHub",
+        });
+        await gh.deleteBranch(branchForChange(change.key)).catch(() => {});
+      }
+    } catch {
+      stillOpen.push(change);
+    }
+  }
+
+  try {
+    const [branches, prs] = await Promise.all([
+      gh.listBranches(ADMIN_BRANCH_PREFIX),
+      gh.listOpenAdminPRs(ADMIN_BRANCH_PREFIX),
+    ]);
+    const keep = new Set([
+      ...prs.map((p) => p.branch),
+      ...stillOpen.map((c) => branchForChange(c.key)),
+    ]);
+    for (const branch of branches) {
+      if (!keep.has(branch)) await gh.deleteBranch(branch).catch(() => {});
+    }
+  } catch {
+    // Listing branches failed; try again next time.
+  }
+  return stillOpen;
+}
+
 export async function submitForReview(
   change: ChangeSet,
   summary: string,

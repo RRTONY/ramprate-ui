@@ -11,6 +11,10 @@
 //   go through an in-card confirm step (window.confirm isn't reliable in a
 //   sandboxed iframe). Publish sends the change_id and the reviewToken the
 //   card was showing, so the server refuses if anything changed since.
+// - Phone and laptop ("devices", from preview_on_devices): screenshots of
+//   the top of a preview page at both sizes, side by side (stacked on a
+//   narrow card). The pictures arrive in the result's _meta (card-only),
+//   and only data:image URLs are shown.
 // - Several changes ("list"): a plain list with each change's status, plus
 //   older waiting work and unrelated Studio drafts that will NOT go live.
 //   No buttons; the person asks in the chat to review one.
@@ -34,7 +38,7 @@
 // resourceDomains), so it adds no dependency to this server. The URI is
 // versioned because ChatGPT caches a card's HTML by URI.
 export const PENDING_CHANGES_UI_URI =
-  "ui://ramprate-admin/pending-changes-v2.html";
+  "ui://ramprate-admin/pending-changes-v3.html";
 
 export const PENDING_CHANGES_HTML = `<!doctype html>
 <html>
@@ -125,6 +129,21 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     box-shadow: inset 0 0 0 1px var(--color-border-primary, var(--fallback-border));
     font-size: var(--font-text-sm-size, 13px);
   }
+  .devices { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .devices figure { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .devices .phone { flex: 1 1 120px; max-width: 200px; }
+  .devices .laptop { flex: 3 1 220px; }
+  .devices img {
+    display: block; width: 100%; height: auto;
+    border-radius: var(--border-radius-md, 8px);
+    box-shadow: 0 0 0 1px var(--color-border-primary, var(--fallback-border));
+  }
+  .devices .missing {
+    padding: 24px 12px; text-align: center;
+    border-radius: var(--border-radius-md, 8px);
+    background: var(--color-background-secondary, var(--fallback-surface));
+  }
+  figcaption { font-size: var(--font-text-sm-size, 13px); font-weight: var(--font-weight-semibold, 600); }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
   .btn {
     appearance: none; border: 0; cursor: pointer; text-decoration: none;
@@ -160,6 +179,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     let busy = false;
     let done = false;
     let note = null;
+    let shots = [];
 
     function esc(value) {
       return String(value == null ? "" : value)
@@ -256,9 +276,9 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
 
       const preview = safeUrl(d.previewUrl);
       if (preview && !(d.previewLinks || []).length) {
-        parts.push('<p class="muted"><a href="' + esc(preview) + '" target="_blank" rel="noopener noreferrer">Open the preview site</a>. Check it on your phone too if the layout changed.</p>');
+        parts.push('<p class="muted"><a href="' + esc(preview) + '" target="_blank" rel="noopener noreferrer">Open the preview site</a>. Ask in the chat to see it on a phone and a laptop.</p>');
       } else if ((d.previewLinks || []).length) {
-        parts.push('<p class="muted">Preview opens a private copy of the site with this change. Check it on your phone too if the layout changed.</p>');
+        parts.push('<p class="muted">Preview opens a private copy of the site with this change. Ask in the chat to see it on a phone and a laptop.</p>');
       }
 
       if (!done && (d.blockers || []).length) {
@@ -297,9 +317,37 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       wire();
     }
 
+    function renderDevices() {
+      const d = data;
+      const byDevice = {};
+      (shots || []).forEach(function (s) { if (s && s.device) byDevice[s.device] = s; });
+      const figure = function (device, label, alt) {
+        const s = byDevice[device] || {};
+        const ok = typeof s.image === "string" && s.image.indexOf("data:image/") === 0;
+        return '<figure class="' + device + '"><figcaption>' + label + '</figcaption>' +
+          (ok
+            ? '<img src="' + esc(s.image) + '" alt="' + esc(alt) + '"' + (s.width ? ' width="' + Number(s.width) + '" height="' + Number(s.height) + '"' : "") + ' />'
+            : '<div class="missing muted">' + esc(s.error || "Not available") + '</div>') +
+          '</figure>';
+      };
+      const page = esc(d.page || "/");
+      const url = safeUrl(d.url);
+      root.innerHTML = [
+        '<h2>' + esc(d.title) + '</h2>',
+        '<p class="muted">How the ' + (d.page === "/" ? "home page" : page + " page") + ' looks with this change, at the top of the page.' +
+          (url ? ' <a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Open the preview</a> to scroll the whole page.' : "") + '</p>',
+        '<div class="devices">' +
+          figure("phone", "Phone", "Phone-size screenshot of " + (d.page || "/") + " with this change") +
+          figure("laptop", "Laptop", "Laptop-size screenshot of " + (d.page || "/") + " with this change") +
+        '</div>',
+        '<p class="muted">The bar at the bottom of the screenshots is the Netlify preview toolbar. It is not part of the live site.</p>',
+      ].join("");
+    }
+
     function render() {
       if (!data) return;
       if (data.view === "detail") renderDetail();
+      else if (data.view === "devices") renderDevices();
       else renderList();
     }
 
@@ -360,6 +408,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     app.ontoolresult = function (params) {
       data = params.structuredContent || readText(params);
       rulesVersion = (params._meta && params._meta.rulesVersion) || null;
+      shots = (params._meta && params._meta.shots) || [];
       confirming = null;
       busy = false;
       done = false;

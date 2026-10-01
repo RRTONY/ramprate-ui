@@ -3,7 +3,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { McpUser } from "@/lib/admin/mcp-auth";
 
-const URI = "ui://ramprate-admin/pending-changes-v2.html";
+const URI = "ui://ramprate-admin/pending-changes-v3.html";
 const KEY = "20261002-abc123";
 
 vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
@@ -15,6 +15,11 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
       : null,
   ),
   listDir: vi.fn(async () => []),
+  getPRChecksDetail: vi.fn(async () => ({
+    status: "success",
+    previewUrl: "https://deploy-preview-41--ramprate.netlify.app",
+    failingChecks: [],
+  })),
 }));
 
 const change = {
@@ -35,7 +40,15 @@ const createChangeSet = vi.fn(async () => ({ key: KEY }));
 vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/admin/change-sets")>()),
   listOpenChangeSets: vi.fn(async () => [change]),
-  getChangeSet: vi.fn(async (k: string) => (k === KEY ? change : null)),
+  getChangeSet: vi.fn(async (k: string) =>
+    k === KEY
+      ? {
+          ...change,
+          prNumber: 41,
+          files: [{ path: "src/app/about/page.tsx", status: "modified" }],
+        }
+      : null,
+  ),
   pendingOverview: vi.fn(async () => ({
     changes: [
       {
@@ -61,6 +74,25 @@ vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
   publishChange: (...a: unknown[]) => publishChange(...(a as [])),
   discardChange: (...a: unknown[]) => discardChange(...(a as [])),
   createChangeSet: (...a: unknown[]) => createChangeSet(...(a as [])),
+  reconcileWithGitHub: vi.fn(async (open: unknown[]) => open),
+}));
+
+vi.mock("@/lib/admin/device-preview", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/admin/device-preview")>()),
+  captureDevices: vi.fn(async () => [
+    {
+      device: "phone",
+      image: "data:image/jpeg;base64,PHONE",
+      width: 412,
+      height: 823,
+    },
+    {
+      device: "laptop",
+      image: "data:image/jpeg;base64,LAPTOP",
+      width: 1350,
+      height: 940,
+    },
+  ]),
 }));
 
 async function connect(user: McpUser) {
@@ -206,6 +238,25 @@ describe("review card (ChatGPT / MCP Apps)", () => {
     expect((res.structuredContent as Record<string, unknown>).change_id).toBe(
       KEY,
     );
+    await client.close();
+  });
+
+  it("phone and laptop screenshots go to the card only, never into the model's text", async () => {
+    const client = await connect(READER);
+    const res = await client.callTool({
+      name: "preview_on_devices",
+      arguments: { change_id: KEY },
+    });
+    expect(res.isError).toBeFalsy();
+    const sc = res.structuredContent as Record<string, unknown>;
+    expect(sc.view).toBe("devices");
+    expect(sc.page).toBe("/about");
+    const shots = (res._meta as { shots: Array<{ image: string }> }).shots;
+    expect(shots.map((s) => s.image)).toEqual([
+      "data:image/jpeg;base64,PHONE",
+      "data:image/jpeg;base64,LAPTOP",
+    ]);
+    expect(JSON.stringify(res.content)).not.toContain("base64");
     await client.close();
   });
 

@@ -90,7 +90,11 @@ vi.mock("@/lib/sanity/write-client", () => ({
 
 const gh = {
   branches: new Map<string, Array<{ path: string; status: string }>>(),
-  prs: new Map<number, { branch: string; head: string; open: boolean }>(),
+  prs: new Map<
+    number,
+    { branch: string; head: string; open: boolean; merged?: boolean }
+  >(),
+  allBranches: new Set<string>(),
   nextPr: 100,
   checks: "success" as string,
   mergeShaFiles: new Map<
@@ -136,7 +140,9 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
     pr.open = false;
     return { merged: true, sha: `merge-${n}` };
   }),
-  deleteBranch: vi.fn(async () => {}),
+  deleteBranch: vi.fn(async (b: string) => {
+    gh.allBranches.delete(b);
+  }),
   closePR: vi.fn(async (n: number) => {
     gh.prs.get(n)!.open = false;
   }),
@@ -148,6 +154,15 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
         branch: p.branch,
         url: `https://github.com/x/pull/${number}`,
       })),
+  getPRState: async (n: number) => {
+    const pr = gh.prs.get(n)!;
+    return {
+      open: pr.open,
+      merged: !!pr.merged,
+      mergeSha: pr.merged ? `m-${n}` : null,
+    };
+  },
+  listBranches: async () => [...gh.allBranches],
   getCommitFiles: async (sha: string) => gh.mergeShaFiles.get(sha)!,
   getFileSha: async (path: string, ref: string) =>
     gh.fileShas.get(`${ref}:${path}`) ?? null,
@@ -216,6 +231,7 @@ beforeEach(() => {
   gh.mergeShaFiles.clear();
   gh.fileShas.clear();
   gh.createdStates = [];
+  gh.allBranches.clear();
   gh.checks = "success";
 });
 
@@ -540,5 +556,53 @@ describe("history and undo", () => {
   it("only published changes can be undone", async () => {
     const c = await codeChange("X", ["src/app/page.tsx"]);
     expect((await cs.undoChange(c.key, USER)).ok).toBe(false);
+  });
+});
+
+describe("keeping in step with GitHub", () => {
+  it("marks changes merged or closed in GitHub, and deletes leftover branches", async () => {
+    put({ _id: "p", _type: "post", title: "P" });
+    const merged = await codeChange("Merged in GitHub", ["src/app/page.tsx"]);
+    const closed = await codeChange("Closed in GitHub", [
+      "src/app/about/page.tsx",
+    ]);
+    await cs.claimContent(closed, {
+      id: "p",
+      type: "post",
+      title: "P",
+      isNew: false,
+    });
+    put({ ...docs.get("p")!, _id: "drafts.p", title: "Edit" });
+    const waiting = await codeChange("Still waiting", [
+      "src/app/blog/page.tsx",
+    ]);
+    Object.assign(gh.prs.get(merged.prNumber!)!, { open: false, merged: true });
+    gh.prs.get(closed.prNumber!)!.open = false;
+    for (const c of [merged, closed, waiting])
+      gh.allBranches.add(cs.branchForChange(c.key));
+    gh.allBranches.add("admin/vibe-20260901-old000"); // abandoned, no PR
+
+    const open = await cs.reconcileWithGitHub(await cs.listOpenChangeSets());
+    expect(open.map((c) => c.key)).toEqual([waiting.key]);
+    expect((await cs.getChangeSet(merged.key))!).toMatchObject({
+      status: "published",
+      publishedBy: "Merged directly in GitHub",
+    });
+    expect((await cs.getChangeSet(closed.key))!.status).toBe("discarded");
+    expect(docs.has("drafts.p")).toBe(false);
+    expect([...gh.allBranches]).toEqual([cs.branchForChange(waiting.key)]);
+  });
+
+  it("keeps a change with no pull request yet, and its branch", async () => {
+    const c = await cs.createChangeSet({
+      title: "New",
+      request: "x",
+      user: USER,
+    });
+    await cs.patchChangeSet(c.key, { branch: cs.branchForChange(c.key) });
+    gh.allBranches.add(cs.branchForChange(c.key));
+    const open = await cs.reconcileWithGitHub(await cs.listOpenChangeSets());
+    expect(open).toHaveLength(1);
+    expect(gh.allBranches.has(cs.branchForChange(c.key))).toBe(true);
   });
 });

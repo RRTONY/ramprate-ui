@@ -239,6 +239,30 @@ export async function getPRHeadSha(prNumber: number): Promise<string | null> {
   return pr?.head.sha ?? null;
 }
 
+export async function getPRState(prNumber: number): Promise<{
+  open: boolean;
+  merged: boolean;
+  mergeSha: string | null;
+}> {
+  const pr = await gh<{
+    state: string;
+    merged: boolean;
+    merge_commit_sha: string | null;
+  }>(`/repos/${OWNER}/${REPO}/pulls/${prNumber}`);
+  return {
+    open: pr?.state === "open",
+    merged: !!pr?.merged,
+    mergeSha: pr?.merged ? (pr.merge_commit_sha ?? null) : null,
+  };
+}
+
+export async function listBranches(prefix: string): Promise<string[]> {
+  const refs = await gh<Array<{ ref: string }>>(
+    `/repos/${OWNER}/${REPO}/git/matching-refs/heads/${prefix}`,
+  );
+  return (refs || []).map((r) => r.ref.replace(/^refs\/heads\//, ""));
+}
+
 export async function closePR(prNumber: number): Promise<void> {
   await gh(`/repos/${OWNER}/${REPO}/pulls/${prNumber}`, {
     method: "PATCH",

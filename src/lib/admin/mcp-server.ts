@@ -18,11 +18,14 @@ import {
   markEdited,
   pendingOverview,
   publishChange,
+  reconcileWithGitHub,
   submitForReview,
   undoChange,
   type ChangeSet,
 } from "@/lib/admin/change-sets";
-import { normalizeChangeKey } from "@/lib/admin/change-describe";
+import { describeFiles, normalizeChangeKey } from "@/lib/admin/change-describe";
+import { captureDevices, previewTarget } from "@/lib/admin/device-preview";
+import * as gh from "@/lib/admin/github-client";
 import { isNetlifyConfigured, listDeploys } from "@/lib/admin/netlify-client";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
 import {
@@ -186,6 +189,24 @@ const SESSION_TOOLS = [
     },
   },
   {
+    name: "preview_on_devices",
+    description:
+      "Show how a change's preview looks on a phone and on a laptop: real screenshots of the top of the page, shown side by side in the card. Use after list_pending_changes whenever the change affects layout, images, buttons or anything visual, so the person can check both sizes before publishing. Needs the change's preview to be built (site check passed). The first try on a page can take a while; if it says to try again, call it once more (Google caches the page, so the second try is quick).",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The change to preview."),
+        path: {
+          type: "string",
+          description:
+            "Page address to show, e.g. '/' or '/about'. Defaults to the first page the change affects.",
+        },
+      },
+      required: [CHANGE_ID_PARAM],
+    },
+    _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
+  },
+  {
     name: "check_deploy",
     description:
       "Netlify build status, in plain words. With a change_id: that change's preview builds (is the preview ready, still building, or did the build fail and why). Without: the live ramprate.com site's latest builds, e.g. to confirm a publish actually went live or to explain a failed build. Read-only. If a build failed, use the error text to fix the cause in the same change.",
@@ -329,6 +350,11 @@ const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
     "openai/toolInvocation/invoked": "Changes ready to review",
     "openai/widgetAccessible": true,
   },
+  preview_on_devices: {
+    "openai/outputTemplate": PENDING_CHANGES_UI_URI,
+    "openai/toolInvocation/invoking": "Taking phone and laptop screenshots…",
+    "openai/toolInvocation/invoked": "Screenshots ready",
+  },
   publish_changes: {
     "openai/toolInvocation/invoking": "Publishing to the live site…",
     "openai/toolInvocation/invoked": "Publish finished",
@@ -346,7 +372,7 @@ const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
 };
 
 async function listPendingChanges(changeKey: string | null) {
-  const open = await listOpenChangeSets();
+  const open = await reconcileWithGitHub(await listOpenChangeSets());
   const overview = await pendingOverview(open);
   const target = changeKey
     ? await getChangeSet(changeKey)
@@ -482,7 +508,7 @@ export function createAdminMcpServer(user: McpUser): Server {
               csp: { resourceDomains: ["https://esm.sh"] },
             },
             "openai/widgetDescription":
-              "Review card for one website change: what will go live, before and after, the site check, preview links, and Publish or Discard buttons with a confirm step.",
+              "Review card for one website change: what will go live, before and after, the site check, preview links, phone and laptop screenshots, and Publish or Discard buttons with a confirm step.",
             "openai/widgetPrefersBorder": true,
           },
         },
@@ -586,6 +612,69 @@ export function createAdminMcpServer(user: McpUser): Server {
         status: "Draft",
         next: `Pass change_id "${change.key}" on every edit for this request. When done, call submit_for_review, then list_pending_changes with this change_id.`,
       });
+    }
+
+    if (name === "preview_on_devices") {
+      if (!changeKey) {
+        return toResult(
+          { error: "Say which change: pass its change_id." },
+          true,
+        );
+      }
+      const target = await getChangeSet(changeKey);
+      if (!target) {
+        return toResult(
+          { error: `No change found with id ${changeKey}.` },
+          true,
+        );
+      }
+      if (!target.prNumber || !isOpen(target)) {
+        return toResult(
+          {
+            error: target.prNumber
+              ? "This change is no longer waiting, so its preview is gone. Look at the live site instead."
+              : "This change has no code edits, so there is no preview site to show. Content edits appear on the live site once published.",
+          },
+          true,
+        );
+      }
+      const { previewUrl } = await gh.getPRChecksDetail(target.prNumber);
+      const defaultPath =
+        describeFiles((target.files ?? []).map((f) => f.path)).find(
+          (a) => a.route,
+        )?.route ?? "/";
+      const url = previewTarget(previewUrl, input.path ?? defaultPath);
+      if (!url) {
+        return toResult(
+          {
+            error: previewUrl
+              ? "That page address isn't valid. Use something like '/' or '/about'."
+              : "The preview isn't built yet. Check list_pending_changes until the site check passes, then try again.",
+          },
+          true,
+        );
+      }
+      const shots = await captureDevices(url);
+      // The pictures go only to the card (_meta), not into the model's
+      // context, where they would cost tokens and add nothing.
+      return {
+        ...toResult({
+          view: "devices",
+          changeId: target.key,
+          title: target.title,
+          page: new URL(url).pathname,
+          url,
+          shots: shots.map((s) => ({
+            device: s.device,
+            ok: !!s.image,
+            ...(s.error ? { error: s.error } : {}),
+          })),
+          note: shots.every((s) => s.image)
+            ? "Phone and laptop screenshots are shown in the card."
+            : "Some screenshots didn't load. Call preview_on_devices again in a few seconds.",
+        }),
+        _meta: { shots },
+      };
     }
 
     if (name === "check_deploy") {
