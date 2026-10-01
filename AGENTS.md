@@ -190,7 +190,10 @@ the Status Report.
   other waiting changes or Sanity Studio drafts, and refuses if anything changed since the review.
 - Always show the person what is about to go live and get a clear yes. If they don't want it,
   `discard_change`. To reverse a published change, `undo_change` (it creates a new "Undo" change
-  that is reviewed and published like any other). History: `list_change_history`.
+  that is reviewed and published like any other). History: `list_change_history` (also shown
+  read-only in Sanity Studio as "Website change history").
+- For anything visual (layout, images, buttons), show `preview_on_devices` so the person sees it on
+  a phone and a laptop before publishing.
 - Never publish while the build check is pending or failing (`check_deploy` explains a failed
   Netlify build).
 
@@ -607,6 +610,23 @@ infrastructure to maintain.
   `tests/admin/change-sets.test.ts` (fake Sanity + GitHub), `tests/admin/change-describe.test.ts`.
   Verified live 2026-10-02 (start → edit → submit → review → stale-token publish refused →
   discard), not just by inspection. Publish and undo were tested against fakes only so far.
+- **Phone + laptop screenshots (`preview_on_devices`, added 2026-10-02):** real screenshots of the
+  top of a change's preview page at phone and laptop size, shown side by side in the card
+  (`src/lib/admin/device-preview.ts`, Google PageSpeed `final-screenshot`, same `GOOGLE_API_KEY`).
+  Only `deploy-preview-N--ramprate.netlify.app` addresses are accepted. Images travel in the
+  result's `_meta` (card-only), never the model's text. Google's first run on a page can exceed
+  the 22s cap (it then says "try again"); the second is ~2s because Google caches it. Pictures,
+  not an embedded live page, because ChatGPT cards must not scroll inside.
+- **Change history in Sanity Studio (added 2026-10-02):** the `adminChange` schema
+  (`src/sanity/schemas/adminChange.ts`) shows the records as "Website change history" at the bottom
+  of Studio, newest first. Read-only: `sanity.config.ts` removes every document action and the
+  "create new" option for this type. Only the MCP server writes these records.
+- **Keeping in step with GitHub (`reconcileWithGitHub`, added 2026-10-02):** each
+  `list_pending_changes` call checks every waiting change's PR. Merged directly in GitHub → marked
+  Published (content drafts not published, noted on the record); closed in GitHub → Discarded
+  (drafts thrown away). Any `admin/vibe-*` branch with no open PR and no waiting change is deleted.
+  Runs only on that person-triggered call, never on a timer, and never blocks the review if
+  GitHub fails.
 - **`check_deploy`** (`src/lib/admin/netlify-client.ts`): read-only Netlify build status for the
   live site or one change's preview, with the failure reason. The site id is a constant and only GET
   requests are made, because `NETLIFY_AUTH_TOKEN` (a personal token) can reach every site on the
@@ -639,7 +659,7 @@ infrastructure to maintain.
   hidden for roles that can't publish (`youCanPublish`). Every tool also has `annotations`
   (`readOnlyHint`/`destructiveHint`/`openWorldHint`) so hosts ask for confirmation before changes.
   Tests: `tests/admin/mcp-widget.test.ts`.
-- **Review card (rebuilt 2026-10-02 for change sets, URI now `pending-changes-v2.html` since
+- **Review card (rebuilt 2026-10-02 for change sets, URI now `pending-changes-v3.html` since
   ChatGPT caches a card's HTML by URI):** one change per card: status, who asked, AI summary plus
   server-written facts ("N other waiting changes are NOT included"), pages with preview links,
   before/after, site check, and Publish (primary) + Discard (secondary), each with an in-card

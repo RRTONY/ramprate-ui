@@ -391,6 +391,14 @@ Gotchas:
 - `npx tsx` can't load modules that pull in `@react-pdf` (package exports error); run live
   scripts through Vitest instead.
 
-Not done yet: desktop + phone preview inside the card (links open the preview; checking on a
-phone is manual), and a Studio view of the history. Publish and undo were verified against
-fakes; the first real publish through the new flow should be watched.
+Publish and undo were verified against fakes; the first real publish through the new flow
+should be watched. (Merged and live 2026-10-02 as PR #41; tools confirmed on the live server.)
+
+Follow-up the same day: `preview_on_devices` (phone + laptop screenshots in the card), the
+read-only "Website change history" in Sanity Studio, and `reconcileWithGitHub` (changes merged
+or closed directly in GitHub get the right status, leftover branches are deleted).
+- Gotcha: the card's HTML lives in a TypeScript template string, so an apostrophe written as
+  `\'` in the source comes out as a bare `'` and breaks the card's script (it hangs on
+  "Loading…"). Avoid apostrophes in card strings, and always `node --check` the extracted script.
+- Studio can't be checked from localhost (not on Sanity's allowed origins); check
+  ramprate.com/studio while signed in.

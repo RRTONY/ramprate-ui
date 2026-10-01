@@ -13,6 +13,7 @@ import seo from "./seo";
 import artifact from "./artifact";
 import kumbayaSubmission from "./kumbayaSubmission";
 import reportRun from "./reportRun";
+import adminChange from "./adminChange";
 
 export const schemaTypes = [
   siteSettings,
@@ -30,4 +31,5 @@ export const schemaTypes = [
   artifact,
   kumbayaSubmission,
   reportRun,
+  adminChange,
 ];
