@@ -1,34 +1,36 @@
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './src/sanity/schemas'
+import { defineConfig } from "sanity";
+import { structureTool } from "sanity/structure";
+import { visionTool } from "@sanity/vision";
+import { schemaTypes } from "./src/sanity/schemas";
 
 // Written only by the MCP admin server; shown read-only, newest first, at
 // the bottom of the Studio menu.
-const HISTORY_TYPE = 'adminChange'
+const HISTORY_TYPE = "adminChange";
 
 export default defineConfig({
-  name: 'ramprate',
-  title: 'RampRate',
+  name: "ramprate",
+  title: "RampRate",
 
-  projectId: 'xdo1fb5d',
-  dataset: 'production',
+  projectId: "xdo1fb5d",
+  dataset: "production",
 
   plugins: [
     structureTool({
       structure: (S) =>
         S.list()
-          .title('Content')
+          .title("Content")
           .items([
-            ...S.documentTypeListItems().filter((item) => item.getId() !== HISTORY_TYPE),
+            ...S.documentTypeListItems().filter(
+              (item) => item.getId() !== HISTORY_TYPE,
+            ),
             S.divider(),
             S.listItem()
-              .title('Website change history')
+              .title("Website change history")
               .id(HISTORY_TYPE)
               .child(
                 S.documentTypeList(HISTORY_TYPE)
-                  .title('Website change history')
-                  .defaultOrdering([{field: 'createdAt', direction: 'desc'}])
+                  .title("Website change history")
+                  .defaultOrdering([{ field: "createdAt", direction: "desc" }])
                   .canHandleIntent(() => false)
                   .initialValueTemplates([]),
               ),
@@ -43,7 +45,9 @@ export default defineConfig({
   },
 
   document: {
-    actions: (prev, context) => (context.schemaType === HISTORY_TYPE ? [] : prev),
-    newDocumentOptions: (prev) => prev.filter((item) => item.templateId !== HISTORY_TYPE),
+    actions: (prev, context) =>
+      context.schemaType === HISTORY_TYPE ? [] : prev,
+    newDocumentOptions: (prev) =>
+      prev.filter((item) => item.templateId !== HISTORY_TYPE),
   },
-})
+});
