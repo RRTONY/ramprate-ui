@@ -42,6 +42,17 @@ vi.mock("@/lib/admin/tools", async (importOriginal) => ({
   runAdminTool: (...args: unknown[]) => runAdminTool(...(args as [])),
 }));
 
+const CHANGE_ID = "20261002-abc123";
+vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/admin/change-sets")>()),
+  getChangeSet: vi.fn(async (key: string) =>
+    key === "20261002-abc123"
+      ? { key, status: "draft", title: "T", content: [] }
+      : null,
+  ),
+  markEdited: vi.fn(async () => {}),
+}));
+
 vi.mock("@/lib/admin/mcp-tool-context", () => ({
   buildMcpToolContext: async () => ({
     ctx: {},
@@ -176,6 +187,7 @@ describe("MCP server rules gate", () => {
         path: "src/app/x.tsx",
         content: "x",
         rules_version: RULES_VERSION,
+        change_id: CHANGE_ID,
       },
     });
     expect(result.isError).toBeFalsy();
@@ -196,6 +208,7 @@ describe("MCP server rules gate", () => {
         content: "x",
         message: "Update hero copy",
         rules_version: RULES_VERSION,
+        change_id: CHANGE_ID,
       },
     });
     const [, input] = runAdminTool.mock.calls[0] as unknown as [
@@ -203,6 +216,51 @@ describe("MCP server rules gate", () => {
       Record<string, unknown>,
     ];
     expect(input.message).toBe("Update hero copy [by Test Writer]");
+  });
+
+  it("refuses an edit that doesn't name its change", async () => {
+    const result = await client.callTool({
+      name: "github_write_file",
+      arguments: {
+        path: "src/app/x.tsx",
+        content: "x",
+        rules_version: RULES_VERSION,
+      },
+    });
+    expect(result.isError).toBe(true);
+    expect(parse(result).error).toMatch(/start_change/);
+    expect(runAdminTool).not.toHaveBeenCalled();
+  });
+
+  it("refuses an unknown or malformed change_id", async () => {
+    for (const change_id of ["20261002-zzzzzz", "not-an-id"]) {
+      const result = await client.callTool({
+        name: "github_write_file",
+        arguments: {
+          path: "src/app/x.tsx",
+          content: "x",
+          rules_version: RULES_VERSION,
+          change_id,
+        },
+      });
+      expect(result.isError).toBe(true);
+    }
+    expect(runAdminTool).not.toHaveBeenCalled();
+  });
+
+  it("requires change_id on every edit tool", async () => {
+    const { tools } = await client.listTools();
+    for (const name of [
+      "github_write_file",
+      "github_write_binary_file",
+      "github_delete_file",
+      "sanity_patch_document",
+      "sanity_create_document",
+    ]) {
+      expect(
+        tools.find((t) => t.name === name)?.inputSchema.required,
+      ).toContain("change_id");
+    }
   });
 
   it("does not gate read-only tools", async () => {

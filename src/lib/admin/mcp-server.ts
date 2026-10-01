@@ -6,10 +6,24 @@ import {
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import * as gh from "@/lib/admin/github-client";
-import { ADMIN_BRANCH_PREFIX } from "@/lib/admin/guardrails";
-import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
-import { ADMIN_TOOLS, runAdminTool, waitForChecks } from "@/lib/admin/tools";
+import { ADMIN_TOOLS, runAdminTool } from "@/lib/admin/tools";
+import {
+  buildReview,
+  changeHistory,
+  createChangeSet,
+  discardChange,
+  getChangeSet,
+  isOpen,
+  listOpenChangeSets,
+  markEdited,
+  pendingOverview,
+  publishChange,
+  submitForReview,
+  undoChange,
+  type ChangeSet,
+} from "@/lib/admin/change-sets";
+import { normalizeChangeKey } from "@/lib/admin/change-describe";
+import { isNetlifyConfigured, listDeploys } from "@/lib/admin/netlify-client";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
 import {
   READ_ONLY_TOOLS,
@@ -43,6 +57,13 @@ const EXCLUDED_FROM_MCP = new Set(["get_attachment", "create_download"]);
 
 const CHAT_TOOLS = ADMIN_TOOLS.filter((t) => !EXCLUDED_FROM_MCP.has(t.name));
 
+const CHANGE_ID_PARAM = "change_id";
+
+const changeIdSchema = (description: string) => ({
+  type: "string",
+  description,
+});
+
 const SESSION_TOOLS = [
   {
     name: "get_project_rules",
@@ -51,24 +72,200 @@ const SESSION_TOOLS = [
     input_schema: { type: "object" as const, properties: {}, required: [] },
   },
   {
+    name: "start_change",
+    description:
+      "Start a new, separate change for ONE request from the person (e.g. 'change the homepage headline'). Returns a change_id. Every edit for this request (github_write_file, github_write_binary_file, github_delete_file, sanity_patch_document, sanity_create_document) must pass this change_id, so each request is kept apart and publishing it never takes any other request live. Start a new change for each new request; keep using the same change_id for follow-up tweaks to the same request.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        title: {
+          type: "string",
+          description:
+            "Short plain-English name, e.g. 'New homepage headline'.",
+        },
+        request: {
+          type: "string",
+          description: "What the person asked for, in their words.",
+        },
+      },
+      required: ["title", "request"],
+    },
+  },
+  {
+    name: "submit_for_review",
+    description:
+      "Call when the edits for a change are finished and checked. Saves a plain-English summary and marks the change 'Ready for review'; only then can it be published. Any later edit to the change sends it back to Draft, so submit again after more edits. Then call list_pending_changes with the same change_id to show the person the review card.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The change_id from start_change."),
+        summary: {
+          type: "string",
+          description:
+            "1 to 3 plain sentences for a non-technical owner: what changed and where, e.g. 'Changed the homepage headline. No other pages were touched.' No jargon.",
+        },
+        before_after: {
+          type: "array",
+          description:
+            "For visible wording or image changes made in code: what the visitor saw before and will see after. Content (Sanity) edits get this automatically, don't repeat them.",
+          items: {
+            type: "object",
+            properties: {
+              label: {
+                type: "string",
+                description: "e.g. 'Homepage headline'",
+              },
+              before: { type: "string" },
+              after: { type: "string" },
+            },
+            required: ["label", "before", "after"],
+          },
+        },
+      },
+      required: [CHANGE_ID_PARAM, "summary"],
+    },
+  },
+  {
     name: "list_pending_changes",
     description:
-      "Show the current pending change, if any: which files differ from the live site, the pull request's automatic check status, and any unpublished Sanity content drafts. Call this before publish_changes. If checks are still running, this call itself waits up to ~20s for them before returning — if the result still comes back with checkStatus \"pending\" and a `note` field, just call this again rather than telling the human you'll wait or check back later; there's no real timer on your side to do that with.",
-    input_schema: { type: "object" as const, properties: {}, required: [] },
-    // Hosts that support MCP Apps render this alongside the plain-text
-    // result as a status card with a real Publish button (see
-    // mcp-ui-widgets.ts, which calls publish_changes via the widget
-    // runtime's callServerTool bridge). Ignored by hosts that don't support
-    // MCP Apps — they just see the plain-text result.
+      'Show waiting changes. With a change_id: the full review for that one change (what will go live, pages affected with preview links, before and after, the site check, and its review_token). Without one: a list of all waiting changes, plus older waiting work and unrelated Sanity Studio drafts that will NOT be published. Always show the person this review before publishing. If checks are still running this call waits up to ~20s; if checkStatus is still "pending", just call it again (you have no timer to wait with).',
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("Optional: the change to review."),
+      },
+      required: [],
+    },
+    // Hosts that support MCP Apps render this as a review card with
+    // Publish and Discard buttons (see mcp-ui-widgets.ts). Others just see
+    // the plain-text result.
     _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
   },
   {
     name: "publish_changes",
     description:
-      "Go live: merge the pending pull request (only if its automatic checks are passing) and publish any pending Sanity drafts. This is the ONLY way anything reaches the real site. Always call list_pending_changes first and confirm with the human what's about to go live before calling this.",
-    input_schema: { type: "object" as const, properties: {}, required: [] },
+      "Go live with ONE reviewed change: publishes only that change's code and content, nothing else. Needs the change_id and the review_token from list_pending_changes for that change; refuses if anything changed since that review, if the site check isn't passing, or if the change isn't 'Ready for review'. Before calling, show the person exactly what will go live and get a clear yes: 'You are about to publish these changes to the live RampRate website. Are you sure you want to continue?'",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The change to publish."),
+        review_token: {
+          type: "string",
+          description:
+            "The reviewToken from list_pending_changes for this change.",
+        },
+      },
+      required: [CHANGE_ID_PARAM, "review_token"],
+    },
+  },
+  {
+    name: "discard_change",
+    description:
+      "Reject a waiting change completely: its code edits and content drafts are thrown away and nothing goes live. Use when the person doesn't want it. It stays in the change history as Discarded. Also works for older waiting changes listed under olderChanges. Confirm with the person first.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The change to discard."),
+      },
+      required: [CHANGE_ID_PARAM],
+    },
+  },
+  {
+    name: "list_change_history",
+    description:
+      "History of website changes made through this server, newest first: when, who asked, what was changed, a summary, and whether it was published, discarded, or undone. Use canUndo and undo_change to restore the previous version of a published change.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        limit: {
+          type: "number",
+          description: "How many (default 20, max 100).",
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: "check_deploy",
+    description:
+      "Netlify build status, in plain words. With a change_id: that change's preview builds (is the preview ready, still building, or did the build fail and why). Without: the live ramprate.com site's latest builds, e.g. to confirm a publish actually went live or to explain a failed build. Read-only. If a build failed, use the error text to fix the cause in the same change.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema(
+          "Optional: show this change's preview builds instead of the live site.",
+        ),
+      },
+      required: [],
+    },
+  },
+  {
+    name: "undo_change",
+    description:
+      "Restore what the site looked like before a PUBLISHED change (from list_change_history). Creates a new waiting change called 'Undo: ...' that puts the old files and content back; it goes live only after the person reviews and publishes it like any other change. Refuses if the same pages or content were changed again afterwards, so later work isn't wiped out.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The published change to undo."),
+      },
+      required: [CHANGE_ID_PARAM],
+    },
   },
 ];
+
+// Edits must name their change (see start_change); reads may, to see that
+// change's version of a file instead of the live one.
+const CHANGE_REQUIRED_TOOLS = new Set([
+  "github_write_file",
+  "github_write_binary_file",
+  "github_delete_file",
+  "sanity_patch_document",
+  "sanity_create_document",
+]);
+const CHANGE_ACTION_TOOLS = new Set([
+  "submit_for_review",
+  "publish_changes",
+  "discard_change",
+  "undo_change",
+]);
+const CHANGE_OPTIONAL_TOOLS = new Set([
+  "github_read_file",
+  "github_list_dir",
+  "check_pr_status",
+]);
+
+function withChangeIdParam(name: string, schema: ToolSchema): ToolSchema {
+  if (CHANGE_REQUIRED_TOOLS.has(name)) {
+    return {
+      ...schema,
+      properties: {
+        ...schema.properties,
+        [CHANGE_ID_PARAM]: changeIdSchema(
+          "The change_id from start_change for the request this edit belongs to.",
+        ),
+      },
+      required: [...(schema.required ?? []), CHANGE_ID_PARAM],
+    };
+  }
+  if (CHANGE_OPTIONAL_TOOLS.has(name)) {
+    return {
+      ...schema,
+      properties: {
+        ...schema.properties,
+        [CHANGE_ID_PARAM]: changeIdSchema(
+          "Optional: read/check this change's version instead of the live site.",
+        ),
+      },
+    };
+  }
+  return schema;
+}
+
+interface ToolSchema {
+  type: "object";
+  properties: Record<string, unknown>;
+  required?: string[];
+}
 
 const MCP_TOOLS = [...CHAT_TOOLS, ...SESSION_TOOLS];
 
@@ -86,6 +283,10 @@ function toResult(output: unknown, isError = false) {
   };
 }
 
+function fromChangeResult<T extends { ok: boolean }>(result: T) {
+  return toResult(result, !result.ok);
+}
+
 // Tool hints ChatGPT and Claude use to decide when to ask the person to
 // confirm before running a tool (read-only tools run straight away; tools
 // that change things, delete, or reach outside RampRate get a prompt).
@@ -93,6 +294,7 @@ const DESTRUCTIVE_TOOLS = new Set([
   "github_delete_file",
   "delete_clickup_task",
   "publish_changes",
+  "discard_change",
 ]);
 const OPEN_WORLD_TOOLS = new Set([
   "send_email",
@@ -118,18 +320,23 @@ function toolAnnotations(name: string) {
 
 // ChatGPT-specific extras on top of the MCP Apps standard keys: the legacy
 // outputTemplate alias, the short "working / done" status lines shown while
-// a tool runs, and widgetAccessible so the card's Publish button may call
-// publish_changes.
+// a tool runs, and widgetAccessible so the card's buttons may call
+// list_pending_changes / publish_changes / discard_change.
 const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
   list_pending_changes: {
     "openai/outputTemplate": PENDING_CHANGES_UI_URI,
-    "openai/toolInvocation/invoking": "Checking pending website changes…",
-    "openai/toolInvocation/invoked": "Pending changes ready",
+    "openai/toolInvocation/invoking": "Checking waiting website changes…",
+    "openai/toolInvocation/invoked": "Changes ready to review",
     "openai/widgetAccessible": true,
   },
   publish_changes: {
     "openai/toolInvocation/invoking": "Publishing to the live site…",
     "openai/toolInvocation/invoked": "Publish finished",
+    "openai/widgetAccessible": true,
+  },
+  discard_change: {
+    "openai/toolInvocation/invoking": "Discarding the change…",
+    "openai/toolInvocation/invoked": "Change discarded",
     "openai/widgetAccessible": true,
   },
   get_project_rules: {
@@ -138,88 +345,35 @@ const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
   },
 };
 
-async function listPendingChanges() {
-  const drafts = await listPendingDrafts();
-  const existing = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
-  if (!existing) {
+async function listPendingChanges(changeKey: string | null) {
+  const open = await listOpenChangeSets();
+  const overview = await pendingOverview(open);
+  const target = changeKey
+    ? await getChangeSet(changeKey)
+    : open.length === 1 && overview.olderChanges.length === 0
+      ? open[0]
+      : null;
+
+  if (changeKey && !target) {
     return {
-      branch: null,
-      prNumber: null,
-      prUrl: null,
-      checkStatus: "unknown",
-      failingChecks: [],
-      files: [],
-      drafts,
-      canPublish: drafts.length > 0,
+      view: "list" as const,
+      error: `No change found with id ${changeKey}.`,
+      ...overview,
     };
   }
+  if (!target) return { view: "list" as const, ...overview };
 
-  const [compare, checks] = await Promise.all([
-    gh.compareToDefaultBranch(existing.branch),
-    waitForChecks(existing.number),
-  ]);
-
+  const others =
+    open.filter((c) => c.key !== target.key).length +
+    overview.olderChanges.length;
+  const review = await buildReview(target, others);
   return {
-    branch: existing.branch,
-    prNumber: existing.number,
-    prUrl: `https://github.com/${gh.GITHUB_REPO.owner}/${gh.GITHUB_REPO.repo}/pull/${existing.number}`,
-    previewUrl: checks.previewUrl,
-    checkStatus: checks.status,
-    ...(checks.note ? { note: checks.note } : {}),
-    failingChecks: checks.failingChecks,
-    files: compare.files,
-    drafts,
-    canPublish:
-      (compare.files.length > 0 || drafts.length > 0) &&
-      checks.status !== "failure" &&
-      checks.status !== "pending",
+    view: "detail" as const,
+    ...review,
+    otherWaiting: overview.changes.filter((c) => c.changeId !== target.key),
+    olderChanges: overview.olderChanges,
+    unrelatedDrafts: overview.unrelatedDrafts,
   };
-}
-
-async function publishChanges() {
-  const existing = await gh.findOpenAdminPR(ADMIN_BRANCH_PREFIX);
-  const drafts = await listPendingDrafts();
-
-  if (!existing && drafts.length === 0) {
-    return { error: "Nothing pending to publish" };
-  }
-
-  let mergeSha: string | null = null;
-  if (existing) {
-    const status = await gh.getPRCombinedStatus(existing.number);
-    if (status === "failure") {
-      return {
-        error:
-          "The pull request's build checks are failing. Fix the issue before publishing.",
-      };
-    }
-    if (status === "pending") {
-      return {
-        error:
-          "The pull request's build checks are still running. Try again in a moment.",
-      };
-    }
-
-    const merged = await gh.mergePR(existing.number);
-    if (!merged.merged) {
-      return { error: "GitHub could not merge the pull request." };
-    }
-    mergeSha = merged.sha;
-
-    try {
-      await gh.deleteBranch(existing.branch);
-    } catch {
-      // Branch may already be auto-deleted by GitHub's merge settings — not fatal.
-    }
-  }
-
-  const publishedIds: string[] = [];
-  for (const draft of drafts) {
-    await publishDraft(draft.id);
-    publishedIds.push(draft.publishedId);
-  }
-
-  return { ok: true, mergeSha, publishedIds };
 }
 
 // Sent to every connecting client during the MCP handshake and meant to act
@@ -234,6 +388,10 @@ STEP 1, EVERY CONVERSATION: call get_project_rules before anything else, read th
 returns in full, and follow them for the rest of the conversation. They override your defaults.
 Every tool that changes the site, its content, or sends email requires the rulesVersion it
 returns as the rules_version argument, and refuses to run without it.
+
+STEP 2, EVERY REQUEST: one request = one change. Call start_change, pass its change_id on
+every edit, then submit_for_review with a plain summary, then list_pending_changes with that
+change_id to show the review card. The person then publishes or discards THAT change only.
 
 The rules cover, among other things:
 - Plain, short, jargon-free replies (the day-to-day user is non-technical), no em dashes.
@@ -273,9 +431,12 @@ export function createAdminMcpServer(user: McpUser): Server {
       description: RULES_GATED_TOOLS.has(t.name)
         ? `${t.description} Requires ${RULES_VERSION_PARAM} from get_project_rules.`
         : t.description,
-      inputSchema: RULES_GATED_TOOLS.has(t.name)
-        ? withRulesVersionParam(t.input_schema)
-        : t.input_schema,
+      inputSchema: (() => {
+        const schema = withChangeIdParam(t.name, t.input_schema as ToolSchema);
+        return RULES_GATED_TOOLS.has(t.name)
+          ? withRulesVersionParam(schema)
+          : schema;
+      })(),
       annotations: toolAnnotations(t.name),
       ...("_meta" in t || CHATGPT_TOOL_META[t.name]
         ? {
@@ -321,7 +482,7 @@ export function createAdminMcpServer(user: McpUser): Server {
               csp: { resourceDomains: ["https://esm.sh"] },
             },
             "openai/widgetDescription":
-              "Shows the website changes waiting to go live, whether the site check passed, a preview link, and a Publish button.",
+              "Review card for one website change: what will go live, before and after, the site check, preview links, and Publish or Discard buttons with a confirm step.",
             "openai/widgetPrefersBorder": true,
           },
         },
@@ -371,7 +532,7 @@ export function createAdminMcpServer(user: McpUser): Server {
                 ? "You can prepare changes (they wait as pending), but a team member with write access must publish them. You can't send email or delete."
                 : "Full access, including publishing.",
         },
-        howToUse: `Follow every rule below for the rest of this conversation. For each request, first use taskGuide to decide what kind of task it is, where it lives (most page text is in code, not Sanity) and whether it needs a yes, and projectStructure to find the files. Pass "${rules.version}" as ${RULES_VERSION_PARAM} on every tool that changes something. End every reply that did work with the Status Report from section 7. Before touching a feature, read its note from knowledgeBase with github_read_file.`,
+        howToUse: `Follow every rule below for the rest of this conversation. One request = one change: start_change, pass its change_id on every edit, submit_for_review with a plain summary, then list_pending_changes with that change_id so the person sees exactly what will go live and can Publish or Discard it. For each request, first use taskGuide to decide what kind of task it is, where it lives (most page text is in code, not Sanity) and whether it needs a yes, and projectStructure to find the files. Pass "${rules.version}" as ${RULES_VERSION_PARAM} on every tool that changes something. End every reply that did work with the Status Report from section 7. Before touching a feature, read its note from knowledgeBase with github_read_file.`,
         rules: rules.content,
         taskGuide: guides.taskGuide,
         projectStructure: guides.projectStructure,
@@ -395,35 +556,202 @@ export function createAdminMcpServer(user: McpUser): Server {
       if (blocked) return toResult({ error: blocked }, true);
     }
 
-    if (name === "list_pending_changes") {
-      // The card's Publish button needs the current rules version (publish
-      // is rules-gated) and to know whether this person may publish at all,
-      // so it can hide the button instead of letting a click fail.
+    const rawChangeId = input[CHANGE_ID_PARAM];
+    delete input[CHANGE_ID_PARAM];
+    const changeKey =
+      rawChangeId === undefined || rawChangeId === ""
+        ? null
+        : normalizeChangeKey(rawChangeId);
+    if (rawChangeId !== undefined && rawChangeId !== "" && !changeKey) {
+      return toResult(
+        {
+          error: `"${String(rawChangeId)}" isn't a valid change_id. Use the one start_change returned.`,
+        },
+        true,
+      );
+    }
 
-      const pending = await listPendingChanges();
+    if (name === "start_change") {
+      const title = String(input.title ?? "").trim();
+      const request = String(input.request ?? "").trim();
+      if (!title || !request) {
+        return toResult(
+          { error: "A title and the person's request are both required." },
+          true,
+        );
+      }
+      const change = await createChangeSet({ title, request, user });
+      return toResult({
+        change_id: change.key,
+        status: "Draft",
+        next: `Pass change_id "${change.key}" on every edit for this request. When done, call submit_for_review, then list_pending_changes with this change_id.`,
+      });
+    }
+
+    if (name === "check_deploy") {
+      if (!isNetlifyConfigured()) {
+        return toResult(
+          {
+            error:
+              "Netlify access isn't set up on the server (NETLIFY_AUTH_TOKEN). Ask the webmaster.",
+          },
+          true,
+        );
+      }
+      let branch: string | undefined;
+      if (changeKey) {
+        const target = await getChangeSet(changeKey);
+        branch = target?.branch ?? undefined;
+        if (!branch) {
+          return toResult({
+            deploys: [],
+            note: target
+              ? "This change has no code edits, so there is no preview build. Content-only changes go live when published."
+              : `No change found with id ${changeKey}.`,
+          });
+        }
+      }
+      try {
+        const deploys = await listDeploys(
+          branch ? { branch, limit: 3 } : { production: true, limit: 3 },
+        );
+        return toResult({
+          site: branch
+            ? `Preview of change ${changeKey}`
+            : "Live site (ramprate.com)",
+          deploys,
+        });
+      } catch (err) {
+        return toResult(
+          {
+            error: err instanceof Error ? err.message : "Netlify check failed",
+          },
+          true,
+        );
+      }
+    }
+
+    if (name === "list_change_history") {
+      const limit = Number(input.limit ?? 20);
+      return toResult({
+        history: await changeHistory(Number.isFinite(limit) ? limit : 20),
+      });
+    }
+
+    if (name === "list_pending_changes") {
+      const pending = await listPendingChanges(changeKey);
+      // rulesVersion goes in the result's _meta, which hosts pass to the UI
+      // card but not to the model - so the model still has to call
+      // get_project_rules itself before it can publish or discard.
       const rulesVersion = await getProjectRules()
         .then((r) => r.version)
         .catch(() => null);
-      // rulesVersion goes in the result's _meta, which hosts pass to the UI
-      // card but not to the model - so the model still has to call
-      // get_project_rules itself before it can publish.
       return {
         ...toResult({
           ...pending,
           youCanPublish: canUseTool(user.role, "publish_changes"),
+          youCanDiscard: canUseTool(user.role, "discard_change"),
           you: { name: user.name, role: user.role },
         }),
         _meta: { rulesVersion },
       };
     }
-    if (name === "publish_changes") {
-      return toResult(await publishChanges());
+
+    if (
+      (CHANGE_REQUIRED_TOOLS.has(name) || CHANGE_ACTION_TOOLS.has(name)) &&
+      !changeKey
+    ) {
+      return toResult(
+        {
+          error:
+            name === "publish_changes" ||
+            name === "discard_change" ||
+            name === "undo_change"
+              ? "Say which change: pass its change_id (see list_pending_changes or list_change_history)."
+              : "Every edit must belong to a change. Call start_change for this request first and pass its change_id.",
+        },
+        true,
+      );
     }
+
+    if (name === "publish_changes") {
+      return fromChangeResult(
+        await publishChange(changeKey!, String(input.review_token ?? ""), user),
+      );
+    }
+    if (name === "discard_change") {
+      return fromChangeResult(await discardChange(changeKey!, user));
+    }
+    if (name === "undo_change") {
+      const result = await undoChange(changeKey!, user);
+      return fromChangeResult(
+        result.ok
+          ? {
+              ...result,
+              next: `Created "${result.title}". Show it with list_pending_changes and change_id "${result.changeId}"; it goes live only if the person publishes it.`,
+            }
+          : result,
+      );
+    }
+
+    let change: ChangeSet | null = null;
+    if (changeKey) {
+      change = await getChangeSet(changeKey);
+      if (!change) {
+        return toResult(
+          {
+            error: `No change found with id ${changeKey}. Call start_change for a new request.`,
+          },
+          true,
+        );
+      }
+    }
+
+    if (name === "submit_for_review") {
+      const summary = String(input.summary ?? "").trim();
+      if (!summary) {
+        return toResult(
+          { error: "A plain-English summary is required." },
+          true,
+        );
+      }
+      const beforeAfter = Array.isArray(input.before_after)
+        ? (input.before_after as Array<Record<string, unknown>>)
+            .filter((b) => b && typeof b === "object")
+            .map((b) => ({
+              label: String(b.label ?? ""),
+              before: String(b.before ?? ""),
+              after: String(b.after ?? ""),
+            }))
+        : [];
+      const result = await submitForReview(change!, summary, beforeAfter);
+      return fromChangeResult(
+        result.ok
+          ? {
+              ...result,
+              next: `Now call list_pending_changes with change_id "${change!.key}" to show the person the review.`,
+            }
+          : result,
+      );
+    }
+
     if (!CHAT_TOOLS.some((t) => t.name === name)) {
       return toResult({ error: `Unknown tool "${name}"` }, true);
     }
 
-    const { ctx, auditLog, finalize } = await buildMcpToolContext();
+    if (CHANGE_REQUIRED_TOOLS.has(name)) {
+      if (!isOpen(change!)) {
+        return toResult(
+          {
+            error: `Change ${change!.key} is already ${change!.status.replace(/_/g, " ")}. Call start_change for a new request.`,
+          },
+          true,
+        );
+      }
+      await markEdited(change!);
+    }
+
+    const { ctx, auditLog, finalize } = await buildMcpToolContext(change);
     const result = await runAdminTool(name, input, ctx);
     const session = await finalize();
 

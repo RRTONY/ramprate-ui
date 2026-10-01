@@ -46,12 +46,15 @@ If the request is unclear, ask **one** short question with 2 to 4 options instea
 ## Step 3. Do it the standard way
 
 1. Read the files (or content) you'll change first. Read the matching `docs/ai/` note for that feature.
+   Through MCP, call `start_change` for this request and pass its `change_id` on every edit.
 2. Make the smallest change that does the job, following the Coding Patterns in AGENTS.md.
 3. Run the checks (AGENTS.md section 5). Through MCP: `check_code_quality` on every changed file,
    then `check_pr_status` until it passes, then open the preview link.
 4. Review your own change with the Code Review Checklist (AGENTS.md section 4).
-5. Show the person the preview and what will go live (`list_pending_changes`). Publish
-   (`publish_changes`) only after a clear yes.
+5. `submit_for_review` with a plain summary, then show the person the review card
+   (`list_pending_changes` with the `change_id`): pages, preview links, before/after. Publish
+   (`publish_changes` with the `change_id` + `review_token`) only after a clear yes, or
+   `discard_change` if they don't want it. Published something by mistake? `undo_change`.
 6. End with the Status Report (AGENTS.md section 7).
 
 ## Common mistakes to avoid
