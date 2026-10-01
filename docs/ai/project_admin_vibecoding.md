@@ -364,3 +364,33 @@ locally.
   for root. All green: tsc, eslint, prettier, vitest (14), `yarn build`.
 
 **Update 2026-09-26: `MCP_ADMIN_TOKEN` removed.** The single shared token described above leaked in a screen share and was replaced by per-person access (`MCP_ADMIN_USERS`, roles read/edit/write) plus a RampRate sign-in page (OAuth, `src/lib/admin/mcp-oauth.ts`). The server never accepts `MCP_ADMIN_TOKEN` now; `.mcp.json` holds only the URL and Claude Code signs in through the browser. See AGENTS.md "MCP server".
+
+## 2026-10-02: per-request change sets, discard, history, undo
+
+Requested by the webmaster after testing in ChatGPT (via Manus) before handing the server to
+Tony. Problems found: no way to reject a change, and every request piled onto ONE shared
+pending branch, so "Publish" could take an older, unrelated change live. Worse, the old
+`publish_changes` published **every** Sanity draft in the dataset, including half-finished
+edits someone had left in Studio.
+
+What changed (details in AGENTS.md, "Change sets"):
+- `start_change` → edits carry `change_id` (required) → `submit_for_review` (AI's plain
+  summary + optional `before_after`) → `list_pending_changes` with `change_id` (review card) →
+  `publish_changes` (`change_id` + `review_token`) or `discard_change`.
+- `list_change_history`, `undo_change` (creates a reviewed "Undo: ..." change), `check_deploy`
+  (read-only Netlify status, needs `NETLIFY_AUTH_TOKEN`).
+- Statuses: Draft → Ready for review → Published / Discarded.
+
+Gotchas:
+- ChatGPT caches a card's HTML by URI, so a redesigned card needs a new URI
+  (`pending-changes-v2.html`).
+- OpenAI's card guidelines: max two actions, no drill-down/multiple views, no inner
+  scrolling. That's why the multi-change view is a plain list without buttons.
+- A leftover `.next/dev/types/validator.ts` from an old `next dev` run broke `npm run build`
+  with "Cannot find module ... tsi-proposal/page.js". Delete `.next/dev` and rebuild.
+- `npx tsx` can't load modules that pull in `@react-pdf` (package exports error); run live
+  scripts through Vitest instead.
+
+Not done yet: desktop + phone preview inside the card (links open the preview; checking on a
+phone is manual), and a Studio view of the history. Publish and undo were verified against
+fakes; the first real publish through the new flow should be watched.

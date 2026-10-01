@@ -181,10 +181,18 @@ the Status Report.
 
 ## 6. Before You Publish
 
-- Nothing goes live except by merging the PR and publishing the matching Sanity drafts
-  (`publish_changes` on the MCP server).
-- Always show the person what is about to go live (`list_pending_changes`) and get a clear yes.
-- Never publish while the build check is pending or failing.
+- **One request = one change.** On the MCP server, call `start_change` for each new request and
+  pass its `change_id` on every edit (edits without one are refused). When done,
+  `submit_for_review` with a 1 to 3 sentence plain summary (plus `before_after` for visible wording
+  changed in code), then `list_pending_changes` with that `change_id` to show the review card.
+- Nothing goes live except `publish_changes` for one reviewed change (its `change_id` + the
+  `reviewToken` from the review). It publishes only that change's code and content drafts, never
+  other waiting changes or Sanity Studio drafts, and refuses if anything changed since the review.
+- Always show the person what is about to go live and get a clear yes. If they don't want it,
+  `discard_change`. To reverse a published change, `undo_change` (it creates a new "Undo" change
+  that is reviewed and published like any other). History: `list_change_history`.
+- Never publish while the build check is pending or failing (`check_deploy` explains a failed
+  Netlify build).
 
 ---
 
@@ -516,6 +524,7 @@ not just locally, or `/api/mcp` will 500 in production:**
 | `MCP_PUBLIC_ORIGIN` | Optional, `https://ramprate.com`. The public address the MCP sign-in metadata advertises. Without it the server works it out from the request, falling back to Netlify's `URL`. It must never be the internal `master--ramprate.netlify.app` address, or ChatGPT/Claude refuse to connect (they require the metadata's resource to match the URL they were given; this exact bug shipped once, fixed 2026-09-26 in `publicOrigin()`). |
 | `MCP_LOGIN_PASSWORD` | Password for the MCP sign-in page (`/oauth/authorize`), used together with a team email from `MCP_ADMIN_USERS`. One password for the whole team, by the owner's choice (2026-09-26). **Changing it signs everyone out** (all sign-in tokens are keyed to it). Never write the value into code or docs. |
 | `GOOGLE_API_KEY` | Used by `lighthouse_check_page` (`src/lib/admin/lighthouse-check.ts`) for Google's PageSpeed Insights API. Required, not optional — the anonymous quota for this API is 0, confirmed via a real 429 response, not just "low." Restrict this key to the PageSpeed Insights API only in Google Cloud Console (Credentials → the key → API restrictions) — don't widen it "just in case" for other Google APIs without deciding that deliberately. |
+| `NETLIFY_AUTH_TOKEN` | Personal Netlify token, used read-only by `check_deploy` (`src/lib/admin/netlify-client.ts`). It can reach every site on the account, so the code only ever reads the RampRate site. Without it, `check_deploy` says it isn't set up; everything else works. |
 | `CLICKUP_API_TOKEN` | Personal ClickUp API token, used by `create_clickup_task`/`update_clickup_task`/`delete_clickup_task` (`src/lib/admin/clickup-client.ts`). A personal token authenticates as whoever generated it — currently Darryl Dsouza — not a app-level integration; ClickUp task writes show up as created/edited by that person. |
 
 **This repo's default branch is `master`, not `main`** — anything touching the GitHub API must
@@ -578,13 +587,30 @@ infrastructure to maintain.
 - **Stateless by design:** built with the SDK's `WebStandardStreamableHTTPServerTransport` in
   stateless mode (`sessionIdGenerator: undefined`) — a fresh `Server` per HTTP request, matching
   Netlify Functions' actual no-memory-between-invocations behavior. Instead of a session cookie,
-  every tool call resolves "the pending change" by asking GitHub whether an admin branch/PR is
-  already open (`gh.findOpenAdminPR`, same single-operator assumption as the chat UI). See
-  `src/lib/admin/mcp-tool-context.ts` — its `finalize()` opens the PR the instant a branch gets its
-  first commit; skipping that step means a later independent tool call can never find the branch
-  again (GitHub only lets you query *open PRs* by branch prefix, not branches with no PR), and would
-  silently fork a new orphan branch per call. Verified against a real GitHub PR during this build,
-  not just by inspection.
+  every edit names its change (`change_id`), and `src/lib/admin/mcp-tool-context.ts` resolves that
+  change's own branch (`admin/vibe-<change_id>`) and PR from its record; `finalize()` opens the PR
+  the instant the branch gets its first commit and saves the PR number on the record.
+- **Change sets (added 2026-10-02, replaces the old "one shared pending change"):** each request is
+  an `adminChange` Sanity document (`src/lib/admin/change-sets.ts`), id `adminChange.<key>`. Dotted
+  ids are never readable without a token (confirmed live: an anonymous read returns nothing), and
+  `adminChange` is not in the agent's editable type allowlist. The record holds title, request, who
+  asked, status (Draft → Ready for review → Published / Discarded), the AI's summary, files and
+  pages affected, and each Sanity document it touched with a copy of the live version from before
+  (`beforeJson`), which drives before/after, conflict checks and undo. A Sanity document can belong
+  to only one waiting change, and is refused if it has unsaved Studio edits, so publishing never
+  takes someone's Studio work live. Publish requires a `reviewToken` (hash of the PR head sha + each
+  draft's `_rev`) and merges with GitHub's `sha` guard. Undo restores files with one commit pointing
+  at the old blobs (`createBranchWithFileStates`, binaries included) and content as drafts, and
+  refuses if the same file or document changed again since. Waiting PRs with no record (from before
+  this) are listed as `olderChanges`: discardable, not publishable. Plain-language helpers (file →
+  page names, field-level before/after) are in `src/lib/admin/change-describe.ts`. Tests:
+  `tests/admin/change-sets.test.ts` (fake Sanity + GitHub), `tests/admin/change-describe.test.ts`.
+  Verified live 2026-10-02 (start → edit → submit → review → stale-token publish refused →
+  discard), not just by inspection. Publish and undo were tested against fakes only so far.
+- **`check_deploy`** (`src/lib/admin/netlify-client.ts`): read-only Netlify build status for the
+  live site or one change's preview, with the failure reason. The site id is a constant and only GET
+  requests are made, because `NETLIFY_AUTH_TOKEN` (a personal token) can reach every site on the
+  account. Netlify's "Skipped" duplicate builds are hidden as noise.
 - **Connecting Claude Code (per-repo, team-wide):** `.mcp.json` at the repo root declares this
   server by URL only (no token, safe to commit). On first use Claude Code asks to approve it; then
   run `/mcp` → `ramprate-admin` → Authenticate, which opens the RampRate sign-in page in the browser
@@ -613,6 +639,14 @@ infrastructure to maintain.
   hidden for roles that can't publish (`youCanPublish`). Every tool also has `annotations`
   (`readOnlyHint`/`destructiveHint`/`openWorldHint`) so hosts ask for confirmation before changes.
   Tests: `tests/admin/mcp-widget.test.ts`.
+- **Review card (rebuilt 2026-10-02 for change sets, URI now `pending-changes-v2.html` since
+  ChatGPT caches a card's HTML by URI):** one change per card: status, who asked, AI summary plus
+  server-written facts ("N other waiting changes are NOT included"), pages with preview links,
+  before/after, site check, and Publish (primary) + Discard (secondary), each with an in-card
+  confirm. With several waiting changes the card is a plain list with no buttons (OpenAI's
+  guidelines: no drill-down inside a card, max two actions). No red: failures use the brand purple
+  `#4A1D5E` (a lighter tint on dark backgrounds) plus words. The older notes below describe the
+  first version.
 - **Interactive widget (MCP Apps):** `list_pending_changes` declares `_meta.ui.resourceUri` pointing
   at a small HTML status card (`src/lib/admin/mcp-ui-widgets.ts`) — hosts that support the MCP Apps
   extension (Claude, ChatGPT; launched as an open standard 2026-01-26, see mcpui.dev) render it

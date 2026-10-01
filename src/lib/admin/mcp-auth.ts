@@ -128,6 +128,8 @@ export function authenticateMcpRequest(req: Request): McpUser | null {
 export const READ_ONLY_TOOLS = new Set([
   "get_project_rules",
   "list_pending_changes",
+  "list_change_history",
+  "check_deploy",
   "github_list_dir",
   "github_read_file",
   "seo_check_page",

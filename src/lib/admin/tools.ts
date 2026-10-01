@@ -605,6 +605,15 @@ export interface AdminToolContext {
   getAttachment: (name: string) => Attachment | null;
   recordDownload: (file: Download) => void;
   log: (entry: string) => void;
+  // Ties a Sanity document to the change being worked on; returns a reason
+  // to refuse (it belongs to another waiting change, or has unsaved Studio
+  // edits) or null to go ahead.
+  claimContent: (item: {
+    id: string;
+    type: string;
+    title: string;
+    isNew: boolean;
+  }) => Promise<string | null>;
 }
 
 export interface ToolCallResult {
@@ -910,6 +919,14 @@ export async function runAdminTool(
           isError: true,
         };
       }
+      const docTitle = current as { title?: string; name?: string };
+      const refused = await ctx.claimContent({
+        id: String((current as { _id: string })._id).replace(/^drafts\./, ""),
+        type: currentType,
+        title: docTitle.title || docTitle.name || id,
+        isNew: false,
+      });
+      if (refused) return { output: { error: refused }, isError: true };
       await patchDraft(id, patch);
       ctx.log(`Patched Sanity draft for ${id}`);
       return { output: { ok: true, id } };
@@ -927,6 +944,12 @@ export async function runAdminTool(
         };
       }
       const created = await createDraft(docType, fields);
+      await ctx.claimContent({
+        id: created._id.replace(/^drafts\./, ""),
+        type: docType,
+        title: String(fields.title ?? fields.name ?? "New item"),
+        isNew: true,
+      });
       ctx.log(`Created Sanity draft ${created._id} (${docType})`);
       return { output: { ok: true, id: created._id } };
     }
