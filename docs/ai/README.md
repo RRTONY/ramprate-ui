@@ -9,6 +9,10 @@ Background notes for any AI tool working on this repo. The **rules** live in [`/
 - Never put passwords, tokens or keys in these files.
 - Notes are dated. If a note conflicts with the current code, the code wins: check it, then fix the note.
 
+## Interactive blog pages
+
+- [project_shared_ownership_blog](project_shared_ownership_blog.md): Exact copy of the shared ownership article, including calculators, original design, assets and blog indexing.
+
 ## Working rules and lessons (the why behind the rules in AGENTS.md)
 
 - [feedback_ambiguous_corrections](feedback_ambiguous_corrections.md): When a terse correction could contradict a very recent explicit user decision, confirm which thing to change before editing — don't guess
