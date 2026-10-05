@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import {
   CallToolRequestSchema,
@@ -10,21 +11,36 @@ import { ADMIN_TOOLS, runAdminTool } from "@/lib/admin/tools";
 import {
   buildReview,
   changeHistory,
+  confirmChange,
   createChangeSet,
   discardChange,
   getChangeSet,
   isOpen,
   listOpenChangeSets,
   markEdited,
+  markWarmed,
   pendingOverview,
   publishChange,
   reconcileWithGitHub,
+  recordDevices,
   submitForReview,
   undoChange,
   type ChangeSet,
 } from "@/lib/admin/change-sets";
-import { describeFiles, normalizeChangeKey } from "@/lib/admin/change-describe";
-import { captureDevices, previewTarget } from "@/lib/admin/device-preview";
+import {
+  APPLIES_TO_LABELS,
+  describeFiles,
+  normalizeAppliesTo,
+  normalizeChangeKey,
+} from "@/lib/admin/change-describe";
+import {
+  captureDevices,
+  deviceOutcome,
+  liveTarget,
+  previewTarget,
+  warmDevices,
+  type Device,
+} from "@/lib/admin/device-preview";
 import * as gh from "@/lib/admin/github-client";
 import { isNetlifyConfigured, listDeploys } from "@/lib/admin/netlify-client";
 import { buildMcpToolContext } from "@/lib/admin/mcp-tool-context";
@@ -77,7 +93,7 @@ const SESSION_TOOLS = [
   {
     name: "start_change",
     description:
-      "Start a new, separate change for ONE request from the person (e.g. 'change the homepage headline'). Returns a change_id. Every edit for this request (github_write_file, github_write_binary_file, github_delete_file, sanity_patch_document, sanity_create_document) must pass this change_id, so each request is kept apart and publishing it never takes any other request live. Start a new change for each new request; keep using the same change_id for follow-up tweaks to the same request.",
+      "Start a new, separate change for ONE request from the person (e.g. 'change the homepage headline'). Returns a change_id. Every edit for this request (github_write_file, github_write_binary_file, github_delete_file, sanity_patch_document, sanity_create_document) must pass this change_id, so each request is kept apart and publishing it never takes any other request live. Start a new change for each new request; keep using the same change_id for follow-up tweaks to the same request. Before calling, look at the site to work out what the person really means. If the request is at all unclear, set needs_confirmation: the card then shows the person 'I understand your request as: ...' with Desktop/Mobile/Both, and every edit is refused until they say yes (confirm_change). Non-technical people often use words like tabs, table, buttons, menu, header, box or section loosely, so treat those as unclear unless the page has exactly one thing they could mean.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -90,8 +106,43 @@ const SESSION_TOOLS = [
           type: "string",
           description: "What the person asked for, in their words.",
         },
+        understood_as: {
+          type: "string",
+          description:
+            "One or two plain sentences saying exactly what you will change and where, in the site's real terms, e.g. 'Move the desktop navigation menu from the top of every page to a vertical menu on the right side.'",
+        },
+        applies_to: {
+          type: "string",
+          enum: ["both", "desktop", "mobile"],
+          description:
+            "Where the change should show. Default 'both'. Use 'desktop' or 'mobile' only when the person said so (e.g. 'on mobile', 'on my phone').",
+        },
+        needs_confirmation: {
+          type: "boolean",
+          description:
+            "true when the request could mean more than one thing, uses loose words (tabs, table, buttons, menu, header, box, section...), or you had to guess. false only when it names exactly what to change, e.g. a precise wording edit.",
+        },
       },
-      required: ["title", "request"],
+      required: ["title", "request", "understood_as", "needs_confirmation"],
+    },
+    _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
+  },
+  {
+    name: "confirm_change",
+    description:
+      "Record the person's YES to what you understood for a change that is 'Waiting for your OK' (start_change with needs_confirmation). Only call it after the person clearly agreed in the chat (the card's Yes button calls it too). Pass applies_to if they picked desktop or mobile only. Edits for the change are refused until this is done. If they said you got it wrong, don't call this: discard_change and start_change again with the corrected understanding.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema("The change to confirm."),
+        applies_to: {
+          type: "string",
+          enum: ["both", "desktop", "mobile"],
+          description:
+            "Optional: the person's choice. Default keeps the current one.",
+        },
+      },
+      required: [CHANGE_ID_PARAM],
     },
   },
   {
@@ -131,7 +182,7 @@ const SESSION_TOOLS = [
   {
     name: "list_pending_changes",
     description:
-      'Show waiting changes. With a change_id: the full review for that one change (what will go live, pages affected with preview links, before and after, the site check, and its review_token). Without one: a list of all waiting changes, plus older waiting work and unrelated Sanity Studio drafts that will NOT be published. Always show the person this review before publishing. If checks are still running this call waits up to ~20s; if checkStatus is still "pending", just call it again (you have no timer to wait with).',
+      'Show waiting changes. With a change_id: the full review for that one change: ONE status (state: working, checking, ready, failed, stuck, awaiting_ok, published, discarded) with nextStep telling the person what to do, the checks (Build, Type check, Lint, Phone and laptop preview), what will go live, before and after, preview links, and its review_token. The card shows Preview, Discard and Publish together (greyed out when not allowed) plus Retry when something failed. Without a change_id: every waiting change, each reviewable on its own, plus older waiting work and unrelated Sanity Studio drafts that will NOT be published. Always show the person this review before publishing. In your reply, lead with the state and nextStep in one line and don\'t repeat the card. If state is "checking", call it again in a bit (you have no timer to wait with).',
     input_schema: {
       type: "object" as const,
       properties: {
@@ -176,7 +227,7 @@ const SESSION_TOOLS = [
   {
     name: "list_change_history",
     description:
-      "History of website changes made through this server, newest first: when, who asked, what was changed, a summary, and whether it was published, discarded, or undone. Use canUndo and undo_change to restore the previous version of a published change.",
+      "History of website changes made through this server, newest first: when, who asked, what was changed, a summary, and whether it was published, discarded, or undone. Shown as a card where each published change has a Restore button (it calls undo_change, which prepares an 'Undo' change for review; nothing goes live until that is published). Use canUndo and undo_change to restore the previous version of a published change.",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -187,11 +238,12 @@ const SESSION_TOOLS = [
       },
       required: [],
     },
+    _meta: { ui: { resourceUri: PENDING_CHANGES_UI_URI } },
   },
   {
     name: "preview_on_devices",
     description:
-      "Show how a change's preview looks on a phone and on a laptop: real screenshots of the top of the page, shown side by side in the card. Use after list_pending_changes whenever the change affects layout, images, buttons or anything visual, so the person can check both sizes before publishing. Needs the change's preview to be built (site check passed). The first try on a page can take a while; if it says to try again, call it once more (Google caches the page, so the second try is quick).",
+      "Show how a change looks on a phone and on a laptop, before (the live site) and after (the preview): real screenshots of the top of the page, side by side in the card. Use after list_pending_changes whenever the change affects layout, images, buttons or anything visual, so the person can check both sizes before publishing. Needs the change's preview to be built (Build check passed). If a screenshot timed out, the card offers Retry, which re-takes only the missing ones (it's usually quick the second time).",
     input_schema: {
       type: "object" as const,
       properties: {
@@ -200,6 +252,12 @@ const SESSION_TOOLS = [
           type: "string",
           description:
             "Page address to show, e.g. '/' or '/about'. Defaults to the first page the change affects.",
+        },
+        devices: {
+          type: "array",
+          items: { type: "string", enum: ["phone", "laptop"] },
+          description:
+            "Optional: only these devices (used by Retry). Default both.",
         },
       },
       required: [CHANGE_ID_PARAM],
@@ -244,6 +302,7 @@ const CHANGE_REQUIRED_TOOLS = new Set([
   "sanity_create_document",
 ]);
 const CHANGE_ACTION_TOOLS = new Set([
+  "confirm_change",
   "submit_for_review",
   "publish_changes",
   "discard_change",
@@ -344,6 +403,28 @@ function toolAnnotations(name: string) {
 // a tool runs, and widgetAccessible so the card's buttons may call
 // list_pending_changes / publish_changes / discard_change.
 const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
+  start_change: {
+    "openai/outputTemplate": PENDING_CHANGES_UI_URI,
+    "openai/toolInvocation/invoking": "Starting the change…",
+    "openai/toolInvocation/invoked": "Change started",
+    "openai/widgetAccessible": true,
+  },
+  confirm_change: {
+    "openai/toolInvocation/invoking": "Saving your OK…",
+    "openai/toolInvocation/invoked": "Confirmed",
+    "openai/widgetAccessible": true,
+  },
+  list_change_history: {
+    "openai/outputTemplate": PENDING_CHANGES_UI_URI,
+    "openai/toolInvocation/invoking": "Loading the change history…",
+    "openai/toolInvocation/invoked": "Change history",
+    "openai/widgetAccessible": true,
+  },
+  undo_change: {
+    "openai/toolInvocation/invoking": "Preparing the restore…",
+    "openai/toolInvocation/invoked": "Restore ready to review",
+    "openai/widgetAccessible": true,
+  },
   list_pending_changes: {
     "openai/outputTemplate": PENDING_CHANGES_UI_URI,
     "openai/toolInvocation/invoking": "Checking waiting website changes…",
@@ -354,6 +435,7 @@ const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
     "openai/outputTemplate": PENDING_CHANGES_UI_URI,
     "openai/toolInvocation/invoking": "Taking phone and laptop screenshots…",
     "openai/toolInvocation/invoked": "Screenshots ready",
+    "openai/widgetAccessible": true,
   },
   publish_changes: {
     "openai/toolInvocation/invoking": "Publishing to the live site…",
@@ -393,6 +475,7 @@ async function listPendingChanges(changeKey: string | null) {
     open.filter((c) => c.key !== target.key).length +
     overview.olderChanges.length;
   const review = await buildReview(target, others);
+  scheduleWarmUp(target, review);
   return {
     view: "detail" as const,
     ...review,
@@ -400,6 +483,49 @@ async function listPendingChanges(changeKey: string | null) {
     olderChanges: overview.olderChanges,
     unrelatedDrafts: overview.unrelatedDrafts,
   };
+}
+
+// Once a change's preview has built, ask Google for its screenshots in the
+// background (after this reply is sent), once per version of the code, so
+// preview_on_devices is quick when the person asks. Never blocks or fails
+// the review.
+function scheduleWarmUp(
+  change: ChangeSet,
+  review: Awaited<ReturnType<typeof buildReview>>,
+) {
+  const build = review.checks.find((c) => c.key === "build");
+  if (
+    build?.state !== "passed" ||
+    !review.headSha ||
+    change.warmedSha === review.headSha
+  ) {
+    return;
+  }
+  const path = defaultPreviewPath(change);
+  const url = previewTarget(review.previewUrl, path);
+  if (!url) return;
+  const headSha = review.headSha;
+  try {
+    after(async () => {
+      await markWarmed(change.key, headSha).catch(() => {});
+      await warmDevices(url, liveTarget(path)).catch(() => {});
+    });
+  } catch {
+    // Outside a request (tests): skip the warm-up.
+  }
+}
+
+function defaultPreviewPath(change: ChangeSet): string {
+  return (
+    describeFiles((change.files ?? []).map((f) => f.path)).find((a) => a.route)
+      ?.route ?? "/"
+  );
+}
+
+async function rulesVersionOrNull(): Promise<string | null> {
+  return getProjectRules()
+    .then((r) => r.version)
+    .catch(() => null);
 }
 
 // Sent to every connecting client during the MCP handshake and meant to act
@@ -600,18 +726,49 @@ export function createAdminMcpServer(user: McpUser): Server {
     if (name === "start_change") {
       const title = String(input.title ?? "").trim();
       const request = String(input.request ?? "").trim();
-      if (!title || !request) {
+      const understoodAs = String(input.understood_as ?? "").trim();
+      if (!title || !request || !understoodAs) {
         return toResult(
-          { error: "A title and the person's request are both required." },
+          {
+            error:
+              "A title, the person's request, and understood_as (what you will change, in plain words) are all required.",
+          },
           true,
         );
       }
-      const change = await createChangeSet({ title, request, user });
-      return toResult({
-        change_id: change.key,
-        status: "Draft",
-        next: `Pass change_id "${change.key}" on every edit for this request. When done, call submit_for_review, then list_pending_changes with this change_id.`,
+      const appliesTo = normalizeAppliesTo(input.applies_to);
+      const needsConfirmation = input.needs_confirmation === true;
+      const change = await createChangeSet({
+        title,
+        request,
+        user,
+        understoodAs,
+        appliesTo,
+        needsConfirmation,
       });
+      return {
+        ...toResult({
+          view: "confirm",
+          change_id: change.key,
+          changeId: change.key,
+          title: change.title,
+          request: change.request,
+          understoodAs,
+          appliesTo,
+          appliesToLabel: APPLIES_TO_LABELS[appliesTo],
+          needsConfirmation,
+          state: needsConfirmation ? "awaiting_ok" : "working",
+          stateLabel: needsConfirmation ? "Waiting for your OK" : "Working",
+          nextStep: needsConfirmation
+            ? "Check what the AI understood. Say yes to let it start, or tell it what you meant."
+            : "The AI is making this change. Nothing to do yet.",
+          next: needsConfirmation
+            ? `STOP: show the person exactly this and wait for their answer: "I understand your request as: ${understoodAs} (Applies to: ${APPLIES_TO_LABELS[appliesTo]}). Is that right?" Edits are refused until they say yes and you call confirm_change (or they press Yes in the card). If they meant something else, discard_change and start_change again.`
+            : `Pass change_id "${change.key}" on every edit for this request. When done, call submit_for_review, then list_pending_changes with this change_id.`,
+          youCanDiscard: canUseTool(user.role, "discard_change"),
+        }),
+        _meta: { rulesVersion: await rulesVersionOrNull() },
+      };
     }
 
     if (name === "preview_on_devices") {
@@ -638,12 +795,12 @@ export function createAdminMcpServer(user: McpUser): Server {
           true,
         );
       }
-      const { previewUrl } = await gh.getPRChecksDetail(target.prNumber);
-      const defaultPath =
-        describeFiles((target.files ?? []).map((f) => f.path)).find(
-          (a) => a.route,
-        )?.route ?? "/";
-      const url = previewTarget(previewUrl, input.path ?? defaultPath);
+      const [{ previewUrl }, headSha] = await Promise.all([
+        gh.getPRChecksDetail(target.prNumber),
+        gh.getPRHeadSha(target.prNumber),
+      ]);
+      const path = input.path ?? defaultPreviewPath(target);
+      const url = previewTarget(previewUrl, path);
       if (!url) {
         return toResult(
           {
@@ -654,7 +811,35 @@ export function createAdminMcpServer(user: McpUser): Server {
           true,
         );
       }
-      const shots = await captureDevices(url);
+      const wanted: Device[] = Array.isArray(input.devices)
+        ? (["phone", "laptop"] as const).filter((d) =>
+            (input.devices as unknown[]).includes(d),
+          )
+        : ["phone", "laptop"];
+      const devices: Device[] = wanted.length ? wanted : ["phone", "laptop"];
+      const shots = await captureDevices(url, liveTarget(path), devices);
+
+      // Keep the earlier result for a device that wasn't re-taken.
+      const prev =
+        target.devices && target.devices.headSha === headSha
+          ? target.devices
+          : null;
+      const outcome = (d: Device) =>
+        devices.includes(d) ? deviceOutcome(shots, d) : (prev?.[d] ?? "failed");
+      if (headSha) {
+        await recordDevices(target.key, {
+          headSha,
+          phone: outcome("phone"),
+          laptop: outcome("laptop"),
+        }).catch(() => {});
+      }
+      const missing = (["phone", "laptop"] as const).filter(
+        (d) => outcome(d) !== "ok",
+      );
+      // Retry covers any picture that didn't load this time, Before too.
+      const retry = devices.filter((d) =>
+        shots.some((x) => x.device === d && !x.image),
+      );
       // The pictures go only to the card (_meta), not into the model's
       // context, where they would cost tokens and add nothing.
       return {
@@ -664,16 +849,21 @@ export function createAdminMcpServer(user: McpUser): Server {
           title: target.title,
           page: new URL(url).pathname,
           url,
+          retaken: devices,
           shots: shots.map((s) => ({
             device: s.device,
+            version: s.version,
             ok: !!s.image,
             ...(s.error ? { error: s.error } : {}),
           })),
-          note: shots.every((s) => s.image)
-            ? "Phone and laptop screenshots are shown in the card."
-            : "Some screenshots didn't load. Call preview_on_devices again in a few seconds.",
+          missing,
+          retry,
+          youCanDiscard: canUseTool(user.role, "discard_change"),
+          note: retry.length
+            ? `Some ${retry.join(" and ")} screenshots didn't load. The card offers Retry, which re-takes only those.`
+            : "Before (live site) and after (this change) are shown for phone and laptop in the card.",
         }),
-        _meta: { shots },
+        _meta: { shots, rulesVersion: await rulesVersionOrNull() },
       };
     }
 
@@ -722,9 +912,14 @@ export function createAdminMcpServer(user: McpUser): Server {
 
     if (name === "list_change_history") {
       const limit = Number(input.limit ?? 20);
-      return toResult({
-        history: await changeHistory(Number.isFinite(limit) ? limit : 20),
-      });
+      return {
+        ...toResult({
+          view: "history",
+          history: await changeHistory(Number.isFinite(limit) ? limit : 20),
+          youCanRestore: canUseTool(user.role, "undo_change"),
+        }),
+        _meta: { rulesVersion: await rulesVersionOrNull() },
+      };
     }
 
     if (name === "list_pending_changes") {
@@ -732,9 +927,7 @@ export function createAdminMcpServer(user: McpUser): Server {
       // rulesVersion goes in the result's _meta, which hosts pass to the UI
       // card but not to the model - so the model still has to call
       // get_project_rules itself before it can publish or discard.
-      const rulesVersion = await getProjectRules()
-        .then((r) => r.version)
-        .catch(() => null);
+      const rulesVersion = await rulesVersionOrNull();
       return {
         ...toResult({
           ...pending,
@@ -763,6 +956,18 @@ export function createAdminMcpServer(user: McpUser): Server {
       );
     }
 
+    if (name === "confirm_change") {
+      const result = await confirmChange(changeKey!, input.applies_to);
+      return fromChangeResult(
+        result.ok
+          ? {
+              ...result,
+              appliesToLabel: APPLIES_TO_LABELS[result.appliesTo],
+              next: `Confirmed. Now make the change, passing change_id "${result.changeId}" on every edit, then submit_for_review.`,
+            }
+          : result,
+      );
+    }
     if (name === "publish_changes") {
       return fromChangeResult(
         await publishChange(changeKey!, String(input.review_token ?? ""), user),
@@ -829,6 +1034,14 @@ export function createAdminMcpServer(user: McpUser): Server {
     }
 
     if (CHANGE_REQUIRED_TOOLS.has(name)) {
+      if (change!.status === "awaiting_confirmation") {
+        return toResult(
+          {
+            error: `The person hasn't confirmed what you understood yet ("${change!.understoodAs ?? change!.title}"). Ask them, wait for a clear yes, then call confirm_change. If they meant something else, discard_change and start_change again.`,
+          },
+          true,
+        );
+      }
       if (!isOpen(change!)) {
         return toResult(
           {

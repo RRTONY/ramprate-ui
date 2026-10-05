@@ -53,7 +53,18 @@ export async function checkCode(
 ): Promise<CodeCheckResult> {
   const absolutePath = path.join(process.cwd(), filePath);
 
-  const eslint = new ESLint({ cwd: process.cwd() });
+  // Imported here (not left for ESLint to find on disk) so the build's file
+  // tracing follows every plugin and helper the config needs into the
+  // serverless bundle; left to ESLint, they load where tracing can't see
+  // them, and the live check failed with "Cannot find module 'fast-glob'"
+  // (needed by @next/eslint-plugin-next). Loaded on first use, not at the
+  // top, so MCP calls that never lint don't pay for loading every plugin.
+  const { default: eslintConfig } = await import("../../../eslint.config.mjs");
+  const eslint = new ESLint({
+    cwd: process.cwd(),
+    overrideConfigFile: true,
+    overrideConfig: eslintConfig,
+  });
   const isIgnored = await eslint.isPathIgnored(absolutePath).catch(() => false);
   let eslintResult: CodeCheckResult["eslint"] = {
     errorCount: 0,
@@ -89,4 +100,44 @@ export async function checkCode(
   ).map((p) => p.message);
 
   return { eslint: eslintResult, prettier: prettierResult, patternIssues };
+}
+
+const LINTABLE = /\.(ts|tsx|js|jsx|mjs)$/;
+
+// The server's own lint run over a change's code files, for the review's
+// "Lint" check. A file that can't be linted is reported as "could not run"
+// (which blocks publishing), never silently counted as passed.
+export async function lintChangedFiles(
+  files: Array<{ path: string; content: string | null }>,
+): Promise<
+  Array<{
+    path: string;
+    errors: number;
+    warnings: number;
+    couldNotRun: string | null;
+  }>
+> {
+  const results = [];
+  for (const f of files.filter((f) => LINTABLE.test(f.path))) {
+    if (f.content === null) continue;
+    try {
+      const r = await checkCode(f.path, f.content);
+      results.push({
+        path: f.path,
+        errors: r.eslint.errorCount,
+        warnings: r.eslint.warningCount,
+        couldNotRun: null,
+      });
+    } catch (err) {
+      results.push({
+        path: f.path,
+        errors: 0,
+        warnings: 0,
+        couldNotRun: (err instanceof Error ? err.message : String(err))
+          .split("\n")[0]
+          .slice(0, 200),
+      });
+    }
+  }
+  return results;
 }

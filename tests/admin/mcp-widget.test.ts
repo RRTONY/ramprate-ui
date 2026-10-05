@@ -3,7 +3,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { McpUser } from "@/lib/admin/mcp-auth";
 
-const URI = "ui://ramprate-admin/pending-changes-v3.html";
+const URI = "ui://ramprate-admin/pending-changes-v4.html";
 const KEY = "20261002-abc123";
 
 vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
@@ -15,6 +15,7 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
       : null,
   ),
   listDir: vi.fn(async () => []),
+  getPRHeadSha: vi.fn(async () => "head41"),
   getPRChecksDetail: vi.fn(async () => ({
     status: "success",
     previewUrl: "https://deploy-preview-41--ramprate.netlify.app",
@@ -35,7 +36,18 @@ const publishChange = vi.fn(async () => ({
   published: [],
 }));
 const discardChange = vi.fn(async () => ({ ok: true, changeId: KEY }));
-const createChangeSet = vi.fn(async () => ({ key: KEY }));
+const createChangeSet = vi.fn(async () => ({
+  key: KEY,
+  title: "New headline",
+  request: "x",
+}));
+const confirmChange = vi.fn(async () => ({
+  ok: true,
+  changeId: KEY,
+  appliesTo: "mobile",
+}));
+const recordDevices = vi.fn(async () => {});
+const WAITING = "20261002-wait01";
 
 vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/admin/change-sets")>()),
@@ -47,8 +59,19 @@ vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
           prNumber: 41,
           files: [{ path: "src/app/about/page.tsx", status: "modified" }],
         }
-      : null,
+      : k === WAITING
+        ? {
+            key: WAITING,
+            title: "Tabs",
+            status: "awaiting_confirmation",
+            understoodAs: "Move the menu to the right.",
+            content: [],
+          }
+        : null,
   ),
+  changeHistory: vi.fn(async () => [
+    { changeId: KEY, title: "Headline", status: "published", canUndo: true },
+  ]),
   pendingOverview: vi.fn(async () => ({
     changes: [
       {
@@ -70,29 +93,39 @@ vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
     canPublish: true,
     reviewToken: "tok123",
     areas: [{ label: "Home page", route: "/", shared: false }],
+    checks: [],
   })),
   publishChange: (...a: unknown[]) => publishChange(...(a as [])),
   discardChange: (...a: unknown[]) => discardChange(...(a as [])),
   createChangeSet: (...a: unknown[]) => createChangeSet(...(a as [])),
+  confirmChange: (...a: unknown[]) => confirmChange(...(a as [])),
+  recordDevices: (...a: unknown[]) => recordDevices(...(a as [])),
   reconcileWithGitHub: vi.fn(async (open: unknown[]) => open),
 }));
 
 vi.mock("@/lib/admin/device-preview", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/admin/device-preview")>()),
-  captureDevices: vi.fn(async () => [
-    {
-      device: "phone",
-      image: "data:image/jpeg;base64,PHONE",
-      width: 412,
-      height: 823,
-    },
-    {
-      device: "laptop",
-      image: "data:image/jpeg;base64,LAPTOP",
-      width: 1350,
-      height: 940,
-    },
-  ]),
+  captureDevices: vi.fn(
+    async (_url: string, _live: string, devices = ["phone", "laptop"]) =>
+      [
+        {
+          device: "phone",
+          version: "after",
+          image: "data:image/jpeg;base64,PHONE",
+          width: 412,
+          height: 823,
+        },
+        {
+          device: "laptop",
+          version: "after",
+          image: null,
+          timedOut: true,
+          width: null,
+          height: null,
+          error: "Took too long",
+        },
+      ].filter((s) => (devices as string[]).includes(s.device)),
+  ),
 }));
 
 async function connect(user: McpUser) {
@@ -233,10 +266,100 @@ describe("review card (ChatGPT / MCP Apps)", () => {
         rules_version: "feedbeef12",
         title: "New headline",
         request: "Change the homepage headline",
+        understood_as: "Change the homepage headline.",
+        needs_confirmation: false,
       },
     });
-    expect((res.structuredContent as Record<string, unknown>).change_id).toBe(
-      KEY,
+    const sc = res.structuredContent as Record<string, unknown>;
+    expect(sc.change_id).toBe(KEY);
+    expect(sc.state).toBe("working");
+    await client.close();
+  });
+
+  it("start_change needs understood_as, so the AI always says what it will do", async () => {
+    const client = await connect(EDITOR);
+    const res = await client.callTool({
+      name: "start_change",
+      arguments: {
+        rules_version: "feedbeef12",
+        title: "T",
+        request: "R",
+        needs_confirmation: true,
+      },
+    });
+    expect(res.isError).toBe(true);
+    await client.close();
+  });
+
+  it("an unclear request shows 'I understand your request as' and waits for a yes", async () => {
+    const client = await connect(EDITOR);
+    const res = await client.callTool({
+      name: "start_change",
+      arguments: {
+        rules_version: "feedbeef12",
+        title: "Tabs",
+        request: "move the tabs to the right",
+        understood_as: "Move the desktop navigation menu to the right side.",
+        applies_to: "desktop",
+        needs_confirmation: true,
+      },
+    });
+    const sc = res.structuredContent as Record<string, unknown>;
+    expect(sc.view).toBe("confirm");
+    expect(sc.state).toBe("awaiting_ok");
+    expect(sc.appliesToLabel).toBe("Desktop only (mobile unchanged)");
+    expect(String(sc.next)).toContain("STOP");
+    expect(createChangeSet).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        needsConfirmation: true,
+        appliesTo: "desktop",
+      }),
+    );
+    expect((res._meta as Record<string, unknown>).rulesVersion).toBe(
+      "feedbeef12",
+    );
+    await client.close();
+  });
+
+  it("refuses edits until the person confirms, then confirm_change unlocks them", async () => {
+    const client = await connect(EDITOR);
+    const edit = await client.callTool({
+      name: "github_write_file",
+      arguments: {
+        rules_version: "feedbeef12",
+        change_id: WAITING,
+        path: "src/components/layout/Header.tsx",
+        content: "x",
+        message: "x",
+      },
+    });
+    expect(edit.isError).toBe(true);
+    expect(JSON.stringify(edit.content)).toContain("hasn't confirmed");
+
+    const ok = await client.callTool({
+      name: "confirm_change",
+      arguments: {
+        rules_version: "feedbeef12",
+        change_id: WAITING,
+        applies_to: "mobile",
+      },
+    });
+    expect(ok.isError).toBeFalsy();
+    expect(confirmChange).toHaveBeenCalledWith(WAITING, "mobile");
+    await client.close();
+  });
+
+  it("history comes back as a card with Restore for people who may use it", async () => {
+    const client = await connect(WRITER);
+    const res = await client.callTool({
+      name: "list_change_history",
+      arguments: {},
+    });
+    const sc = res.structuredContent as Record<string, unknown>;
+    expect(sc.view).toBe("history");
+    expect(sc.youCanRestore).toBe(true);
+    expect((res._meta as Record<string, unknown>).rulesVersion).toBe(
+      "feedbeef12",
     );
     await client.close();
   });
@@ -254,9 +377,26 @@ describe("review card (ChatGPT / MCP Apps)", () => {
     const shots = (res._meta as { shots: Array<{ image: string }> }).shots;
     expect(shots.map((s) => s.image)).toEqual([
       "data:image/jpeg;base64,PHONE",
-      "data:image/jpeg;base64,LAPTOP",
+      null,
     ]);
     expect(JSON.stringify(res.content)).not.toContain("base64");
+    expect(sc.missing).toEqual(["laptop"]);
+    expect(recordDevices).toHaveBeenLastCalledWith(KEY, {
+      headSha: "head41",
+      phone: "ok",
+      laptop: "timed_out",
+    });
+    await client.close();
+  });
+
+  it("Retry re-takes only the missing device", async () => {
+    const client = await connect(READER);
+    const res = await client.callTool({
+      name: "preview_on_devices",
+      arguments: { change_id: KEY, devices: ["laptop"] },
+    });
+    const sc = res.structuredContent as Record<string, unknown>;
+    expect(sc.retaken).toEqual(["laptop"]);
     await client.close();
   });
 
@@ -278,8 +418,14 @@ describe("review card (ChatGPT / MCP Apps)", () => {
     expect(content.text).toContain("rules_version: rulesVersion");
     expect(content.text).toContain("args.review_token = data.reviewToken");
     expect(content.text).toContain(
-      "You are about to publish these changes to the live RampRate website.",
+      "You are about to publish this change to the live RampRate website.",
     );
+    // Same three actions, same place, every time.
+    expect(content.text).toContain('button("preview", "Preview"');
+    expect(content.text).toContain('button("discard", "Discard"');
+    expect(content.text).toContain('button("publish", "Publish"');
+    expect(content.text).toContain('name: "confirm_change"');
+    expect(content.text).toContain('name: "undo_change"');
     expect(content.text).toContain("applyHostStyleVariables");
     await client.close();
   });

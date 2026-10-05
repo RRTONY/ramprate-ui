@@ -127,6 +127,7 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
     })),
   }),
   getPRHeadSha: async (n: number) => gh.prs.get(n)?.head ?? null,
+  getFile: async (path: string) => ({ content: `// ${path}\n`, sha: "f" }),
   getPRChecksDetail: async () => ({
     status: gh.checks,
     previewUrl: "https://deploy-preview-100--ramprate.netlify.app",
@@ -186,12 +187,35 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
   },
 }));
 
+// The server's own lint run; tests choose its outcome.
+const lint = { couldNotRun: null as string | null, errors: 0, warnings: 0 };
+vi.mock("@/lib/admin/code-check", () => ({
+  lintChangedFiles: async (files: Array<{ path: string }>) =>
+    files.map((f) => ({
+      path: f.path,
+      errors: lint.errors,
+      warnings: lint.warnings,
+      couldNotRun: lint.couldNotRun,
+    })),
+}));
+
 // The real waitForChecks polls for up to 20s while checks are pending.
+// `ci` lets a test set GitHub Actions apart from Netlify's build.
+const ci = {
+  state: null as string | null,
+  waiting: [] as string[],
+  failing: [] as string[],
+};
 vi.mock("@/lib/admin/tools", () => ({
   waitForChecks: async () => ({
-    status: gh.checks,
+    status:
+      ci.state === "failure" || ci.state === "pending" ? ci.state : gh.checks,
     previewUrl: "https://deploy-preview-100--ramprate.netlify.app",
     failingChecks: [],
+    build: gh.checks,
+    ci: ci.state,
+    ciWaiting: ci.waiting,
+    ciFailing: ci.failing,
   }),
 }));
 
@@ -233,6 +257,12 @@ beforeEach(() => {
   gh.createdStates = [];
   gh.allBranches.clear();
   gh.checks = "success";
+  lint.couldNotRun = null;
+  lint.errors = 0;
+  lint.warnings = 0;
+  ci.state = null;
+  ci.waiting = [];
+  ci.failing = [];
 });
 
 describe("change sets keep each request separate", () => {
@@ -604,5 +634,207 @@ describe("keeping in step with GitHub", () => {
     const open = await cs.reconcileWithGitHub(await cs.listOpenChangeSets());
     expect(open).toHaveLength(1);
     expect(gh.allBranches.has(cs.branchForChange(c.key))).toBe(true);
+  });
+});
+
+describe("one clear status and next step", () => {
+  it("ready: all checks passed, all three actions available", async () => {
+    const c = await codeChange("Nav", ["src/components/layout/Header.tsx"]);
+    await cs.submitForReview(c, "Moved the menu.", []);
+    const r = await review(c.key);
+    expect(r.state).toBe("ready");
+    expect(r.actions).toEqual({
+      preview: true,
+      discard: true,
+      publish: true,
+      retry: false,
+    });
+    expect(r.checks.map((x) => [x.key, x.state])).toEqual([
+      ["build", "passed"],
+      ["typecheck", "passed"],
+      ["lint", "passed"],
+      ["ci", "not_needed"],
+      ["devices", "not_run"],
+    ]);
+    expect(r.canPublish).toBe(true);
+  });
+
+  it("checking: Preview and Discard work, Publish waits", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    gh.checks = "pending";
+    const r = await review(c.key);
+    expect(r.state).toBe("checking");
+    // Netlify posts the preview link as the build starts; it only works
+    // once the build has finished, so Preview waits for that.
+    expect(r.actions).toMatchObject({
+      preview: false,
+      discard: true,
+      publish: false,
+    });
+    expect(r.canPublish).toBe(false);
+  });
+
+  it("stuck: a build still running 20+ minutes after the last edit", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    await cs.patchChangeSet(c.key, {
+      lastEditedAt: new Date(Date.now() - 25 * 60_000).toISOString(),
+    });
+    gh.checks = "pending";
+    const r = await review(c.key);
+    expect(r.state).toBe("stuck");
+    expect(r.actions).toMatchObject({
+      retry: true,
+      discard: true,
+      publish: false,
+    });
+  });
+
+  it("failed: lint that could not run blocks Publish, and says so", async () => {
+    lint.couldNotRun = "Cannot find module 'fast-glob'";
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    const r = await review(c.key);
+    expect(r.state).toBe("failed");
+    expect(r.nextStep).toContain("Lint could not run");
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("could_not_run");
+    expect(r.actions).toMatchObject({
+      retry: true,
+      discard: true,
+      publish: false,
+    });
+    const res = await cs.publishChange(c.key, r.reviewToken, USER);
+    expect(res).toMatchObject({ ok: false });
+    expect(gh.prs.get(c.prNumber!)!.open).toBe(true);
+  });
+
+  it("lint warnings are shown but don't block; errors in changed files do", async () => {
+    lint.warnings = 3;
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    const r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("issues");
+    expect(r.state).toBe("ready");
+
+    lint.errors = 2;
+    const d = await codeChange("Nav 2", ["src/app/about/page.tsx"]);
+    await cs.submitForReview(d, "x", []);
+    const r2 = await review(d.key);
+    expect(r2.checks.find((x) => x.key === "lint")!.state).toBe("failed");
+    expect(r2.state).toBe("failed");
+    expect(r2.canPublish).toBe(false);
+  });
+
+  it("GitHub's own jobs get their own row, apart from Netlify's build", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    ci.state = "pending";
+    ci.waiting = ["test"];
+    let r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "build")!.state).toBe("passed");
+    expect(r.checks.find((x) => x.key === "ci")).toMatchObject({
+      state: "running",
+      detail: expect.stringContaining("test"),
+    });
+    expect(r.state).toBe("checking");
+    expect(r.actions.preview).toBe(true);
+
+    ci.state = "failure";
+    ci.failing = ["lint-changed-files"];
+    r = await review(c.key);
+    expect(r.state).toBe("failed");
+    expect(r.nextStep).toContain("GitHub checks failed");
+
+    ci.state = "pending";
+    await cs.patchChangeSet(c.key, {
+      lastEditedAt: new Date(Date.now() - 30 * 60_000).toISOString(),
+    });
+    r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "ci")!.state).toBe("timed_out");
+    expect(r.state).toBe("stuck");
+  });
+
+  it("lint is re-run when the code changed after submit", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    gh.prs.get(c.prNumber!)!.head = "head-later";
+    const r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("passed");
+    expect((await cs.getChangeSet(c.key))!.lint!.headSha).toBe("head-later");
+  });
+
+  it("what will go live ends with what is NOT included, and where it applies", async () => {
+    const c = await cs.createChangeSet({
+      title: "Nav",
+      request: "move the tabs",
+      user: USER,
+      understoodAs: "Move the desktop menu to the right.",
+      appliesTo: "desktop",
+    });
+    const branch = cs.branchForChange(c.key);
+    gh.branches.set(branch, [
+      { path: "src/components/layout/Header.tsx", status: "modified" },
+    ]);
+    gh.prs.set(gh.nextPr, { branch, head: "h", open: true });
+    await cs.patchChangeSet(c.key, { branch, prNumber: gh.nextPr++ });
+    await cs.submitForReview(
+      (await cs.getChangeSet(c.key))!,
+      "Menu moved to the right.",
+      [],
+    );
+    const r = await cs.buildReview((await cs.getChangeSet(c.key))!, 1);
+    expect(r.goesLive).toEqual([
+      "Menu moved to the right.",
+      "Site header (every page)",
+      "Applies to: Desktop only (mobile unchanged)",
+      "1 other waiting change is NOT included",
+    ]);
+    expect(r.understoodAs).toBe("Move the desktop menu to the right.");
+  });
+});
+
+describe("confirm what the AI understood", () => {
+  it("an unclear request waits for the person's OK before any work", async () => {
+    const c = await cs.createChangeSet({
+      title: "Tabs",
+      request: "move the tabs to the right",
+      user: USER,
+      understoodAs: "Move the desktop navigation menu to the right side.",
+      needsConfirmation: true,
+    });
+    expect(c.status).toBe("awaiting_confirmation");
+    expect(cs.isOpen(c)).toBe(true);
+    expect((await cs.submitForReview(c, "x", [])).ok).toBe(false);
+
+    const ok = await cs.confirmChange(c.key, "mobile");
+    expect(ok).toMatchObject({ ok: true, appliesTo: "mobile" });
+    const after = (await cs.getChangeSet(c.key))!;
+    expect(after.status).toBe("draft");
+    expect(after.appliesTo).toBe("mobile");
+  });
+
+  it("defaults to desktop and mobile, and confirming twice is harmless", async () => {
+    const c = await cs.createChangeSet({
+      title: "Tabs",
+      request: "x",
+      user: USER,
+      understoodAs: "y",
+      needsConfirmation: true,
+    });
+    expect((await cs.confirmChange(c.key, undefined)).ok).toBe(true);
+    expect((await cs.getChangeSet(c.key))!.appliesTo).toBe("both");
+    expect((await cs.confirmChange(c.key, "desktop")).ok).toBe(true);
+    expect((await cs.getChangeSet(c.key))!.appliesTo).toBe("both");
+  });
+
+  it("a clear request starts straight away", async () => {
+    const c = await cs.createChangeSet({
+      title: "Headline",
+      request: "Change the headline to X",
+      user: USER,
+      understoodAs: "Change the homepage headline to X.",
+    });
+    expect(c.status).toBe("draft");
   });
 });
