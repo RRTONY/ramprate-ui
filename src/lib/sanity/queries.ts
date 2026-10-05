@@ -56,7 +56,7 @@ export const pageBySlugQuery = groq`
 
 // Blog Posts (excludes thinking section)
 export const postsQuery = groq`
-  *[_type == "post" && section != "thinking"] | order(publishedAt desc) [$start...$end]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking"] | order(publishedAt desc) [$start...$end]{
     _id,
     title,
     slug,
@@ -68,7 +68,7 @@ export const postsQuery = groq`
 `;
 
 export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug][0]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && slug.current == $slug][0]{
     _id,
     _updatedAt,
     title,
@@ -83,37 +83,37 @@ export const postBySlugQuery = groq`
   }
 `;
 
-export const postCountQuery = groq`count(*[_type == "post" && section != "thinking"])`;
+export const postCountQuery = groq`count(*[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking"])`;
 
 // Related posts: same section, sharing a category, excluding the current post
 export const relatedPostsQuery = groq`
-  *[_type == "post" && section != "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
 `;
 
 // Fallback when a post has no categories (or no other post shares one)
 export const recentPostsQuery = groq`
-  *[_type == "post" && section != "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
 `;
 
 export const relatedThinkingPostsQuery = groq`
-  *[_type == "post" && section == "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section == "thinking" && slug.current != $slug && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
 `;
 
 export const recentThinkingPostsQuery = groq`
-  *[_type == "post" && section == "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section == "thinking" && slug.current != $slug] | order(publishedAt desc) [0...3]{
     _id, title, slug, excerpt, mainImage
   }
 `;
 
 // Thinking Posts
 export const thinkingPostsQuery = groq`
-  *[_type == "post" && section == "thinking"] | order(publishedAt desc) [$start...$end]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section == "thinking"] | order(publishedAt desc) [$start...$end]{
     _id,
     title,
     slug,
@@ -124,7 +124,7 @@ export const thinkingPostsQuery = groq`
   }
 `;
 
-export const thinkingPostCountQuery = groq`count(*[_type == "post" && section == "thinking"])`;
+export const thinkingPostCountQuery = groq`count(*[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section == "thinking"])`;
 
 // Categories - ordered by number of posts desc so populated categories appear first
 export const categoriesQuery = groq`
@@ -132,7 +132,7 @@ export const categoriesQuery = groq`
     _id,
     title,
     slug,
-    "postCount": count(*[_type == "post" && section != "thinking" && ^._id in categories[]._ref])
+    "postCount": count(*[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking" && ^._id in categories[]._ref])
   } | order(postCount desc, title asc)
 `;
 
@@ -141,7 +141,7 @@ export const categoryBySlugQuery = groq`
 `;
 
 export const postsByCategoryQuery = groq`
-  *[_type == "post" && section != "thinking" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) [$start...$end]{
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) [$start...$end]{
     _id,
     title,
     slug,
@@ -153,7 +153,7 @@ export const postsByCategoryQuery = groq`
 `;
 
 export const postCountByCategoryQuery = groq`
-  count(*[_type == "post" && section != "thinking" && $categorySlug in categories[]->slug.current])
+  count(*[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section != "thinking" && $categorySlug in categories[]->slug.current])
 `;
 
 // Team Members
@@ -235,7 +235,7 @@ export const clientLogosQuery = groq`
 
 // All thinking posts (no pagination - archive view)
 export const allThinkingPostsQuery = groq`
-  *[_type == "post" && section == "thinking"] | order(publishedAt desc){
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && section == "thinking"] | order(publishedAt desc){
     _id,
     title,
     "slug": slug.current,
@@ -251,14 +251,14 @@ export const spyIndexPageQuery = groq`
     seo
   }
 `;
-export const allPostSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`;
+export const allPostSlugsQuery = groq`*[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && defined(slug.current)]{slug, section, publishedAt, _updatedAt, mainImage}`;
 export const allCategorySlugsQuery = groq`*[_type == "category" && defined(slug.current)]{slug, _updatedAt}`;
 
 // Full-text search across all posts (blog + thinking) - matches title,
 // excerpt, category names, and the article body itself so a term that only
 // appears deep in the post copy still surfaces the result.
 export const searchPostsQuery = groq`
-  *[_type == "post" && defined(slug.current) && (
+  *[_type == "post" && coalesce(slug.current, "") != "shared-ownership" && defined(slug.current) && (
     title match $q ||
     excerpt match $q ||
     count(categories[title match $q]) > 0 ||
