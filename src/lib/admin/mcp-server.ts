@@ -836,6 +836,10 @@ export function createAdminMcpServer(user: McpUser): Server {
       const missing = (["phone", "laptop"] as const).filter(
         (d) => outcome(d) !== "ok",
       );
+      // Retry covers any picture that didn't load this time, Before too.
+      const retry = devices.filter((d) =>
+        shots.some((x) => x.device === d && !x.image),
+      );
       // The pictures go only to the card (_meta), not into the model's
       // context, where they would cost tokens and add nothing.
       return {
@@ -853,9 +857,10 @@ export function createAdminMcpServer(user: McpUser): Server {
             ...(s.error ? { error: s.error } : {}),
           })),
           missing,
+          retry,
           youCanDiscard: canUseTool(user.role, "discard_change"),
-          note: missing.length
-            ? `${missing.join(" and ")} screenshot didn't load. The card offers Retry, which re-takes only that one.`
+          note: retry.length
+            ? `Some ${retry.join(" and ")} screenshots didn't load. The card offers Retry, which re-takes only those.`
             : "Before (live site) and after (this change) are shown for phone and laptop in the card.",
         }),
         _meta: { shots, rulesVersion: await rulesVersionOrNull() },

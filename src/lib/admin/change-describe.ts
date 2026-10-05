@@ -334,7 +334,7 @@ export function normalizeAppliesTo(raw: unknown): AppliesTo {
   return raw === "desktop" || raw === "mobile" ? raw : "both";
 }
 
-export type CheckKey = "build" | "typecheck" | "lint" | "devices";
+export type CheckKey = "build" | "typecheck" | "lint" | "ci" | "devices";
 export type CheckState =
   | "passed"
   | "issues"
@@ -377,8 +377,14 @@ export type BuildState = "success" | "pending" | "failure" | "unknown";
 
 export function reviewChecks(input: {
   hasCode: boolean;
+  // Netlify's preview build only.
   build: BuildState | null;
+  // True when anything has been running 20+ minutes since the last edit.
   buildStuck: boolean;
+  // GitHub Actions jobs (tests, lint and format of changed files).
+  ci?: BuildState | null;
+  ciWaiting?: string[];
+  ciFailing?: string[];
   headSha: string | null;
   lint: LintRecord | null;
   devices: DeviceRecord | null;
@@ -403,6 +409,13 @@ export function reviewChecks(input: {
       {
         key: "lint",
         label: "Lint",
+        state: "not_needed",
+        detail: note,
+        required: false,
+      },
+      {
+        key: "ci",
+        label: "GitHub checks",
         state: "not_needed",
         detail: note,
         required: false,
@@ -497,8 +510,14 @@ export function reviewChecks(input: {
         ? {
             key: "lint",
             label: "Lint",
-            state: "issues",
-            detail: `${errors} error${errors === 1 ? "" : "s"}, ${warnings} warning${warnings === 1 ? "" : "s"} in the changed files. Worth a look, doesn't block publishing.`,
+            // Errors in the files a change touches also fail GitHub's own
+            // lint job, so they block; warnings never do. Old problems in
+            // files the change doesn't touch are never counted.
+            state: errors > 0 ? "failed" : "issues",
+            detail:
+              errors > 0
+                ? `${errors} error${errors === 1 ? "" : "s"} in the changed files. The AI needs to fix ${errors === 1 ? "it" : "them"}.`
+                : `${warnings} warning${warnings === 1 ? "" : "s"} in the changed files. Worth a look, doesn't block publishing.`,
             required: true,
           }
         : {
@@ -511,6 +530,50 @@ export function reviewChecks(input: {
             required: true,
           };
   }
+
+  const ciWaiting = input.ciWaiting ?? [];
+  const ciFailing = input.ciFailing ?? [];
+  const ci: CheckRow =
+    input.ci === "failure"
+      ? {
+          key: "ci",
+          label: "GitHub checks",
+          state: "failed",
+          detail: `Failed: ${ciFailing.join(", ") || "a GitHub check"}. The AI can read the error with get_check_log_excerpt and fix it.`,
+          required: true,
+        }
+      : input.ci === "pending"
+        ? input.buildStuck
+          ? {
+              key: "ci",
+              label: "GitHub checks",
+              state: "timed_out",
+              detail: `Still waiting after 20+ minutes: ${ciWaiting.join(", ") || "a GitHub check"}.`,
+              required: true,
+            }
+          : {
+              key: "ci",
+              label: "GitHub checks",
+              state: "running",
+              detail: `Running: ${ciWaiting.join(", ") || "automatic tests"} (usually a few minutes).`,
+              required: true,
+            }
+        : input.ci === "success"
+          ? {
+              key: "ci",
+              label: "GitHub checks",
+              state: "passed",
+              detail:
+                "Automatic tests, and lint and format of the changed files, passed.",
+              required: true,
+            }
+          : {
+              key: "ci",
+              label: "GitHub checks",
+              state: "not_needed",
+              detail: "No automatic GitHub checks ran for this change.",
+              required: false,
+            };
 
   let devices: CheckRow;
   const d =
@@ -550,7 +613,7 @@ export function reviewChecks(input: {
     };
   }
 
-  return [build, typecheck, lint, devices];
+  return [build, typecheck, lint, ci, devices];
 }
 
 export type ReviewState =

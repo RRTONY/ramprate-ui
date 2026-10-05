@@ -188,23 +188,34 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
 }));
 
 // The server's own lint run; tests choose its outcome.
-const lint = { couldNotRun: null as string | null, errors: 0 };
+const lint = { couldNotRun: null as string | null, errors: 0, warnings: 0 };
 vi.mock("@/lib/admin/code-check", () => ({
   lintChangedFiles: async (files: Array<{ path: string }>) =>
     files.map((f) => ({
       path: f.path,
       errors: lint.errors,
-      warnings: 0,
+      warnings: lint.warnings,
       couldNotRun: lint.couldNotRun,
     })),
 }));
 
 // The real waitForChecks polls for up to 20s while checks are pending.
+// `ci` lets a test set GitHub Actions apart from Netlify's build.
+const ci = {
+  state: null as string | null,
+  waiting: [] as string[],
+  failing: [] as string[],
+};
 vi.mock("@/lib/admin/tools", () => ({
   waitForChecks: async () => ({
-    status: gh.checks,
+    status:
+      ci.state === "failure" || ci.state === "pending" ? ci.state : gh.checks,
     previewUrl: "https://deploy-preview-100--ramprate.netlify.app",
     failingChecks: [],
+    build: gh.checks,
+    ci: ci.state,
+    ciWaiting: ci.waiting,
+    ciFailing: ci.failing,
   }),
 }));
 
@@ -248,6 +259,10 @@ beforeEach(() => {
   gh.checks = "success";
   lint.couldNotRun = null;
   lint.errors = 0;
+  lint.warnings = 0;
+  ci.state = null;
+  ci.waiting = [];
+  ci.failing = [];
 });
 
 describe("change sets keep each request separate", () => {
@@ -638,6 +653,7 @@ describe("one clear status and next step", () => {
       ["build", "passed"],
       ["typecheck", "passed"],
       ["lint", "passed"],
+      ["ci", "not_needed"],
       ["devices", "not_run"],
     ]);
     expect(r.canPublish).toBe(true);
@@ -649,8 +665,10 @@ describe("one clear status and next step", () => {
     gh.checks = "pending";
     const r = await review(c.key);
     expect(r.state).toBe("checking");
+    // Netlify posts the preview link as the build starts; it only works
+    // once the build has finished, so Preview waits for that.
     expect(r.actions).toMatchObject({
-      preview: true,
+      preview: false,
       discard: true,
       publish: false,
     });
@@ -691,14 +709,50 @@ describe("one clear status and next step", () => {
     expect(gh.prs.get(c.prNumber!)!.open).toBe(true);
   });
 
-  it("lint problems are shown but don't block (house rule: never gate on lint debt)", async () => {
-    lint.errors = 2;
+  it("lint warnings are shown but don't block; errors in changed files do", async () => {
+    lint.warnings = 3;
     const c = await codeChange("Nav", ["src/app/page.tsx"]);
     await cs.submitForReview(c, "x", []);
     const r = await review(c.key);
     expect(r.checks.find((x) => x.key === "lint")!.state).toBe("issues");
     expect(r.state).toBe("ready");
-    expect((await cs.publishChange(c.key, r.reviewToken, USER)).ok).toBe(true);
+
+    lint.errors = 2;
+    const d = await codeChange("Nav 2", ["src/app/about/page.tsx"]);
+    await cs.submitForReview(d, "x", []);
+    const r2 = await review(d.key);
+    expect(r2.checks.find((x) => x.key === "lint")!.state).toBe("failed");
+    expect(r2.state).toBe("failed");
+    expect(r2.canPublish).toBe(false);
+  });
+
+  it("GitHub's own jobs get their own row, apart from Netlify's build", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    ci.state = "pending";
+    ci.waiting = ["test"];
+    let r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "build")!.state).toBe("passed");
+    expect(r.checks.find((x) => x.key === "ci")).toMatchObject({
+      state: "running",
+      detail: expect.stringContaining("test"),
+    });
+    expect(r.state).toBe("checking");
+    expect(r.actions.preview).toBe(true);
+
+    ci.state = "failure";
+    ci.failing = ["lint-changed-files"];
+    r = await review(c.key);
+    expect(r.state).toBe("failed");
+    expect(r.nextStep).toContain("GitHub checks failed");
+
+    ci.state = "pending";
+    await cs.patchChangeSet(c.key, {
+      lastEditedAt: new Date(Date.now() - 30 * 60_000).toISOString(),
+    });
+    r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "ci")!.state).toBe("timed_out");
+    expect(r.state).toBe("stuck");
   });
 
   it("lint is re-run when the code changed after submit", async () => {

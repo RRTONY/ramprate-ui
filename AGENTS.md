@@ -669,12 +669,17 @@ infrastructure to maintain.
   (a build still running 20+ min after the last edit), Published, Discarded, plus `nextStep` (what
   the person should do) and which actions work. The card always shows **Preview | Discard |
   Publish** in the same place, greyed out when not allowed, plus **Retry** when failed, stuck or
-  checking. Checks are listed separately: **Build** and **Type check** (the Netlify preview build
-  runs `next build`, which type-checks), **Lint** (the server lints the changed files itself at
-  submit and whenever the code version changes; stored as `lint` on the record), and **Phone and
-  laptop preview** (optional). Publish is refused until Build, Type check and Lint have finished
-  on the exact version reviewed; lint that **could not run** blocks, lint *problems* are shown but
-  don't block (house rule: never gate on old lint debt).
+  checking. Checks are listed separately: **Build** and **Type check** (Netlify's preview build
+  only; it runs `next build`, which type-checks), **Lint** (the server lints the changed files
+  itself at submit and whenever the code version changes; stored as `lint` on the record),
+  **GitHub checks** (the Actions jobs in `.github/workflows/admin-pr-lint.yml`: `test`, and
+  `lint-changed-files` with a Prettier check, named when waiting or failed), and **Phone and
+  laptop preview** (optional). `getPRChecksDetail` splits Netlify (`netlify/...` status and the
+  "... - ramprate" check runs) from Actions. Publish is refused until all required checks finish
+  on the exact version reviewed. Lint that **could not run** blocks; lint **errors** in the
+  changed files block (GitHub's own lint job fails on them anyway); warnings don't, and old
+  problems in untouched files are never counted. Anything still running 20+ minutes after the
+  last edit shows as **Stuck** (seen live: GitHub's `test` job sat queued for 10+ minutes).
 - **Confirm before unclear changes (2026-10-06):** `start_change` now needs `understood_as`
   (plain restatement in the site's real terms) and `needs_confirmation`, and takes `applies_to`
   (`both` default, `desktop`, `mobile`). When confirmation is needed the change starts as

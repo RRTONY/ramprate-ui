@@ -471,7 +471,11 @@ export async function buildReview(
   );
   const checkRows = reviewChecks({
     hasCode: !!change.prNumber,
-    build: (checks?.status as BuildState | undefined) ?? null,
+    build:
+      ((checks?.build ?? checks?.status) as BuildState | undefined) ?? null,
+    ci: (checks?.ci as BuildState | undefined) ?? null,
+    ciWaiting: checks?.ciWaiting ?? [],
+    ciFailing: checks?.ciFailing ?? [],
     buildStuck:
       checks?.status === "pending" &&
       Number.isFinite(lastEdit) &&
@@ -492,7 +496,7 @@ export async function buildReview(
   const outcome = reviewOutcome({
     status: change.status,
     checks: checkRows,
-    hasPreview: !!previewUrl,
+    hasPreview: !!previewUrl && (checks?.build ?? checks?.status) === "success",
     problems,
   });
   const appliesTo = change.appliesTo ?? "both";

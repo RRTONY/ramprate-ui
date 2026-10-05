@@ -455,13 +455,16 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
           : '<div class="missing muted">' + esc(s.error || (version === "before" ? "Not on the live site yet" : "Not available")) + '</div>') + '</figure>';
       };
       const missing = d.missing || [];
+      const retryList = (d.retry && d.retry.length) ? d.retry : missing;
       const parts = ['<h2>' + esc(d.title) + '</h2>'];
       parts.push(statusBlock(missing.length ? "stuck" : "ready",
         missing.length ? (missing.join(" and ") + " preview timed out") : "Screenshots ready",
-        missing.length ? "Retry to take the missing one again (it's usually quick the second time), or Discard the change." : "Compare before and after, then go back to the review to Publish or Discard."));
+        missing.length ? "Retry to take the missing ones again (it's usually quick the second time), or Discard the change."
+          : retryList.length ? "Some Before pictures (the live site) didn't load. Retry to try again, or compare what is there."
+          : "Compare before and after, then go back to the review to Publish or Discard."));
       const url = safeUrl(d.url);
       const bar = [];
-      if (missing.length) bar.push(button("retry-shots", busy === "shots" ? "Retrying…" : "Retry", "secondary", !busy));
+      if (retryList.length) bar.push(button("retry-shots", busy === "shots" ? "Retrying…" : "Retry", "secondary", !busy));
       bar.push(button("preview", "Preview", "secondary", !!url));
       if (missing.length) bar.push(button("discard", "Discard", "secondary", !!(d.youCanDiscard && rulesVersion && !busy)));
       bar.push(button("back", busy === "back" ? "Opening…" : "Back to review", "primary", !busy));
@@ -477,7 +480,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       parts.push('<div class="devrow"><h3>Laptop</h3><div class="pair">' + fig("laptop", "before", "Before") + fig("laptop", "after", "After") + '</div></div>');
       parts.push('<p class="muted">The bar at the bottom of the After pictures is the Netlify preview toolbar. It is not part of the live site.</p>');
       root.innerHTML = parts.join("");
-      bind("retry-shots", function () { takeShots(missing); });
+      bind("retry-shots", function () { takeShots(retryList); });
       bind("preview", function () { openLink(url); });
       bind("back", function () { refresh(d.changeId, "back"); });
       bind("discard", function () { confirming = "discard"; note = null; render(); });

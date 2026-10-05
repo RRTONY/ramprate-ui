@@ -436,3 +436,10 @@ Gotchas:
 - The card was checked by rendering each view in headless Chrome with a stubbed `App` and
   sample data (light and dark). In dark mode the card's own text is light, so a test page must
   not force a white background.
+- End-to-end test on the deploy preview (2026-10-06, a "MCP smoke test, please ignore" change,
+  discarded afterwards) found: the review called everything "Build", but Netlify had finished and
+  GitHub's `test` Actions job was the one still queued, so checks are now split into Build
+  (Netlify) and GitHub checks (Actions); Netlify posts the preview link as the build starts, so
+  Preview only turns on once Build has passed; the first screenshot try timed out on 3 of 4
+  pictures (the warm-up hadn't run, because Build never showed as passed), and Retry now re-takes
+  any failed picture, Before included.
