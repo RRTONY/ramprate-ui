@@ -671,7 +671,9 @@ export function reviewOutcome(input: {
   if (required.some((c) => c.state === "running" || c.state === "not_run")) {
     return out(
       "checking",
-      "Checks are still running. You can open the Preview now. Publish unlocks when they pass.",
+      preview
+        ? "Checks are still running. You can open the Preview now. Publish unlocks when they pass."
+        : "Checks are still running (the preview site is being built). Publish unlocks when they pass.",
       { retry: true, discard: true, preview },
     );
   }
@@ -696,7 +698,7 @@ export function goesLiveList(input: {
   const items: string[] = [];
   if (input.summary) items.push(input.summary);
   for (const a of input.areas)
-    items.push(a.shared ? `${a.label}` : `Page: ${a.label}`);
+    items.push(a.route && !a.shared ? `Page: ${a.label}` : a.label);
   for (const c of input.content) items.push(c);
   if (input.areas.length)
     items.push(`Applies to: ${APPLIES_TO_LABELS[input.appliesTo]}`);

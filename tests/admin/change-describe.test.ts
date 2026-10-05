@@ -263,3 +263,58 @@ describe("one status for content-only and finished changes", async () => {
     expect(r.nextStep).toContain("Nothing has been changed yet");
   });
 });
+
+describe("plain wording found in the live test (2026-10-06)", async () => {
+  const { goesLiveList, reviewChecks, reviewOutcome } =
+    await import("@/lib/admin/change-describe");
+
+  it("only says 'open the Preview' once there is a preview", () => {
+    const checks = reviewChecks({
+      hasCode: true,
+      build: "pending",
+      buildStuck: false,
+      headSha: "h",
+      lint: { headSha: "h", files: [] },
+      devices: null,
+    });
+    const building = reviewOutcome({
+      status: "ready_for_review",
+      checks,
+      hasPreview: false,
+      problems: [],
+    });
+    expect(building.state).toBe("checking");
+    expect(building.nextStep).not.toContain("open the Preview");
+    expect(
+      reviewOutcome({
+        status: "ready_for_review",
+        checks,
+        hasPreview: true,
+        problems: [],
+      }).nextStep,
+    ).toContain("open the Preview");
+  });
+
+  it("labels only real pages as 'Page:'", () => {
+    const items = goesLiveList({
+      summary: null,
+      appliesTo: "both",
+      areas: [
+        { label: "About page", route: "/about", shared: false },
+        {
+          label: "Behind-the-scenes file: src/lib/x.ts",
+          route: null,
+          shared: false,
+        },
+      ],
+      content: [],
+      otherPendingCount: 0,
+    });
+    expect(items).toEqual([
+      "Page: About page",
+      "Behind-the-scenes file: src/lib/x.ts",
+      "Applies to: Desktop and mobile",
+      "No other changes are included",
+    ]);
+  });
+});
