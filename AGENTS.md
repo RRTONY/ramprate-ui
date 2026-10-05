@@ -616,7 +616,7 @@ infrastructure to maintain.
   Google PageSpeed `final-screenshot`, same `GOOGLE_API_KEY`). Only
   `deploy-preview-N--ramprate.netlify.app` and `ramprate.com` addresses are accepted. Images
   travel in the result's `_meta` (card-only), never the model's text. Google's first run on a page
-  can exceed the 22s cap; later runs are ~2s because Google caches it. So once a change's Build
+  can take ~26s (laptop size), so the cap is 45s (Netlify functions may run 60s; the old 22s cap dated from its former 26s limit); later runs are often quicker because Google caches the page. So once a change's Build
   check passes, `list_pending_changes` warms Google up in the background with Next's `after()`
   (once per code version, `warmedSha` on the record), and the card's Retry re-takes only the
   missing device (`devices` param). The result is saved on the record (`devices`) and shown as the

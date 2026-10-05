@@ -33,9 +33,12 @@ export interface DeviceShot {
 
 const PREVIEW_ORIGIN = /^https:\/\/deploy-preview-\d+--ramprate\.netlify\.app$/;
 const LIVE_ORIGIN = "https://ramprate.com";
-// Google can take 15-30s per page. Stay under the serverless function's time
-// limit so a slow run gives a clear "try again" instead of a dead request.
-const TIMEOUT_MS = 22_000;
+// Google can take 15-30s per page (measured 2026-10-06: ~26s every time for
+// a laptop-size run of the preview home page, cached or not). Netlify's
+// synchronous function limit is 60s (it used to be 26s, which is where an
+// older 22s cap came from), so 45s leaves room to answer with a clear
+// "try again" instead of a dead request.
+const TIMEOUT_MS = 45_000;
 // Background warm-up runs after the reply, so it can wait longer.
 const WARM_TIMEOUT_MS = 55_000;
 
