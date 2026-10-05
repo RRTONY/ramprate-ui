@@ -260,6 +260,28 @@ export const portableTextComponents: PortableTextComponents = {
       )
     },
 
+    // ── FAQ accordion (native <details>, no client JS) ────────────────────────
+    faq: ({value}) => {
+      const items: {_key: string; question?: string; answer?: string}[] = (value?.items ?? []).filter(
+        (item: {question?: string; answer?: string}) => item?.question && item?.answer,
+      )
+      if (!items.length) return null
+      return (
+        <div className="my-8 space-y-3">
+          {items.map(item => (
+            <details key={item._key} className="group rounded-2xl border border-white/10 bg-dark-mid overflow-hidden">
+              <summary className="relative cursor-pointer list-none font-body font-bold text-[17px] leading-snug text-white px-5 py-4 pr-12 [&::-webkit-details-marker]:hidden">
+                {item.question}
+                <span aria-hidden="true" className="absolute right-4 top-3.5 text-xl text-gold group-open:hidden">+</span>
+                <span aria-hidden="true" className="absolute right-4 top-3.5 text-xl text-gold hidden group-open:inline">–</span>
+              </summary>
+              <p className="px-5 pb-5 font-body text-[15px] leading-relaxed text-white/70">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      )
+    },
+
     // ── Image ─────────────────────────────────────────────────────────────────
     image: ({value}) => {
       if (!value?.asset?._ref) return null

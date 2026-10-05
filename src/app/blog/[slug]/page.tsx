@@ -13,6 +13,7 @@ import SanityImage from "@/components/shared/SanityImage";
 import JsonLd, {
   blogPostJsonLd,
   breadcrumbJsonLd,
+  faqJsonLd,
 } from "@/components/shared/JsonLd";
 import { urlFor } from "@/lib/sanity/image";
 import { stripSiteNameSuffix } from "@/lib/sanity/seo";
@@ -102,6 +103,11 @@ export default async function BlogPostPage({
     relatedPosts = await client.fetch(recentPostsQuery, { slug });
   }
 
+  const faqItems: { question: string; answer: string }[] = (post.body ?? [])
+    .filter((b: { _type: string }) => b._type === "faq")
+    .flatMap((b: { items?: { question?: string; answer?: string }[] }) => b.items ?? [])
+    .filter((i: { question?: string; answer?: string }) => i.question && i.answer);
+
   const date = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString("en-US", {
         year: "numeric",
@@ -125,6 +131,7 @@ export default async function BlogPostPage({
             : undefined,
         })}
       />
+      {faqItems.length > 0 && <JsonLd data={faqJsonLd(faqItems)} />}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
