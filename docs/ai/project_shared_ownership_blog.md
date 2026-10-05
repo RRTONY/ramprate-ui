@@ -13,3 +13,7 @@ Copied on 2026-10-06 at the user's request to reproduce the entire interactive p
 ## Next.js route collision
 
 Once the Sanity listing post is published, exclude shared-ownership from generateStaticParams in src/app/blog/[slug]/page.tsx. Otherwise Next.js 16.3.6 tries to prerender both the dedicated GET route and the dynamic blog page at the same path, failing with: Invariant: Expected an HTML size for prerendered app route /blog/shared-ownership. The initial preview passed before the listing record was published, so this issue appeared only during the production build. Keep the published post for indexing; reserve its route for the standalone HTML handler.
+
+## Temporarily offline at the owner's request
+
+The owner asked to remove this article from the live website on 2026-10-05 UTC and intends to publish tomorrow. The dedicated route returns HTTP 404 with noindex; all public post queries exclude the shared-ownership slug, and its SITE_PAGES entry is removed. The exact HTML, assets, and Sanity post remain saved. No automatic publication is scheduled. On a new publication request, restore the HTML response, remove the temporary query exclusion, and restore the SITE_PAGES entry. Keep the dynamic-route static-params collision exclusion described above.
