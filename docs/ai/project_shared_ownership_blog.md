@@ -9,3 +9,7 @@ Copied on 2026-10-06 at the user's request to reproduce the entire interactive p
 - The user explicitly chose the original interactive design. Preserve the original HTML image elements, colors and inline styles despite the normal React/Tailwind coding conventions. Do not rewrite the prose or reconcile the source's older appendix with its newer calculator model without asking.
 - Only local asset URLs, canonical and social metadata URLs, and source-essay links were adjusted. All original styles and executable calculator code are preserved.
 - Updating this article requires updating the stored HTML and its indexed Sanity text together. Do not replace this route with a remote iframe or redirect.
+
+## Next.js route collision
+
+Once the Sanity listing post is published, exclude shared-ownership from generateStaticParams in src/app/blog/[slug]/page.tsx. Otherwise Next.js 16.3.6 tries to prerender both the dedicated GET route and the dynamic blog page at the same path, failing with: Invariant: Expected an HTML size for prerendered app route /blog/shared-ownership. The initial preview passed before the listing record was published, so this issue appeared only during the production build. Keep the published post for indexing; reserve its route for the standalone HTML handler.
