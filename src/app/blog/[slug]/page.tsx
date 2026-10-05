@@ -34,9 +34,14 @@ export const revalidate = 60;
 
 export async function generateStaticParams() {
   const posts = await client.fetch(allPostSlugsQuery);
-  return posts.map((post: { slug: { current: string } }) => ({
-    slug: post.slug.current,
-  }));
+  return posts
+    .filter(
+      (post: { slug: { current: string } }) =>
+        post.slug.current !== "shared-ownership",
+    )
+    .map((post: { slug: { current: string } }) => ({
+      slug: post.slug.current,
+    }));
 }
 
 export async function generateMetadata({
@@ -105,8 +110,13 @@ export default async function BlogPostPage({
 
   const faqItems: { question: string; answer: string }[] = (post.body ?? [])
     .filter((b: { _type: string }) => b._type === "faq")
-    .flatMap((b: { items?: { question?: string; answer?: string }[] }) => b.items ?? [])
-    .filter((i: { question?: string; answer?: string }) => i.question && i.answer);
+    .flatMap(
+      (b: { items?: { question?: string; answer?: string }[] }) =>
+        b.items ?? [],
+    )
+    .filter(
+      (i: { question?: string; answer?: string }) => i.question && i.answer,
+    );
 
   const date = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString("en-US", {
