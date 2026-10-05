@@ -1,0 +1,11 @@
+# Shared ownership interactive blog
+
+Copied on 2026-10-06 at the user's request to reproduce the entire interactive page exactly.
+
+- Source: https://syzygy-who-gets-to-plug-in.eclecticexe.chatgpt.site/shared-ownership
+- Public route: /blog/shared-ownership. The route handler returns the original HTML from src/content/shared-ownership.json, including styles and calculator scripts, without the normal blog wrapper.
+- Images and downloads: public/blog/shared-ownership-assets/. The hero uses lossless WebP with verified identical decoded RGB pixels, because the original PNG exceeds the MCP 4 MiB request limit after base64 encoding.
+- A Sanity post with slug shared-ownership supplies the blog listing, sitemap and full-text search. SITE_PAGES supplies the AI page directory.
+- The user explicitly chose the original interactive design. Preserve the original HTML image elements, colors and inline styles despite the normal React/Tailwind coding conventions. Do not rewrite the prose or reconcile the source's older appendix with its newer calculator model without asking.
+- Only local asset URLs, canonical and social metadata URLs, and source-essay links were adjusted. All original styles and executable calculator code are preserved.
+- Updating this article requires updating the stored HTML and its indexed Sanity text together. Do not replace this route with a remote iframe or redirect.

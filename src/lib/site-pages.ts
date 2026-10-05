@@ -8,6 +8,15 @@ export interface SitePage {
 
 export const SITE_PAGES: SitePage[] = [
   {
+    title: "The cloud has roots. Give the community a stake.",
+    path: "/blog/shared-ownership",
+    type: "blog",
+    keywords:
+      "data center tokenization community shared ownership ImpactSoul equity governance distributions calculator regenerative finance",
+    description:
+      "Explore a $1 billion data center tokenization proposal: 1% community tranches up to 10% shared ownership, cash distributions, equity valuation and secondary-market conditions.",
+  },
+  {
     title: "Sourcing - Enterprise IT Advisory",
     path: "/sourcing",
     type: "practice",
