@@ -45,6 +45,32 @@ export default defineType({
           ],
           preview: {select: {caption: 'caption', rows: 'rows'}, prepare: ({caption, rows}) => ({title: caption || 'Table', subtitle: `${rows?.length ?? 0} rows`})},
         }),
+        defineArrayMember({
+          name: 'faq',
+          title: 'FAQ accordion',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'items',
+              title: 'Questions',
+              type: 'array',
+              of: [
+                defineArrayMember({
+                  name: 'faqItem',
+                  title: 'Question',
+                  type: 'object',
+                  fields: [
+                    defineField({name: 'question', title: 'Question', type: 'string', validation: r => r.required()}),
+                    defineField({name: 'answer', title: 'Answer', type: 'text', rows: 4, validation: r => r.required()}),
+                  ],
+                  preview: {select: {title: 'question', subtitle: 'answer'}},
+                }),
+              ],
+              validation: r => r.min(1),
+            }),
+          ],
+          preview: {select: {items: 'items'}, prepare: ({items}) => ({title: 'FAQ accordion', subtitle: `${items?.length ?? 0} questions`})},
+        }),
       ],
     }),
     defineField({name: 'seo', title: 'SEO', type: 'seo'}),
