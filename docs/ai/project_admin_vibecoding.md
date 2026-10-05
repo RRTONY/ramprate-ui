@@ -402,3 +402,37 @@ or closed directly in GitHub get the right status, leftover branches are deleted
   "Loading…"). Avoid apostrophes in card strings, and always `node --check` the extracted script.
 - Studio can't be checked from localhost (not on Sanity's allowed origins); check
   ramprate.com/studio while signed in.
+
+## 2026-10-06: clear status and actions, confirm before unclear changes, lint fix
+
+Second round of team testing in ChatGPT (via Manus) before handing the server to Tony. 11
+points, ranked; all addressed in one change (details in AGENTS.md, "One status, one next step"):
+
+1. and 2. One clear "what do I do next" and the actions always together: the card leads with one
+   status and a "Next step" line, then Preview | Discard | Publish (+ Retry), greyed out when not
+   available.
+3. One status instead of "Ready for review" + "Site check still running" + "Not ready to
+   publish" at once: `reviewOutcome()` in `change-describe.ts` decides it on the server.
+4. Failed or incomplete checks shown as such: Build, Type check, Lint, Phone and laptop preview,
+   each Passed / Running / Not run yet / Timed out / Failed / Could not run. Publish blocked until
+   the required ones finish. The live "Lint: could not run because fast-glob is missing" was a
+   real bundling bug, now fixed (AGENTS.md, "Lint inside the MCP function").
+5. Old waiting changes never block a new one: they already published independently; the list
+   card now has a Review button per change instead of no buttons.
+6. and 7. Desktop vs mobile and "I understand your request as": `start_change` takes
+   `understood_as`, `applies_to`, `needs_confirmation`; edits are refused until confirmed.
+8. "What will go live" is a plain list ending with "N other waiting changes are NOT included".
+9. History + rollback: already existed (`list_change_history`, `undo_change`); now a card with a
+   Restore button.
+10. Before vs after: text before/after already existed; screenshots now show the live page
+    (before) next to the preview (after).
+11. Phone screenshot timeouts: background warm-up with `after()` once the build passes, and
+    Retry re-takes only the missing device.
+
+Gotchas:
+- Importing `eslint.config.mjs` without `serverExternalPackages` fails the Turbopack build
+  ("Can't resolve 'eslint/lib/util/glob-util'" from eslint-plugin-import).
+- `after()` throws outside a request (Vitest), so the warm-up is wrapped in try/catch.
+- The card was checked by rendering each view in headless Chrome with a stubbed `App` and
+  sample data (light and dark). In dark mode the card's own text is light, so a test page must
+  not force a white background.

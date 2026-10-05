@@ -127,6 +127,7 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
     })),
   }),
   getPRHeadSha: async (n: number) => gh.prs.get(n)?.head ?? null,
+  getFile: async (path: string) => ({ content: `// ${path}\n`, sha: "f" }),
   getPRChecksDetail: async () => ({
     status: gh.checks,
     previewUrl: "https://deploy-preview-100--ramprate.netlify.app",
@@ -186,6 +187,18 @@ vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
   },
 }));
 
+// The server's own lint run; tests choose its outcome.
+const lint = { couldNotRun: null as string | null, errors: 0 };
+vi.mock("@/lib/admin/code-check", () => ({
+  lintChangedFiles: async (files: Array<{ path: string }>) =>
+    files.map((f) => ({
+      path: f.path,
+      errors: lint.errors,
+      warnings: 0,
+      couldNotRun: lint.couldNotRun,
+    })),
+}));
+
 // The real waitForChecks polls for up to 20s while checks are pending.
 vi.mock("@/lib/admin/tools", () => ({
   waitForChecks: async () => ({
@@ -233,6 +246,8 @@ beforeEach(() => {
   gh.createdStates = [];
   gh.allBranches.clear();
   gh.checks = "success";
+  lint.couldNotRun = null;
+  lint.errors = 0;
 });
 
 describe("change sets keep each request separate", () => {
@@ -604,5 +619,168 @@ describe("keeping in step with GitHub", () => {
     const open = await cs.reconcileWithGitHub(await cs.listOpenChangeSets());
     expect(open).toHaveLength(1);
     expect(gh.allBranches.has(cs.branchForChange(c.key))).toBe(true);
+  });
+});
+
+describe("one clear status and next step", () => {
+  it("ready: all checks passed, all three actions available", async () => {
+    const c = await codeChange("Nav", ["src/components/layout/Header.tsx"]);
+    await cs.submitForReview(c, "Moved the menu.", []);
+    const r = await review(c.key);
+    expect(r.state).toBe("ready");
+    expect(r.actions).toEqual({
+      preview: true,
+      discard: true,
+      publish: true,
+      retry: false,
+    });
+    expect(r.checks.map((x) => [x.key, x.state])).toEqual([
+      ["build", "passed"],
+      ["typecheck", "passed"],
+      ["lint", "passed"],
+      ["devices", "not_run"],
+    ]);
+    expect(r.canPublish).toBe(true);
+  });
+
+  it("checking: Preview and Discard work, Publish waits", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    gh.checks = "pending";
+    const r = await review(c.key);
+    expect(r.state).toBe("checking");
+    expect(r.actions).toMatchObject({
+      preview: true,
+      discard: true,
+      publish: false,
+    });
+    expect(r.canPublish).toBe(false);
+  });
+
+  it("stuck: a build still running 20+ minutes after the last edit", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    await cs.patchChangeSet(c.key, {
+      lastEditedAt: new Date(Date.now() - 25 * 60_000).toISOString(),
+    });
+    gh.checks = "pending";
+    const r = await review(c.key);
+    expect(r.state).toBe("stuck");
+    expect(r.actions).toMatchObject({
+      retry: true,
+      discard: true,
+      publish: false,
+    });
+  });
+
+  it("failed: lint that could not run blocks Publish, and says so", async () => {
+    lint.couldNotRun = "Cannot find module 'fast-glob'";
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    const r = await review(c.key);
+    expect(r.state).toBe("failed");
+    expect(r.nextStep).toContain("Lint could not run");
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("could_not_run");
+    expect(r.actions).toMatchObject({
+      retry: true,
+      discard: true,
+      publish: false,
+    });
+    const res = await cs.publishChange(c.key, r.reviewToken, USER);
+    expect(res).toMatchObject({ ok: false });
+    expect(gh.prs.get(c.prNumber!)!.open).toBe(true);
+  });
+
+  it("lint problems are shown but don't block (house rule: never gate on lint debt)", async () => {
+    lint.errors = 2;
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    const r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("issues");
+    expect(r.state).toBe("ready");
+    expect((await cs.publishChange(c.key, r.reviewToken, USER)).ok).toBe(true);
+  });
+
+  it("lint is re-run when the code changed after submit", async () => {
+    const c = await codeChange("Nav", ["src/app/page.tsx"]);
+    await cs.submitForReview(c, "x", []);
+    gh.prs.get(c.prNumber!)!.head = "head-later";
+    const r = await review(c.key);
+    expect(r.checks.find((x) => x.key === "lint")!.state).toBe("passed");
+    expect((await cs.getChangeSet(c.key))!.lint!.headSha).toBe("head-later");
+  });
+
+  it("what will go live ends with what is NOT included, and where it applies", async () => {
+    const c = await cs.createChangeSet({
+      title: "Nav",
+      request: "move the tabs",
+      user: USER,
+      understoodAs: "Move the desktop menu to the right.",
+      appliesTo: "desktop",
+    });
+    const branch = cs.branchForChange(c.key);
+    gh.branches.set(branch, [
+      { path: "src/components/layout/Header.tsx", status: "modified" },
+    ]);
+    gh.prs.set(gh.nextPr, { branch, head: "h", open: true });
+    await cs.patchChangeSet(c.key, { branch, prNumber: gh.nextPr++ });
+    await cs.submitForReview(
+      (await cs.getChangeSet(c.key))!,
+      "Menu moved to the right.",
+      [],
+    );
+    const r = await cs.buildReview((await cs.getChangeSet(c.key))!, 1);
+    expect(r.goesLive).toEqual([
+      "Menu moved to the right.",
+      "Site header (every page)",
+      "Applies to: Desktop only (mobile unchanged)",
+      "1 other waiting change is NOT included",
+    ]);
+    expect(r.understoodAs).toBe("Move the desktop menu to the right.");
+  });
+});
+
+describe("confirm what the AI understood", () => {
+  it("an unclear request waits for the person's OK before any work", async () => {
+    const c = await cs.createChangeSet({
+      title: "Tabs",
+      request: "move the tabs to the right",
+      user: USER,
+      understoodAs: "Move the desktop navigation menu to the right side.",
+      needsConfirmation: true,
+    });
+    expect(c.status).toBe("awaiting_confirmation");
+    expect(cs.isOpen(c)).toBe(true);
+    expect((await cs.submitForReview(c, "x", [])).ok).toBe(false);
+
+    const ok = await cs.confirmChange(c.key, "mobile");
+    expect(ok).toMatchObject({ ok: true, appliesTo: "mobile" });
+    const after = (await cs.getChangeSet(c.key))!;
+    expect(after.status).toBe("draft");
+    expect(after.appliesTo).toBe("mobile");
+  });
+
+  it("defaults to desktop and mobile, and confirming twice is harmless", async () => {
+    const c = await cs.createChangeSet({
+      title: "Tabs",
+      request: "x",
+      user: USER,
+      understoodAs: "y",
+      needsConfirmation: true,
+    });
+    expect((await cs.confirmChange(c.key, undefined)).ok).toBe(true);
+    expect((await cs.getChangeSet(c.key))!.appliesTo).toBe("both");
+    expect((await cs.confirmChange(c.key, "desktop")).ok).toBe(true);
+    expect((await cs.getChangeSet(c.key))!.appliesTo).toBe("both");
+  });
+
+  it("a clear request starts straight away", async () => {
+    const c = await cs.createChangeSet({
+      title: "Headline",
+      request: "Change the headline to X",
+      user: USER,
+      understoodAs: "Change the homepage headline to X.",
+    });
+    expect(c.status).toBe("draft");
   });
 });

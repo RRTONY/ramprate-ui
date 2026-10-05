@@ -1,44 +1,48 @@
-// MCP Apps resource for list_pending_changes: a review card rendered by
-// hosts that support the MCP Apps extension (ChatGPT, Claude; see
-// https://mcpui.dev). Hosts that don't just show the tool's plain text
-// result instead, so this is additive, not a replacement.
+// MCP Apps resource for the change tools: one card rendered by hosts that
+// support the MCP Apps extension (ChatGPT, Claude; see https://mcpui.dev).
+// Hosts that don't just show the tool's plain text result instead, so this
+// is additive, not a replacement.
 //
-// Two layouts, one per result (never a drill-down inside the card):
-// - One change ("detail"): who asked, status, the AI's plain summary plus
-//   server-written facts (what is and isn't included), the pages and
-//   content that will go live with preview links, before vs after, the site
-//   check, and two actions: Publish (primary) and Discard (secondary). Both
-//   go through an in-card confirm step (window.confirm isn't reliable in a
-//   sandboxed iframe). Publish sends the change_id and the reviewToken the
-//   card was showing, so the server refuses if anything changed since.
-// - Phone and laptop ("devices", from preview_on_devices): screenshots of
-//   the top of a preview page at both sizes, side by side (stacked on a
-//   narrow card). The pictures arrive in the result's _meta (card-only),
-//   and only data:image URLs are shown.
-// - Several changes ("list"): a plain list with each change's status, plus
-//   older waiting work and unrelated Studio drafts that will NOT go live.
-//   No buttons; the person asks in the chat to review one.
+// Built for a non-technical owner (team feedback, 2026-10-06): every view
+// leads with ONE status and the next step, and the actions always sit in
+// the same place, in the same order, greyed out when not available:
+//   Preview | Discard | Publish   (+ Retry when something failed or stuck)
+// The server decides the status, next step and which actions work
+// (change-describe.ts reviewOutcome), so the card never has to guess.
+//
+// Views, one per result (never a drill-down inside one card):
+// - "confirm" (start_change): "I understand your request as ...", where it
+//   applies (Desktop and mobile by default), Yes, proceed / Tell me what you
+//   meant. Yes calls confirm_change, then posts "Yes, go ahead" into the chat
+//   so the AI carries on.
+// - "detail" (list_pending_changes with one change): status + next step +
+//   actions, what will go live (always ending with what is NOT included),
+//   the checks (Build, Type check, Lint, Phone and laptop preview), before
+//   and after.
+// - "list" (several waiting changes): each with its own Review button, so an
+//   old waiting change never stands in the way of a new one.
+// - "devices" (preview_on_devices): before (live site) and after (preview)
+//   screenshots for phone and laptop; Retry re-takes only the missing ones.
+// - "history" (list_change_history): who changed what and when, with a
+//   Restore button on published changes (prepares an Undo change to review).
 //
 // Buttons call the server through the App runtime's callServerTool bridge
-// (@modelcontextprotocol/ext-apps). publish_changes and discard_change are
-// rules-gated, so the card passes the rules version the server put in the
-// result's _meta (card-only, never shown to the model). Each button is
-// hidden for roles that can't use it.
+// (@modelcontextprotocol/ext-apps). Rules-gated tools get the rules version
+// the server put in the result's _meta (card-only, never shown to the
+// model). Each button is hidden or greyed out for roles that can't use it.
 //
-// Follows OpenAI's Apps SDK UI guidelines (and works the same in Claude):
-// host theme, fonts and colours via applyDocumentTheme /
+// Host theme, fonts and colours via applyDocumentTheme /
 // applyHostStyleVariables / applyHostFonts with light/dark fallbacks; brand
-// gold only on the one primary button; at most two actions, at the bottom;
-// no inner scrolling (long lists collapse to "+N more"); plain words. Every
-// server value is HTML-escaped and links must be https. No red anywhere
-// (team standard): failures use the brand purple plus words, never colour
-// alone, and not the host's "danger" colour, which is red.
+// gold only on the one primary button; no inner scrolling (long lists
+// collapse to "+N more"); plain words. Every server value is HTML-escaped
+// and links must be https. No red anywhere (team standard): failures use the
+// brand purple plus words, never colour alone.
 //
 // The runtime loads from esm.sh inside the sandboxed iframe (csp
 // resourceDomains), so it adds no dependency to this server. The URI is
 // versioned because ChatGPT caches a card's HTML by URI.
 export const PENDING_CHANGES_UI_URI =
-  "ui://ramprate-admin/pending-changes-v3.html";
+  "ui://ramprate-admin/pending-changes-v4.html";
 
 export const PENDING_CHANGES_HTML = `<!doctype html>
 <html>
@@ -162,6 +166,41 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     color: var(--color-text-primary, var(--fallback-text));
     box-shadow: inset 0 0 0 1px var(--color-border-primary, var(--fallback-border));
   }
+
+  .status {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 12px; border-radius: var(--border-radius-md, 8px);
+    background: var(--color-background-secondary, var(--fallback-surface));
+  }
+  .status .big { display: flex; align-items: center; gap: 8px; font-weight: var(--font-weight-semibold, 600); font-size: var(--font-text-md-size, 14px); }
+  .status .big .dot { width: 10px; height: 10px; }
+  .status .next { font-size: var(--font-text-sm-size, 13px); }
+  .dot.issues { background: var(--color-text-warning, #b45309); }
+  .checks li { display: grid; grid-template-columns: 10px minmax(0, 9em) minmax(0, 1fr); gap: 2px 8px; align-items: baseline; }
+  .checks .dot { align-self: center; }
+  .checks .what { font-weight: var(--font-weight-semibold, 600); }
+  .understood { margin: 0; padding: 8px 12px; border-left: 3px solid var(--color-border-primary, var(--fallback-border)); }
+  fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  legend { font-weight: var(--font-weight-semibold, 600); margin-bottom: 4px; padding: 0; }
+  label.opt { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .linkbtn { appearance: none; border: 0; background: none; padding: 0; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .linkbtn:disabled { opacity: 0.55; cursor: default; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pair.phone { max-width: 360px; }
+  .devrow { display: flex; flex-direction: column; gap: 6px; }
+  .devrow img {
+    display: block; width: 100%; height: auto;
+    border-radius: var(--border-radius-md, 8px);
+    box-shadow: 0 0 0 1px var(--color-border-primary, var(--fallback-border));
+  }
+  .devrow figure { margin: 0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .devrow .missing {
+    padding: 24px 8px; text-align: center; font-size: var(--font-text-sm-size, 13px);
+    border-radius: var(--border-radius-md, 8px);
+    background: var(--color-background-secondary, var(--fallback-surface));
+  }
+  .hist li { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+  .hist .who { min-width: 0; }
 </style>
 </head>
 <body>
@@ -176,10 +215,10 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     let data = null;
     let rulesVersion = null;
     let confirming = null; // "publish" | "discard" | null
-    let busy = false;
-    let done = false;
+    let busy = null;       // name of the running action, or null
     let note = null;
     let shots = [];
+    let scope = "both";
 
     function esc(value) {
       return String(value == null ? "" : value)
@@ -193,6 +232,10 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       const d = new Date(iso);
       return isNaN(d) ? "" : d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
     }
+    function day(iso) {
+      const d = new Date(iso);
+      return isNaN(d) ? "" : d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    }
     function capped(items, render) {
       const shown = items.slice(0, MAX_ITEMS).map(render);
       if (items.length > MAX_ITEMS) shown.push('<li class="muted">+' + (items.length - MAX_ITEMS) + ' more</li>');
@@ -202,13 +245,90 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       return note ? '<div class="note ' + note.kind + '" role="status">' + esc(note.text) + '</div>' : "";
     }
 
-    const CHECK = {
-      success: ["success", "Site check passed"],
-      pending: ["pending", "Site check still running"],
-      failure: ["failure", "Site check failed"],
+    // One colour per status, always with words next to it.
+    const STATE_DOT = {
+      awaiting_ok: "pending", working: "unknown", checking: "pending", ready: "success",
+      failed: "failure", stuck: "pending", published: "success", discarded: "unknown",
     };
-    const STATUS_DOT = { draft: "unknown", ready_for_review: "pending", published: "success", discarded: "unknown" };
+    const CHECK_DOT = {
+      passed: "success", issues: "issues", running: "pending", not_run: "pending",
+      timed_out: "pending", failed: "failure", could_not_run: "failure", not_needed: "unknown",
+    };
+    const CHECK_WORD = {
+      passed: "Passed", issues: "Passed with notes", running: "Running", not_run: "Not run yet",
+      timed_out: "Timed out", failed: "Failed", could_not_run: "Could not run", not_needed: "Not needed",
+    };
+    const STATUS_DOT = { awaiting_confirmation: "pending", draft: "unknown", ready_for_review: "pending", published: "success", discarded: "unknown" };
 
+    function statusBlock(stateKey, label, next) {
+      return '<div class="status" role="status"><div class="big"><span class="dot ' + (STATE_DOT[stateKey] || "unknown") + '" aria-hidden="true"></span>' +
+        esc(label) + '</div>' + (next ? '<div class="next"><strong>Next step:</strong> ' + esc(next) + '</div>' : "") + '</div>';
+    }
+    function button(id, label, kind, enabled, title) {
+      return '<button class="btn ' + kind + '" id="' + id + '"' + (enabled ? "" : " disabled") +
+        (title ? ' title="' + esc(title) + '"' : "") + '>' + esc(label) + '</button>';
+    }
+
+    // ── Confirm what the AI understood (start_change) ─────────────────────
+    function renderConfirm() {
+      const d = data;
+      const parts = ['<h2>' + esc(d.title) + '</h2>'];
+      parts.push(statusBlock(d.state, d.stateLabel, d.nextStep));
+      parts.push('<div><h3>I understand your request as:</h3><p class="understood">' + esc(d.understoodAs) + '</p></div>');
+      if (d.state === "awaiting_ok") {
+        const opts = [["both", "Both desktop and mobile"], ["desktop", "Desktop only"], ["mobile", "Mobile only"]];
+        parts.push('<fieldset' + (busy ? " disabled" : "") + '><legend>Where should this change apply?</legend>' + opts.map(function (o) {
+          return '<label class="opt"><input type="radio" name="scope" value="' + o[0] + '"' + (scope === o[0] ? " checked" : "") + ' /> ' + esc(o[1]) + '</label>';
+        }).join("") + '</fieldset>');
+        parts.push(noteHtml());
+        const can = !!rulesVersion;
+        parts.push('<div class="actions">' +
+          button("yes-proceed", busy === "confirm" ? "Saving…" : "Yes, proceed", "primary", can && !busy) +
+          button("not-quite", "Tell me what you meant", "secondary", !busy) + '</div>');
+        if (!can) parts.push('<p class="muted">Say yes in the chat to let the AI start.</p>');
+      } else {
+        parts.push('<p class="muted">Applies to: ' + esc(d.appliesToLabel) + '</p>');
+        parts.push(noteHtml());
+      }
+      root.innerHTML = parts.join("");
+      document.querySelectorAll('input[name="scope"]').forEach(function (el) {
+        el.onchange = function () { scope = el.value; };
+      });
+      bind("yes-proceed", confirmYes);
+      bind("not-quite", notQuite);
+    }
+
+    async function confirmYes() {
+      busy = "confirm"; note = null; render();
+      try {
+        const result = await app.callServerTool({ name: "confirm_change", arguments: { change_id: data.changeId, applies_to: scope, rules_version: rulesVersion } });
+        const out = result.structuredContent || readText(result);
+        busy = null;
+        if (result.isError || !out || out.ok === false) {
+          note = { kind: "error", text: (out && out.error) || "That didn't work. Say yes in the chat instead." };
+        } else {
+          data.state = "working"; data.stateLabel = "Working";
+          data.nextStep = "The AI is making this change. Nothing to do yet.";
+          data.appliesToLabel = out.appliesToLabel || data.appliesToLabel;
+          note = { kind: "success", text: "Thanks, the AI is starting now." };
+          tell("Yes, that's right. Go ahead (" + (out.appliesToLabel || "desktop and mobile") + ").");
+        }
+      } catch (e) {
+        busy = null;
+        note = { kind: "error", text: "That didn't work. Say yes in the chat instead." };
+      }
+      render();
+    }
+    function notQuite() {
+      note = { kind: "success", text: "Type what you meant in the chat below. Nothing has been changed." };
+      tell("That's not quite what I meant.");
+      render();
+    }
+    function tell(text) {
+      try { app.sendMessage({ role: "user", content: [{ type: "text", text: text }] }).catch(function () {}); } catch (e) {}
+    }
+
+    // ── Several waiting changes ─────────────────────────────────────────────
     function renderList() {
       const changes = data.changes || [];
       const older = data.olderChanges || [];
@@ -216,18 +336,19 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       const parts = [];
       if (data.error) parts.push('<div class="note error">' + esc(data.error) + '</div>');
       if (!changes.length && !older.length) {
-        parts.push('<span class="muted">Nothing is waiting to go live.</span>');
+        parts.push(statusBlock("published", "Nothing waiting", "Nothing is waiting to go live."));
       } else {
-        parts.push('<h2>Website changes waiting</h2>');
+        parts.push('<h2>Website changes waiting (' + changes.length + ')</h2>');
+        parts.push('<p class="muted">Each change is separate. Publishing one never takes another live.</p>');
         if (changes.length) {
-          parts.push('<ul class="box" aria-label="Waiting changes">' + capped(changes, function (c) {
-            return '<li class="row"><span>' + esc(c.title) + ' <span class="muted">· ' + esc(c.requestedBy) + ', ' + esc(when(c.createdAt)) + '</span></span>' +
-              '<span class="chip"><span class="dot ' + (STATUS_DOT[c.status] || "unknown") + '" aria-hidden="true"></span>' + esc(c.statusLabel) + '</span></li>';
+          parts.push('<ul class="box" aria-label="Waiting changes">' + capped(changes, function (c, i) {
+            return '<li class="row"><span>' + esc(c.title) + ' <span class="muted">· ' + esc(c.requestedBy) + ', ' + esc(when(c.createdAt)) + '</span><br />' +
+              '<span class="chip"><span class="dot ' + (STATUS_DOT[c.status] || "unknown") + '" aria-hidden="true"></span>' + esc(c.statusLabel) + '</span></span>' +
+              button("review-" + i, busy === "review-" + i ? "Opening…" : "Review", "secondary", !busy) + '</li>';
           }) + '</ul>');
-          parts.push('<p class="muted">Each change is reviewed and published on its own. Ask in the chat to review one by name.</p>');
         }
         if (older.length) {
-          parts.push('<p class="muted">' + older.length + ' older waiting change' + (older.length === 1 ? "" : "s") + ' from before this update. These can be discarded, not published. Ask in the chat to discard them.</p>');
+          parts.push('<p class="muted">' + older.length + ' older waiting change' + (older.length === 1 ? "" : "s") + ' from before the change tracking. They can be discarded, not published. Ask in the chat to discard them.</p>');
         }
       }
       if (drafts.length) {
@@ -235,32 +356,61 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       }
       parts.push(noteHtml());
       root.innerHTML = parts.join("");
+      changes.slice(0, MAX_ITEMS).forEach(function (c, i) {
+        bind("review-" + i, function () { refresh(c.changeId, "review-" + i); });
+      });
     }
 
+    // ── One change: status, actions, what goes live, checks ───────────────
     function renderDetail() {
       const d = data;
+      const a = d.actions || {};
       const parts = [];
       parts.push('<h2>' + esc(d.title) + '</h2>');
-      const c = d.checkStatus ? (CHECK[d.checkStatus] || ["unknown", "Site check status unknown"]) : null;
-      parts.push('<div class="meta">' +
-        '<span class="chip"><span class="dot ' + (STATUS_DOT[d.status] || "unknown") + '" aria-hidden="true"></span>' + esc(d.statusLabel) + '</span>' +
-        (c ? '<span class="chip"><span class="dot ' + c[0] + '" aria-hidden="true"></span>' + esc(c[1]) + '</span>' : "") +
-        '<span class="muted">Asked by ' + esc(d.requestedBy) + ', ' + esc(when(d.createdAt)) + '</span></div>');
+      parts.push(statusBlock(d.state, d.stateLabel, d.nextStep));
 
-      if (d.summary) parts.push('<p>' + esc(d.summary) + '</p>');
-      parts.push('<p class="muted">' + esc(d.facts) + '</p>');
+      // Actions: always the same buttons in the same place.
+      const preview = safeUrl(((d.previewLinks || [])[0] || {}).url) || safeUrl(d.previewUrl);
+      if (confirming === "publish") {
+        parts.push('<div class="confirm"><strong>You are about to publish this change to the live RampRate website.</strong> Only what is listed under "What will go live" goes out, nothing else. Are you sure?</div>');
+        parts.push('<div class="actions">' + button("yes", busy ? "Publishing…" : "Yes, publish", "primary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
+      } else if (confirming === "discard") {
+        parts.push('<div class="confirm"><strong>Discard this change?</strong> Everything in it is thrown away and nothing goes live. You can always ask for it again.</div>');
+        parts.push('<div class="actions">' + button("yes", busy ? "Discarding…" : "Yes, discard", "secondary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
+      } else {
+        const can = !!rulesVersion && !busy;
+        const bar = [];
+        if (a.retry) bar.push(button("retry", busy === "retry" ? "Checking…" : "Retry", "secondary", !busy, "Check the status again"));
+        bar.push(button("preview", "Preview", "secondary", !!(a.preview && preview), a.preview && preview ? "Open the preview site" : "No preview yet"));
+        bar.push(button("discard", "Discard", "secondary", !!(a.discard && d.youCanDiscard && can)));
+        bar.push(button("publish", "Publish", "primary", !!(a.publish && d.canPublish && d.youCanPublish && can),
+          a.publish ? "" : "Publish unlocks when the status is Ready for review"));
+        parts.push('<div class="actions">' + bar.join("") + '</div>');
+        if (a.publish && !d.youCanPublish) parts.push('<p class="muted">Ready to publish. Ask a team member with publish access to approve it.</p>');
+        else if ((a.publish || a.discard) && !rulesVersion) parts.push('<p class="muted">Ask in the chat to publish or discard this change.</p>');
+      }
+      parts.push(noteHtml());
 
-      const areas = d.areas || [];
-      const content = d.content || [];
-      const links = {};
-      (d.previewLinks || []).forEach(function (l) { if (safeUrl(l.url)) links[l.label] = l.url; });
-      if (areas.length || content.length) {
-        const items = areas.map(function (a) {
-          const url = links[a.label];
-          return '<li class="row"><span>' + esc(a.label) + '</span>' +
-            (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Preview</a>' : "") + '</li>';
-        }).concat(content.map(function (x) { return '<li>' + esc(x.label) + '</li>'; }));
-        parts.push('<div><h3>What will go live</h3><ul class="box" aria-label="What will go live">' + capped(items, function (h) { return h; }) + '</ul></div>');
+      const live = d.goesLive || [];
+      if (live.length) {
+        parts.push('<div><h3>What will go live</h3><ul class="box" aria-label="What will go live">' + capped(live, function (t) { return '<li>' + esc(t) + '</li>'; }) + '</ul></div>');
+      }
+      if (d.understoodAs) {
+        parts.push('<p class="muted">Asked by ' + esc(d.requestedBy) + ', ' + esc(when(d.createdAt)) + '. Understood as: ' + esc(d.understoodAs) + '</p>');
+      } else {
+        parts.push('<p class="muted">Asked by ' + esc(d.requestedBy) + ', ' + esc(when(d.createdAt)) + '.</p>');
+      }
+
+      const checks = d.checks || [];
+      if (checks.length) {
+        parts.push('<div><h3>Checks</h3><ul class="box checks" aria-label="Checks">' + checks.map(function (c) {
+          const extra = c.key === "devices" && c.state !== "not_needed" && d.status !== "published" && d.status !== "discarded" && d.previewUrl
+            ? ' <button class="linkbtn" id="shots"' + (busy ? " disabled" : "") + '>' + (busy === "shots" ? "Taking screenshots…" : (c.state === "passed" ? "See them" : c.state === "not_run" ? "Take them" : "Retry")) + '</button>'
+            : "";
+          return '<li><span class="dot ' + (CHECK_DOT[c.state] || "unknown") + '" aria-hidden="true"></span>' +
+            '<span class="what">' + esc(c.label) + '</span>' +
+            '<span><strong>' + esc(CHECK_WORD[c.state] || c.state) + '</strong>' + (c.required ? "" : ' <span class="muted">(optional)</span>') + '. <span class="muted">' + esc(c.detail) + '</span>' + extra + '</span></li>';
+        }).join("") + '</ul></div>');
       }
 
       const ba = d.beforeAfter || [];
@@ -274,114 +424,203 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
         parts.push('<div><h3>Before and after</h3><ul class="box">' + shown.join("") + '</ul></div>');
       }
 
-      const preview = safeUrl(d.previewUrl);
-      if (preview && !(d.previewLinks || []).length) {
-        parts.push('<p class="muted"><a href="' + esc(preview) + '" target="_blank" rel="noopener noreferrer">Open the preview site</a>. Ask in the chat to see it on a phone and a laptop.</p>');
-      } else if ((d.previewLinks || []).length) {
-        parts.push('<p class="muted">Preview opens a private copy of the site with this change. Ask in the chat to see it on a phone and a laptop.</p>');
+      const pages = (d.previewLinks || []).filter(function (l) { return safeUrl(l.url); });
+      if (pages.length > 1) {
+        parts.push('<p class="muted">Preview each page: ' + pages.slice(0, MAX_ITEMS).map(function (l) {
+          return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label) + '</a>';
+        }).join(", ") + '</p>');
       }
-
-      if (!done && (d.blockers || []).length) {
-        parts.push('<p class="muted">Not ready to publish: ' + esc(d.blockers.join(" ")) + '</p>');
-      }
-
-      if (confirming === "publish") {
-        parts.push('<div class="confirm"><strong>You are about to publish these changes to the live RampRate website.</strong> Only this change goes live, nothing else. Are you sure you want to continue?</div>');
-      } else if (confirming === "discard") {
-        parts.push('<div class="confirm"><strong>Discard this change?</strong> Everything in it is thrown away and nothing goes live. You can always ask for it again.</div>');
-      }
-      parts.push(noteHtml());
-
-      const isOpen = d.status === "draft" || d.status === "ready_for_review";
-      const canPublish = !done && d.canPublish && d.youCanPublish && rulesVersion;
-      const canDiscard = !done && isOpen && d.youCanDiscard && rulesVersion;
-      const actions = [];
-      if (confirming === "publish") {
-        actions.push('<button class="btn primary" id="yes"' + (busy ? " disabled" : "") + '>' + (busy ? "Publishing…" : "Yes, publish") + '</button>');
-        actions.push('<button class="btn secondary" id="cancel"' + (busy ? " disabled" : "") + '>Cancel</button>');
-      } else if (confirming === "discard") {
-        actions.push('<button class="btn secondary" id="yes"' + (busy ? " disabled" : "") + '>' + (busy ? "Discarding…" : "Yes, discard") + '</button>');
-        actions.push('<button class="btn secondary" id="cancel"' + (busy ? " disabled" : "") + '>Cancel</button>');
-      } else {
-        if (canPublish) actions.push('<button class="btn primary" id="publish">Publish</button>');
-        if (canDiscard) actions.push('<button class="btn secondary" id="discard">Discard</button>');
-      }
-      if (!done && isOpen && !rulesVersion) {
-        parts.push('<p class="muted">Ask in the chat to publish or discard this change.</p>');
-      } else if (!done && d.canPublish && !d.youCanPublish) {
-        parts.push('<p class="muted">Ready to publish. Ask a team member with publish access to approve it.</p>');
-      }
-      if (actions.length) parts.push('<div class="actions">' + actions.join("") + '</div>');
 
       root.innerHTML = parts.join("");
-      wire();
-    }
-
-    function renderDevices() {
-      const d = data;
-      const byDevice = {};
-      (shots || []).forEach(function (s) { if (s && s.device) byDevice[s.device] = s; });
-      const figure = function (device, label, alt) {
-        const s = byDevice[device] || {};
-        const ok = typeof s.image === "string" && s.image.indexOf("data:image/") === 0;
-        return '<figure class="' + device + '"><figcaption>' + label + '</figcaption>' +
-          (ok
-            ? '<img src="' + esc(s.image) + '" alt="' + esc(alt) + '"' + (s.width ? ' width="' + Number(s.width) + '" height="' + Number(s.height) + '"' : "") + ' />'
-            : '<div class="missing muted">' + esc(s.error || "Not available") + '</div>') +
-          '</figure>';
-      };
-      const page = esc(d.page || "/");
-      const url = safeUrl(d.url);
-      root.innerHTML = [
-        '<h2>' + esc(d.title) + '</h2>',
-        '<p class="muted">How the ' + (d.page === "/" ? "home page" : page + " page") + ' looks with this change, at the top of the page.' +
-          (url ? ' <a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Open the preview</a> to scroll the whole page.' : "") + '</p>',
-        '<div class="devices">' +
-          figure("phone", "Phone", "Phone-size screenshot of " + (d.page || "/") + " with this change") +
-          figure("laptop", "Laptop", "Laptop-size screenshot of " + (d.page || "/") + " with this change") +
-        '</div>',
-        '<p class="muted">The bar at the bottom of the screenshots is the Netlify preview toolbar. It is not part of the live site.</p>',
-      ].join("");
-    }
-
-    function render() {
-      if (!data) return;
-      if (data.view === "detail") renderDetail();
-      else if (data.view === "devices") renderDevices();
-      else renderList();
-    }
-
-    function wire() {
-      const bind = function (id, fn) { const el = document.getElementById(id); if (el) el.onclick = fn; };
+      bind("preview", function () { openLink(preview); });
       bind("publish", function () { confirming = "publish"; note = null; render(); });
       bind("discard", function () { confirming = "discard"; note = null; render(); });
       bind("cancel", function () { confirming = null; render(); });
       bind("yes", function () { act(confirming); });
+      bind("retry", function () { refresh(d.changeId, "retry"); });
+      bind("shots", function () { takeShots(null); });
+    }
+
+    // ── Before / after screenshots ──────────────────────────────────────────
+    function renderDevices() {
+      const d = data;
+      const by = {};
+      (shots || []).forEach(function (s) { if (s && s.device) by[s.device + ":" + (s.version || "after")] = s; });
+      const fig = function (device, version, label) {
+        const s = by[device + ":" + version] || {};
+        const ok = typeof s.image === "string" && s.image.indexOf("data:image/") === 0;
+        const alt = (version === "before" ? "Live site, " : "With this change, ") + device + " size, " + (d.page || "/");
+        return '<figure><figcaption>' + label + '</figcaption>' + (ok
+          ? '<img src="' + esc(s.image) + '" alt="' + esc(alt) + '"' + (s.width ? ' width="' + Number(s.width) + '" height="' + Number(s.height) + '"' : "") + ' />'
+          : '<div class="missing muted">' + esc(s.error || (version === "before" ? "Not on the live site yet" : "Not available")) + '</div>') + '</figure>';
+      };
+      const missing = d.missing || [];
+      const parts = ['<h2>' + esc(d.title) + '</h2>'];
+      parts.push(statusBlock(missing.length ? "stuck" : "ready",
+        missing.length ? (missing.join(" and ") + " preview timed out") : "Screenshots ready",
+        missing.length ? "Retry to take the missing one again (it's usually quick the second time), or Discard the change." : "Compare before and after, then go back to the review to Publish or Discard."));
+      const url = safeUrl(d.url);
+      const bar = [];
+      if (missing.length) bar.push(button("retry-shots", busy === "shots" ? "Retrying…" : "Retry", "secondary", !busy));
+      bar.push(button("preview", "Preview", "secondary", !!url));
+      if (missing.length) bar.push(button("discard", "Discard", "secondary", !!(d.youCanDiscard && rulesVersion && !busy)));
+      bar.push(button("back", busy === "back" ? "Opening…" : "Back to review", "primary", !busy));
+      if (confirming === "discard") {
+        parts.push('<div class="confirm"><strong>Discard this change?</strong> Everything in it is thrown away and nothing goes live.</div>');
+        parts.push('<div class="actions">' + button("yes", busy ? "Discarding…" : "Yes, discard", "secondary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
+      } else {
+        parts.push('<div class="actions">' + bar.join("") + '</div>');
+      }
+      parts.push(noteHtml());
+      parts.push('<p class="muted">Top of the ' + (d.page === "/" ? "home page" : esc(d.page || "/") + " page") + '. Before is the live site, After is this change.</p>');
+      parts.push('<div class="devrow"><h3>Phone</h3><div class="pair phone">' + fig("phone", "before", "Before") + fig("phone", "after", "After") + '</div></div>');
+      parts.push('<div class="devrow"><h3>Laptop</h3><div class="pair">' + fig("laptop", "before", "Before") + fig("laptop", "after", "After") + '</div></div>');
+      parts.push('<p class="muted">The bar at the bottom of the After pictures is the Netlify preview toolbar. It is not part of the live site.</p>');
+      root.innerHTML = parts.join("");
+      bind("retry-shots", function () { takeShots(missing); });
+      bind("preview", function () { openLink(url); });
+      bind("back", function () { refresh(d.changeId, "back"); });
+      bind("discard", function () { confirming = "discard"; note = null; render(); });
+      bind("cancel", function () { confirming = null; render(); });
+      bind("yes", function () { act("discard"); });
+    }
+
+    // ── History with Restore ────────────────────────────────────────────────
+    function renderHistory() {
+      const rows = data.history || [];
+      const parts = ['<h2>Change history</h2>'];
+      if (!rows.length) parts.push('<span class="muted">No changes yet.</span>');
+      else {
+        parts.push('<ul class="box hist" aria-label="Change history">' + capped(rows, function (h, i) {
+          const restore = h.canUndo && data.youCanRestore && rulesVersion
+            ? button("restore-" + i, busy === "restore-" + i ? "Preparing…" : "Restore previous", "secondary", !busy)
+            : "";
+          return '<li><span class="who">' + esc(day(h.publishedAt || h.createdAt)) + ' · ' + esc(h.requestedBy) + ' · ' + esc(h.title) +
+            ' <span class="chip"><span class="dot ' + (STATUS_DOT[h.status] || "unknown") + '" aria-hidden="true"></span>' +
+            esc(h.undoneBy ? "Restored" : h.statusLabel) + '</span></span>' + restore + '</li>';
+        }) + '</ul>');
+        parts.push('<p class="muted">Restore prepares a new change that puts the site back the way it was before. Nothing goes live until you review and publish it.</p>');
+      }
+      parts.push(noteHtml());
+      root.innerHTML = parts.join("");
+      rows.slice(0, MAX_ITEMS).forEach(function (h, i) {
+        bind("restore-" + i, function () { restore(h.changeId, "restore-" + i); });
+      });
+    }
+
+    async function restore(changeId, tag) {
+      busy = tag; note = null; render();
+      try {
+        const result = await app.callServerTool({ name: "undo_change", arguments: { change_id: changeId, rules_version: rulesVersion } });
+        const out = result.structuredContent || readText(result);
+        if (result.isError || !out || out.ok === false) {
+          busy = null;
+          note = { kind: "error", text: (out && out.error) || "Restoring didn't work." };
+          render();
+          return;
+        }
+        busy = null;
+        await refresh(out.changeId, tag);
+      } catch (e) {
+        busy = null;
+        note = { kind: "error", text: "That didn't work: " + (e && e.message ? e.message : "unknown error") };
+        render();
+      }
+    }
+
+    // ── Shared actions ──────────────────────────────────────────────────────
+    function render() {
+      if (!data) return;
+      if (data.view === "confirm") renderConfirm();
+      else if (data.view === "detail") renderDetail();
+      else if (data.view === "devices") renderDevices();
+      else if (data.view === "history") renderHistory();
+      else renderList();
+    }
+    function bind(id, fn) { const el = document.getElementById(id); if (el) el.onclick = fn; }
+    function openLink(url) {
+      if (!url) return;
+      try { app.openLink({ url: url }).catch(function () { window.open(url, "_blank", "noopener"); }); }
+      catch (e) { window.open(url, "_blank", "noopener"); }
+    }
+
+    function show(result) {
+      data = result.structuredContent || readText(result);
+      if (result._meta && result._meta.rulesVersion) rulesVersion = result._meta.rulesVersion;
+      if (result._meta && result._meta.shots) shots = result._meta.shots;
+      if (data && data.appliesTo) scope = data.appliesTo;
+    }
+
+    async function refresh(changeId, tag) {
+      busy = tag; note = null; render();
+      try {
+        const result = await app.callServerTool({ name: "list_pending_changes", arguments: changeId ? { change_id: changeId } : {} });
+        busy = null; confirming = null;
+        if (result.isError) note = { kind: "error", text: "Couldn't load that change. Ask in the chat." };
+        else show(result);
+      } catch (e) {
+        busy = null;
+        note = { kind: "error", text: "That didn't work: " + (e && e.message ? e.message : "unknown error") };
+      }
+      render();
+    }
+
+    async function takeShots(only) {
+      const changeId = data.changeId;
+      const page = data.view === "devices" ? data.page : undefined;
+      busy = "shots"; note = null; render();
+      try {
+        const args = { change_id: changeId };
+        if (page) args.path = page;
+        if (only && only.length) args.devices = only;
+        const result = await app.callServerTool({ name: "preview_on_devices", arguments: args });
+        busy = null;
+        const out = result.structuredContent || readText(result);
+        if (result.isError || !out || out.error) {
+          note = { kind: "error", text: (out && out.error) || "Screenshots didn't work. Try again in a moment." };
+        } else {
+          // A retry only re-takes the missing device; keep the others.
+          const fresh = (result._meta && result._meta.shots) || [];
+          const keep = only && only.length ? (shots || []).filter(function (s) { return only.indexOf(s.device) < 0; }) : [];
+          data = out;
+          shots = keep.concat(fresh);
+          if (result._meta && result._meta.rulesVersion) rulesVersion = result._meta.rulesVersion;
+        }
+      } catch (e) {
+        busy = null;
+        note = { kind: "error", text: "That didn't work: " + (e && e.message ? e.message : "unknown error") };
+      }
+      render();
     }
 
     async function act(kind) {
-      busy = true;
-      render();
+      busy = kind; render();
       const args = { change_id: data.changeId, rules_version: rulesVersion };
       if (kind === "publish") args.review_token = data.reviewToken;
       try {
         const result = await app.callServerTool({ name: kind === "publish" ? "publish_changes" : "discard_change", arguments: args });
         const out = result.structuredContent || readText(result);
-        busy = false;
+        busy = null;
         confirming = null;
         if (result.isError || !out || out.ok === false || out.error) {
           note = { kind: "error", text: (out && out.error) || (kind === "publish" ? "Publishing didn't work." : "Discarding didn't work.") };
-        } else if (kind === "publish") {
-          done = true;
-          data.status = "published"; data.statusLabel = "Published";
-          note = { kind: "success", text: "Published. The live site updates in a few minutes. It's saved in the change history and can be undone." };
         } else {
-          done = true;
-          data.status = "discarded"; data.statusLabel = "Discarded";
-          note = { kind: "success", text: "Discarded. Nothing from this change will go live." };
+          const published = kind === "publish";
+          data = Object.assign({}, data, {
+            view: "detail",
+            status: published ? "published" : "discarded",
+            statusLabel: published ? "Published" : "Discarded",
+            state: published ? "published" : "discarded",
+            stateLabel: published ? "Published" : "Discarded",
+            nextStep: published
+              ? "Nothing to do. The live site updates in a few minutes. It's in the change history and can be restored."
+              : "Nothing to do. Nothing from this change will go live.",
+            actions: { preview: false, discard: false, publish: false, retry: false },
+          });
+          note = null;
         }
       } catch (e) {
-        busy = false;
+        busy = null;
         confirming = null;
         note = { kind: "error", text: "That didn't work: " + (e && e.message ? e.message : "unknown error") };
       }
@@ -404,17 +643,13 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       if (ctx.styles && ctx.styles.css && ctx.styles.css.fonts) applyHostFonts(ctx.styles.css.fonts);
     }
 
-    const app = new App({ name: "ramprate-admin-ui", version: "3.0.0" }, {}, { autoResize: true });
+    const app = new App({ name: "ramprate-admin-ui", version: "4.0.0" }, {}, { autoResize: true });
     app.ontoolresult = function (params) {
-      data = params.structuredContent || readText(params);
-      rulesVersion = (params._meta && params._meta.rulesVersion) || null;
-      shots = (params._meta && params._meta.shots) || [];
-      confirming = null;
-      busy = false;
-      done = false;
-      note = null;
+      rulesVersion = null; shots = [];
+      confirming = null; busy = null; note = null;
+      show(params);
       if (!data) {
-        root.innerHTML = '<span class="muted">Couldn\\'t read the waiting changes. Ask again in the chat.</span>';
+        root.innerHTML = '<span class="muted">Couldn\\'t read this result. Ask again in the chat.</span>';
         return;
       }
       render();

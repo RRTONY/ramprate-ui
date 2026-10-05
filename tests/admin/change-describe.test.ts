@@ -191,3 +191,75 @@ describe("change keys", () => {
     expect(normalizeChangeKey("20261002-ab12cd; drop")).toBeNull();
   });
 });
+
+describe("one status for content-only and finished changes", async () => {
+  const { reviewChecks, reviewOutcome } =
+    await import("@/lib/admin/change-describe");
+  const contentOnly = reviewChecks({
+    hasCode: false,
+    build: null,
+    buildStuck: false,
+    headSha: null,
+    lint: null,
+    devices: null,
+  });
+
+  it("content-only changes need no build, so they can be ready at once", () => {
+    expect(
+      contentOnly.every((c) => c.state === "not_needed" && !c.required),
+    ).toBe(true);
+    const r = reviewOutcome({
+      status: "ready_for_review",
+      checks: contentOnly,
+      hasPreview: false,
+      problems: [],
+    });
+    expect(r.state).toBe("ready");
+    expect(r.actions).toEqual({
+      preview: false,
+      discard: true,
+      publish: true,
+      retry: false,
+    });
+  });
+
+  it("published and discarded changes offer no actions", () => {
+    for (const status of ["published", "discarded"] as const) {
+      const r = reviewOutcome({
+        status,
+        checks: contentOnly,
+        hasPreview: true,
+        problems: [],
+      });
+      expect(r.state).toBe(status);
+      expect(Object.values(r.actions).some(Boolean)).toBe(false);
+    }
+  });
+
+  it("a draft is 'Working' and can only be discarded or previewed", () => {
+    const r = reviewOutcome({
+      status: "draft",
+      checks: contentOnly,
+      hasPreview: true,
+      problems: [],
+    });
+    expect(r.state).toBe("working");
+    expect(r.actions).toEqual({
+      preview: true,
+      discard: true,
+      publish: false,
+      retry: false,
+    });
+  });
+
+  it("problems that aren't checks still fail the review with the reason", () => {
+    const r = reviewOutcome({
+      status: "ready_for_review",
+      checks: contentOnly,
+      hasPreview: false,
+      problems: ["Nothing has been changed yet"],
+    });
+    expect(r.state).toBe("failed");
+    expect(r.nextStep).toContain("Nothing has been changed yet");
+  });
+});

@@ -6,16 +6,27 @@ import { listPendingDrafts, publishDraft } from "@/lib/admin/sanity-content";
 import { waitForChecks } from "@/lib/admin/tools";
 import type { McpUser } from "@/lib/admin/mcp-auth";
 import {
+  APPLIES_TO_LABELS,
   STATUS_LABELS,
   describeContent,
   describeFiles,
   factsLine,
+  goesLiveList,
   newChangeKey,
+  normalizeAppliesTo,
+  reviewChecks,
+  reviewOutcome,
   reviewToken,
   sanityBeforeAfter,
   type AffectedArea,
+  type AppliesTo,
   type BeforeAfter,
+  type BuildState,
   type ChangeStatus,
+  type CheckRow,
+  type DeviceRecord,
+  type LintRecord,
+  type ReviewOutcome,
 } from "@/lib/admin/change-describe";
 
 // One "change set" per request the person makes in ChatGPT/Claude. Each has
@@ -33,7 +44,13 @@ import {
 
 const DOC_TYPE = "adminChange";
 const DRAFT_PREFIX = "drafts.";
-const OPEN_STATUSES: ChangeStatus[] = ["draft", "ready_for_review"];
+const OPEN_STATUSES: ChangeStatus[] = [
+  "awaiting_confirmation",
+  "draft",
+  "ready_for_review",
+];
+// A build still "running" this long after the last edit is stuck.
+const BUILD_STUCK_MS = 20 * 60_000;
 
 export interface ChangeContentEntry {
   _key: string;
@@ -54,9 +71,18 @@ export interface ChangeSet {
   key: string;
   title: string;
   request: string;
+  // The AI's plain restatement of the request, shown to the person before
+  // any edit when the request could mean more than one thing.
+  understoodAs?: string | null;
+  appliesTo?: AppliesTo;
   requestedBy: { name: string; email: string };
   status: ChangeStatus;
   createdAt: string;
+  lastEditedAt?: string | null;
+  confirmedAt?: string | null;
+  lint?: LintRecord | null;
+  devices?: DeviceRecord | null;
+  warmedSha?: string | null;
   branch: string | null;
   prNumber: number | null;
   summary?: string | null;
@@ -150,6 +176,9 @@ export async function createChangeSet(input: {
   request: string;
   user: McpUser;
   undoes?: string;
+  understoodAs?: string;
+  appliesTo?: AppliesTo;
+  needsConfirmation?: boolean;
 }): Promise<ChangeSet> {
   const key = newChangeKey();
   const doc: ChangeSet = {
@@ -157,8 +186,10 @@ export async function createChangeSet(input: {
     key,
     title: input.title.slice(0, 120),
     request: input.request.slice(0, 2000),
+    understoodAs: input.understoodAs?.slice(0, 600) || null,
+    appliesTo: normalizeAppliesTo(input.appliesTo),
     requestedBy: { name: input.user.name, email: input.user.email },
-    status: "draft",
+    status: input.needsConfirmation ? "awaiting_confirmation" : "draft",
     createdAt: new Date().toISOString(),
     branch: null,
     prNumber: null,
@@ -174,12 +205,77 @@ export function isOpen(change: ChangeSet): boolean {
 }
 
 // Any edit after "Ready for review" sends the change back to Draft, so the
-// summary and review always describe the latest version.
+// summary and review always describe the latest version. The edit time is
+// what "stuck" is measured from.
 export async function markEdited(change: ChangeSet): Promise<void> {
+  const lastEditedAt = new Date().toISOString();
   if (change.status === "ready_for_review") {
-    await patchChangeSet(change.key, { status: "draft", submittedAt: null });
+    await patchChangeSet(change.key, {
+      status: "draft",
+      submittedAt: null,
+      lastEditedAt,
+    });
     change.status = "draft";
+  } else {
+    await patchChangeSet(change.key, { lastEditedAt });
   }
+  change.lastEditedAt = lastEditedAt;
+}
+
+// The person said yes to what the AI understood (and picked desktop,
+// mobile or both). Only then may the AI start editing.
+export async function confirmChange(
+  key: string,
+  appliesTo: unknown,
+): Promise<Result<{ changeId: string; appliesTo: AppliesTo }>> {
+  const change = await getChangeSet(key);
+  if (!change) return fail(`No change found with id ${key}.`);
+  if (change.status !== "awaiting_confirmation") {
+    return change.status === "draft" || change.status === "ready_for_review"
+      ? { ok: true, changeId: key, appliesTo: change.appliesTo ?? "both" }
+      : fail(
+          `This change is already ${STATUS_LABELS[change.status].toLowerCase()}.`,
+        );
+  }
+  const scope =
+    appliesTo === undefined || appliesTo === null || appliesTo === ""
+      ? (change.appliesTo ?? "both")
+      : normalizeAppliesTo(appliesTo);
+  await patchChangeSet(key, {
+    status: "draft",
+    appliesTo: scope,
+    confirmedAt: new Date().toISOString(),
+  });
+  return { ok: true, changeId: key, appliesTo: scope };
+}
+
+// The server's own lint run over the code files a change touches, at one
+// exact version. Loaded lazily: ESLint is heavy and only needed here.
+async function lintAt(
+  headSha: string,
+  files: Array<{ path: string; status: string }>,
+): Promise<LintRecord> {
+  const { lintChangedFiles } = await import("@/lib/admin/code-check");
+  const withContent = await Promise.all(
+    files
+      .filter((f) => f.status !== "removed")
+      .map(async (f) => ({
+        path: f.path,
+        content: (await gh.getFile(f.path, headSha))?.content ?? null,
+      })),
+  );
+  return { headSha, files: await lintChangedFiles(withContent) };
+}
+
+export async function recordDevices(
+  key: string,
+  record: DeviceRecord,
+): Promise<void> {
+  await patchChangeSet(key, { devices: record });
+}
+
+export async function markWarmed(key: string, headSha: string): Promise<void> {
+  await patchChangeSet(key, { warmedSha: headSha });
 }
 
 // Called before a content edit (and right after a content item is created)
@@ -242,6 +338,16 @@ export interface ContentReview {
 export interface ChangeReview {
   changeId: string;
   title: string;
+  // The one status to show, with what to do next and which buttons work.
+  state: ReviewOutcome["state"];
+  stateLabel: string;
+  nextStep: string;
+  actions: ReviewOutcome["actions"];
+  checks: CheckRow[];
+  goesLive: string[];
+  understoodAs: string | null;
+  appliesTo: AppliesTo;
+  appliesToLabel: string;
   status: ChangeStatus;
   statusLabel: string;
   requestedBy: string;
@@ -326,12 +432,70 @@ export async function buildReview(
     }));
   }
 
+  // Lint the exact version under review if it hasn't been yet (normally done
+  // at submit; this catches anything pushed after that).
+  let lint = change.lint ?? null;
+  if (
+    isOpen(change) &&
+    change.status === "ready_for_review" &&
+    headSha &&
+    lint?.headSha !== headSha
+  ) {
+    try {
+      lint = await lintAt(headSha, files);
+      await patchChangeSet(change.key, { lint });
+    } catch (err) {
+      lint = {
+        headSha,
+        files: [
+          {
+            path: "(all files)",
+            errors: 0,
+            warnings: 0,
+            couldNotRun: String(err).slice(0, 200),
+          },
+        ],
+      };
+    }
+  }
+
   const content = isOpen(change) ? await reviewContent(change) : [];
   const areas = describeFiles(files.map((f) => f.path));
   const contentLabels = isOpen(change)
     ? content.map((c) => c.label)
     : (change.content ?? []).map((c) => describeContent(c.type, c.title));
   const previewUrl = checks?.previewUrl ?? null;
+
+  const lastEdit = Date.parse(
+    change.lastEditedAt ?? change.submittedAt ?? change.createdAt,
+  );
+  const checkRows = reviewChecks({
+    hasCode: !!change.prNumber,
+    build: (checks?.status as BuildState | undefined) ?? null,
+    buildStuck:
+      checks?.status === "pending" &&
+      Number.isFinite(lastEdit) &&
+      Date.now() - lastEdit > BUILD_STUCK_MS,
+    headSha,
+    lint,
+    devices: change.devices ?? null,
+  });
+  const problems: string[] = [];
+  if (files.length === 0 && content.length === 0 && isOpen(change)) {
+    problems.push("Nothing has been changed yet");
+  }
+  if (content.some((c) => c.missingDraft)) {
+    problems.push(
+      "Some content edits are missing (they may have been discarded in Sanity Studio)",
+    );
+  }
+  const outcome = reviewOutcome({
+    status: change.status,
+    checks: checkRows,
+    hasPreview: !!previewUrl,
+    problems,
+  });
+  const appliesTo = change.appliesTo ?? "both";
 
   const blockers: string[] = [];
   if (change.status !== "ready_for_review") {
@@ -344,9 +508,14 @@ export async function buildReview(
   if (files.length === 0 && content.length === 0 && isOpen(change)) {
     blockers.push("Nothing has been changed yet.");
   }
-  if (checks?.status === "failure") blockers.push("The site check failed.");
-  if (checks?.status === "pending")
-    blockers.push("The site check is still running.");
+  for (const c of checkRows) {
+    if (!c.required) continue;
+    if (c.state === "failed") blockers.push(`${c.label} failed.`);
+    if (c.state === "could_not_run") blockers.push(`${c.label} could not run.`);
+    if (c.state === "timed_out") blockers.push(`${c.label} is stuck.`);
+    if (c.state === "running" || c.state === "not_run")
+      blockers.push(`${c.label} hasn't finished.`);
+  }
   if (content.some((c) => c.missingDraft)) {
     blockers.push(
       "Some content edits are missing (they may have been discarded in Sanity Studio).",
@@ -356,6 +525,21 @@ export async function buildReview(
   return {
     changeId: change.key,
     title: change.title,
+    state: outcome.state,
+    stateLabel: outcome.label,
+    nextStep: outcome.nextStep,
+    actions: outcome.actions,
+    checks: checkRows,
+    goesLive: goesLiveList({
+      summary: change.summary ?? null,
+      appliesTo,
+      areas,
+      content: contentLabels,
+      otherPendingCount,
+    }),
+    understoodAs: change.understoodAs ?? null,
+    appliesTo,
+    appliesToLabel: APPLIES_TO_LABELS[appliesTo],
     status: change.status,
     statusLabel: STATUS_LABELS[change.status],
     requestedBy: change.requestedBy?.name ?? "Unknown",
@@ -396,7 +580,7 @@ export async function buildReview(
       content.map((c) => ({ id: c.id, rev: c.rev })),
     ),
     headSha,
-    canPublish: blockers.length === 0,
+    canPublish: blockers.length === 0 && outcome.actions.publish,
     blockers,
     undoes: change.undoes ?? null,
   };
@@ -532,10 +716,15 @@ export async function submitForReview(
   change: ChangeSet,
   summary: string,
   beforeAfter: BeforeAfter[],
-): Promise<Result<{ status: ChangeStatus }>> {
+): Promise<Result<{ status: ChangeStatus; lint: LintRecord | null }>> {
   if (!isOpen(change)) {
     return fail(
       `This change is already ${STATUS_LABELS[change.status].toLowerCase()}.`,
+    );
+  }
+  if (change.status === "awaiting_confirmation") {
+    return fail(
+      "The person hasn't confirmed what you understood yet. Wait for their yes (confirm_change) before working on it.",
     );
   }
   let files: Array<{ path: string; status: string }> = [];
@@ -548,7 +737,29 @@ export async function submitForReview(
       "Nothing has been changed in this change yet, so there's nothing to review.",
     );
   }
+  let lint: LintRecord | null = null;
+  const headSha = change.prNumber
+    ? await gh.getPRHeadSha(change.prNumber)
+    : null;
+  if (headSha) {
+    try {
+      lint = await lintAt(headSha, files);
+    } catch (err) {
+      lint = {
+        headSha,
+        files: [
+          {
+            path: "(all files)",
+            errors: 0,
+            warnings: 0,
+            couldNotRun: String(err).slice(0, 200),
+          },
+        ],
+      };
+    }
+  }
   await patchChangeSet(change.key, {
+    lint,
     status: "ready_for_review",
     summary: summary.slice(0, 1000),
     beforeAfter: beforeAfter.slice(0, 20).map((b) => ({
@@ -561,7 +772,7 @@ export async function submitForReview(
     areas: describeFiles(files.map((f) => f.path)).map((a) => a.label),
     submittedAt: new Date().toISOString(),
   });
-  return { ok: true, status: "ready_for_review" };
+  return { ok: true, status: "ready_for_review", lint };
 }
 
 function publishedRevMismatch(
@@ -628,6 +839,18 @@ export async function publishChange(
     }
   }
   if (change.prNumber) {
+    const lint = change.lint;
+    if (!lint || lint.headSha !== headSha) {
+      return fail(
+        "Lint hasn't run on this exact version yet. Review it again (list_pending_changes), then publish.",
+      );
+    }
+    const broken = lint.files.find((f) => f.couldNotRun);
+    if (broken) {
+      return fail(
+        `Lint could not run (${broken.couldNotRun}). It has to run before this can go live. Retry, or ask the webmaster.`,
+      );
+    }
     const status = await gh.getPRCombinedStatus(change.prNumber);
     if (status === "failure") {
       return fail(

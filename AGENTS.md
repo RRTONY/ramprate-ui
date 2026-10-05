@@ -610,13 +610,17 @@ infrastructure to maintain.
   `tests/admin/change-sets.test.ts` (fake Sanity + GitHub), `tests/admin/change-describe.test.ts`.
   Verified live 2026-10-02 (start → edit → submit → review → stale-token publish refused →
   discard), not just by inspection. Publish and undo were tested against fakes only so far.
-- **Phone + laptop screenshots (`preview_on_devices`, added 2026-10-02):** real screenshots of the
-  top of a change's preview page at phone and laptop size, shown side by side in the card
-  (`src/lib/admin/device-preview.ts`, Google PageSpeed `final-screenshot`, same `GOOGLE_API_KEY`).
-  Only `deploy-preview-N--ramprate.netlify.app` addresses are accepted. Images travel in the
-  result's `_meta` (card-only), never the model's text. Google's first run on a page can exceed
-  the 22s cap (it then says "try again"); the second is ~2s because Google caches it. Pictures,
-  not an embedded live page, because ChatGPT cards must not scroll inside.
+- **Phone + laptop screenshots (`preview_on_devices`, added 2026-10-02, before/after 2026-10-06):**
+  screenshots of the top of a page at phone and laptop size, **before** (live ramprate.com) and
+  **after** (the change's preview), side by side in the card (`src/lib/admin/device-preview.ts`,
+  Google PageSpeed `final-screenshot`, same `GOOGLE_API_KEY`). Only
+  `deploy-preview-N--ramprate.netlify.app` and `ramprate.com` addresses are accepted. Images
+  travel in the result's `_meta` (card-only), never the model's text. Google's first run on a page
+  can exceed the 22s cap; later runs are ~2s because Google caches it. So once a change's Build
+  check passes, `list_pending_changes` warms Google up in the background with Next's `after()`
+  (once per code version, `warmedSha` on the record), and the card's Retry re-takes only the
+  missing device (`devices` param). The result is saved on the record (`devices`) and shown as the
+  optional "Phone and laptop preview" check.
 - **Change history in Sanity Studio (added 2026-10-02):** the `adminChange` schema
   (`src/sanity/schemas/adminChange.ts`) shows the records as "Website change history" at the bottom
   of Studio, newest first. Read-only: `sanity.config.ts` removes every document action and the
@@ -659,14 +663,43 @@ infrastructure to maintain.
   hidden for roles that can't publish (`youCanPublish`). Every tool also has `annotations`
   (`readOnlyHint`/`destructiveHint`/`openWorldHint`) so hosts ask for confirmation before changes.
   Tests: `tests/admin/mcp-widget.test.ts`.
-- **Review card (rebuilt 2026-10-02 for change sets, URI now `pending-changes-v3.html` since
-  ChatGPT caches a card's HTML by URI):** one change per card: status, who asked, AI summary plus
-  server-written facts ("N other waiting changes are NOT included"), pages with preview links,
-  before/after, site check, and Publish (primary) + Discard (secondary), each with an in-card
-  confirm. With several waiting changes the card is a plain list with no buttons (OpenAI's
-  guidelines: no drill-down inside a card, max two actions). No red: failures use the brand purple
-  `#4A1D5E` (a lighter tint on dark backgrounds) plus words. The older notes below describe the
-  first version.
+- **One status, one next step, one button row (2026-10-06, team feedback before handing over to
+  Tony):** the server works out a single state for every change (`reviewOutcome` in
+  `change-describe.ts`): Waiting for your OK, Working, Checking, Ready for review, Failed, Stuck
+  (a build still running 20+ min after the last edit), Published, Discarded, plus `nextStep` (what
+  the person should do) and which actions work. The card always shows **Preview | Discard |
+  Publish** in the same place, greyed out when not allowed, plus **Retry** when failed, stuck or
+  checking. Checks are listed separately: **Build** and **Type check** (the Netlify preview build
+  runs `next build`, which type-checks), **Lint** (the server lints the changed files itself at
+  submit and whenever the code version changes; stored as `lint` on the record), and **Phone and
+  laptop preview** (optional). Publish is refused until Build, Type check and Lint have finished
+  on the exact version reviewed; lint that **could not run** blocks, lint *problems* are shown but
+  don't block (house rule: never gate on old lint debt).
+- **Confirm before unclear changes (2026-10-06):** `start_change` now needs `understood_as`
+  (plain restatement in the site's real terms) and `needs_confirmation`, and takes `applies_to`
+  (`both` default, `desktop`, `mobile`). When confirmation is needed the change starts as
+  "Waiting for your OK" (`awaiting_confirmation`), the card shows "I understand your request as:
+  ..." with Both/Desktop/Mobile, and **every edit is refused** until the person says yes
+  (`confirm_change`, or the card's "Yes, proceed", which also posts "Yes, go ahead" into the chat
+  via the MCP Apps `sendMessage`). "Tell me what you meant" posts a message instead. The
+  understanding and where it applies are shown under "What will go live".
+- **Lint inside the MCP function (fixed 2026-10-06):** `code-check.ts` imports `eslint.config.mjs`
+  directly, and `next.config.ts` lists `eslint` + `eslint-config-next` in
+  `serverExternalPackages`. Together that makes file tracing copy every plugin and helper the
+  config needs (it previously failed live with "Cannot find module 'fast-glob'", needed by
+  `@next/eslint-plugin-next`). Bundling them instead fails the build (eslint-plugin-import
+  requires an ESLint internal). The MCP function grew from ~58 MB to ~102 MB traced, mostly the
+  TypeScript compiler the lint parser needs.
+- **Review card (rebuilt 2026-10-06, URI now `pending-changes-v4.html`, since ChatGPT caches a
+  card's HTML by URI):** views: `confirm` (start_change), `detail` (one change: status + next step
+  + buttons, "What will go live" always ending with what is NOT included, checks, before/after),
+  `list` (several waiting changes, each with its own **Review** button, so an old waiting change
+  never stands in the way of a new one), `devices` (before/after screenshots with Retry), and
+  `history` (`list_change_history`: date, who, what, status, with **Restore previous** on published
+  changes, which calls `undo_change` and opens the new Undo change's review). The team asked for
+  three actions, so this deliberately goes past OpenAI's "max two actions" guideline. No red:
+  failures use the brand purple `#4A1D5E` (a lighter tint on dark backgrounds) plus words. The
+  older notes below describe the first version.
 - **Interactive widget (MCP Apps):** `list_pending_changes` declares `_meta.ui.resourceUri` pointing
   at a small HTML status card (`src/lib/admin/mcp-ui-widgets.ts`) — hosts that support the MCP Apps
   extension (Claude, ChatGPT; launched as an open standard 2026-01-26, see mcpui.dev) render it

@@ -23,6 +23,7 @@ export const RULES_GATED_TOOLS = new Set([
   "sanity_patch_document",
   "sanity_create_document",
   "start_change",
+  "confirm_change",
   "submit_for_review",
   "publish_changes",
   "discard_change",

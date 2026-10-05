@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { parseScreenshot, previewTarget } from "@/lib/admin/device-preview";
+import {
+  deviceOutcome,
+  liveTarget,
+  parseScreenshot,
+  previewTarget,
+} from "@/lib/admin/device-preview";
 
 const PREVIEW = "https://deploy-preview-41--ramprate.netlify.app";
 
@@ -42,6 +47,7 @@ describe("parseScreenshot", () => {
     );
     expect(shot).toEqual({
       device: "phone",
+      version: "after",
       image: "data:image/jpeg;base64,AAA",
       width: 412,
       height: 823,
@@ -62,5 +68,31 @@ describe("parseScreenshot", () => {
         "laptop",
       ).error,
     ).toBe("No screenshot came back");
+  });
+});
+
+describe("before (live site) screenshots", () => {
+  it("only ever points at ramprate.com, with the same path checks", () => {
+    expect(liveTarget("/about")).toBe("https://ramprate.com/about");
+    expect(liveTarget(undefined)).toBe("https://ramprate.com/");
+    expect(liveTarget("/a/../b")).toBeNull();
+    expect(new URL(liveTarget("//evil.com")!).host).toBe("ramprate.com");
+  });
+
+  it("judges a device by its After shot and tells a timeout from a failure", () => {
+    const ok = {
+      device: "phone" as const,
+      version: "after" as const,
+      image: "data:image/jpeg;base64,A",
+      width: 1,
+      height: 1,
+    };
+    const before = { ...ok, version: "before" as const };
+    const late = { ...ok, image: null, timedOut: true };
+    const broken = { ...ok, image: null };
+    expect(deviceOutcome([before, ok], "phone")).toBe("ok");
+    expect(deviceOutcome([before, late], "phone")).toBe("timed_out");
+    expect(deviceOutcome([broken], "phone")).toBe("failed");
+    expect(deviceOutcome([before], "phone")).toBe("failed");
   });
 });

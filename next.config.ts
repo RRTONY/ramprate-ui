@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
   // @eslint / @typescript-eslint tree (not just the one missing file) since
   // there could be other dynamically-required internals beyond this one and
   // each guess costs a full deploy cycle to verify.
+  // code-check.ts imports eslint.config.mjs so file tracing can follow the
+  // config's plugins (and their helpers, like fast-glob) into the function.
+  // Bundling them fails (eslint-plugin-import requires an ESLint internal
+  // that only exists at runtime), so they stay plain node_modules packages:
+  // loaded at runtime, but still traced and copied into the function.
+  serverExternalPackages: ["eslint", "eslint-config-next"],
   outputFileTracingIncludes: {
     "/api/mcp": [
       "./node_modules/eslint*/**/*",
