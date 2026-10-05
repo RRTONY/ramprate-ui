@@ -215,6 +215,51 @@ export const portableTextComponents: PortableTextComponents = {
       )
     },
 
+    // ── Table (first row = header, first column = row labels) ─────────────────
+    table: ({value}) => {
+      const rows: {_key: string; cells?: string[]}[] = value?.rows ?? []
+      if (rows.length < 2) return null
+      const [head, ...bodyRows] = rows
+      const wide = (head.cells?.length ?? 0) > 3
+      return (
+        <figure className="my-8 -mx-5 sm:mx-0">
+          <div className="overflow-x-auto px-5 sm:px-0" tabIndex={0} role="region" aria-label={value.caption || 'Table'}>
+            <table className={`w-full border-collapse text-left font-body text-sm ${wide ? 'min-w-180' : ''}`}>
+              {value.caption && (
+                <caption className="mb-3 text-left text-sm text-white/45">{value.caption}</caption>
+              )}
+              <thead>
+                <tr className="border-b border-white/20">
+                  {head.cells?.map((cell, i) => (
+                    <th key={i} scope="col" className="px-3 py-3 align-bottom font-semibold text-white first:pl-0">
+                      {cell}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {bodyRows.map(row => (
+                  <tr key={row._key} className="border-b border-white/8">
+                    {row.cells?.map((cell, i) =>
+                      i === 0 ? (
+                        <th key={i} scope="row" className="px-3 py-3 pl-0 align-top font-semibold text-white">
+                          {cell}
+                        </th>
+                      ) : (
+                        <td key={i} className="px-3 py-3 align-top leading-relaxed text-white/80">
+                          {cell}
+                        </td>
+                      ),
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </figure>
+      )
+    },
+
     // ── Image ─────────────────────────────────────────────────────────────────
     image: ({value}) => {
       if (!value?.asset?._ref) return null
