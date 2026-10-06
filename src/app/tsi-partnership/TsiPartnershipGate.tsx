@@ -697,8 +697,8 @@ function TsiPartnershipContent() {
             src="/tsi-partnership/weave-art.webp"
             alt="Distinct ceramic elements assembled into one individual organic form: a metaphor for personalized nutrition."
             className="weave-art"
-            width={240}
-            height={240}
+            width={440}
+            height={440}
             priority
           />
         </div>
@@ -1000,10 +1000,6 @@ function TsiPartnershipContent() {
         </div>
       </section>
 
-      {/* The artifact ends this section as a static read, with no call to
-          action - this page adds a "Schedule a call" link to /contact since
-          an interactive page benefits from one. Flagged as an intentional
-          addition, not a feature of the source artifact. */}
       <section className="section" id="next">
         <Eyebrow>Next step</Eyebrow>
         <h2>Let&rsquo;s start with a phone call</h2>
@@ -1019,22 +1015,6 @@ function TsiPartnershipContent() {
             RampRate side.
           </p>
         </div>
-        <a
-          href="/contact"
-          style={{
-            display: "inline-block",
-            marginTop: 8,
-            padding: "13px 26px",
-            background: "var(--accent)",
-            color: "var(--bg)",
-            borderRadius: 10,
-            fontWeight: 600,
-            fontSize: ".92rem",
-            textDecoration: "none",
-          }}
-        >
-          Schedule a call
-        </a>
       </section>
 
       <section className="section" id="terms">
