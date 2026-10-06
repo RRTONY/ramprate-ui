@@ -28,3 +28,7 @@ The owner supplied Tony's latest articles and explicitly instructed: do not depl
 - Five new images are stored under public/blog/yotta-2026-assets as lossless WebP, with decoded RGB pixels verified identical to the original PNGs. Markdown downloads are copied unchanged. The ownership illustration and structure SVG reuse the existing shared-ownership-assets files.
 - Only asset URLs, canonical/schema URLs, and cross-links are adapted. The model and research appendix links remain pointed at the latest source website, since the owner supplied only these two articles and asked to keep the obsolete local model offline.
 - Sanity drafts 5c3b3633-c8a4-4585-8876-1c63663abafb and 960de313-52fd-4b76-8225-7c4b8c080702 hold the titles, original descriptions and full indexed text for eventual listings/search/sitemap. Their draft status means public listings do not show them yet. SITE_PAGES changes are staged in the same review.
+
+### Original typography correction
+
+The first preview omitted the two relative @font-face resources in fonts/, producing fallback Georgia lettering despite identical CSS font-size settings. The owner's visual review caught this. Both original OTF binaries are now copied under public/blog/yotta-2026-assets/fonts/ and both HTML copies use absolute local font URLs. Exact-copy verification must include CSS url() resources and rendered geometry, not just HTML text, image files and CSS string equality. Netlify may inject its preview collaboration toolbar; it is hosting UI, not article content.
