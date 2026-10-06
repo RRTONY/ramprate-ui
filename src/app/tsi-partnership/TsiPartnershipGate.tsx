@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 // Self-contained client-side gate, same pattern as /aidoc-ownership-brief:
@@ -9,18 +9,157 @@ import Image from "next/image";
 // keeping this discussion off the open web - it's one link, shared directly.
 const ACCESS_CODE = "TSI-2026";
 
+// This page's palette, typography (Fraunces + Public Sans) and generative
+// motifs are deliberately ported from the bespoke HTML design artifact built
+// for this discussion, not the site's own gold/dark system - every rule
+// below is scoped under .tsi-page so it never leaks into the rest of the
+// site. The artifact's dark-mode variant is intentionally left out: nothing
+// in this page offers a toggle, and the project favors fixed per-section
+// backgrounds over light/dark switching.
+const TSI_STYLES = `
+.tsi-page{
+  --bg:#FAF5EE;
+  --surface:#F1E8D9;
+  --ink:#231C2A;
+  --ink-soft:#5E5668;
+  --accent:#6B3F78;
+  --accent-soft:#8C5C98;
+  --sage:#69795A;
+  --line:#DED0BB;
+  --error:#B3473F;
+  --section-heading-gap:18px;
+  color-scheme:light;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-public-sans),system-ui,-apple-system,"Segoe UI",sans-serif;
+  max-width:1120px;
+  margin-inline:auto;
+  padding-inline:20px;
+}
+.tsi-page *{box-sizing:border-box}
+.tsi-page [id]{scroll-margin-top:56px}
+.tsi-page h1,.tsi-page h2{font-family:var(--font-fraunces),"Iowan Old Style",Georgia,serif;font-weight:560;text-wrap:balance;margin:0}
+.tsi-page p,.tsi-page td,.tsi-page dd,.tsi-page h3{text-wrap:pretty}
+.tsi-page .eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .6rem}
+.tsi-page .note{font-size:.8rem;color:var(--ink-soft)}
+.tsi-page .brand-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line)}
+.tsi-page .brand-chip{display:inline-flex;align-items:center;line-height:0}
+.tsi-page .brand-chip img{display:block;height:28px;width:auto}
+.tsi-page .footer .brand-chip img{height:32px}
+.tsi-page .brand-bar .note{max-width:38ch;line-height:1.5}
+
+.tsi-page nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.tsi-page .toc-inner{display:flex;gap:20px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
+.tsi-page .toc-inner::-webkit-scrollbar{display:none}
+.tsi-page .toc a{color:var(--ink-soft);text-decoration:none;font-size:.78rem;white-space:nowrap;letter-spacing:.02em;font-weight:500}
+.tsi-page .toc a:hover{color:var(--accent)}
+
+.tsi-page .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;column-gap:42px;align-items:center;padding-block:44px 52px}
+@media (max-width:760px){.tsi-page .hero{grid-template-columns:1fr;row-gap:18px}}
+.tsi-page .hero h1{font-size:clamp(2.1rem,4.4vw,3rem);line-height:1.08;max-width:18ch}
+.tsi-page .hero .tagline{font-family:var(--font-fraunces),Georgia,serif;font-style:italic;color:var(--accent-soft);font-size:1.25rem;line-height:1.35;margin-top:16px;max-width:30ch}
+.tsi-page .hero p{color:var(--ink-soft);font-size:.98rem;line-height:1.6;max-width:48ch;margin-top:14px}
+@media (max-width:760px){.tsi-page .hero h1{font-size:2.35rem}.tsi-page .hero .tagline{font-size:1.16rem}}
+
+.tsi-page .scene.tailored-weave{background:none;border-radius:0;overflow:visible;aspect-ratio:1.06;isolation:isolate;display:flex;align-items:center;justify-content:center;min-width:0;position:relative}
+.tsi-page .weave-art{display:block;width:100%;max-width:none;height:auto;flex:none;object-fit:contain;pointer-events:none}
+@media (max-width:760px){.tsi-page .scene.tailored-weave{width:100%;max-width:470px;justify-self:center;aspect-ratio:1.18}.tsi-page .weave-art{width:105%;max-width:100%}}
+@media (prefers-reduced-motion:no-preference){.tsi-page .weave-art{animation:tsiWeaveReveal .8s ease-out both}}
+@keyframes tsiWeaveReveal{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media print{.tsi-page .weave-art{animation:none}}
+
+.tsi-page .section{padding-block:48px 52px;border-top:1px solid var(--line)}
+.tsi-page .section>h2,.tsi-page .principles>h2{font-size:clamp(1.4rem,3vw,1.9rem);margin:0 0 var(--section-heading-gap)}
+.tsi-page .section>h2+.prose,.tsi-page .principles>h2+.prose{margin-top:0}
+.tsi-page .section>h2+.prose>p:first-child,.tsi-page .principles>h2+.prose>p:first-child{margin-top:0}
+.tsi-page .section p{line-height:1.7}
+.tsi-page .prose{max-width:64ch}
+.tsi-page .prose p{color:var(--ink-soft);line-height:1.65;margin:0 0 14px;font-size:.98rem}
+.tsi-page .pair-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 36px}
+.tsi-page .pair-grid>.pair:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:760px){.tsi-page .pair-grid{grid-template-columns:1fr}}
+.tsi-page .pair h3{font-family:var(--font-fraunces),Georgia,serif;color:var(--accent);font-weight:560;font-size:1.05rem;margin:0 0 8px}
+.tsi-page .pair p{color:var(--ink-soft);line-height:1.6;font-size:.95rem;margin:0}
+
+.tsi-page .principals-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:28px}
+@media (max-width:600px){.tsi-page .principals-grid{grid-template-columns:1fr}}
+.tsi-page .principal{display:flex;gap:16px;align-items:flex-start}
+.tsi-page .avatar{width:54px;height:54px;border-radius:50%;flex:none;object-fit:cover;display:block}
+.tsi-page .principal h3{margin:0 0 2px;font-family:var(--font-fraunces),Georgia,serif;font-size:1.04rem}
+.tsi-page .principal .role{color:var(--accent-soft);font-size:.78rem;margin:0 0 8px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.tsi-page .principal p{color:var(--ink-soft);font-size:.9rem;line-height:1.55;margin:0}
+
+.tsi-page .table-wrap{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:12px}
+.tsi-page table{border-collapse:collapse;width:100%;min-width:480px;font-size:.9rem}
+.tsi-page #roadmap table,.tsi-page #market table{min-width:560px}
+.tsi-page th{background:var(--accent);color:var(--bg);text-align:left;padding:12px 16px;font-family:var(--font-fraunces),Georgia,serif;font-weight:560;font-size:.85rem}
+.tsi-page td{padding:12px 16px;border-top:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+.tsi-page tbody tr:first-child td{border-top:none}
+
+.tsi-page .principles{position:relative;padding-block:52px 60px;border-top:1px solid var(--line);overflow:hidden;isolation:isolate}
+.tsi-page .principles-composition{position:absolute;right:0;top:50%;transform:translateY(-50%);width:330px;height:330px;pointer-events:none;z-index:0;opacity:.19}
+.tsi-page .principles-composition .tessera{fill:var(--accent-soft)}
+.tsi-page .principles-composition .sage{fill:var(--sage)}
+@media (max-width:950px){.tsi-page .principles-composition{right:-65px;opacity:.12;width:300px;height:300px}}
+@media (max-width:760px){.tsi-page .principles-composition{top:auto;bottom:-42px;right:-48px;transform:none;width:230px;height:230px;opacity:.075}}
+.tsi-page #principles>.prose{position:relative;z-index:1;max-width:60ch}
+.tsi-page #principles>h2,.tsi-page #principles>.eyebrow{position:relative;z-index:1}
+.tsi-page #principles>h2{max-width:24ch;font-size:clamp(1.4rem,3vw,1.9rem)}
+
+.tsi-page #why-us .pair-grid{grid-template-columns:repeat(3,1fr);gap:28px}
+.tsi-page #why-us .pair h3{line-height:1.35}
+.tsi-page #why-us>.prose{margin-bottom:26px}
+@media (max-width:760px){.tsi-page #why-us .pair-grid{grid-template-columns:1fr}}
+
+.tsi-page .has-composition{position:relative}
+.tsi-page .has-composition>h2{padding-right:270px;min-height:90px;display:flex;align-items:center}
+.tsi-page .section-composition{position:absolute;top:78px;right:0;width:230px;height:86px;pointer-events:none;opacity:.27}
+.tsi-page .section-composition .motif-piece{fill:var(--accent-soft)}
+.tsi-page .section-composition .sage{fill:var(--sage)}
+@media (max-width:950px){.tsi-page .has-composition>h2{padding-right:220px}.tsi-page .section-composition{width:190px;height:72px;top:80px}}
+@media (max-width:760px){.tsi-page .has-composition>h2{padding-right:0;min-height:0;display:block}.tsi-page .section-composition{position:static;display:block;width:172px;height:65px;margin:-2px 0 23px auto;opacity:.23}}
+@media print{.tsi-page .section-composition{position:static;display:block;width:150px;height:56px;margin:0 0 15px auto}.tsi-page .has-composition>h2{padding-right:0;min-height:0}}
+
+.tsi-page .partnership{background:var(--surface);border-top:none;border-radius:22px;padding:44px clamp(20px,4vw,44px) 40px;margin-block:14px;position:relative}
+.tsi-page .partnership-weave{display:block;width:132px;height:132px;object-fit:contain;margin:0 0 20px}
+@media (max-width:600px){.tsi-page .partnership-weave{width:108px;height:108px;margin-bottom:18px}}
+
+.tsi-page dl.glossary{display:grid;grid-template-columns:max-content 1fr;gap:10px 20px;margin-top:8px}
+.tsi-page dl.glossary dt{font-family:var(--font-fraunces),Georgia,serif;color:var(--accent-soft);font-weight:560;font-size:.95rem}
+.tsi-page dl.glossary dd{margin:0;color:var(--ink-soft);font-size:.92rem;line-height:1.55}
+.tsi-page .reference-terms summary{cursor:pointer;font-family:var(--font-fraunces),Georgia,serif;font-size:1.2rem;color:var(--accent);padding:8px 0 14px}
+.tsi-page .reference-terms dl{margin-top:16px}
+
+.tsi-page .footer{border-top:1px solid var(--line);padding-block:30px 48px;text-align:center}
+.tsi-page .footer p{color:var(--ink-soft);font-size:.8rem;margin:14px 0 0}
+
+@media print{
+  .tsi-page .reference-terms{display:block}
+  .tsi-page nav.toc{display:none}
+  .tsi-page .section,.tsi-page .principles{padding-block:25px}
+  .tsi-page h2,.tsi-page h3{break-after:avoid}
+  .tsi-page tr,.tsi-page .principal{break-inside:avoid}
+  .tsi-page p{widows:3;orphans:3}
+}
+`;
+
 const navLinks = [
-  { href: "#heard", label: "Heard" },
-  { href: "#channels", label: "Channels" },
-  { href: "#questions", label: "Questions" },
-  { href: "#team", label: "Team" },
+  { href: "#market", label: "Opportunity" },
+  { href: "#model", label: "Questions" },
+  { href: "#about", label: "About" },
+  { href: "#principles", label: "Principles" },
+  { href: "#why-us", label: "Experience" },
+  { href: "#team", label: "Model" },
   { href: "#pilot", label: "Pilot" },
-  { href: "#roadmap", label: "Roadmap" },
-  { href: "#role", label: "Role" },
-  { href: "#call", label: "Call" },
+  { href: "#operations", label: "Operations" },
+  { href: "#roadmap", label: "Eight weeks" },
+  { href: "#partnership", label: "Partnership" },
+  { href: "#commercial", label: "Commercial" },
+  { href: "#options", label: "Options" },
+  { href: "#next", label: "Call" },
 ];
 
-const heardFromYou = [
+const heardItems = [
   {
     title: "A few strong partners",
     body: "You want a few strong partners, not many small ones — focused channels, not five directions at once.",
@@ -47,7 +186,7 @@ const heardFromYou = [
   },
 ];
 
-const channelRows = [
+const marketRows = [
   [
     "EAPs",
     "A nutrition offering through an employer-support partner",
@@ -75,37 +214,38 @@ const channelRows = [
   ],
 ];
 
-const questions = [
+const modelItems = [
   {
-    q: "What would a useful first pilot prove?",
-    a: "Agree the population, product, payer and baseline, and how to test adoption, commercial economics and any proposed savings with suitable evidence.",
+    title: "What would a useful first pilot prove?",
+    body: "Agree the population, product, payer and baseline. Define how to test adoption, commercial economics and any proposed savings with suitable evidence.",
   },
   {
-    q: "What is the route to new US capacity?",
-    a: "Your team reported that the two Phoenix machines were fully booked. We should confirm the current position and whether an alternative supply route could support a pilot.",
+    title: "What is the route to new US capacity?",
+    body: "Your team reported that the two Phoenix machines were fully booked. We should confirm the current position and whether an alternative supply route could support a pilot.",
   },
   {
-    q: "What would it take, financially, to scale the dispensing machines if the pilot works?",
-    a: "We should understand additional-machine costs and financing responsibilities before committing to a wider rollout.",
+    title:
+      "What would it take, financially, to scale the dispensing machines if the pilot works?",
+    body: "We should understand additional-machine costs and financing responsibilities before committing to a wider rollout.",
   },
   {
-    q: "Who carries each responsibility?",
-    a: "Identify the partner brand and confirm who owns engagement, labeling, product claims, regulatory compliance and delivery, with one decision contact on each side.",
+    title: "Who carries each responsibility?",
+    body: "Identify the partner brand and confirm who owns engagement, labeling, product claims, regulatory compliance and delivery. Agree one decision contact on each side.",
   },
   {
-    q: "What should the relationship become?",
-    a: "Review the patent position with qualified counsel and agree what evidence would support a larger operating role. TSI decides the scope, pace and direction.",
+    title: "What should the relationship become?",
+    body: "Review the patent position with qualified counsel and agree what evidence would support a larger operating role. TSI decides the scope, pace and direction.",
   },
 ];
 
-const examples = [
+const whyUsItems = [
   {
     title: "Mapping a complex partner ecosystem",
     body: "For a major global technology company, RampRate mapped channel and partnership relationships across telecom, cybersecurity, gaming and online child safety. The relevant method is to identify buyers, partner incentives and routes to market.",
   },
   {
     title: "Building workable channel terms",
-    body: "RampRate has developed channel-agreement templates and partner compensation structures for growing companies, turning buyer interest into agreements with clear economics and responsibilities.",
+    body: "RampRate has developed channel-agreement templates and partner compensation structures for growing companies. This helps turn buyer interest into agreements with clear economics and responsibilities.",
   },
   {
     title: "Health and supplement relationships",
@@ -113,7 +253,29 @@ const examples = [
   },
 ];
 
-const roadmap = [
+const pilotItems = [
+  {
+    title: "Test the commercial model",
+    body: "Agree one population, a defined product scope and a payment model. Track participation, adherence, replenishment, retention, delivery, service costs and retained contribution.",
+  },
+  {
+    title: "Build credible proof",
+    body: "Clinical advisers help choose appropriate baseline and outcome measures. Any claim about health improvement or healthcare-cost savings needs a suitable study design and supporting evidence.",
+  },
+];
+
+const operationsItems = [
+  {
+    title: "Operate successful channels",
+    body: "Coordinate onboarding, approved materials, account handoffs, partner support, renewals and issue resolution.",
+  },
+  {
+    title: "Make progress visible",
+    body: "Maintain a buyer pipeline, economics review and action log. Review revenue, contribution, cash collection and delivery performance, with owners for corrective actions.",
+  },
+];
+
+const roadmapRows = [
   [
     "Weeks 1–2 / Align",
     "Confirm the first channel, decision contacts, product scope and what counts as proof.",
@@ -136,7 +298,7 @@ const roadmap = [
   ],
 ];
 
-const opportunities = [
+const optionsItems = [
   {
     title: "Lower-waste packaging",
     body: "Explore the zero-waste and compostable-packaging direction you raised, where materials and delivery requirements make it practical.",
@@ -167,14 +329,199 @@ const glossary = [
   ],
 ];
 
+// Generative motif data, carried over verbatim from the design artifact.
+// Each tessera/piece is one Bezier path repeated at a different
+// translate/rotate/scale - the same shared shape, assembled into three
+// different compositions (the #principles root motif, and the #team /
+// #operations section strips).
+const TESSERA_D =
+  "M -9 -5 C -8 -12 0 -12 7 -7 C 13 -3 10 5 4 9 C -2 13 -11 8 -9 -5 Z";
+const MOTIF_D =
+  "M -8 -4 C -8 -10 -1 -12 6 -7 C 12 -3 10 4 4 8 C -2 12 -11 7 -8 -4 Z";
+
+const principlesPieces: { t: string; sage: boolean }[] = [
+  { t: "translate(129.2 43.3) rotate(34.5) scale(0.79 0.93)", sage: false },
+  { t: "translate(81.8 69.9) rotate(43.9) scale(1.01 0.76)", sage: false },
+  { t: "translate(105.3 69.5) rotate(-20.4) scale(1.03 0.88)", sage: false },
+  { t: "translate(83.1 91.8) rotate(-31.8) scale(0.92 1.01)", sage: false },
+  { t: "translate(105.5 94.9) rotate(57.4) scale(0.71 0.95)", sage: false },
+  { t: "translate(60.9 115.4) rotate(-59.5) scale(0.73 0.97)", sage: false },
+  { t: "translate(84.2 114.6) rotate(-47.1) scale(0.80 1.00)", sage: false },
+  { t: "translate(63.0 141.5) rotate(-27.5) scale(0.82 0.96)", sage: false },
+  { t: "translate(84.1 138.2) rotate(10.6) scale(0.94 1.02)", sage: false },
+  { t: "translate(38.5 166.0) rotate(-66.3) scale(0.88 1.02)", sage: true },
+  { t: "translate(60.9 166.1) rotate(41.2) scale(0.85 0.77)", sage: false },
+  { t: "translate(82.1 164.2) rotate(-32.3) scale(0.82 0.94)", sage: false },
+  { t: "translate(58.3 190.9) rotate(40.2) scale(0.75 0.85)", sage: false },
+  { t: "translate(84.2 187.3) rotate(3.3) scale(0.96 0.80)", sage: false },
+  { t: "translate(106.0 188.2) rotate(-25.6) scale(0.97 1.06)", sage: false },
+  { t: "translate(38.3 211.3) rotate(-46.2) scale(1.02 0.78)", sage: false },
+  { t: "translate(61.6 210.9) rotate(65.0) scale(0.95 0.86)", sage: false },
+  { t: "translate(86.5 212.1) rotate(-49.9) scale(0.74 1.04)", sage: false },
+  { t: "translate(108.9 213.6) rotate(41.1) scale(0.78 0.82)", sage: false },
+  { t: "translate(134.0 211.6) rotate(-32.2) scale(0.73 0.89)", sage: false },
+  { t: "translate(301.5 210.3) rotate(-40.9) scale(0.82 1.06)", sage: false },
+  { t: "translate(58.2 237.3) rotate(39.5) scale(1.02 0.92)", sage: false },
+  { t: "translate(84.9 233.8) rotate(53.0) scale(0.96 0.83)", sage: false },
+  { t: "translate(107.9 238.1) rotate(27.0) scale(0.78 1.08)", sage: false },
+  { t: "translate(134.1 236.0) rotate(-3.8) scale(0.84 1.09)", sage: false },
+  { t: "translate(158.8 234.1) rotate(-65.8) scale(0.86 0.82)", sage: false },
+  { t: "translate(275.3 234.6) rotate(8.9) scale(0.96 0.76)", sage: false },
+  { t: "translate(62.7 261.6) rotate(-54.9) scale(0.83 0.92)", sage: false },
+  { t: "translate(85.6 260.0) rotate(67.0) scale(0.70 1.03)", sage: true },
+  { t: "translate(108.1 257.9) rotate(-16.5) scale(0.91 1.09)", sage: true },
+  { t: "translate(131.4 257.7) rotate(34.0) scale(0.75 0.82)", sage: false },
+  { t: "translate(153.3 262.3) rotate(-32.5) scale(1.04 0.79)", sage: true },
+  { t: "translate(179.9 258.9) rotate(20.2) scale(0.80 0.87)", sage: true },
+  { t: "translate(201.5 257.0) rotate(-5.4) scale(1.00 0.94)", sage: false },
+  { t: "translate(227.8 261.6) rotate(51.9) scale(0.73 0.98)", sage: false },
+  { t: "translate(254.6 261.3) rotate(12.6) scale(0.93 1.02)", sage: true },
+  { t: "translate(274.9 257.2) rotate(-48.4) scale(1.02 0.95)", sage: true },
+  { t: "translate(85.6 282.6) rotate(-36.6) scale(0.87 0.89)", sage: true },
+  { t: "translate(109.4 286.2) rotate(46.4) scale(0.92 0.91)", sage: false },
+  { t: "translate(130.3 281.6) rotate(-41.3) scale(0.88 0.82)", sage: false },
+  { t: "translate(157.9 284.7) rotate(-42.1) scale(0.74 0.75)", sage: true },
+  { t: "translate(178.6 285.3) rotate(46.1) scale(0.83 0.77)", sage: false },
+  { t: "translate(206.7 281.1) rotate(18.0) scale(1.04 0.86)", sage: false },
+  { t: "translate(229.9 285.0) rotate(-45.8) scale(0.97 0.96)", sage: false },
+  { t: "translate(252.6 286.0) rotate(10.0) scale(1.01 0.79)", sage: true },
+  { t: "translate(131.0 307.9) rotate(64.7) scale(0.94 0.84)", sage: false },
+  { t: "translate(155.7 305.5) rotate(-55.3) scale(0.87 0.86)", sage: false },
+  { t: "translate(181.3 306.5) rotate(-6.9) scale(0.87 0.75)", sage: false },
+  { t: "translate(202.6 306.0) rotate(2.0) scale(0.77 0.76)", sage: true },
+  { t: "translate(225.2 307.1) rotate(-24.3) scale(0.77 0.81)", sage: false },
+  { t: "translate(302 226) rotate(-18) scale(0.8)", sage: false },
+  { t: "translate(324 258) rotate(6) scale(0.65)", sage: false },
+  { t: "translate(290 287) rotate(9) scale(0.9)", sage: false },
+  { t: "translate(329 304) rotate(-1) scale(0.6)", sage: false },
+  { t: "translate(285 330) rotate(14) scale(0.5)", sage: false },
+];
+
+const teamPieces: { t: string; sage: boolean }[] = [
+  { t: "translate(45.0 14.4) rotate(22.1) scale(0.70)", sage: true },
+  { t: "translate(64.6 14.4) rotate(30.9) scale(0.67)", sage: true },
+  { t: "translate(83.6 17.0) rotate(-43.6) scale(0.75)", sage: true },
+  { t: "translate(104.1 15.8) rotate(59.6) scale(0.70)", sage: true },
+  { t: "translate(121.4 14.1) rotate(-11.6) scale(0.81)", sage: false },
+  { t: "translate(140.8 15.3) rotate(54.6) scale(0.69)", sage: false },
+  { t: "translate(159.8 14.9) rotate(5.7) scale(0.74)", sage: false },
+  { t: "translate(181.8 17.4) rotate(-35.5) scale(0.69)", sage: false },
+  { t: "translate(48.3 36.0) rotate(28.2) scale(0.63)", sage: true },
+  { t: "translate(67.5 34.6) rotate(35.6) scale(0.66)", sage: true },
+  { t: "translate(85.9 32.8) rotate(-33.7) scale(0.75)", sage: true },
+  { t: "translate(102.2 33.3) rotate(-12.5) scale(0.69)", sage: true },
+  { t: "translate(123.6 35.3) rotate(57.2) scale(0.81)", sage: false },
+  { t: "translate(144.0 35.2) rotate(-38.8) scale(0.68)", sage: false },
+  { t: "translate(161.5 34.2) rotate(-48.8) scale(0.75)", sage: false },
+  { t: "translate(178.8 35.7) rotate(23.4) scale(0.74)", sage: false },
+  { t: "translate(197.4 33.6) rotate(17.9) scale(0.80)", sage: false },
+  { t: "translate(30.0 50.8) rotate(36.1) scale(0.71)", sage: true },
+  { t: "translate(46.8 53.2) rotate(-45.8) scale(0.73)", sage: true },
+  { t: "translate(64.4 53.9) rotate(-36.7) scale(0.64)", sage: true },
+  { t: "translate(84.3 52.9) rotate(-2.9) scale(0.79)", sage: true },
+  { t: "translate(104.0 53.2) rotate(-15.3) scale(0.68)", sage: true },
+  { t: "translate(123.5 52.5) rotate(-46.6) scale(0.63)", sage: false },
+  { t: "translate(140.6 52.9) rotate(56.8) scale(0.76)", sage: false },
+  { t: "translate(162.1 51.0) rotate(58.2) scale(0.77)", sage: false },
+  { t: "translate(179.4 50.0) rotate(-26.1) scale(0.70)", sage: false },
+  { t: "translate(197.7 50.2) rotate(43.8) scale(0.64)", sage: false },
+  { t: "translate(45.2 70.5) rotate(-36.8) scale(0.66)", sage: true },
+  { t: "translate(67.3 69.2) rotate(-5.4) scale(0.66)", sage: true },
+  { t: "translate(85.8 70.1) rotate(-11.8) scale(0.79)", sage: true },
+  { t: "translate(104.1 70.9) rotate(26.0) scale(0.71)", sage: true },
+  { t: "translate(122.9 68.5) rotate(34.0) scale(0.64)", sage: false },
+  { t: "translate(143.0 71.8) rotate(9.6) scale(0.76)", sage: false },
+  { t: "translate(159.7 71.4) rotate(-9.0) scale(0.64)", sage: false },
+  { t: "translate(178.6 69.5) rotate(-8.9) scale(0.68)", sage: false },
+];
+
+const operationsPieces: { t: string; sage: boolean; op: number }[] = [
+  { t: "translate(16.0 24.0) rotate(10.2) scale(0.64)", sage: false, op: 0.6 },
+  { t: "translate(39.0 65.0) rotate(1.3) scale(0.64)", sage: false, op: 0.6 },
+  { t: "translate(54.0 22.0) rotate(2.0) scale(0.59)", sage: false, op: 0.6 },
+  { t: "translate(74.0 50.0) rotate(-69.0) scale(0.71)", sage: false, op: 0.6 },
+  { t: "translate(97.0 17.0) rotate(52.6) scale(0.57)", sage: false, op: 0.6 },
+  { t: "translate(112.0 71.0) rotate(82.0) scale(0.56)", sage: false, op: 0.6 },
+  { t: "translate(123.0 41.0) rotate(19.6) scale(0.68)", sage: true, op: 0.6 },
+  { t: "translate(162.0 18.0) rotate(-21.3) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(179.0 18.0) rotate(-19.4) scale(0.72)", sage: true, op: 1 },
+  { t: "translate(196.0 18.0) rotate(-11.4) scale(0.72)", sage: true, op: 1 },
+  { t: "translate(213.0 18.0) rotate(-1.6) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(145.0 35.0) rotate(15.1) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(162.0 35.0) rotate(6.2) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(179.0 35.0) rotate(7.1) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(196.0 35.0) rotate(-9.8) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(213.0 35.0) rotate(21.8) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(145.0 52.0) rotate(9.1) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(162.0 52.0) rotate(-11.9) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(179.0 52.0) rotate(-18.9) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(196.0 52.0) rotate(-4.4) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(213.0 52.0) rotate(-5.0) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(145.0 69.0) rotate(15.3) scale(0.72)", sage: true, op: 1 },
+  { t: "translate(162.0 69.0) rotate(-12.8) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(179.0 69.0) rotate(-1.3) scale(0.72)", sage: false, op: 1 },
+  { t: "translate(196.0 69.0) rotate(-4.5) scale(0.72)", sage: true, op: 1 },
+];
+
 function Eyebrow({ children }: { children: React.ReactNode }) {
+  return <p className="eyebrow">{children}</p>;
+}
+
+function PairGrid({ items }: { items: { title: string; body: string }[] }) {
   return (
-    <span
-      className="text-xs font-semibold tracking-[0.2em] uppercase"
-      style={{ color: "var(--gold)", fontFamily: "var(--font-mono)" }}
+    <div className="pair-grid">
+      {items.map((item) => (
+        <div key={item.title} className="pair">
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PrinciplesComposition() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="principles-composition"
+      focusable="false"
+      viewBox="0 0 360 360"
     >
-      {children}
-    </span>
+      {principlesPieces.map((p, i) => (
+        <path
+          key={i}
+          className={p.sage ? "tessera sage" : "tessera"}
+          d={TESSERA_D}
+          transform={p.t}
+        />
+      ))}
+    </svg>
+  );
+}
+
+function SectionComposition({
+  pieces,
+}: {
+  pieces: { t: string; sage: boolean; op?: number }[];
+}) {
+  return (
+    <svg
+      aria-hidden="true"
+      className="section-composition"
+      focusable="false"
+      viewBox="0 0 240 90"
+    >
+      {pieces.map((p, i) => (
+        <path
+          key={i}
+          className={p.sage ? "motif-piece sage" : "motif-piece"}
+          d={MOTIF_D}
+          opacity={p.op ?? 1}
+          transform={p.t}
+        />
+      ))}
+    </svg>
   );
 }
 
@@ -194,29 +541,48 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
   }
 
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-5">
-      <div className="w-full max-w-sm">
+    <main
+      className="tsi-page"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <style>{TSI_STYLES}</style>
+      <div style={{ width: "100%", maxWidth: 360, padding: "48px 0" }}>
         <Image
           src="/ramprate-logo.png"
           alt="RampRate"
           width={140}
           height={34}
-          className="w-[140px] h-auto mx-auto mb-8"
-        />
-        <div
-          className="text-2xl font-bold mb-2 text-center"
           style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--color-ink)",
+            width: 120,
+            height: "auto",
+            display: "block",
+            margin: "0 auto 24px",
+          }}
+        />
+        <p className="eyebrow" style={{ textAlign: "center" }}>
+          RampRate + TSI
+        </p>
+        <h1
+          style={{
+            fontSize: "1.7rem",
+            textAlign: "center",
+            marginBottom: 10,
           }}
         >
-          TSI &amp; RampRate
-        </div>
+          A partnership discussion
+        </h1>
         <p
-          className="text-sm text-center mb-8"
           style={{
-            fontFamily: "var(--font-body)",
-            color: "var(--color-ink-mid)",
+            textAlign: "center",
+            color: "var(--ink-soft)",
+            fontSize: ".92rem",
+            lineHeight: 1.6,
+            marginBottom: 28,
           }}
         >
           This discussion is confidential. Enter the access code to continue.
@@ -233,21 +599,41 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
           onKeyDown={(e) => e.key === "Enter" && attempt()}
           placeholder="Access code"
           autoComplete="off"
-          className="w-full px-4 py-3 border-2 border-black rounded text-sm text-black bg-white focus:outline-none mb-3"
-          style={{ fontFamily: "var(--font-body)" }}
+          style={{
+            width: "100%",
+            padding: "12px 16px",
+            border: `1px solid ${error ? "var(--error)" : "var(--line)"}`,
+            borderRadius: 10,
+            fontSize: ".95rem",
+            color: "var(--ink)",
+            background: "var(--bg)",
+            marginBottom: 12,
+          }}
         />
         {error && (
           <p
-            className="text-sm text-red-600 mb-3"
-            style={{ fontFamily: "var(--font-body)" }}
+            style={{
+              fontSize: ".85rem",
+              color: "var(--error)",
+              marginBottom: 12,
+            }}
           >
             Incorrect code. Please try again.
           </p>
         )}
         <button
           onClick={attempt}
-          className="w-full py-3 bg-black text-white font-bold rounded text-sm hover:bg-gray-800 transition-colors"
-          style={{ fontFamily: "var(--font-body)" }}
+          style={{
+            width: "100%",
+            padding: "13px 16px",
+            background: "var(--accent)",
+            color: "var(--bg)",
+            border: "none",
+            borderRadius: 10,
+            fontWeight: 600,
+            fontSize: ".95rem",
+            cursor: "pointer",
+          }}
         >
           Enter
         </button>
@@ -258,64 +644,47 @@ function GateScreen({ onUnlock }: { onUnlock: () => void }) {
 
 function TsiPartnershipContent() {
   return (
-    <div style={{ fontFamily: "var(--font-body)" }}>
-      <nav className="sticky top-0 z-30 bg-dark/95 backdrop-blur border-b border-white/10">
-        <div className="max-w-[1180px] mx-auto px-7 h-16 flex items-center gap-5">
+    <div className="tsi-page">
+      <style>{TSI_STYLES}</style>
+
+      <header className="brand-bar">
+        <span className="brand-chip">
           <Image
-            src="/ramprate-logo.png"
-            alt="RampRate"
-            width={110}
-            height={26}
-            className="w-[110px] h-auto brightness-0 invert"
+            src="/tsi-partnership/bcorp-badge.webp"
+            alt="RampRate — Certified B Corporation"
+            width={460}
+            height={99}
           />
-          <div className="ml-auto flex items-center gap-5 overflow-x-auto no-scrollbar">
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-[11px] font-mono uppercase tracking-wide text-white/60 hover:text-gold-light whitespace-nowrap"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
+        </span>
+        <p className="note">
+          Confidential discussion materials prepared for TSI.
+        </p>
+      </header>
+
+      <nav className="toc" aria-label="Section navigation">
+        <div className="toc-inner">
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href}>
+              {l.label}
+            </a>
+          ))}
         </div>
       </nav>
 
-      <header className="relative overflow-hidden bg-dark">
-        <div className="max-w-[1180px] mx-auto px-7 pt-16 pb-16">
-          <div className="flex gap-3 flex-wrap mb-7">
-            <span className="rounded-full border border-white/25 bg-white/5 px-3 py-2 text-[11px] font-mono text-white/80">
-              CONFIDENTIAL
-            </span>
-            <span className="rounded-full border border-white/25 bg-white/5 px-3 py-2 text-[11px] font-mono text-white/80">
-              PARTNERSHIP DISCUSSION
-            </span>
-          </div>
-          <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-3">
-            TSI has built the manufacturing strength
-          </div>
-          <h1 className="text-[clamp(2rem,5vw,3.6rem)] leading-[1.05] tracking-[-0.02em] font-bold text-white max-w-[780px] mb-5 font-display">
-            TSI and RampRate: What We Can Build Together
-          </h1>
-          <p className="text-white/70 text-lg italic max-w-[640px] font-display">
+      <section className="hero">
+        <div>
+          <p className="eyebrow">RampRate + TSI / A partnership discussion</p>
+          <h1>TSI has built the manufacturing strength.</h1>
+          <p className="tagline">
             Let&rsquo;s explore the next chapter of US institutional growth.
           </p>
-        </div>
-      </header>
-
-      <section className="section-warm py-20">
-        <div className="max-w-[820px] mx-auto px-7">
-          <p className="text-[17px] leading-relaxed mb-5">
+          <p>
             Tailored Script brings personalized nutrition within reach of
             partner brands. Together, we can build buyer relationships and a
             practical route to sustained institutional growth, starting with a
             focused employer-health pilot.
           </p>
-          <p
-            className="text-[17px] leading-relaxed"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
+          <p>
             TSI has built real momentum here: nearly 30 years operating in the
             US ingredients business, a 2025 listing on the Shanghai Stock
             Exchange, and an expanding US manufacturing footprint anchored by
@@ -323,92 +692,58 @@ function TsiPartnershipContent() {
             not to redo what you&rsquo;ve already built.
           </p>
         </div>
-      </section>
-
-      <section className="section-light py-20" id="heard">
-        <div className="max-w-[1180px] mx-auto px-7">
-          <div className="mb-10">
-            <Eyebrow>Listening first</Eyebrow>
-            <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2">
-              What we heard from you
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
-            {heardFromYou.map((item) => (
-              <div key={item.title}>
-                <h3 className="text-lg font-bold mb-1 font-display">
-                  {item.title}
-                </h3>
-                <p style={{ color: "var(--color-ink-mid)" }}>{item.body}</p>
-              </div>
-            ))}
-          </div>
+        <div className="scene tailored-weave">
+          <Image
+            src="/tsi-partnership/weave-art.webp"
+            alt="Distinct ceramic elements assembled into one individual organic form: a metaphor for personalized nutrition."
+            className="weave-art"
+            width={240}
+            height={240}
+            priority
+          />
         </div>
       </section>
 
-      <section className="section-warm py-20" id="channels">
-        <div className="max-w-[1180px] mx-auto px-7">
-          <div className="mb-8">
-            <Eyebrow>A focused route</Eyebrow>
-            <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-4">
-              Start with a focused route to institutional buyers
-            </h2>
-            <p
-              className="max-w-[760px]"
-              style={{ color: "var(--color-ink-mid)" }}
-            >
-              You have asked for a few strong partners and a pilot that proves
-              volume and economics before wider expansion. We suggest starting
-              with EAP and self-insured-employer pathways. A consumer-facing
-              brand partner leads engagement, supported by TSI&rsquo;s
-              manufacturing and dispensing platform.
-            </p>
-          </div>
-          <div className="overflow-x-auto rounded-2xl border border-black/10 bg-white">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left border-b border-black/10">
-                  <th className="px-6 py-4 font-semibold">Potential channel</th>
-                  <th className="px-6 py-4 font-semibold">Possible route</th>
-                  <th className="px-6 py-4 font-semibold">
-                    Question to answer
-                  </th>
+      <section className="section" id="heard">
+        <Eyebrow>Listening first</Eyebrow>
+        <h2>What we heard from you</h2>
+        <PairGrid items={heardItems} />
+      </section>
+
+      <section className="section" id="market">
+        <Eyebrow>The opportunity</Eyebrow>
+        <h2>Start with a focused route to institutional buyers</h2>
+        <div className="prose">
+          <p>
+            You have asked for a few strong partners and a pilot that proves
+            volume and economics before wider expansion. We suggest starting
+            with EAP and self-insured-employer pathways. A consumer-facing brand
+            partner leads engagement, supported by TSI&rsquo;s manufacturing and
+            dispensing platform.
+          </p>
+        </div>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Potential channel</th>
+                <th>Possible route</th>
+                <th>Question to answer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {marketRows.map((row) => (
+                <tr key={row[0]}>
+                  <td>{row[0]}</td>
+                  <td>{row[1]}</td>
+                  <td>{row[2]}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {channelRows.map((row, i) => (
-                  <tr
-                    key={row[0]}
-                    className={
-                      i < channelRows.length - 1
-                        ? "border-b border-black/5"
-                        : ""
-                    }
-                  >
-                    <td className="px-6 py-4 font-medium align-top">
-                      {row[0]}
-                    </td>
-                    <td
-                      className="px-6 py-4 align-top"
-                      style={{ color: "var(--color-ink-mid)" }}
-                    >
-                      {row[1]}
-                    </td>
-                    <td
-                      className="px-6 py-4 align-top"
-                      style={{ color: "var(--color-ink-mid)" }}
-                    >
-                      {row[2]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p
-            className="mt-6 max-w-[760px]"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="prose">
+          <p>
             These are routes to evaluate together. The first engagement focuses
             on one or two closely related fronts, rather than opening every
             channel at once.
@@ -416,76 +751,83 @@ function TsiPartnershipContent() {
         </div>
       </section>
 
-      <section className="section-light py-20" id="questions">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>Open together</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-3">
-            The questions we should answer together
-          </h2>
-          <p className="mb-8" style={{ color: "var(--color-ink-mid)" }}>
-            Five open questions will shape the scope:
-          </p>
-          <ol className="flex flex-col gap-6">
-            {questions.map((item, i) => (
-              <li key={item.q} className="flex gap-4">
-                <span
-                  className="shrink-0 text-sm font-bold font-mono w-7 h-7 rounded-full flex items-center justify-center text-black"
-                  style={{ background: "var(--gold)" }}
-                >
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 className="font-bold font-display mb-1">{item.q}</h3>
-                  <p style={{ color: "var(--color-ink-mid)" }}>{item.a}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+      <section className="section" id="model">
+        <Eyebrow>Joint decisions</Eyebrow>
+        <h2>The questions we should answer together</h2>
+        <PairGrid items={modelItems} />
       </section>
 
-      <section className="section-warm py-20" id="team">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>Who&rsquo;s involved</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-5">
-            Senior leadership, with specialists matched to the work
-          </h2>
-          <p className="text-[17px] leading-relaxed mb-5">
-            RampRate is a global advisory firm founded in 2000 &mdash; 25 years
+      <section className="section" id="about">
+        <Eyebrow>About RampRate</Eyebrow>
+        <h2>Senior leadership, with specialists matched to the work</h2>
+        <div className="prose">
+          <p>
+            RampRate is a global advisory firm founded in 2000 — 25 years
             connecting market research, partner relationships and commercial
             execution across enterprise technology, digital media, sourcing and
             health and wellness. RampRate reports billions of dollars in
             cumulative commercial transactions across that work; this is
-            RampRate&rsquo;s own account, not independently audited. Tony
-            Greenberg and Alex Veytsel bring complementary relationship and
-            commercial experience; healthcare channel operators, clinical
+            RampRate&rsquo;s own account, not independently audited.
+          </p>
+          <p>
+            Tony Greenberg and Alex Veytsel bring complementary relationship and
+            commercial experience. Healthcare channel operators, clinical
             advisers and qualified counsel join where the work requires them.
           </p>
-          <p
-            className="text-[17px] leading-relaxed"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
-            Tony Greenberg, founder and CEO, founded RampRate in 2000 and brings
-            enterprise relationships, senior commercial leadership and a focus
-            on opportunities that improve lives. Alex Veytsel, chief strategy
-            officer, joined RampRate in 2004 and brings value-chain analysis,
-            partner strategy and experience structuring new business models.
-          </p>
+        </div>
+        <div className="principals-grid">
+          <div className="principal">
+            <Image
+              src="/tsi-partnership/avatar-tony.jpg"
+              alt="Tony Greenberg"
+              className="avatar"
+              width={220}
+              height={220}
+            />
+            <div>
+              <h3>Tony Greenberg</h3>
+              <p className="role">Founder &amp; CEO</p>
+              <p>
+                Founded RampRate in 2000. Brings enterprise relationships,
+                senior commercial leadership and a focus on opportunities that
+                improve lives.
+              </p>
+            </div>
+          </div>
+          <div className="principal">
+            <Image
+              src="/tsi-partnership/avatar-alex.jpg"
+              alt="Alex Veytsel"
+              className="avatar"
+              width={220}
+              height={220}
+            />
+            <div>
+              <h3>Alex Veytsel</h3>
+              <p className="role">Chief Strategy Officer</p>
+              <p>
+                Joined RampRate in 2004. Brings value-chain analysis, partner
+                strategy and experience structuring new business models.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="section-light py-20 text-center">
-        <div className="max-w-[760px] mx-auto px-7">
-          <p className="text-[clamp(1.3rem,3vw,1.8rem)] italic font-display leading-snug">
-            Less friction. Clearer decisions. Stronger partnerships. A better
-            tomorrow we can help build.
-          </p>
-          <p className="mt-6" style={{ color: "var(--color-ink-mid)" }}>
+      <section className="principles" id="principles">
+        <PrinciplesComposition />
+        <Eyebrow>Principles</Eyebrow>
+        <h2>
+          Less friction. Clearer decisions. Stronger partnerships. A better
+          tomorrow we can help build.
+        </h2>
+        <div className="prose">
+          <p>
             We research before making commitments, keep responsibilities and
             incentives clear, and match claims to evidence. Senior leaders stay
             involved and specialists have defined outputs.
           </p>
-          <p className="mt-3" style={{ color: "var(--color-ink-mid)" }}>
+          <p>
             The purpose is practical: help partners bring useful nutrition
             services to more people while building a business that can sustain
             them.
@@ -493,181 +835,118 @@ function TsiPartnershipContent() {
         </div>
       </section>
 
-      <section className="section-warm py-20">
-        <div className="max-w-[1180px] mx-auto px-7">
-          <Eyebrow>Track record</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-3">
-            Three examples of the work we bring
-          </h2>
-          <p
-            className="mb-8 max-w-[760px]"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
+      <section className="section" id="why-us">
+        <Eyebrow>Relevant experience</Eyebrow>
+        <h2>Three examples of the work we bring</h2>
+        <div className="prose">
+          <p>
             The following examples are drawn from RampRate&rsquo;s internal
             account of its work. They describe commercial experience, rather
             than verified health outcomes. Specific references can be agreed for
             follow-up.
           </p>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {examples.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-black/10 bg-white p-7"
-              >
-                <h3 className="text-lg font-bold mb-2 font-display">
-                  {item.title}
-                </h3>
-                <p
-                  className="text-[15px] leading-relaxed"
-                  style={{ color: "var(--color-ink-mid)" }}
-                >
-                  {item.body}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
+        <PairGrid items={whyUsItems} />
       </section>
 
-      <section className="section-light py-20" id="pilot">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>How we work together</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-6">
-            One coordinated team around TSI&rsquo;s capabilities
-          </h2>
-          <div className="flex flex-col gap-6 mb-10">
-            <div>
-              <h3 className="font-bold font-display mb-1">
-                TSI supplies the product capability
-              </h3>
-              <p style={{ color: "var(--color-ink-mid)" }}>
-                TSI leads formulation, manufacturing, dispensing and quality.
-                The partner brand carries consumer engagement and the agreed
-                labeling, claims and regulatory responsibilities.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold font-display mb-1">
-                RampRate develops the buyer relationships
-              </h3>
-              <p style={{ color: "var(--color-ink-mid)" }}>
-                We map priority segments, qualify buyer interest, assemble
-                specialists and coordinate negotiations and pilot delivery. TSI
-                retains final commercial approval. RampRate runs the channel
-                work day to day, and the agreed scope will name the people,
-                outputs, budgets and approval responsibilities.
-              </p>
-            </div>
-          </div>
-
-          <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold font-display mb-5">
-            A focused pilot with a clear expansion decision
-          </h2>
-          <div className="flex flex-col gap-6">
-            <div>
-              <h3 className="font-bold font-display mb-1">
-                Testing the commercial model
-              </h3>
-              <p style={{ color: "var(--color-ink-mid)" }}>
-                Agreeing one population, a defined product scope and a payment
-                model, then tracking participation, adherence, replenishment,
-                retention, delivery, service costs and retained contribution.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold font-display mb-1">
-                Building credible proof
-              </h3>
-              <p style={{ color: "var(--color-ink-mid)" }}>
-                Clinical advisers help choose appropriate baseline and outcome
-                measures, and any claim about health improvement or
-                healthcare-cost savings needs a suitable study design and
-                supporting evidence. Buyer reporting uses only the information
-                needed for the pilot, with clear permissions and consent for
-                identifiable health data. The pilot ends with a decision to
-                expand, revise or stop.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-warm py-20">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>Staying accountable</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-5">
-            Keep buyer promises connected to delivery
-          </h2>
-          <p className="mb-4" style={{ color: "var(--color-ink-mid)" }}>
-            Operating successful channels means coordinating onboarding,
-            approved materials, account handoffs, partner support, renewals and
-            issue resolution. Making progress visible means maintaining a buyer
-            pipeline, economics review and action log, and reviewing revenue,
-            contribution, cash collection and delivery performance, with owners
-            for corrective actions.
+      <section className="section has-composition" id="team">
+        <Eyebrow>Operating model</Eyebrow>
+        <h2>One coordinated team around TSI&rsquo;s capabilities</h2>
+        <SectionComposition pieces={teamPieces} />
+        <PairGrid
+          items={[
+            {
+              title: "TSI supplies the product capability",
+              body: "TSI leads formulation, manufacturing, dispensing and quality. The partner brand carries consumer engagement and the agreed labeling, claims and regulatory responsibilities.",
+            },
+            {
+              title: "RampRate develops the buyer relationships",
+              body: "We map priority segments, qualify buyer interest, assemble specialists and coordinate negotiations and pilot delivery. TSI retains final commercial approval.",
+            },
+          ]}
+        />
+        <div className="prose">
+          <p>
+            RampRate runs the channel work day to day, and the agreed scope will
+            name the people, outputs, budgets and approval responsibilities.
           </p>
-          <p style={{ color: "var(--color-ink-mid)" }}>
+        </div>
+      </section>
+
+      <section className="section" id="agreements">
+        <Eyebrow>Commercial discipline</Eyebrow>
+        <h2>Build relationships that work for both sides</h2>
+        <div className="prose">
+          <p>
+            Buyer agreements protect contribution and make service duties clear.
+            We compare pricing, partner compensation, volumes, payment terms,
+            fulfillment and support costs before recommending a route.
+          </p>
+          <p>
+            The aim is repeatable business with clear customer and data
+            responsibilities, rather than volume that creates delivery problems.
+          </p>
+        </div>
+      </section>
+
+      <section className="section" id="pilot">
+        <Eyebrow>Pilot and evidence</Eyebrow>
+        <h2>A focused pilot with a clear expansion decision</h2>
+        <PairGrid items={pilotItems} />
+        <div className="prose">
+          <p>
+            Buyer reporting uses only the information needed for the pilot, with
+            clear permissions and consent for identifiable health data. The
+            pilot ends with a decision to expand, revise or stop.
+          </p>
+        </div>
+      </section>
+
+      <section className="section has-composition" id="operations">
+        <Eyebrow>Beyond the pilot</Eyebrow>
+        <h2>Keep buyer promises connected to delivery</h2>
+        <SectionComposition pieces={operationsPieces} />
+        <PairGrid items={operationsItems} />
+        <div className="prose">
+          <p>
             This is how a successful first engagement becomes an ongoing
             operating relationship.
           </p>
         </div>
       </section>
 
-      <section className="section-light py-20" id="roadmap">
-        <div className="max-w-[1180px] mx-auto px-7">
-          <Eyebrow>Eight weeks</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-3">
-            An eight-week path to a joint decision
-          </h2>
-          <p
-            className="mb-8 max-w-[760px]"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
+      <section className="section" id="roadmap">
+        <Eyebrow>Discussion framework</Eyebrow>
+        <h2>An eight-week path to a joint decision</h2>
+        <div className="prose">
+          <p>
             This is a framework for discussion, not a fixed delivery commitment.
             Research and buyer conversations run together, and the detailed
             scope sets the calendar and dependencies.
           </p>
-          <div className="overflow-x-auto rounded-2xl border border-black/10 bg-white">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left border-b border-black/10">
-                  <th className="px-6 py-4 font-semibold">Discussion stage</th>
-                  <th className="px-6 py-4 font-semibold">Work to explore</th>
-                  <th className="px-6 py-4 font-semibold">Potential outcome</th>
+        </div>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Discussion stage</th>
+                <th>Work to explore</th>
+                <th>Potential outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roadmapRows.map((row) => (
+                <tr key={row[0]}>
+                  <td>{row[0]}</td>
+                  <td>{row[1]}</td>
+                  <td>{row[2]}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {roadmap.map((row, i) => (
-                  <tr
-                    key={row[0]}
-                    className={
-                      i < roadmap.length - 1 ? "border-b border-black/5" : ""
-                    }
-                  >
-                    <td className="px-6 py-4 font-medium align-top whitespace-nowrap">
-                      {row[0]}
-                    </td>
-                    <td
-                      className="px-6 py-4 align-top"
-                      style={{ color: "var(--color-ink-mid)" }}
-                    >
-                      {row[1]}
-                    </td>
-                    <td
-                      className="px-6 py-4 align-top"
-                      style={{ color: "var(--color-ink-mid)" }}
-                    >
-                      {row[2]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p
-            className="mt-6 max-w-[760px]"
-            style={{ color: "var(--color-ink-mid)" }}
-          >
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="prose">
+          <p>
             The outcome we seek is a clear route to a viable first pilot. A
             signed buyer agreement or launched pilot depends on the decisions
             and readiness established during the work.
@@ -675,126 +954,114 @@ function TsiPartnershipContent() {
         </div>
       </section>
 
-      <section className="section-warm py-20" id="role">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>Earned, not assumed</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-5">
-            The role we want to earn
-          </h2>
-          <p className="text-[17px] leading-relaxed mb-5">
-            We want to earn a larger role through results &mdash; in the United
-            States first, and where it makes sense, in other countries where you
-            have not yet established channel operations. Together, we can remove
+      <section className="section partnership" id="partnership">
+        <Image
+          src="/tsi-partnership/weave-art.webp"
+          alt=""
+          aria-hidden="true"
+          className="partnership-weave"
+          width={132}
+          height={132}
+        />
+        <Eyebrow>The long-term partnership</Eyebrow>
+        <h2>The role we want to earn</h2>
+        <div className="prose">
+          <p>
+            We want to earn a larger role through results — in the United States
+            first, and where it makes sense, in other countries where you have
+            not yet established channel operations. Together, we can remove
             barriers to market entry, build strong buyer relationships and turn
             your manufacturing capabilities into sustained growth.
           </p>
-          <p className="mb-5" style={{ color: "var(--color-ink-mid)" }}>
+          <p>
             Begin with a focused market and pilot engagement. Earn a broader
             role through buyer demand, sound economics and reliable delivery.
             TSI decides how the relationship grows.
           </p>
-          <p className="font-semibold">
-            A standard agreement goes in place before work starts.
-          </p>
         </div>
       </section>
 
-      <section className="section-light py-20">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>Looking ahead</Eyebrow>
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mt-2 mb-6">
-            Keep the next opportunities in view
-          </h2>
-          <div className="flex flex-col gap-6 mb-6">
-            {opportunities.map((item) => (
-              <div key={item.title}>
-                <h3 className="font-bold font-display mb-1">{item.title}</h3>
-                <p style={{ color: "var(--color-ink-mid)" }}>{item.body}</p>
-              </div>
-            ))}
-          </div>
-          <p style={{ color: "var(--color-ink-mid)" }}>
+      <section className="section" id="commercial">
+        <Eyebrow>Commercial relationship</Eyebrow>
+        <div className="prose">
+          <p>A standard agreement goes in place before work starts.</p>
+        </div>
+      </section>
+
+      <section className="section" id="options">
+        <Eyebrow>Adjacent opportunities</Eyebrow>
+        <h2>Keep the next opportunities in view</h2>
+        <PairGrid items={optionsItems} />
+        <div className="prose">
+          <p>
             These ideas can support later product development. Their inclusion
             in the first engagement is a joint decision.
           </p>
         </div>
       </section>
 
-      <section
-        className="py-20 text-center"
-        id="call"
-        style={{ background: "var(--gold)" }}
-      >
-        <div className="max-w-[700px] mx-auto px-7">
-          <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] font-bold font-display mb-4 text-black">
-            Let&rsquo;s start with a phone call
-          </h2>
-          <p className="mb-9 text-black/80">
+      {/* The artifact ends this section as a static read, with no call to
+          action - this page adds a "Schedule a call" link to /contact since
+          an interactive page benefits from one. Flagged as an intentional
+          addition, not a feature of the source artifact. */}
+      <section className="section" id="next">
+        <Eyebrow>Next step</Eyebrow>
+        <h2>Let&rsquo;s start with a phone call</h2>
+        <div className="prose">
+          <p>
+            Let&rsquo;s start with a phone call to align on priorities and
+            discuss a scope of work.
+          </p>
+          <p>
             We can use the call to choose the first channel, agree what a useful
             pilot should prove and identify the product, capacity and partner
             information needed to move forward. Tony will coordinate the
             RampRate side.
           </p>
-          <a
-            href="/contact"
-            className="inline-block px-8 py-4 rounded-xl font-bold text-sm bg-black text-white"
-          >
-            Schedule a call
-          </a>
         </div>
+        <a
+          href="/contact"
+          style={{
+            display: "inline-block",
+            marginTop: 8,
+            padding: "13px 26px",
+            background: "var(--accent)",
+            color: "var(--bg)",
+            borderRadius: 10,
+            fontWeight: 600,
+            fontSize: ".92rem",
+            textDecoration: "none",
+          }}
+        >
+          Schedule a call
+        </a>
       </section>
 
-      <section className="section-warm py-20">
-        <div className="max-w-[820px] mx-auto px-7">
-          <Eyebrow>A few terms, defined</Eyebrow>
-          <div className="mt-5 overflow-x-auto rounded-2xl border border-black/10 bg-white">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left border-b border-black/10">
-                  <th className="px-6 py-4 font-semibold">Term</th>
-                  <th className="px-6 py-4 font-semibold">Definition</th>
-                </tr>
-              </thead>
-              <tbody>
-                {glossary.map((row, i) => (
-                  <tr
-                    key={row[0]}
-                    className={
-                      i < glossary.length - 1 ? "border-b border-black/5" : ""
-                    }
-                  >
-                    <td className="px-6 py-4 font-medium align-top whitespace-nowrap">
-                      {row[0]}
-                    </td>
-                    <td
-                      className="px-6 py-4 align-top"
-                      style={{ color: "var(--color-ink-mid)" }}
-                    >
-                      {row[1]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <section className="section" id="terms">
+        <Eyebrow>Reference</Eyebrow>
+        <details className="reference-terms">
+          <summary>A few terms, defined</summary>
+          <dl className="glossary">
+            {glossary.map((row) => (
+              <Fragment key={row[0]}>
+                <dt>{row[0]}</dt>
+                <dd>{row[1]}</dd>
+              </Fragment>
+            ))}
+          </dl>
+        </details>
       </section>
 
-      <footer className="bg-dark py-11 border-t border-white/10">
-        <div className="max-w-[1180px] mx-auto px-7 flex flex-wrap items-end justify-between gap-5">
+      <footer className="footer">
+        <span className="brand-chip">
           <Image
-            src="/ramprate-logo.png"
-            alt="RampRate"
-            width={130}
-            height={31}
-            className="w-[130px] h-auto brightness-0 invert"
+            src="/tsi-partnership/bcorp-badge.webp"
+            alt="RampRate — Certified B Corporation"
+            width={460}
+            height={99}
           />
-          <div className="text-[11px] font-mono text-white/40 text-right">
-            RampRate Confidential
-            <br />
-            TSI and RampRate: What We Can Build Together
-          </div>
-        </div>
+        </span>
+        <p>Confidential discussion materials prepared for TSI.</p>
       </footer>
     </div>
   );
@@ -802,6 +1069,22 @@ function TsiPartnershipContent() {
 
 export default function TsiPartnershipGate() {
   const [unlocked, setUnlocked] = useState(false);
+
+  // Smooth in-page anchor scrolling for the sticky section nav, limited to
+  // this route and skipped for anyone who has asked for reduced motion.
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReduced) return;
+    const root = document.documentElement;
+    const previous = root.style.scrollBehavior;
+    root.style.scrollBehavior = "smooth";
+    return () => {
+      root.style.scrollBehavior = previous;
+    };
+  }, []);
+
   return unlocked ? (
     <TsiPartnershipContent />
   ) : (
