@@ -652,8 +652,8 @@ function TsiPartnershipContent() {
           <Image
             src="/tsi-partnership/bcorp-badge.webp"
             alt="RampRate — Certified B Corporation"
-            width={460}
-            height={99}
+            width={1140}
+            height={246}
           />
         </span>
         <p className="note">
@@ -1037,8 +1037,8 @@ function TsiPartnershipContent() {
           <Image
             src="/tsi-partnership/bcorp-badge.webp"
             alt="RampRate — Certified B Corporation"
-            width={460}
-            height={99}
+            width={1140}
+            height={246}
           />
         </span>
         <p>Confidential discussion materials prepared for TSI.</p>
@@ -1062,6 +1062,22 @@ export default function TsiPartnershipGate() {
     root.style.scrollBehavior = "smooth";
     return () => {
       root.style.scrollBehavior = previous;
+    };
+  }, []);
+
+  // This page's content column is capped at 1120px and centered, but <body>
+  // still carries the site's own near-black background (globals.css sets
+  // `--dark` on body for every other route). On any viewport wider than the
+  // column, that showed through as dark bars down both sides. Matching the
+  // body to this page's own ivory background for as long as the page is
+  // mounted removes the seam; restoring the previous inline value on unmount
+  // hands the site's dark background straight back to every other route.
+  useEffect(() => {
+    const body = document.body;
+    const previous = body.style.background;
+    body.style.background = "#FAF5EE";
+    return () => {
+      body.style.background = previous;
     };
   }, []);
 
