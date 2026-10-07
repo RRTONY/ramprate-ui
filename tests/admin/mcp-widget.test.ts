@@ -3,7 +3,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { McpUser } from "@/lib/admin/mcp-auth";
 
-const URI = "ui://ramprate-admin/pending-changes-v4.html";
+const URI = "ui://ramprate-admin/pending-changes-v5.html";
 const KEY = "20261002-abc123";
 
 vi.mock("@/lib/admin/github-client", async (importOriginal) => ({
@@ -418,9 +418,7 @@ describe("review card (ChatGPT / MCP Apps)", () => {
     expect(ui.csp.resourceDomains).toEqual(["https://esm.sh"]);
     expect(content.text).toContain("rules_version: rulesVersion");
     expect(content.text).toContain("args.review_token = data.reviewToken");
-    expect(content.text).toContain(
-      "You are about to publish this change to the live RampRate website.",
-    );
+    expect(content.text).toContain('" to the live RampRate website.');
     // Same three actions, same place, every time.
     expect(content.text).toContain('button("preview", "Preview"');
     expect(content.text).toContain('button("discard", "Discard"');
@@ -503,6 +501,79 @@ describe("attached files (2026-10-08: ChatGPT/Claude can't send base64)", () => 
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain("request_upload_link");
     await client.close();
+  });
+});
+
+describe("Other Pending Changes (team feedback 2026-10-08)", () => {
+  it("adds the other waiting changes to a change's review, for the card and the AI", async () => {
+    const sets = await import("@/lib/admin/change-sets");
+    const other = {
+      key: "20261001-old111",
+      title: "Old footer tweak",
+      request: "Change the footer text",
+      status: "ready_for_review",
+      createdAt: "2026-10-01T09:00:00Z",
+      requestedBy: { name: "Rob", email: "rob@ramprate.com" },
+      prNumber: 40,
+      content: [],
+    };
+    vi.mocked(sets.listOpenChangeSets).mockResolvedValue([
+      { ...change, createdAt: "2026-10-02T10:00:00Z" },
+      other,
+    ] as never);
+    const client = await connect(WRITER);
+    const res = await client.callTool({
+      name: "list_pending_changes",
+      arguments: { change_id: KEY },
+    });
+    const sc = res.structuredContent as {
+      otherPending: Array<{ changeId: string; previewUrl: string }>;
+      otherPendingNote: string;
+    };
+    expect(sc.otherPending.map((r) => r.changeId)).toEqual(["20261001-old111"]);
+    expect(sc.otherPending[0].previewUrl).toContain("deploy-preview-40");
+    expect(sc.otherPendingNote).toContain("Other Pending Changes");
+    expect(sc.otherPendingNote).toContain("Old footer tweak");
+    await client.close();
+    vi.mocked(sets.listOpenChangeSets).mockResolvedValue([change] as never);
+  });
+
+  it("says there are none when this is the only change", async () => {
+    const client = await connect(WRITER);
+    const res = await client.callTool({
+      name: "list_pending_changes",
+      arguments: { change_id: KEY },
+    });
+    const sc = res.structuredContent as {
+      otherPending: unknown[];
+      otherPendingNote: string;
+    };
+    expect(sc.otherPending).toEqual([]);
+    expect(sc.otherPendingNote).toContain("No other pending changes.");
+    await client.close();
+  });
+
+  it("leaves read-only tools alone", async () => {
+    const client = await connect(WRITER);
+    const res = await client.callTool({
+      name: "github_list_dir",
+      arguments: { path: "src" },
+    });
+    expect(JSON.stringify(res)).not.toContain("otherPending");
+    await client.close();
+  });
+
+  it("card shows the section with Preview, Publish, Discard and a way back to the chat", async () => {
+    const { PENDING_CHANGES_HTML } = await import("@/lib/admin/mcp-ui-widgets");
+    for (const text of [
+      "Other pending changes",
+      "No other pending changes.",
+      '"Continue in chat"',
+      '"Open conversation"',
+      'openAndConfirm(r.changeId, "publish"',
+    ]) {
+      expect(PENDING_CHANGES_HTML).toContain(text);
+    }
   });
 });
 

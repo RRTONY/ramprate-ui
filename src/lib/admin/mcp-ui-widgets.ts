@@ -42,7 +42,7 @@
 // resourceDomains), so it adds no dependency to this server. The URI is
 // versioned because ChatGPT caches a card's HTML by URI.
 export const PENDING_CHANGES_UI_URI =
-  "ui://ramprate-admin/pending-changes-v4.html";
+  "ui://ramprate-admin/pending-changes-v5.html";
 
 export const PENDING_CHANGES_HTML = `<!doctype html>
 <html>
@@ -199,6 +199,11 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
     border-radius: var(--border-radius-md, 8px);
     background: var(--color-background-secondary, var(--fallback-surface));
   }
+  .pending li { display: flex; flex-direction: column; gap: 6px; padding: 6px 0; }
+  .pending li + li { border-top: 1px solid var(--color-border-primary, var(--fallback-border)); padding-top: 10px; }
+  .pending .head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .pending .asked { font-style: italic; }
+  .pending .actions { margin-top: 0; }
   .hist li { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
   .hist .who { min-width: 0; }
 </style>
@@ -290,7 +295,9 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
         parts.push('<p class="muted">Applies to: ' + esc(d.appliesToLabel) + '</p>');
         parts.push(noteHtml());
       }
+      parts.push(pendingSection(d.otherPending, "Other pending changes"));
       root.innerHTML = parts.join("");
+      bindPending(d.otherPending);
       document.querySelectorAll('input[name="scope"]').forEach(function (el) {
         el.onchange = function () { scope = el.value; };
       });
@@ -328,6 +335,60 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       try { app.sendMessage({ role: "user", content: [{ type: "text", text: text }] }).catch(function () {}); } catch (e) {}
     }
 
+    // ── Other pending changes (every view) ─────────────────────────────────
+    // Each row has its own buttons. Publish and Discard first open THAT
+    // change's review with the confirm step showing, so the person always
+    // sees exactly what goes live and publishing one never takes another.
+    function pendingSection(rows, heading) {
+      if (!Array.isArray(rows)) return "";
+      if (!rows.length) return '<div><h3>' + esc(heading) + '</h3><p class="muted">No other pending changes.</p></div>';
+      const can = !!rulesVersion && !busy;
+      return '<div><h3>' + esc(heading) + ' (' + rows.length + ')</h3><ul class="box pending" aria-label="' + esc(heading) + '">' +
+        capped(rows, function (r, i) {
+          const tag = "p" + i;
+          return '<li><div class="head"><button class="linkbtn" id="' + tag + '-open"' + (busy ? " disabled" : "") + '><strong>' + esc(r.title) + '</strong></button>' +
+            '<span class="chip"><span class="dot ' + (STATUS_DOT[r.status] || "unknown") + '" aria-hidden="true"></span>' + esc(r.statusLabel) + '</span></div>' +
+            '<span class="muted">Asked by ' + esc(r.requestedBy) + ', ' + esc(when(r.createdAt)) + '</span>' +
+            (r.request ? '<span class="muted asked">"' + esc(r.request.length > 160 ? r.request.slice(0, 157) + "…" : r.request) + '"</span>' : "") +
+            '<div class="actions">' +
+            button(tag + "-preview", "Preview", "secondary", !!safeUrl(r.previewUrl), safeUrl(r.previewUrl) ? "Open this change's preview site" : "No preview yet") +
+            button(tag + "-publish", busy === tag + "-publish" ? "Opening…" : "Publish", "secondary", !!(r.readyToPublish && data.youCanPublish && can), r.readyToPublish ? "Review and publish only this change" : "Not ready to publish yet") +
+            button(tag + "-discard", busy === tag + "-discard" ? "Opening…" : "Discard", "secondary", !!(data.youCanDiscard && can)) +
+            button(tag + "-chat", safeUrl(r.conversationUrl) ? "Open conversation" : "Continue in chat", "secondary", true,
+              safeUrl(r.conversationUrl) ? "Open the chat where this was asked" : "No link to the original chat was saved. This picks the change up here.") +
+            '</div></li>';
+        }) + '</ul></div>';
+    }
+    function bindPending(rows) {
+      (Array.isArray(rows) ? rows : []).slice(0, MAX_ITEMS).forEach(function (r, i) {
+        const tag = "p" + i;
+        bind(tag + "-open", function () { refresh(r.changeId, tag + "-open"); });
+        bind(tag + "-preview", function () { openLink(safeUrl(r.previewUrl)); });
+        bind(tag + "-publish", function () { openAndConfirm(r.changeId, "publish", tag + "-publish"); });
+        bind(tag + "-discard", function () { openAndConfirm(r.changeId, "discard", tag + "-discard"); });
+        bind(tag + "-chat", function () {
+          const link = safeUrl(r.conversationUrl);
+          if (link) { openLink(link); return; }
+          tell("Let's pick up the website change: " + r.title + " (change_id " + r.changeId + "). Show me where it stands.");
+          note = { kind: "success", text: "Sent to the chat. The AI will pick this change up there." };
+          render();
+        });
+      });
+    }
+    async function openAndConfirm(changeId, kind, tag) {
+      await refresh(changeId, tag);
+      if (!data || data.changeId !== changeId) return;
+      const a = data.actions || {};
+      if (kind === "publish" && !(a.publish && data.canPublish)) {
+        note = { kind: "error", text: "This change can't be published yet. " + (data.nextStep || "") };
+      } else if (kind === "discard" && !a.discard) {
+        note = { kind: "error", text: "This change can't be discarded right now." };
+      } else {
+        confirming = kind;
+      }
+      render();
+    }
+
     // ── Several waiting changes ─────────────────────────────────────────────
     function renderList() {
       const changes = data.changes || [];
@@ -340,13 +401,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       } else {
         parts.push('<h2>Website changes waiting (' + changes.length + ')</h2>');
         parts.push('<p class="muted">Each change is separate. Publishing one never takes another live.</p>');
-        if (changes.length) {
-          parts.push('<ul class="box" aria-label="Waiting changes">' + capped(changes, function (c, i) {
-            return '<li class="row"><span>' + esc(c.title) + ' <span class="muted">· ' + esc(c.requestedBy) + ', ' + esc(when(c.createdAt)) + '</span><br />' +
-              '<span class="chip"><span class="dot ' + (STATUS_DOT[c.status] || "unknown") + '" aria-hidden="true"></span>' + esc(c.statusLabel) + '</span></span>' +
-              button("review-" + i, busy === "review-" + i ? "Opening…" : "Review", "secondary", !busy) + '</li>';
-          }) + '</ul>');
-        }
+        if (changes.length) parts.push(pendingSection(data.otherPending || [], "Waiting changes"));
         if (older.length) {
           parts.push('<p class="muted">' + older.length + ' older waiting change' + (older.length === 1 ? "" : "s") + ' from before the change tracking. They can be discarded, not published. Ask in the chat to discard them.</p>');
         }
@@ -356,9 +411,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       }
       parts.push(noteHtml());
       root.innerHTML = parts.join("");
-      changes.slice(0, MAX_ITEMS).forEach(function (c, i) {
-        bind("review-" + i, function () { refresh(c.changeId, "review-" + i); });
-      });
+      bindPending(data.otherPending);
     }
 
     // ── One change: status, actions, what goes live, checks ───────────────
@@ -372,10 +425,10 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       // Actions: always the same buttons in the same place.
       const preview = safeUrl(((d.previewLinks || [])[0] || {}).url) || safeUrl(d.previewUrl);
       if (confirming === "publish") {
-        parts.push('<div class="confirm"><strong>You are about to publish this change to the live RampRate website.</strong> Only what is listed under "What will go live" goes out, nothing else. Are you sure?</div>');
+        parts.push('<div class="confirm"><strong>You are about to publish "' + esc(d.title) + '" to the live RampRate website.</strong> Only what is listed under "What will go live" goes out, nothing else. Are you sure?</div>');
         parts.push('<div class="actions">' + button("yes", busy ? "Publishing…" : "Yes, publish", "primary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
       } else if (confirming === "discard") {
-        parts.push('<div class="confirm"><strong>Discard this change?</strong> Everything in it is thrown away and nothing goes live. You can always ask for it again.</div>');
+        parts.push('<div class="confirm"><strong>Discard "' + esc(d.title) + '"?</strong> Everything in it is thrown away and nothing goes live. You can always ask for it again.</div>');
         parts.push('<div class="actions">' + button("yes", busy ? "Discarding…" : "Yes, discard", "secondary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
       } else {
         const can = !!rulesVersion && !busy;
@@ -431,7 +484,10 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
         }).join(", ") + '</p>');
       }
 
+      if (!confirming) parts.push(pendingSection(d.otherPending, "Other pending changes"));
+
       root.innerHTML = parts.join("");
+      bindPending(d.otherPending);
       bind("preview", function () { openLink(preview); });
       bind("publish", function () { confirming = "publish"; note = null; render(); });
       bind("discard", function () { confirming = "discard"; note = null; render(); });
@@ -469,7 +525,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       if (missing.length) bar.push(button("discard", "Discard", "secondary", !!(d.youCanDiscard && rulesVersion && !busy)));
       bar.push(button("back", busy === "back" ? "Opening…" : "Back to review", "primary", !busy));
       if (confirming === "discard") {
-        parts.push('<div class="confirm"><strong>Discard this change?</strong> Everything in it is thrown away and nothing goes live.</div>');
+        parts.push('<div class="confirm"><strong>Discard "' + esc(d.title) + '"?</strong> Everything in it is thrown away and nothing goes live.</div>');
         parts.push('<div class="actions">' + button("yes", busy ? "Discarding…" : "Yes, discard", "secondary", !busy) + button("cancel", "Cancel", "secondary", !busy) + '</div>');
       } else {
         parts.push('<div class="actions">' + bar.join("") + '</div>');
@@ -646,7 +702,7 @@ export const PENDING_CHANGES_HTML = `<!doctype html>
       if (ctx.styles && ctx.styles.css && ctx.styles.css.fonts) applyHostFonts(ctx.styles.css.fonts);
     }
 
-    const app = new App({ name: "ramprate-admin-ui", version: "4.0.0" }, {}, { autoResize: true });
+    const app = new App({ name: "ramprate-admin-ui", version: "5.0.0" }, {}, { autoResize: true });
     app.ontoolresult = function (params) {
       rulesVersion = null; shots = [];
       confirming = null; busy = null; note = null;

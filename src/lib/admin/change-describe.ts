@@ -317,6 +317,25 @@ export function normalizeChangeKey(raw: unknown): string | null {
   return /^\d{8}-[a-z0-9]{6}$/.test(s) ? s : null;
 }
 
+// Neither ChatGPT nor Claude tells the server which chat a request came
+// from (checked 2026-10-08), so a link is only saved when the person shares
+// one. Only real chat addresses, so the card never opens anything else.
+const CONVERSATION_HOSTS = ["chatgpt.com", "chat.openai.com", "claude.ai"];
+
+export function normalizeConversationUrl(raw: unknown): string | null {
+  if (typeof raw !== "string" || !raw.trim()) return null;
+  try {
+    const url = new URL(raw.trim());
+    return url.protocol === "https:" &&
+      CONVERSATION_HOSTS.includes(url.hostname.toLowerCase()) &&
+      url.pathname.length > 1
+      ? url.toString()
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 // ── One status, one next step ────────────────────────────────────────────────
 // The review card and the AI both show exactly one of these, worked out by
 // the server from the change's status and its checks, so the person never

@@ -469,3 +469,23 @@ real signed link (refuses garbage links, closed changes and a fake .png). Not ye
 upload end to end on the live server, and ChatGPT actually filling `file` (needs a real ChatGPT
 session after deploy).
 
+## 2026-10-08: Other Pending Changes on every answer and in the card
+
+Team feedback before handing over to Tony: old waiting changes were easy to forget. Now every
+change-related result carries `otherPending` + `otherPendingNote` (see AGENTS.md), the Status
+Report has an "Other pending changes" line, and the card lists them with per-row Preview,
+Publish, Discard and Continue in chat / Open conversation.
+
+- **No automatic chat link.** Researched 2026-10-08: ChatGPT sends `openai/session` (anonymized,
+  can't be turned into a chatgpt.com/c/ URL); Claude sends nothing; MCP Apps `hostContext` has no
+  conversation field; the card's iframe referrer is only the origin. Optional
+  `conversation_url` on `start_change` covers a pasted share link.
+- **Row Publish never publishes directly.** It loads that change's review (fresh review token and
+  checks), then shows the confirm step, so the person sees exactly that change's "What will go
+  live" before saying yes.
+- **Gotcha:** the card is one big template string. A `\'` written into it becomes a bare `'` in
+  the output, which broke the whole script ("Loading…" forever). There's now a test that runs
+  `node --check` on the filled-in script. Prefer double-quoted JS strings inside the card.
+- **Still to do:** the controlled live Publish test the team asked for (publish one change while
+  another waits; confirm only the chosen one goes live and the other stays pending). Needs a yes,
+  since it changes the live site.

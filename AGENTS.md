@@ -224,6 +224,9 @@ Leave out a line only if it truly doesn't apply.
 **Needs you:** decisions or approvals, or "Nothing"
 
 **Still pending:** unfinished items, or "Nothing"
+
+**Other pending changes:** (MCP sessions) every website change still waiting to be published or
+discarded, one line each: what it is, when it was asked, status. Or "No other pending changes."
 ```
 
 ---
@@ -711,7 +714,26 @@ infrastructure to maintain.
   `@next/eslint-plugin-next`). Bundling them instead fails the build (eslint-plugin-import
   requires an ESLint internal). The MCP function grew from ~58 MB to ~102 MB traced, mostly the
   TypeScript compiler the lint parser needs.
-- **Review card (rebuilt 2026-10-06, URI now `pending-changes-v4.html`, since ChatGPT caches a
+- **Other Pending Changes (added 2026-10-08, team feedback before handing over to Tony):** every
+  change-related result (`start_change`, `confirm_change`, `submit_for_review`,
+  `list_pending_changes`, `publish_changes`, `discard_change`, `undo_change`) carries
+  `otherPending` (the other waiting changes, oldest first: title, the person's original words,
+  who asked and when, status, preview link) and `otherPendingNote`, which tells the AI to end its
+  reply with an "Other Pending Changes" section (or "No other pending changes."). Built from the
+  change records only (one Sanity query, no GitHub calls), never fails the answer it's attached
+  to, and read-only tools don't get it. The card shows the same list on every view, each row with
+  **Preview | Publish | Discard | Continue in chat / Open conversation**. Row Publish and Discard
+  open *that* change's review with the confirm step showing (its own review token, its own "What
+  will go live"), so publishing one never publishes another. **There is no automatic link to the
+  original chat:** neither ChatGPT nor Claude tells an MCP server or card which conversation a
+  call came from (ChatGPT's `openai/session` is an anonymized id, not a chat URL; checked
+  2026-10-08). So `start_change` takes an optional `conversation_url` (only https chatgpt.com,
+  chat.openai.com or claude.ai links are kept, `normalizeConversationUrl`), shown as "Open
+  conversation"; without one the button is "Continue in chat", which posts the change id into the
+  current chat so the AI picks it up there. Card URI is now `pending-changes-v5.html`. Tests:
+  `tests/admin/other-pending.test.ts`, `tests/admin/mcp-widget.test.ts` (including a check that
+  the card's script is valid JavaScript: an unescaped `'` inside the template once broke it).
+- **Review card (rebuilt 2026-10-06, URI then `pending-changes-v4.html`, since ChatGPT caches a
   card's HTML by URI):** views: `confirm` (start_change), `detail` (one change: status + next step
   + buttons, "What will go live" always ending with what is NOT included, checks, before/after),
   `list` (several waiting changes, each with its own **Review** button, so an old waiting change

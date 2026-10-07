@@ -99,6 +99,8 @@ export interface ChangeSet {
   undoes?: string | null;
   undoneBy?: string | null;
   publishNote?: string | null;
+  // Link back to the chat the request came from, when the app gave one.
+  conversationUrl?: string | null;
 }
 
 export type Result<T> = ({ ok: true } & T) | { ok: false; error: string };
@@ -179,6 +181,7 @@ export async function createChangeSet(input: {
   understoodAs?: string;
   appliesTo?: AppliesTo;
   needsConfirmation?: boolean;
+  conversationUrl?: string | null;
 }): Promise<ChangeSet> {
   const key = newChangeKey();
   const doc: ChangeSet = {
@@ -195,6 +198,7 @@ export async function createChangeSet(input: {
     prNumber: null,
     content: [],
     undoes: input.undoes ?? null,
+    conversationUrl: input.conversationUrl ?? null,
   };
   await writeClient.create({ ...doc, _type: DOC_TYPE });
   return doc;
@@ -643,6 +647,70 @@ export async function pendingOverview(
       .filter((d) => !ownedDrafts.has(d.id))
       .map((d) => ({ id: d.id, label: describeContent(d.type, d.title) })),
   };
+}
+
+// "Other Pending Changes" (team feedback 2026-10-08): every change-related
+// answer lists the other waiting changes, so an old one is never forgotten.
+// Built from the records alone (one query, no GitHub calls), so it is cheap
+// enough to attach to every result; the full checks load when one is opened.
+export interface PendingRow {
+  changeId: string;
+  title: string;
+  request: string;
+  status: ChangeStatus;
+  statusLabel: string;
+  requestedBy: string;
+  createdAt: string;
+  previewUrl: string | null;
+  conversationUrl: string | null;
+  // Only a hint for the buttons: publish_changes re-checks everything.
+  readyToPublish: boolean;
+}
+
+export function pendingRows(
+  changes: ChangeSet[],
+  excludeKey?: string | null,
+): PendingRow[] {
+  return changes
+    .filter((c) => c.key !== excludeKey && OPEN_STATUSES.includes(c.status))
+    .sort((a, b) => (a.createdAt ?? "").localeCompare(b.createdAt ?? ""))
+    .map((c) => ({
+      changeId: c.key,
+      title: c.title,
+      request: c.request,
+      status: c.status,
+      statusLabel: STATUS_LABELS[c.status],
+      requestedBy: c.requestedBy?.name ?? "Unknown",
+      createdAt: c.createdAt,
+      previewUrl: c.prNumber
+        ? `https://deploy-preview-${c.prNumber}--ramprate.netlify.app`
+        : null,
+      conversationUrl: c.conversationUrl ?? null,
+      readyToPublish: c.status === "ready_for_review",
+    }));
+}
+
+export function otherPendingText(rows: PendingRow[] | null): string {
+  if (!rows) return "Couldn't load the other pending changes just now.";
+  if (!rows.length) return "No other pending changes.";
+  return rows
+    .map((r) => {
+      const asked = new Date(r.createdAt).toLocaleString("en-US", {
+        timeZone: "America/Los_Angeles",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      });
+      const links = [
+        r.previewUrl ? `Preview: ${r.previewUrl}` : "No preview yet",
+        r.conversationUrl
+          ? `Original conversation: ${r.conversationUrl}`
+          : "Original conversation: not recorded",
+      ].join(" | ");
+      return `- ${r.title} (change_id ${r.changeId}): ${r.statusLabel}. Asked by ${r.requestedBy}, ${asked} PT. Request: "${r.request}". ${links}`;
+    })
+    .join("\n");
 }
 
 // Keeps records and GitHub in step when someone acts in GitHub directly:
