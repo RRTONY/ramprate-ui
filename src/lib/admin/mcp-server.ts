@@ -7,7 +7,18 @@ import {
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { ADMIN_TOOLS, runAdminTool } from "@/lib/admin/tools";
+import {
+  ADMIN_TOOLS,
+  normalizeRepoPath,
+  runAdminTool,
+} from "@/lib/admin/tools";
+import { isPathDenied } from "@/lib/admin/guardrails";
+import {
+  checkFileMatchesPath,
+  MAX_UPLOAD_PAGE_BYTES,
+  resolveBinaryInput,
+  signUploadGrant,
+} from "@/lib/admin/binary-upload";
 import {
   buildReview,
   changeHistory,
@@ -143,6 +154,25 @@ const SESSION_TOOLS = [
         },
       },
       required: [CHANGE_ID_PARAM],
+    },
+  },
+  {
+    name: "request_upload_link",
+    description:
+      "Get a private link where the person can upload an image or PDF straight into this change, for when they attached a file in the chat but you can't pass it to github_write_binary_file (you only see the picture, never its bytes; Claude never passes attached files to this server). Give them the link in plain words, e.g. 'Open this link and drop the picture there, then tell me when it's done.' It works for 30 minutes, for this one file, and saves it to the path you choose. After they say it's done, carry on with the code change and submit_for_review.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        [CHANGE_ID_PARAM]: changeIdSchema(
+          "The change_id from start_change the file belongs to.",
+        ),
+        path: {
+          type: "string",
+          description:
+            "Where to save it in the repo, e.g. public/images/tsi-hero.png. The upload must be the same kind of file as the ending.",
+        },
+      },
+      required: [CHANGE_ID_PARAM, "path"],
     },
   },
   {
@@ -295,6 +325,7 @@ const SESSION_TOOLS = [
 // Edits must name their change (see start_change); reads may, to see that
 // change's version of a file instead of the live one.
 const CHANGE_REQUIRED_TOOLS = new Set([
+  "request_upload_link",
   "github_write_file",
   "github_write_binary_file",
   "github_delete_file",
@@ -447,6 +478,11 @@ const CHATGPT_TOOL_META: Record<string, Record<string, unknown>> = {
     "openai/toolInvocation/invoked": "Change discarded",
     "openai/widgetAccessible": true,
   },
+  github_write_binary_file: {
+    "openai/fileParams": ["file"],
+    "openai/toolInvocation/invoking": "Saving the file…",
+    "openai/toolInvocation/invoked": "File saved",
+  },
   get_project_rules: {
     "openai/toolInvocation/invoking": "Loading RampRate's rules…",
     "openai/toolInvocation/invoked": "Rules loaded",
@@ -568,7 +604,10 @@ const ATTRIBUTED_MESSAGE_TOOLS = new Set([
   "github_delete_file",
 ]);
 
-export function createAdminMcpServer(user: McpUser): Server {
+export function createAdminMcpServer(
+  user: McpUser,
+  origin = "https://ramprate.com",
+): Server {
   const server = new Server(
     { name: "ramprate-admin", version: "1.0.0" },
     {
@@ -1001,6 +1040,40 @@ export function createAdminMcpServer(user: McpUser): Server {
       }
     }
 
+    if (name === "request_upload_link") {
+      const path = normalizeRepoPath(input.path);
+      if (!path || isPathDenied(path)) {
+        return toResult(
+          {
+            error: path
+              ? `${path} can't be changed from here.`
+              : "Say where to save the file (path).",
+          },
+          true,
+        );
+      }
+      if (change!.status === "awaiting_confirmation" || !isOpen(change!)) {
+        return toResult(
+          {
+            error:
+              change!.status === "awaiting_confirmation"
+                ? "The person hasn't confirmed this change yet. Get their yes (confirm_change) first."
+                : `Change ${change!.key} is already ${change!.status.replace(/_/g, " ")}. Call start_change for a new request.`,
+          },
+          true,
+        );
+      }
+      const { token, expiresAt } = signUploadGrant(change!.key, path, user);
+      return toResult({
+        ok: true,
+        uploadUrl: `${origin}/api/mcp/upload?t=${encodeURIComponent(token)}`,
+        path,
+        expiresAt,
+        maxSizeMb: MAX_UPLOAD_PAGE_BYTES / 1024 / 1024,
+        next: "Give the person this link in plain words and ask them to tell you when the upload is done. Then check it with github_list_dir (with this change_id) and carry on.",
+      });
+    }
+
     if (name === "submit_for_review") {
       const summary = String(input.summary ?? "").trim();
       if (!summary) {
@@ -1049,6 +1122,19 @@ export function createAdminMcpServer(user: McpUser): Server {
           },
           true,
         );
+      }
+      if (name === "github_write_binary_file") {
+        // Check (and download) the file before touching the change, so a
+        // bad file never creates a branch or marks the change edited.
+        const file = await resolveBinaryInput(input);
+        const path = normalizeRepoPath(input.path);
+        const problem = file.ok
+          ? path && checkFileMatchesPath(path, file.bytes)
+          : file.error;
+        if (!file.ok || problem) return toResult({ error: problem }, true);
+        delete input.file;
+        delete input.source_url;
+        input.base64Content = file.bytes.toString("base64");
       }
       await markEdited(change!);
     }

@@ -101,6 +101,7 @@ vi.mock("@/lib/admin/change-sets", async (importOriginal) => ({
   confirmChange: (...a: unknown[]) => confirmChange(...(a as [])),
   recordDevices: (...a: unknown[]) => recordDevices(...(a as [])),
   reconcileWithGitHub: vi.fn(async (open: unknown[]) => open),
+  markEdited: vi.fn(async () => {}),
 }));
 
 vi.mock("@/lib/admin/device-preview", async (importOriginal) => ({
@@ -428,5 +429,97 @@ describe("review card (ChatGPT / MCP Apps)", () => {
     expect(content.text).toContain('name: "undo_change"');
     expect(content.text).toContain("applyHostStyleVariables");
     await client.close();
+  });
+});
+
+describe("attached files (2026-10-08: ChatGPT/Claude can't send base64)", () => {
+  it("tells ChatGPT the binary tool takes an attached file", async () => {
+    const client = await connect(WRITER);
+    const { tools } = await client.listTools();
+    const tool = tools.find((t) => t.name === "github_write_binary_file")!;
+    expect(
+      (tool._meta as Record<string, unknown>)["openai/fileParams"],
+    ).toEqual(["file"]);
+    const file = (
+      tool.inputSchema.properties as Record<string, { required?: string[] }>
+    ).file;
+    expect(file.required).toEqual(["download_url", "file_id"]);
+    expect(tool.inputSchema.required).not.toContain("base64Content");
+    await client.close();
+  });
+
+  it("gives an upload link for an open change, and refuses one not confirmed yet", async () => {
+    vi.stubEnv("PORTAL_AUTH_SECRET", "test-secret");
+    const client = await connect(EDITOR);
+    const ok = await client.callTool({
+      name: "request_upload_link",
+      arguments: {
+        change_id: KEY,
+        path: "public/images/tsi-hero.png",
+        rules_version: "feedbeef12",
+      },
+    });
+    const sc = ok.structuredContent as Record<string, string>;
+    expect(ok.isError).toBe(false);
+    expect(sc.uploadUrl).toMatch(
+      /^https:\/\/ramprate\.com\/api\/mcp\/upload\?t=rmcp_up\./,
+    );
+
+    const waiting = await client.callTool({
+      name: "request_upload_link",
+      arguments: {
+        change_id: WAITING,
+        path: "public/a.png",
+        rules_version: "feedbeef12",
+      },
+    });
+    expect(waiting.isError).toBe(true);
+
+    const denied = await client.callTool({
+      name: "request_upload_link",
+      arguments: {
+        change_id: KEY,
+        path: "src/lib/admin/tools.ts",
+        rules_version: "feedbeef12",
+      },
+    });
+    expect(denied.isError).toBe(true);
+    await client.close();
+    vi.unstubAllEnvs();
+  });
+
+  it("explains what to do instead when the AI sends a file name as base64", async () => {
+    const client = await connect(EDITOR);
+    const res = await client.callTool({
+      name: "github_write_binary_file",
+      arguments: {
+        change_id: KEY,
+        path: "public/images/tsi-hero.png",
+        base64Content: "/mnt/data/tsi-hero.png",
+        message: "hero",
+        rules_version: "feedbeef12",
+      },
+    });
+    expect(res.isError).toBe(true);
+    expect(JSON.stringify(res.content)).toContain("request_upload_link");
+    await client.close();
+  });
+});
+
+describe("card script", () => {
+  it("is valid JavaScript after the template is filled in (an unescaped quote once left the card stuck on Loading)", async () => {
+    const { PENDING_CHANGES_HTML } = await import("@/lib/admin/mcp-ui-widgets");
+    const { execFileSync } = await import("child_process");
+    const { mkdtempSync, writeFileSync } = await import("fs");
+    const { tmpdir } = await import("os");
+    const { join } = await import("path");
+    const script = /<script type="module">([\s\S]*)<\/script>/.exec(
+      PENDING_CHANGES_HTML,
+    )![1];
+    const file = join(mkdtempSync(join(tmpdir(), "card-")), "card.mjs");
+    writeFileSync(file, script);
+    expect(() =>
+      execFileSync(process.execPath, ["--check", file], { stdio: "pipe" }),
+    ).not.toThrow();
   });
 });
