@@ -8,6 +8,24 @@ export interface SitePage {
 
 export const SITE_PAGES: SitePage[] = [
   {
+    title: "Data Centers Have a Heart. Meet the Humans Behind the Cloud.",
+    path: "/blog/data-centers-have-a-heart",
+    type: "blog",
+    keywords:
+      "YOTTA Tony Greenberg data centers community cloud neighbors ImpactSoul iMasons",
+    description:
+      "Behind the infrastructure are people worth knowing. Three days at YOTTA reminded me why their kindness belongs in the story, and why the neighbors deserve to feel it.",
+  },
+  {
+    title: "The Cloud Gets Rich. What Do Its Neighbors Get?",
+    path: "/blog/the-cloud-gets-rich",
+    type: "blog",
+    keywords:
+      "YOTTA Tony Greenberg data centers community cloud neighbors ImpactSoul iMasons",
+    description:
+      "A challenge to data center developers: put community prosperity, real decision rights, and your reputation inside the deal.",
+  },
+  {
     title: "Sourcing - Enterprise IT Advisory",
     path: "/sourcing",
     type: "practice",

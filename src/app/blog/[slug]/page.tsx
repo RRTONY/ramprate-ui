@@ -37,7 +37,11 @@ export async function generateStaticParams() {
   return posts
     .filter(
       (post: { slug: { current: string } }) =>
-        post.slug.current !== "shared-ownership",
+        ![
+          "shared-ownership",
+          "data-centers-have-a-heart",
+          "the-cloud-gets-rich",
+        ].includes(post.slug.current),
     )
     .map((post: { slug: { current: string } }) => ({
       slug: post.slug.current,

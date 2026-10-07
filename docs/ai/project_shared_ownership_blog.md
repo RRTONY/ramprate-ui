@@ -17,3 +17,18 @@ Once the Sanity listing post is published, exclude shared-ownership from generat
 ## Temporarily offline at the owner's request
 
 The owner asked to remove this article from the live website on 2026-10-05 UTC and intends to publish tomorrow. The dedicated route returns HTTP 404 with noindex; all public post queries exclude the shared-ownership slug, and its SITE_PAGES entry is removed. The exact HTML, assets, and Sanity post remain saved. No automatic publication is scheduled. On a new publication request, restore the HTML response, remove the temporary query exclusion, and restore the SITE_PAGES entry. Keep the dynamic-route static-params collision exclusion described above.
+
+## Latest two-part series, preview only (2026-10-07 India time)
+
+The owner supplied Tony's latest articles and explicitly instructed: do not deploy until I say. Change 20261006-pv89ex prepares both pages for review only. Do not restore the obsolete shared-ownership route or publish this change without a new explicit instruction.
+
+- Part One source: https://syzygy-who-gets-to-plug-in.eclecticexe.chatgpt.site/data-centers-have-a-heart.html; route /blog/data-centers-have-a-heart; exact HTML in src/content/data-centers-have-a-heart.json.
+- Part Two source: https://syzygy-who-gets-to-plug-in.eclecticexe.chatgpt.site/the-cloud-gets-rich.html; route /blog/the-cloud-gets-rich; exact HTML in src/content/the-cloud-gets-rich.json.
+- Both use the same standalone HTML GET pattern as the earlier article to preserve source design. Exclude both slugs in the dynamic blog generateStaticParams to prevent the previously observed production collision once their Sanity drafts are published.
+- Five new images are stored under public/blog/yotta-2026-assets as lossless WebP, with decoded RGB pixels verified identical to the original PNGs. Markdown downloads are copied unchanged. The ownership illustration and structure SVG reuse the existing shared-ownership-assets files.
+- Only asset URLs, canonical/schema URLs, and cross-links are adapted. The model and research appendix links remain pointed at the latest source website, since the owner supplied only these two articles and asked to keep the obsolete local model offline.
+- Sanity drafts 5c3b3633-c8a4-4585-8876-1c63663abafb and 960de313-52fd-4b76-8225-7c4b8c080702 hold the titles, original descriptions and full indexed text for eventual listings/search/sitemap. Their draft status means public listings do not show them yet. SITE_PAGES changes are staged in the same review.
+
+### Original typography correction
+
+The first preview omitted the two relative @font-face resources in fonts/, producing fallback Georgia lettering despite identical CSS font-size settings. The owner's visual review caught this. Both original OTF binaries are now copied under public/blog/yotta-2026-assets/fonts/ and both HTML copies use absolute local font URLs. Exact-copy verification must include CSS url() resources and rendered geometry, not just HTML text, image files and CSS string equality. Netlify may inject its preview collaboration toolbar; it is hosting UI, not article content.
