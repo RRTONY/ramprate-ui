@@ -489,3 +489,14 @@ Publish, Discard and Continue in chat / Open conversation.
 - **Still to do:** the controlled live Publish test the team asked for (publish one change while
   another waits; confirm only the chosen one goes live and the other stays pending). Needs a yes,
   since it changes the live site.
+
+## 2026-10-08: ChatGPT dropped every tool after the upload-link release
+
+Right after PR 55/56 went live, ChatGPT said it had "no repository tools available" in a chat
+that had used them minutes earlier. Cause: `request_upload_link` listed `change_id` in its own
+`required` AND `withChangeIdParam` appended it again, so `required` had a duplicate and the
+schema was invalid JSON Schema. Claude tolerated it; ChatGPT drops the whole app. Fix: the
+helpers (`withChangeIdParam`, `withRulesVersionParam`) never add a key twice, and
+`tests/admin/mcp-widget.test.ts` checks every tool schema (no duplicate required keys, every
+required key has a property, valid names). After a fix like this, ChatGPT still needs the app
+refreshed (Settings, Apps & Connectors, RampRate, Refresh) and a new chat.
