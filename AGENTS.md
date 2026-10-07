@@ -631,6 +631,22 @@ infrastructure to maintain.
   (drafts thrown away). Any `admin/vibe-*` branch with no open PR and no waiting change is deleted.
   Runs only on that person-triggered call, never on a timer, and never blocks the review if
   GitHub fails.
+- **Images and files the person attaches (added 2026-10-08):** the AI only *sees* an attached
+  picture, it never holds the file's bytes, so it must never try to write one out as base64 (that
+  failed live in ChatGPT with "content is not valid Base64"). `github_write_binary_file` takes the
+  file one of three ways: `file` (ChatGPT fills it in itself, declared via
+  `_meta["openai/fileParams"]`; the server downloads its `download_url`), `source_url` (a public
+  https link), or `base64Content` (real bytes only). **In Claude, or whenever `file` isn't
+  available, call `request_upload_link`** and give the person the link: a private page
+  (`/api/mcp/upload`) where they drop the file, saved straight into that one change at the path
+  chosen. The link works 30 minutes, for one change and one path, is re-checked against
+  `MCP_ADMIN_USERS` on use, and needs the change confirmed and still open. Every file is checked
+  before anything is saved: 4 MB limit on the page (Netlify body limit), 8 MB for downloads, and
+  the contents must really be the type its name says (.png, .jpg, .webp, .svg, .pdf...), so an
+  error page saved as `hero.png` is refused. Downloads only go to public https addresses,
+  redirects included. If a file tool errors, read its error message: it says what to do next.
+  Code: `src/lib/admin/binary-upload.ts`, `src/app/api/mcp/upload/route.ts`. Tests:
+  `tests/admin/binary-upload.test.ts`, `tests/admin/mcp-widget.test.ts`.
 - **`check_deploy`** (`src/lib/admin/netlify-client.ts`): read-only Netlify build status for the
   live site or one change's preview, with the failure reason. The site id is a constant and only GET
   requests are made, because `NETLIFY_AUTH_TOKEN` (a personal token) can reach every site on the

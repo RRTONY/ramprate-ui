@@ -19,6 +19,7 @@ export const GUIDE_PATHS = {
 export const RULES_GATED_TOOLS = new Set([
   "github_write_file",
   "github_write_binary_file",
+  "request_upload_link",
   "github_delete_file",
   "sanity_patch_document",
   "sanity_create_document",

@@ -443,3 +443,29 @@ Gotchas:
   Preview only turns on once Build has passed; the first screenshot try timed out on 3 of 4
   pictures (the warm-up hadn't run, because Build never showed as passed), and Retry now re-takes
   any failed picture, Before included.
+
+## 2026-10-08: attached images and files (ChatGPT and Claude)
+
+**What broke:** someone asked ChatGPT to replace the TSI hero image with a PNG they attached.
+ChatGPT's AI passed a file reference to `github_write_binary_file` as `base64Content`, and GitHub
+refused it ("content is not valid Base64"). The AI never has an attached file's bytes, only the
+picture, so a base64-only tool could never work for attachments. Claude.ai has the same problem.
+
+**Fix:**
+- ChatGPT: the tool now lists `file` in `_meta["openai/fileParams"]` with OpenAI's file schema
+  (`download_url`, `file_id` required; `mime_type`, `file_name` declared). ChatGPT fills it in and
+  the server downloads it. Treat `download_url` as a temporary secret: never log or return it.
+- Claude (and any app): `request_upload_link` returns `/api/mcp/upload?t=<signed token>`. The
+  token is an `rmcp_up` blob from `mcp-oauth.ts`'s `signBlob` (own derived key, so it can't pass as
+  a sign-in token; keyed to `MCP_LOGIN_PASSWORD`, so a password change kills open links).
+- The file is downloaded and checked **before** the change is marked edited or a branch is made, so
+  a bad file leaves no trace.
+- Gotcha: the upload route imports `change-sets.ts`, which pulls in `tools.ts` and so
+  `code-check.ts`'s whole-project file tracing, same as `/api/mcp`. Harmless on Netlify (one
+  server handler), but that's why the build prints the tracing warning for this route too.
+
+**Verified:** unit + server tests (fake GitHub/Sanity), production build, and the built page with a
+real signed link (refuses garbage links, closed changes and a fake .png). Not yet verified: a real
+upload end to end on the live server, and ChatGPT actually filling `file` (needs a real ChatGPT
+session after deploy).
+
