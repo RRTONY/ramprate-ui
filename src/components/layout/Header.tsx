@@ -81,7 +81,9 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div
+          className={`hidden lg:flex items-center gap-6 ${pathname === "/" ? "lg:translate-x-3" : ""}`}
+        >
           {/* Practices dropdown */}
           <div
             className="relative"
@@ -176,7 +178,9 @@ export default function Header() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-black/5 shadow-lg">
-          <div className="px-5 py-6 space-y-1">
+          <div
+            className={`px-5 py-5 space-y-0.5 ${pathname === "/" ? "translate-x-1" : ""}`}
+          >
             {/* Practices in mobile */}
             <p className="font-body px-3 py-1 text-xs uppercase tracking-widest mb-1 text-[oklch(0.5_0.02_50)]">
               Practices
@@ -185,7 +189,7 @@ export default function Header() {
               <Link
                 key={p.href}
                 href={p.href}
-                className="font-body flex items-center justify-between px-3 py-2.5 rounded-md transition-colors hover:bg-[oklch(0.94_0.03_80)]"
+                className="font-body flex items-center justify-between px-3 py-2 rounded-md transition-colors hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
               >
                 <span className="text-sm font-medium text-[oklch(0.18_0.03_50)]">
@@ -201,7 +205,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="font-body block px-3 py-3 text-sm font-medium rounded-md transition-colors text-[oklch(0.18_0.03_50)] hover:bg-[oklch(0.94_0.03_80)]"
+                className="font-body block px-3 py-2.5 text-sm font-medium rounded-md transition-colors text-[oklch(0.18_0.03_50)] hover:bg-[oklch(0.94_0.03_80)]"
                 onClick={() => setMobileOpen(false)}
               >
                 {item.label}
