@@ -594,3 +594,40 @@ describe("card script", () => {
     ).not.toThrow();
   });
 });
+
+describe("tool definitions stay valid (2026-10-08: one bad schema made ChatGPT drop every tool)", () => {
+  it("every tool's input schema is well formed", async () => {
+    const client = await connect(WRITER);
+    const { tools } = await client.listTools();
+    const problems: string[] = [];
+    const check = (
+      name: string,
+      schema: Record<string, unknown>,
+      at: string,
+    ) => {
+      const props = (schema.properties ?? {}) as Record<
+        string,
+        Record<string, unknown>
+      >;
+      const required = (schema.required ?? []) as string[];
+      if (new Set(required).size !== required.length)
+        problems.push(`${name}${at}: duplicate in required`);
+      for (const key of required) {
+        if (!(key in props))
+          problems.push(`${name}${at}: required "${key}" has no property`);
+      }
+      for (const [key, prop] of Object.entries(props)) {
+        if (prop.type === "object") check(name, prop, `${at}.${key}`);
+      }
+    };
+    for (const t of tools) {
+      if (!/^[a-zA-Z0-9_-]{1,64}$/.test(t.name))
+        problems.push(`${t.name}: bad name`);
+      if (t.inputSchema.type !== "object")
+        problems.push(`${t.name}: not an object schema`);
+      check(t.name, t.inputSchema as Record<string, unknown>, "");
+    }
+    expect(problems).toEqual([]);
+    await client.close();
+  });
+});
