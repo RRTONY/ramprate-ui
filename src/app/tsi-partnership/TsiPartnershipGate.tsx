@@ -694,11 +694,11 @@ function TsiPartnershipContent() {
         </div>
         <div className="scene tailored-weave">
           <Image
-            src="/tsi-partnership/weave-art.webp"
+            src="/tsi-partnership/weave-art.png"
             alt="Distinct ceramic elements assembled into one individual organic form: a metaphor for personalized nutrition."
             className="weave-art"
-            width={440}
-            height={440}
+            width={1254}
+            height={1254}
             priority
           />
         </div>
@@ -956,12 +956,12 @@ function TsiPartnershipContent() {
 
       <section className="section partnership" id="partnership">
         <Image
-          src="/tsi-partnership/weave-art.webp"
+          src="/tsi-partnership/weave-art.png"
           alt=""
           aria-hidden="true"
           className="partnership-weave"
-          width={132}
-          height={132}
+          width={1254}
+          height={1254}
         />
         <Eyebrow>The long-term partnership</Eyebrow>
         <h2>The role we want to earn</h2>
