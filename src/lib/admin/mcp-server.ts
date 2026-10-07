@@ -6,6 +6,7 @@ import {
   ListResourceTemplatesRequestSchema,
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
+  type CallToolRequest,
 } from "@modelcontextprotocol/sdk/types.js";
 import {
   ADMIN_TOOLS,
@@ -30,6 +31,8 @@ import {
   listOpenChangeSets,
   markEdited,
   markWarmed,
+  otherPendingText,
+  pendingRows,
   pendingOverview,
   publishChange,
   reconcileWithGitHub,
@@ -43,6 +46,7 @@ import {
   describeFiles,
   normalizeAppliesTo,
   normalizeChangeKey,
+  normalizeConversationUrl,
 } from "@/lib/admin/change-describe";
 import {
   captureDevices,
@@ -127,6 +131,11 @@ const SESSION_TOOLS = [
           enum: ["both", "desktop", "mobile"],
           description:
             "Where the change should show. Default 'both'. Use 'desktop' or 'mobile' only when the person said so (e.g. 'on mobile', 'on my phone').",
+        },
+        conversation_url: {
+          type: "string",
+          description:
+            "Optional: a link to this chat (a chatgpt.com or claude.ai share link) if the person gave you one. Shown as 'Open conversation' next to the change. You can't find this yourself; never make one up.",
         },
         needs_confirmation: {
           type: "boolean",
@@ -681,7 +690,7 @@ export function createAdminMcpServer(
     };
   });
 
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const handleCall = async (request: CallToolRequest) => {
     const { name, arguments: rawArgs } = request.params;
     const { [RULES_VERSION_PARAM]: rulesVersion, ...input } = (rawArgs ??
       {}) as Record<string, unknown>;
@@ -784,6 +793,7 @@ export function createAdminMcpServer(
         understoodAs,
         appliesTo,
         needsConfirmation,
+        conversationUrl: normalizeConversationUrl(input.conversation_url),
       });
       return {
         ...toResult({
@@ -805,6 +815,7 @@ export function createAdminMcpServer(
             ? `STOP: show the person exactly this and wait for their answer: "I understand your request as: ${understoodAs} (Applies to: ${APPLIES_TO_LABELS[appliesTo]}). Is that right?" Edits are refused until they say yes and you call confirm_change (or they press Yes in the card). If they meant something else, discard_change and start_change again.`
             : `Pass change_id "${change.key}" on every edit for this request. When done, call submit_for_review, then list_pending_changes with this change_id.`,
           youCanDiscard: canUseTool(user.role, "discard_change"),
+          youCanPublish: canUseTool(user.role, "publish_changes"),
         }),
         _meta: { rulesVersion: await rulesVersionOrNull() },
       };
@@ -1162,7 +1173,60 @@ export function createAdminMcpServer(
         : result.output;
 
     return toResult(output, result.isError);
+  };
+
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    const result = await handleCall(request);
+    if (!OTHER_PENDING_TOOLS.has(request.params.name)) return result;
+    return withOtherPending(
+      result,
+      request.params.arguments?.[CHANGE_ID_PARAM] as string | undefined,
+    );
   });
 
   return server;
+}
+
+// Team feedback 2026-10-08: every change-related answer carries the other
+// waiting changes ("Other Pending Changes"), for the card and for the AI to
+// end its reply with, so an old change is never forgotten.
+const OTHER_PENDING_TOOLS = new Set([
+  "start_change",
+  "confirm_change",
+  "submit_for_review",
+  "list_pending_changes",
+  "publish_changes",
+  "discard_change",
+  "undo_change",
+]);
+
+async function withOtherPending<
+  T extends {
+    content: Array<{ type: "text"; text: string }>;
+    structuredContent?: Record<string, unknown>;
+    isError?: boolean;
+  },
+>(result: T, requestedKey: string | undefined): Promise<T> {
+  const sc = result.structuredContent;
+  if (result.isError || !sc) return result;
+  const exclude =
+    sc.view === "list"
+      ? null
+      : typeof sc.changeId === "string"
+        ? sc.changeId
+        : (normalizeChangeKey(requestedKey) ?? null);
+  // Never fails the answer it is attached to.
+  const rows = await listOpenChangeSets()
+    .then((open) => pendingRows(open, exclude))
+    .catch(() => null);
+  const extra = {
+    otherPending: rows,
+    otherPendingNote: `End your reply with a section titled "Other Pending Changes" listing these in plain words (what it is, when it was asked, status), or "No other pending changes." if there are none. Each can be previewed, published or discarded on its own; publishing one never publishes another.\n${otherPendingText(rows)}`,
+  };
+  const merged = { ...sc, ...extra };
+  return {
+    ...result,
+    structuredContent: merged,
+    content: [{ type: "text", text: JSON.stringify(merged, null, 2) }],
+  };
 }
