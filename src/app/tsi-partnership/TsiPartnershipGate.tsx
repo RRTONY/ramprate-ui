@@ -694,7 +694,7 @@ function TsiPartnershipContent() {
         </div>
         <div className="scene tailored-weave">
           <Image
-            src="/tsi-partnership/weave-art.webp"
+            src="/tsi-partnership/weave-art.png"
             alt="Distinct ceramic elements assembled into one individual organic form: a metaphor for personalized nutrition."
             className="weave-art"
             width={440}
@@ -956,7 +956,7 @@ function TsiPartnershipContent() {
 
       <section className="section partnership" id="partnership">
         <Image
-          src="/tsi-partnership/weave-art.webp"
+          src="/tsi-partnership/weave-art.png"
           alt=""
           aria-hidden="true"
           className="partnership-weave"
