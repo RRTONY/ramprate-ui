@@ -205,38 +205,6 @@ export function NuAminoForm() {
                   </div>
                 </div>
               )}
-              {section.id === "intake" && (
-                <div className="apf-section-block">
-                  <h3>Does the September 9 submission apply to NuAmino?</h3>
-                  <div className="apf-field">
-                    <label htmlFor="na-intake-scope">
-                      Please confirm the scope of that submission
-                    </label>
-                    <select
-                      id="na-intake-scope"
-                      value={verification.intakeScope || ""}
-                      onChange={(e) =>
-                        setVerification((v) => ({
-                          ...v,
-                          intakeScope: e.target.value,
-                        }))
-                      }
-                    >
-                      <option value="">Select an answer</option>
-                      <option value="Yes, all details apply to NuAmino">
-                        Yes, all details apply to NuAmino
-                      </option>
-                      <option value="Some details apply; corrections below">
-                        Some details apply; corrections below
-                      </option>
-                      <option value="No, it relates to a different business">
-                        No, it relates to a different business
-                      </option>
-                      <option value="Not sure">Not sure</option>
-                    </select>
-                  </div>
-                </div>
-              )}
               {section.questions.map((question) => (
                 <div className="apf-section-block" key={question.id}>
                   <div className="apf-field">
