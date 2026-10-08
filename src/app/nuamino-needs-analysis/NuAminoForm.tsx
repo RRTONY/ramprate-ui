@@ -151,11 +151,10 @@ export function NuAminoForm() {
               </div>
               <h1>{section.title}</h1>
               <p className="apf-panel-intro">
-                {section.subtitle}. We have prefilled some answers based on
-                information you have already shared with us. Please review them
-                and update anything that needs correcting. The more detail you
-                can provide, the better we can understand your business and
-                priorities.
+                {section.subtitle}.{" "}
+                {section.id === "gtm"
+                  ? "Please provide as much detail as possible to help us understand your customer base, channel priorities and growth objectives."
+                  : "We have prefilled some answers based on information you have already shared with us. Please review them and update anything that needs correcting. The more detail you can provide, the better we can understand your business and priorities."}
               </p>
               {step === 0 && (
                 <div className="apf-section-block">
