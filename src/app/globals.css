@@ -441,3 +441,28 @@ body.ai-modal-open [data-hide-on-ai] {
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
+
+/* Continuous timeline movement, with accessible motion controls. */
+@keyframes timeline-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.timeline-marquee {
+  animation: timeline-marquee 90s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-marquee {
+    animation: none;
+  }
+  .timeline-marquee > div:nth-child(2) {
+    display: none;
+  }
+  .timeline-marquee {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
