@@ -215,7 +215,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen bg-warm-light">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#292722]">
         <div className="absolute inset-0">
           <Image
             src="/home/homepage-sunset.jpg"
@@ -225,15 +225,15 @@ export default function HomeContent() {
             sizes="100vw"
             className="object-cover object-right"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/65 via-dark/25 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/25 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/45 via-dark/15 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/15 via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
             <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
+                <span className="inline-flex items-center gap-2.5 py-1 border-b border-white/35">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
                   <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/90">
                     <a
@@ -249,7 +249,7 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-balance text-[clamp(3rem,7.5vw,5.25rem)]">
+              <h1 className="font-display font-medium text-white leading-[1.12] tracking-[-0.025em] text-balance text-[clamp(3rem,7vw,5.1rem)]">
                 Where Relationships
                 <br />
                 Become{" "}
@@ -258,7 +258,7 @@ export default function HomeContent() {
                 </span>
               </h1>
 
-              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white text-pretty">
+              <p className="font-body mt-8 text-lg sm:text-xl leading-[1.75] max-w-xl text-white text-pretty">
                 We help founders grow their businesses and enterprise teams make
                 better technology decisions. Our work spans product strategy,
                 supplier selection, and contract negotiation.
@@ -267,7 +267,7 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-lg"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark"
                 >
                   Talk to our team <ArrowRight size={16} />
                 </Link>
@@ -287,7 +287,7 @@ export default function HomeContent() {
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
-            <ArrowDown size={16} className="animate-bounce" />
+            <ArrowDown size={16} />
           </div>
         </div>
       </section>
@@ -302,7 +302,7 @@ export default function HomeContent() {
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Selected Engagements
             </span>
-            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold text-ink">
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium text-ink">
               Results, not promises.
             </h2>
           </div>
@@ -336,7 +336,7 @@ export default function HomeContent() {
             <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-ink-mid">
               Our Practices
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight">
+            <h2 className="font-display text-4xl sm:text-5xl font-medium text-ink leading-tight">
               Six practices.
               <br />
               One coalition.
@@ -404,7 +404,7 @@ export default function HomeContent() {
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Why We&apos;re Different
             </span>
-            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium tracking-tight text-ink">
               Data-driven. Objective. Impact-oriented.
             </h2>
           </div>
@@ -471,7 +471,7 @@ export default function HomeContent() {
       <section className="section-light py-24 sm:py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-20">
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink">
+            <h2 className="font-display text-4xl sm:text-5xl font-medium text-ink">
               25 years. <span className="text-rust">One standard.</span>
             </h2>
           </div>
@@ -490,7 +490,7 @@ export default function HomeContent() {
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Our Approach
             </span>
-            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium tracking-tight text-ink">
               Research. Blueprint. Activate.
             </h2>
           </div>
@@ -533,7 +533,7 @@ export default function HomeContent() {
               <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
                 Compensation
               </span>
-              <h2 className="font-display mt-4 text-4xl sm:text-5xl font-bold tracking-tight text-ink">
+              <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium tracking-tight text-ink">
                 We align compensation with value created.
               </h2>
               <p className="font-body mt-6 leading-relaxed text-ink-mid text-base sm:text-lg">
