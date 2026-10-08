@@ -218,32 +218,16 @@ export default function HomeContent() {
       <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
         <div className="absolute inset-0">
           <Image
-            src="/hero.webp"
-            alt=""
+            src="/home/homepage-sunset.jpg"
+            alt="A diverse group approaches a warmly lit glass building under a colorful sunset, with stronger golden illumination near the entrance."
             fill
             priority
             sizes="100vw"
-            className="object-cover object-right brightness-[1.3] saturate-[1.25] contrast-[1.03]"
+            className="object-cover object-right"
           />
-          <div
-            className="absolute inset-0 mix-blend-screen"
-            style={{
-              background:
-                "linear-gradient(135deg, oklch(0.58 0.18 35 / 0.24) 0%, oklch(0.82 0.18 72 / 0.12) 40%, transparent 60%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/75 via-dark/35 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/65 via-dark/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/25 via-transparent to-transparent" />
         </div>
-
-        <div
-          className="pointer-events-none absolute -top-32 -right-10 z-[1] h-[700px] w-[700px] rounded-full opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle, oklch(0.72 0.16 60 / 0.2) 0%, oklch(0.8 0.12 75 / 0.06) 55%, transparent 75%)",
-            filter: "blur(70px)",
-          }}
-        />
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
@@ -251,7 +235,7 @@ export default function HomeContent() {
               <div className="mb-8">
                 <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/60">
+                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/90">
                     <a
                       href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                       target="_blank"
@@ -265,30 +249,33 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-[clamp(3rem,7.5vw,5.25rem)]">
+              <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight text-balance text-[clamp(3rem,7.5vw,5.25rem)]">
                 Where Relationships
                 <br />
-                Become <span className="text-gold">Revenue.</span>
+                Become{" "}
+                <span className="whitespace-nowrap text-[oklch(0.91_0.1_85)]">
+                  Revenue.
+                </span>
               </h1>
 
-              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white/70">
-                We don&apos;t advise from the sidelines - we execute. Founder
-                advisory, product strategy, and mission-critical sourcing,
-                backed by $10B+ managed since 2000.
+              <p className="font-body mt-8 text-lg sm:text-xl leading-relaxed max-w-xl text-white text-pretty">
+                We help founders grow their businesses and enterprise teams make
+                better technology decisions. Our work spans product strategy,
+                supplier selection, and contract negotiation.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-[0_8px_30px_rgba(212,168,67,0.2)]"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark shadow-lg"
                 >
-                  Tell Us What&apos;s Broken <ArrowRight size={16} />
+                  Talk to our team <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/20 text-white/80 hover:bg-white/5 transition-all"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/60 text-white hover:bg-white/10 transition-all"
                 >
-                  See Case Results
+                  View client results
                 </Link>
               </div>
             </div>
