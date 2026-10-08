@@ -88,9 +88,9 @@ const tier2Clients = [
 
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
-    <div className="text-center p-4 sm:p-5 bg-white">
+    <div className="text-center px-2 py-3 bg-white">
       {clientLogos[name] ? (
-        <div className="h-12 flex items-center justify-center">
+        <div className="h-10 flex items-center justify-center">
           <Image
             src={clientLogos[name]}
             alt={name}
@@ -118,9 +118,9 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="section-light py-16 sm:py-20">
+    <section className="section-light py-10 sm:py-12">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink leading-tight text-balance">
             Selected client engagements
           </h2>
@@ -131,17 +131,21 @@ export default function ClientWall() {
         </div>
 
         {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
-          {[...tier1Clients, ...additionalLogoClients].map((c) => (
-            <ClientCard key={c.name} name={c.name} context={c.context} />
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          {[...tier1Clients, ...additionalLogoClients.slice(0, 2)].map((c) => (
+            <ClientCard key={c.name} name={c.name} context="" />
           ))}
         </div>
 
         {/* Tier 2 */}
         {showAllClients && (
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-black/8 border border-black/8 rounded-lg overflow-hidden mt-3">
-            {tier2Clients
-              .filter((c) => !clientLogos[c.name])
+            {[...additionalLogoClients.slice(2), ...tier2Clients]
+              .filter(
+                (c) =>
+                  !clientLogos[c.name] ||
+                  additionalLogoClients.some((a) => a.name === c.name),
+              )
               .map((c) => (
                 <ClientCard key={c.name} name={c.name} context={c.context} />
               ))}
