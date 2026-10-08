@@ -88,16 +88,16 @@ const tier2Clients = [
 
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
-    <div className="text-center px-2 py-3 bg-white">
+    <div className="flex min-h-14 items-center justify-center px-2 py-2 bg-white">
       {clientLogos[name] ? (
-        <div className="h-10 flex items-center justify-center">
+        <div className="h-9 w-full flex items-center justify-center">
           <Image
             src={clientLogos[name]}
             alt={name}
-            width={160}
-            height={70}
-            sizes="(max-width: 640px) 140px, 160px"
-            className="max-h-16 w-auto max-w-full object-contain scale-[0.7]"
+            width={116}
+            height={40}
+            sizes="(max-width: 640px) 95px, 116px"
+            className="max-h-8 w-auto max-w-[116px] object-contain"
           />
         </div>
       ) : (
@@ -131,7 +131,7 @@ export default function ClientWall() {
         </div>
 
         {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-x-4 gap-y-2">
           {[...tier1Clients, ...additionalLogoClients.slice(0, 2)].map((c) => (
             <ClientCard key={c.name} name={c.name} context="" />
           ))}

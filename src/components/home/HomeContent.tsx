@@ -215,7 +215,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen bg-warm-light">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#292722]">
+      <section className="relative min-h-[700px] sm:min-h-[760px] flex flex-col overflow-hidden bg-warm-bg">
         <div className="absolute inset-0">
           <Image
             src="/home/homepage-sunset.jpg"
@@ -225,22 +225,22 @@ export default function HomeContent() {
             sizes="100vw"
             className="object-cover object-right"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/45 via-dark/15 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/15 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-warm-bg via-warm-bg/95 to-warm-bg/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-warm-bg/50 via-transparent to-warm-bg/10" />
         </div>
 
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
             <div className="max-w-2xl">
               <div className="mb-8">
-                <span className="inline-flex items-center gap-2.5 py-1 border-b border-white/35">
+                <span className="inline-flex items-center gap-2.5 py-1 border-b border-ink/25">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                  <span className="font-body text-[11px] sm:text-xs font-medium tracking-[0.2em] uppercase text-white/90">
+                  <span className="font-body text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-ink">
                     <a
                       href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:text-white transition-colors"
+                      className="hover:text-rust transition-colors"
                     >
                       B Lab Certified
                     </a>{" "}
@@ -249,16 +249,14 @@ export default function HomeContent() {
                 </span>
               </div>
 
-              <h1 className="font-display font-medium text-white leading-[1.12] tracking-[-0.025em] text-balance text-[clamp(3rem,7vw,5.1rem)]">
+              <h1 className="font-display font-medium text-ink leading-[1.12] tracking-[-0.025em] text-balance text-[clamp(3rem,7vw,5.1rem)]">
                 Where Relationships
                 <br />
                 Become{" "}
-                <span className="whitespace-nowrap text-[oklch(0.91_0.1_85)]">
-                  Revenue.
-                </span>
+                <span className="whitespace-nowrap text-rust">Revenue.</span>
               </h1>
 
-              <p className="font-body mt-8 text-lg sm:text-xl leading-[1.75] max-w-xl text-white text-pretty">
+              <p className="font-body mt-8 text-lg sm:text-xl leading-[1.75] max-w-xl text-ink text-pretty">
                 We help founders grow their businesses and enterprise teams make
                 better technology decisions. Our work spans product strategy,
                 supplier selection, and contract negotiation.
@@ -267,13 +265,13 @@ export default function HomeContent() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:bg-ink bg-rust text-white"
                 >
                   Talk to our team <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
-                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-white/60 text-white hover:bg-white/10 transition-all"
+                  className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-ink/35 text-ink hover:bg-white/75 transition-all"
                 >
                   View client results
                 </Link>
@@ -283,7 +281,7 @@ export default function HomeContent() {
         </div>
 
         <div className="relative z-10 pb-10 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-white/50">
+          <div className="flex flex-col items-center gap-2 text-ink-mid">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
             </span>
@@ -590,28 +588,22 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section
-        className="font-body py-24 sm:py-32 text-center text-white"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--rust) 0%, oklch(0.5 0.13 45) 100%)",
-        }}
-      >
+      <section className="font-body py-24 sm:py-32 text-center bg-warm-bg border-t border-black/10">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-ink mb-6">
             Tell us what&apos;s broken.
           </h2>
-          <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
+          <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-ink-mid">
             A principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-white/80">
+          <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-ink-mid">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-colors bg-rust hover:bg-ink text-white"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>
