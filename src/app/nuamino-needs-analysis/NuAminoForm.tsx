@@ -20,7 +20,7 @@ export function NuAminoForm() {
       ),
     ),
   );
-  const [verification, setVerification] = useState<VerifyMap>({});
+  const verification: VerifyMap = {};
   const [respondent, setRespondent] = useState({
     name: "",
     email: "",
