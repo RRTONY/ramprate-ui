@@ -88,26 +88,16 @@ const tier2Clients = [
 
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
-    <div className="text-center p-4 sm:p-5 bg-white">
+    <div className="text-center p-2 sm:p-3 bg-white">
       {clientLogos[name] ? (
-        <div className="h-12 flex items-center justify-center">
+        <div className="h-9 flex items-center justify-center">
           <Image
             src={clientLogos[name]}
             alt={name}
             width={160}
             height={70}
             sizes="(max-width: 640px) 140px, 160px"
-            className={
-              ["Paramount", "Goldman Sachs", "Blizzard Entertainment"].includes(
-                name,
-              )
-                ? name === "Paramount"
-                  ? "h-16 w-20 object-contain scale-50 brightness-0"
-                  : "max-h-16 w-40 max-w-full object-contain scale-50 brightness-0"
-                : name === "Audible"
-                  ? "max-h-16 w-auto max-w-full object-contain scale-50 grayscale brightness-[0.6] contrast-[10]"
-                  : "max-h-16 w-auto max-w-full object-contain scale-50 grayscale contrast-200"
-            }
+            className="max-h-8 sm:max-h-9 w-auto max-w-full object-contain"
           />
         </div>
       ) : (
@@ -128,9 +118,9 @@ export default function ClientWall() {
   const [showAllClients, setShowAllClients] = useState(false);
 
   return (
-    <section className="section-light py-16 sm:py-20">
+    <section className="section-light py-8 sm:py-10">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-5">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink leading-tight text-balance">
             Selected client engagements
           </h2>
@@ -141,24 +131,28 @@ export default function ClientWall() {
         </div>
 
         {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
-          {[...tier1Clients, ...additionalLogoClients].map((c) => (
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          {tier1Clients.concat(additionalLogoClients.slice(0, 2)).map((c) => (
             <ClientCard key={c.name} name={c.name} context={c.context} />
           ))}
         </div>
 
         {/* Tier 2 */}
         {showAllClients && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-black/8 border border-black/8 rounded-lg overflow-hidden mt-3">
-            {tier2Clients
-              .filter((c) => !clientLogos[c.name])
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-3">
+            {additionalLogoClients
+              .slice(2)
+              .concat(tier2Clients)
+              .filter(
+                (c) => !tier1Clients.some((first) => first.name === c.name),
+              )
               .map((c) => (
                 <ClientCard key={c.name} name={c.name} context={c.context} />
               ))}
           </div>
         )}
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-5">
           <button
             onClick={() => setShowAllClients(!showAllClients)}
             className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-ink text-ink-mid"
