@@ -128,13 +128,13 @@ export default function Header() {
           ))}
 
           <HeaderSearch scrolled={dark} />
-          <SiteSearch scrolled={dark} />
+          {pathname !== "/" && <SiteSearch scrolled={dark} />}
         </div>
 
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-2">
           <HeaderSearch scrolled={dark} />
-          <SiteSearch scrolled={dark} />
+          {pathname !== "/" && <SiteSearch scrolled={dark} />}
           <button
             className={`p-3 transition-colors ${mobileIconClass}`}
             onClick={() => setMobileOpen(!mobileOpen)}
