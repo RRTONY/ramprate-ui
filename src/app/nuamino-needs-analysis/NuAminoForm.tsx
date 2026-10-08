@@ -9,7 +9,17 @@ type VerifyMap = Record<string, string>;
 
 export function NuAminoForm() {
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<ResponseMap>({});
+  const [answers, setAnswers] = useState<ResponseMap>(() =>
+    Object.fromEntries(
+      NUAMINO_SECTIONS.flatMap((section) =>
+        section.questions
+          .filter(
+            (question) => question.understanding && section.id !== "stability",
+          )
+          .map((question) => [question.id, question.understanding || ""]),
+      ),
+    ),
+  );
   const [verification, setVerification] = useState<VerifyMap>({});
   const [respondent, setRespondent] = useState({
     name: "",
@@ -95,7 +105,7 @@ export function NuAminoForm() {
           </div>
           <p className="apf-rail-heading">
             NuAmino needs analysis, prepared by RampRate. Seven focused parts,
-            with space to correct our current understanding.
+            with prefilled answers you can edit where needed.
           </p>
           <ol className="apf-steps" aria-label="Questionnaire progress">
             {NUAMINO_SECTIONS.map((part, index) => (
@@ -122,8 +132,8 @@ export function NuAminoForm() {
             ))}
           </ol>
           <p className="apf-rail-footer">
-            Our understanding is provided for confirmation, not as an assumed
-            answer. Please correct anything inaccurate.
+            We have filled in what we already know. Simply edit anything that
+            needs updating.
           </p>
         </aside>
         <main className="apf-main">
@@ -142,8 +152,8 @@ export function NuAminoForm() {
               <h1>{section.title}</h1>
               <p className="apf-panel-intro">
                 {section.subtitle}. Answers can be approximate unless a precise
-                answer is requested. Use the notes to correct or expand on our
-                understanding.
+                answer is requested. Existing answers are editable. Leave them
+                unchanged if accurate.
               </p>
               {step === 0 && (
                 <div className="apf-section-block">
@@ -232,38 +242,6 @@ export function NuAminoForm() {
                       {question.label}
                       {question.id === "stabilityTesting" ? " *" : ""}
                     </label>
-                    {question.understanding && (
-                      <>
-                        <p className="apf-section-note">
-                          <strong>Our understanding (please verify):</strong>{" "}
-                          {question.understanding}
-                        </p>
-                        <select
-                          aria-label={`Verify current understanding for ${question.label}`}
-                          value={verification[question.id] || ""}
-                          onChange={(e) =>
-                            setVerification((v) => ({
-                              ...v,
-                              [question.id]: e.target.value,
-                            }))
-                          }
-                        >
-                          <option value="">
-                            Choose: confirm, correct, or clarify
-                          </option>
-                          <option value="Confirmed">Confirmed as stated</option>
-                          <option value="Correction provided">
-                            Needs correction
-                          </option>
-                          <option value="Additional detail provided">
-                            Mostly right, with added detail
-                          </option>
-                          <option value="Unable to confirm">
-                            Unable to confirm
-                          </option>
-                        </select>
-                      </>
-                    )}
                     <textarea
                       id={`na-${question.id}`}
                       rows={4}
@@ -275,11 +253,7 @@ export function NuAminoForm() {
                           [question.id]: e.target.value,
                         }))
                       }
-                      placeholder={
-                        question.understanding
-                          ? "Add corrections or relevant details here…"
-                          : "Your response…"
-                      }
+                      placeholder="Your response…"
                     />
                   </div>
                 </div>
