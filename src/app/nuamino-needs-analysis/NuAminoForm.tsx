@@ -121,9 +121,11 @@ export function NuAminoForm() {
                   aria-label={`Go to ${part.title}`}
                 >
                   <span className="apf-step-badge">{index + 1}</span>
-                  <span className="apf-step-text">
-                    <span className="apf-step-title">{part.title}</span>
-                    <span className="apf-step-sub">
+                  <span className="apf-step-text flex min-w-0 flex-col gap-3">
+                    <span className="apf-step-title block leading-snug">
+                      {part.title}
+                    </span>
+                    <span className="apf-step-sub block !mt-0 leading-relaxed">
                       {part.questions.length} questions
                     </span>
                   </span>
