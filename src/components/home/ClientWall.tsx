@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ── CLIENT LOGO WALL - Two-Tier ── */
 const tier1Clients = [
@@ -22,6 +23,44 @@ const tier1Clients = [
   },
   { name: "Riot Games", context: "Supported rapid global expansion" },
 ];
+const additionalLogoClients = [
+  { name: "Goldman Sachs", context: "" },
+  { name: "PayPal", context: "" },
+  { name: "Verizon", context: "" },
+  { name: "AT&T", context: "" },
+  { name: "Accenture", context: "" },
+  { name: "Bain & Company", context: "" },
+  { name: "McKinsey & Company", context: "" },
+  { name: "Bridgewater", context: "" },
+  { name: "Broadcom", context: "" },
+  { name: "Blizzard Entertainment", context: "" },
+  { name: "Audible", context: "" },
+  { name: "Expedia", context: "" },
+];
+
+const clientLogos: Record<string, string> = {
+  Microsoft: "/proof/logos/microsoft.png",
+  eBay: "/proof/logos/ebay.png",
+  Sony: "/home/logos/sony.svg",
+  Paramount: "/home/logos/paramount.svg",
+  Intel: "/home/logos/intel.svg",
+  Nike: "/home/logos/nike.svg",
+  Hearst: "/home/logos/hearst.svg",
+  "Riot Games": "/home/logos/riot-games.png",
+  "Goldman Sachs": "/proof/logos/goldman-sachs.svg",
+  PayPal: "/proof/logos/paypal.svg",
+  Verizon: "/proof/logos/verizon.svg",
+  "AT&T": "/proof/logos/at-t.png",
+  Accenture: "/proof/logos/accenture.png",
+  "Bain & Company": "/proof/logos/bain.png",
+  "McKinsey & Company": "/proof/logos/mckinsey.png",
+  Bridgewater: "/proof/logos/bridgewater.png",
+  Broadcom: "/proof/logos/broadcom.png",
+  "Blizzard Entertainment": "/proof/logos/blizzard.png",
+  Audible: "/proof/logos/audible.png",
+  Expedia: "/proof/logos/expedia.png",
+};
+
 const tier2Clients = [
   { name: "Disney", context: "Best IT services deal during executive tenure" },
   { name: "AOL", context: "17-36% price reductions; breakthrough SLAs" },
@@ -49,13 +88,32 @@ const tier2Clients = [
 
 function ClientCard({ name, context }: { name: string; context: string }) {
   return (
-    <div className="text-center px-3 py-6">
-      <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-ink">
-        {name}
-      </h3>
-      <p className="font-body text-[11px] sm:text-xs mt-1.5 leading-snug text-ink-mid">
-        {context}
-      </p>
+    <div className="text-center p-4 sm:p-5 bg-white">
+      {clientLogos[name] ? (
+        <div className="h-20 flex items-center justify-center">
+          <Image
+            src={clientLogos[name]}
+            alt={name}
+            width={160}
+            height={70}
+            sizes="(max-width: 640px) 140px, 160px"
+            className={
+              name === "Paramount"
+                ? "h-16 w-20 object-contain brightness-0"
+                : "max-h-16 w-auto max-w-full object-contain grayscale contrast-200"
+            }
+          />
+        </div>
+      ) : (
+        <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-ink text-balance">
+          {name}
+        </h3>
+      )}
+      {context && (
+        <p className="font-body text-xs mt-2 leading-snug text-ink-mid text-pretty">
+          {context}
+        </p>
+      )}
     </div>
   );
 }
@@ -68,18 +126,17 @@ export default function ClientWall() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-12">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink leading-tight">
-            25 Years Inside the World&apos;s Most
-            <br className="hidden sm:block" />
-            <span className="text-rust"> Complex Enterprises</span>
+            Selected client engagements
           </h2>
           <p className="font-body mt-3 text-sm text-ink-mid">
-            100+ engagements. $10B+ in decisions transacted. Names you know.
+            Technology sourcing, product strategy, and growth advisory since
+            2000.
           </p>
         </div>
 
         {/* Tier 1 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 divide-x divide-y divide-black/8 border border-black/8 rounded-lg overflow-hidden">
-          {tier1Clients.map((c) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+          {[...tier1Clients, ...additionalLogoClients].map((c) => (
             <ClientCard key={c.name} name={c.name} context={c.context} />
           ))}
         </div>
@@ -87,9 +144,11 @@ export default function ClientWall() {
         {/* Tier 2 */}
         {showAllClients && (
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-black/8 border border-black/8 rounded-lg overflow-hidden mt-3">
-            {tier2Clients.map((c) => (
-              <ClientCard key={c.name} name={c.name} context={c.context} />
-            ))}
+            {tier2Clients
+              .filter((c) => !clientLogos[c.name])
+              .map((c) => (
+                <ClientCard key={c.name} name={c.name} context={c.context} />
+              ))}
           </div>
         )}
 
@@ -98,7 +157,7 @@ export default function ClientWall() {
             onClick={() => setShowAllClients(!showAllClients)}
             className="font-body text-xs font-semibold tracking-[0.15em] uppercase transition-colors hover:text-ink text-ink-mid"
           >
-            {showAllClients ? "- Show Less" : "+ View All Clients"}
+            {showAllClients ? "- Show Less" : "+ More client engagements"}
           </button>
         </div>
       </div>
