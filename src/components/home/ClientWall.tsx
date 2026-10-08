@@ -132,19 +132,19 @@ export default function ClientWall() {
 
         {/* Tier 1 */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-          {tier1Clients.concat(additionalLogoClients.slice(0, 2)).map((c) => (
-            <ClientCard key={c.name} name={c.name} context={c.context} />
+          {[...tier1Clients, ...additionalLogoClients.slice(0, 2)].map((c) => (
+            <ClientCard key={c.name} name={c.name} context="" />
           ))}
         </div>
 
         {/* Tier 2 */}
         {showAllClients && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-3">
-            {additionalLogoClients
-              .slice(2)
-              .concat(tier2Clients)
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-black/8 border border-black/8 rounded-lg overflow-hidden mt-3">
+            {[...additionalLogoClients.slice(2), ...tier2Clients]
               .filter(
-                (c) => !tier1Clients.some((first) => first.name === c.name),
+                (c) =>
+                  !clientLogos[c.name] ||
+                  additionalLogoClients.some((a) => a.name === c.name),
               )
               .map((c) => (
                 <ClientCard key={c.name} name={c.name} context={c.context} />
