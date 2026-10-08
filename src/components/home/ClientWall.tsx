@@ -90,7 +90,7 @@ function ClientCard({ name, context }: { name: string; context: string }) {
   return (
     <div className="text-center p-4 sm:p-5 bg-white">
       {clientLogos[name] ? (
-        <div className="h-20 flex items-center justify-center">
+        <div className="h-12 flex items-center justify-center">
           <Image
             src={clientLogos[name]}
             alt={name}
@@ -102,11 +102,11 @@ function ClientCard({ name, context }: { name: string; context: string }) {
                 name,
               )
                 ? name === "Paramount"
-                  ? "h-16 w-20 object-contain brightness-0"
-                  : "max-h-16 w-40 max-w-full object-contain brightness-0"
+                  ? "h-16 w-20 object-contain scale-50 brightness-0"
+                  : "max-h-16 w-40 max-w-full object-contain scale-50 brightness-0"
                 : name === "Audible"
-                  ? "max-h-16 w-auto max-w-full object-contain grayscale brightness-[0.6] contrast-[10]"
-                  : "max-h-16 w-auto max-w-full object-contain grayscale contrast-200"
+                  ? "max-h-16 w-auto max-w-full object-contain scale-50 grayscale brightness-[0.6] contrast-[10]"
+                  : "max-h-16 w-auto max-w-full object-contain scale-50 grayscale contrast-200"
             }
           />
         </div>
@@ -131,10 +131,10 @@ export default function ClientWall() {
     <section className="section-light py-16 sm:py-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-12">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink leading-tight">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink leading-tight text-balance">
             Selected client engagements
           </h2>
-          <p className="font-body mt-3 text-sm text-ink-mid">
+          <p className="font-body mt-3 text-sm text-ink-mid text-pretty">
             Technology sourcing, product strategy, and growth advisory since
             2000.
           </p>
