@@ -10,8 +10,6 @@ import {
   Database,
   DollarSign,
 } from "lucide-react";
-import type { CSSProperties } from "react";
-import PracticeIcon from "./PracticeIcon";
 
 // Below-the-fold, interactive-only sections - split into their own JS chunks
 // so the hero above the fold doesn't have to wait on their code to hydrate.
@@ -215,7 +213,7 @@ export default function HomeContent() {
   return (
     <div className="min-h-screen bg-warm-light">
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#292722]">
+      <section className="relative min-h-[88svh] flex flex-col overflow-hidden bg-warm-bg">
         <div className="absolute inset-0">
           <Image
             src="/home/homepage-sunset.jpg"
@@ -225,12 +223,12 @@ export default function HomeContent() {
             sizes="100vw"
             className="object-cover object-right"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/45 via-dark/15 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/40 via-dark/10 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-dark/15 via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-32 pb-20">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full pt-28 pb-12">
             <div className="max-w-2xl">
               <div className="mb-8">
                 <span className="inline-flex items-center gap-2.5 py-1 border-b border-white/35">
@@ -264,7 +262,7 @@ export default function HomeContent() {
                 supplier selection, and contract negotiation.
               </p>
 
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/contact"
                   className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:opacity-90 bg-gold text-dark"
@@ -282,7 +280,7 @@ export default function HomeContent() {
           </div>
         </div>
 
-        <div className="relative z-10 pb-10 flex justify-center">
+        <div className="relative z-10 pb-5 flex justify-center">
           <div className="flex flex-col items-center gap-2 text-white/50">
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase block">
               Scroll
@@ -296,9 +294,9 @@ export default function HomeContent() {
       <ClientWall />
 
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
-      <section className="section-warm py-24 sm:py-32">
+      <section className="section-warm py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <div className="mb-16 max-w-2xl">
+          <div className="mb-9 max-w-2xl">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Selected Engagements
             </span>
@@ -329,67 +327,36 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ═══ BRANDS / PRACTICES ═══ */}
-      <section id="brands" className="section-light py-24 sm:py-32">
+      {/* PRACTICES */}
+      <section
+        id="brands"
+        className="section-light border-y border-black/10 py-8 sm:py-10"
+      >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-20 max-w-2xl mx-auto">
-            <span className="font-body text-xs tracking-[0.3em] uppercase block mb-4 text-ink-mid">
-              Our Practices
-            </span>
-            <h2 className="font-display text-4xl sm:text-5xl font-medium text-ink leading-tight">
-              Six practices.
-              <br />
-              One coalition.
+          <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
+            <h2 className="font-display text-2xl sm:text-3xl text-ink">
+              Our practices
             </h2>
-            <p className="font-body mt-6 text-base sm:text-lg text-ink-mid">
-              One discipline - trust turned into revenue - applied across six
-              audiences. Each practice is purpose-built, but every one draws on
-              the same senior team.
+            <p className="font-body text-sm text-ink-mid">
+              Six specialties. One senior team.
             </p>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brands.map((brand, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-l border-t border-black/10">
+            {brands.map((brand) => (
               <Link
                 key={brand.name}
                 href={brand.href}
-                className="group relative block rounded-xl border p-8 transition-all duration-300 bg-white border-black/5 hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:-translate-y-1"
-                style={{ "--accent": brand.accentColor } as CSSProperties}
+                title={brand.description}
+                className="group bg-white border-r border-b border-black/10 px-3 py-4 hover:bg-warm-light transition-colors"
               >
-                <span className="font-mono absolute top-8 right-8 text-[11px] tracking-[0.2em] text-ink-mid/60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
-                  style={{
-                    background: `color-mix(in oklch, ${brand.accentColor} 12%, transparent)`,
-                  }}
-                >
-                  <PracticeIcon
-                    kind={brand.iconKind}
-                    color={brand.accentColor}
-                  />
-                </div>
-
-                <p
-                  className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
-                  style={{ color: brand.accentColor }}
-                >
+                <span className="font-body block text-[10px] tracking-wide uppercase text-rust mb-1">
                   {brand.tag}
-                </p>
-                <h3 className="font-display text-xl font-bold text-ink mb-3">
-                  {brand.name}
-                </h3>
-                <p className="font-body text-sm leading-relaxed mb-6 text-ink-mid">
+                </span>
+                <span className="font-display text-base sm:text-lg text-ink group-hover:text-rust flex items-center gap-1">
+                  {brand.name} <ArrowRight size={12} />
+                </span>
+                <span className="font-body block text-xs leading-snug text-ink-mid mt-2">
                   {brand.description}
-                </p>
-                <span
-                  className="font-body inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
-                  style={{ color: brand.accentColor }}
-                >
-                  Explore {brand.name}
-                  <ArrowRight size={14} />
                 </span>
               </Link>
             ))}
@@ -398,9 +365,9 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
-      <section className="section-warm py-24 sm:py-32">
+      <section className="section-warm py-14 sm:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-9">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Why We&apos;re Different
             </span>
@@ -468,9 +435,9 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="section-light py-24 sm:py-32 overflow-hidden">
+      <section className="section-light py-14 sm:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-20">
+          <div className="text-center mb-9">
             <h2 className="font-display text-4xl sm:text-5xl font-medium text-ink">
               25 years. <span className="text-rust">One standard.</span>
             </h2>
@@ -484,9 +451,9 @@ export default function HomeContent() {
       <TestimonialsCarousel />
 
       {/* ═══ HOW WE OPERATE ═══ */}
-      <section className="section-light py-24 sm:py-32">
+      <section className="section-light py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-16 max-w-2xl">
+          <div className="mb-9 max-w-2xl">
             <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-rust">
               Our Approach
             </span>
@@ -526,7 +493,7 @@ export default function HomeContent() {
       </section>
 
       {/* ═══ COMPENSATION ═══ */}
-      <section className="section-warm py-24 sm:py-32">
+      <section className="section-warm py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -590,28 +557,22 @@ export default function HomeContent() {
       {/* ── Newsletter Capture ── */}
       <NewsletterSection />
 
-      <section
-        className="font-body py-24 sm:py-32 text-center text-white"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--rust) 0%, oklch(0.5 0.13 45) 100%)",
-        }}
-      >
+      <section className="font-body py-14 sm:py-20 text-center text-ink bg-warm-bg">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-ink mb-4">
             Tell us what&apos;s broken.
           </h2>
-          <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-white/80">
+          <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-ink-mid">
             A principal responds within 24 hours. No associates. No filters. No
             intake maze.
           </p>
-          <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-white/80">
+          <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-ink-mid">
             If we can create leverage, we&apos;ll show you how. If we
             can&apos;t, we&apos;ll tell you fast.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-white text-rust shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-opacity hover:opacity-90 bg-rust text-white"
           >
             Tell Us What&apos;s Broken <ArrowRight size={16} />
           </Link>
