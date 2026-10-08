@@ -47,7 +47,7 @@ const clientLogos: Record<string, string> = {
   Nike: "/home/logos/nike.svg",
   Hearst: "/home/logos/hearst.svg",
   "Riot Games": "/home/logos/riot-games.png",
-  "Goldman Sachs": "/proof/logos/goldman-sachs.svg",
+  "Goldman Sachs": "/home/logos/goldman-sachs.svg",
   PayPal: "/proof/logos/paypal.svg",
   Verizon: "/proof/logos/verizon.svg",
   "AT&T": "/proof/logos/at-t.png",
@@ -56,7 +56,7 @@ const clientLogos: Record<string, string> = {
   "McKinsey & Company": "/proof/logos/mckinsey.png",
   Bridgewater: "/proof/logos/bridgewater.png",
   Broadcom: "/proof/logos/broadcom.png",
-  "Blizzard Entertainment": "/proof/logos/blizzard.png",
+  "Blizzard Entertainment": "/home/logos/blizzard.svg",
   Audible: "/proof/logos/audible.png",
   Expedia: "/proof/logos/expedia.png",
 };
@@ -98,9 +98,15 @@ function ClientCard({ name, context }: { name: string; context: string }) {
             height={70}
             sizes="(max-width: 640px) 140px, 160px"
             className={
-              name === "Paramount"
-                ? "h-16 w-20 object-contain brightness-0"
-                : "max-h-16 w-auto max-w-full object-contain grayscale contrast-200"
+              ["Paramount", "Goldman Sachs", "Blizzard Entertainment"].includes(
+                name,
+              )
+                ? name === "Paramount"
+                  ? "h-16 w-20 object-contain brightness-0"
+                  : "max-h-16 w-40 max-w-full object-contain brightness-0"
+                : name === "Audible"
+                  ? "max-h-16 w-auto max-w-full object-contain grayscale brightness-[0.6] contrast-[10]"
+                  : "max-h-16 w-auto max-w-full object-contain grayscale contrast-200"
             }
           />
         </div>
