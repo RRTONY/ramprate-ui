@@ -105,7 +105,7 @@ function ClientCard({ name, context }: { name: string; context: string }) {
           {name}
         </h3>
       )}
-      {false && context && (
+      {context && (
         <p className="font-body text-xs mt-2 leading-snug text-ink-mid text-pretty">
           {context}
         </p>
@@ -133,7 +133,7 @@ export default function ClientWall() {
         {/* Tier 1 */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
           {[...tier1Clients, ...additionalLogoClients.slice(0, 2)].map((c) => (
-            <ClientCard key={c.name} name={c.name} context={c.context} />
+            <ClientCard key={c.name} name={c.name} context="" />
           ))}
         </div>
 
