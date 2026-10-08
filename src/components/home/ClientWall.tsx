@@ -53,7 +53,7 @@ const clientLogos: Record<string, string> = {
   "AT&T": "/proof/logos/at-t.png",
   Accenture: "/proof/logos/accenture.png",
   "Bain & Company": "/proof/logos/bain.png",
-  "McKinsey & Company": "/proof/logos/mckinsey.png",
+  "McKinsey & Company": "/home/logos/mckinsey.svg",
   Bridgewater: "/proof/logos/bridgewater.png",
   Broadcom: "/proof/logos/broadcom.png",
   "Blizzard Entertainment": "/home/logos/blizzard.svg",
