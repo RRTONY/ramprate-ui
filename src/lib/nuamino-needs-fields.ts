@@ -193,8 +193,6 @@ export const NUAMINO_SECTIONS: NuAminoSection[] = [
         id: "priorityProducts",
         label:
           "For new channel development, which products do you most want us to lead with?",
-        understanding:
-          "The ED/cardiovascular opportunity Richard mentioned on October 2 was an exploratory direction, not a confirmed NuAmino priority.",
       },
       {
         id: "branding",
