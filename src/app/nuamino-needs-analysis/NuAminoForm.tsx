@@ -151,9 +151,11 @@ export function NuAminoForm() {
               </div>
               <h1>{section.title}</h1>
               <p className="apf-panel-intro">
-                {section.subtitle}. Answers can be approximate unless a precise
-                answer is requested. Existing answers are editable. Leave them
-                unchanged if accurate.
+                {section.subtitle}. We have prefilled some answers based on
+                information you have already shared with us. Please review them
+                and update anything that needs correcting. The more detail you
+                can provide, the better we can understand your business and
+                priorities.
               </p>
               {step === 0 && (
                 <div className="apf-section-block">
