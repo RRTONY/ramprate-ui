@@ -97,17 +97,7 @@ function ClientCard({ name, context }: { name: string; context: string }) {
             width={160}
             height={70}
             sizes="(max-width: 640px) 140px, 160px"
-            className={
-              ["Paramount", "Goldman Sachs", "Blizzard Entertainment"].includes(
-                name,
-              )
-                ? name === "Paramount"
-                  ? "h-16 w-20 object-contain scale-50 brightness-0"
-                  : "max-h-16 w-40 max-w-full object-contain scale-50 brightness-0"
-                : name === "Audible"
-                  ? "max-h-16 w-auto max-w-full object-contain scale-50 grayscale brightness-[0.6] contrast-[10]"
-                  : "max-h-16 w-auto max-w-full object-contain scale-50 grayscale contrast-200"
-            }
+            className="max-h-16 w-auto max-w-full object-contain scale-50"
           />
         </div>
       ) : (
