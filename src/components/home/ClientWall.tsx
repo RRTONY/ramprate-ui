@@ -97,7 +97,7 @@ function ClientCard({ name, context }: { name: string; context: string }) {
             width={160}
             height={70}
             sizes="(max-width: 640px) 140px, 160px"
-            className="max-h-12 w-auto max-w-full object-contain scale-[0.42]"
+            className="max-h-16 w-auto max-w-full object-contain scale-[0.7]"
           />
         </div>
       ) : (
