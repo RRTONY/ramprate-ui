@@ -15,6 +15,23 @@ export interface TrafficAlert {
   message: string;
 }
 
+// A traffic dip is a visibility note, not a site error, so it is worded and
+// coloured calmly. Only "broken" (page or asset failing to load) is a real
+// problem shown in red.
+export function isSiteError(alert: TrafficAlert): boolean {
+  return alert.severity === "broken";
+}
+
+export function alertLabel(alert: TrafficAlert): string {
+  if (alert.severity === "broken") return "Broken";
+  if (alert.severity === "zero_traffic") return "No visits yet";
+  return "Lower traffic";
+}
+
+export function alertTone(alert: TrafficAlert): "critical" | "neutral" {
+  return isSiteError(alert) ? "critical" : "neutral";
+}
+
 // Compares trailing sessions-per-path against sessions-per-path from the
 // same point one week earlier (a same-weekday baseline controls for normal
 // weekly traffic rhythm better than yesterday-vs-today would).
@@ -27,12 +44,13 @@ export function detectTrafficDropAlerts(
     if (previous === 0) continue; // no baseline to compare against
     const current = currentByPath.get(path) ?? 0;
     const dropFraction = (previous - current) / previous;
+    const dipMessage = `${path}: fewer visits than usual, ${current} vs ${previous} at the same point last week (down ${(dropFraction * 100).toFixed(0)}%).`;
 
     if (current === 0) {
       alerts.push({
         key: `zero-traffic:${path}`,
         severity: "zero_traffic",
-        message: `${path}: zero sessions today (had ${previous} at the same point last week).`,
+        message: `${path}: no visits yet today (had ${previous} at the same point last week). The page is working, it just had fewer visitors.`,
       });
       continue;
     }
@@ -41,19 +59,19 @@ export function detectTrafficDropAlerts(
       alerts.push({
         key: `traffic-drop-critical:${path}`,
         severity: "critical",
-        message: `${path}: sessions down ${(dropFraction * 100).toFixed(0)}% (${current} vs ${previous}) - CRITICAL, notify Tony immediately.`,
+        message: dipMessage,
       });
     } else if (dropFraction >= ALERT_THRESHOLDS.urgent) {
       alerts.push({
         key: `traffic-drop-urgent:${path}`,
         severity: "urgent",
-        message: `${path}: sessions down ${(dropFraction * 100).toFixed(0)}% (${current} vs ${previous}) - urgent.`,
+        message: dipMessage,
       });
     } else if (dropFraction >= ALERT_THRESHOLDS.investigate) {
       alerts.push({
         key: `traffic-drop-investigate:${path}`,
         severity: "investigate",
-        message: `${path}: sessions down ${(dropFraction * 100).toFixed(0)}% (${current} vs ${previous}) - investigate.`,
+        message: dipMessage,
       });
     }
   }

@@ -5,6 +5,9 @@ import {
   detectTrafficDropAlerts,
   detectBrokenElementAlerts,
   getAlreadyAlertedKeysToday,
+  alertLabel,
+  alertTone,
+  isSiteError,
   type TrafficAlert,
 } from "./alerts";
 import { REPORT_RECIPIENTS } from "./constants";
@@ -66,32 +69,44 @@ export async function runAlertCheck(): Promise<AlertCheckResult> {
   const newAlerts = allAlerts.filter((a) => !alreadyAlerted.has(a.key));
   if (newAlerts.length === 0) return { alertsFired: [] };
 
+  const errorCount = newAlerts.filter(isSiteError).length;
+  const title = errorCount > 0 ? "Site Alert" : "Traffic Update";
+  const subtitle =
+    errorCount > 0
+      ? `${errorCount} page(s) not loading correctly${
+          newAlerts.length > errorCount ? `, plus ${newAlerts.length - errorCount} traffic note(s)` : ""
+        }.`
+      : `${newAlerts.length} page(s) had fewer visits than the same time last week. The site is working normally, this is only a visibility note.`;
+  const subject =
+    errorCount > 0
+      ? `RampRate Site Alert: ${errorCount} page(s) not loading correctly`
+      : `RampRate Traffic Update: ${newAlerts.length} page(s) with fewer visits`;
+
   const body = [
-    "RampRate Traffic Alert",
+    `RampRate ${title}`,
     "",
-    ...newAlerts.map((a) => `[${a.severity.toUpperCase()}] ${a.message}`),
+    subtitle,
+    "",
+    ...newAlerts.map((a) => `[${alertLabel(a)}] ${a.message}`),
     "",
     `Generated at ${new Date().toISOString()}`,
   ].join("\n");
 
   const html = wrapEmail(
-    "Traffic Alert",
-    `${newAlerts.length} issue(s) detected`,
+    title,
+    subtitle,
     renderSection(
-      "Alerts",
+      errorCount > 0 ? "Details" : "Pages with fewer visits",
       renderTable(
-        ["Severity", "Detail"],
-        newAlerts.map((a) => [
-          badge(a.severity.replace("_", " ").toUpperCase(), a.severity === "investigate" ? "warn" : "critical"),
-          escapeHtml(a.message),
-        ]),
+        ["Type", "Detail"],
+        newAlerts.map((a) => [badge(alertLabel(a), alertTone(a)), escapeHtml(a.message)]),
       ),
     ),
   );
 
   const { id: emailId } = await sendEmail({
     to: REPORT_RECIPIENTS,
-    subject: `RampRate Traffic Alert: ${newAlerts.length} issue(s) detected`,
+    subject,
     text: body,
     html,
   });

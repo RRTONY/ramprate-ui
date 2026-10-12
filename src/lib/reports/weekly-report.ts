@@ -202,7 +202,6 @@ function buildWeeklyBody(
 function wowBadge(change: number | null): string {
   if (change === null) return badge("n/a", "neutral");
   const label = `${change >= 0 ? "+" : ""}${change.toFixed(0)}%`;
-  if (change <= -60) return badge(label, "critical");
   if (change <= -25) return badge(label, "warn");
   return badge(label, "ok");
 }

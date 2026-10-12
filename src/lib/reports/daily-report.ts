@@ -14,6 +14,8 @@ import { checkAllPages, type PageUptimeResult } from "./uptime-check";
 import {
   detectTrafficDropAlerts,
   detectBrokenElementAlerts,
+  alertLabel,
+  alertTone,
   type TrafficAlert,
 } from "./alerts";
 import { REPORT_RECIPIENTS } from "./constants";
@@ -200,8 +202,8 @@ function buildDailyBody(
   lines.push("");
 
   if (alerts.length > 0) {
-    lines.push("ALERTS:");
-    for (const a of alerts) lines.push(`  [${a.severity.toUpperCase()}] ${a.message}`);
+    lines.push("NOTES:");
+    for (const a of alerts) lines.push(`  [${alertLabel(a)}] ${a.message}`);
     lines.push("");
   }
 
@@ -212,7 +214,6 @@ function buildDailyBody(
 function changeBadge(pctLabel: string): string {
   if (pctLabel === "n/a") return badge("n/a", "neutral");
   const value = parseInt(pctLabel, 10);
-  if (value <= -60) return badge(pctLabel, "critical");
   if (value <= -25) return badge(pctLabel, "warn");
   return badge(pctLabel, "ok");
 }
@@ -228,10 +229,10 @@ function buildDailyHtml(
 
   if (alerts.length > 0) {
     const rows = alerts.map((a) => [
-      badge(a.severity.replace("_", " ").toUpperCase(), a.severity === "critical" ? "critical" : a.severity === "broken" ? "critical" : "warn"),
+      badge(alertLabel(a), alertTone(a)),
       escapeHtml(a.message),
     ]);
-    sections.push(renderSection("Alerts", renderTable(["Severity", "Detail"], rows)));
+    sections.push(renderSection("Notes", renderTable(["Type", "Detail"], rows)));
   }
 
   if (!ga4) {
