@@ -14,6 +14,7 @@ interface PostCardProps {
     slug?: { current: string };
     publishedAt?: string;
     excerpt?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mainImage?: any;
     categories?: Category[];
   };
