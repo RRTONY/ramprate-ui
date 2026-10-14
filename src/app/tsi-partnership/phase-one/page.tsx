@@ -91,7 +91,11 @@ const styles = `
 .tsi-scope .toc::-webkit-scrollbar{display:none}
 .tsi-scope .toc a{color:var(--ink-soft);text-decoration:none;font-size:.78rem;white-space:nowrap;letter-spacing:.02em;font-weight:500}
 .tsi-scope .toc a:hover{color:var(--accent)}
-.tsi-scope .hero{display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center;padding-block:48px 54px}
+.tsi-scope .scope-note{position:relative;margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px 22px 26px;overflow:hidden}
+.tsi-scope .scope-note::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.tsi-scope .scope-note p{max-width:82ch;font-size:.94rem}
+.tsi-scope .scope-note strong{color:var(--ink);font-weight:600}
+.tsi-scope .hero{display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center;padding-block:40px 54px}
 .tsi-scope .hero h1{font-size:clamp(2.35rem,4.8vw,3.6rem);line-height:1.02;max-width:13ch}
 .tsi-scope .tagline{font-family:var(--font-fraunces),Georgia,serif;font-style:italic;color:var(--accent-soft)!important;font-size:1.25rem;line-height:1.35!important;margin-top:16px!important;max-width:31ch}
 .tsi-scope .hero-copy{font-size:.98rem;max-width:50ch;margin-top:14px!important}
@@ -210,6 +214,19 @@ export default function TsiPhaseOneScopePage() {
             <a href="#end">End of Phase One</a>
           </div>
         </nav>
+
+        <section className="scope-note" aria-label="Proposed scope note">
+          <p>
+            <strong>
+              This is an initial proposed scope and set of deliverables for
+              discussion with Joe.
+            </strong>{" "}
+            It is intended to give us a concrete starting point for the
+            conversation, not a fixed statement of work. We expect to refine and
+            agree the final scope, priorities and outputs based on the meeting
+            on the 20th.
+          </p>
+        </section>
 
         <section className="hero" id="objective">
           <div>
