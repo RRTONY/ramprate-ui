@@ -335,7 +335,10 @@ export default function TsiPhaseOneScopePage() {
             <p className="lede">
               Build two separate maps, then rank both by addressable volume and
               begin turning the highest-priority names into live relationships
-              immediately.
+              immediately. Alongside the mapping, define where TSI is most
+              differentiated on cost, quality and timeliness, and identify
+              shortage-prone formulations where the platform may have an
+              especially strong commercial advantage.
             </p>
             <div className="two-col">
               <article className="card">
@@ -378,6 +381,36 @@ export default function TsiPhaseOneScopePage() {
                 </div>
               </article>
             </div>
+            <div className="two-col">
+              <article className="card sage">
+                <CardMotif className="card-motif" />
+                <h3>Differentiation &amp; positioning</h3>
+                <p>
+                  Define the clearest reasons a buyer or partner would choose
+                  TSI over existing alternatives, including where the platform
+                  wins on cost, quality or timeliness and where supply
+                  constraints make TSI&apos;s capabilities especially relevant.
+                </p>
+                <ul>
+                  <li>Cost advantage and manufacturing economics.</li>
+                  <li>Quality, reliability and formulation capability.</li>
+                  <li>Timeliness and speed to dispense or launch.</li>
+                  <li>Shortage-prone formulations and supply gaps.</li>
+                  <li>
+                    Positioning TSI as the platform or &quot;ingredient
+                    inside&quot; the end-customer offering.
+                  </li>
+                </ul>
+              </article>
+              <article className="card">
+                <h3>How it carries forward</h3>
+                <p>
+                  The positioning hypotheses become explicit questions in the
+                  candidate interviews, so the strongest differentiation is
+                  validated by the market rather than assumed internally.
+                </p>
+              </article>
+            </div>
           </div>
         </section>
 
@@ -407,6 +440,11 @@ export default function TsiPhaseOneScopePage() {
                   <li>
                     Whether the value proposition matters to the buyer or
                     channel partner in practice.
+                  </li>
+                  <li>
+                    Which points of differentiation actually resonate: cost,
+                    quality, timeliness, supply resilience or the platform
+                    &quot;ingredient inside&quot; model.
                   </li>
                   <li>
                     What evidence would be needed to support engagement or
@@ -551,24 +589,26 @@ export default function TsiPhaseOneScopePage() {
           <Motif className="motif" />
           <p className="eyebrow">End of Phase One</p>
           <h2>
-            A qualified, advanced relationship and a clear view of what closing
-            it would take.
+            A qualified, advanced relationship and a channel business plan TSI
+            can use to take the opportunity forward.
           </h2>
           <div className="end-grid">
             <div>
-              <h3>What TSI will have</h3>
+              <h3>Channel business plan</h3>
               <p>
-                One relationship already advanced toward a close/no-close
-                decision, plus two or three others meaningfully qualified
-                through real dialogue and market behavior.
+                A final document bringing together the ranked buyer and partner
+                maps, validated differentiation and positioning, candidate
+                evidence, commercial economics, priority relationships and a
+                practical path to market.
               </p>
             </div>
             <div>
-              <h3>What TSI will understand</h3>
+              <h3>Advanced commercial relationship</h3>
               <p>
-                Who the strongest candidate is, why they care, how the economics
-                need to work, and what remains between the current position and
-                signature.
+                One relationship already advanced toward a close/no-close
+                decision, with a clear view of why the candidate cares, how the
+                economics need to work and what remains between the current
+                position and signature.
               </p>
             </div>
           </div>
@@ -580,17 +620,18 @@ export default function TsiPhaseOneScopePage() {
             <p className="eyebrow">Phase One outcome</p>
             <h2>The output is momentum, not just analysis.</h2>
             <p>
-              Phase One ends with a qualified, advanced relationship and a clear
-              view of what closing and scaling in the employer-health channel
-              would actually require.
+              Phase One ends with a qualified, advanced relationship, validated
+              positioning and economics, and a channel business plan that turns
+              the work into a concrete route to market.
             </p>
           </div>
           <div className="final-box">
             <strong>A relationship already moving.</strong>
             <span>
               One candidate is advanced, two or three others have been
-              meaningfully qualified, and the economics are tied to real
-              commercial possibilities.
+              meaningfully qualified, the differentiation has been tested with
+              the market, and the commercial case is captured in a final channel
+              business plan.
             </span>
           </div>
         </section>
