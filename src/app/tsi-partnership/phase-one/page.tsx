@@ -73,7 +73,7 @@ const styles = `
 .tsi-scope{
   --bg:#FAF5EE;--surface:#F1E8D9;--surface-2:#F7EFE5;--ink:#231C2A;--ink-soft:#5E5668;
   --accent:#6B3F78;--accent-soft:#8C5C98;--sage:#69795A;--line:#DED0BB;--white:#FFFDFC;
-  min-height:100vh;background:var(--bg);color:var(--ink);
+  min-height:100vh;background:var(--bg);color:var(--ink);color-scheme:light;
   font-family:var(--font-public-sans),system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 .tsi-scope *{box-sizing:border-box}
@@ -84,7 +84,6 @@ const styles = `
 .tsi-scope .eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .6rem}
 .tsi-scope .brand-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line)}
 .tsi-scope .brand-left{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.tsi-scope .rr-logo{display:block;width:120px;height:auto}
 .tsi-scope .bcorp{display:block;width:130px;height:auto}
 .tsi-scope .note{font-size:.8rem;max-width:38ch;line-height:1.5}
 .tsi-scope nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
@@ -152,6 +151,13 @@ const styles = `
 .tsi-scope .piece-light{fill:var(--bg)}
 .tsi-scope .footer{border-top:1px solid var(--line);padding-block:30px 48px;text-align:center;margin-top:38px}
 .tsi-scope .footer p{font-size:.8rem;margin-top:14px}
+@media (prefers-color-scheme:dark){
+  .tsi-scope{
+    --bg:#FAF5EE;--surface:#F1E8D9;--surface-2:#F7EFE5;--ink:#231C2A;--ink-soft:#5E5668;
+    --accent:#6B3F78;--accent-soft:#8C5C98;--sage:#69795A;--line:#DED0BB;--white:#FFFDFC;
+    background:var(--bg);color:var(--ink);color-scheme:light;
+  }
+}
 @media (max-width:800px){
   .tsi-scope .hero,.tsi-scope .intro-grid,.tsi-scope .final{grid-template-columns:1fr}
   .tsi-scope .flow{grid-template-columns:1fr 1fr}
@@ -165,7 +171,6 @@ const styles = `
   .tsi-scope .shell{padding-inline:14px}
   .tsi-scope .brand-bar{align-items:flex-start}
   .tsi-scope .brand-left{gap:12px}
-  .tsi-scope .rr-logo{width:108px}
   .tsi-scope .bcorp{width:116px}
   .tsi-scope .hero h1{font-size:2.35rem}
   .tsi-scope .flow{grid-template-columns:1fr}
@@ -180,14 +185,6 @@ export default function TsiPhaseOneScopePage() {
       <div className="shell">
         <header className="brand-bar">
           <div className="brand-left">
-            <Image
-              src="/ramprate-logo.png"
-              alt="RampRate"
-              width={1200}
-              height={338}
-              className="rr-logo"
-              priority
-            />
             <Image
               src="/tsi-partnership/bcorp-badge.webp"
               alt="RampRate — Certified B Corporation"
