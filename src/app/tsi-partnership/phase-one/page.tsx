@@ -107,6 +107,18 @@ const styles = `
 .tsi-scope .step strong{display:block;font-family:var(--font-fraunces),Georgia,serif;font-weight:560;margin-top:2px}
 .tsi-scope .step span{display:block;color:var(--ink-soft);font-size:.84rem;line-height:1.48;margin-top:3px}
 .tsi-scope .section{padding-block:50px 54px;border-top:1px solid var(--line)}
+.tsi-scope .relationship-section{padding-block:50px 54px;border-top:1px solid var(--line)}
+.tsi-scope .relationship-head{display:grid;grid-template-columns:.92fr 1.08fr;gap:36px;align-items:start}
+.tsi-scope .relationship-head h2{font-size:clamp(1.6rem,3.2vw,2.15rem);line-height:1.08;max-width:22ch}
+.tsi-scope .relationship-lead{font-size:1rem;max-width:64ch}
+.tsi-scope .relationship-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.tsi-scope .relationship-card{position:relative;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;overflow:hidden}
+.tsi-scope .relationship-card h3{font-size:1.08rem;color:var(--accent);margin-bottom:10px}
+.tsi-scope .relationship-card p{font-size:.9rem}
+.tsi-scope .relationship-card strong{color:var(--ink);font-weight:600}
+.tsi-scope .relationship-note{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tsi-scope .relationship-note .card{background:var(--surface)}
+.tsi-scope .relationship-note .card:last-child{background:rgba(105,121,90,.08)}
 .tsi-scope .intro-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:end}
 .tsi-scope .section h2{font-size:clamp(1.45rem,3vw,1.95rem);line-height:1.08;max-width:23ch}
 .tsi-scope .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
@@ -163,12 +175,13 @@ const styles = `
   }
 }
 @media (max-width:800px){
-  .tsi-scope .hero,.tsi-scope .intro-grid,.tsi-scope .final{grid-template-columns:1fr}
+  .tsi-scope .hero,.tsi-scope .intro-grid,.tsi-scope .relationship-head,.tsi-scope .final{grid-template-columns:1fr}
   .tsi-scope .flow{grid-template-columns:1fr 1fr}
   .tsi-scope .deliverable{grid-template-columns:1fr;gap:18px}
   .tsi-scope .deliverable-head{padding-right:0;min-height:0}
   .tsi-scope .deliverable-head .motif{position:static;display:block;width:170px;height:64px;margin:-4px 0 18px auto;opacity:.23}
-  .tsi-scope .two-col,.tsi-scope .end-grid{grid-template-columns:1fr}
+  .tsi-scope .two-col,.tsi-scope .end-grid,.tsi-scope .relationship-note{grid-template-columns:1fr}
+  .tsi-scope .relationship-grid{grid-template-columns:1fr}
   .tsi-scope .metrics{grid-template-columns:1fr}
 }
 @media (max-width:560px){
@@ -206,6 +219,7 @@ export default function TsiPhaseOneScopePage() {
         <nav aria-label="Section navigation">
           <div className="toc">
             <a href="#objective">Objective</a>
+            <a href="#relationships">Relationships</a>
             <a href="#phase-flow">How it works</a>
             <a href="#deliverable-1">Deliverable 1</a>
             <a href="#deliverable-2">Deliverable 2</a>
@@ -280,6 +294,78 @@ export default function TsiPhaseOneScopePage() {
               ))}
             </div>
           </aside>
+        </section>
+
+        <section className="relationship-section" id="relationships">
+          <div className="relationship-head">
+            <div>
+              <p className="eyebrow">Joe&apos;s question / Relationships</p>
+              <h2>
+                What relationships do we already have, and how do we build them
+                in a new channel?
+              </h2>
+            </div>
+            <p className="relationship-lead">
+              We do not start from an existing book of contacts. We identify the
+              organizations that actually control access in the channel and
+              bring them to the table on terms that work for everyone. That is
+              the approach that has worked for us elsewhere, and it is already
+              in motion here.
+            </p>
+          </div>
+
+          <div className="relationship-grid">
+            <article className="relationship-card">
+              <CardMotif className="card-motif" />
+              <h3>Payer &amp; administration access</h3>
+              <p>
+                We are engaged with <strong>ComPsych</strong>, one of the
+                largest EAP providers in the country, and with{" "}
+                <strong>UnitedHealth Group</strong>. Both are exactly the kind
+                of gatekeeper that controls distribution into the
+                employer-health and capitated-care space being discussed.
+              </p>
+            </article>
+            <article className="relationship-card">
+              <CardMotif className="card-motif" />
+              <h3>Distribution access</h3>
+              <p>
+                We are working a deal with <strong>Threshold Industries</strong>
+                , a sales and scientific organization that could carry the
+                platform directly to market.
+              </p>
+            </article>
+            <article className="relationship-card">
+              <CardMotif className="card-motif" />
+              <h3>What these relationships show</h3>
+              <p>
+                These are not signed commitments to this specific opportunity.
+                They show the process already in motion: find the organizations
+                that control access and go after them directly, rather than wait
+                until the engagement starts to begin relationship development.
+              </p>
+            </article>
+          </div>
+
+          <div className="relationship-note">
+            <article className="card">
+              <h3>What we are not claiming yet</h3>
+              <p>
+                We are not claiming that any of these organizations has already
+                committed interest, budget or funding for a pilot. That is the
+                next question to answer.
+              </p>
+            </article>
+            <article className="card">
+              <h3>What happens next</h3>
+              <p>
+                Deliverable 2 is where we test who is actually willing to move,
+                and on what terms. What we can commit to now is opening those
+                conversations with the organizations above as soon as we are
+                aligned on scope.
+              </p>
+            </article>
+          </div>
         </section>
 
         <section className="section" id="phase-flow">
