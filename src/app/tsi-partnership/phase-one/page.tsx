@@ -330,8 +330,8 @@ export default function TsiPhaseOneScopePage() {
               <CardMotif className="card-motif" />
               <h3>Payer &amp; administration access</h3>
               <p>
-                We are engaged with <strong>ComPsych</strong>, one of the
-                largest EAP providers in the country, and with{" "}
+                We have warm relationship paths into <strong>ComPsych</strong>,
+                one of the largest EAP providers in the country, and into{" "}
                 <strong>UnitedHealth Group</strong>. Both are exactly the kind
                 of gatekeeper that controls distribution into the
                 employer-health and capitated-care space being discussed.
