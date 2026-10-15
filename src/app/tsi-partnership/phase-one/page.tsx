@@ -342,8 +342,9 @@ export default function TsiPhaseOneScopePage() {
                 These are not signed commitments to this specific opportunity,
                 and they are not intended to be the only relationships pursued.
                 They show the process already in motion: start with credible
-                access points, learn who really controls the decision, and use
-                each conversation to open the next relevant door.
+                access points, learn who really controls the decision, then use
+                both those conversations and our wider advisor and relationship
+                network to open the next relevant door.
               </p>
             </article>
           </div>
@@ -355,9 +356,15 @@ export default function TsiPhaseOneScopePage() {
                 Deliverables 1 and 2 are not a static target-list exercise. We
                 continuously update the relationship map with named decision
                 makers, introducers and adjacent channel organizations surfaced
-                through the work. The objective is to compound access: one
-                credible relationship should create visibility into the next
-                people and organizations required to get a deal done.
+                through the work. We also take those needs back into
+                RampRate&apos;s own network: our advisors, long-standing
+                relationships and trusted connectors are used deliberately to
+                identify additional routes into the organizations that matter.
+              </p>
+              <p style={{ marginTop: "12px" }}>
+                The objective is to compound access. One credible relationship
+                should lead to the next relevant person, and our wider network
+                gives us more than one route for opening that door.
               </p>
             </article>
             <article className="card">
