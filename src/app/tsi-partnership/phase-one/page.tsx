@@ -116,7 +116,7 @@ const styles = `
 .tsi-scope .relationship-card h3{font-size:1.08rem;color:var(--accent);margin-bottom:10px}
 .tsi-scope .relationship-card p{font-size:.9rem}
 .tsi-scope .relationship-card strong{color:var(--ink);font-weight:600}
-.tsi-scope .relationship-note{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tsi-scope .relationship-note{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .tsi-scope .relationship-note .card{background:var(--surface)}
 .tsi-scope .relationship-note .card:last-child{background:rgba(105,121,90,.08)}
 .tsi-scope .intro-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:end}
@@ -339,15 +339,27 @@ export default function TsiPhaseOneScopePage() {
               <CardMotif className="card-motif" />
               <h3>What these relationships show</h3>
               <p>
-                These are not signed commitments to this specific opportunity.
-                They show the process already in motion: find the organizations
-                that control access and go after them directly, rather than wait
-                until the engagement starts to begin relationship development.
+                These are not signed commitments to this specific opportunity,
+                and they are not intended to be the only relationships pursued.
+                They show the process already in motion: start with credible
+                access points, learn who really controls the decision, and use
+                each conversation to open the next relevant door.
               </p>
             </article>
           </div>
 
           <div className="relationship-note">
+            <article className="card">
+              <h3>How the relationship map expands</h3>
+              <p>
+                Deliverables 1 and 2 are not a static target-list exercise. We
+                continuously update the relationship map with named decision
+                makers, introducers and adjacent channel organizations surfaced
+                through the work. The objective is to compound access: one
+                credible relationship should create visibility into the next
+                people and organizations required to get a deal done.
+              </p>
+            </article>
             <article className="card">
               <h3>What we are not claiming yet</h3>
               <p>
