@@ -2,40 +2,42 @@
 
 import { useRef, useState } from "react";
 
-const ACCESS_HASH =
-  "49c044226da7aadaf128a3ec026710367941ea477e7e613bd9e6cb615ddf18c4";
-
-async function sha256(value: string) {
-  const bytes = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest))
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-}
-
 export default function StarNewsGate() {
   const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function submit() {
-    const hash = await sha256(password);
-    if (hash === ACCESS_HASH) {
-      setUnlocked(true);
-      setError(false);
-      return;
-    }
+    if (submitting) return;
+    setSubmitting(true);
+    setError(false);
 
-    setError(true);
-    setPassword("");
-    inputRef.current?.focus();
+    try {
+      const response = await fetch("/starnews/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!response.ok) {
+        setError(true);
+        setPassword("");
+        inputRef.current?.focus();
+        return;
+      }
+
+      setUnlocked(true);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (unlocked) {
     return (
       <iframe
-        src="/starnews/discussion.html"
+        src="/starnews/content"
         title="StarNews × RampRate Partnership Discussion"
         className="block h-dvh w-full border-0 bg-[oklch(0.98_0.01_80)]"
       />
@@ -84,10 +86,11 @@ export default function StarNewsGate() {
           )}
           <button
             type="button"
+            disabled={submitting}
             onClick={() => void submit()}
-            className="mt-3 w-full rounded-lg bg-[oklch(0.5_0.12_310)] px-4 py-3 text-sm font-semibold text-white"
+            className="mt-3 w-full rounded-lg bg-[oklch(0.5_0.12_310)] px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
           >
-            Enter
+            {submitting ? "Checking…" : "Enter"}
           </button>
         </div>
       </div>
