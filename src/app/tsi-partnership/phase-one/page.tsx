@@ -235,8 +235,8 @@ export default function TsiPhaseOneScopePage() {
             <a href="#deliverable-2">Deliverable 2</a>
             <a href="#deliverable-3">Deliverable 3</a>
             <a href="#deliverable-4">Deliverable 4</a>
-            <a href="#team">Team</a>
             <a href="#end">End of Phase One</a>
+            <a href="#team">Team</a>
           </div>
         </nav>
 
@@ -710,6 +710,36 @@ export default function TsiPhaseOneScopePage() {
           </div>
         </section>
 
+        <section className="end-card" id="end">
+          <Motif className="motif" />
+          <p className="eyebrow">End of Phase One</p>
+          <h2>
+            One or more qualified, advanced relationships and a channel business
+            plan TSI can use to take the opportunity forward.
+          </h2>
+          <div className="end-grid">
+            <div>
+              <h3>Channel business plan</h3>
+              <p>
+                A final document bringing together the ranked buyer and partner
+                maps, validated differentiation and positioning, candidate
+                evidence, commercial economics, priority relationships and a
+                practical path to market.
+              </p>
+            </div>
+            <div>
+              <h3>Advanced commercial relationships</h3>
+              <p>
+                At least one relationship advanced toward a close/no-close
+                decision, with additional candidates carried forward wherever
+                discussions justify it. For each, TSI has a clear view of why
+                the candidate cares, how the economics need to work and what
+                remains between the current position and signature.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="team-section" id="team">
           <div className="team-head">
             <div>
@@ -767,6 +797,11 @@ export default function TsiPhaseOneScopePage() {
               roster.
             </h3>
             <p>
+              In practice, that means keeping a small accountable core team in
+              place and adding specialist expertise only when the work shows it
+              can materially improve access, credibility or execution.
+            </p>
+            <p style={{ marginTop: "12px" }}>
               One capability we are already looking to add is deeper
               nutraceutical and formulation expertise: someone who can bring
               real operating credibility in supplements, product formulation and
@@ -777,36 +812,6 @@ export default function TsiPhaseOneScopePage() {
               Tony is already working that search through his network.
             </p>
           </article>
-        </section>
-
-        <section className="end-card" id="end">
-          <Motif className="motif" />
-          <p className="eyebrow">End of Phase One</p>
-          <h2>
-            One or more qualified, advanced relationships and a channel business
-            plan TSI can use to take the opportunity forward.
-          </h2>
-          <div className="end-grid">
-            <div>
-              <h3>Channel business plan</h3>
-              <p>
-                A final document bringing together the ranked buyer and partner
-                maps, validated differentiation and positioning, candidate
-                evidence, commercial economics, priority relationships and a
-                practical path to market.
-              </p>
-            </div>
-            <div>
-              <h3>Advanced commercial relationships</h3>
-              <p>
-                At least one relationship advanced toward a close/no-close
-                decision, with additional candidates carried forward wherever
-                discussions justify it. For each, TSI has a clear view of why
-                the candidate cares, how the economics need to work and what
-                remains between the current position and signature.
-              </p>
-            </div>
-          </div>
         </section>
 
         <section className="final">
