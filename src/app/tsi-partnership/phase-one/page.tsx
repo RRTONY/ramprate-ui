@@ -767,15 +767,21 @@ export default function TsiPhaseOneScopePage() {
               roster.
             </h3>
             <p>
-              As conversations progress, we expect to bring in additional
-              advisors, subject-matter specialists and relationship owners where
-              they can materially improve access, credibility or execution. That
-              could include people from RampRate&apos;s existing advisor
-              network, scientific or clinical expertise, operating specialists,
-              or individuals with direct relationships into a priority account
-              or channel. The principle is to add people because the work calls
-              for them, with their role and availability confirmed, rather than
-              pad the project with a large team from day one.
+              One capability we are already looking to add is deeper
+              nutraceutical and formulation expertise: someone who can bring
+              real operating credibility in supplements, product formulation and
+              the science behind the offer, while also helping sharpen how the
+              opportunity is presented to partners and buyers.
+            </p>
+            <p style={{ marginTop: "12px" }}>
+              Tony is already working that search through his network. Current
+              avenues include a candidate referred through Jeff into Genesis
+              Peptides, an experienced formulation specialist from Tony&apos;s
+              industry relationships, and potentially Dan Stickler. Kyle is also
+              being brought into the near-term discussion. These are people we
+              are exploring, not committed team members yet, but they make the
+              expansion model concrete: we add the domain expertise the work
+              needs as the opportunity develops.
             </p>
           </article>
         </section>
