@@ -341,13 +341,12 @@ export default function TsiPhaseOneScopePage() {
               <CardMotif className="card-motif" />
               <h3>Distribution access</h3>
               <p>
-                We are working a deal which brings a team of roughly{" "}
-                <strong>60 sales representatives and 40 PhDs</strong>. That
+                We are advancing a distribution relationship built around a
+                large, scientifically credentialed sales organization. That
                 combination matters because it offers both commercial reach and
-                scientific credibility: a scaled team that could take the
-                platform into market, support technically complex buyer
-                conversations and help open additional distribution
-                relationships.
+                scientific depth: a team that can take the platform into market,
+                support technically complex buyer conversations and help open
+                additional distribution relationships.
               </p>
             </article>
             <article className="relationship-card">
