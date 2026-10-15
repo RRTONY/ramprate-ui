@@ -337,8 +337,7 @@ export default function TsiPhaseOneScopePage() {
                 scientific credibility: a scaled team that could take the
                 platform into market, support technically complex buyer
                 conversations and help open additional distribution
-                relationships. We are currently working to complete a 2.5%
-                commercial agreement with them.
+                relationships.
               </p>
             </article>
             <article className="relationship-card">
