@@ -331,8 +331,14 @@ export default function TsiPhaseOneScopePage() {
               <h3>Distribution access</h3>
               <p>
                 We are working a deal with <strong>Threshold Industries</strong>
-                , a sales and scientific organization that could carry the
-                platform directly to market.
+                , which brings a team of roughly{" "}
+                <strong>60 sales representatives and 40 PhDs</strong>. That
+                combination matters because it offers both commercial reach and
+                scientific credibility: a scaled team that could take the
+                platform into market, support technically complex buyer
+                conversations and help open additional distribution
+                relationships. We are currently working to complete a 2.5%
+                commercial agreement with them.
               </p>
             </article>
             <article className="relationship-card">
