@@ -149,6 +149,16 @@ const styles = `
 .tsi-scope .checklist{display:grid;gap:10px;margin-top:12px}
 .tsi-scope .check{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--ink-soft);font-size:.9rem;line-height:1.5}
 .tsi-scope .check::before{content:"✓";color:var(--sage);font-weight:800}
+.tsi-scope .team-section{padding-block:52px 54px;border-top:1px solid var(--line)}
+.tsi-scope .team-head{display:grid;grid-template-columns:.92fr 1.08fr;gap:36px;align-items:start}
+.tsi-scope .team-head h2{font-size:clamp(1.6rem,3.2vw,2.15rem);line-height:1.08;max-width:20ch}
+.tsi-scope .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.tsi-scope .team-card{position:relative;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;overflow:hidden}
+.tsi-scope .team-card h3{font-size:1.12rem;color:var(--accent);margin-bottom:4px}
+.tsi-scope .team-role{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage)!important;font-weight:700;margin-bottom:10px!important}
+.tsi-scope .team-expand{position:relative;margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;overflow:hidden}
+.tsi-scope .team-expand h3{font-size:1.18rem;color:var(--accent);margin-bottom:10px}
+.tsi-scope .team-expand p{max-width:82ch}
 .tsi-scope .end-card{position:relative;margin-block:14px 0;background:var(--surface);border-radius:22px;padding:40px clamp(22px,4vw,42px);overflow:hidden}
 .tsi-scope .end-card .motif{width:126px;height:48px;opacity:.28;margin-bottom:18px}
 .tsi-scope .end-card h2{max-width:26ch}
@@ -175,13 +185,13 @@ const styles = `
   }
 }
 @media (max-width:800px){
-  .tsi-scope .hero,.tsi-scope .intro-grid,.tsi-scope .relationship-head,.tsi-scope .final{grid-template-columns:1fr}
+  .tsi-scope .hero,.tsi-scope .intro-grid,.tsi-scope .relationship-head,.tsi-scope .team-head,.tsi-scope .final{grid-template-columns:1fr}
   .tsi-scope .flow{grid-template-columns:1fr 1fr}
   .tsi-scope .deliverable{grid-template-columns:1fr;gap:18px}
   .tsi-scope .deliverable-head{padding-right:0;min-height:0}
   .tsi-scope .deliverable-head .motif{position:static;display:block;width:170px;height:64px;margin:-4px 0 18px auto;opacity:.23}
   .tsi-scope .two-col,.tsi-scope .end-grid,.tsi-scope .relationship-note{grid-template-columns:1fr}
-  .tsi-scope .relationship-grid{grid-template-columns:1fr}
+  .tsi-scope .relationship-grid,.tsi-scope .team-grid{grid-template-columns:1fr}
   .tsi-scope .metrics{grid-template-columns:1fr}
 }
 @media (max-width:560px){
@@ -225,6 +235,7 @@ export default function TsiPhaseOneScopePage() {
             <a href="#deliverable-2">Deliverable 2</a>
             <a href="#deliverable-3">Deliverable 3</a>
             <a href="#deliverable-4">Deliverable 4</a>
+            <a href="#team">Team</a>
             <a href="#end">End of Phase One</a>
           </div>
         </nav>
@@ -697,6 +708,76 @@ export default function TsiPhaseOneScopePage() {
               </article>
             </div>
           </div>
+        </section>
+
+        <section className="team-section" id="team">
+          <div className="team-head">
+            <div>
+              <p className="eyebrow">Joe&apos;s question / Team</p>
+              <h2>Who would actually do the work?</h2>
+            </div>
+            <p className="relationship-lead">
+              The core team is deliberately small and accountable, with clear
+              ownership across relationships, commercial structure and senior
+              access. We then add the right specialist or advisor support as the
+              work reveals where it will create leverage.
+            </p>
+          </div>
+
+          <div className="team-grid">
+            <article className="team-card">
+              <CardMotif className="card-motif" />
+              <h3>Rob Holmes</h3>
+              <p className="team-role">Relationship &amp; outreach lead</p>
+              <p>
+                Leads the day-to-day relationship with TSI, target mapping,
+                outreach, interview coordination and follow-through with
+                prospective buyers, channel partners and introducers.
+              </p>
+            </article>
+
+            <article className="team-card">
+              <CardMotif className="card-motif" />
+              <h3>Alex Veytsel</h3>
+              <p className="team-role">Commercial structure &amp; economics</p>
+              <p>
+                Owns the commercial model, pricing and unit economics, deal
+                structure, qualification logic and the economic case that
+                determines which opportunities are worth carrying forward.
+              </p>
+            </article>
+
+            <article className="team-card">
+              <CardMotif className="card-motif" />
+              <h3>Tony Greenberg</h3>
+              <p className="team-role">Introductions &amp; senior decisions</p>
+              <p>
+                Supports senior introductions, opens doors through
+                RampRate&apos;s network and advisor relationships, and helps
+                make the key decisions on where to focus, escalate or bring
+                additional people into the work.
+              </p>
+            </article>
+          </div>
+
+          <article className="team-expand">
+            <Motif className="hero-motif" />
+            <h3>
+              The team expands around the opportunity, not around a fixed
+              roster.
+            </h3>
+            <p>
+              As conversations progress, we expect to bring in additional
+              advisors, subject-matter specialists and relationship owners where
+              they can materially improve access, credibility or execution. That
+              could include people from RampRate&apos;s existing advisor
+              network, scientific or clinical expertise, operating specialists,
+              or individuals with direct relationships into a priority account
+              or channel. The principle is to add people because the work calls
+              for them, with their role and availability confirmed, rather than
+              pad the project with a large team from day one.
+            </p>
+          </article>
         </section>
 
         <section className="end-card" id="end">
