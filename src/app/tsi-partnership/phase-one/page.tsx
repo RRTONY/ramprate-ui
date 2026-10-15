@@ -774,14 +774,7 @@ export default function TsiPhaseOneScopePage() {
               opportunity is presented to partners and buyers.
             </p>
             <p style={{ marginTop: "12px" }}>
-              Tony is already working that search through his network. Current
-              avenues include a candidate referred through Jeff into Genesis
-              Peptides, an experienced formulation specialist from Tony&apos;s
-              industry relationships, and potentially Dan Stickler. Kyle is also
-              being brought into the near-term discussion. These are people we
-              are exploring, not committed team members yet, but they make the
-              expansion model concrete: we add the domain expertise the work
-              needs as the opportunity develops.
+              Tony is already working that search through his network.
             </p>
           </article>
         </section>
