@@ -245,7 +245,7 @@ export default function TsiPhaseOneScopePage() {
         <section className="hero" id="objective">
           <div>
             <p className="eyebrow">RampRate + TSI / Phase One scope</p>
-            <h1>From market hypothesis to a relationship ready to close.</h1>
+            <h1>From market hypothesis to relationships ready to advance.</h1>
             <p className="tagline">
               Prove demand and economics in the EAP and employer-health channel
               while advancing real partner candidates throughout.
@@ -254,8 +254,8 @@ export default function TsiPhaseOneScopePage() {
               The objective is not to finish with a market study and then start
               outreach. It is to learn with the market in real time, carry the
               strongest candidates forward at every step, and end Phase One with
-              a qualified relationship already moving toward an internal
-              decision.
+              one or more qualified relationships already moving toward an
+              internal decision.
             </p>
           </div>
           <aside className="hero-card" aria-label="Phase One progression">
@@ -280,8 +280,8 @@ export default function TsiPhaseOneScopePage() {
                 ],
                 [
                   "4",
-                  "Advance one to close",
-                  "Work through population, delivery and internal approval with the strongest relationship.",
+                  "Advance the strongest relationships",
+                  "Work through population, delivery and internal approval with every candidate that earns the right to keep moving.",
                 ],
               ].map(([n, title, body]) => (
                 <div className="step" key={n}>
@@ -421,8 +421,8 @@ export default function TsiPhaseOneScopePage() {
                 "Actual conversations test value, interest, budget and timing.",
               ],
               [
-                "Advanced relationship",
-                "One candidate reaches a concrete close/no-close decision point.",
+                "Advanced relationships",
+                "At least one candidate reaches a concrete close/no-close decision point, with others carried forward where momentum supports it.",
               ],
             ].map(([title, body]) => (
               <article className="flow-card" key={title}>
@@ -654,14 +654,17 @@ export default function TsiPhaseOneScopePage() {
           <div>
             <div className="deliverable-head">
               <p className="eyebrow">Deliverable 4</p>
-              <h2>The most advanced candidate, ready to close.</h2>
+              <h2>The most advanced candidates, ready to take forward.</h2>
               <Motif className="motif" />
             </div>
             <p className="lede">
-              By the end of the phase, one relationship will have moved
-              furthest. The goal is not a name on a list. It is a candidate that
-              has already worked through enough of the opportunity to make a
-              close/no-close decision meaningful.
+              By the end of the phase, we expect at least one relationship to
+              have reached a meaningful close/no-close decision point. If
+              several candidates show real momentum, we carry all of them
+              forward rather than artificially narrowing the outcome to one. The
+              goal is not a name on a list. It is a set of relationships that
+              have worked through enough of the opportunity to justify continued
+              pursuit.
             </p>
             <div className="two-col">
               <article className="card sage">
@@ -685,10 +688,11 @@ export default function TsiPhaseOneScopePage() {
               <article className="card">
                 <h3>The decision point</h3>
                 <p>
-                  Do we carry this relationship to signature? The answer is
-                  based on real progress, real economics and real internal
-                  movement, rather than a cold introduction made after the
-                  research is finished.
+                  Which relationships have earned the right to move toward
+                  signature? The answer is based on real progress, real
+                  economics and real internal movement. At least one should
+                  reach that decision point; more than one can if the
+                  conversations support it.
                 </p>
               </article>
             </div>
@@ -699,8 +703,8 @@ export default function TsiPhaseOneScopePage() {
           <Motif className="motif" />
           <p className="eyebrow">End of Phase One</p>
           <h2>
-            A qualified, advanced relationship and a channel business plan TSI
-            can use to take the opportunity forward.
+            One or more qualified, advanced relationships and a channel business
+            plan TSI can use to take the opportunity forward.
           </h2>
           <div className="end-grid">
             <div>
@@ -713,12 +717,13 @@ export default function TsiPhaseOneScopePage() {
               </p>
             </div>
             <div>
-              <h3>Advanced commercial relationship</h3>
+              <h3>Advanced commercial relationships</h3>
               <p>
-                One relationship already advanced toward a close/no-close
-                decision, with a clear view of why the candidate cares, how the
-                economics need to work and what remains between the current
-                position and signature.
+                At least one relationship advanced toward a close/no-close
+                decision, with additional candidates carried forward wherever
+                discussions justify it. For each, TSI has a clear view of why
+                the candidate cares, how the economics need to work and what
+                remains between the current position and signature.
               </p>
             </div>
           </div>
@@ -730,17 +735,19 @@ export default function TsiPhaseOneScopePage() {
             <p className="eyebrow">Phase One outcome</p>
             <h2>The output is momentum, not just analysis.</h2>
             <p>
-              Phase One ends with a qualified, advanced relationship, validated
-              positioning and economics, and a channel business plan that turns
+              Phase One ends with at least one qualified, advanced relationship,
+              potentially several if the market responds well, plus validated
+              positioning and economics and a channel business plan that turns
               the work into a concrete route to market.
             </p>
           </div>
           <div className="final-box">
-            <strong>A relationship already moving.</strong>
+            <strong>Relationships already moving.</strong>
             <span>
-              One candidate is advanced, two or three others have been
-              meaningfully qualified, the differentiation has been tested with
-              the market, and the commercial case is captured in a final channel
+              At least one candidate is advanced toward a concrete decision, and
+              any additional candidates showing real momentum are carried
+              forward as well. The differentiation has been tested with the
+              market, and the commercial case is captured in a final channel
               business plan.
             </span>
           </div>
