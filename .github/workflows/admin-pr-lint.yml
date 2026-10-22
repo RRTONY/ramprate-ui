@@ -16,9 +16,11 @@ jobs:
         with:
           node-version: 20
 
-      # package-lock.json is committed, so install exactly those versions -
-      # the same ones Netlify installs (it uses npm whenever that file exists).
-      - run: npm ci --no-audit --no-fund
+      # package-lock.json is committed; install from it the same way Netlify
+      # does (npm install, which uses npm whenever that file exists). Not
+      # `npm ci`: on Linux it rejects a lockfile made on macOS over an
+      # optional peer (fdir wants picomatch ^3 || ^4), which Netlify accepts.
+      - run: npm install --no-audit --no-fund
 
       # Only check files this PR actually touches — the repo has pre-existing
       # lint/formatting debt elsewhere (prettier didn't exist before this) that
@@ -58,7 +60,7 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci --no-audit --no-fund
+      - run: npm install --no-audit --no-fund
 
       # Catches a change that imports a file it never created (PR #73,
       # 2026-10-15: './PhaseOneGate'), which otherwise only surfaced as a vague
