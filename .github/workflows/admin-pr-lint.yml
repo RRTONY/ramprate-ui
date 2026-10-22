@@ -72,6 +72,12 @@ jobs:
       # the equivalent, since it demonstrably builds fine on the same pin.
       - run: yarn install --ignore-engines
 
+      # Catches a change that imports a file it never created (PR #73,
+      # 2026-10-15: './PhaseOneGate'), which otherwise only surfaced as a vague
+      # Netlify "build failed". Repo-wide is fine: master type-checks clean.
+      - name: Type check
+        run: npx tsc --noEmit
+
       # Repo-wide is fine here (unlike lint) — the test suite is new and
       # everything in it currently passes, so this won't be permanently red.
       - run: yarn test

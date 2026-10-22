@@ -698,8 +698,9 @@ infrastructure to maintain.
   checking. Checks are listed separately: **Build** and **Type check** (Netlify's preview build
   only; it runs `next build`, which type-checks), **Lint** (the server lints the changed files
   itself at submit and whenever the code version changes; stored as `lint` on the record),
-  **GitHub checks** (the Actions jobs in `.github/workflows/admin-pr-lint.yml`: `test`, and
-  `lint-changed-files` with a Prettier check, named when waiting or failed), and **Phone and
+  **GitHub checks** (the Actions jobs in `.github/workflows/admin-pr-lint.yml`: `test`, which
+  also runs a repo-wide `tsc --noEmit` type check since 2026-10-23, and `lint-changed-files`
+  with a Prettier check, named when waiting or failed), and **Phone and
   laptop preview** (optional). `getPRChecksDetail` splits Netlify (`netlify/...` status and the
   "... - ramprate" check runs) from Actions. Publish is refused until all required checks finish
   on the exact version reviewed. Lint that **could not run** blocks; lint **errors** in the
