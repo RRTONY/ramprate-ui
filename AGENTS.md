@@ -117,7 +117,9 @@ Follow the patterns already in the codebase before inventing new ones. Specific 
 - Long repeated system prompts use prompt caching (`cache_control: { type: "ephemeral" }`).
 
 **Dependencies**
-- No new npm dependency without asking first. No `framer-motion` on the marketing site (it is fine
+- No new npm dependency without asking first. `package-lock.json` is committed (since 2026-10-23) and both
+  Netlify and the GitHub checks install from it with npm, so builds are repeatable. Use npm, not
+  yarn, and commit the lockfile change with any package change. No `framer-motion` on the marketing site (it is fine
   inside `/flow`).
 
 **General**
