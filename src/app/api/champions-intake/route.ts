@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/lib/admin/resend-client";
 import { createClickupTask } from "@/lib/admin/clickup-client";
+import { isLinkedInProfileUrl } from "@/lib/linkedin";
 
 // Shared inbox, not a named individual - a Champion's introduction shouldn't
 // depend on one person seeing one email. Same address as the public
@@ -29,6 +30,20 @@ export async function POST(req: NextRequest) {
   // claim-time, so it's threaded through into the ClickUp record and the
   // applicant's own confirmation email below as a durable, independent copy.
   const receivedAt = new Date().toISOString();
+
+  if (
+    typeof formData.linkedin !== "string" ||
+    !isLinkedInProfileUrl(formData.linkedin)
+  ) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "Please enter your LinkedIn profile link, for example https://linkedin.com/in/your-name.",
+      },
+      { status: 400 },
+    );
+  }
 
   const payload = {
     formData: { ...formData, receivedAt },
