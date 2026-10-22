@@ -8,13 +8,7 @@ const ACCESS_HASH =
 const AUTH_COOKIE = "starnews_proposal_auth";
 const AUTH_COOKIE_VALUE =
   "923c960d503099b3c93a48bf4daaa12a1f8b4b2c40240ed54a6debf735640140";
-
-const ASSET_FILES: Record<string, string> = Object.fromEntries(
-  Array.from({ length: 17 }, (_, index) => [
-    String(index),
-    `asset-${String(index).padStart(2, "0")}.webp`,
-  ]),
-);
+const CHUNK_COUNT = 27;
 
 function hash(value: string) {
   return createHash("sha256").update(value).digest("hex");
@@ -28,18 +22,15 @@ function matchesPassword(value: string) {
   );
 }
 
-function isAuthorized(req: NextRequest) {
-  return req.cookies.get(AUTH_COOKIE)?.value === AUTH_COOKIE_VALUE;
-}
-
-function privateFile(...parts: string[]) {
+function chunkPath(index: number) {
   return path.join(
     process.cwd(),
     "src",
     "app",
     "starnews-proposal",
     "private",
-    ...parts,
+    "chunks",
+    `part-${String(index).padStart(3, "0")}.txt`,
   );
 }
 
@@ -67,7 +58,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAuthorized(req)) {
+  if (req.cookies.get(AUTH_COOKIE)?.value !== AUTH_COOKIE_VALUE) {
     return new NextResponse("Unauthorized", {
       status: 401,
       headers: {
@@ -77,26 +68,13 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const asset = req.nextUrl.searchParams.get("asset");
+  const chunks = await Promise.all(
+    Array.from({ length: CHUNK_COUNT }, (_, index) =>
+      readFile(chunkPath(index), "utf8"),
+    ),
+  );
 
-  if (asset !== null) {
-    const filename = ASSET_FILES[asset];
-    if (!filename) {
-      return new NextResponse("Not found", { status: 404 });
-    }
-
-    const body = await readFile(privateFile("assets", filename));
-    return new NextResponse(body, {
-      headers: {
-        "Content-Type": "image/webp",
-        "Cache-Control": "private, max-age=28800",
-        "X-Robots-Tag": "noindex, nofollow, noarchive",
-      },
-    });
-  }
-
-  const html = await readFile(privateFile("proposal.html"), "utf8");
-  return new NextResponse(html, {
+  return new NextResponse(chunks.join(""), {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "private, no-store",
