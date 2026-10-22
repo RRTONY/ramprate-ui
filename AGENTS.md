@@ -579,7 +579,11 @@ infrastructure to maintain.
   document (only from trusted ChatGPT/Claude hosts, `resolveClient`), use its redirect URIs, and
   verify its **`private_key_jwt`** client assertion (RS256, against its `jwks_uri`, checking
   iss/sub/aud/exp) at the token endpoint. Without this, ChatGPT failed with "Couldn't create MCP
-  app". (2) **Dynamic client registration** (`/api/oauth/register`), used by Claude; a client that
+  app". **chatgpt.com serves those two files unreliably** (24 of 30 requests got a 404 on
+  2026-10-23, which showed people "This app isn't registered with RampRate"), so `fetchJson`
+  retries within an 8s deadline, then uses the last good copy, then a pinned copy of ChatGPT's
+  public document and key (`PINNED_DOCUMENTS`). Public data only, so it grants nothing. If OpenAI
+  rotates its key, update the pinned copy. (2) **Dynamic client registration** (`/api/oauth/register`), used by Claude; a client that
   asks for `client_secret_basic`/`client_secret_post` gets a derived secret that the token endpoint
   checks. Metadata advertises both, plus `authorization_response_iss_parameter_supported`.
 - **Team-member access (added 2026-09-26):** every request is tied to one person from
