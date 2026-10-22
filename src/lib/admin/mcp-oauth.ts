@@ -257,23 +257,84 @@ function isTrustedHttpsUrl(value: string): boolean {
   }
 }
 
+// chatgpt.com answers most requests for its client document and keys with a
+// 404 (24 of 30 in a row on 2026-10-23, same URL, same headers), so a single
+// try made ChatGPT sign-in fail with "This app isn't registered". Retry a few
+// times within one overall deadline.
+const FETCH_ATTEMPTS = 8;
+const FETCH_DEADLINE_MS = 8000;
+
 async function fetchJson(url: string): Promise<unknown> {
-  try {
-    const res = await fetch(url, {
-      headers: { accept: "application/json" },
-      redirect: "error",
-      signal: AbortSignal.timeout(5000),
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
+  const deadline = Date.now() + FETCH_DEADLINE_MS;
+  for (let attempt = 0; attempt < FETCH_ATTEMPTS; attempt++) {
+    const left = deadline - Date.now();
+    if (left <= 0) break;
+    try {
+      const res = await fetch(url, {
+        headers: { accept: "application/json" },
+        redirect: "error",
+        signal: AbortSignal.timeout(Math.min(3000, left)),
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      // retry
+    }
+    if (attempt < FETCH_ATTEMPTS - 1) {
+      await new Promise((r) =>
+        setTimeout(r, Math.min(150 * (attempt + 1), 600)),
+      );
+    }
   }
+  return null;
+}
+
+// Last-resort copies of ChatGPT's public client document and signing key
+// (fetched 2026-10-23), used only when every live fetch fails. Both are
+// public by design: the return address is a chatgpt.com URL (an allowed
+// host anyway) and a public key can only verify, never sign, so these grant
+// nothing - the token step still needs an assertion signed by ChatGPT. If
+// OpenAI rotates the key, the live fetch (tried first) picks up the new one.
+const CHATGPT_CIMD = "https://chatgpt.com/oauth/client.json";
+const CHATGPT_JWKS = "https://chatgpt.com/oauth/jwks.json";
+const PINNED_DOCUMENTS: Record<string, unknown> = {
+  [CHATGPT_CIMD]: {
+    client_id: CHATGPT_CIMD,
+    client_name: "ChatGPT",
+    redirect_uris: ["https://chatgpt.com/connector_platform_oauth_redirect"],
+    token_endpoint_auth_method: "private_key_jwt",
+    jwks_uri: CHATGPT_JWKS,
+  },
+  [CHATGPT_JWKS]: {
+    keys: [
+      {
+        kty: "RSA",
+        kid: "cimd-20260428030119",
+        use: "sig",
+        alg: "RS256",
+        n: "y09nMyYX6LhSgS3YmbLOZrFoR8SffxG0kM5gQ5PKpHVMzbAu__-7rf0_Q_pwhVa9vxJzv3cRkGnXKNWKOHDdEXp8YFPVUql4NcDjDdS_0w0uos8gazoa7Td47qVquxOsG3861l8oKEh-E4r5C_6w6Sx0Rl2WEEs2-dmvn3fwH9PkLCQOo4tsNAEnrW_ge2vQE-pFo-kJp5QRRiX2w0YvaMFtIfEvNbdPSJ3xd7NbGrvRt279HrxgDLGUvpbeWrCsp3D7HdR2QZn-9MZp7CHPlMGtFgN9aIB4Guf7qYlRiC3Ja0ZI22jSMct6xrI-90XX4AK2FhiWmYOmjV_2d3vEVw",
+        e: "AQAB",
+      },
+    ],
+  },
+};
+
+// Live first, then the last good copy this instance saw (even if older than
+// the cache TTL), then the pinned copy.
+const lastGood = new Map<string, unknown>();
+
+async function fetchRemoteJson(url: string): Promise<unknown> {
+  const live = await fetchJson(url);
+  if (live) {
+    lastGood.set(url, live);
+    return live;
+  }
+  return lastGood.get(url) ?? PINNED_DOCUMENTS[url] ?? null;
 }
 
 export function clearRemoteClientCachesForTests(): void {
   cimdCache.clear();
   jwksCache.clear();
+  lastGood.clear();
 }
 
 async function readClientDocument(
@@ -282,7 +343,7 @@ async function readClientDocument(
   const hit = cimdCache.get(url);
   if (hit && Date.now() - hit.at < REMOTE_TTL_MS) return hit.client;
 
-  const doc = (await fetchJson(url)) as Record<string, unknown> | null;
+  const doc = (await fetchRemoteJson(url)) as Record<string, unknown> | null;
   let client: RegisteredClient | null = null;
   if (doc && doc.client_id === url && Array.isArray(doc.redirect_uris)) {
     const uris = doc.redirect_uris.filter(
@@ -325,7 +386,7 @@ export async function resolveClient(
 async function jwksFor(uri: string, fresh = false): Promise<CryptoJwk[]> {
   const hit = jwksCache.get(uri);
   if (!fresh && hit && Date.now() - hit.at < REMOTE_TTL_MS) return hit.keys;
-  const body = (await fetchJson(uri)) as { keys?: CryptoJwk[] } | null;
+  const body = (await fetchRemoteJson(uri)) as { keys?: CryptoJwk[] } | null;
   const keys = Array.isArray(body?.keys) ? body.keys : [];
   if (keys.length) jwksCache.set(uri, { keys, at: Date.now() });
   return keys;
