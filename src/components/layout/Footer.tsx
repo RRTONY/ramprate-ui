@@ -62,8 +62,8 @@ export default function Footer({
             <p className="font-body text-[15px] text-ed-muted leading-relaxed max-w-md">
               Since 2000, we&apos;ve brought extraordinary people, ideas, and
               organizations together to solve difficult problems, challenge
-              conventional thinking, and create outcomes that change
-              what&apos;s possible.
+              conventional thinking, and create outcomes that change what&apos;s
+              possible.
             </p>
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"

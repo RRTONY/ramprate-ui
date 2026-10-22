@@ -1,69 +1,72 @@
-import type {Metadata} from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import {sanityFetch} from '@/lib/sanity/client'
-import {siteSettingsQuery} from '@/lib/sanity/queries'
-import {toTelHref} from '@/lib/utils'
-import ContactForm from '@/components/sections/ContactForm'
-import {getPageSeo, withSeoOverrides} from '@/lib/sanity/seo'
-import JsonLd, {breadcrumbJsonLd} from '@/components/shared/JsonLd'
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { sanityFetch } from "@/lib/sanity/client";
+import { siteSettingsQuery } from "@/lib/sanity/queries";
+import { toTelHref } from "@/lib/utils";
+import ContactForm from "@/components/sections/ContactForm";
+import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 const FALLBACK_METADATA: Metadata = {
-  title: 'Contact',
-  description: 'Start a conversation with RampRate. The first conversation is always free.',
+  title: "Contact",
+  description:
+    "Start a conversation with RampRate. The first conversation is always free.",
   keywords: [
-    'contact RampRate',
-    'IT sourcing advisory contact',
-    'enterprise advisory engagement',
+    "contact RampRate",
+    "IT sourcing advisory contact",
+    "enterprise advisory engagement",
   ],
-  alternates: { canonical: '/contact' },
+  alternates: { canonical: "/contact" },
   openGraph: {
-    title: 'Contact',
-    description: 'Start a conversation with RampRate. The first conversation is always free.',
-    url: 'https://ramprate.com/contact',
-    type: 'website',
-    images: ['/og.png'],
+    title: "Contact",
+    description:
+      "Start a conversation with RampRate. The first conversation is always free.",
+    url: "https://ramprate.com/contact",
+    type: "website",
+    images: ["/og.png"],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Contact',
-    description: 'Start a conversation with RampRate. The first conversation is always free.',
-    images: ['/og.png'],
+    card: "summary_large_image",
+    title: "Contact",
+    description:
+      "Start a conversation with RampRate. The first conversation is always free.",
+    images: ["/og.png"],
   },
-}
+};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getPageSeo('/contact')
-  return withSeoOverrides(FALLBACK_METADATA, data?.seo)
+  const data = await getPageSeo("/contact");
+  return withSeoOverrides(FALLBACK_METADATA, data?.seo);
 }
 
-
 const offices = [
-  {city: 'Santa Monica, CA', role: 'US Headquarters'},
-  {city: 'Ibiza, Spain',     role: 'EU Headquarters'},
-  {city: 'Massachusetts',    role: 'East Coast'},
-  {city: 'North Carolina',   role: 'Southeast'},
-  {city: 'Florida',          role: 'Southeast'},
-]
+  { city: "Santa Monica, CA", role: "US Headquarters" },
+  { city: "Ibiza, Spain", role: "EU Headquarters" },
+  { city: "Massachusetts", role: "East Coast" },
+  { city: "North Carolina", role: "Southeast" },
+  { city: "Florida", role: "Southeast" },
+];
 
-const B_CORP_PROFILE = 'https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/'
+const B_CORP_PROFILE =
+  "https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/";
 
 export default async function ContactPage() {
-  const settings = await sanityFetch<{phone?: string; email?: string}>({
+  const settings = await sanityFetch<{ phone?: string; email?: string }>({
     query: siteSettingsQuery,
-    tags: ['siteSettings'],
+    tags: ["siteSettings"],
     revalidate: 60,
-  })
+  });
 
-  const phone = settings?.phone || '+1(909)235-9945'
-  const email = settings?.email || 'hello@ramprate.com'
+  const phone = settings?.phone || "+1(909)235-9945";
+  const email = settings?.email || "hello@ramprate.com";
 
   return (
     <div className="bg-ed-ivory text-ed-ink">
       <JsonLd
         data={breadcrumbJsonLd([
-          {name: 'Home', url: 'https://ramprate.com'},
-          {name: 'Contact', url: 'https://ramprate.com/contact'},
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "Contact", url: "https://ramprate.com/contact" },
         ])}
       />
 
@@ -74,23 +77,33 @@ export default async function ContactPage() {
             Contact
           </span>
           <h1 className="font-display mt-4 text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.08] tracking-tight max-w-3xl">
-            Trust Us With What You{' '}
+            Trust Us With What You{" "}
             <span className="relative isolate whitespace-nowrap">
               Hate to Do
-              <span aria-hidden="true" className="absolute left-0 right-0 -bottom-1 h-2 rounded-full bg-ed-coral/60 -z-10" />
+              <span
+                aria-hidden="true"
+                className="absolute left-0 right-0 -bottom-1 h-2 rounded-full bg-ed-coral/60 -z-10"
+              />
             </span>
           </h1>
           <p className="font-body mt-6 text-lg sm:text-xl leading-relaxed max-w-2xl text-ed-muted">
-            And focus on the change you want to create in the world. The first conversation is always free.
+            And focus on the change you want to create in the world. The first
+            conversation is always free.
           </p>
 
           <ul className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 font-body text-[15px] text-ed-ink">
             <li className="flex items-center gap-2.5">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ed-forest" />
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full bg-ed-forest"
+              />
               Serving clients since 2000
             </li>
             <li className="flex items-center gap-2.5">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ed-forest" />
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full bg-ed-forest"
+              />
               Offices in the US and Europe
             </li>
             <li>
@@ -100,7 +113,14 @@ export default async function ContactPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 rounded-md hover:underline underline-offset-4"
               >
-                <Image src="/bcorp-logo.svg" alt="" width={20} height={29} className="h-7 w-auto" unoptimized />
+                <Image
+                  src="/bcorp-logo.svg"
+                  alt=""
+                  width={20}
+                  height={29}
+                  className="h-7 w-auto"
+                  unoptimized
+                />
                 Certified B Corporation
               </a>
             </li>
@@ -115,18 +135,28 @@ export default async function ContactPage() {
             <ContactForm email={email} />
           </div>
 
-          <aside className="lg:col-span-5 space-y-6 lg:sticky lg:top-28" aria-label="Other ways to reach us">
+          <aside
+            className="lg:col-span-5 space-y-6 lg:sticky lg:top-28"
+            aria-label="Other ways to reach us"
+          >
             <div className="rounded-2xl bg-ed-sage p-6 sm:p-8 border-l-4 border-ed-coral">
-              <h2 className="font-display text-xl sm:text-2xl font-bold">The RampRate Guarantee</h2>
+              <h2 className="font-display text-xl sm:text-2xl font-bold">
+                The RampRate Guarantee
+              </h2>
               <p className="font-body mt-3 text-base leading-relaxed text-ed-ink/85">
-                The audit is always free. If we don&apos;t deliver 300%+ ROI on our sourcing engagements, you don&apos;t pay. We put skin in the game because we believe in what we do.
+                The audit is always free. If we don&apos;t deliver 300%+ ROI on
+                our sourcing engagements, you don&apos;t pay. We put skin in the
+                game because we believe in what we do.
               </p>
             </div>
 
             <div className="rounded-2xl bg-white border border-ed-line p-6 sm:p-8">
-              <h2 className="font-display text-xl sm:text-2xl font-bold">Prefer to talk first?</h2>
+              <h2 className="font-display text-xl sm:text-2xl font-bold">
+                Prefer to talk first?
+              </h2>
               <p className="font-body mt-2 text-base leading-relaxed text-ed-muted">
-                Pick a time that suits you and one of our principals will be on the call.
+                Pick a time that suits you and one of our principals will be on
+                the call.
               </p>
               <a
                 href="https://calendly.com/ramprate"
@@ -136,14 +166,29 @@ export default async function ContactPage() {
               >
                 Schedule a Call
                 <span className="sr-only">(opens in a new tab)</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </a>
 
               <dl className="mt-8 pt-6 border-t border-ed-line grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-5 font-body">
                 <div>
                   <dt className="text-sm font-semibold text-ed-muted">Email</dt>
                   <dd className="mt-1">
-                    <a href={`mailto:${email}`} className="text-base font-medium text-ed-ink underline decoration-ed-line underline-offset-4 hover:decoration-ed-forest break-all">
+                    <a
+                      href={`mailto:${email}`}
+                      className="text-base font-medium text-ed-ink underline decoration-ed-line underline-offset-4 hover:decoration-ed-forest break-all"
+                    >
                       {email}
                     </a>
                   </dd>
@@ -151,7 +196,10 @@ export default async function ContactPage() {
                 <div>
                   <dt className="text-sm font-semibold text-ed-muted">Phone</dt>
                   <dd className="mt-1">
-                    <a href={`tel:${toTelHref(phone)}`} className="text-base font-medium text-ed-ink underline decoration-ed-line underline-offset-4 hover:decoration-ed-forest">
+                    <a
+                      href={`tel:${toTelHref(phone)}`}
+                      className="text-base font-medium text-ed-ink underline decoration-ed-line underline-offset-4 hover:decoration-ed-forest"
+                    >
                       {phone}
                     </a>
                   </dd>
@@ -159,12 +207,18 @@ export default async function ContactPage() {
               </dl>
 
               <div className="mt-6 pt-6 border-t border-ed-line">
-                <h3 className="font-body text-sm font-semibold text-ed-muted">Offices</h3>
+                <h3 className="font-body text-sm font-semibold text-ed-muted">
+                  Offices
+                </h3>
                 <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 font-body">
                   {offices.map((o) => (
                     <li key={o.city}>
-                      <span className="block text-[15px] font-medium">{o.city}</span>
-                      <span className="block text-sm text-ed-muted">{o.role}</span>
+                      <span className="block text-[15px] font-medium">
+                        {o.city}
+                      </span>
+                      <span className="block text-sm text-ed-muted">
+                        {o.role}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -172,8 +226,11 @@ export default async function ContactPage() {
             </div>
 
             <p className="font-body text-base text-ed-muted px-1">
-              Not ready to talk?{' '}
-              <Link href="/process" className="font-semibold text-ed-violet underline underline-offset-4">
+              Not ready to talk?{" "}
+              <Link
+                href="/process"
+                className="font-semibold text-ed-violet underline underline-offset-4"
+              >
                 See how we work
               </Link>
             </p>
@@ -181,5 +238,5 @@ export default async function ContactPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
