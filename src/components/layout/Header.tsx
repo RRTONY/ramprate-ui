@@ -49,6 +49,7 @@ export default function Header() {
     "/henry-jannol",
     "/josh-bykowski",
     "/legal-master",
+    "/roles",
   ];
   const lightBgExactPaths = ["/biochain", "/contact"];
   const isLightPage =

@@ -36,6 +36,7 @@ Background notes for any AI tool working on this repo. The **rules** live in [`/
 - [project_gsc_mcp_tools](project_gsc_mcp_tools.md): 09-24 added 4 Google Search Console tools to the /api/mcp admin server (uncommitted); needs service account added as GSC user
 - [project_next16_loading_404_bug](project_next16_loading_404_bug.md): Next.js 16 loading.tsx creates an ancestor Suspense boundary that silently breaks notFound()/redirect() status codes for ALL nested dynamic routes
 - [project_payments_advisory](project_payments_advisory.md): New /payments-advisory pages: RFP-authorship tool for payment processor selection, standalone (not a registered practice)
+- [project_open_roles](project_open_roles.md): /roles Open Roles listing + role pages (2026-10-24), rebuilt in Next.js from Darryl's static roles-package; preview flag, Tony's banner, Dover link, go-live checklist
 - [project_pdf_report_template](project_pdf_report_template.md): Reusable branded PDF report template + generator script (scripts/report-template/), built 2026-09-05 after past guide PDFs (Sanity CMS Guide, Supplier Intake Manual Guide) turned out to have no saved template at all
 - [project_ramprate](project_ramprate.md): RampRate UI codebase — architecture, known issues, stack summary
 - [project_seo_audit_2026-08](project_seo_audit_2026-08.md): Live SEO audit of ramprate.com (2026-08-04) - what was actually broken vs. working, and fixes applied
