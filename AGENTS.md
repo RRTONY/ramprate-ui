@@ -488,6 +488,7 @@ was saved).
 | `/artifacts`        | Sales-published HTML artifacts (listing) — see Artifact Publishing System below |
 | `/artifacts/[slug]` | Individual published artifact, sandboxed iframe                          |
 | `/artifacts/admin`  | Password-gated Artifact Manager (internal, noindex)                      |
+| `/roles`, `/roles/[slug]` | Open Roles (noindex preview until Sam and Tony approve), see `docs/ai/project_open_roles.md` |
 
 ---
 
