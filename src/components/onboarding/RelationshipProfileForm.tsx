@@ -247,7 +247,7 @@ export default function RelationshipProfileForm() {
       );
     } catch {
       setSubmitError(
-        "Something went wrong sending your profile. Please try again in a moment, or email admin@ramprate.com.",
+        "Something went wrong sending your profile. Please try again in a moment, or email hello@ramprate.com.",
       );
     } finally {
       setSubmitting(false);
@@ -574,7 +574,7 @@ export default function RelationshipProfileForm() {
         <p className="font-body mx-auto mt-3 max-w-md text-lg text-ed-muted text-pretty">
           We have received your profile and will use it to schedule and
           communicate the way you prefer. If anything changes, just let us know
-          at admin@ramprate.com.
+          at hello@ramprate.com.
         </p>
       </div>
     );
