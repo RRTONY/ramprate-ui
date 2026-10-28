@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/lib/admin/resend-client";
 
 const allowedIntents = ["project", "introduction", "partnership", "other"];
-const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const text = (value: unknown, limit = 2000) =>
   typeof value === "string" ? value.trim().slice(0, limit) : "";
 const list = (value: unknown) =>
