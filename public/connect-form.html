@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Roboto+Slab:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -472,6 +472,177 @@
         * {
           animation: none !important;
           transition: none !important;
+        }
+      }
+
+      /* Match the existing /contact page's editorial palette and layout. */
+      :root {
+        --ink: #263630;
+        --muted: #58665f;
+        --purple: #315f4f;
+        --purple-deep: #23483d;
+        --purple-soft: #6a9485;
+        --teal: #315f4f;
+        --tint: #e1ebe4;
+        --line: #dfdbd2;
+        --white: #ffffff;
+        --head: "Playfair Display", Georgia, serif;
+        --body: "DM Sans", Arial, sans-serif;
+      }
+      body {
+        background: #f7f5f0;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      .page {
+        display: block;
+        max-width: 1216px;
+        padding: 104px 32px 112px;
+      }
+      .intro {
+        position: static;
+        padding: 0;
+        margin-bottom: 60px;
+      }
+      .wordmark,
+      .ramp {
+        display: none;
+      }
+      .intro::before {
+        content: "CONNECT";
+        display: block;
+        font: 700 13px/1.4 var(--body);
+        letter-spacing: 0.18em;
+        color: #315f4f;
+        margin-bottom: 21px;
+      }
+      h1 {
+        font-family: var(--head);
+        font-weight: 700;
+        font-size: clamp(40px, 5.8vw, 68px);
+        line-height: 1.08;
+        max-width: 780px;
+        letter-spacing: -0.025em;
+        margin: 0 0 23px;
+      }
+      h1::after {
+        content: "";
+        display: block;
+        width: 218px;
+        height: 7px;
+        border-radius: 9px;
+        background: #efb3a5;
+        margin-top: 9px;
+      }
+      .lede {
+        font: 400 clamp(17px, 2vw, 20px)/1.7 var(--body);
+        max-width: 720px;
+        margin: 0;
+      }
+      .panel {
+        width: 100%;
+        max-width: 850px;
+        padding: 40px 44px;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        box-shadow:
+          0 1px 2px rgba(35, 55, 47, 0.04),
+          0 12px 32px -12px rgba(35, 55, 47, 0.12);
+      }
+      .panel h2 {
+        font: 700 clamp(25px, 3vw, 32px)/1.2 var(--head);
+        margin: 0 0 12px;
+      }
+      .panel .sub {
+        font: 400 16px/1.65 var(--body);
+        margin-bottom: 28px;
+      }
+      label,
+      legend {
+        font: 600 15px/1.5 var(--body);
+        margin-bottom: 8px;
+      }
+      .opt {
+        font: 400 14px var(--body);
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        font: 400 16px/1.5 var(--body);
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        padding: 12px 15px;
+        min-height: 48px;
+      }
+      input:hover,
+      textarea:hover {
+        border-color: #9aaea5;
+      }
+      input:focus-visible,
+      textarea:focus-visible {
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px rgba(49, 95, 79, 0.2);
+      }
+      .chip span,
+      .stack .chip span {
+        font: 600 14px/1.4 var(--body);
+        border: 1px solid var(--line);
+      }
+      .chip input:checked + span {
+        background: var(--tint);
+        border-color: var(--purple);
+        color: var(--purple-deep);
+      }
+      .chip input:focus-visible + span {
+        box-shadow: 0 0 0 3px rgba(49, 95, 79, 0.2);
+      }
+      .sect {
+        background: #e1ebe4;
+      }
+      .sect h3 {
+        font-family: var(--head);
+        font-size: 19px;
+      }
+      .submit {
+        font-family: var(--body);
+        font-size: 16px;
+        border-radius: 9px;
+      }
+      .submit:focus-visible {
+        outline-color: #efb3a5;
+      }
+      .done h2 {
+        font-family: var(--head);
+      }
+      .done .tick {
+        background: #e1ebe4;
+      }
+      @media (max-width: 900px) {
+        .page {
+          padding: 60px 24px 80px;
+        }
+        .intro {
+          margin-bottom: 34px;
+        }
+        .panel {
+          max-width: none;
+          padding: 30px 26px;
+        }
+      }
+      @media (max-width: 520px) {
+        .page {
+          padding: 40px 18px 64px;
+        }
+        .panel {
+          padding: 25px 20px;
+        }
+        h1 {
+          font-size: clamp(38px, 10vw, 50px);
+        }
+        .intro {
+          margin-bottom: 28px;
         }
       }
     </style>
