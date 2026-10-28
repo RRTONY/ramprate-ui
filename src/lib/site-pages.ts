@@ -8,6 +8,15 @@ export interface SitePage {
 
 export const SITE_PAGES: SitePage[] = [
   {
+    title: "Connect with RampRate",
+    path: "/connect",
+    type: "page",
+    keywords:
+      "connect contact inquiry partnership introduction projects get in touch",
+    description:
+      "Tell us about your project, introduction, partnership idea or inquiry and the RampRate team will take it from there.",
+  },
+  {
     title: "Data Centers Have a Heart. Meet the Humans Behind the Cloud.",
     path: "/blog/data-centers-have-a-heart",
     type: "blog",

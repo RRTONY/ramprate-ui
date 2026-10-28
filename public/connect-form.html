@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connect with RampRate</title>
+    <meta
+      name="description"
+      content="Tell us about your project, introduction, partnership idea or inquiry and the RampRate team will take it from there."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #242424;
+        --muted: #5b5b5f;
+        --purple: #7e32d4;
+        --purple-deep: #403092;
+        --purple-soft: #a454ff;
+        --teal: #00d2d4;
+        --orange: #ff6e12;
+        --tint: #f6f1fd;
+        --line: #ddd6ea;
+        --white: #ffffff;
+        --danger: #c42b1c;
+        --head: "Poppins", "Helvetica Neue", Arial, sans-serif;
+        --body: "Roboto Slab", Georgia, "Times New Roman", serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--white);
+        color: var(--ink);
+        font-family: var(--body);
+        font-weight: 300;
+        font-size: 17px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3,
+      legend,
+      label,
+      button,
+      .wordmark {
+        font-family: var(--head);
+      }
+      h1,
+      h2,
+      p,
+      legend {
+        text-wrap: balance;
+      }
+      p {
+        text-wrap: pretty;
+      }
+
+      .page {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 28px 24px 56px;
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: 56px;
+        align-items: start;
+      }
+      .intro {
+        position: sticky;
+        top: 32px;
+        padding-top: 8px;
+      }
+      .wordmark {
+        font-weight: 600;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        display: inline-block;
+        text-decoration: none;
+        margin-bottom: 56px;
+      }
+      .wordmark span {
+        color: var(--purple);
+      }
+      h1 {
+        font-weight: 600;
+        font-size: clamp(34px, 4.4vw, 52px);
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        margin: 0 0 20px;
+        color: var(--ink);
+      }
+      .lede {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0 0 36px;
+        max-width: 30em;
+      }
+      .ramp {
+        display: block;
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+        margin-top: 8px;
+      }
+
+      .panel {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 36px 36px 32px;
+        box-shadow: 0 24px 60px -28px rgba(64, 48, 146, 0.28);
+      }
+      .panel h2 {
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        margin: 0 0 4px;
+      }
+      .panel .sub {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .field {
+        margin: 0 0 20px;
+        min-width: 0;
+      }
+      label,
+      legend {
+        display: block;
+        font-weight: 500;
+        font-size: 14.5px;
+        color: var(--ink);
+        margin: 0 0 7px;
+        padding: 0;
+      }
+      .opt {
+        font-family: var(--body);
+        font-weight: 300;
+        color: var(--muted);
+        font-size: 14px;
+        margin-left: 6px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        width: 100%;
+        font: 400 16px/1.4 var(--body);
+        color: var(--ink);
+        background: var(--white);
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        padding: 13px 14px;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+      textarea {
+        min-height: 104px;
+        resize: vertical;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #8a8a90;
+        font-weight: 300;
+      }
+      input:hover,
+      textarea:hover {
+        border-color: #bfb2d8;
+      }
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: none;
+        border-color: var(--purple);
+        box-shadow: 0 0 0 4px rgba(126, 50, 212, 0.16);
+      }
+      .help {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin: 6px 0 0;
+      }
+      .err {
+        display: none;
+        font-family: var(--head);
+        font-weight: 500;
+        font-size: 13px;
+        color: var(--danger);
+        margin: 6px 0 0;
+      }
+      .field.bad .err {
+        display: block;
+      }
+      .field.bad input,
+      .field.bad textarea {
+        border-color: var(--danger);
+      }
+
+      fieldset {
+        border: 0;
+        margin: 0 0 20px;
+        padding: 0;
+        min-width: 0;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+      .chip {
+        position: relative;
+      }
+      .chip input {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: pointer;
+      }
+      .chip span {
+        display: inline-block;
+        font: 500 14px/1 var(--head);
+        color: var(--ink);
+        background: var(--white);
+        border: 1.5px solid var(--line);
+        border-radius: 999px;
+        padding: 11px 16px;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .chip:hover span {
+        border-color: var(--purple-soft);
+      }
+      .chip input:checked + span {
+        background: var(--tint);
+        border-color: var(--purple);
+        color: var(--purple-deep);
+      }
+      .chip input:focus-visible + span {
+        box-shadow: 0 0 0 4px rgba(126, 50, 212, 0.2);
+        border-color: var(--purple);
+      }
+
+      .consent {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin: 6px 0 24px;
+      }
+      .consent input {
+        flex: none;
+        width: 22px;
+        height: 22px;
+        margin: 2px 0 0;
+        accent-color: var(--purple);
+        cursor: pointer;
+      }
+      .consent label {
+        font-family: var(--body);
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 1.55;
+        margin: 0;
+        color: var(--ink);
+      }
+      .consent.bad label {
+        color: var(--danger);
+      }
+
+      .submit {
+        width: 100%;
+        border: 0;
+        cursor: pointer;
+        background: var(--purple);
+        color: var(--white);
+        font-weight: 600;
+        font-size: 16.5px;
+        letter-spacing: 0.005em;
+        padding: 16px 22px;
+        border-radius: 12px;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .submit:hover {
+        background: var(--purple-deep);
+      }
+      .submit:active {
+        transform: translateY(1px);
+      }
+      .submit:focus-visible {
+        outline: 3px solid var(--teal);
+        outline-offset: 3px;
+      }
+      .submit[disabled] {
+        opacity: 0.65;
+        cursor: progress;
+      }
+      .fine {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin: 14px 0 0;
+        text-align: center;
+      }
+      .banner {
+        display: none;
+        margin: 0 0 20px;
+        padding: 13px 16px;
+        border-radius: 10px;
+        background: #fdedea;
+        color: #8f1d12;
+        font-family: var(--head);
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .banner.show {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+      .stack {
+        display: grid;
+        gap: 10px;
+      }
+      .stack .chip span {
+        display: block;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 15px;
+        line-height: 1.35;
+      }
+      .sect {
+        background: var(--tint);
+        border-radius: 14px;
+        padding: 18px 18px 2px;
+        margin: 0 0 22px;
+      }
+      .sect h3 {
+        font-weight: 600;
+        font-size: 15.5px;
+        margin: 0 0 14px;
+        letter-spacing: -0.005em;
+      }
+      fieldset.bad .err {
+        display: block;
+      }
+      fieldset.bad .chip span {
+        border-color: var(--danger);
+      }
+      #rest.open {
+        animation: rise 0.35s ease-out both;
+      }
+      .divider {
+        height: 1px;
+        background: var(--line);
+        margin: 4px 0 24px;
+        border: 0;
+      }
+
+      .hp {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      .done {
+        display: none;
+        text-align: left;
+        padding: 12px 0 8px;
+      }
+      .done.show {
+        display: block;
+        animation: rise 0.45s ease-out both;
+      }
+      .done .tick {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--tint);
+        display: grid;
+        place-items: center;
+        margin-bottom: 22px;
+      }
+      .done h2 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
+      }
+      .done p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+      .done a {
+        color: var(--purple);
+        font-weight: 400;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .page {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          padding: 20px 18px 40px;
+        }
+        .intro {
+          position: static;
+        }
+        .wordmark {
+          margin-bottom: 28px;
+          font-size: 25px;
+        }
+        .lede {
+          margin-bottom: 0;
+        }
+        .ramp {
+          display: none;
+        }
+        .panel {
+          padding: 26px 20px 24px;
+          border-radius: 16px;
+        }
+      }
+      @media (max-width: 520px) {
+        body {
+          font-size: 16.5px;
+        }
+        .row {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* Match the existing /contact page's editorial palette and layout. */
+      :root {
+        --ink: #263630;
+        --muted: #58665f;
+        --purple: #315f4f;
+        --purple-deep: #23483d;
+        --purple-soft: #6a9485;
+        --teal: #315f4f;
+        --tint: #e1ebe4;
+        --line: #dfdbd2;
+        --white: #ffffff;
+        --head: "Playfair Display", Georgia, serif;
+        --body: "DM Sans", Arial, sans-serif;
+      }
+      body {
+        background: #f7f5f0;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      .page {
+        display: block;
+        max-width: 1216px;
+        padding: 104px 32px 112px;
+      }
+      .intro {
+        position: static;
+        padding: 0;
+        margin-bottom: 60px;
+      }
+      .wordmark,
+      .ramp {
+        display: none;
+      }
+      .intro::before {
+        content: "CONNECT";
+        display: block;
+        font: 700 13px/1.4 var(--body);
+        letter-spacing: 0.18em;
+        color: #315f4f;
+        margin-bottom: 21px;
+      }
+      h1 {
+        font-family: var(--head);
+        font-weight: 700;
+        font-size: clamp(40px, 5.8vw, 68px);
+        line-height: 1.08;
+        max-width: 780px;
+        letter-spacing: -0.025em;
+        margin: 0 0 23px;
+      }
+      h1::after {
+        content: "";
+        display: block;
+        width: 218px;
+        height: 7px;
+        border-radius: 9px;
+        background: #efb3a5;
+        margin-top: 9px;
+      }
+      .lede {
+        font: 400 clamp(17px, 2vw, 20px)/1.7 var(--body);
+        max-width: 720px;
+        margin: 0;
+      }
+      .panel {
+        width: 100%;
+        max-width: 850px;
+        padding: 40px 44px;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        box-shadow:
+          0 1px 2px rgba(35, 55, 47, 0.04),
+          0 12px 32px -12px rgba(35, 55, 47, 0.12);
+      }
+      .panel h2 {
+        font: 700 clamp(25px, 3vw, 32px)/1.2 var(--head);
+        margin: 0 0 12px;
+      }
+      .panel .sub {
+        font: 400 16px/1.65 var(--body);
+        margin-bottom: 28px;
+      }
+      label,
+      legend {
+        font: 600 15px/1.5 var(--body);
+        margin-bottom: 8px;
+      }
+      .opt {
+        font: 400 14px var(--body);
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        font: 400 16px/1.5 var(--body);
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        padding: 12px 15px;
+        min-height: 48px;
+      }
+      input:hover,
+      textarea:hover {
+        border-color: #9aaea5;
+      }
+      input:focus-visible,
+      textarea:focus-visible {
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px rgba(49, 95, 79, 0.2);
+      }
+      .chip span,
+      .stack .chip span {
+        font: 600 14px/1.4 var(--body);
+        border: 1px solid var(--line);
+      }
+      .chip input:checked + span {
+        background: var(--tint);
+        border-color: var(--purple);
+        color: var(--purple-deep);
+      }
+      .chip input:focus-visible + span {
+        box-shadow: 0 0 0 3px rgba(49, 95, 79, 0.2);
+      }
+      .sect {
+        background: #e1ebe4;
+      }
+      .sect h3 {
+        font-family: var(--head);
+        font-size: 19px;
+      }
+      .submit {
+        font-family: var(--body);
+        font-size: 16px;
+        border-radius: 9px;
+      }
+      .submit:focus-visible {
+        outline-color: #efb3a5;
+      }
+      .done h2 {
+        font-family: var(--head);
+      }
+      .done .tick {
+        background: #e1ebe4;
+      }
+      @media (max-width: 900px) {
+        .page {
+          padding: 60px 24px 80px;
+        }
+        .intro {
+          margin-bottom: 34px;
+        }
+        .panel {
+          max-width: none;
+          padding: 30px 26px;
+        }
+      }
+      @media (max-width: 520px) {
+        .page {
+          padding: 40px 18px 64px;
+        }
+        .panel {
+          padding: 25px 20px;
+        }
+        h1 {
+          font-size: clamp(38px, 10vw, 50px);
+        }
+        .intro {
+          margin-bottom: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="intro" aria-labelledby="title">
+        <a
+          class="wordmark"
+          href="https://ramprate.com"
+          aria-label="RampRate home"
+          >ramp<span>rate</span></a
+        >
+        <h1 id="title">Connect with RampRate.</h1>
+        <p class="lede">
+          Tell us what brings you here and what you’re working on. The RampRate
+          team will take it from there.
+        </p>
+        <svg
+          class="ramp"
+          viewBox="0 0 340 150"
+          role="img"
+          aria-label="Rising steps"
+        >
+          <rect x="0" y="110" width="52" height="40" rx="8" fill="#F6F1FD" />
+          <rect x="64" y="84" width="52" height="66" rx="8" fill="#E3D3FA" />
+          <rect x="128" y="58" width="52" height="92" rx="8" fill="#A454FF" />
+          <rect x="192" y="32" width="52" height="118" rx="8" fill="#7E32D4" />
+          <rect x="256" y="6" width="52" height="144" rx="8" fill="#403092" />
+          <circle cx="322" cy="14" r="7" fill="#00D2D4" />
+        </svg>
+      </section>
+
+      <section class="panel" aria-label="Contact form">
+        <form id="f" novalidate autocomplete="on">
+          <h2>Let’s start with why you’re here</h2>
+          <p class="sub">
+            Pick the closest option and the right questions will appear. Only
+            the starred fields are required.
+          </p>
+
+          <div class="banner" id="banner" role="alert"></div>
+
+          <fieldset data-f="intent">
+            <legend>What brings you to RampRate? *</legend>
+            <div class="chips stack" id="intent">
+              <label class="chip"
+                ><input type="radio" name="intent" value="project" /><span
+                  >I’m seeking help with my project or business</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="intent" value="introduction" /><span
+                  >I’m introducing someone else</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="intent" value="partnership" /><span
+                  >I’m proposing a partnership</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="intent" value="other" /><span
+                  >I have another inquiry</span
+                ></label
+              >
+            </div>
+            <p class="err">Please choose the option that fits best.</p>
+          </fieldset>
+
+          <div id="rest" hidden>
+            <hr class="divider" />
+
+            <div class="row">
+              <div class="field" data-f="name">
+                <label for="name">Your full name *</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Jordan Rivera"
+                  required
+                />
+                <p class="err">Please enter your name.</p>
+              </div>
+              <div class="field" data-f="email">
+                <label for="email">Your email *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  inputmode="email"
+                  placeholder="jordan@company.com"
+                  required
+                />
+                <p class="err">Please enter a valid email address.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field" data-f="company">
+                <label for="company">Company or project *</label>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  autocomplete="organization"
+                  placeholder="Name of your company or project"
+                  required
+                />
+                <p class="err">Please tell us your company or project.</p>
+              </div>
+              <div class="field">
+                <label for="role"
+                  >Your role <span class="opt">optional</span></label
+                >
+                <input
+                  id="role"
+                  name="role"
+                  type="text"
+                  autocomplete="organization-title"
+                  placeholder="Founder, Head of IT, Investor"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="phone"
+                >WhatsApp or phone <span class="opt">optional</span></label
+              >
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                placeholder="+1 310 555 0123"
+              />
+              <p class="help">Include your country code.</p>
+            </div>
+
+            <!-- Introduction: the person being introduced -->
+            <div class="sect" data-show="introduction" hidden>
+              <h3>About the person you’re introducing</h3>
+              <div class="row">
+                <div class="field" data-f="intro_name">
+                  <label for="intro_name">Their name *</label>
+                  <input
+                    id="intro_name"
+                    name="intro_name"
+                    type="text"
+                    placeholder="Full name"
+                  />
+                  <p class="err">
+                    Please enter the name of the person you’re introducing.
+                  </p>
+                </div>
+                <div class="field">
+                  <label for="intro_org"
+                    >Their company <span class="opt">optional</span></label
+                  >
+                  <input id="intro_org" name="intro_org" type="text" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label for="intro_contact"
+                    >Their email or phone
+                    <span class="opt">optional</span></label
+                  >
+                  <input id="intro_contact" name="intro_contact" type="text" />
+                </div>
+                <div class="field">
+                  <label for="intro_how"
+                    >How you know them <span class="opt">optional</span></label
+                  >
+                  <input id="intro_how" name="intro_how" type="text" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Partnership: type of partnership -->
+            <fieldset data-show="partnership" hidden>
+              <legend>
+                What kind of partnership do you have in mind?
+                <span class="opt">pick any</span>
+              </legend>
+              <div class="chips" id="ptypes"></div>
+            </fieldset>
+
+            <div class="field" data-f="overview">
+              <label for="overview" id="overviewLabel"></label>
+              <textarea id="overview" name="overview" required></textarea>
+              <p class="err">
+                Please give us a short overview so we know where to start.
+              </p>
+            </div>
+
+            <!-- Project: stage and outcome -->
+            <fieldset data-show="project" hidden>
+              <legend>
+                Where does it stand today? <span class="opt">optional</span>
+              </legend>
+              <div class="chips">
+                <label class="chip"
+                  ><input type="radio" name="stage" value="Just an idea" /><span
+                    >Just an idea</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input type="radio" name="stage" value="Being built" /><span
+                    >Being built</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="stage"
+                    value="Up and running"
+                  /><span>Up and running</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="stage"
+                    value="Scaling or restructuring"
+                  /><span>Scaling or restructuring</span></label
+                >
+              </div>
+            </fieldset>
+            <div class="field" data-show="project" hidden>
+              <label for="outcome"
+                >What would a great outcome look like?
+                <span class="opt">optional</span></label
+              >
+              <input
+                id="outcome"
+                name="outcome"
+                type="text"
+                placeholder="In a sentence or two"
+              />
+            </div>
+
+            <!-- Introduction: have they agreed -->
+            <fieldset data-show="introduction" hidden>
+              <legend>
+                Do they know you’re making this introduction?
+                <span class="opt">optional</span>
+              </legend>
+              <div class="chips">
+                <label class="chip"
+                  ><input type="radio" name="agreed" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input type="radio" name="agreed" value="Not yet" /><span
+                    >Not yet</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+
+            <!-- Partnership: existing relationship, only asked here -->
+            <fieldset data-show="partnership" hidden>
+              <legend>
+                Have you worked with RampRate before?
+                <span class="opt">optional</span>
+              </legend>
+              <div class="chips">
+                <label class="chip"
+                  ><input type="radio" name="prior" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input type="radio" name="prior" value="No" /><span
+                    >No, this is new</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+            <div class="field" id="priorWho" hidden>
+              <label for="prior_who"
+                >Who do you work with at RampRate?
+                <span class="opt">optional</span></label
+              >
+              <input id="prior_who" name="prior_who" type="text" />
+            </div>
+
+            <!-- Other: who to reach -->
+            <div class="field" data-show="other" hidden>
+              <label for="reach"
+                >Is there someone at RampRate you’d like to reach?
+                <span class="opt">optional</span></label
+              >
+              <input
+                id="reach"
+                name="reach"
+                type="text"
+                placeholder="A name or team, if you know"
+              />
+            </div>
+
+            <fieldset data-show="project introduction other" hidden>
+              <legend>
+                What do you need from RampRate?
+                <span class="opt">pick any</span>
+              </legend>
+              <div class="chips" id="chips"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Timing <span class="opt">optional</span></legend>
+              <div class="chips" id="timing">
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="timing"
+                    value="As soon as possible"
+                  /><span>As soon as possible</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="timing"
+                    value="Within a month"
+                  /><span>Within a month</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="timing"
+                    value="In the next few months"
+                  /><span>In the next few months</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="timing"
+                    value="Just exploring"
+                  /><span>Just exploring</span></label
+                >
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="heard"
+                >How did you hear about RampRate?
+                <span class="opt">optional</span></label
+              >
+              <input
+                id="heard"
+                name="heard"
+                type="text"
+                placeholder="An event, a person, a search"
+              />
+            </div>
+
+            <fieldset>
+              <legend>Best way to reach you</legend>
+              <div class="chips" id="pref">
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="contact_pref"
+                    value="Email"
+                    checked
+                  /><span>Email</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="contact_pref"
+                    value="WhatsApp"
+                  /><span>WhatsApp</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="contact_pref"
+                    value="Phone call"
+                  /><span>Phone call</span></label
+                >
+              </div>
+            </fieldset>
+
+            <div class="hp" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="consent" id="consentWrap">
+              <input id="consent" name="consent" type="checkbox" required />
+              <label for="consent"
+                >I’m happy for RampRate to contact me about what I’ve shared
+                here. *</label
+              >
+            </div>
+
+            <button class="submit" id="go" type="submit">
+              Send my details
+            </button>
+            <p class="fine">We only use this to follow up with you.</p>
+          </div>
+        </form>
+
+        <div
+          class="done"
+          id="done"
+          role="status"
+          aria-live="polite"
+          tabindex="-1"
+        >
+          <div class="tick" aria-hidden="true">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#7E32D4"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg>
+          </div>
+          <h2 id="doneTitle">Thank you for connecting with RampRate!</h2>
+          <p>
+            We’ve received your details, and our team will review your inquiry
+            and get in touch with you soon.
+          </p>
+          <p>
+            If you have anything else to share or additional questions, email us
+            at <a href="mailto:hello@ramprate.com">hello@ramprate.com</a>. We
+            look forward to connecting with you!
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        /* ---------- Settings: edit these ---------- */
+
+        // Where the form sends its data (POST, JSON). Point this at your website
+        // endpoint or a webhook (Zapier, Make, ClickUp automation) that creates the
+        // ClickUp task and sends the email alert. Leave empty until it is connected.
+        var FORM_ENDPOINT = "/api/connect";
+
+        // "What do you need from RampRate?" options. Keep them general so the form
+        // stays open to new kinds of inquiry.
+        var NEEDS = [
+          "Advice or strategy",
+          "IT and telecom sourcing",
+          "Cutting technology costs",
+          "Introductions",
+          "A partnership",
+          "Funding or investment",
+          "Something else",
+        ];
+
+        // Partnership types, shown only on the partnership path.
+        var PARTNER_TYPES = [
+          "Services or sourcing",
+          "Technology",
+          "Referrals or introductions",
+          "Investment",
+          "Co-marketing or events",
+          "Something else",
+        ];
+
+        // The overview question changes with the path the person chooses.
+        var OVERVIEW = {
+          project:
+            "Tell us about your project or inquiry. What are you building or trying to accomplish, where does it stand today, and how could RampRate help? *",
+          introduction:
+            "Tell us about the person or project you’re introducing. What are they building or trying to accomplish, where does it stand today, and how could RampRate help? *",
+          partnership:
+            "Tell us about the partnership you have in mind. What are you proposing, where do things stand today, and what would you like from RampRate? *",
+          other:
+            "Tell us about your inquiry. What would you like to discuss, and how could RampRate help? *",
+        };
+
+        /* ---------- Build chips ---------- */
+        function build(id, name, list) {
+          var box = document.getElementById(id);
+          list.forEach(function (t) {
+            var l = document.createElement("label");
+            l.className = "chip";
+            var i = document.createElement("input");
+            i.type = "checkbox";
+            i.name = name;
+            i.value = t;
+            var s = document.createElement("span");
+            s.textContent = t;
+            l.appendChild(i);
+            l.appendChild(s);
+            box.appendChild(l);
+          });
+        }
+        build("chips", "needs", NEEDS);
+        build("ptypes", "ptypes", PARTNER_TYPES);
+
+        /* ---------- Event tag from the link (?event=CryptoMondays) ---------- */
+        var q = new URLSearchParams(location.search);
+        var ev = q.get("event") || q.get("e") || "";
+        var heard = document.getElementById("heard");
+        if (ev) heard.value = ev;
+
+        /* ---------- Helpers ---------- */
+        var form = document.getElementById("f");
+        var banner = document.getElementById("banner");
+        var go = document.getElementById("go");
+        var rest = document.getElementById("rest");
+        var overviewLabel = document.getElementById("overviewLabel");
+        var priorWho = document.getElementById("priorWho");
+        function field(n) {
+          return form.querySelector('[data-f="' + n + '"]');
+        }
+        function setBad(n, bad) {
+          var f = field(n);
+          if (f) f.classList.toggle("bad", bad);
+        }
+        function validEmail(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+        }
+        function intent() {
+          var c = form.querySelector('input[name="intent"]:checked');
+          return c ? c.value : "";
+        }
+        function checked(name) {
+          var c = form.querySelector('input[name="' + name + '"]:checked');
+          return c ? c.value : "";
+        }
+        function many(name) {
+          return Array.prototype.map.call(
+            form.querySelectorAll('input[name="' + name + '"]:checked'),
+            function (i) {
+              return i.value;
+            },
+          );
+        }
+        function val(id) {
+          return form.elements[id].value.trim();
+        }
+
+        ["name", "email", "company", "intro_name", "overview"].forEach(
+          function (n) {
+            form.elements[n].addEventListener("input", function () {
+              setBad(n, false);
+            });
+          },
+        );
+        document
+          .getElementById("consent")
+          .addEventListener("change", function () {
+            document.getElementById("consentWrap").classList.remove("bad");
+          });
+
+        // Choosing a path reveals the questions that belong to it.
+        function applyIntent() {
+          var v = intent();
+          setBad("intent", false);
+          if (!v) return;
+          var first = rest.hidden;
+          rest.hidden = false;
+          if (first) rest.classList.add("open");
+          Array.prototype.forEach.call(
+            form.querySelectorAll("[data-show]"),
+            function (el) {
+              el.hidden =
+                el.getAttribute("data-show").split(" ").indexOf(v) === -1;
+            },
+          );
+          overviewLabel.textContent = OVERVIEW[v];
+          priorWho.hidden = !(
+            v === "partnership" && checked("prior") === "Yes"
+          );
+        }
+        Array.prototype.forEach.call(
+          form.querySelectorAll('input[name="intent"]'),
+          function (r) {
+            r.addEventListener("change", applyIntent);
+          },
+        );
+        Array.prototype.forEach.call(
+          form.querySelectorAll('input[name="prior"]'),
+          function (r) {
+            r.addEventListener("change", applyIntent);
+          },
+        );
+
+        function showDone(first) {
+          form.style.display = "none";
+          var d = document.getElementById("done");
+          document.getElementById("doneTitle").textContent =
+            "Thank you for connecting with RampRate!";
+          d.classList.add("show");
+          d.focus({ preventScroll: true });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* ---------- Submit ---------- */
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          banner.classList.remove("show");
+
+          var v = intent();
+          var name = val("name"),
+            email = val("email"),
+            company = val("company");
+          var overview = val("overview"),
+            introName = val("intro_name");
+          var consent = form.elements.consent.checked;
+
+          var ok = true,
+            firstBad = null;
+          function flag(n, bad, el) {
+            setBad(n, bad);
+            if (bad) {
+              ok = false;
+              if (!firstBad) firstBad = el || form.elements[n];
+            }
+          }
+          flag("intent", !v, form.querySelector('input[name="intent"]'));
+          if (v) {
+            flag("name", !name);
+            flag("email", !validEmail(email));
+            flag("company", !company);
+            flag("intro_name", v === "introduction" && !introName);
+            flag("overview", !overview);
+            document
+              .getElementById("consentWrap")
+              .classList.toggle("bad", !consent);
+            if (!consent) {
+              ok = false;
+              if (!firstBad) firstBad = form.elements.consent;
+            }
+          }
+          if (!ok) {
+            firstBad.focus();
+            return;
+          }
+
+          var first = name.split(" ")[0];
+
+          // Spam trap: bots fill the hidden field. Pretend success, send nothing.
+          if (form.elements.website.value) {
+            showDone(first);
+            return;
+          }
+
+          var payload = {
+            intent: v,
+            name: name,
+            email: email,
+            company: company,
+            role: val("role"),
+            phone: val("phone"),
+            overview: overview,
+            needs: v === "partnership" ? [] : many("needs"),
+            timing: checked("timing"),
+            heard_from: val("heard"),
+            event_tag: ev,
+            contact_preference: checked("contact_pref"),
+            consent: true,
+            source_page: location.origin + location.pathname,
+            submitted_at: new Date().toISOString(),
+          };
+
+          // Only the answers that belong to the chosen path are sent.
+          if (v === "project") {
+            payload.details = {
+              stage: checked("stage"),
+              desired_outcome: val("outcome"),
+            };
+          } else if (v === "introduction") {
+            payload.details = {
+              introduced_person: {
+                name: introName,
+                company: val("intro_org"),
+                contact: val("intro_contact"),
+                relationship: val("intro_how"),
+              },
+              person_knows: checked("agreed"),
+            };
+          } else if (v === "partnership") {
+            payload.details = {
+              partnership_types: many("ptypes"),
+              worked_with_us_before: checked("prior"),
+              rampate_contact:
+                checked("prior") === "Yes" ? val("prior_who") : "",
+            };
+          } else {
+            payload.details = { wants_to_reach: val("reach") };
+          }
+
+          // Add ?preview=1 to the link to test the thank-you screen without sending.
+          if (q.get("preview") === "1") {
+            showDone(first);
+            return;
+          }
+
+          if (!FORM_ENDPOINT) {
+            banner.textContent =
+              "This form isn’t connected yet, so nothing was sent. Please email hello@ramprate.com instead.";
+            banner.classList.add("show");
+            return;
+          }
+
+          go.disabled = true;
+          go.textContent = "Sending...";
+          fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          })
+            .then(function (r) {
+              if (!r.ok) throw new Error("bad status " + r.status);
+              showDone(first);
+            })
+            .catch(function () {
+              banner.textContent =
+                "Something went wrong and your details were not sent. Please try again, or email hello@ramprate.com.";
+              banner.classList.add("show");
+              go.disabled = false;
+              go.textContent = "Send my details";
+            });
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        function reportHeight() {
+          window.parent.postMessage(
+            {
+              type: "ramprate-connect-height",
+              height: document.documentElement.scrollHeight,
+            },
+            window.location.origin,
+          );
+        }
+        new ResizeObserver(reportHeight).observe(document.body);
+        window.addEventListener("load", reportHeight);
+      })();
+    </script>
+  </body>
+</html>
