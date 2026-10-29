@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { POST } from "../src/app/api/connect/route";
@@ -109,5 +111,27 @@ describe("Connect submission safeguards", () => {
     expect(html).toContain("hello@ramprate.com");
     expect(html).not.toContain("PrivatePerson");
     expect(sendEmail).not.toHaveBeenCalled();
+  });
+});
+
+describe("Connect event prefill", () => {
+  const html = readFileSync("public/connect-form.html", "utf8");
+  const script = html.slice(
+    html.indexOf("var q = new URLSearchParams(location.search);"),
+    html.indexOf("/* ---------- Helpers ---------- */"),
+  );
+  it.each([
+    ["", "vegas"],
+    ["A colleague", "A colleague"],
+    [" ", " "],
+  ])("prefills only an empty heard field (%j)", (value, expected) => {
+    const heard = { value };
+    runInNewContext(script, {
+      URLSearchParams,
+      location: { search: "?event=vegas" },
+      document: { getElementById: () => heard },
+      sessionStorage: { setItem: () => {} },
+    });
+    expect(heard.value).toBe(expected);
   });
 });
