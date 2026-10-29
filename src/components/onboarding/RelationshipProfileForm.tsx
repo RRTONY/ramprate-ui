@@ -25,6 +25,7 @@ import {
 } from "@/lib/relationship-profile-cities";
 
 import {
+  PROFILE_DRAFT_TTL_MS,
   readProfileDraft,
   writeProfileDraft,
   clearProfileDraft,
@@ -171,19 +172,30 @@ export default function RelationshipProfileForm() {
 
   useEffect(() => {
     if (!mounted || done) return;
+    let expiryTimer: number | undefined;
+    let expired = false;
     function save() {
-      if (draftFinished.current) return;
+      if (draftFinished.current || expired) return;
       const saved = writeProfileDraft({
         values,
         step,
         prefill: draftPrefill.current,
       });
       setDraftSaved(saved);
+      if (saved) {
+        window.clearTimeout(expiryTimer);
+        expiryTimer = window.setTimeout(() => {
+          expired = true;
+          clearProfileDraft();
+          setDraftSaved(false);
+        }, PROFILE_DRAFT_TTL_MS);
+      }
     }
     const timer = window.setTimeout(save, 300);
     window.addEventListener("pagehide", save);
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(expiryTimer);
       window.removeEventListener("pagehide", save);
     };
   }, [values, step, mounted, done]);
