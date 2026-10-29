@@ -58,11 +58,13 @@ export default function ConnectFrame({ src }: { src: string }) {
       if (nextHeight !== null) setHeight(nextHeight);
     }
     window.addEventListener("message", onMessage);
+    const initialMeasure = window.requestAnimationFrame(observeContent);
     return () => {
+      window.cancelAnimationFrame(initialMeasure);
       window.removeEventListener("message", onMessage);
       observer.current?.disconnect();
     };
-  }, []);
+  }, [observeContent]);
 
   return (
     <iframe
