@@ -155,7 +155,9 @@ async function submit(body: unknown = valid) {
 beforeEach(async () => {
   vi.resetModules();
   vi.clearAllMocks();
+  vi.stubEnv("CLICKUP_CONNECT_TOKEN", "");
   vi.stubEnv("CLICKUP_API_TOKEN", secret);
+  vi.stubEnv("CONTEXT", "production");
   vi.stubEnv("CLICKUP_CONNECT_LIST_ID", "");
   vi.stubEnv("CLICKUP_CONNECT_ASSIGNEE", "");
   fields = definitions();
@@ -433,10 +435,7 @@ describe("Connect ClickUp integration", () => {
     );
     expect((await submit()).status).toBe(200);
     expect(payloads()).toHaveLength(1);
-    expect(warn).toHaveBeenCalledWith(
-      "CU_DUPLICATE_CHECK_FAILED",
-      expect.any(String),
-    );
+    expect(warn).toHaveBeenCalledWith("CU_NO_ACCESS_403", expect.any(String));
   });
   it("still creates a task with the full description if metadata is unavailable", async () => {
     const normal = fetchMock.getMockImplementation()!;
@@ -489,6 +488,8 @@ describe("Connect ClickUp integration", () => {
     expect(email).toHaveBeenCalledTimes(2);
     expect(email.mock.calls[0][0].text).toContain(valid.overview);
     expect(fetchMock.mock.calls[0][1].signal.aborted).toBe(true);
+    expect(email.mock.calls[0][0].text).toContain("[CU_TIMEOUT]");
+    expect(warn).toHaveBeenCalledWith("CU_TIMEOUT", expect.any(String));
   });
   it("keeps visitor success and the complete failure email when task creation fails, without leaking data", async () => {
     const normal = fetchMock.getMockImplementation()!;
@@ -566,5 +567,80 @@ describe("Connect ClickUp integration", () => {
     );
     expect(JSON.stringify(errorLog.mock.calls)).not.toContain(secret);
     expect(JSON.stringify(errorLog.mock.calls)).not.toContain(valid.email);
+  });
+  it.each([
+    ["dedicated-test-token", secret, "dedicated-test-token"],
+    ["", secret, secret],
+    ["   ", secret, secret],
+  ])(
+    "prefers the Connect token and falls back to the existing API token",
+    async (dedicated, fallback, expected) => {
+      vi.stubEnv("CLICKUP_CONNECT_TOKEN", dedicated);
+      vi.stubEnv("CLICKUP_API_TOKEN", fallback);
+      await submit();
+      expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe(expected);
+      expect(JSON.stringify(warn.mock.calls)).not.toContain(expected);
+    },
+  );
+  it.each([
+    [401, "CU_UNAUTHORIZED_401"],
+    [403, "CU_NO_ACCESS_403"],
+    [404, "CU_LIST_NOT_FOUND_404"],
+    [429, "CU_RATE_LIMIT_429"],
+    [400, "CU_TASK_CREATE_FAILED_400"],
+    [503, "CU_TASK_CREATE_FAILED_503"],
+  ])(
+    "reports only a safe code for ClickUp HTTP %s, identically in log, email and preview header",
+    async (status, code) => {
+      vi.stubEnv("CONTEXT", "deploy-preview");
+      const normal = fetchMock.getMockImplementation()!;
+      fetchMock.mockImplementation((input, init) =>
+        init.method === "POST"
+          ? Promise.resolve(
+              json({ error: `${secret} ${valid.email}` }, status, {
+                "retry-after": "60",
+              }),
+            )
+          : normal(input, init),
+      );
+      const response = await submit();
+      expect(response.status).toBe(200);
+      expect(await response.json()).toEqual({ ok: true });
+      expect(response.headers.get("X-Connect-ClickUp")).toBe(code);
+      expect(email.mock.calls[0][0].text.split("\n")[0]).toBe(
+        `ClickUp save failed - please add this lead manually [${code}]`,
+      );
+      expect(warn).toHaveBeenCalledWith(
+        code,
+        expect.stringMatching(/^\d{4}-\d\d-\d\dT/),
+      );
+      const logs = JSON.stringify(warn.mock.calls);
+      for (const value of [secret, valid.email, valid.name, valid.overview])
+        expect(logs).not.toContain(value);
+    },
+  );
+  it("reports missing tokens without calling ClickUp and never exposes diagnostics in production", async () => {
+    vi.stubEnv("CLICKUP_CONNECT_TOKEN", "");
+    vi.stubEnv("CLICKUP_API_TOKEN", "");
+    const response = await submit();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(response.headers.get("X-Connect-ClickUp")).toBeNull();
+    expect(email.mock.calls[0][0].text).toContain("[CU_TOKEN_MISSING]");
+    expect(warn).toHaveBeenCalledWith("CU_TOKEN_MISSING", expect.any(String));
+  });
+  it("reports a field metadata failure safely while still saving a task", async () => {
+    const normal = fetchMock.getMockImplementation()!;
+    fetchMock.mockImplementation((input, init) =>
+      url(input).pathname.endsWith("/field")
+        ? Promise.resolve(json({ error: secret }, 400))
+        : normal(input, init),
+    );
+    await submit();
+    expect(warn).toHaveBeenCalledWith(
+      "CU_FIELD_LOOKUP_FAILED_400",
+      expect.any(String),
+    );
+    expect(payloads()).toHaveLength(1);
+    expect(email.mock.calls[0][0].text).not.toContain("ClickUp save failed");
   });
 });
