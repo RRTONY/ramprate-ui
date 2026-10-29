@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   createSession,
@@ -7,6 +9,13 @@ import {
 } from "../src/app/kula-proposal/private/access";
 
 describe("Kula proposal access", () => {
+  it("preserves every byte of the supplied proposal", () => {
+    const html = readFileSync("src/app/kula-proposal/private/proposal.txt");
+    expect(createHash("sha256").update(html).digest("hex")).toBe(
+      "77838dbea6779f9d8b0fe531d6989f0bff9647db90a2bf9587f322919ce1657f",
+    );
+  });
+
   const now = 1793318400000;
   const secret = "test-only-session-signing-key";
 
