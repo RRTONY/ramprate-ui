@@ -14,11 +14,54 @@ const list = (value: unknown) =>
     : [];
 
 export async function POST(req: NextRequest) {
+  const contentType = req.headers
+    .get("content-type")
+    ?.split(";")[0]
+    .trim()
+    .toLowerCase();
+  if (contentType !== "application/json") {
+    return new Response(
+      '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Connect with RampRate</title><p>This form needs JavaScript. Please email <a href="mailto:hello@ramprate.com">hello@ramprate.com</a> instead.</p><a href="/connect">Return to Connect</a></html>',
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-store",
+        },
+      },
+    );
+  }
+  const maxBodyBytes = 20 * 1024;
+  const tooLarge = () =>
+    NextResponse.json(
+      { ok: false, error: "Form data must be 20 KB or smaller." },
+      { status: 413 },
+    );
+  if (Number(req.headers.get("content-length") || 0) > maxBodyBytes)
+    return tooLarge();
   let body: Record<string, unknown>;
   try {
-    if (Number(req.headers.get("content-length") || 0) > 25000)
-      return NextResponse.json({ ok: false }, { status: 413 });
-    body = await req.json();
+    const reader = req.body?.getReader();
+    if (!reader) throw new Error("empty");
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > maxBodyBytes) {
+        await reader.cancel();
+        return tooLarge();
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    body = JSON.parse(new TextDecoder().decode(bytes));
     if (!body || typeof body !== "object" || Array.isArray(body))
       throw new Error("invalid");
   } catch {
@@ -27,10 +70,11 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
-  const name = text(body.name, 150);
-  const email = text(body.email, 250);
-  const company = text(body.company, 200);
-  const overview = text(body.overview, 5000);
+  if (body.website) return NextResponse.json({ ok: true });
+  const name = text(body.name, 100);
+  const email = text(body.email, 254);
+  const company = text(body.company, 150);
+  const overview = text(body.overview, 2000);
   const intent = text(body.intent, 30);
   const details =
     body.details &&
@@ -42,6 +86,44 @@ export async function POST(req: NextRequest) {
     details.introduced_person && typeof details.introduced_person === "object"
       ? (details.introduced_person as Record<string, unknown>)
       : {};
+  const limitedFields: [string, unknown, number][] = [
+    ["name", body.name, 100],
+    ["email", body.email, 254],
+    ["company", body.company, 150],
+    ["role", body.role, 100],
+    ["phone", body.phone, 30],
+    ["overview", body.overview, 2000],
+    ["intro_name", introduced.name, 100],
+    ["intro_org", introduced.company, 150],
+    ["intro_contact", introduced.contact, 150],
+    ["intro_how", introduced.relationship, 300],
+    ["outcome", details.desired_outcome, 300],
+    ["prior_who", details.rampate_contact, 150],
+    ["reach", details.wants_to_reach, 300],
+    ["heard", body.heard_from, 200],
+  ];
+  for (const [field, value, limit] of limitedFields) {
+    if (typeof value === "string" && value.length > limit) {
+      return NextResponse.json(
+        { ok: false, error: `${field} must be ${limit} characters or fewer.` },
+        { status: 400 },
+      );
+    }
+  }
+  const phone = text(body.phone);
+  if (
+    phone &&
+    (!/^\+?[0-9 .()\-]+$/.test(phone) ||
+      !/^[0-9]{7,15}$/.test(phone.replace(/[ .()\-]/g, "").replace(/^\+/, "")))
+  ) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Please enter a valid phone number, or leave it blank.",
+      },
+      { status: 400 },
+    );
+  }
   if (
     !name ||
     !emailPattern.test(email) ||
