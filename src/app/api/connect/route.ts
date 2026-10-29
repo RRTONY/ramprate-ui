@@ -620,7 +620,10 @@ export async function POST(req: NextRequest) {
   }
   return NextResponse.json(
     { ok: true },
-    process.env.CONTEXT === "deploy-preview"
+    process.env.CONTEXT === "deploy-preview" ||
+      /^deploy-preview-\d+--ramprate\.netlify\.app$/.test(
+        new URL(req.url).hostname,
+      )
       ? { headers: { "X-Connect-ClickUp": clickUpSaved.code || "SAVED" } }
       : undefined,
   );
