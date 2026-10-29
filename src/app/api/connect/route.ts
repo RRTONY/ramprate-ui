@@ -144,14 +144,30 @@ function clickUpSubmission(body: Record<string, unknown>, receivedAt: string) {
   };
 }
 
+type ClickUpResult = { ok: boolean; code?: string };
+function clickUpFailureCode(error: unknown, stage: string) {
+  const message = error instanceof Error ? error.message : "";
+  const status = /^CU_HTTP_(\d{3})$/.exec(message)?.[1];
+  if (status === "401") return "CU_UNAUTHORIZED_401";
+  if (status === "403") return "CU_NO_ACCESS_403";
+  if (status === "404" && stage !== "CU_TASK_UPDATE_FAILED")
+    return "CU_LIST_NOT_FOUND_404";
+  if (status === "429") return "CU_RATE_LIMIT_429";
+  if (message === "CU_TIMEOUT") return "CU_TIMEOUT";
+  if (message === "CU_NETWORK") return "CU_NETWORK_FAILED";
+  return status ? `${stage}_${status}` : stage;
+}
+
 async function saveConnectToClickUp(
   body: Record<string, unknown>,
   receivedAt: string,
-) {
-  const token = process.env.CLICKUP_API_TOKEN;
+): Promise<ClickUpResult> {
+  const token =
+    process.env.CLICKUP_CONNECT_TOKEN?.trim() ||
+    process.env.CLICKUP_API_TOKEN?.trim();
   if (!token) {
-    connectLog("CU_NOT_CONFIGURED", receivedAt);
-    return false;
+    connectLog("CU_TOKEN_MISSING", receivedAt);
+    return { ok: false, code: "CU_TOKEN_MISSING" };
   }
   const listId = process.env.CLICKUP_CONNECT_LIST_ID?.trim() || "901115639111";
   const assigneeText =
@@ -163,12 +179,13 @@ async function saveConnectToClickUp(
     !Number.isSafeInteger(assignee) ||
     assignee <= 0
   ) {
-    connectLog("CU_CONFIG", receivedAt);
-    return false;
+    connectLog("CU_CONFIG_INVALID", receivedAt);
+    return { ok: false, code: "CU_CONFIG_INVALID" };
   }
   const submission = clickUpSubmission(body, receivedAt);
   const controller = new AbortController();
   const deadline = Date.now() + 8000;
+  let stage = "CU_FIELD_LOOKUP_FAILED";
   const failure = (code: string) => new Error(code);
   let timeout: ReturnType<typeof setTimeout> | undefined;
   const expired = new Promise<never>((_, reject) => {
@@ -218,7 +235,7 @@ async function saveConnectToClickUp(
         const wait = Number.isFinite(delay) ? delay : 250;
         if (wait >= deadline - Date.now()) {
           controller.abort();
-          throw failure("CU_RETRY_BUDGET");
+          throw failure(`CU_HTTP_${response.status}`);
         }
         await response.body?.cancel();
         await new Promise<void>((resolve, reject) => {
@@ -267,9 +284,9 @@ async function saveConnectToClickUp(
           fields,
           expires: Date.now() + 5 * 60 * 1000,
         };
-      } catch {
-        if (controller.signal.aborted) throw failure("CU_TIMEOUT");
-        connectLog("CU_FIELDS_LOOKUP_FAILED", receivedAt);
+      } catch (error) {
+        if (controller.signal.aborted) throw error;
+        connectLog(clickUpFailureCode(error, stage), receivedAt);
       }
     }
     const customFields: {
@@ -334,6 +351,7 @@ async function saveConnectToClickUp(
       });
     }
     let duplicate: ClickUpTask | undefined;
+    stage = "CU_DUPLICATE_CHECK_FAILED";
     try {
       const since = Date.now() - 30 * 24 * 60 * 60 * 1000;
       const emailId = fields.find((field) => field.name === "Email")?.id;
@@ -365,11 +383,12 @@ async function saveConnectToClickUp(
         )
           break;
       }
-    } catch {
-      if (controller.signal.aborted) throw failure("CU_TIMEOUT");
-      connectLog("CU_DUPLICATE_CHECK_FAILED", receivedAt);
+    } catch (error) {
+      if (controller.signal.aborted) throw error;
+      connectLog(clickUpFailureCode(error, stage), receivedAt);
     }
     if (duplicate) {
+      stage = "CU_TASK_UPDATE_FAILED";
       const id = encodeURIComponent(duplicate.id);
       await request(`task/${id}/comment`, "POST", {
         comment_text: `New submission\n${submission.pacific}\n\n${submission.description}`,
@@ -385,6 +404,7 @@ async function saveConnectToClickUp(
       connectLog("CU_DUPLICATE_MERGED", receivedAt);
       return;
     }
+    stage = "CU_TASK_CREATE_FAILED";
     const task = await request(`list/${listId}/task`, "POST", {
       name: submission.name,
       description: submission.description,
@@ -397,14 +417,11 @@ async function saveConnectToClickUp(
   }
   try {
     await Promise.race([work(), expired]);
-    return true;
+    return { ok: true };
   } catch (error) {
-    const code =
-      error instanceof Error && /^CU_[A-Z0-9_]+$/.test(error.message)
-        ? error.message
-        : "CU_FAILED";
+    const code = clickUpFailureCode(error, stage);
     connectLog(code, receivedAt);
-    return false;
+    return { ok: false, code };
   } finally {
     if (timeout) clearTimeout(timeout);
     controller.abort();
@@ -565,9 +582,9 @@ export async function POST(req: NextRequest) {
   ].filter(([, value]) => value);
   const message = fields.map(([key, value]) => key + ": " + value).join("\n\n");
   const clickUpSaved = await saveConnectToClickUp(body, receivedAt);
-  const emailText = clickUpSaved
+  const emailText = clickUpSaved.ok
     ? message
-    : "ClickUp save failed - please add this lead manually\n\n" +
+    : `ClickUp save failed - please add this lead manually [${clickUpSaved.code}]\n\n` +
       message +
       "\n\nSource page: " +
       text(body.source_page) +
@@ -601,5 +618,10 @@ export async function POST(req: NextRequest) {
       { status: 502 },
     );
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json(
+    { ok: true },
+    process.env.CONTEXT === "deploy-preview"
+      ? { headers: { "X-Connect-ClickUp": clickUpSaved.code || "SAVED" } }
+      : undefined,
+  );
 }
