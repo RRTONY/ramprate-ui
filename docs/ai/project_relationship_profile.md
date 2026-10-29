@@ -28,7 +28,9 @@ Built 2026-10-23 for Satya (Sam Patnayak). A universal onboarding form for prosp
 - Draft storage: `src/lib/relationship-profile-draft.ts` uses the versioned localStorage key
   `ramprate.relationship-profile.draft.v1`. Save is debounced 300ms and flushed on pagehide.
   Restore preserves partial input and the step, never consent or `website_url`. All storage
-  access is guarded. Clear only on successful submission. Drafts are tied to the prefill link: refresh
+  access is guarded. Clear on successful submission or after seven days of inactivity.
+  Stored `expiresAt` is checked on load; expired drafts and legacy drafts without expiry are
+  deleted. An open-tab timer also removes an idle draft and prevents pagehide from reviving it. Drafts are tied to the prefill link: refresh
   restores edited answers, while a different prefill link starts fresh at the first step.
 - Shared validation rejects end times at or before start, unsafe scheduling-link schemes,
   malformed email domains/local parts, and invalid or all-zero phone numbers. Scheduling
