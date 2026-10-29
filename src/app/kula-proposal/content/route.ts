@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
   }
 
   const html = await readFile(
-    path.join(process.cwd(), "src/app/kula-proposal/private/proposal.html"),
+    path.join(process.cwd(), "src/app/kula-proposal/private/proposal.txt"),
     "utf8",
   );
   return new NextResponse(html, {
