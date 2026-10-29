@@ -1523,14 +1523,14 @@
         if (!root) return;
         var lastHeight = 0;
         function reportHeight() {
+          // scrollHeight has the iframe viewport as a floor, so it cannot shrink.
+          var height = Math.ceil(root.getBoundingClientRect().height);
           if (
             document.fonts &&
             document.fonts.status === "loading" &&
             root.querySelector("#rest").hidden
           )
             return;
-          // scrollHeight has the iframe viewport as a floor, so it cannot shrink.
-          var height = Math.ceil(root.getBoundingClientRect().height);
           if (
             !Number.isFinite(height) ||
             height < 100 ||
@@ -1548,8 +1548,8 @@
           new ResizeObserver(reportHeight).observe(root);
         window.addEventListener("load", reportHeight);
         window.addEventListener("resize", reportHeight);
-        if (document.fonts) document.fonts.ready.then(reportHeight);
         reportHeight();
+        if (document.fonts) document.fonts.ready.then(reportHeight);
       })();
     </script>
   </body>
