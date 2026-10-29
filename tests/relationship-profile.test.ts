@@ -349,3 +349,22 @@ describe("profile drafts", () => {
     expect(readProfileDraft(() => storage)).toEqual({ values: {}, step: 0 });
   });
 });
+
+it("ties the saved draft to its prefill link without including consent", () => {
+  let saved = "";
+  const storage = {
+    getItem: () => saved,
+    setItem: (_key: string, value: string) => {
+      saved = value;
+    },
+    removeItem: () => {
+      saved = "";
+    },
+  };
+  writeProfileDraft(
+    { values: valid, step: 2, prefill: "p-ZZ-TEST" },
+    () => storage,
+  );
+  expect(readProfileDraft(() => storage).prefill).toBe("p-ZZ-TEST");
+  expect(readProfileDraft(() => storage).values.consent).toBeUndefined();
+});
