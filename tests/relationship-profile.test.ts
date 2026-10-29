@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { tzFromCity } from "../src/lib/relationship-profile-cities";
 import {
   formatProfileText,
@@ -8,6 +8,7 @@ import {
 } from "../src/lib/relationship-profile-fields";
 
 import {
+  PROFILE_DRAFT_TTL_MS,
   readProfileDraft,
   writeProfileDraft,
   clearProfileDraft,
@@ -302,6 +303,7 @@ describe("profile drafts", () => {
     const storage = memoryStore(
       JSON.stringify({
         version: 1,
+        expiresAt: Date.now() + PROFILE_DRAFT_TTL_MS,
         step: 5,
         values: { ...valid, website_url: "trap" },
       }),
@@ -317,12 +319,26 @@ describe("profile drafts", () => {
     });
     expect(
       readProfileDraft(() =>
-        memoryStore(JSON.stringify({ version: 1, values: {}, step: 99 })),
+        memoryStore(
+          JSON.stringify({
+            version: 1,
+            expiresAt: Date.now() + PROFILE_DRAFT_TTL_MS,
+            values: {},
+            step: 99,
+          }),
+        ),
       ).step,
     ).toBe(5);
     expect(
       readProfileDraft(() =>
-        memoryStore(JSON.stringify({ version: 1, values: {}, step: -1 })),
+        memoryStore(
+          JSON.stringify({
+            version: 1,
+            expiresAt: Date.now() + PROFILE_DRAFT_TTL_MS,
+            values: {},
+            step: -1,
+          }),
+        ),
       ).step,
     ).toBe(0);
   });
@@ -367,4 +383,55 @@ it("ties the saved draft to its prefill link without including consent", () => {
   );
   expect(readProfileDraft(() => storage).prefill).toBe("p-ZZ-TEST");
   expect(readProfileDraft(() => storage).values.consent).toBeUndefined();
+});
+
+describe("draft privacy expiry", () => {
+  it("expires and deletes a draft exactly seven days after the last save", () => {
+    let saved: string | null = null;
+    const storage = {
+      getItem: () => saved,
+      setItem: (_key: string, value: string) => {
+        saved = value;
+      },
+      removeItem: () => {
+        saved = null;
+      },
+    };
+    const now = 1_800_000_000_000;
+    const clock = vi.spyOn(Date, "now").mockReturnValue(now);
+    try {
+      writeProfileDraft({ values: valid, step: 2 }, () => storage);
+      expect(JSON.parse(saved!).expiresAt).toBe(now + PROFILE_DRAFT_TTL_MS);
+      clock.mockReturnValue(now + PROFILE_DRAFT_TTL_MS - 1);
+      expect(readProfileDraft(() => storage).values.fullName).toBe(
+        valid.fullName,
+      );
+      clock.mockReturnValue(now + PROFILE_DRAFT_TTL_MS);
+      expect(readProfileDraft(() => storage)).toEqual({ values: {}, step: 0 });
+      expect(saved).toBeNull();
+    } finally {
+      clock.mockRestore();
+    }
+  });
+
+  it.each([undefined, "tomorrow", 0, Number.MAX_SAFE_INTEGER])(
+    "deletes legacy or invalid expiry %s without restoring any values",
+    (expiresAt) => {
+      let saved: string | null = JSON.stringify({
+        version: 1,
+        values: valid,
+        step: 2,
+        expiresAt,
+      });
+      const storage = {
+        getItem: () => saved,
+        setItem: () => {},
+        removeItem: () => {
+          saved = null;
+        },
+      };
+      expect(readProfileDraft(() => storage)).toEqual({ values: {}, step: 0 });
+      expect(saved).toBeNull();
+    },
+  );
 });
