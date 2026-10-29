@@ -34,7 +34,9 @@ export default function ConnectFrame({ src }: { src: string }) {
   const observeContent = useCallback(() => {
     observer.current?.disconnect();
     try {
-      const root = frame.current?.contentDocument?.querySelector("main.page");
+      const document = frame.current?.contentDocument;
+      if (!document || document.readyState === "loading") return;
+      const root = document.querySelector("main.page");
       if (!root) return;
       const measure = () => {
         const nextHeight = root.getBoundingClientRect().height;
