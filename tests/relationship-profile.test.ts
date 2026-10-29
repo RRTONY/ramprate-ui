@@ -1,5 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
-import { tzFromCity } from "../src/lib/relationship-profile-cities";
+import {
+  tzFromCity,
+  COMMON_TIME_ZONES,
+  modernZoneName,
+  getTimeZoneChoices,
+  searchTimeZones,
+  tzOffsetLabel,
+} from "../src/lib/relationship-profile-cities";
 import {
   formatProfileText,
   sanitizeMeta,
@@ -434,4 +441,123 @@ describe("draft privacy expiry", () => {
       expect(saved).toBeNull();
     },
   );
+});
+
+describe("simplified onboarding time zones", () => {
+  it("keeps the requested 13 common choices in order", () => {
+    expect(COMMON_TIME_ZONES.map(([zone]) => zone)).toEqual([
+      "America/Los_Angeles",
+      "America/Denver",
+      "America/Phoenix",
+      "America/Chicago",
+      "America/New_York",
+      "Pacific/Honolulu",
+      "America/Anchorage",
+      "Europe/London",
+      "Europe/Paris",
+      "Asia/Kolkata",
+      "Asia/Dubai",
+      "Asia/Singapore",
+      "Australia/Sydney",
+    ]);
+  });
+
+  it("automatically finds Pacific Time from Las Vegas", () => {
+    expect(tzFromCity("Las Vegas")).toBe("America/Los_Angeles");
+  });
+
+  it.each([
+    ["Asia/Calcutta", "Kolkata"],
+    ["Asia/Saigon", "Ho Chi Minh City"],
+    ["Asia/Rangoon", "Yangon"],
+    ["Europe/Kiev", "Kyiv"],
+  ])("modernizes only the display of %s", (zone, label) => {
+    expect(modernZoneName(zone)).toBe(label);
+    expect(validateValues({ ...valid, tzPick: zone }).data.tzPick).toBe(zone);
+  });
+
+  it("searches city examples, country and zone names", () => {
+    const choices = getTimeZoneChoices([
+      "Asia/Calcutta",
+      "Asia/Saigon",
+      "Asia/Rangoon",
+      "Europe/Kiev",
+      "Asia/Tokyo",
+      "Europe/Berlin",
+    ]);
+    for (const query of ["Kolk", "Mumbai", "India"]) {
+      expect(
+        searchTimeZones(choices, query).some((zone) =>
+          zone.label.includes("Kolkata"),
+        ),
+      ).toBe(true);
+    }
+    expect(searchTimeZones(choices, "Vietnam")[0].label).toContain(
+      "Ho Chi Minh City",
+    );
+    expect(searchTimeZones(choices, "Myanmar")[0].label).toContain("Yangon");
+    expect(searchTimeZones(choices, "Kyiv")[0].label).toContain("Kyiv");
+    expect(searchTimeZones(choices, "Japan")[0].value).toBe("Asia/Tokyo");
+    expect(searchTimeZones(choices, "Europe Berlin")[0].value).toBe(
+      "Europe/Berlin",
+    );
+  });
+
+  it("limits search results to eight, hides stations and small territories, and handles empty searches", () => {
+    const choices = getTimeZoneChoices();
+    expect(searchTimeZones(choices, "America")).toHaveLength(8);
+    expect(searchTimeZones(choices, "")).toEqual([]);
+    expect(searchTimeZones(choices, "zz no such zone")).toEqual([]);
+    const excluded = getTimeZoneChoices([
+      "Antarctica/McMurdo",
+      "Pacific/Wake",
+      "Atlantic/St_Helena",
+      "Pacific/Guam",
+    ]);
+    expect(
+      excluded.every(
+        (zone) =>
+          ![
+            "Antarctica/McMurdo",
+            "Pacific/Wake",
+            "Atlantic/St_Helena",
+            "Pacific/Guam",
+          ].includes(zone.value),
+      ),
+    ).toBe(true);
+    expect(
+      choices.some((zone) => /Calcutta|Saigon|Rangoon|Kiev/.test(zone.label)),
+    ).toBe(false);
+  });
+
+  it("calculates offsets for the date, including daylight saving", () => {
+    const winter = new Date("2026-01-15T12:00:00Z");
+    const summer = new Date("2026-07-15T12:00:00Z");
+    expect(tzOffsetLabel("America/Los_Angeles", winter)).toBe("UTC-8");
+    expect(tzOffsetLabel("America/Los_Angeles", summer)).toBe("UTC-7");
+    expect(tzOffsetLabel("Europe/London", winter)).toBe("UTC");
+    expect(tzOffsetLabel("Europe/London", summer)).toBe("UTC+1");
+    expect(tzOffsetLabel("Asia/Kolkata", winter)).toBe("UTC+5:30");
+    expect(tzOffsetLabel("Australia/Sydney", winter)).toBe("UTC+11");
+    expect(tzOffsetLabel("Australia/Sydney", summer)).toBe("UTC+10");
+  });
+
+  it("does not require a time zone and preserves old zone IDs in drafts", () => {
+    expect(validateValues({ ...valid, tzPick: "" }).errors).toEqual({});
+    let saved = "";
+    const storage = {
+      getItem: () => saved,
+      setItem: (_key: string, v: string) => {
+        saved = v;
+      },
+      removeItem: () => {
+        saved = "";
+      },
+    };
+    writeProfileDraft(
+      { values: { ...valid, tzPick: "Asia/Calcutta" }, step: 1 },
+      () => storage,
+    );
+    expect(readProfileDraft(() => storage).values.tzPick).toBe("Asia/Calcutta");
+  });
 });
