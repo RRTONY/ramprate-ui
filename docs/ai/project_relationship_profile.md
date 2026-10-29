@@ -23,6 +23,30 @@ Built 2026-10-23 for Satya (Sam Patnayak). A universal onboarding form for prosp
 - Prefill: a link ending `#p-<token>` fills known answers. The token is base64url of a JSON object keyed by the field keys in the fields file. Only known keys with valid values are used.
 - Not stored anywhere except email. No ClickUp task or CRM record is created yet.
 
+## Approved onboarding fixes (2026-10-29)
+
+- Draft storage: `src/lib/relationship-profile-draft.ts` uses the versioned localStorage key
+  `ramprate.relationship-profile.draft.v1`. Save is debounced 300ms and flushed on pagehide.
+  Restore preserves partial input and the step, never consent or `website_url`. All storage
+  access is guarded. Clear on successful submission or after seven days of inactivity.
+  Stored `expiresAt` is checked on load; expired drafts and legacy drafts without expiry are
+  deleted. An open-tab timer also removes an idle draft and prevents pagehide from reviving it. Drafts are tied to the prefill link: refresh
+  restores edited answers, while a different prefill link starts fresh at the first step.
+- Shared validation rejects end times at or before start, unsafe scheduling-link schemes,
+  malformed email domains/local parts, and invalid or all-zero phone numbers. Scheduling
+  links gain HTTPS when missing. Both email fields are trimmed and support plus-addressing.
+  The primary phone label asks for a country code; `channelHandle` remains free text.
+- Review keeps escaped full text, with three-line previews and Show more/Show less for overflow.
+  Privacy and Terms links sit outside the checkbox labels so following a link never changes consent.
+- Honeypot stays off-screen, aria-hidden, untabbable and autocomplete-off, without a visible label.
+- Error descriptions include chip buttons and consent; blocked submission focuses consent if it
+  is the first remaining error. Existing Continue focus behavior remains in place.
+- Time zone picker changes are on hold. The current selector, stored zone values, offsets and
+  automatic city/device lookup are unchanged.
+- Endpoint, payload keys, recipients, spam-trap field name and backend behavior are unchanged.
+  Test submission with networking intercepted and `ZZ TEST` data only. Never send test email
+  or create real records as part of this change.
+
 ## Open follow-ups
 
 - Create a ClickUp task per submission (same pattern as `src/app/api/champions-intake/route.ts`).

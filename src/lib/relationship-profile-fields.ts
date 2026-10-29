@@ -49,7 +49,8 @@ export const CONSENT_LABEL =
 
 const MAX_TEXT = 200;
 const MAX_AREA = 2000;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const EMAIL_RE =
+  /^[^\s@.][^\s@]*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/i;
 const TZ_RE = /^[A-Za-z]+(?:\/[A-Za-z0-9_+-]+){1,2}$/;
 
 const opts = (...labels: string[]): Option[] =>
@@ -143,7 +144,7 @@ export const STEPS: StepDef[] = [
       },
       {
         key: "phone",
-        label: "Phone or messaging number",
+        label: "Phone number (include country code)",
         short: "Phone",
         type: "tel",
         required: true,
@@ -423,13 +424,20 @@ export const ERROR_MESSAGES: Record<string, string> = {
   [CONSENT_KEY]: "Please tick the box to confirm.",
 };
 
+export function cleanSchedulingLink(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  return /^[a-z][a-z\d+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
 function isValidUrl(value: string): boolean {
   if (/\s/.test(value)) return false;
   try {
-    const url = new URL(
-      /^https?:\/\//i.test(value) ? value : `https://${value}`,
+    const url = new URL(value);
+    return (
+      (url.protocol === "https:" || url.protocol === "http:") &&
+      url.hostname.includes(".")
     );
-    return url.hostname.includes(".");
   } catch {
     return false;
   }
@@ -438,9 +446,17 @@ function isValidUrl(value: string): boolean {
 function checkValue(field: FieldDef, value: string): string {
   switch (field.type) {
     case "email":
-      return EMAIL_RE.test(value) ? "" : ERROR_MESSAGES.email;
-    case "tel":
-      return value.replace(/\D/g, "").length >= 7 ? "" : ERROR_MESSAGES.phone;
+      return EMAIL_RE.test(value) &&
+        !value.split("@")[0].endsWith(".") &&
+        !value.includes("..")
+        ? ""
+        : ERROR_MESSAGES.email;
+    case "tel": {
+      const number = value.replace(/[\s().-]/g, "");
+      return /^\+?\d{7,15}$/.test(number) && !/^\+?0+$/.test(number)
+        ? ""
+        : ERROR_MESSAGES.phone;
+    }
     case "url":
       return isValidUrl(value) ? "" : "Please enter a valid link.";
     case "select":
@@ -482,7 +498,8 @@ export function validateValues(
       continue;
     }
 
-    const value = typeof input === "string" ? input.trim() : "";
+    const trimmed = typeof input === "string" ? input.trim() : "";
+    const value = field.type === "url" ? cleanSchedulingLink(trimmed) : trimmed;
     if (!value) {
       if (field.required) {
         errors[field.key] = ERROR_MESSAGES[field.key] ?? "This is needed.";
@@ -502,6 +519,16 @@ export function validateValues(
       continue;
     }
     data[field.key] = value;
+  }
+
+  if (
+    (!onlyKeys || onlyKeys.includes("hoursEnd")) &&
+    typeof data.hoursStart === "string" &&
+    typeof data.hoursEnd === "string" &&
+    data.hoursEnd <= data.hoursStart
+  ) {
+    errors.hoursEnd =
+      "Your day ends before it starts. Please check your hours.";
   }
 
   if (!onlyKeys || onlyKeys.includes(CONSENT_KEY)) {

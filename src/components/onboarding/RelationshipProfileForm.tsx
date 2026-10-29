@@ -8,6 +8,7 @@ import {
   STEPS,
   TZ_PICK_KEY,
   displayValue,
+  cleanSchedulingLink,
   sanitizePrefill,
   validateValues,
   type FieldDef,
@@ -22,6 +23,13 @@ import {
   tzFromCity,
   tzOffsetLabel,
 } from "@/lib/relationship-profile-cities";
+
+import {
+  PROFILE_DRAFT_TTL_MS,
+  readProfileDraft,
+  writeProfileDraft,
+  clearProfileDraft,
+} from "@/lib/relationship-profile-draft";
 
 const CORE_KEYS = [
   "fullName",
@@ -71,6 +79,46 @@ function zoneLabel(tz: string, label: string, withOffset: boolean): string {
   return offset ? `${label}, ${offset}` : label;
 }
 
+function ReviewAnswer({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const element = textRef.current;
+    if (!element) return;
+    const measure = () => {
+      if (!expanded)
+        setOverflows(element.scrollHeight > element.clientHeight + 1);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [text, expanded]);
+
+  return (
+    <>
+      <span
+        ref={textRef}
+        className={`whitespace-pre-wrap [overflow-wrap:anywhere] ${expanded ? "block" : "line-clamp-3"}`}
+      >
+        {text}
+      </span>
+      {(overflows || expanded) && (
+        <button
+          type="button"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((previous) => !previous)}
+          className={`font-body min-h-11 py-2 text-sm font-semibold text-ed-violet underline underline-offset-4 ${focusRing}`}
+        >
+          {expanded ? "Show less" : "Show more"}
+        </button>
+      )}
+    </>
+  );
+}
+
 export default function RelationshipProfileForm() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState<Values>({});
@@ -84,6 +132,9 @@ export default function RelationshipProfileForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [done, setDone] = useState(false);
+  const [draftSaved, setDraftSaved] = useState(false);
+  const draftFinished = useRef(false);
+  const draftPrefill = useRef("");
   const cardRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -96,17 +147,58 @@ export default function RelationshipProfileForm() {
       Intl as unknown as { supportedValuesOf?: (key: string) => string[] }
     ).supportedValuesOf?.("timeZone");
     const preset = readPrefill();
+    const prefill =
+      window.location.hash
+        .replace(/^#/, "")
+        .split(".")
+        .find((part) => part.startsWith("p-")) ?? "";
+    draftPrefill.current = prefill;
+    const draft = readProfileDraft();
+    const restoreDraft = (draft.prefill ?? "") === prefill;
     const timer = window.setTimeout(() => {
       setMounted(true);
       setDeviceTz(Intl.DateTimeFormat().resolvedOptions().timeZone || "");
       setAllZones(zones ?? []);
-      if (Object.keys(preset).length) {
+      if (restoreDraft) {
+        setValues(draft.values);
+        setStep(draft.step);
+      } else {
         setValues(preset);
         setPrefilled(Object.keys(preset));
       }
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!mounted || done) return;
+    let expiryTimer: number | undefined;
+    let expired = false;
+    function save() {
+      if (draftFinished.current || expired) return;
+      const saved = writeProfileDraft({
+        values,
+        step,
+        prefill: draftPrefill.current,
+      });
+      setDraftSaved(saved);
+      if (saved) {
+        window.clearTimeout(expiryTimer);
+        expiryTimer = window.setTimeout(() => {
+          expired = true;
+          clearProfileDraft();
+          setDraftSaved(false);
+        }, PROFILE_DRAFT_TTL_MS);
+      }
+    }
+    const timer = window.setTimeout(save, 300);
+    window.addEventListener("pagehide", save);
+    return () => {
+      window.clearTimeout(timer);
+      window.clearTimeout(expiryTimer);
+      window.removeEventListener("pagehide", save);
+    };
+  }, [values, step, mounted, done]);
 
   const tzInfo = useMemo((): { tz: string; source: TzSource } | null => {
     const pick = str(values[TZ_PICK_KEY]);
@@ -153,6 +245,7 @@ export default function RelationshipProfileForm() {
   }, [allZones]);
 
   function setValue(key: string, value: string | string[]) {
+    setDraftSaved(false);
     setValues((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => {
       if (!prev[key]) return prev;
@@ -199,7 +292,8 @@ export default function RelationshipProfileForm() {
 
   function checkStep(index: number): boolean {
     const keys = STEPS[index].fields.map((f) => f.key);
-    const { errors: found } = validateValues(values, keys);
+    const { data, errors: found } = validateValues(values, keys);
+    setValues((prev) => ({ ...prev, ...data }));
     setErrors((prev) => {
       const next = { ...prev };
       keys.forEach((k) => delete next[k]);
@@ -223,6 +317,8 @@ export default function RelationshipProfileForm() {
         goTo(index);
         const first = STEPS[index].fields.find((f) => found[f.key]);
         if (first) focusField(first.key);
+      } else if (found[CONSENT_KEY]) {
+        focusField(CONSENT_KEY);
       }
       return;
     }
@@ -241,6 +337,8 @@ export default function RelationshipProfileForm() {
       });
       if (!res.ok) throw new Error("failed");
       trackEvent("form_complete", { form: "relationship_profile" });
+      draftFinished.current = true;
+      clearProfileDraft();
       setDone(true);
       window.requestAnimationFrame(() =>
         cardRef.current?.scrollIntoView({ block: "start" }),
@@ -303,6 +401,7 @@ export default function RelationshipProfileForm() {
                   key={o.value}
                   type="button"
                   aria-pressed={on}
+                  aria-describedby={describedBy}
                   onClick={() => toggle(field, o.value)}
                   className={`font-body min-h-11 rounded-full border-[1.5px] px-4 py-2 text-base font-medium transition-colors max-[380px]:px-3 max-[380px]:text-[15px] ${focusRing} ${
                     on
@@ -404,6 +503,13 @@ export default function RelationshipProfileForm() {
           <input
             id={id}
             type={field.type}
+            onBlur={(e) => {
+              if (field.type === "url") {
+                setValue(field.key, cleanSchedulingLink(e.target.value));
+              } else if (field.type === "email") {
+                setValue(field.key, e.target.value.trim());
+              }
+            }}
             value={str(values[field.key])}
             onChange={(e) => setValue(field.key, e.target.value)}
             placeholder={field.placeholder}
@@ -484,8 +590,19 @@ export default function RelationshipProfileForm() {
                     <dt className="font-body text-sm font-semibold text-ed-muted">
                       {f.short ?? f.label}
                     </dt>
-                    <dd className="font-body whitespace-pre-wrap break-words">
-                      {v ? displayValue(f, v) : ""}
+                    <dd className="font-body min-w-0">
+                      <ReviewAnswer
+                        text={
+                          v
+                            ? displayValue(
+                                f,
+                                f.type === "url"
+                                  ? cleanSchedulingLink(str(v))
+                                  : v,
+                              )
+                            : ""
+                        }
+                      />
                     </dd>
                   </div>
                 ))}
@@ -502,13 +619,16 @@ export default function RelationshipProfileForm() {
           );
         })}
 
-        <label
+        <div
+          data-field={CONSENT_KEY}
           className={`mt-6 flex cursor-pointer items-start gap-3 rounded-xl border-[1.5px] p-4 font-body text-base has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ed-violet ${
             errors[CONSENT_KEY] ? "border-red-700" : "border-ed-ink/25"
           }`}
         >
           <input
+            id="rp-consent"
             type="checkbox"
+            aria-invalid={errors[CONSENT_KEY] ? "true" : undefined}
             checked={consent}
             onChange={(e) => {
               setConsent(e.target.checked);
@@ -519,14 +639,38 @@ export default function RelationshipProfileForm() {
             }
             className="mt-1 h-5 w-5 shrink-0 accent-ed-forest"
           />
-          <span>
-            <span aria-hidden="true" className="mr-1 text-red-700">
-              *
-            </span>
-            <span className="sr-only">(required) </span>
-            {CONSENT_LABEL}
-          </span>
-        </label>
+          <div>
+            <label htmlFor="rp-consent">
+              <span aria-hidden="true" className="mr-1 text-red-700">
+                *
+              </span>
+              <span className="sr-only">(required) </span>
+              {CONSENT_LABEL.split(". I can")[0]}, as described in our
+            </label>{" "}
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex min-h-11 items-center text-ed-violet underline underline-offset-4 ${focusRing}`}
+            >
+              Privacy Policy
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>{" "}
+            and{" "}
+            <a
+              href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex min-h-11 items-center text-ed-violet underline underline-offset-4 ${focusRing}`}
+            >
+              Terms<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            .{" "}
+            <label htmlFor="rp-consent">
+              I can ask for changes or removal at any time.
+            </label>
+          </div>
+        </div>
         {errors[CONSENT_KEY] && (
           <p
             id="rp-consent-error"
@@ -659,20 +803,23 @@ export default function RelationshipProfileForm() {
           aria-hidden="true"
           className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
         >
-          <label>
-            Leave this empty
-            <input
-              type="text"
-              name="website_url"
-              tabIndex={-1}
-              autoComplete="off"
-              value={honeypot}
-              onChange={(e) => setHoneypot(e.target.value)}
-            />
-          </label>
+          <input
+            type="text"
+            name="website_url"
+            aria-hidden="true"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
         </div>
 
         <div className="px-5 pb-2 pt-8 sm:px-7">
+          {draftSaved && (
+            <p role="status" className="font-body mb-3 text-sm text-ed-muted">
+              Draft saved on this device.
+            </p>
+          )}
           <h2
             ref={headingRef}
             tabIndex={-1}
