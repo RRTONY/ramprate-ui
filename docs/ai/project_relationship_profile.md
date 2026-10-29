@@ -58,6 +58,18 @@ Built 2026-10-23 for Satya (Sam Patnayak). A universal onboarding form for prosp
   Test submission with networking intercepted and `ZZ TEST` data only. Never send test email
   or create real records as part of this change.
 
+## Group D preview QA
+
+- 63 unit tests pass, including winter/summer offsets, search by city/country/zone,
+  result cap, omitted stations/territories, and legacy stored IDs.
+- 13 browser scenarios pass on preview 91. Las Vegas resolves automatically; manual Eastern
+  survives a city edit; search supports keyboard selection; legacy Asia/Calcutta restores
+  across refresh, displays Kolkata, and submits its original ID unchanged.
+- Axe WCAG A/AA checks report no violations in the closed picker, common list, or search results.
+  Layout and 44px targets pass at 375px, including a reduced 400px viewport for keyboard simulation.
+- One ZZ TEST preview submission was intercepted and answered locally. No real endpoint call,
+  email, or record was created. Physical phone keyboards and spoken screen readers were not tested.
+
 ## Open follow-ups
 
 - Create a ClickUp task per submission (same pattern as `src/app/api/champions-intake/route.ts`).
