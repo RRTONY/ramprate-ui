@@ -2,7 +2,7 @@ import { ALL_FIELDS, STEPS, type Values } from "./relationship-profile-fields";
 
 export const PROFILE_DRAFT_KEY = "ramprate.relationship-profile.draft.v1";
 
-type Draft = { values: Values; step: number };
+type Draft = { values: Values; step: number; prefill?: string };
 type DraftStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 type GetStorage = () => DraftStorage;
 const browserStorage: GetStorage = () => window.localStorage;
@@ -33,7 +33,13 @@ export function readProfileDraft(
     const step = Number.isInteger(raw.step)
       ? Math.max(0, Math.min(STEPS.length, raw.step))
       : 0;
-    return { values, step };
+    return {
+      values,
+      step,
+      ...(typeof raw.prefill === "string" && raw.prefill
+        ? { prefill: raw.prefill }
+        : {}),
+    };
   } catch {
     return empty;
   }
@@ -51,7 +57,12 @@ export function writeProfileDraft(
     );
     getStorage().setItem(
       PROFILE_DRAFT_KEY,
-      JSON.stringify({ version: 1, values, step: draft.step }),
+      JSON.stringify({
+        version: 1,
+        values,
+        step: draft.step,
+        prefill: draft.prefill ?? "",
+      }),
     );
     return true;
   } catch {
