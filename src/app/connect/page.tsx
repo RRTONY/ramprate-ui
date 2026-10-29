@@ -1,28 +1,16 @@
-"use client";
-import { useEffect, useState } from "react";
+import ConnectFrame from "./ConnectFrame";
 
-export default function ConnectPage() {
-  const [height, setHeight] = useState(1500);
-  useEffect(() => {
-    function onMessage(event: MessageEvent) {
-      if (
-        event.origin !== window.location.origin ||
-        event.data?.type !== "ramprate-connect-height"
-      )
-        return;
-      const nextHeight = Number(event.data.height);
-      if (Number.isFinite(nextHeight) && nextHeight > 300 && nextHeight < 10000)
-        setHeight(nextHeight + 12);
-    }
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, []);
-  return (
-    <iframe
-      title="Connect with RampRate"
-      src="/connect-form.html"
-      className="block w-full border-0 bg-white"
-      style={{ height }}
-    />
-  );
+export default async function ConnectPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const query = await searchParams;
+  const first = (value: string | string[] | undefined) =>
+    Array.isArray(value) ? value[0] : value;
+  const tag =
+    first(query.event) || first(query.e) || first(query.utm_campaign) || "";
+  const src =
+    "/connect-form.html" + (tag ? "?event=" + encodeURIComponent(tag) : "");
+  return <ConnectFrame src={src} />;
 }
