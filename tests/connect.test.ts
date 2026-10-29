@@ -27,6 +27,7 @@ function submit(body: unknown, headers: Record<string, string> = {}) {
 }
 beforeEach(() => {
   vi.clearAllMocks();
+  vi.stubEnv("CLICKUP_CONNECT_TOKEN", "");
   vi.stubEnv("CLICKUP_API_TOKEN", "");
 });
 afterEach(() => vi.unstubAllEnvs());
