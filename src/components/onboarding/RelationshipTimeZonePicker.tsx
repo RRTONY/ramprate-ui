@@ -117,7 +117,9 @@ export default function RelationshipTimeZonePicker({
         </button>
       </div>
       <p className="font-body mt-1 text-sm text-ed-muted">
-        Leave this alone and we will use your city, when recognized.
+        {value
+          ? "Your choice stays selected if you edit your city."
+          : "Leave this alone and we will use your city, when recognized."}
       </p>
       {open && (
         <div
