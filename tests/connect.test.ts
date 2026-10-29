@@ -76,7 +76,11 @@ describe("Connect submission safeguards", () => {
     );
   });
   it("rejects oversized bodies with and without Content-Length", async () => {
-    for (const headers of [{}, { "content-length": "22000" }]) {
+    const headerCases: Record<string, string>[] = [
+      {},
+      { "content-length": "22000" },
+    ];
+    for (const headers of headerCases) {
       expect(
         (await submit({ ...valid, extra: "x".repeat(21000) }, headers)).status,
       ).toBe(413);
