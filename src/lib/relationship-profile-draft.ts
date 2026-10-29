@@ -1,6 +1,7 @@
 import { ALL_FIELDS, STEPS, type Values } from "./relationship-profile-fields";
 
 export const PROFILE_DRAFT_KEY = "ramprate.relationship-profile.draft.v1";
+export const PROFILE_DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 type Draft = { values: Values; step: number; prefill?: string };
 type DraftStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
@@ -16,6 +17,16 @@ export function readProfileDraft(
     if (!saved || saved.length > 200_000) return empty;
     const raw = JSON.parse(saved);
     if (raw?.version !== 1 || !raw.values || typeof raw.values !== "object") {
+      return empty;
+    }
+    const now = Date.now();
+    if (
+      typeof raw.expiresAt !== "number" ||
+      !Number.isFinite(raw.expiresAt) ||
+      raw.expiresAt <= now ||
+      raw.expiresAt > now + PROFILE_DRAFT_TTL_MS
+    ) {
+      getStorage().removeItem(PROFILE_DRAFT_KEY);
       return empty;
     }
     const values: Values = {};
@@ -59,6 +70,7 @@ export function writeProfileDraft(
       PROFILE_DRAFT_KEY,
       JSON.stringify({
         version: 1,
+        expiresAt: Date.now() + PROFILE_DRAFT_TTL_MS,
         values,
         step: draft.step,
         prefill: draft.prefill ?? "",
