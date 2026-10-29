@@ -39,9 +39,15 @@ export default function ConnectFrame({ src }: { src: string }) {
       const root = document.querySelector("main.page");
       if (!root) return;
       const measure = () => {
+        if (
+          document.fonts?.status === "loading" &&
+          root.querySelector<HTMLElement>("#rest")?.hidden
+        )
+          return;
         const nextHeight = root.getBoundingClientRect().height;
         if (validHeight(nextHeight)) setHeight(Math.ceil(nextHeight) + 1);
       };
+      document.fonts?.ready.then(measure);
       measure();
       observer.current = new ResizeObserver(measure);
       observer.current.observe(root);
