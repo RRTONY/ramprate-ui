@@ -133,6 +133,7 @@ export default function RelationshipProfileForm() {
   const [done, setDone] = useState(false);
   const [draftSaved, setDraftSaved] = useState(false);
   const draftFinished = useRef(false);
+  const draftPrefill = useRef("");
   const cardRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -145,17 +146,24 @@ export default function RelationshipProfileForm() {
       Intl as unknown as { supportedValuesOf?: (key: string) => string[] }
     ).supportedValuesOf?.("timeZone");
     const preset = readPrefill();
+    const prefill =
+      window.location.hash
+        .replace(/^#/, "")
+        .split(".")
+        .find((part) => part.startsWith("p-")) ?? "";
+    draftPrefill.current = prefill;
     const draft = readProfileDraft();
+    const restoreDraft = (draft.prefill ?? "") === prefill;
     const timer = window.setTimeout(() => {
       setMounted(true);
       setDeviceTz(Intl.DateTimeFormat().resolvedOptions().timeZone || "");
       setAllZones(zones ?? []);
-      if (Object.keys(preset).length) {
-        setValues(preset);
-        setPrefilled(Object.keys(preset));
-      } else {
+      if (restoreDraft) {
         setValues(draft.values);
         setStep(draft.step);
+      } else {
+        setValues(preset);
+        setPrefilled(Object.keys(preset));
       }
     }, 0);
     return () => window.clearTimeout(timer);
@@ -165,7 +173,11 @@ export default function RelationshipProfileForm() {
     if (!mounted || done) return;
     function save() {
       if (draftFinished.current) return;
-      const saved = writeProfileDraft({ values, step });
+      const saved = writeProfileDraft({
+        values,
+        step,
+        prefill: draftPrefill.current,
+      });
       setDraftSaved(saved);
     }
     const timer = window.setTimeout(save, 300);
