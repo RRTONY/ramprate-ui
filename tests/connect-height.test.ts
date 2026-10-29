@@ -84,3 +84,54 @@ describe("Connect intrinsic height reporter", () => {
     expect(postMessage).toHaveBeenCalledTimes(3);
   });
 });
+
+describe("Connect first-load font sizing", () => {
+  it("holds the measured initial height during font loading, without delaying an opened form", () => {
+    const html = readFileSync("public/connect-form.html", "utf8");
+    const script = html.slice(
+      html.lastIndexOf("<script>") + 8,
+      html.lastIndexOf("</script>"),
+    );
+    let height = 1067;
+    const rest = { hidden: true };
+    const root = {
+      getBoundingClientRect: () => ({ height }),
+      querySelector: () => rest,
+    };
+    let resize = () => {};
+    let fontsReady = () => {};
+    const fonts = {
+      status: "loading",
+      ready: {
+        then: (callback: () => void) => {
+          fontsReady = callback;
+        },
+      },
+    };
+    const postMessage = vi.fn();
+    runInNewContext(script, {
+      document: { fonts, querySelector: () => root },
+      ResizeObserver: class {
+        constructor(callback: () => void) {
+          resize = callback;
+        }
+        observe() {}
+      },
+      window: {
+        parent: { postMessage },
+        location: { origin: "https://ramprate.com" },
+        addEventListener() {},
+      },
+    });
+    expect(postMessage).not.toHaveBeenCalled();
+    height = 993;
+    fonts.status = "loaded";
+    fontsReady();
+    expect(postMessage.mock.calls.at(-1)?.[0].height).toBe(993);
+    fonts.status = "loading";
+    rest.hidden = false;
+    height = 3306;
+    resize();
+    expect(postMessage.mock.calls.at(-1)?.[0].height).toBe(3306);
+  });
+});
