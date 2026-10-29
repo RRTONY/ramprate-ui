@@ -15,14 +15,8 @@ import {
   type TzSource,
   type Values,
 } from "@/lib/relationship-profile-fields";
-import {
-  TZ_EUROPE,
-  TZ_FALLBACK,
-  TZ_NORTH_AMERICA,
-  describeZone,
-  tzFromCity,
-  tzOffsetLabel,
-} from "@/lib/relationship-profile-cities";
+import { describeZone, tzFromCity } from "@/lib/relationship-profile-cities";
+import RelationshipTimeZonePicker from "./RelationshipTimeZonePicker";
 
 import {
   PROFILE_DRAFT_TTL_MS,
@@ -74,11 +68,6 @@ function readPrefill(): Values {
   }
 }
 
-function zoneLabel(tz: string, label: string, withOffset: boolean): string {
-  const offset = withOffset ? tzOffsetLabel(tz) : "";
-  return offset ? `${label}, ${offset}` : label;
-}
-
 function ReviewAnswer({ text }: { text: string }) {
   const [expanded, setExpanded] = useState(false);
   const [overflows, setOverflows] = useState(false);
@@ -126,7 +115,6 @@ export default function RelationshipProfileForm() {
   const [prefilled, setPrefilled] = useState<string[]>([]);
   const [consent, setConsent] = useState(false);
   const [deviceTz, setDeviceTz] = useState("");
-  const [allZones, setAllZones] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -143,9 +131,6 @@ export default function RelationshipProfileForm() {
 
   useEffect(() => {
     trackEvent("form_start", { form: "relationship_profile" });
-    const zones = (
-      Intl as unknown as { supportedValuesOf?: (key: string) => string[] }
-    ).supportedValuesOf?.("timeZone");
     const preset = readPrefill();
     const prefill =
       window.location.hash
@@ -158,7 +143,6 @@ export default function RelationshipProfileForm() {
     const timer = window.setTimeout(() => {
       setMounted(true);
       setDeviceTz(Intl.DateTimeFormat().resolvedOptions().timeZone || "");
-      setAllZones(zones ?? []);
       if (restoreDraft) {
         setValues(draft.values);
         setStep(draft.step);
@@ -210,39 +194,6 @@ export default function RelationshipProfileForm() {
     if (deviceTz) return { tz: deviceTz, source: "device" };
     return null;
   }, [values, deviceTz]);
-
-  const tzNote = useMemo(() => {
-    if (!str(values.location) && !str(values[TZ_PICK_KEY])) return "";
-    if (!tzInfo) return "We will confirm the time zone with you.";
-    if (tzInfo.source === "device") {
-      return `We could not match that city, so we will use your device’s time zone (${describeZone(tzInfo.tz)}) for now. Choose one above if that is not right.`;
-    }
-    return `Time zone: ${describeZone(tzInfo.tz)}`;
-  }, [values, tzInfo]);
-
-  const zoneGroups = useMemo(() => {
-    const taken = new Set(
-      [...TZ_NORTH_AMERICA, ...TZ_EUROPE].map(([tz]) => tz),
-    );
-    const rest = (allZones.length ? allZones : TZ_FALLBACK)
-      .filter(
-        (z) =>
-          !taken.has(z) &&
-          z.includes("/") &&
-          !/^(Etc|US|Canada|Brazil|Chile|Mexico)\//.test(z),
-      )
-      .sort()
-      .map((z): [string, string] => {
-        const parts = z.split("/");
-        const place = parts.slice(1).join(" / ").replace(/_/g, " ");
-        return [z, `${place} (${parts[0]})`];
-      });
-    return [
-      { label: "North America", zones: TZ_NORTH_AMERICA },
-      { label: "Europe", zones: TZ_EUROPE },
-      { label: "Everywhere else", zones: rest },
-    ];
-  }, [allZones]);
 
   function setValue(key: string, value: string | string[]) {
     setDraftSaved(false);
@@ -416,7 +367,18 @@ export default function RelationshipProfileForm() {
           </div>
         </>
       );
-    } else if (field.type === "select" || field.type === "timezone") {
+    } else if (field.type === "timezone") {
+      control = (
+        <RelationshipTimeZonePicker
+          id={id}
+          value={str(values[field.key])}
+          timezone={tzInfo?.tz}
+          source={tzInfo?.source}
+          error={error}
+          onChange={(zone) => setValue(field.key, zone)}
+        />
+      );
+    } else if (field.type === "select") {
       control = (
         <>
           <label htmlFor={id} className={labelClass}>
@@ -431,24 +393,12 @@ export default function RelationshipProfileForm() {
               aria-describedby={describedBy}
               className={`${inputClass} appearance-none pr-10`}
             >
-              <option value="">
-                {field.type === "timezone" ? "Not sure, or skip" : "Select"}
-              </option>
-              {field.type === "timezone"
-                ? zoneGroups.map((group) => (
-                    <optgroup key={group.label} label={group.label}>
-                      {group.zones.map(([tz, text]) => (
-                        <option key={tz} value={tz}>
-                          {zoneLabel(tz, text, mounted)}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))
-                : (field.options ?? []).map((o) => (
-                    <option key={o.value} value={o.value}>
-                      {o.label}
-                    </option>
-                  ))}
+              <option value="">Select</option>
+              {(field.options ?? []).map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
             <svg
               aria-hidden="true"
@@ -465,14 +415,6 @@ export default function RelationshipProfileForm() {
           </div>
           {field.hint && (
             <p className="font-body mt-2 text-sm text-ed-muted">{field.hint}</p>
-          )}
-          {field.type === "timezone" && tzNote && (
-            <p
-              aria-live="polite"
-              className="font-body mt-2 text-sm font-medium text-ed-forest"
-            >
-              {tzNote}
-            </p>
           )}
         </>
       );
@@ -611,7 +553,9 @@ export default function RelationshipProfileForm() {
                     <dt className="font-body text-sm font-semibold text-ed-muted">
                       Time zone
                     </dt>
-                    <dd className="font-body">{tzInfo.tz}</dd>
+                    <dd className="font-body [overflow-wrap:anywhere]">
+                      {describeZone(tzInfo.tz)}
+                    </dd>
                   </div>
                 )}
               </dl>
