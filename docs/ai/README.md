@@ -51,3 +51,9 @@ Background notes for any AI tool working on this repo. The **rules** live in [`/
 
 - [reference_sanity_cms_guide](reference_sanity_cms_guide.md): Internal PDF guide teaching the non-dev team how to edit content in Sanity Studio
 - [reference_sanity_write_pattern](reference_sanity_write_pattern.md): How to write/patch Sanity content programmatically in this repo — a persistent write client now exists (src/lib/sanity/write-client.ts) for the admin chat; one-off scripts can also still use SANITY_API_TOKEN directly
+
+## Connect form safeguards (2026-10-29)
+
+`/connect` reads event/e/utm_campaign on the server and passes the tag to `ConnectFrame`; the standalone form at `public/connect-form.html` validates and remembers tags in sessionStorage. A fresh session without a parameter has no tag; revisiting without a parameter retains the saved tag. Storage access must tolerate blocked storage.
+
+Keep all existing JSON keys, including the historical `details.rampate_contact` spelling. `source_page` is the parent origin/path without query or hash; `form_url` preserves the embedded form URL. Native submission uses POST and returns a friendly HTML error. The form is disabled until initialization and has an early independent submit guard. Field limits and phone validation are enforced in the form and in `src/app/api/connect/route.ts`; body size is bounded while streaming, including requests without Content-Length. Route tests mock email delivery. Never submit test inquiries to the live inbox.
