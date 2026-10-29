@@ -643,4 +643,21 @@ describe("Connect ClickUp integration", () => {
     expect(payloads()).toHaveLength(1);
     expect(email.mock.calls[0][0].text).not.toContain("ClickUp save failed");
   });
+  it("makes safe diagnostics available on the preview hostname if CONTEXT is absent", async () => {
+    vi.stubEnv("CONTEXT", "");
+    vi.stubEnv("CLICKUP_API_TOKEN", "");
+    const response = await POST(
+      new NextRequest(
+        "https://deploy-preview-92--ramprate.netlify.app/api/connect",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(valid),
+        },
+      ),
+    );
+    expect(response.headers.get("X-Connect-ClickUp")).toBe("CU_TOKEN_MISSING");
+    expect(email.mock.calls[0][0].text).toContain("[CU_TOKEN_MISSING]");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
 });
