@@ -1523,6 +1523,12 @@
         if (!root) return;
         var lastHeight = 0;
         function reportHeight() {
+          if (
+            document.fonts &&
+            document.fonts.status === "loading" &&
+            root.querySelector("#rest").hidden
+          )
+            return;
           // scrollHeight has the iframe viewport as a floor, so it cannot shrink.
           var height = Math.ceil(root.getBoundingClientRect().height);
           if (
