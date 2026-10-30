@@ -51,7 +51,7 @@ export default function Header() {
     "/legal-master",
     "/roles",
   ];
-  const lightBgExactPaths = ["/biochain", "/contact", "/onboarding"];
+  const lightBgExactPaths = ["/", "/biochain", "/contact", "/onboarding"];
   const isLightPage =
     lightBgPaths.some((p) => pathname.startsWith(p)) ||
     lightBgExactPaths.includes(pathname);
