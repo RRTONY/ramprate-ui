@@ -1,0 +1,54 @@
+.apf-root .apf-steps {
+  gap: 12px;
+}
+.apf-root .apf-step-item {
+  padding-bottom: 14px;
+  min-width: 0;
+}
+.apf-root .apf-step-btn {
+  margin: 0;
+  padding: 8px 0;
+  align-items: flex-start;
+}
+.apf-root .apf-step-text {
+  min-width: 0;
+  flex: 1;
+}
+.apf-root .apf-step-title {
+  display: block;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.apf-root .apf-step-sub {
+  display: block;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+@media (max-width: 860px) {
+  .apf-root .apf-steps {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+  .apf-root .apf-step-item {
+    flex: 0 0 132px;
+    padding-bottom: 0;
+  }
+  .apf-root .apf-step-item::before {
+    display: none;
+  }
+  .apf-root .apf-step-btn {
+    margin: 0;
+    padding: 8px 4px;
+    align-items: center;
+    min-height: 80px;
+  }
+  .apf-root .apf-step-title {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .apf-root .apf-step-sub {
+    display: none;
+  }
+}

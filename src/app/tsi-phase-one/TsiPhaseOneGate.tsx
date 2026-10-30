@@ -1,7 +1,17 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ACCESS_CODE } from "../tsi-partnership/TsiPartnershipGate";
+
+const ACCESS_HASH =
+  "51eb2ecd57391422872b32c35ea1a30a1238a7607f64864efa82b9c3505e3a58";
+
+async function sha256(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 export default function TsiPhaseOneGate({
   children,
@@ -13,8 +23,9 @@ export default function TsiPhaseOneGate({
   const [error, setError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function attempt() {
-    if (code.trim().toLowerCase() === ACCESS_CODE.toLowerCase()) {
+  async function attempt() {
+    const hash = await sha256(code.trim());
+    if (hash === ACCESS_HASH) {
       setUnlocked(true);
       setError(false);
       return;
@@ -56,7 +67,7 @@ export default function TsiPhaseOneGate({
             setError(false);
           }}
           onKeyDown={(event) => {
-            if (event.key === "Enter") attempt();
+            if (event.key === "Enter") void attempt();
           }}
           className="mt-7 w-full rounded-[10px] border border-[oklch(0.86_0.03_75)] bg-[oklch(0.97_0.02_75)] px-4 py-3 text-[0.95rem] text-[oklch(0.24_0.03_315)] outline-none focus:border-[oklch(0.48_0.11_315)]"
         />
@@ -67,7 +78,7 @@ export default function TsiPhaseOneGate({
         )}
         <button
           type="button"
-          onClick={attempt}
+          onClick={() => void attempt()}
           className="mt-3 w-full rounded-[10px] bg-[oklch(0.48_0.11_315)] px-4 py-[13px] text-[0.95rem] font-semibold text-[oklch(0.97_0.02_75)]"
         >
           Enter

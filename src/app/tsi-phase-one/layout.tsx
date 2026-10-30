@@ -1,6 +1,6 @@
 import { Fraunces, Public_Sans } from "next/font/google";
 
-// Route-scoped fonts for the TSI partnership page only. This page's design
+// Route-scoped fonts for the standalone TSI Phase One page. This page's design
 // (ivory/plum/sage palette, Fraunces display serif) deliberately departs from
 // the rest of the site's Playfair/DM Sans + gold/dark system, matching the
 // bespoke HTML design artifact this page was built from. Scoping the fonts

@@ -7,7 +7,7 @@ import Image from "next/image";
 // no dependency on src/lib/portal-auth.ts's fixed PORTAL_IDS registry, so
 // this page can ship on its own. Not meant for anything more sensitive than
 // keeping this discussion off the open web - it's one link, shared directly.
-export const ACCESS_CODE = "TSI-2026";
+const ACCESS_CODE = "TSI-2026";
 
 // This page's palette, typography (Fraunces + Public Sans) and generative
 // motifs are deliberately ported from the bespoke HTML design artifact built

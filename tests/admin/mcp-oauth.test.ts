@@ -783,3 +783,111 @@ describe("ChatGPT's client metadata document + private_key_jwt", () => {
     expect(await resolveClient(CIMD)).toBeNull();
   });
 });
+
+describe("chatgpt.com answering 404 most of the time (2026-10-23)", () => {
+  const CIMD = "https://chatgpt.com/oauth/client.json";
+  const JWKS = "https://chatgpt.com/oauth/jwks.json";
+  const DOC = {
+    client_id: CIMD,
+    redirect_uris: [CHATGPT_CB],
+    token_endpoint_auth_method: "private_key_jwt",
+    jwks_uri: JWKS,
+    client_name: "ChatGPT",
+  };
+
+  beforeEach(async () => {
+    const { clearRemoteClientCachesForTests } =
+      await import("@/lib/admin/mcp-oauth");
+    clearRemoteClientCachesForTests();
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("retries until the client document loads", async () => {
+    let calls = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        ++calls < 4
+          ? new Response("not found", { status: 404 })
+          : Response.json(DOC),
+      ),
+    );
+    const { resolveClient } = await import("@/lib/admin/mcp-oauth");
+    const client = await resolveClient(CIMD);
+    expect(client?.redirectUris).toEqual([CHATGPT_CB]);
+    expect(calls).toBe(4);
+  });
+
+  it("falls back to the pinned ChatGPT document and key when every fetch fails", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("not found", { status: 404 })),
+    );
+    const { resolveClient, validateAuthorizeRequest } =
+      await import("@/lib/admin/mcp-oauth");
+    const client = await resolveClient(CIMD);
+    expect(client?.redirectUris).toEqual([CHATGPT_CB]);
+    expect(client?.authMethod).toBe("private_key_jwt");
+    expect(client?.jwksUri).toBe(JWKS);
+
+    const { challenge } = pkce();
+    const v = await validateAuthorizeRequest({
+      response_type: "code",
+      client_id: CIMD,
+      redirect_uri: CHATGPT_CB,
+      code_challenge: challenge,
+      code_challenge_method: "S256",
+    });
+    expect("error" in v).toBe(false);
+  }, 20000);
+
+  it("the pinned key still refuses an assertion ChatGPT didn't sign", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("not found", { status: 404 })),
+    );
+    const { verifyClientAssertion } = await import("@/lib/admin/mcp-oauth");
+    const { generateKeyPairSync, sign } = await import("crypto");
+    const { privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
+    const t = Math.floor(Date.now() / 1000);
+    const h = Buffer.from(
+      JSON.stringify({ alg: "RS256", kid: "cimd-20260428030119" }),
+    ).toString("base64url");
+    const p = Buffer.from(
+      JSON.stringify({
+        iss: CIMD,
+        sub: CIMD,
+        aud: "https://ramprate.com/api/oauth/token",
+        exp: t + 60,
+      }),
+    ).toString("base64url");
+    const forged = `${h}.${p}.${sign("RSA-SHA256", Buffer.from(`${h}.${p}`), privateKey).toString("base64url")}`;
+    expect(
+      await verifyClientAssertion(CIMD, JWKS, forged, [
+        "https://ramprate.com/api/oauth/token",
+      ]),
+    ).toBe(false);
+  }, 30000);
+
+  it("has no pinned fallback for other hosts' documents", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("not found", { status: 404 })),
+    );
+    const { resolveClient } = await import("@/lib/admin/mcp-oauth");
+    expect(
+      await resolveClient("https://claude.ai/oauth/client.json"),
+    ).toBeNull();
+  }, 20000);
+
+  it("a live document always wins over the pinned copy", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({ ...DOC, client_id: "https://chatgpt.com/other.json" }),
+      ),
+    );
+    const { resolveClient } = await import("@/lib/admin/mcp-oauth");
+    expect(await resolveClient(CIMD)).toBeNull();
+  });
+});

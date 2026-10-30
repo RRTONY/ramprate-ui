@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics/track";
+import { isLinkedInProfileUrl } from "@/lib/linkedin";
 
 // Adobe Sign embedded widget for the Champion Agreement. The agreement is
 // already signed on RampRate's side, so this is the countersignature step.
@@ -85,7 +86,20 @@ export default function ChampionApplyForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    const linkedinInput = form.elements.namedItem("linkedin");
+    if (
+      linkedinInput instanceof HTMLInputElement &&
+      !isLinkedInProfileUrl(linkedinInput.value)
+    ) {
+      linkedinInput.setCustomValidity(
+        "Please enter your LinkedIn profile link, for example https://linkedin.com/in/your-name.",
+      );
+      linkedinInput.reportValidity();
+      return;
+    }
 
     setStatus("sending");
     setError("");
@@ -407,6 +421,7 @@ export default function ChampionApplyForm() {
                 autoComplete={field.autoComplete}
                 placeholder={field.placeholder}
                 required={field.required}
+                onInput={(event) => event.currentTarget.setCustomValidity("")}
                 style={inputStyle}
               />
             </div>

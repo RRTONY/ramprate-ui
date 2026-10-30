@@ -84,7 +84,7 @@ const styles = `
 .tsi-scope .eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .6rem}
 .tsi-scope .brand-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line)}
 .tsi-scope .brand-left{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.tsi-scope .bcorp{display:block;width:130px;height:auto}
+.tsi-scope .bcorp{display:block;width:220px;max-width:100%;height:auto;object-fit:contain}
 .tsi-scope .note{font-size:.8rem;max-width:38ch;line-height:1.5}
 .tsi-scope nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .tsi-scope .toc{display:flex;gap:20px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
@@ -198,7 +198,7 @@ const styles = `
   .tsi-scope .shell{padding-inline:14px}
   .tsi-scope .brand-bar{align-items:flex-start}
   .tsi-scope .brand-left{gap:12px}
-  .tsi-scope .bcorp{width:116px}
+  .tsi-scope .bcorp{width:200px;max-width:100%}
   .tsi-scope .hero h1{font-size:2.35rem}
   .tsi-scope .flow{grid-template-columns:1fr}
   .tsi-scope .final{padding:28px 22px}
@@ -218,6 +218,7 @@ export default function TsiPhaseOneScopePage() {
               width={1140}
               height={246}
               className="bcorp"
+              unoptimized
               priority
             />
           </div>
@@ -843,6 +844,7 @@ export default function TsiPhaseOneScopePage() {
             width={1140}
             height={246}
             className="bcorp"
+            unoptimized
           />
           <p>Confidential discussion materials prepared for TSI.</p>
         </footer>
