@@ -63,7 +63,9 @@ Event labels intentionally prefill `heard` only when its current value is empty.
 
 ## Connect ClickUp saving (preview work, 2026-10-30)
 
-Server integration lives only in `src/app/api/connect/route.ts`. Read `CLICKUP_CONNECT_TOKEN` first, falling back to the existing `CLICKUP_API_TOKEN`. Do not change Netlify environment variables; use their existing values. Never put token values in chat, source, documentation, or logs. Optional server settings: `CLICKUP_CONNECT_LIST_ID` (default `901115639111`) and `CLICKUP_CONNECT_ASSIGNEE` (default `87423169`).
+Server integration lives only in `src/app/api/connect/route.ts`. Read `CLICKUP_CONNECT_TOKEN` first, falling back to the existing `CLICKUP_API_TOKEN`. Do not change Netlify environment variables; use their existing values. Never put token values in chat, source, documentation, or logs. Optional server settings: `CLICKUP_CONNECT_LIST_ID` (default `901115639111`, the Inbound Connect list) and `CLICKUP_CONNECT_ASSIGNEE` (default `87423169`, Darryl; `none` creates tasks unassigned).
+
+**Gotcha (found 2026-10-30):** a ClickUp automation moves any task assigned to Darryl into "Darryl's Tasks" the instant it is created, which also wipes the Inbound Connect custom fields. Tested directly: an unassigned task stays in Inbound Connect, an assigned one moves. Until that automation is turned off in ClickUp, Netlify has `CLICKUP_CONNECT_ASSIGNEE=none`; set it back to `87423169` (and redeploy) once it is off. Netlify also has `CLICKUP_CONNECT_LIST_ID=901115639111` set explicitly for Production and Deploy Previews.
 
 The handler preserves existing validation and honeypot behavior, looks up the 14 custom fields by exact name with a five-minute in-memory cache, resolves dropdown/label option IDs by name, and keeps raw answers in the task description. Real payload paths include `details.stage`, `details.partnership_types`, and the historical `details.rampate_contact` spelling. There is no partnership-specific agreed value; the AGREED section uses `details.person_knows` only when supplied.
 
