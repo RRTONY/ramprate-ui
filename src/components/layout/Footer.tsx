@@ -48,7 +48,7 @@ export default function Footer({
     "https://www.linkedin.com/company/ramprate";
   const twitterUrl =
     socialLinks?.find((l) => l.platform === "twitter")?.url ||
-    "https://twitter.com/ramprate";
+    "https://x.com/ramprate";
 
   return (
     <footer className="bg-ed-ivory text-ed-ink border-t border-ed-line py-12 sm:py-14">
