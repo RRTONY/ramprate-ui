@@ -47,7 +47,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-package-lock.json
+# package-lock.json IS committed (2026-10-23): without it every Netlify build
+# resolved fresh versions and failed at random during install. Use npm, not yarn.
 yarn.lock
 
 # personal Claude Code settings (the shared agents in .claude/agents/ ARE committed)

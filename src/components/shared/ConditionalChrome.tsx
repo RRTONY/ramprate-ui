@@ -29,6 +29,7 @@ export function ConditionalChrome({
     segments[0] === "oauth" ||
     segments[0] === "starnews" ||
     segments[0] === "starnews-proposal" ||
+    segments[0] === "kula-proposal" ||
     segments[0] === "tsi-partnership" ||
     segments[0] === "tsi-phase-one";
   const hideChrome =
