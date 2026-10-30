@@ -172,12 +172,16 @@ async function saveConnectToClickUp(
   const listId = process.env.CLICKUP_CONNECT_LIST_ID?.trim() || "901115639111";
   const assigneeText =
     process.env.CLICKUP_CONNECT_ASSIGNEE?.trim() || "87423169";
+  // "none" skips assignment: a ClickUp automation moves any task assigned to
+  // Darryl out of Inbound Connect into his own list, dropping its fields.
+  const unassigned = assigneeText.toLowerCase() === "none";
   const assignee = Number(assigneeText);
   if (
     !/^\d+$/.test(listId) ||
-    !/^\d+$/.test(assigneeText) ||
-    !Number.isSafeInteger(assignee) ||
-    assignee <= 0
+    (!unassigned &&
+      (!/^\d+$/.test(assigneeText) ||
+        !Number.isSafeInteger(assignee) ||
+        assignee <= 0))
   ) {
     connectLog("CU_CONFIG_INVALID", receivedAt);
     return { ok: false, code: "CU_CONFIG_INVALID" };
@@ -409,7 +413,7 @@ async function saveConnectToClickUp(
       name: submission.name,
       description: submission.description,
       status: "New",
-      assignees: [assignee],
+      assignees: unassigned ? [] : [assignee],
       tags: submission.event ? [submission.event] : [],
       custom_fields: customFields,
     });

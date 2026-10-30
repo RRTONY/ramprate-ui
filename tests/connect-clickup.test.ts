@@ -549,6 +549,17 @@ describe("Connect ClickUp integration", () => {
       task.custom_fields.some((field: { id: string }) => field.id === "evil"),
     ).toBe(false);
   });
+  it("creates an unassigned task when the assignee is set to none, and rejects a bad assignee", async () => {
+    vi.stubEnv("CLICKUP_CONNECT_ASSIGNEE", " None ");
+    await submit();
+    expect(payloads()[0].assignees).toEqual([]);
+    expect(payloads()[0].status).toBe("New");
+    fetchMock.mockClear();
+    vi.stubEnv("CLICKUP_CONNECT_ASSIGNEE", "nobody");
+    await submit();
+    expect(payloads()).toEqual([]);
+    expect(email.mock.calls.at(-1)?.[0].text).toContain("CU_CONFIG_INVALID");
+  });
   it("fails safely without the token and never logs token-bearing thrown errors", async () => {
     fetchMock.mockRejectedValue(new Error(secret));
     await submit();
