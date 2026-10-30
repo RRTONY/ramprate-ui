@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { POST } from "../src/app/api/connect/route";
 import { sendEmail } from "../src/lib/admin/resend-client";
@@ -25,7 +25,12 @@ function submit(body: unknown, headers: Record<string, string> = {}) {
     }),
   );
 }
-beforeEach(() => vi.clearAllMocks());
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.stubEnv("CLICKUP_CONNECT_TOKEN", "");
+  vi.stubEnv("CLICKUP_API_TOKEN", "");
+});
+afterEach(() => vi.unstubAllEnvs());
 describe("Connect submission safeguards", () => {
   it.each([
     ["abc!!!", 400],
