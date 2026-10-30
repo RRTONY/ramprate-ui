@@ -1,85 +1,40 @@
-"use client";
-
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
 type TimelineItem = { year: string; event: string };
 
 export default function Timeline({ timeline }: { timeline: TimelineItem[] }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    trackRef.current?.scrollBy({
-      left: direction === "left" ? -400 : 400,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <>
-      {/* Desktop: horizontal, arrow-driven (native scrollbar hidden) */}
-      <div className="hidden md:block relative">
-        <div
-          ref={trackRef}
-          className="flex gap-0 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {timeline.map((item) => (
-            <div key={item.year} className="flex-shrink-0 w-[200px] relative">
-              <div className="flex flex-col items-center">
-                <div className="w-3 h-3 rounded-full relative z-10 mb-3 bg-rust" />
-                <div className="absolute top-1.5 left-1/2 w-full h-px bg-black/10" />
-                <span className="font-mono text-lg font-bold mb-2 text-rust">
+    <div
+      aria-label="RampRate milestones, scrolling from right to left"
+      className="group relative overflow-hidden py-2"
+      tabIndex={0}
+    >
+      <div className="timeline-marquee flex w-max items-start group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none">
+        {[0, 1].map((copy) => (
+          <div
+            key={copy}
+            aria-hidden={copy === 1}
+            className="flex shrink-0 items-start"
+          >
+            {timeline.map((item) => (
+              <div
+                key={item.year}
+                className="relative w-[220px] shrink-0 px-3 text-center sm:w-[270px]"
+              >
+                <div className="absolute left-0 right-0 top-[5px] h-px bg-black/10" />
+                <div className="relative z-10 mx-auto mb-4 h-3 w-3 rounded-full bg-rust" />
+                <span className="font-mono text-lg font-bold text-rust">
                   {item.year}
                 </span>
-                <p className="font-body text-xs text-center leading-relaxed px-3 text-ink-mid">
+                <p className="font-body mt-2 text-sm leading-relaxed text-ink-mid">
                   {item.event}
                 </p>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-center gap-3 mt-4">
-          <button
-            type="button"
-            onClick={() => scroll("left")}
-            aria-label="Scroll timeline left"
-            className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center text-ink-mid transition-colors hover:text-ink hover:border-black/30"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <button
-            type="button"
-            onClick={() => scroll("right")}
-            aria-label="Scroll timeline right"
-            className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center text-ink-mid transition-colors hover:text-ink hover:border-black/30"
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile: vertical */}
-      <div className="md:hidden space-y-0">
-        {timeline.map((item, i) => (
-          <div key={item.year} className="flex gap-5 relative">
-            <div className="flex flex-col items-center">
-              <div className="w-3 h-3 rounded-full shrink-0 relative z-10 bg-rust" />
-              {i < timeline.length - 1 && (
-                <div className="w-px flex-1 mt-1 bg-black/10" />
-              )}
-            </div>
-            <div className="pb-8">
-              <span className="font-mono text-sm font-bold text-rust">
-                {item.year}
-              </span>
-              <p className="font-body text-sm mt-1 leading-relaxed text-ink-mid">
-                {item.event}
-              </p>
-            </div>
+            ))}
           </div>
         ))}
       </div>
-    </>
+      <p className="sr-only">
+        The timeline moves automatically. Hover over it or focus it to pause.
+      </p>
+    </div>
   );
 }

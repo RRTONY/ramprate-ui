@@ -126,6 +126,10 @@ const timeline = [
     event:
       "AI-augmented advisory. Same relationships, faster pattern recognition.",
   },
+  {
+    year: "2026",
+    event: "Continuing the next chapter of AI-enabled advisory.",
+  },
 ];
 
 /* ── HOW WE OPERATE ── */

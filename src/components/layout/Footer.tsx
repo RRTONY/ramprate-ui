@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/components/shared/Logo";
 import { toTelHref } from "@/lib/utils";
@@ -50,41 +51,56 @@ export default function Footer({
     "https://twitter.com/ramprate";
 
   return (
-    <footer className="text-ink-mid py-16 bg-warm-bg border-t border-black/10">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+    <footer className="bg-ed-ivory text-ed-ink border-t border-ed-line py-12 sm:py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 mb-10">
           {/* Column 1 - Brand */}
-          <div>
-            <Link href="/" className="block mb-4">
+          <div className="col-span-2 lg:col-span-5 lg:pr-10">
+            <Link href="/" className="inline-block mb-4">
               <Logo variant="dark" size="md" />
             </Link>
-            <p className="font-body text-xs text-ink-mid mb-5 leading-relaxed">
-              Since 2000. A fractional team of superstars creating
-              trajectory-changing connections.
+            <p className="font-body text-[15px] text-ed-muted leading-relaxed max-w-md">
+              Since 2000, we&apos;ve brought extraordinary people, ideas, and
+              organizations together to solve difficult problems, challenge
+              conventional thinking, and create outcomes that change what&apos;s
+              possible.
             </p>
             <a
               href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
               target="_blank"
-              rel="noreferrer"
-              className="inline-block font-mono text-[10px] font-medium border border-black/20 rounded px-2 py-0.5 tracking-wider uppercase text-ink-mid hover:border-black/40 hover:text-rust transition-colors"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-3 rounded-md text-sm font-medium text-ed-ink hover:underline underline-offset-4"
             >
-              B Lab Certified
+              <Image
+                src="/bcorp-logo.svg"
+                alt="Certified B Corporation"
+                width={30}
+                height={44}
+                className="h-11 w-auto"
+                unoptimized
+              />
+              View our B Lab profile
             </a>
           </div>
 
           {/* Column 2 - Brands */}
-          <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-ink-mid mb-4">
-              Brands
+          <div className="lg:col-span-3">
+            <p className="font-body text-sm font-semibold text-ed-ink mb-3">
+              Practices
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {brandLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="font-body group block">
-                    <span className="text-sm text-ink group-hover:text-rust transition-colors block">
-                      {link.label}
+                  <Link
+                    href={link.href}
+                    title={link.desc}
+                    className="font-body text-[15px] text-ed-muted hover:text-ed-forest transition-colors"
+                  >
+                    {link.label}
+                    <span className="hidden sm:inline text-sm text-ed-muted/80">
+                      {" "}
+                      · {link.desc}
                     </span>
-                    <span className="text-xs text-ink-mid">{link.desc}</span>
                   </Link>
                 </li>
               ))}
@@ -92,16 +108,16 @@ export default function Footer({
           </div>
 
           {/* Column 3 - Company */}
-          <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-ink-mid mb-4">
+          <div className="lg:col-span-2">
+            <p className="font-body text-sm font-semibold text-ed-ink mb-3">
               Company
             </p>
-            <ul className="space-y-2.5">
+            <ul className="space-y-2">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-sm text-ink-mid hover:text-rust transition-colors"
+                    className="font-body text-[15px] text-ed-muted hover:text-ed-forest transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -111,20 +127,20 @@ export default function Footer({
           </div>
 
           {/* Column 4 - Engage */}
-          <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-ink-mid mb-4">
+          <div className="col-span-2 lg:col-span-2">
+            <p className="font-body text-sm font-semibold text-ed-ink mb-3">
               Engage
             </p>
-            <div className="space-y-2 mb-6">
+            <div className="space-y-2 mb-5">
               <a
                 href={`mailto:${email || "hello@ramprate.com"}`}
-                className="font-body text-sm text-ink-mid hover:text-rust transition-colors block"
+                className="font-body text-[15px] text-ed-muted hover:text-ed-forest transition-colors block break-all"
               >
                 {email || "hello@ramprate.com"}
               </a>
               <a
                 href={`tel:${toTelHref(phone || "+19092359945")}`}
-                className="font-body text-sm text-ink-mid hover:text-rust transition-colors block"
+                className="font-body text-[15px] text-ed-muted hover:text-ed-forest transition-colors block"
               >
                 {phone || "+1(909)235-9945"}
               </a>
@@ -134,12 +150,12 @@ export default function Footer({
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ink-mid hover:text-rust transition-colors"
+                className="text-ed-muted hover:text-ed-forest transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg
-                  width="18"
-                  height="18"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -150,12 +166,12 @@ export default function Footer({
                 href={twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ink-mid hover:text-rust transition-colors"
+                className="text-ed-muted hover:text-ed-forest transition-colors"
                 aria-label="X / Twitter"
               >
                 <svg
-                  width="18"
-                  height="18"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -167,21 +183,21 @@ export default function Footer({
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-black/15 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-ink-mid">
+        <div className="border-t border-ed-line pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="font-body text-sm text-ed-muted">
             &copy; {new Date().getFullYear()} {companyName || "RampRate"}. All
             rights reserved.
           </p>
           <div className="flex gap-6">
             <Link
               href="/privacy"
-              className="font-body text-xs text-ink-mid hover:text-rust transition-colors"
+              className="font-body text-sm text-ed-muted hover:text-ed-forest transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="font-body text-xs text-ink-mid hover:text-rust transition-colors"
+              className="font-body text-sm text-ed-muted hover:text-ed-forest transition-colors"
             >
               Terms of Service
             </Link>

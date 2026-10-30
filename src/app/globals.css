@@ -34,6 +34,19 @@
   --champion-hero-text: #cbc2dc;
   --champion-hero-label: #9c92b0;
 
+  /* ── EDITORIAL PALETTE (proposed 2026-10-23, NOT yet approved) ──
+     Light, editorial look trialled on /contact and the footer. Coral fails
+     text contrast on ivory, so it is decoration only, never text. */
+  --ed-ivory: #f7f5f0;
+  --ed-ink: #24312f;
+  --ed-muted: #4f5b58;
+  --ed-line: #e2ddd2;
+  --ed-forest: #315d50;
+  --ed-forest-dark: #26493f;
+  --ed-sage: #dce8df;
+  --ed-violet: #7e32d4;
+  --ed-coral: #e9a18b;
+
   /* --font-display / --font-body / --font-mono come from next/font
      variable classes applied to <html> in layout.tsx, not defined here. */
 
@@ -60,6 +73,16 @@
   --color-champion: var(--champion);
   --color-champion-dark: var(--champion-dark);
   --color-champion-light: var(--champion-light);
+
+  --color-ed-ivory: var(--ed-ivory);
+  --color-ed-ink: var(--ed-ink);
+  --color-ed-muted: var(--ed-muted);
+  --color-ed-line: var(--ed-line);
+  --color-ed-forest: var(--ed-forest);
+  --color-ed-forest-dark: var(--ed-forest-dark);
+  --color-ed-sage: var(--ed-sage);
+  --color-ed-violet: var(--ed-violet);
+  --color-ed-coral: var(--ed-coral);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -440,4 +463,29 @@ body.ai-modal-open [data-hide-on-ai] {
 }
 .animate-blink {
   animation: blink 1s step-end infinite;
+}
+
+/* Continuous timeline movement, with accessible motion controls. */
+@keyframes timeline-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.timeline-marquee {
+  animation: timeline-marquee 90s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-marquee {
+    animation: none;
+  }
+  .timeline-marquee > div:nth-child(2) {
+    display: none;
+  }
+  .timeline-marquee {
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }
