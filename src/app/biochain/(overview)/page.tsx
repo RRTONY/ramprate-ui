@@ -202,7 +202,7 @@ const vettingPipeline = [
   {
     step: "02",
     label: "Scored",
-    desc: "Every application is scored against our 12-variable qualification matrix - not accepted on reputation alone.",
+    desc: "Every application is scored against our 9-variable qualification matrix - not accepted on reputation alone.",
   },
   {
     step: "03",
@@ -220,7 +220,7 @@ const process = [
   {
     num: "01",
     title: "Supplier Qualification Matrix",
-    desc: "12-variable scoring: GMP status, COA completeness, HPLC purity standards, endotoxin testing, NTA particle sizing, cold-chain infrastructure, and real buyer feedback. No supplier enters the network on reputation alone.",
+    desc: "9-variable scoring: GMP status, COA completeness, HPLC purity standards, endotoxin testing, NTA particle sizing, cold-chain infrastructure, and real buyer feedback. No supplier enters the network on reputation alone.",
   },
   {
     num: "02",
@@ -489,7 +489,7 @@ export default function BioChainSourcingPage() {
             }}
           >
             At BioChain, we do not simply find you a cheaper supplier. We
-            evaluate every supplier against a 12-variable qualification matrix
+            evaluate every supplier against a 9-variable qualification matrix
             and score them on Supplier Strength - a composite measure of how
             much leverage, reliability, and documentation they can deliver to
             your account. The stronger the supplier&apos;s profile relative to
@@ -1241,7 +1241,7 @@ export default function BioChainSourcingPage() {
               >
                 Most procurement advisors negotiate against the street price.
                 RampRate negotiates against the supplier&apos;s cost structure.
-                After 24 years of directing volume at the manufacturers and labs
+                After 25 years of directing volume at the manufacturers and labs
                 that supply the supply chain, we have relationships that exist
                 below the distributor tier entirely. When the fit is right -
                 meaning your account volume, specification consistency, and

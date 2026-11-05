@@ -9,7 +9,7 @@ import { faqs } from "./faq-data";
 export const metadata: Metadata = {
   title: "BioChain Sourcing - Verified Biologics Procurement",
   description:
-    "RampRate's BioChain practice: verified sourcing for peptides, exosomes, stem cells, and regenerative biologics. 24 years of procurement intelligence applied to the healing economy.",
+    "RampRate's BioChain practice: verified sourcing for peptides, exosomes, stem cells, and regenerative biologics. 25 years of procurement intelligence applied to the healing economy.",
   keywords: [
     "peptide sourcing",
     "exosome sourcing",
