@@ -18,6 +18,8 @@ import JsonLd, {
 import { urlFor } from "@/lib/sanity/image";
 import { stripSiteNameSuffix } from "@/lib/sanity/seo";
 import Link from "next/link";
+import Image from "next/image";
+import { localBlogThumbnail } from "@/lib/blog-thumbnails";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import CtaSection from "@/components/sections/CtaSection";
@@ -264,7 +266,17 @@ export default async function BlogPostPage({
                   href={`/blog/${rp.slug.current}`}
                   className="group block"
                 >
-                  {rp.mainImage && (
+                  {localBlogThumbnail(rp.slug.current) ? (
+                    <div className="mb-3 rounded-lg overflow-hidden aspect-video">
+                      <Image
+                        src={localBlogThumbnail(rp.slug.current)!}
+                        alt={rp.title}
+                        width={400}
+                        height={225}
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  ) : rp.mainImage && (
                     <div className="mb-3 rounded-lg overflow-hidden aspect-video">
                       <SanityImage
                         image={rp.mainImage}

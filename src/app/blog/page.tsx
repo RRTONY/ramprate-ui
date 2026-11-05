@@ -12,6 +12,7 @@ import {
 import PostCard from "@/components/blog/PostCard";
 import Pagination from "@/components/blog/Pagination";
 import CategoryFilter from "@/components/blog/CategoryFilter";
+import AmericaUnbundledBanner from "@/components/blog/AmericaUnbundledBanner";
 import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
@@ -177,6 +178,8 @@ async function BlogContent({
 
       {/* ── CONTENT ── */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 pb-24">
+        {currentPage === 1 && !activeCategory && <AmericaUnbundledBanner />}
+
         {/* Category filter - client component, reads URL search params */}
         <CategoryFilter categories={categoryList} />
 
