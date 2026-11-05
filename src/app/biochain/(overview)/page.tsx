@@ -299,7 +299,6 @@ const testimonials = [
   },
 ];
 
-
 export default function BioChainSourcingPage() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
 
@@ -330,8 +329,8 @@ export default function BioChainSourcingPage() {
               }}
             >
               Peptides, exosomes, stem cells and NAD+. We check where each
-              product comes from, verify its lab reports, and share real
-              market pricing once we understand your needs.
+              product comes from, verify its lab reports, and share real market
+              pricing once we understand your needs.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
               <Link
@@ -451,15 +450,15 @@ export default function BioChainSourcingPage() {
             No Bad Vendors. Only Bad Fits.
           </h2>
           <p className="font-body mt-6 text-base leading-relaxed text-ink-mid">
-            BioChain is not a directory. We match clinics, pharmacies and
-            brands with suppliers we have checked ourselves, based on what you
-            buy, how much, and what paperwork you need. A supplier that is
-            wrong for one buyer can be the best choice for another.
+            BioChain is not a directory. We match clinics, pharmacies and brands
+            with suppliers we have checked ourselves, based on what you buy, how
+            much, and what paperwork you need. A supplier that is wrong for one
+            buyer can be the best choice for another.
           </p>
           <p className="font-body mt-5 text-base leading-relaxed text-ink-mid">
-            That covers manufacturers, testing labs, ingredients, packaging
-            and logistics, all run through the same process RampRate has
-            used for Fortune 500 IT buyers for 25 years.
+            That covers manufacturers, testing labs, ingredients, packaging and
+            logistics, all run through the same process RampRate has used for
+            Fortune 500 IT buyers for 25 years.
           </p>
         </div>
       </section>
@@ -772,7 +771,10 @@ export default function BioChainSourcingPage() {
 
           <ol className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
             {vettingPipeline.map((s) => (
-              <li key={s.step} className="border-t-2 border-[oklch(0.52_0.12_70)] pt-4">
+              <li
+                key={s.step}
+                className="border-t-2 border-[oklch(0.52_0.12_70)] pt-4"
+              >
                 <span className="font-mono text-xs font-semibold text-[oklch(0.52_0.12_70)]">
                   Step {s.step}
                 </span>

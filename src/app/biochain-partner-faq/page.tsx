@@ -238,15 +238,11 @@ export default async function BioChainPartnerFaqPage() {
         >
           <div className="max-w-[1180px] mx-auto px-7">
             <div className="grid sm:grid-cols-[180px_1fr] gap-8 mb-6">
-              <div
-                className="text-xs font-mono uppercase tracking-wide text-[oklch(0.5_0.1_70)]"
-              >
+              <div className="text-xs font-mono uppercase tracking-wide text-[oklch(0.5_0.1_70)]">
                 {section.kicker}
               </div>
               <div>
-                <h2
-                  className="text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display text-ink"
-                >
+                <h2 className="text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display text-ink">
                   {section.title}
                 </h2>
                 {section.intro && <div className="mt-3">{section.intro}</div>}
@@ -279,15 +275,11 @@ export default async function BioChainPartnerFaqPage() {
         >
           <div className="max-w-[1180px] mx-auto px-7">
             <div className="grid sm:grid-cols-[180px_1fr] gap-8 mb-6">
-              <div
-                className="text-xs font-mono uppercase tracking-wide text-[oklch(0.5_0.1_70)]"
-              >
+              <div className="text-xs font-mono uppercase tracking-wide text-[oklch(0.5_0.1_70)]">
                 {section.kicker}
               </div>
               <div>
-                <h2
-                  className="text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display text-ink"
-                >
+                <h2 className="text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold font-display text-ink">
                   {section.title}
                 </h2>
                 {section.intro && <div className="mt-3">{section.intro}</div>}

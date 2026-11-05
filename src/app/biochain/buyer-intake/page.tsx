@@ -60,8 +60,8 @@ export default function ClientIntakePage() {
           </h1>
           <p className="font-body text-ink-mid text-lg leading-relaxed mb-10 max-w-2xl">
             An 8-section intake covering your organization, current sourcing,
-            full product catalog, and goals, so we can scope your sourcing
-            audit before the first call. No fee. No obligation. Confidential.
+            full product catalog, and goals, so we can scope your sourcing audit
+            before the first call. No fee. No obligation. Confidential.
           </p>
           <Link
             href="/biochain/catalogue-access"

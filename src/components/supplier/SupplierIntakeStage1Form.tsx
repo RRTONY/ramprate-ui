@@ -3,8 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { trackEvent } from "@/lib/analytics/track";
-import { Check, ArrowLeft, ArrowRight, Building2, Package, Gauge } from "lucide-react";
-import { STAGE1_STEPS, STAGE1_REQUIRED_FIELD_COUNT } from "@/lib/supplier-intake-fields";
+import {
+  Check,
+  ArrowLeft,
+  ArrowRight,
+  Building2,
+  Package,
+  Gauge,
+} from "lucide-react";
+import {
+  STAGE1_STEPS,
+  STAGE1_REQUIRED_FIELD_COUNT,
+} from "@/lib/supplier-intake-fields";
 import {
   Card,
   StepBar,
@@ -98,9 +108,10 @@ export default function SupplierIntakeStage1Form() {
           Application Received
         </h2>
         <p className="font-body text-base leading-relaxed mb-8 text-[oklch(0.45_0.02_50)]">
-          Thank you for submitting your supplier profile. We will review it against active buyer
-          mandates. If there is a fit, we will follow up with a longer application to confirm the
-          details. No response means no current match - not a rejection.
+          Thank you for submitting your supplier profile. We will review it
+          against active buyer mandates. If there is a fit, we will follow up
+          with a longer application to confirm the details. No response means no
+          current match - not a rejection.
         </p>
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[oklch(0.72_0.15_75/0.12)] text-[oklch(0.45_0.12_70)]">
           <div className="w-1.5 h-1.5 rounded-full bg-gold" />
@@ -112,12 +123,28 @@ export default function SupplierIntakeStage1Form() {
   const stepFields = STAGE1_STEPS[active];
 
   return (
-    <form name="supplier-intake" onSubmit={formik.handleSubmit} className="font-body">
-      <input ref={honeypotRef} type="text" name="bot_field" tabIndex={-1} autoComplete="off" className="hidden" />
+    <form
+      name="supplier-intake"
+      onSubmit={formik.handleSubmit}
+      className="font-body"
+    >
+      <input
+        ref={honeypotRef}
+        type="text"
+        name="bot_field"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+      />
 
       <StepBar tabs={TABS} active={active} onStepClick={goToStep} />
 
-      <Card icon={TABS[active].Icon} title={TABS[active].label} stepNumber={active + 1} totalSteps={TABS.length}>
+      <Card
+        icon={TABS[active].Icon}
+        title={TABS[active].label}
+        stepNumber={active + 1}
+        totalSteps={TABS.length}
+      >
         <div className="grid sm:grid-cols-2 gap-5">
           {stepFields.map((field) => (
             <FieldRenderer key={field.key} field={field} formik={formik} />
@@ -140,7 +167,8 @@ export default function SupplierIntakeStage1Form() {
               {!submitting && <ArrowRight size={16} />}
             </button>
             <p className="font-body mt-3 text-[11px] text-[oklch(0.6_0.02_50)]">
-              <span className="text-gold">*</span> {STAGE1_REQUIRED_FIELD_COUNT} required fields
+              <span className="text-gold">*</span> {STAGE1_REQUIRED_FIELD_COUNT}{" "}
+              required fields
             </p>
           </>
         )}

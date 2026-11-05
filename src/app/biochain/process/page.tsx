@@ -213,7 +213,9 @@ export default function BioChainProcessPage() {
             <span className={`${eyebrow} block mb-4`}>How Sourcing Works</span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-ink mb-6 leading-tight">
               From First Call to{" "}
-              <span className="text-[oklch(0.52_0.12_70)]">Verified Supplier</span>{" "}
+              <span className="text-[oklch(0.52_0.12_70)]">
+                Verified Supplier
+              </span>{" "}
               in 90 Days.
             </h1>
             <p className="font-body text-lg leading-relaxed text-ink-mid mb-10">
@@ -227,7 +229,10 @@ export default function BioChainProcessPage() {
                 { value: "90", label: "Days to verified supply" },
                 { value: "25", label: "Years refined" },
               ].map((stat) => (
-                <div key={stat.label} className="border-l-2 border-black/10 pl-4">
+                <div
+                  key={stat.label}
+                  className="border-l-2 border-black/10 pl-4"
+                >
                   <dt className="font-display text-3xl font-bold text-ink">
                     {stat.value}
                   </dt>
@@ -274,7 +279,9 @@ export default function BioChainProcessPage() {
                 id={item.id}
                 className="relative overflow-hidden rounded-xl border border-black/10 bg-white p-7 scroll-mt-32"
               >
-                <div className={`absolute top-0 left-0 right-0 h-1 ${item.bar}`} />
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1 ${item.bar}`}
+                />
                 <h3 className="font-display text-2xl font-bold text-ink">
                   {item.title}
                 </h3>
@@ -299,7 +306,10 @@ export default function BioChainProcessPage() {
       </section>
 
       {/* Phase 1 - Diagnose */}
-      <section id="supply-audit" className="section-light py-20 sm:py-24 scroll-mt-20">
+      <section
+        id="supply-audit"
+        className="section-light py-20 sm:py-24 scroll-mt-20"
+      >
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="mb-12">
             <span className={eyebrow}>Phase 1 - Diagnose</span>
@@ -394,7 +404,9 @@ export default function BioChainProcessPage() {
               It&apos;s never happened in 25 years.
             </p>
             <p className="font-body mt-4 text-sm text-ink-mid">
-              <strong className="font-semibold text-ink">The Economics: </strong>
+              <strong className="font-semibold text-ink">
+                The Economics:{" "}
+              </strong>
               $15K–$50K/month · Success-fee available · Biologics specialist
               ~20% of fee · Clawbacks · Historical: 20X value
             </p>

@@ -60,16 +60,12 @@ export default function PartnerFaqSection({ items }: { items: FaqItem[] }) {
             <details
               key={i}
               open={isOpen}
-              onToggle={(e) =>
-                toggle(i, (e.target as HTMLDetailsElement).open)
-              }
+              onToggle={(e) => toggle(i, (e.target as HTMLDetailsElement).open)}
               className={`rounded-2xl border border-black/10 bg-white overflow-hidden ${
                 match ? "" : "hidden"
               }`}
             >
-              <summary
-                className="relative cursor-pointer list-none font-bold text-[17px] leading-tight px-5 py-4 pr-12 text-ink [&::-webkit-details-marker]:hidden"
-              >
+              <summary className="relative cursor-pointer list-none font-bold text-[17px] leading-tight px-5 py-4 pr-12 text-ink [&::-webkit-details-marker]:hidden">
                 {item.q}
                 <span className="absolute right-4 top-3.5 text-xl text-gold">
                   {isOpen ? "–" : "+"}

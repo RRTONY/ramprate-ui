@@ -14,9 +14,7 @@ export default function BioChainSubNav() {
   const pathname = usePathname();
 
   return (
-    <div
-      className="fixed top-16 sm:top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-black/5"
-    >
+    <div className="fixed top-16 sm:top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-black/5">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center gap-6 h-11 overflow-x-auto no-scrollbar">
         {tabs.map((tab) => {
           const active = pathname === tab.href;
