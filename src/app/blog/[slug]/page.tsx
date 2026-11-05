@@ -71,7 +71,9 @@ export async function generateMetadata({
     url: `https://ramprate.com/blog/${slug}`,
     publishedTime: post.publishedAt,
     modifiedTime: post._updatedAt,
-    ...(ogImage && { images: [urlFor(ogImage).width(1200).height(630).url()] }),
+    // A post with no Sanity picture still gets the site's share image, the
+    // same one /blog uses, so a shared link never shows up without one.
+    images: [ogImage ? urlFor(ogImage).width(1200).height(630).url() : "/og.png"],
   };
   return {
     title,
