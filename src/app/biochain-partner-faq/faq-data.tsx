@@ -5,7 +5,6 @@ export type FaqSection = {
   id: string;
   kicker: string;
   title: string;
-  dark: boolean;
   intro?: ReactNode;
   items: FaqItem[];
 };
@@ -198,7 +197,7 @@ export const sellerPrograms = [
 ];
 
 export const buyerRowIntro = (
-  <p className="text-white/70 text-[15px] leading-relaxed max-w-3xl">
+  <p className="text-ink-mid text-[15px] leading-relaxed max-w-3xl">
     Manufacturing and pharmacy partners aren&rsquo;t only sellers in the
     BioChain network. When you need APIs, raw materials, blended actives, or
     outsourced compounding or manufacturing capacity to grow, RampRate can run
@@ -298,13 +297,13 @@ function FeeTable({
       <table className="w-full table-fixed border-collapse text-sm">
         <thead>
           <tr>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
+            <th className="bg-warm-bg text-ink text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
               From
             </th>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
+            <th className="bg-warm-bg text-ink text-left font-mono text-[11px] uppercase px-3 py-3 w-[30%]">
               To Less Than
             </th>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3">
+            <th className="bg-warm-bg text-ink text-left font-mono text-[11px] uppercase px-3 py-3">
               {valueLabel}
             </th>
           </tr>
@@ -357,13 +356,13 @@ function Scorecard() {
       <table className="w-full table-fixed border-collapse text-sm">
         <thead>
           <tr>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3 w-[34%]">
+            <th className="bg-warm-bg text-ink text-left font-mono text-[11px] uppercase px-3 py-3 w-[34%]">
               Criterion
             </th>
-            <th className="bg-dark text-warm-bg text-center font-mono text-[11px] uppercase px-3 py-3 w-[70px]">
+            <th className="bg-warm-bg text-ink text-center font-mono text-[11px] uppercase px-3 py-3 w-[70px]">
               Weight
             </th>
-            <th className="bg-dark text-warm-bg text-left font-mono text-[11px] uppercase px-3 py-3">
+            <th className="bg-warm-bg text-ink text-left font-mono text-[11px] uppercase px-3 py-3">
               What we look for
             </th>
           </tr>
@@ -387,7 +386,6 @@ export const faqSections: FaqSection[] = [
     id: "section-1",
     kicker: "03 / Sourcing",
     title: "RampRate's Sourcing Process: What It Is and How to Ace It",
-    dark: false,
     intro: (
       <p className="text-ink-mid text-[15px] leading-relaxed mb-2">
         This section walks through RampRate&rsquo;s sourcing process as it
@@ -835,7 +833,6 @@ export const faqSections: FaqSection[] = [
     id: "section-2",
     kicker: "04 / Core Terms",
     title: "Core Referral Terms",
-    dark: true,
     items: [
       {
         q: "How does lead registration work?",
@@ -946,7 +943,6 @@ export const faqSections: FaqSection[] = [
     id: "section-3",
     kicker: "05 / Startup Terms",
     title: "Early Stage Startup / Elevate Referral Terms",
-    dark: false,
     items: [
       {
         q: "For earlier-stage partners, can referral fees be paid in equity instead of cash?",
@@ -1009,7 +1005,6 @@ export const faqSections: FaqSection[] = [
     id: "section-4",
     kicker: "06 / Leads",
     title: "You Can Send Us Leads Too",
-    dark: true,
     items: [
       {
         q: "Why would I want to send you leads?",
@@ -1099,7 +1094,6 @@ export const faqSections: FaqSection[] = [
     id: "section-5",
     kicker: "07 / Other",
     title: "Overarching Agreement Structure Beyond the Core Referral Terms",
-    dark: false,
     items: [
       {
         q: "What happens to fees if RampRate's partnership with the manufacturer ends?",
@@ -1260,9 +1254,8 @@ export const buySideFaqSections: FaqSection[] = [
     id: "buy-section-1",
     kicker: "08 / Process Options",
     title: "How RampRate Sources For You",
-    dark: true,
     intro: (
-      <p className="text-white/70 text-[15px] leading-relaxed mb-2">
+      <p className="text-ink-mid text-[15px] leading-relaxed mb-2">
         This section is written from your side as a buyer &mdash; sourcing the
         products, raw materials, or capacity you need, rather than selling what
         you already produce.
@@ -1391,7 +1384,6 @@ export const buySideFaqSections: FaqSection[] = [
     id: "buy-section-2",
     kicker: "09 / Contract Framework",
     title: "Contract Framework for Full Sourcing Engagements",
-    dark: false,
     items: [
       {
         q: "What's included in RampRate's contract package?",
@@ -1486,7 +1478,6 @@ export const buySideFaqSections: FaqSection[] = [
     id: "buy-section-3",
     kicker: "10 / Fee Structure",
     title: "Fee Structure for Full Sourcing Engagements",
-    dark: true,
     items: [
       {
         q: "What should I know about the fee structure?",
@@ -1724,7 +1715,6 @@ export const buySideFaqSections: FaqSection[] = [
     id: "buy-section-4",
     kicker: "11 / Confidentiality & Legal",
     title: "Confidentiality and Misc Legal Terms",
-    dark: false,
     items: [
       {
         q: "What should I know about confidentiality protections?",

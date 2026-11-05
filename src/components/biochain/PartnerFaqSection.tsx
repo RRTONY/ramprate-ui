@@ -8,13 +8,7 @@ export interface FaqItem {
   searchText: string;
 }
 
-export default function PartnerFaqSection({
-  items,
-  dark = false,
-}: {
-  items: FaqItem[];
-  dark?: boolean;
-}) {
+export default function PartnerFaqSection({ items }: { items: FaqItem[] }) {
   const [query, setQuery] = useState("");
   const [openSet, setOpenSet] = useState<Set<number>>(new Set());
 
@@ -56,11 +50,7 @@ export default function PartnerFaqSection({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search this section"
-        className={`w-full mb-6 rounded-xl border px-4 py-3 text-[15px] outline-none focus:border-gold ${
-          dark
-            ? "border-white/15 bg-dark-mid text-white placeholder:text-white/40"
-            : "border-black/10 bg-white text-ink"
-        }`}
+        className="w-full mb-6 rounded-xl border border-black/10 bg-white px-4 py-3 text-[15px] text-ink outline-none focus:border-gold"
       />
       <div className="grid sm:grid-cols-2 gap-3.5 items-start">
         {items.map((item, i) => {
@@ -70,29 +60,19 @@ export default function PartnerFaqSection({
             <details
               key={i}
               open={isOpen}
-              onToggle={(e) =>
-                toggle(i, (e.target as HTMLDetailsElement).open)
-              }
-              className={`rounded-2xl border overflow-hidden ${
-                dark
-                  ? "border-white/10 bg-dark-mid"
-                  : "border-black/10 bg-white"
-              } ${match ? "" : "hidden"}`}
+              onToggle={(e) => toggle(i, (e.target as HTMLDetailsElement).open)}
+              className={`rounded-2xl border border-black/10 bg-white overflow-hidden ${
+                match ? "" : "hidden"
+              }`}
             >
-              <summary
-                className={`relative cursor-pointer list-none font-bold text-[17px] leading-tight px-5 py-4 pr-12 [&::-webkit-details-marker]:hidden ${
-                  dark ? "text-white" : "text-ink"
-                }`}
-              >
+              <summary className="relative cursor-pointer list-none font-bold text-[17px] leading-tight px-5 py-4 pr-12 text-ink [&::-webkit-details-marker]:hidden">
                 {item.q}
                 <span className="absolute right-4 top-3.5 text-xl text-gold">
                   {isOpen ? "–" : "+"}
                 </span>
               </summary>
               <div
-                className={`px-5 pb-5 text-[15px] leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_ul]:pl-5 [&_ul]:mb-3 [&_li]:my-1.5 [&_ul_ul]:mt-1.5 [&_ul_ul]:opacity-80 ${
-                  dark ? "text-white/70" : "text-ink-mid"
-                }`}
+                className={`px-5 pb-5 text-[15px] leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_ul]:pl-5 [&_ul]:mb-3 [&_li]:my-1.5 [&_ul_ul]:mt-1.5 [&_ul_ul]:opacity-80 text-ink-mid`}
               >
                 {item.a}
               </div>

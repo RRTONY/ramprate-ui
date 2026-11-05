@@ -45,39 +45,25 @@ export default function SupplierIntakePage() {
         data={breadcrumbJsonLd([
           { name: "Home", url: "https://ramprate.com" },
           { name: "BioChain", url: "https://ramprate.com/biochain" },
-          { name: "Supplier Intake", url: "https://ramprate.com/biochain/supplier-intake" },
+          {
+            name: "Supplier Intake",
+            url: "https://ramprate.com/biochain/supplier-intake",
+          },
         ])}
       />
       {/* Hero */}
-      <section
-        className="relative pt-36 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+      <section className="section-light pt-40 pb-20 border-b border-black/10">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4 block text-[oklch(0.52_0.12_70)]">
             Peptide Supply Partner Application
           </span>
-          <h1
-            className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink mb-6 leading-tight">
             Supplier Intake Form
           </h1>
-          <p
-            className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
-            A quick, {STAGE1_TOTAL_FIELD_COUNT}-field first look - no uploads, about 2-3
-            minutes. If there&apos;s a fit, we&apos;ll follow up with a longer
-            application to confirm the details. No fee. No obligation.
+          <p className="font-body text-ink-mid text-lg leading-relaxed mb-10 max-w-2xl">
+            A quick, {STAGE1_TOTAL_FIELD_COUNT}-field first look - no uploads,
+            about 2-3 minutes. If there&apos;s a fit, we&apos;ll follow up with
+            a longer application to confirm the details. No fee. No obligation.
           </p>
         </div>
       </section>

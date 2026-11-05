@@ -46,12 +46,13 @@ export default function Header() {
   // Pages with light/white backgrounds - force dark nav from the start (no dark hero)
   const lightBgPaths = [
     "/attorney",
+    "/biochain",
     "/henry-jannol",
     "/josh-bykowski",
     "/legal-master",
     "/roles",
   ];
-  const lightBgExactPaths = ["/", "/biochain", "/contact", "/onboarding"];
+  const lightBgExactPaths = ["/", "/contact", "/onboarding"];
   const isLightPage =
     lightBgPaths.some((p) => pathname.startsWith(p)) ||
     lightBgExactPaths.includes(pathname);

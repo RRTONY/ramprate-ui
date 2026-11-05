@@ -50,44 +50,22 @@ export default function ClientIntakePage() {
         ])}
       />
       {/* Hero */}
-      <section
-        className="relative pt-36 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+      <section className="section-light pt-40 pb-20 border-b border-black/10">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4 block text-[oklch(0.52_0.12_70)]">
             RampRate BioChain Sourcing
           </span>
-          <h1
-            className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink mb-6 leading-tight">
             Client Intake Application
           </h1>
-          <p
-            className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="font-body text-ink-mid text-lg leading-relaxed mb-10 max-w-2xl">
             An 8-section intake covering your organization, current sourcing,
-            full product catalog, and goals - so we can scope your sourcing
-            audit and calibrate the right supply strategy from day one. No fee.
-            No obligation. Confidential.
+            full product catalog, and goals, so we can scope your sourcing audit
+            before the first call. No fee. No obligation. Confidential.
           </p>
           <Link
             href="/biochain/catalogue-access"
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-80"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
+            className="font-body inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4 text-[oklch(0.45_0.1_65)] hover:opacity-80"
           >
             Browse our full product catalogue first
             <ArrowRight size={14} />
