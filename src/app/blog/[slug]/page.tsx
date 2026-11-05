@@ -16,7 +16,7 @@ import JsonLd, {
   faqJsonLd,
 } from "@/components/shared/JsonLd";
 import { urlFor } from "@/lib/sanity/image";
-import { stripSiteNameSuffix } from "@/lib/sanity/seo";
+import { shareImages, stripSiteNameSuffix } from "@/lib/sanity/seo";
 import Link from "next/link";
 import Image from "next/image";
 import { localBlogThumbnail } from "@/lib/blog-thumbnails";
@@ -58,7 +58,6 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await client.fetch(postBySlugQuery, { slug });
   if (!post) return {};
-  const ogImage = post.seo?.ogImage || post.mainImage;
   // The root layout appends " | RampRate" to every title via its template.
   // Sanity-authored metaTitles sometimes already end in "| RampRate", which
   // would otherwise double up (e.g. "Post Title | RampRate | RampRate").
@@ -71,9 +70,7 @@ export async function generateMetadata({
     url: `https://ramprate.com/blog/${slug}`,
     publishedTime: post.publishedAt,
     modifiedTime: post._updatedAt,
-    // A post with no Sanity picture still gets the site's share image, the
-    // same one /blog uses, so a shared link never shows up without one.
-    images: [ogImage ? urlFor(ogImage).width(1200).height(630).url() : "/og.png"],
+    images: shareImages(post.seo?.ogImage, post.mainImage),
   };
   return {
     title,
