@@ -2,34 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import {
-  LuTestTubes,
-  LuCircleDot,
-  LuDna,
-  LuAtom,
-  LuTrendingUp,
-  LuLeaf,
-  LuSyringe,
-  LuSettings2,
-  LuFactory,
-  LuHandshake,
-} from "react-icons/lu";
+import { useState } from "react";
 import { faqs } from "./faq-data";
 
 const gold = "oklch(0.52 0.12 70)";
 const goldBg = "oklch(0.52 0.12 70 / 0.1)";
-
-const productIcons: Record<string, React.ReactNode> = {
-  peptides: <LuTestTubes size={22} />,
-  exosomes: <LuCircleDot size={22} />,
-  "stem-cells": <LuDna size={22} />,
-  nad: <LuAtom size={22} />,
-  "growth-factors": <LuTrendingUp size={22} />,
-  botanicals: <LuLeaf size={22} />,
-  "delivery-systems": <LuSyringe size={22} />,
-  "custom-formulation": <LuSettings2 size={22} />,
-};
 
 const products = [
   {
@@ -322,46 +299,6 @@ const testimonials = [
   },
 ];
 
-function Reveal({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.07 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(20px)",
-        transition: "opacity .55s ease, transform .55s ease",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function BioChainSourcingPage() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
@@ -370,8 +307,6 @@ export default function BioChainSourcingPage() {
     <main>
       {/* Hero */}
       <section className="relative pt-44 pb-20 overflow-hidden section-light">
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[280px] h-[280px] bottom-0 -left-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
             <span
@@ -394,10 +329,9 @@ export default function BioChainSourcingPage() {
                 fontFamily: "var(--font-body)",
               }}
             >
-              Peptides. Exosomes. Stem cells. NAD+. RampRate&apos;s 24-year
-              procurement intelligence engine now serves the healing economy -
-              verified provenance, assessed quality, and disclosed pricing on
-              every transaction.
+              Peptides, exosomes, stem cells and NAD+. We check where each
+              product comes from, verify its lab reports, and share real
+              market pricing once we understand your needs.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
               <Link
@@ -431,8 +365,6 @@ export default function BioChainSourcingPage() {
 
       {/* Origin Story + Introduction */}
       <section className="relative section-warm overflow-hidden py-16 sm:py-20">
-        <div className="glass-orb glass-orb-rust w-[280px] h-[280px] -bottom-32 -left-32" />
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -right-32" />
         <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -486,27 +418,18 @@ export default function BioChainSourcingPage() {
       </section>
 
       {/* Proof Stats Band */}
-      <section className="py-12 sm:py-14" style={{ background: "var(--dark)" }}>
+      <section className="section-light py-12 sm:py-14 border-y border-black/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {proofStats.map((s) => (
-              <Reveal key={s.label} className="text-center">
-                <div
-                  className="text-2xl sm:text-3xl font-bold"
-                  style={{ color: gold, fontFamily: "var(--font-display)" }}
-                >
+              <div key={s.label} className="text-center">
+                <div className="font-display text-2xl sm:text-3xl font-bold text-ink">
                   {s.value}
                 </div>
-                <div
-                  className="mt-1 text-xs uppercase tracking-wider"
-                  style={{
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
+                <div className="font-body mt-1 text-sm text-ink-mid">
                   {s.label}
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -527,53 +450,16 @@ export default function BioChainSourcingPage() {
           >
             No Bad Vendors. Only Bad Fits.
           </h2>
-          <p
-            className="mt-6 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            BioChain is RampRate&apos;s trusted sourcing and supplier
-            intelligence platform, built to bring transparency, confidence, and
-            procurement expertise to the life sciences ecosystem. Rather than
-            simply listing vendors, we focus on connecting organizations with
-            verified suppliers that best match their specific business needs.
+          <p className="font-body mt-6 text-base leading-relaxed text-ink-mid">
+            BioChain is not a directory. We match clinics, pharmacies and
+            brands with suppliers we have checked ourselves, based on what you
+            buy, how much, and what paperwork you need. A supplier that is
+            wrong for one buyer can be the best choice for another.
           </p>
-          <p
-            className="mt-5 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            We believe there are no bad vendors - only bad fits. Our role is to
-            help organizations identify the right partners through structured
-            evaluation, verified sourcing, and decades of procurement expertise.
-          </p>
-          <p
-            className="mt-5 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            By combining supplier validation, procurement intelligence, and
-            marketplace transparency, BioChain is building a cleaner, more
-            trusted ecosystem where buyers can make informed sourcing decisions
-            with confidence.
-          </p>
-          <p
-            className="mt-5 text-base leading-relaxed"
-            style={{
-              color: "oklch(0.4 0.02 50)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            Whether you&apos;re looking for a manufacturing partner, laboratory
-            services, ingredients, packaging, logistics, technology, or other
-            life sciences solutions, BioChain provides a curated marketplace
-            backed by RampRate&apos;s proven procurement methodology.
+          <p className="font-body mt-5 text-base leading-relaxed text-ink-mid">
+            That covers manufacturers, testing labs, ingredients, packaging
+            and logistics, all run through the same process RampRate has
+            used for Fortune 500 IT buyers for 25 years.
           </p>
         </div>
       </section>
@@ -583,7 +469,6 @@ export default function BioChainSourcingPage() {
         className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="procurement-expertise"
       >
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -615,14 +500,14 @@ export default function BioChainSourcingPage() {
             terms.
           </p>
 
-          <Reveal className="mt-10">
+          <div className="mt-10">
             <div
               className="overflow-x-auto rounded-xl border"
               style={{ borderColor: "oklch(0.9 0.01 80)" }}
             >
               <table
                 className="w-full text-sm"
-                style={{ borderCollapse: "collapse", minWidth: 480 }}
+                style={{ borderCollapse: "collapse" }}
               >
                 <thead>
                   <tr
@@ -673,10 +558,10 @@ export default function BioChainSourcingPage() {
                 </tbody>
               </table>
             </div>
-          </Reveal>
+          </div>
 
           <div className="grid sm:grid-cols-2 gap-6 mt-6">
-            <Reveal>
+            <div>
               <div
                 className="rounded-xl p-6 border border-black/5"
                 style={{ background: "#fff" }}
@@ -697,8 +582,8 @@ export default function BioChainSourcingPage() {
                   Minimum Qualifying Score to Enter the Network
                 </div>
               </div>
-            </Reveal>
-            <Reveal>
+            </div>
+            <div>
               <div
                 className="rounded-xl p-6 border border-black/5"
                 style={{ background: "#fff" }}
@@ -719,10 +604,10 @@ export default function BioChainSourcingPage() {
                   Average Score Across Active BioChain Suppliers
                 </div>
               </div>
-            </Reveal>
+            </div>
           </div>
 
-          <Reveal className="mt-10">
+          <div className="mt-10">
             <div
               className="rounded-xl p-7 sm:p-8 border-2"
               style={{ borderColor: gold, background: "#fff" }}
@@ -868,111 +753,54 @@ export default function BioChainSourcingPage() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* How BioChain Works (formerly "BioChain Process") */}
+      {/* How BioChain Works */}
       <section
-        className="relative section-dark overflow-hidden py-16 sm:py-20"
+        className="relative section-light py-16 sm:py-20 border-t border-black/10"
         id="how-it-works"
       >
-        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] bottom-20 -left-20" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase"
-            style={{ color: gold, fontFamily: "var(--font-body)" }}
-          >
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.52_0.12_70)]">
             How BioChain Works
           </span>
-          <h2
-            className="mt-4 text-3xl sm:text-4xl font-bold text-white max-w-2xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h2 className="font-display mt-4 text-3xl sm:text-4xl font-bold text-ink max-w-2xl">
             From Application to Approved Supplier
           </h2>
 
-          {/* Vetting pipeline visual */}
-          <div className="mt-12 flex flex-col sm:flex-row items-stretch gap-3 sm:gap-2">
-            {vettingPipeline.map((s, i, arr) => (
-              <div key={s.step} className="flex-1 flex items-center gap-2">
-                <Reveal className="flex-1 h-full">
-                  <div
-                    className="h-full rounded-xl p-5 border border-white/10"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
-                  >
-                    <span
-                      className="text-xs font-semibold tracking-wider"
-                      style={{ color: gold, fontFamily: "var(--font-mono)" }}
-                    >
-                      {s.step}
-                    </span>
-                    <h4
-                      className="mt-2 text-sm font-bold text-white"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {s.label}
-                    </h4>
-                    <p
-                      className="mt-2 text-xs leading-relaxed text-white/60"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      {s.desc}
-                    </p>
-                  </div>
-                </Reveal>
-                {i < arr.length - 1 && (
-                  <div
-                    className="hidden sm:flex items-center justify-center shrink-0"
-                    style={{ color: gold }}
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                )}
+          <ol className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+            {vettingPipeline.map((s) => (
+              <li key={s.step} className="border-t-2 border-[oklch(0.52_0.12_70)] pt-4">
+                <span className="font-mono text-xs font-semibold text-[oklch(0.52_0.12_70)]">
+                  Step {s.step}
+                </span>
+                <h3 className="font-display mt-1 text-base font-bold text-ink">
+                  {s.label}
+                </h3>
+                <p className="font-body mt-2 text-sm leading-relaxed text-ink-mid">
+                  {s.desc}
+                </p>
+              </li>
+            ))}
+          </ol>
+
+          <h3 className="font-display mt-16 text-xl font-bold text-ink">
+            What You Get Along the Way
+          </h3>
+          <dl className="mt-6 grid md:grid-cols-2 gap-x-12 gap-y-8">
+            {process.map((step) => (
+              <div key={step.num} className="border-l-2 border-black/10 pl-5">
+                <dt className="font-display text-lg font-bold text-ink">
+                  {step.title}
+                </dt>
+                <dd className="font-body mt-2 text-sm leading-relaxed text-ink-mid">
+                  {step.desc}
+                </dd>
               </div>
             ))}
-          </div>
-
-          {/* Supporting detail cards */}
-          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {process.map((step) => (
-              <Reveal key={step.num}>
-                <div
-                  className="rounded-xl p-6 border border-white/10 h-full"
-                  style={{ background: "rgba(255,255,255,0.05)" }}
-                >
-                  <span
-                    className="text-xs font-semibold tracking-wider"
-                    style={{ color: gold, fontFamily: "var(--font-mono)" }}
-                  >
-                    {step.num}
-                  </span>
-                  <h3
-                    className="mt-3 text-lg font-bold text-white"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-sm leading-relaxed text-white/60"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {step.desc}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          </dl>
         </div>
       </section>
 
@@ -981,7 +809,6 @@ export default function BioChainSourcingPage() {
         className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="supplier-categories"
       >
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -993,7 +820,7 @@ export default function BioChainSourcingPage() {
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Every Category - Vetted, Verified, and Ready to Source
+            What We Source
           </h2>
           <p
             className="mt-6 text-base leading-relaxed max-w-3xl"
@@ -1014,17 +841,11 @@ export default function BioChainSourcingPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((p) => (
-              <Reveal key={p.slug}>
+              <div key={p.slug}>
                 <div
                   className="rounded-xl p-7 border border-black/5 flex flex-col h-full"
                   style={{ background: "oklch(0.97 0.01 80)" }}
                 >
-                  <div
-                    className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
-                    style={{ background: goldBg, color: gold }}
-                  >
-                    {productIcons[p.slug]}
-                  </div>
                   <h3
                     className="text-lg font-bold mb-3"
                     style={{ fontFamily: "var(--font-display)" }}
@@ -1115,7 +936,7 @@ export default function BioChainSourcingPage() {
                     Source {p.title} with RampRate →
                   </Link>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -1127,7 +948,7 @@ export default function BioChainSourcingPage() {
         style={{ background: gold }}
       >
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <Reveal>
+          <div>
             <div className="rounded-2xl bg-white p-8 sm:p-10 shadow-lg">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10 mb-6">
                 <div>
@@ -1203,12 +1024,11 @@ export default function BioChainSourcingPage() {
               >
                 BioChain is a professional-grade practice built for established
                 accounts. We require a minimum of $50,000 in annual biologics
-                spend to engage - below that threshold, the savings math
-                doesn&apos;t clear our fee structure. At $50K and above, it
-                compounds dramatically.
+                spend to engage. Below that, the savings don&apos;t cover our
+                fee. Above it, the savings grow with your volume.
               </p>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -1243,7 +1063,7 @@ export default function BioChainSourcingPage() {
             once we understand your fit - we&apos;re a sourcing partner, not a
             price list.
           </p>
-          <Reveal>
+          <div>
             <div
               className="overflow-x-auto rounded-xl border"
               style={{ borderColor: "oklch(0.88 0.01 80)", background: "#fff" }}
@@ -1380,7 +1200,7 @@ export default function BioChainSourcingPage() {
                 </tbody>
               </table>
             </div>
-          </Reveal>
+          </div>
           <p
             className="mt-4 text-xs leading-relaxed"
             style={{
@@ -1399,7 +1219,7 @@ export default function BioChainSourcingPage() {
             benchmark.
           </p>
 
-          <Reveal className="mt-14">
+          <div className="mt-14">
             <div
               className="rounded-2xl p-8 sm:p-10 border"
               style={{ borderColor: "oklch(0.88 0.01 80)", background: "#fff" }}
@@ -1446,7 +1266,7 @@ export default function BioChainSourcingPage() {
                 </svg>
               </Link>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -1455,7 +1275,6 @@ export default function BioChainSourcingPage() {
         className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="client-profile"
       >
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -1467,7 +1286,7 @@ export default function BioChainSourcingPage() {
             className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            The Accounts That Get Maximum Value From BioChain
+            Who We Work Best With
           </h2>
           <p
             className="mt-6 text-base leading-relaxed max-w-3xl"
@@ -1482,7 +1301,7 @@ export default function BioChainSourcingPage() {
             lowest-price guessing.
           </p>
 
-          <Reveal className="mt-10">
+          <div className="mt-10">
             <div className="rounded-xl p-7 border border-black/5 bg-white">
               <h3
                 className="text-sm font-bold uppercase tracking-wider mb-5"
@@ -1520,9 +1339,9 @@ export default function BioChainSourcingPage() {
                 ))}
               </div>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal className="mt-6">
+          <div className="mt-6">
             <div className="flex flex-wrap gap-2">
               {clientOrgTypes.map((org) => (
                 <span
@@ -1538,9 +1357,9 @@ export default function BioChainSourcingPage() {
                 </span>
               ))}
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal className="mt-10">
+          <div className="mt-10">
             <div
               className="rounded-xl p-7 sm:p-8 border-2"
               style={{ borderColor: gold, background: "#fff" }}
@@ -1644,7 +1463,7 @@ export default function BioChainSourcingPage() {
                 </p>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -1653,7 +1472,6 @@ export default function BioChainSourcingPage() {
         className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="blog"
       >
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -1669,7 +1487,7 @@ export default function BioChainSourcingPage() {
           </h2>
           <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {blogPosts.map((post) => (
-              <Reveal key={post.href}>
+              <div key={post.href}>
                 <a
                   href={post.href}
                   target="_blank"
@@ -1709,7 +1527,7 @@ export default function BioChainSourcingPage() {
                     </p>
                   </div>
                 </a>
-              </Reveal>
+              </div>
             ))}
           </div>
           <div className="text-center mt-12">
@@ -1802,7 +1620,6 @@ export default function BioChainSourcingPage() {
         className="relative section-warm overflow-hidden py-16 sm:py-20"
         id="impactsoul"
       >
-        <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
           <span
             className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -1873,18 +1690,11 @@ export default function BioChainSourcingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
-              <Reveal key={t.attr}>
+              <div key={t.attr}>
                 <div
                   className="rounded-xl p-7 border h-full bg-white"
                   style={{ borderColor: "oklch(0.9 0.01 80)" }}
                 >
-                  <div
-                    className="text-sm mb-3 tracking-wider"
-                    style={{ color: gold }}
-                    aria-hidden="true"
-                  >
-                    ★★★★★
-                  </div>
                   <p
                     className="text-sm leading-relaxed mb-4"
                     style={{ fontFamily: "var(--font-body)" }}
@@ -1901,7 +1711,7 @@ export default function BioChainSourcingPage() {
                     {t.attr}
                   </div>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -1909,9 +1719,8 @@ export default function BioChainSourcingPage() {
 
       {/* CTAs - Two Paths: Sourcing vs. Supplying */}
       <section className="relative section-warm overflow-hidden py-16 sm:py-20">
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -left-32" />
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <Reveal>
+          <div>
             <div className="text-center mb-14">
               <span
                 className="text-xs font-semibold tracking-[0.2em] uppercase"
@@ -1926,19 +1735,13 @@ export default function BioChainSourcingPage() {
                 Two Ways to Join the BioChain Network
               </h2>
             </div>
-          </Reveal>
+          </div>
           <div className="grid sm:grid-cols-2 gap-6">
-            <Reveal>
+            <div>
               <div
                 className="rounded-xl p-8 border border-black/5 flex flex-col h-full"
                 style={{ background: "#fff" }}
               >
-                <div
-                  className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
-                  style={{ background: goldBg, color: gold }}
-                >
-                  <LuHandshake size={20} />
-                </div>
                 <h3
                   className="text-lg font-bold mb-3"
                   style={{ fontFamily: "var(--font-display)" }}
@@ -1979,18 +1782,12 @@ export default function BioChainSourcingPage() {
                   </svg>
                 </Link>
               </div>
-            </Reveal>
-            <Reveal>
+            </div>
+            <div>
               <div
                 className="rounded-xl p-8 border border-black/5 flex flex-col h-full"
                 style={{ background: "#fff" }}
               >
-                <div
-                  className="w-11 h-11 rounded-lg flex items-center justify-center mb-5"
-                  style={{ background: goldBg, color: gold }}
-                >
-                  <LuFactory size={20} />
-                </div>
                 <h3
                   className="text-lg font-bold mb-3"
                   style={{ fontFamily: "var(--font-display)" }}
@@ -2031,7 +1828,7 @@ export default function BioChainSourcingPage() {
                   </svg>
                 </Link>
               </div>
-            </Reveal>
+            </div>
           </div>
           <div className="text-center mt-10">
             <Link

@@ -134,7 +134,7 @@ export default function SupplierIntakeStage1Form() {
             <button
               type="submit"
               disabled={submitting}
-              className="font-body mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 bg-[linear-gradient(135deg,var(--gold),oklch(0.58_0.18_68))]"
+              className="font-body mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-sm font-semibold text-white bg-[oklch(0.52_0.12_70)] hover:bg-[oklch(0.47_0.12_70)] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {submitting ? "Submitting…" : "Submit Application"}
               {!submitting && <ArrowRight size={16} />}

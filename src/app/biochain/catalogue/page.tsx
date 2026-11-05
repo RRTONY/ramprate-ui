@@ -48,32 +48,15 @@ export default async function BioChainCataloguePage() {
           { name: "Catalogue", url: "https://ramprate.com/biochain/catalogue" },
         ])}
       />
-      <section
-        className="relative pt-36 pb-16 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[240px] h-[240px] bottom-0 -left-28" />
-        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-          <span
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-            style={{
-              color: "var(--gold-light)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+      <section className="section-light pt-40 pb-16 border-b border-black/10">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4 block text-[oklch(0.52_0.12_70)]">
             RampRate BioChain Sourcing
           </span>
-          <h1
-            className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink mb-6 leading-tight">
             Full Product Catalog
           </h1>
-          <p
-            className="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
+          <p className="font-body text-ink-mid text-lg leading-relaxed mb-6 max-w-2xl">
             {totalItems}+ peptides and biologics across{" "}
             {PRODUCT_CATEGORIES.length} categories.
           </p>
@@ -87,8 +70,7 @@ export default async function BioChainCataloguePage() {
             </Link>
             <Link
               href="/biochain/supplier-intake"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-all"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="font-body inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold border-2 border-black/15 text-ink hover:bg-black/5 transition-colors"
             >
               Apply as a Supplier
             </Link>

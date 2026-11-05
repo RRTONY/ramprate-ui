@@ -81,36 +81,23 @@ export default function PortalGate({
 
   if (variant === "biochain") {
     return (
-      <main className="relative min-h-screen w-full overflow-hidden bg-dark flex items-center justify-center px-5 py-16">
-        <div className="absolute inset-0">
-          <Image
-            src="/biochain/partner-faq-hero.webp"
-            alt=""
-            fill
-            priority
-            className="object-cover object-[70%_center]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(10,15,26,0.97)_0%,rgba(10,15,26,0.92)_45%,rgba(10,15,26,0.78)_100%)]" />
-        </div>
-        <div className="glass-orb glass-orb-amber w-[380px] h-[380px] -top-32 -right-24" />
-        <div className="glass-orb glass-orb-rust w-[260px] h-[260px] -bottom-24 -left-20" />
-
-        <div className="relative z-10 w-full max-w-md">
-          <div className="glass-card-dark p-9 sm:p-10">
+      <main className="min-h-screen w-full bg-warm-bg flex items-center justify-center px-5 py-16">
+        <div className="w-full max-w-md">
+          <div className="rounded-2xl border border-black/10 bg-white p-9 sm:p-10">
             <Image
               src="/ramprate-logo.png"
               alt="RampRate"
               width={150}
               height={36}
-              className="w-[130px] h-auto brightness-0 invert mb-8"
+              className="w-[130px] h-auto mb-8"
             />
-            <div className="text-xs font-mono uppercase tracking-[0.08em] text-gold-light mb-3">
+            <div className="text-xs font-mono uppercase tracking-[0.08em] text-[oklch(0.5_0.1_70)] mb-3">
               RampRate BioChain Network
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-display">
+            <h2 className="text-2xl sm:text-3xl font-bold text-ink mb-2 font-display">
               {title}
             </h2>
-            <p className="text-sm text-white/60 mb-7 font-body">{subtitle}</p>
+            <p className="text-sm text-ink-mid mb-7 font-body">{subtitle}</p>
 
             <div className="relative mb-3">
               <input
@@ -125,12 +112,12 @@ export default function PortalGate({
                 }}
                 placeholder={placeholder}
                 autoComplete="off"
-                className="w-full px-4 py-3 pr-12 bg-dark-mid border border-white/15 rounded-lg text-sm text-white placeholder-white/30 focus:outline-none focus:border-gold transition-colors font-body"
+                className="w-full px-4 py-3 pr-12 bg-white border border-black/15 rounded-lg text-sm text-ink placeholder-black/35 focus:outline-none focus:border-gold transition-colors font-body"
               />
               <button
                 type="button"
                 onClick={() => setShowCode((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-gold-light transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-ink transition-colors"
                 tabIndex={-1}
                 aria-label={showCode ? "Hide code" : "Show code"}
               >
@@ -138,7 +125,7 @@ export default function PortalGate({
               </button>
             </div>
             {error && (
-              <p className="text-sm text-red-400 mb-3 font-body">
+              <p className="text-sm text-[oklch(0.5_0.18_25)] mb-3 font-body">
                 {incorrectMessage}
               </p>
             )}

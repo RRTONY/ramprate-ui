@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 };
 
 const supplyChainRoles = [
-  { name: "Manufacturer", sub: "Where it's made", color: "oklch(0.52 0.12 70)" },
-  { name: "Distributor", sub: "Getting to volume", color: "oklch(0.82 0.15 75)" },
-  { name: "Tester", sub: "Purity verification", color: "oklch(0.65 0.14 50)" },
-  { name: "Logistics", sub: "Cold chain & delivery", color: "oklch(0.55 0.15 30)" },
-  { name: "Compliance", sub: "Regulatory oversight", color: "oklch(0.45 0.1 40)" },
+  { name: "Manufacturer", sub: "Where it's made" },
+  { name: "Distributor", sub: "Getting to volume" },
+  { name: "Tester", sub: "Purity verification" },
+  { name: "Logistics", sub: "Cold chain & delivery" },
+  { name: "Compliance", sub: "Regulatory oversight" },
 ];
 
 const frictionPoints = [
@@ -40,10 +40,10 @@ const frictionPoints = [
 
 const compoundStandardSupply = [
   {
-    label: "COMPOUND",
+    label: "Compound",
     id: "find-compound",
     title: "Find Your Compound",
-    color: "oklch(0.52 0.12 70)",
+    bar: "bg-[oklch(0.52_0.12_70)]",
     points: [
       "What are you actually sourcing, and at what purity?",
       "Which suppliers can't produce it at the volume you need?",
@@ -53,10 +53,10 @@ const compoundStandardSupply = [
     ],
   },
   {
-    label: "STANDARD",
+    label: "Standard",
     id: "find-standard",
     title: "Find Your Standard",
-    color: "oklch(0.82 0.15 75)",
+    bar: "bg-[oklch(0.72_0.14_75)]",
     points: [
       "What's the right testing standard? Right lab?",
       "Stop trusting the supplier's own paperwork.",
@@ -66,10 +66,10 @@ const compoundStandardSupply = [
     ],
   },
   {
-    label: "SUPPLY",
+    label: "Supply",
     id: "find-supply",
     title: "Find Your Supply",
-    color: "oklch(0.55 0.15 30)",
+    bar: "bg-rust",
     points: [
       "Supply security lives inside the chain of custody.",
       "The suppliers. The labs. The logistics.",
@@ -88,6 +88,57 @@ const steps = [
   { num: "05", label: "Top 25 Suppliers" },
   { num: "06", label: "Onboard & Verify" },
   { num: "07", label: "90-Day Proof" },
+];
+
+const diagnoseSteps = [
+  {
+    num: "01",
+    title: "The Call",
+    lead: "You tell us what you're sourcing. We listen, and we give you our diagnosis within 48 hours.",
+    body: "It could be an unverified supplier, a missing COA, or a broken chain of custody.",
+  },
+  {
+    num: "02",
+    title: "Supply Chain Assessment",
+    lead: "We map who is involved in your supply today: the manufacturer, the distributor, the tester and the logistics partner.",
+    body: "Then we show where the risk sits, what it could cost you, and how your current supply chain compares with the one you need.",
+  },
+];
+
+const activateSteps = [
+  {
+    num: "03",
+    title: "Assemble the Specialists",
+    p1: "One vertical-specific sourcing team contracted at ~20% of our fee. Principals + biologics specialist.",
+    p2: "If the audit found a gap, we fill it. Missing lab partner? We bring one. No verified manufacturer? We find one.",
+  },
+  {
+    num: "04",
+    title: "10 Must-Haves",
+    p1: "What do you need besides a lower price? Every buyer wants savings - that's not the whole answer. The answer is purity and provenance you can prove.",
+    p2: "We ask for everything you need. Then we build the supplier shortlist.",
+  },
+  {
+    num: "05",
+    title: "Top 25 Verified Suppliers",
+    p1: "We identify the 25 highest-fit, verified suppliers from our network. Introductions only to suppliers that fit, never a mass email.",
+    p2: "25 years of procurement relationships opens doors that cold outreach never will.",
+  },
+];
+
+const executeSteps = [
+  {
+    num: "06",
+    title: "Onboard & Verify",
+    lead: "Supplier calls, sample testing and signed contracts. A principal is on every call, and you get a progress report every week.",
+    body: "We test and verify before anything closes, rather than taking the supplier's word for it.",
+  },
+  {
+    num: "07",
+    title: "90-Day Checkpoint",
+    lead: "If we haven't delivered a verified, reliable supply chain in 90 days, you can walk. No penalty. No hard feelings. No lock-in.",
+    body: "In 25 years, no one has ever exercised this option.",
+  },
 ];
 
 const summaryRows = [
@@ -117,6 +168,33 @@ const summaryRows = [
   },
 ];
 
+const eyebrow =
+  "font-body text-xs font-semibold tracking-[0.2em] uppercase text-[oklch(0.52_0.12_70)]";
+const h2 =
+  "font-display mt-4 text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-ink";
+
+function StepBlock({
+  num,
+  title,
+  children,
+}: {
+  num: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="border-t border-black/15 pt-5">
+      <span className="font-mono text-xs font-semibold text-[oklch(0.52_0.12_70)]">
+        Step {num}
+      </span>
+      <h3 className="font-display mt-1 text-xl font-bold text-ink">{title}</h3>
+      <div className="font-body mt-3 space-y-3 text-sm leading-relaxed text-ink-mid">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function BioChainProcessPage() {
   return (
     <main>
@@ -127,158 +205,49 @@ export default function BioChainProcessPage() {
           { name: "Process", url: "https://ramprate.com/biochain/process" },
         ])}
       />
+
       {/* Hero */}
-      <section
-        className="relative pt-36 pb-20 overflow-hidden"
-        style={{ background: "var(--dark)" }}
-      >
-        <div className="glass-orb glass-orb-amber w-[400px] h-[400px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[300px] h-[300px] bottom-0 -left-32" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+      <section className="section-light pt-44 pb-16">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="max-w-3xl">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
-              style={{
-                color: "oklch(0.82 0.15 75)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              How Sourcing Works
-            </span>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <span className={`${eyebrow} block mb-4`}>How Sourcing Works</span>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-ink mb-6 leading-tight">
               From First Call to{" "}
-              <span style={{ color: "var(--gold-light)" }}>
-                Verified Supplier
-              </span>{" "}
+              <span className="text-[oklch(0.52_0.12_70)]">Verified Supplier</span>{" "}
               in 90 Days.
             </h1>
-            <p
-              className="text-white/70 text-lg leading-relaxed mb-8"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              First we find your compound. Then your standard. Then your
-              supply chain. 25 years of procurement expertise. It&apos;s
-              never not worked.
+            <p className="font-body text-lg leading-relaxed text-ink-mid mb-10">
+              First we confirm the compound you need. Then the testing standard
+              it has to meet. Then the suppliers who can deliver it. The same
+              process RampRate has refined over 25 years.
             </p>
-            <div className="grid grid-cols-3 gap-4 mb-10">
+            <dl className="grid grid-cols-3 gap-6 mb-10 max-w-lg">
               {[
                 { value: "7", label: "Steps" },
                 { value: "90", label: "Days to verified supply" },
                 { value: "25", label: "Years refined" },
               ].map((stat) => (
-                <div key={stat.label} className="glass-card p-4">
-                  <div
-                    className="text-2xl font-bold mb-1"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
+                <div key={stat.label} className="border-l-2 border-black/10 pl-4">
+                  <dt className="font-display text-3xl font-bold text-ink">
                     {stat.value}
-                  </div>
-                  <div
-                    className="text-xs text-white/50"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
+                  </dt>
+                  <dd className="font-body mt-1 text-xs text-ink-mid">
                     {stat.label}
-                  </div>
+                  </dd>
                 </div>
               ))}
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#find-compound"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "oklch(0.52 0.12 70)",
-                  background: "oklch(0.52 0.12 70 / 0.1)",
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="oklch(0.52 0.12 70)"
-                  strokeWidth="2"
+            </dl>
+            <nav aria-label="Jump to" className="flex flex-wrap gap-3">
+              {compoundStandardSupply.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className="font-body inline-flex items-center px-5 py-3 rounded-md border-2 border-black/15 text-sm font-semibold text-ink hover:bg-black/5 transition-colors"
                 >
-                  <circle cx="12" cy="6" r="3" />
-                  <circle cx="6" cy="18" r="3" />
-                  <circle cx="18" cy="18" r="3" />
-                  <path d="M12 9v4M9.5 15.5L12 13l2.5 2.5" />
-                </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.52 0.12 70)" }}>
-                    Compound
-                  </span>
-                </span>
-              </a>
-              <a
-                href="#find-standard"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "oklch(0.82 0.15 75)",
-                  background: "oklch(0.82 0.15 75 / 0.1)",
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="oklch(0.82 0.15 75)"
-                  strokeWidth="2"
-                >
-                  <path d="M9 11l3 3L22 4" />
-                  <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
-                </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.82 0.15 75)" }}>
-                    Standard
-                  </span>
-                </span>
-              </a>
-              <a
-                href="#find-supply"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-lg border-2 hover:bg-white/10 transition-all"
-                style={{
-                  borderColor: "oklch(0.55 0.15 30)",
-                  background: "oklch(0.55 0.15 30 / 0.1)",
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="oklch(0.55 0.15 30)"
-                  strokeWidth="2"
-                >
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M23 21v-2a4 4 0 00-3-3.87" />
-                  <path d="M16 3.13a4 4 0 010 7.75" />
-                </svg>
-                <span
-                  className="text-sm font-bold tracking-wider uppercase text-white"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  Find Your{" "}
-                  <span style={{ color: "oklch(0.55 0.15 30)" }}>Supply</span>
-                </span>
-              </a>
-            </div>
+                  {item.title}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
       </section>
@@ -286,31 +255,15 @@ export default function BioChainProcessPage() {
       {/* Compound / Standard / Supply */}
       <section
         id="compound-standard-supply"
-        className="relative section-dark py-20 sm:py-28 scroll-mt-20 overflow-hidden"
+        className="section-warm py-20 sm:py-24 scroll-mt-20"
       >
-        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -top-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] bottom-20 -left-20" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
-            <span
-              className="text-xs tracking-[0.3em] uppercase text-white/40 mb-4 block"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              The Journey
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Before We Fix Your Supply Chain,{" "}
-              <span style={{ color: "var(--gold-light)" }}>
-                We Fix Your Verification.
-              </span>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="max-w-2xl mb-12">
+            <span className={eyebrow}>The Journey</span>
+            <h2 className={h2}>
+              Before We Fix Your Supply Chain, We Fix Your Verification.
             </h2>
-            <p
-              className="mt-5 text-base sm:text-lg text-white/50 max-w-2xl mx-auto"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
+            <p className="font-body mt-4 text-base text-ink-mid">
               You can&apos;t trust what you can&apos;t verify.
             </p>
           </div>
@@ -319,35 +272,18 @@ export default function BioChainProcessPage() {
               <div
                 key={item.label}
                 id={item.id}
-                className="glass-card p-7 relative overflow-hidden scroll-mt-24"
+                className="relative overflow-hidden rounded-xl border border-black/10 bg-white p-7 scroll-mt-32"
               >
-                <div
-                  className="absolute top-0 left-0 right-0 h-1"
-                  style={{ backgroundColor: item.color }}
-                />
-                <h3
-                  className="text-4xl font-bold mb-6"
-                  style={{
-                    color: item.color,
-                    fontFamily: "var(--font-display)",
-                  }}
-                >
-                  {item.label}
-                </h3>
-                <h4
-                  className="text-sm font-bold uppercase tracking-wider text-white mb-5"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <div className={`absolute top-0 left-0 right-0 h-1 ${item.bar}`} />
+                <h3 className="font-display text-2xl font-bold text-ink">
                   {item.title}
-                </h4>
-                <ul className="space-y-3">
-                  {item.points.map((p, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-2.5 text-sm text-white/60"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      <span className="text-white/20 mt-0.5">-</span>
+                </h3>
+                <ul className="font-body mt-5 space-y-3 text-sm text-ink-mid">
+                  {item.points.map((p) => (
+                    <li key={p} className="flex items-start gap-2.5">
+                      <span aria-hidden="true" className="text-black/25">
+                        -
+                      </span>
                       <span>{p}</span>
                     </li>
                   ))}
@@ -355,649 +291,163 @@ export default function BioChainProcessPage() {
               </div>
             ))}
           </div>
-          <div
-            className="mt-10 p-5 rounded-lg border-l-4"
-            style={{
-              borderColor: "oklch(0.82 0.15 75)",
-              background: "rgba(255,255,255,0.03)",
-            }}
-          >
-            <p
-              className="text-sm sm:text-base text-white/70 italic"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Our role: find the risk, verify the chain, fix the sourcing,
-              build the process. Not the cheapest supplier - the right
-              supplier.
-            </p>
-          </div>
-          <p
-            className="mt-6 text-center text-xs text-white/30 tracking-widest"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            COMPOUND → STANDARD → SUPPLY
+          <p className="font-body mt-10 border-l-4 border-[oklch(0.52_0.12_70)] pl-5 text-base text-ink">
+            Our role: find the risk, verify the chain, fix the sourcing, build
+            the process. Not the cheapest supplier, the right supplier.
           </p>
         </div>
       </section>
 
       {/* Phase 1 - Diagnose */}
-      <section
-        id="supply-audit"
-        className="relative section-warm py-20 sm:py-28 scroll-mt-20 overflow-hidden"
-      >
-        <div className="glass-orb glass-orb-rust w-[300px] h-[300px] -bottom-32 -right-32" />
-        <div className="glass-orb glass-orb-amber w-[180px] h-[180px] top-10 -left-20" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              Phase 1 - Diagnose
-            </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Find the real risk -{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>
-                not the invoice.
-              </span>
-            </h2>
+      <section id="supply-audit" className="section-light py-20 sm:py-24 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="mb-12">
+            <span className={eyebrow}>Phase 1 - Diagnose</span>
+            <h2 className={h2}>Find the real risk, not the invoice.</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="glass-card-warm p-7">
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.52 0.12 70 / 0.1)" }}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="oklch(0.52 0.12 70)"
-                    strokeWidth="2"
-                  >
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.68a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 11.5a16 16 0 006.29 6.29l1.14-1.14a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                  </svg>
-                </div>
-                <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.52 0.12 70)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    01
-                  </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    The Call
-                  </h3>
-                </div>
-              </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                You tell us what you&apos;re sourcing. We listen. We diagnose
-                in 48 hours.
-              </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                Could be an unverified supplier. A missing COA. A broken
-                chain of custody. Whatever the problem, there&apos;s always a
-                solution.
-              </p>
-            </div>
-            <div className="glass-card-warm p-7">
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.82 0.15 75 / 0.1)" }}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="oklch(0.82 0.15 75)"
-                    strokeWidth="2"
-                  >
-                    <line x1="18" y1="20" x2="18" y2="10" />
-                    <line x1="12" y1="20" x2="12" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="14" />
-                  </svg>
-                </div>
-                <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    02
-                  </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    Supply Chain Assessment
-                  </h3>
-                </div>
-              </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                Map your sourcing&apos;s invisible architecture. Who&apos;s
-                the Manufacturer? The Distributor? The Tester? The Logistics
-                partner?
-              </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                Identify where risk is hiding. Calculate the exposure. See
-                the supply chain you have vs. the one you need.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-10">
+            {diagnoseSteps.map((s) => (
+              <StepBlock key={s.num} num={s.num} title={s.title}>
+                <p className="text-ink">{s.lead}</p>
+                <p>{s.body}</p>
+              </StepBlock>
+            ))}
           </div>
-          <div className="mt-10">
-            <h4
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-5"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              The Supply Chain Roles
-            </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-              {supplyChainRoles.map((role) => (
-                <div
-                  key={role.name}
-                  className="rounded-lg p-4 text-center"
-                  style={{
-                    backgroundColor: `color-mix(in oklch, ${role.color} 12%, oklch(0.97 0.01 80))`,
-                  }}
-                >
-                  <div
-                    className="text-sm font-bold"
-                    style={{
-                      color: role.color,
-                      fontFamily: "var(--font-display)",
-                    }}
+          <div className="mt-14 grid lg:grid-cols-2 gap-10">
+            <div>
+              <h3 className="font-display text-lg font-bold text-ink mb-4">
+                The Supply Chain Roles
+              </h3>
+              <ul className="font-body divide-y divide-black/10 border-y border-black/10">
+                {supplyChainRoles.map((role) => (
+                  <li
+                    key={role.name}
+                    className="flex justify-between gap-4 py-3 text-sm"
                   >
-                    {role.name}
-                  </div>
-                  <div
-                    className="text-xs mt-0.5"
-                    style={{
-                      color: "oklch(0.45 0.02 50)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {role.sub}
-                  </div>
-                </div>
-              ))}
+                    <span className="font-semibold text-ink">{role.name}</span>
+                    <span className="text-ink-mid">{role.sub}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div className="mt-10">
-            <h4
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-4"
-              style={{
-                color: "oklch(0.45 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              Common Friction Points We Find
-            </h4>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {frictionPoints.map((fp) => (
-                <div
-                  key={fp}
-                  className="flex items-center gap-2.5 text-sm"
-                  style={{
-                    color: "oklch(0.35 0.02 50)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="oklch(0.55 0.15 30)"
-                    strokeWidth="2"
-                    className="shrink-0"
-                  >
-                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                    <polyline points="22 4 12 14.01 9 11.01" />
-                  </svg>
-                  <span>{fp}</span>
-                </div>
-              ))}
+            <div>
+              <h3 className="font-display text-lg font-bold text-ink mb-4">
+                Common Problems We Find
+              </h3>
+              <ul className="font-body space-y-3 text-sm text-ink">
+                {frictionPoints.map((fp) => (
+                  <li key={fp} className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rust"
+                    />
+                    <span>{fp}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* Phase 2 - Activate */}
-      <section className="relative section-dark py-20 sm:py-28 overflow-hidden">
-        <div className="glass-orb glass-orb-amber w-[280px] h-[280px] top-10 -right-32" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] -bottom-20 left-10" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-14">
-            <span
-              className="text-xs tracking-[0.3em] uppercase text-white/40 mb-4 block"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Phase 2 - Activate
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Build the shortlist. Name the requirements.{" "}
-              <span style={{ color: "var(--gold-light)" }}>
-                Set the standards.
-              </span>
+      <section className="section-warm py-20 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="mb-12">
+            <span className={eyebrow}>Phase 2 - Activate</span>
+            <h2 className={h2}>
+              Build the shortlist. Name the requirements. Set the standards.
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                num: "03",
-                title: "Assemble the Specialists",
-                p1: "One vertical-specific sourcing team contracted at ~20% of our fee. Principals + biologics specialist.",
-                p2: "If the audit found a gap, we fill it. Missing lab partner? We bring one. No verified manufacturer? We find one.",
-              },
-              {
-                num: "04",
-                title: "10 Must-Haves",
-                p1: "What do you need besides a lower price? Every buyer wants savings - that's not the whole answer. The answer is purity and provenance you can prove.",
-                p2: "We ask for everything you need. Then we build the supplier shortlist.",
-              },
-              {
-                num: "05",
-                title: "Top 25 Verified Suppliers",
-                p1: "We identify the 25 highest-fit, verified suppliers from our network. Vetted introductions only. No spray and pray.",
-                p2: "25 years of procurement relationships opens doors that cold outreach never will.",
-              },
-            ].map((item) => (
-              <div key={item.num} className="glass-card p-7">
-                <div className="flex items-center justify-between mb-5">
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    {item.num}
-                  </span>
-                </div>
-                <h3
-                  className="text-lg font-bold text-white mb-4"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className="text-sm text-white/60 leading-relaxed mb-4"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  {item.p1}
-                </p>
-                <p
-                  className="text-sm text-white/50 leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  {item.p2}
-                </p>
-              </div>
+          <div className="grid md:grid-cols-3 gap-10">
+            {activateSteps.map((item) => (
+              <StepBlock key={item.num} num={item.num} title={item.title}>
+                <p>{item.p1}</p>
+                <p>{item.p2}</p>
+              </StepBlock>
             ))}
           </div>
         </div>
       </section>
 
       {/* Phase 3 - Execute */}
-      <section className="relative section-warm py-20 sm:py-28 overflow-hidden">
-        <div className="glass-orb glass-orb-amber w-[300px] h-[300px] -top-32 -left-32" />
-        <div className="glass-orb glass-orb-rust w-[180px] h-[180px] bottom-20 right-10" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="mb-14">
-            <span
-              className="text-xs font-semibold tracking-[0.2em] uppercase"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              Phase 3 - Execute & Deliver
-            </span>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Process over promises.{" "}
-              <span style={{ color: "oklch(0.55 0.15 30)" }}>
-                Verification over paperwork.
-              </span>
+      <section className="section-light py-20 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="mb-12">
+            <span className={eyebrow}>Phase 3 - Execute &amp; Deliver</span>
+            <h2 className={h2}>
+              Process over promises. Verification over paperwork.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="glass-card-warm p-7">
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.52 0.12 70 / 0.1)" }}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="oklch(0.52 0.12 70)"
-                    strokeWidth="2"
-                  >
-                    <path d="M9 11l3 3L22 4" />
-                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
-                  </svg>
-                </div>
-                <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.52 0.12 70)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    06
-                  </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    Onboard & Verify
-                  </h3>
-                </div>
-              </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                We go live. Supplier calls. Sample testing. Contracts signed.
-                Principals on every call. Weekly progress reports.
-              </p>
-              <p
-                className="text-sm leading-relaxed"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                Category management - not vendor claims. We test, verify,
-                close. Process over promises. Verification over paperwork.
-              </p>
-            </div>
-            <div className="glass-card-warm p-7">
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "oklch(0.55 0.15 30 / 0.1)" }}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="oklch(0.55 0.15 30)"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <div>
-                  <span
-                    className="text-xs font-bold tracking-wider"
-                    style={{
-                      color: "oklch(0.55 0.15 30)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    07
-                  </span>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    90-Day Checkpoint
-                  </h3>
-                </div>
-              </div>
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{
-                  color: "oklch(0.35 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                If we haven&apos;t delivered a verified, reliable supply
-                chain in 90 days, you can walk. No penalty. No hard feelings.
-                No lock-in.
-              </p>
-              <p
-                className="text-sm leading-relaxed font-medium"
-                style={{
-                  color: "oklch(0.45 0.02 50)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                In 25 years, no one has ever exercised this option.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-10">
+            {executeSteps.map((s) => (
+              <StepBlock key={s.num} num={s.num} title={s.title}>
+                <p className="text-ink">{s.lead}</p>
+                <p>{s.body}</p>
+              </StepBlock>
+            ))}
           </div>
-          <div
-            className="mt-10 flex items-center gap-4 p-5 rounded-xl border"
-            style={{
-              background: "oklch(0.82 0.15 75 / 0.1)",
-              borderColor: "oklch(0.82 0.15 75 / 0.2)",
-            }}
-          >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="oklch(0.82 0.15 75)"
-              strokeWidth="2"
-              className="shrink-0"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            <p
-              className="text-sm sm:text-base font-semibold"
-              style={{
-                color: "oklch(0.25 0.03 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              <span
-                className="uppercase tracking-wider text-xs mr-2"
-                style={{
-                  color: "oklch(0.82 0.15 75)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
-                The Guarantee:
-              </span>
+          <div className="mt-12 rounded-xl border border-black/10 bg-warm-light p-6">
+            <p className="font-body text-base text-ink">
+              <strong className="font-semibold">The Guarantee: </strong>
               90 days. If we don&apos;t deliver verified supply, you walk.
               It&apos;s never happened in 25 years.
             </p>
-          </div>
-          <div className="mt-6">
-            <p
-              className="text-xs font-bold tracking-[0.2em] uppercase mb-3"
-              style={{
-                color: "oklch(0.55 0.15 30)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              The Economics
+            <p className="font-body mt-4 text-sm text-ink-mid">
+              <strong className="font-semibold text-ink">The Economics: </strong>
+              $15K–$50K/month · Success-fee available · Biologics specialist
+              ~20% of fee · Clawbacks · Historical: 20X value
             </p>
-            <div
-              className="flex flex-wrap gap-x-6 gap-y-2 text-sm"
-              style={{
-                color: "oklch(0.35 0.02 50)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              <span>$15K–$50K/month</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
-              <span>Success-fee available</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
-              <span>Biologics specialist ~20% of fee</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
-              <span>Clawbacks</span>
-              <span style={{ color: "oklch(0.7 0.02 50)" }}>·</span>
-              <span>Historical: 20X value</span>
-            </div>
           </div>
         </div>
       </section>
 
       {/* The Complete Map */}
-      <section className="relative section-dark py-20 sm:py-28 overflow-hidden">
-        <div className="glass-orb glass-orb-amber w-[350px] h-[350px] -bottom-40 -right-40" />
-        <div className="glass-orb glass-orb-rust w-[200px] h-[200px] top-20 -left-20" />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-14">
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              The Complete Map
-            </h2>
-          </div>
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-1 mb-14">
-            {steps.map((step, i) => (
-              <div key={step.num} className="flex items-center">
-                <div className="flex flex-col items-center">
-                  <div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white font-bold text-sm"
-                    style={{
-                      background: "oklch(0.52 0.12 70)",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    {step.num}
-                  </div>
-                  <span
-                    className="mt-2 text-[10px] sm:text-xs text-white/50 text-center uppercase tracking-wider max-w-[80px]"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {step.label}
-                  </span>
-                </div>
-                {i < steps.length - 1 && (
-                  <div
-                    className="hidden sm:block w-8 md:w-12 h-px mt-[-16px]"
-                    style={{ background: "oklch(0.52 0.12 70 / 0.4)" }}
-                  />
-                )}
-              </div>
+      <section className="section-warm py-20 sm:py-24">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <h2 className={`${h2} mt-0 mb-10`}>The Complete Map</h2>
+          <ol className="font-body flex flex-wrap gap-x-6 gap-y-3 mb-12 text-sm text-ink">
+            {steps.map((step) => (
+              <li key={step.num} className="flex items-center gap-2">
+                <span className="font-mono text-xs font-semibold text-[oklch(0.52_0.12_70)]">
+                  {step.num}
+                </span>
+                {step.label}
+              </li>
             ))}
-          </div>
-          <div className="space-y-3">
+          </ol>
+          <dl className="divide-y divide-black/10 border-y border-black/10">
             {summaryRows.map((row) => (
               <div
                 key={row.label}
-                className="glass-card flex flex-col sm:flex-row gap-4 sm:gap-8 p-5"
+                className="flex flex-col sm:flex-row gap-2 sm:gap-8 py-5"
               >
-                <div className="sm:w-44 shrink-0">
-                  <span
-                    className="text-xs font-bold uppercase tracking-wider"
-                    style={{
-                      color: "oklch(0.82 0.15 75)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {row.label}
-                  </span>
-                </div>
-                <p
-                  className="text-sm text-white/60 leading-relaxed"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
+                <dt className="font-body sm:w-56 shrink-0 text-sm font-semibold text-ink">
+                  {row.label}
+                </dt>
+                <dd className="font-body text-sm leading-relaxed text-ink-mid">
                   {row.text}
-                </p>
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="relative py-24 sm:py-32 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom right, oklch(0.52 0.12 70), oklch(0.35 0.1 40))",
-          }}
-        />
-        <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+      <section className="py-20 sm:py-24 bg-[oklch(0.52_0.12_70)]">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             Tell Us What&apos;s Broken.
           </h2>
-          <p
-            className="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
-            Principal responds within 24 hours. No associates. No filters. No
-            intake maze.
+          <p className="font-body mt-6 text-base sm:text-lg text-white/90 max-w-xl mx-auto">
+            A principal replies within 24 hours. No associates, no screening
+            calls, no long intake process.
           </p>
           <div className="mt-10">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm sm:text-base font-semibold bg-white hover:bg-white/90 transition-all shadow-lg"
-              style={{
-                color: "oklch(0.35 0.1 40)",
-                fontFamily: "var(--font-body)",
-              }}
+              className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm sm:text-base font-semibold bg-white text-[oklch(0.4_0.1_60)] hover:bg-white/90 transition-colors"
             >
               Tell Us What&apos;s Broken
               <svg
@@ -1007,6 +457,7 @@ export default function BioChainProcessPage() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                aria-hidden="true"
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
