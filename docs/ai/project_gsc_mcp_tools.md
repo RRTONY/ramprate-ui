@@ -38,3 +38,12 @@ only `sitemap.xml`. Deleting worked with the account's **Full** permission, so "
   107 unique), brew methods, food pairings and farm/harvest/lot data were in the data but never
   shown on the page. Now shown (tonyg-site branch `index-america-unbundled-2026-11-07`), so each
   page has its own words. Re-check those 7 URLs in Search Console a few weeks after it's live.
+- Charity Scorecard (2026-11-07): 61 profiles "Discovered - currently not indexed" and 22 unknown to
+  Google. Cause: the hub's HTML linked none of the 103 profiles (the explorer only shows a
+  "Full Profile" link after a row is expanded, and renders 25 rows), and Google's last look at the hub
+  was May 21 under the old Manus robots.txt. Fix on tonyg-site branch
+  `index-america-unbundled-2026-11-07`: a closed-by-default "All N charities, by sector" list of
+  plain links under the explorer. After it's live, Request indexing on `/charity-scorecard`.
+- Plausible on ramprate.com: plausible.io serves its own scripts fine but returns 404 for our
+  per-site script (`pa-...js`), so the site was removed from the account or the plan lapsed. No
+  Plausible key exists in either repo; needs a login to plausible.io, not a code change.
