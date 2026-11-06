@@ -16,8 +16,10 @@ import JsonLd, {
   faqJsonLd,
 } from "@/components/shared/JsonLd";
 import { urlFor } from "@/lib/sanity/image";
-import { stripSiteNameSuffix } from "@/lib/sanity/seo";
+import { shareImages, stripSiteNameSuffix } from "@/lib/sanity/seo";
 import Link from "next/link";
+import Image from "next/image";
+import { localBlogThumbnail } from "@/lib/blog-thumbnails";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import CtaSection from "@/components/sections/CtaSection";
@@ -56,7 +58,6 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await client.fetch(postBySlugQuery, { slug });
   if (!post) return {};
-  const ogImage = post.seo?.ogImage || post.mainImage;
   // The root layout appends " | RampRate" to every title via its template.
   // Sanity-authored metaTitles sometimes already end in "| RampRate", which
   // would otherwise double up (e.g. "Post Title | RampRate | RampRate").
@@ -69,7 +70,7 @@ export async function generateMetadata({
     url: `https://ramprate.com/blog/${slug}`,
     publishedTime: post.publishedAt,
     modifiedTime: post._updatedAt,
-    ...(ogImage && { images: [urlFor(ogImage).width(1200).height(630).url()] }),
+    images: shareImages(post.seo?.ogImage, post.mainImage),
   };
   return {
     title,
@@ -264,7 +265,17 @@ export default async function BlogPostPage({
                   href={`/blog/${rp.slug.current}`}
                   className="group block"
                 >
-                  {rp.mainImage && (
+                  {localBlogThumbnail(rp.slug.current) ? (
+                    <div className="mb-3 rounded-lg overflow-hidden aspect-video">
+                      <Image
+                        src={localBlogThumbnail(rp.slug.current)!}
+                        alt={rp.title}
+                        width={400}
+                        height={225}
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  ) : rp.mainImage && (
                     <div className="mb-3 rounded-lg overflow-hidden aspect-video">
                       <SanityImage
                         image={rp.mainImage}

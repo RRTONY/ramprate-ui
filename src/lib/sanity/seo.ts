@@ -11,6 +11,18 @@ export type SeoFields = {
   ogImage?: any;
 };
 
+// The site-wide share picture (public/og.png), used whenever a page or post
+// has no picture of its own, so a shared link never shows up without one.
+export const DEFAULT_SHARE_IMAGE = "/og.png";
+
+// Share-image list for openGraph/twitter `images`: the first Sanity image
+// given (e.g. seo.ogImage, then mainImage) at 1200x630, else the site default.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function shareImages(...candidates: any[]): string[] {
+  const image = candidates.find(Boolean);
+  return [image ? urlFor(image).width(1200).height(630).url() : DEFAULT_SHARE_IMAGE];
+}
+
 export async function getPageSeo(route: string) {
   return sanityFetch<{ seo?: SeoFields } | null>({
     query: pageSeoQuery,
@@ -79,9 +91,7 @@ export function withSeoOverrides(
     : fallback.title;
   const description = seo.metaDescription || fallback.description;
   const keywords = seo.keywords?.length ? seo.keywords : fallback.keywords;
-  const ogImages = seo.ogImage
-    ? [urlFor(seo.ogImage).width(1200).height(630).url()]
-    : undefined;
+  const ogImages = seo.ogImage ? shareImages(seo.ogImage) : undefined;
 
   return {
     ...fallback,

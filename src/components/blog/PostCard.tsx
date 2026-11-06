@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import SanityImage from "@/components/shared/SanityImage";
+import { localBlogThumbnail } from "@/lib/blog-thumbnails";
 
 interface Category {
   title?: string;
@@ -29,12 +30,7 @@ export default function PostCard({ post }: PostCardProps) {
       })
     : null;
 
-  const articleThumbnail =
-    post.slug?.current === "data-centers-have-a-heart"
-      ? "/blog/yotta-2026-assets/cloud-neighbors-tacos8.webp"
-      : post.slug?.current === "the-cloud-gets-rich"
-        ? "/blog/yotta-2026-assets/constellation-kitchen-tacos8.webp"
-        : null;
+  const articleThumbnail = localBlogThumbnail(post.slug?.current);
 
   return (
     <article className="rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-2px] bg-white/3 border border-white/6">

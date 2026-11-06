@@ -4,6 +4,7 @@ import {PortableText, portableTextComponents} from '@/lib/sanity/portable-text'
 import SanityImage from '@/components/shared/SanityImage'
 import JsonLd, {blogPostJsonLd, breadcrumbJsonLd} from '@/components/shared/JsonLd'
 import {urlFor} from '@/lib/sanity/image'
+import {shareImages} from '@/lib/sanity/seo'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import type {Metadata} from 'next'
@@ -30,7 +31,6 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
   const {slug} = await params
   const post = await client.fetch(postBySlugQuery, {slug})
   if (!post) return {}
-  const ogImage = post.seo?.ogImage || post.mainImage
   const title = post.seo?.metaTitle || post.title
   const description = post.seo?.metaDescription || post.excerpt
   const openGraph = {
@@ -40,7 +40,7 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
     url: `https://ramprate.com/thinking/${slug}`,
     publishedTime: post.publishedAt,
     modifiedTime: post._updatedAt,
-    ...(ogImage && {images: [urlFor(ogImage).width(1200).height(630).url()]}),
+    images: shareImages(post.seo?.ogImage, post.mainImage),
   }
   return {
     title,
