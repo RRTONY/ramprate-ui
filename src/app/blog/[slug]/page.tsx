@@ -197,7 +197,7 @@ export default async function BlogPostPage({
             {post.title}
           </h1>
 
-          <div className="font-mono flex items-center gap-5 text-sm text-white/35">
+          <div className="font-mono flex items-center gap-5 text-sm text-white/60">
             {post.authors?.length > 0 && (
               <span>
                 By{" "}
@@ -269,22 +269,24 @@ export default async function BlogPostPage({
                     <div className="mb-3 rounded-lg overflow-hidden aspect-video">
                       <Image
                         src={localBlogThumbnail(rp.slug.current)!}
-                        alt={rp.title}
+                        alt=""
                         width={400}
                         height={225}
                         className="w-full h-full object-cover transition-transform group-hover:scale-105"
                       />
                     </div>
-                  ) : rp.mainImage && (
-                    <div className="mb-3 rounded-lg overflow-hidden aspect-video">
-                      <SanityImage
-                        image={rp.mainImage}
-                        alt={rp.mainImage.alt || rp.title}
-                        width={400}
-                        height={225}
-                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    </div>
+                  ) : (
+                    rp.mainImage && (
+                      <div className="mb-3 rounded-lg overflow-hidden aspect-video">
+                        <SanityImage
+                          image={rp.mainImage}
+                          alt=""
+                          width={400}
+                          height={225}
+                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                        />
+                      </div>
+                    )
                   )}
                   <h3 className="font-display font-semibold text-white leading-snug transition-colors group-hover:text-(--gold)">
                     {rp.title}

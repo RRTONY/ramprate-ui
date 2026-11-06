@@ -50,7 +50,7 @@ export default function Pagination({
   const ghostClass = "font-body bg-white/5 text-white/65 border border-white/8";
   const goldClass = "font-mono font-bold bg-gold text-dark";
   const numInactiveClass =
-    "font-mono bg-white/4 text-white/45 border border-white/8";
+    "font-mono bg-white/4 text-white/60 border border-white/8";
 
   const prevUrl = buildUrl(currentPage - 1, activeCategory);
   const nextUrl = buildUrl(currentPage + 1, activeCategory);
@@ -63,9 +63,11 @@ export default function Pagination({
           <Link
             href={prevUrl}
             onClick={scrollToResults}
+            aria-label="Previous page"
             className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
           >
             <svg
+              aria-hidden="true"
               width="14"
               height="14"
               viewBox="0 0 24 24"
@@ -84,7 +86,8 @@ export default function Pagination({
           p === "ellipsis" ? (
             <span
               key={`e${i}`}
-              className="font-mono w-8 text-center text-sm select-none text-white/20"
+              aria-hidden="true"
+              className="font-mono w-8 text-center text-sm select-none text-white/45"
             >
               ···
             </span>
@@ -107,9 +110,11 @@ export default function Pagination({
           <Link
             href={nextUrl}
             onClick={scrollToResults}
+            aria-label="Next page"
             className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
           >
             <svg
+              aria-hidden="true"
               width="14"
               height="14"
               viewBox="0 0 24 24"
@@ -131,9 +136,11 @@ export default function Pagination({
           <Link
             href={prevUrl}
             onClick={scrollToResults}
+            aria-label="Previous page"
             className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
           >
             <svg
+              aria-hidden="true"
               width="14"
               height="14"
               viewBox="0 0 24 24"
@@ -152,7 +159,8 @@ export default function Pagination({
           p === "ellipsis" ? (
             <span
               key={`e${i}`}
-              className="font-mono w-10 text-center text-sm select-none text-white/20"
+              aria-hidden="true"
+              className="font-mono w-10 text-center text-sm select-none text-white/45"
             >
               ···
             </span>
@@ -175,9 +183,11 @@ export default function Pagination({
           <Link
             href={nextUrl}
             onClick={scrollToResults}
+            aria-label="Next page"
             className={`${btnBase} w-10 h-10 hover:opacity-80 ${ghostClass}`}
           >
             <svg
+              aria-hidden="true"
               width="14"
               height="14"
               viewBox="0 0 24 24"

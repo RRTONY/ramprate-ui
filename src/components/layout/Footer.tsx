@@ -97,7 +97,7 @@ export default function Footer({
                     className="font-body text-[15px] text-ed-muted hover:text-ed-forest transition-colors"
                   >
                     {link.label}
-                    <span className="hidden sm:inline text-sm text-ed-muted/80">
+                    <span className="hidden sm:inline text-sm text-ed-muted">
                       {" "}
                       · {link.desc}
                     </span>
