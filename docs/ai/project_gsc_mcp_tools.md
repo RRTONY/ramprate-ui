@@ -18,4 +18,6 @@ connection not signed in, the same code runs from a terminal: a throwaway `.ts` 
 the file after). Used that day to inspect the America, Unbundled pages (both essays indexed, last crawled 09-29 and
 10-17; the RampRate intro "URL is unknown to Google", since ramprate.com's sitemap was last read 10-31, before the
 intro went up) and to resubmit both `sitemap.xml` files. "Request indexing" is still website-only. The ramprate.com
-property also lists five 2019 WordPress-era sitemaps (`post-sitemap.xml` etc.) with errors; removing them needs a yes.
+property also listed five 2019 WordPress-era sitemaps (`post-sitemap.xml`, `page-`, `post_tag-`, `category-`,
+`resource-sitemap.xml`; all 404 on the live site) with errors; removed the same day with the webmaster's yes, leaving
+only `sitemap.xml`. Deleting worked with the account's **Full** permission, so "Owner needed to delete" above is wrong.
