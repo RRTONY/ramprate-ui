@@ -33,5 +33,8 @@ only `sitemap.xml`. Deleting worked with the account's **Full** permission, so "
   `X-Robots-Tag` header. All are clean now. Google's records date from the May–June Manus crawls,
   so the fix is "Validate fix" in Search Console, not code. Real fixes made: sitemap coffee URLs
   are now percent-encoded (the accented "tarrazú" page didn't match its own canonical).
-- Thin brewsoul coffee pages (~220 words, same template) get grouped by Google under one canonical
-  (`stumptown-hair-bender`). That needs more unique words per page, which is a content decision.
+- Thin brewsoul coffee pages (~220 words, same template) got grouped by Google under one canonical
+  (`stumptown-hair-bender`). Cause: every coffee's own written `connoisseurNote` (27-75 words, all
+  107 unique), brew methods, food pairings and farm/harvest/lot data were in the data but never
+  shown on the page. Now shown (tonyg-site branch `index-america-unbundled-2026-11-07`), so each
+  page has its own words. Re-check those 7 URLs in Search Console a few weeks after it's live.
