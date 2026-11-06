@@ -21,3 +21,17 @@ intro went up) and to resubmit both `sitemap.xml` files. "Request indexing" is s
 property also listed five 2019 WordPress-era sitemaps (`post-sitemap.xml`, `page-`, `post_tag-`, `category-`,
 `resource-sitemap.xml`; all 404 on the live site) with errors; removed the same day with the webmaster's yes, leaving
 only `sitemap.xml`. Deleting worked with the account's **Full** permission, so "Owner needed to delete" above is wrong.
+
+### 2026-11-07: every sitemap page inspected, both sites
+- Recipe: a throwaway `.mts` file at the repo root that fetches `/sitemap.xml`, calls `inspectUrls()`
+  in batches of 10 (the helper caps at 20), and writes the results to a scratch JSON file. Run with
+  `npx tsx --env-file=.env`. 657 pages took a few minutes, well under the ~2,000/day quota.
+  (A `.ts` file fails: tsx compiles it as CommonJS and top-level `await` is refused.)
+- ramprate.com: 150 of 154 indexed. The other four are new pages Google hasn't reached yet.
+- tonygreenberg.com: every page in its "Why pages aren't indexed" report (noindex, robots.txt
+  blocked, soft 404, redirect) was re-checked live, including with Googlebot's user agent and the
+  `X-Robots-Tag` header. All are clean now. Google's records date from the May–June Manus crawls,
+  so the fix is "Validate fix" in Search Console, not code. Real fixes made: sitemap coffee URLs
+  are now percent-encoded (the accented "tarrazú" page didn't match its own canonical).
+- Thin brewsoul coffee pages (~220 words, same template) get grouped by Google under one canonical
+  (`stumptown-hair-bender`). That needs more unique words per page, which is a content decision.

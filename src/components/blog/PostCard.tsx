@@ -107,7 +107,7 @@ export default function PostCard({ post }: PostCardProps) {
           </p>
         )}
         {date && (
-          <p className="font-mono text-xs font-medium text-white/25">{date}</p>
+          <p className="font-mono text-xs font-medium text-white/55">{date}</p>
         )}
       </div>
     </article>
