@@ -44,6 +44,26 @@ const object = (value: unknown): Record<string, unknown> =>
     ? (value as Record<string, unknown>)
     : {};
 const connectLog = (code: string, time: string) => console.warn(code, time);
+const qualificationFields: [string, string, number][] = [
+  ["why_now", "Why now?", 300],
+  ["company_size", "Company size (number of people)", 100],
+  ["funding_stage", "Funding stage", 100],
+  ["last_round", "Amount raised in last round", 100],
+  ["arr", "Annual recurring revenue (ARR)", 100],
+  ["raising", "Are you currently raising?", 100],
+  ["runway", "Runway", 100],
+  ["signoff", "Who signs off on bringing us in?", 100],
+  ["deck_link", "Link to your deck", 500],
+];
+const qualificationBlock = (body: Record<string, unknown>) => {
+  const qualification = object(body.qualification);
+  return qualificationFields
+    .map(
+      ([key, label, limit]) =>
+        `${label}: ${text(qualification[key], limit) || "Not provided"}`,
+    )
+    .join("\n");
+};
 
 function clickUpSubmission(body: Record<string, unknown>, receivedAt: string) {
   const details = object(body.details);
@@ -79,6 +99,9 @@ function clickUpSubmission(body: Record<string, unknown>, receivedAt: string) {
       ]),
     ],
     ["OVERVIEW", text(body.overview, 2000)],
+    ...(["project", "partnership"].includes(text(body.intent))
+      ? [["QUALIFICATION", qualificationBlock(body)] as [string, string]]
+      : []),
     ["DESIRED OUTCOME", text(details.desired_outcome, 300)],
     ["STAGE", text(details.stage)],
     ["NEEDS", list(body.needs).join(", ")],
@@ -516,6 +539,14 @@ export async function POST(req: NextRequest) {
     ["prior_who", details.rampate_contact, 150],
     ["reach", details.wants_to_reach, 300],
     ["heard", body.heard_from, 200],
+    ...qualificationFields.map(
+      ([key, , limit]) =>
+        [key, object(body.qualification)[key], limit] as [
+          string,
+          unknown,
+          number,
+        ],
+    ),
   ];
   for (const [field, value, limit] of limitedFields) {
     if (typeof value === "string" && value.length > limit) {
@@ -580,7 +611,11 @@ export async function POST(req: NextRequest) {
     ["Requested contact", text(details.wants_to_reach)],
     ["Received at", new Date().toISOString()],
   ].filter(([, value]) => value);
-  const message = fields.map(([key, value]) => key + ": " + value).join("\n\n");
+  const message =
+    fields.map(([key, value]) => key + ": " + value).join("\n\n") +
+    (["project", "partnership"].includes(intent)
+      ? "\n\nQualification\n" + qualificationBlock(body)
+      : "");
   const clickUpSaved = await saveConnectToClickUp(body, receivedAt);
   const emailText = clickUpSaved.ok
     ? message
