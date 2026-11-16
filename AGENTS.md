@@ -58,6 +58,8 @@ Read the note for the area you're touching before changing it.
 - **A traffic dip is not an error.** Automated report/alert emails (`src/lib/reports/`) word lower
   or zero visits calmly, in neutral colors ("Lower traffic", never "CRITICAL"/"urgent"). Only a page
   or file that fails to load is shown as a red "Broken" alert (team request, 2026-10-13).
+- **B Corp wording is "B Lab certified"**, not "Certified B Corporation" (team review, 2026-11-17).
+  Older pages still use the old wording; fix them when you touch them.
 - **Minor copy edits on live pages go straight to production** once done (per Alex Veytsel). New
   pages, structural changes, or anything with compliance or legal questions wait for confirmation.
 

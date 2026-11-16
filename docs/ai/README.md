@@ -45,6 +45,7 @@ Background notes for any AI tool working on this repo. The **rules** live in [`/
 - [project_supplier_intake](project_supplier_intake.md): Supplier intake: two-stage form (2026-07-10) + inline scoring/approval workflow in the shared Apps Script (2026-07-14), Google Sheet/Drive backend
 - [project_supplier_intake_eric_brooks_incident](project_supplier_intake_eric_brooks_incident.md): 2026-09-16: Eric Brooks (SUP-2026-0001) Stage 2 invite email silently never sent - investigation, fixes applied to the local .gs reference copy, clasp tooling built, root cause still unconfirmed live
 - [project_talk_to_us_page](project_talk_to_us_page.md): New /talk-to-us Engagement Intake page (2026-08-19) replicating a standalone Google Apps Script form natively on-site; posts to same Apps Script sheet
+- [project_ramprate_dns_incident_2026-11](project_ramprate_dns_incident_2026-11.md): 2026-11-15 Hostinger DNS change sent ramprate.com to Hostinger (expired cert, redirect to legacy.ramprate.com); DNS lives at Hostinger, not Netlify
 - [project_tonygreenberg_dns_incident](project_tonygreenberg_dns_incident.md): 2026-08-26 tonygreenberg.com apex DNS pointed at Netlify prematurely, causing 'Site not found'; reverted to Manus pending real cutover sign-off
 - [project_tonygreenberg_migration](project_tonygreenberg_migration.md): TonyGreenberg.com Manus-to-Netlify migration plan, now v2 (2026-08-22) adding AI chatbot + Supabase-backed publish-approval workflow — stack decisions, PDF deliverables, phase plan, live SEO diagnostics
 

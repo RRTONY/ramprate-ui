@@ -348,12 +348,12 @@ export const portableTextComponents: PortableTextComponents = {
       </h4>
     ),
     normal: ({children}) => (
-      <p className="mb-5 leading-relaxed" style={{color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-body)'}}>
+      <p className="mb-5 leading-relaxed text-pretty text-white/80 font-body">
         {children}
       </p>
     ),
     lead: ({children}) => (
-      <p className="mb-6 leading-relaxed text-xl" style={{color: 'rgba(255,255,255,0.9)', fontFamily: 'var(--font-body)', fontWeight: 400}}>
+      <p className="mb-6 leading-relaxed text-pretty text-xl font-normal text-white/90 font-body">
         {children}
       </p>
     ),

@@ -73,7 +73,7 @@ export default function Footer({
             >
               <Image
                 src="/bcorp-logo.svg"
-                alt="Certified B Corporation"
+                alt="B Lab certified"
                 width={30}
                 height={44}
                 className="h-11 w-auto"
