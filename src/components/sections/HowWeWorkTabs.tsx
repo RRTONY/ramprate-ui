@@ -345,7 +345,7 @@ export default function HowWeWorkTabs() {
                 </div>
                 <div>
                   <p className={`${monoLabel} text-white mb-0.5`}>
-                    Certified B Corporation
+                    B Lab certified
                   </p>
                   <p className="font-body text-xs leading-relaxed text-white/35">
                     Top 4,000 globally out of 100,000+ applicants. Verified

@@ -651,7 +651,7 @@ function TsiPartnershipContent() {
         <span className="brand-chip">
           <Image
             src="/tsi-partnership/bcorp-badge.webp"
-            alt="RampRate — Certified B Corporation"
+            alt="RampRate, B Lab certified"
             width={1140}
             height={246}
           />
@@ -1036,7 +1036,7 @@ function TsiPartnershipContent() {
         <span className="brand-chip">
           <Image
             src="/tsi-partnership/bcorp-badge.webp"
-            alt="RampRate — Certified B Corporation"
+            alt="RampRate, B Lab certified"
             width={1140}
             height={246}
           />

@@ -835,7 +835,7 @@ export default function ProofPage() {
             >
               <Image
                 src="/bcorp-logo.svg"
-                alt="Certified B Corporation"
+                alt="B Lab certified"
                 width={88}
                 height={129}
                 className="h-16 sm:h-[110px] w-auto shrink-0"

@@ -136,7 +136,7 @@ export default function PrivacyPage() {
 
           <div className="pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-white/30 text-sm" style={{fontFamily: 'var(--font-body)'}}>
-              RampRate, Inc. · Los Angeles, CA · Certified B Corporation
+              RampRate, Inc. · Los Angeles, CA · B Lab certified
             </p>
             <Link
               href="/contact"

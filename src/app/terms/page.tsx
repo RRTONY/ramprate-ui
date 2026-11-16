@@ -163,7 +163,7 @@ export default function TermsPage() {
               className="text-white/30 text-sm"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              RampRate, Inc. · Los Angeles, CA · Certified B Corporation
+              RampRate, Inc. · Los Angeles, CA · B Lab certified
             </p>
             <Link
               href="/privacy"

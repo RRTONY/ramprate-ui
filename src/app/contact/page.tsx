@@ -121,7 +121,7 @@ export default async function ContactPage() {
                   className="h-7 w-auto"
                   unoptimized
                 />
-                Certified B Corporation
+                B Lab certified
               </a>
             </li>
           </ul>

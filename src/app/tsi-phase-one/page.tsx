@@ -214,7 +214,7 @@ export default function TsiPhaseOneScopePage() {
           <div className="brand-left">
             <Image
               src="/tsi-partnership/bcorp-badge.webp"
-              alt="RampRate — Certified B Corporation"
+              alt="RampRate, B Lab certified"
               width={1140}
               height={246}
               className="bcorp"
@@ -840,7 +840,7 @@ export default function TsiPhaseOneScopePage() {
         <footer className="footer">
           <Image
             src="/tsi-partnership/bcorp-badge.webp"
-            alt="RampRate — Certified B Corporation"
+            alt="RampRate, B Lab certified"
             width={1140}
             height={246}
             className="bcorp"

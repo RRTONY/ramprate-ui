@@ -514,7 +514,7 @@ export default function ImpactSoulPage() {
                 className="text-xl font-bold mb-2"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Certified B Corporation
+                B Lab certified
               </h3>
               <p
                 className="text-sm leading-relaxed"
@@ -523,7 +523,7 @@ export default function ImpactSoulPage() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                RampRate is a Certified B Corp - meeting the highest standards
+                RampRate is B Lab certified, meeting the highest standards
                 of verified social and environmental performance, public
                 transparency, and legal accountability. We don&apos;t just
                 advise on impact - we live it.
