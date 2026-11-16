@@ -317,7 +317,7 @@ export const portableTextComponents: PortableTextComponents = {
             unoptimized
           />
           {value.caption && (
-            <figcaption className="mt-2 text-sm" style={{color: 'rgba(255,255,255,0.45)', clear: isLeft || isRight ? 'both' : undefined}}>
+            <figcaption className={`mt-2 mb-6 text-sm text-white/45 ${isLeft || isRight ? 'clear-both' : ''}`}>
               {value.caption}
             </figcaption>
           )}
