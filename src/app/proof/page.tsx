@@ -834,7 +834,7 @@ export default function ProofPage() {
               className="flex flex-row sm:flex-col items-center gap-4 sm:gap-2 text-[oklch(0.28_0.04_178)]"
             >
               <Image
-                src="/bcorp-logo.svg"
+                src="/b-lab-certified.svg"
                 alt="B Lab certified"
                 width={88}
                 height={129}

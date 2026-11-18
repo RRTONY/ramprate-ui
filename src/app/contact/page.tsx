@@ -114,7 +114,7 @@ export default async function ContactPage() {
                 className="flex items-center gap-2.5 rounded-md hover:underline underline-offset-4"
               >
                 <Image
-                  src="/bcorp-logo.svg"
+                  src="/b-lab-certified.svg"
                   alt=""
                   width={20}
                   height={29}
