@@ -72,7 +72,7 @@ export default function Footer({
               className="mt-5 inline-flex items-center gap-3 rounded-md text-sm font-medium text-ed-ink hover:underline underline-offset-4"
             >
               <Image
-                src="/bcorp-logo.svg"
+                src="/b-lab-certified.svg"
                 alt="B Lab certified"
                 width={30}
                 height={44}
