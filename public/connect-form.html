@@ -163,7 +163,8 @@
       input[type="text"],
       input[type="email"],
       input[type="tel"],
-      textarea {
+      textarea,
+      select {
         width: 100%;
         font: 400 16px/1.4 var(--body);
         color: var(--ink);
@@ -187,11 +188,13 @@
         font-weight: 300;
       }
       input:hover,
-      textarea:hover {
+      textarea:hover,
+      select:hover {
         border-color: #bfb2d8;
       }
       input:focus-visible,
-      textarea:focus-visible {
+      textarea:focus-visible,
+      select:focus-visible {
         outline: none;
         border-color: var(--purple);
         box-shadow: 0 0 0 4px rgba(126, 50, 212, 0.16);
@@ -569,7 +572,8 @@
       input[type="text"],
       input[type="email"],
       input[type="tel"],
-      textarea {
+      textarea,
+      select {
         font: 400 16px/1.5 var(--body);
         border: 1px solid var(--line);
         border-radius: 9px;
@@ -600,6 +604,12 @@
       }
       .sect {
         background: #e1ebe4;
+      }
+      .qualification {
+        padding-bottom: 3px;
+      }
+      .qualification-help {
+        margin: 0 0 22px;
       }
       .sect h3 {
         font-family: var(--head);
@@ -1018,6 +1028,146 @@
               </legend>
               <div class="chips" id="chips"></div>
             </fieldset>
+
+            <section
+              class="sect qualification"
+              data-show="project partnership"
+              aria-labelledby="qualification-title"
+              hidden
+            >
+              <h3 id="qualification-title">About your company</h3>
+              <p class="help qualification-help">
+                Optional. This helps us point you to the right person and scope
+                faster.
+              </p>
+              <div class="field">
+                <label for="why_now"
+                  >Why now? Is there a deadline, a raise, a launch or a
+                  regulatory event? <span class="opt">optional</span></label
+                >
+                <input
+                  id="why_now"
+                  name="why_now"
+                  type="text"
+                  maxlength="300"
+                />
+              </div>
+              <div class="field">
+                <label for="company_size"
+                  >Company size (number of people):
+                  <span class="opt">optional</span></label
+                >
+                <select id="company_size" name="company_size">
+                  <option value="">Select an option</option>
+                  <option value="Just me">Just me</option>
+                  <option value="2 to 10">2 to 10</option>
+                  <option value="11 to 50">11 to 50</option>
+                  <option value="51 to 200">51 to 200</option>
+                  <option value="200+">200+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="funding_stage"
+                  >Funding stage: <span class="opt">optional</span></label
+                >
+                <select id="funding_stage" name="funding_stage">
+                  <option value="">Select an option</option>
+                  <option value="Bootstrapped (founder money or revenue only)">
+                    Bootstrapped (founder money or revenue only)
+                  </option>
+                  <option value="Friends, family or angels">
+                    Friends, family or angels
+                  </option>
+                  <option value="Pre-seed">Pre-seed</option>
+                  <option value="Seed">Seed</option>
+                  <option value="Series A">Series A</option>
+                  <option value="Series B+">Series B+</option>
+                  <option value="Grant-funded">Grant-funded</option>
+                  <option value="Token raise">Token raise</option>
+                  <option value="Profitable, not raising">
+                    Profitable, not raising
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="last_round"
+                  >Amount raised in last round:
+                  <span class="opt">optional</span></label
+                >
+                <select id="last_round" name="last_round">
+                  <option value="">Select an option</option>
+                  <option value="Under $500K">Under $500K</option>
+                  <option value="$500K to $2M">$500K to $2M</option>
+                  <option value="$2M to $10M">$2M to $10M</option>
+                  <option value="$10M+">$10M+</option>
+                  <option value="No raise">No raise</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="arr"
+                  >Annual recurring revenue (ARR):
+                  <span class="opt">optional</span></label
+                >
+                <select id="arr" name="arr">
+                  <option value="">Select an option</option>
+                  <option value="Pre-revenue">Pre-revenue</option>
+                  <option value="Under $250K">Under $250K</option>
+                  <option value="$250K to $1M">$250K to $1M</option>
+                  <option value="$1M to $5M">$1M to $5M</option>
+                  <option value="$5M+">$5M+</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="raising"
+                  >Are you currently raising?
+                  <span class="opt">optional</span></label
+                >
+                <select id="raising" name="raising">
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="In the next 6 months">
+                    In the next 6 months
+                  </option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="runway"
+                  >Runway: <span class="opt">optional</span></label
+                >
+                <select id="runway" name="runway">
+                  <option value="">Select an option</option>
+                  <option value="Under 6 months">Under 6 months</option>
+                  <option value="6 to 12 months">6 to 12 months</option>
+                  <option value="12+ months">12+ months</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="signoff"
+                  >Who signs off on bringing us in?
+                  <span class="opt">optional</span></label
+                >
+                <select id="signoff" name="signoff">
+                  <option value="">Select an option</option>
+                  <option value="Me">Me</option>
+                  <option value="Co-founder">Co-founder</option>
+                  <option value="Board">Board</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="deck_link">Link to your deck (optional)</label>
+                <input
+                  id="deck_link"
+                  name="deck_link"
+                  type="text"
+                  maxlength="500"
+                />
+              </div>
+            </section>
 
             <fieldset>
               <legend>Timing <span class="opt">optional</span></legend>
@@ -1446,6 +1596,20 @@
               form_url: location.href,
               submitted_at: new Date().toISOString(),
             };
+
+            if (v === "project" || v === "partnership") {
+              payload.qualification = {
+                why_now: val("why_now"),
+                company_size: val("company_size"),
+                funding_stage: val("funding_stage"),
+                last_round: val("last_round"),
+                arr: val("arr"),
+                raising: val("raising"),
+                runway: val("runway"),
+                signoff: val("signoff"),
+                deck_link: val("deck_link"),
+              };
+            }
 
             // Only the answers that belong to the chosen path are sent.
             if (v === "project") {
