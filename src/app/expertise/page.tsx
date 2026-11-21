@@ -1,3 +1,4 @@
+import { advisoryPractices } from "@/lib/advisory-practices";
 import Link from "next/link";
 import type { Metadata } from "next";
 import JsonLd, {
@@ -9,7 +10,7 @@ import { getPageSeo, withSeoOverrides } from "@/lib/sanity/seo";
 const FALLBACK_METADATA: Metadata = {
   title: "Expertise",
   description:
-    "Five practices. One mission: transparency, skin in the game, and principals who execute.",
+    "Six practices. One mission: transparency, skin in the game, and principals who execute.",
   keywords: [
     "RampRate practices",
     "enterprise IT sourcing",
@@ -23,7 +24,7 @@ const FALLBACK_METADATA: Metadata = {
   openGraph: {
     title: "Expertise",
     description:
-      "Five practices. One mission: transparency, skin in the game, and principals who execute.",
+      "Six practices. One mission: transparency, skin in the game, and principals who execute.",
     url: "https://ramprate.com/expertise",
     type: "website",
     images: ["/og.png"],
@@ -32,7 +33,7 @@ const FALLBACK_METADATA: Metadata = {
     card: "summary_large_image",
     title: "Expertise",
     description:
-      "Five practices. One mission: transparency, skin in the game, and principals who execute.",
+      "Six practices. One mission: transparency, skin in the game, and principals who execute.",
     images: ["/og.png"],
   },
 };
@@ -42,50 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return withSeoOverrides(FALLBACK_METADATA, data?.seo);
 }
 
-const practices = [
-  {
-    name: "RampRate",
-    tagline: "Enterprise IT Sourcing",
-    desc: "150K+ data points. 350+ suppliers. 80 countries. We benchmark every contract against real transaction intelligence - not theory. $10B+ in enterprise decisions transacted.",
-    color: "oklch(0.82 0.15 75)",
-    href: "/sourcing",
-    stats: ["$10B+ Transacted", "150K+ Data Points", "350+ Suppliers"],
-  },
-  {
-    name: "Syzygy",
-    tagline: "Growth Strategy for Founders",
-    desc: "GTM acceleration, revenue architecture, and strategic introductions for growth-stage companies. We don't advise from the sidelines - we execute with you daily.",
-    color: "oklch(0.65 0.2 150)",
-    href: "/growth",
-    stats: ["99% Intro-to-Contract", "4+ Year Engagements", "US Market Entry"],
-  },
-  {
-    name: "Stratum",
-    tagline: "Web3 & Blockchain Advisory",
-    desc: "Token design, DAO governance, decentralized infrastructure. From protocol architecture to enterprise adoption - we bridge Web3 and the Fortune 500.",
-    color: "oklch(0.6 0.2 280)",
-    href: "/web3",
-    stats: ["Token Design", "DAO Governance", "Enterprise Web3"],
-  },
-  {
-    name: "ImpactSoul",
-    tagline: "Impact & Regenerative Consulting",
-    desc: "ESG strategy, B Corp certification, grant management, and asset tokenization for regenerative projects. Technology as a delivery mechanism for social and environmental impact.",
-    color: "oklch(0.7 0.15 30)",
-    href: "/impactsoul",
-    stats: ["B Corp Certified", "$3M+ Grants", "Regenerative Focus"],
-  },
-  {
-    name: "Torque",
-    tagline:
-      "Sourcing the Counsel and Leverage You Need, Pre-Litigation or in Suit",
-    desc: "Sourcing and coordinating the legal and financial specialists high-stakes disputes require - equity disputes, stalled claims, discovery windfalls, and asset protection. 25 years and $10B+ in enterprise decisions.",
-    color: "oklch(0.52 0.12 70)",
-    href: "/torque",
-    stats: ["25 Years", "$10B+ Transacted", "B Corp Certified"],
-  },
-];
-
 export default function ExpertisePage() {
   return (
     <>
@@ -93,7 +50,7 @@ export default function ExpertisePage() {
         data={serviceJsonLd({
           name: "RampRate Advisory Practices",
           description:
-            "Enterprise IT sourcing, growth strategy, Web3 advisory, impact consulting, and litigation counsel sourcing (Torque) - independent advisory with transparency, skin in the game, and principals who execute.",
+            "Enterprise IT sourcing, growth strategy, Web3 advisory, health supplier qualification, impact consulting, and litigation counsel sourcing (Torque) - independent advisory with transparency, skin in the game, and principals who execute.",
           url: "https://ramprate.com/expertise",
           serviceType: "IT and business advisory",
         })}
@@ -118,20 +75,20 @@ export default function ExpertisePage() {
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-4xl">
-            Five Brands. <span className="text-amber">One Mission.</span>
+            Six ways to move a decision forward
           </h1>
 
           <p className="font-body mt-6 text-base sm:text-lg leading-relaxed max-w-2xl text-white/50">
-            Each practice serves a different market with the same values:
-            transparency, skin in the game, and principals who execute.
+            Choose the decision closest to yours. A RampRate principal will help
+            you find the right practice or bring several together.
           </p>
         </div>
       </section>
 
       {/* Practice Cards */}
-      <section className="py-24 bg-[#0d1117]">
+      <section className="py-24 bg-dark">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-12">
-          {practices.map((p) => (
+          {advisoryPractices.map((p) => (
             <div
               key={p.name}
               className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/2"
@@ -139,38 +96,38 @@ export default function ExpertisePage() {
               {/* Colored left border accent */}
               <div
                 className="absolute top-0 left-0 w-1 h-full"
-                style={{ backgroundColor: p.color }}
+                style={{ backgroundColor: p.darkSectionAccent }}
               />
 
               <div className="p-8 sm:p-10">
                 {/* Tagline */}
                 <p
                   className="font-mono text-xs uppercase mb-2 tracking-[0.2em]"
-                  style={{ color: p.color }}
+                  style={{ color: p.darkSectionAccent }}
                 >
-                  {p.tagline}
+                  {p.name}
                 </p>
 
                 {/* Name */}
                 <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
-                  {p.name}
+                  {p.decision}
                 </h2>
 
                 {/* Description */}
                 <p className="font-body leading-relaxed max-w-2xl mb-6 text-white/60">
-                  {p.desc}
+                  {p.description}
                 </p>
 
                 {/* Stats pills */}
                 <div className="flex flex-wrap gap-3 mb-6">
-                  {p.stats.map((s) => (
+                  {p.topics.map((s) => (
                     <span
                       key={s}
                       className="font-mono px-3 py-1.5 rounded-full text-xs font-medium"
                       style={{
-                        border: `1px solid color-mix(in oklch, ${p.color} 30%, transparent)`,
-                        color: p.color,
-                        backgroundColor: `color-mix(in oklch, ${p.color} 8%, transparent)`,
+                        border: `1px solid color-mix(in oklch, ${p.darkSectionAccent} 30%, transparent)`,
+                        color: p.darkSectionAccent,
+                        backgroundColor: `color-mix(in oklch, ${p.darkSectionAccent} 8%, transparent)`,
                       }}
                     >
                       {s}
@@ -182,9 +139,9 @@ export default function ExpertisePage() {
                 <Link
                   href={p.href}
                   className="font-body inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 text-[oklch(0.15_0.02_75)]"
-                  style={{ backgroundColor: p.color }}
+                  style={{ backgroundColor: p.darkSectionAccent }}
                 >
-                  Learn More
+                  Explore {p.name}
                   <svg
                     width="14"
                     height="14"
@@ -205,7 +162,7 @@ export default function ExpertisePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-[#0a0f1a]">
+      <section className="py-24 bg-dark">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-6">
             Not Sure Which Practice Fits?
