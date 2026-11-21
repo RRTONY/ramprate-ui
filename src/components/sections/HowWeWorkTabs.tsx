@@ -4,10 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 
 // ── Shared style tokens ───────────────────────────────────────────────────────
-const sectionLabel = "font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber";
-const h2Class = "font-display text-3xl sm:text-4xl font-bold leading-tight text-white";
+const sectionLabel =
+  "font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber";
+const h2Class =
+  "font-display text-3xl sm:text-4xl font-bold leading-tight text-white";
 const bodyText = "font-body text-sm sm:text-base leading-relaxed";
-const monoLabel = "font-mono text-[10px] font-semibold uppercase tracking-widest";
+const monoLabel =
+  "font-mono text-[10px] font-semibold uppercase tracking-widest";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const steps = [
@@ -98,16 +101,16 @@ const links = [
     external: false,
   },
   {
-    label: "How We Work",
+    label: "Our practices",
     href: "/expertise",
-    desc: "Compensation model, delivery practices",
+    desc: "Find the right team for your decision",
     external: false,
   },
   {
-    label: "B Corp Certification",
-    href: "/ramprate-is-b-certified-corp-the-accolade-is-a-clear-sign-our-business-is-on-the-right-track",
-    desc: "Verified transparency - top 4,000 globally",
-    external: false,
+    label: "B Lab profile",
+    href: "https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/",
+    desc: "Certification dates and impact scores",
+    external: true,
   },
   {
     label: "Client Proof",
@@ -207,282 +210,282 @@ export default function HowWeWorkTabs() {
       </div>
 
       {/* ── Process Tab ── */}
-      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "process" ? "" : "hidden"}`}>
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-3xl mx-auto">
-              {steps.map((step, i) => {
-                const isOpen = openStep === i;
-                return (
-                  <div
-                    key={i}
-                    className={`border-b rounded-lg mb-1 transition-colors border-white/7 ${
-                      isOpen ? "bg-gold/6" : "bg-white/2"
-                    }`}
+      <section
+        className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "process" ? "" : "hidden"}`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto">
+            {steps.map((step, i) => {
+              const isOpen = openStep === i;
+              return (
+                <div
+                  key={i}
+                  className={`border-b rounded-lg mb-1 transition-colors border-white/7 ${
+                    isOpen ? "bg-gold/6" : "bg-white/2"
+                  }`}
+                >
+                  <button
+                    onClick={() => setOpenStep(isOpen ? null : i)}
+                    className="w-full text-left py-5 sm:py-6 px-4 flex items-center gap-5 group"
                   >
-                    <button
-                      onClick={() => setOpenStep(isOpen ? null : i)}
-                      className="w-full text-left py-5 sm:py-6 px-4 flex items-center gap-5 group"
-                    >
-                      <span className={`${monoLabel} shrink-0 text-amber`}>
-                        {step.num}
-                      </span>
-                      <div className="flex-1 flex items-center justify-between gap-4">
-                        <h3 className="font-display text-base sm:text-lg font-semibold text-white group-hover:text-amber transition-colors">
-                          {step.title}
-                        </h3>
-                        {/* Prominent expand indicator */}
-                        <span
-                          className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200 ${
-                            isOpen
-                              ? "border-amber bg-gold/15 text-amber rotate-45"
-                              : "border-white/25 bg-white/5 text-white/60 rotate-0"
-                          }`}
+                    <span className={`${monoLabel} shrink-0 text-amber`}>
+                      {step.num}
+                    </span>
+                    <div className="flex-1 flex items-center justify-between gap-4">
+                      <h3 className="font-display text-base sm:text-lg font-semibold text-white group-hover:text-amber transition-colors">
+                        {step.title}
+                      </h3>
+                      {/* Prominent expand indicator */}
+                      <span
+                        className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-200 ${
+                          isOpen
+                            ? "border-amber bg-gold/15 text-amber rotate-45"
+                            : "border-white/25 bg-white/5 text-white/60 rotate-0"
+                        }`}
+                      >
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         >
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                          </svg>
-                        </span>
-                      </div>
-                    </button>
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </span>
+                    </div>
+                  </button>
 
-                    {isOpen && (
-                      <p className={`${bodyText} pb-6 px-4 pl-14 text-white/50`}>
-                        {step.body}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
+                  {isOpen && (
+                    <p className={`${bodyText} pb-6 px-4 pl-14 text-white/50`}>
+                      {step.body}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
 
-              {/* Pull quote */}
-              <div className="mt-10 p-6 sm:p-8 rounded-lg border-l-4 bg-gold/6 border-l-amber">
-                <p className="font-display text-lg sm:text-xl font-bold text-white leading-snug mb-3">
-                  &ldquo;We don&apos;t charge upfront. We eat what we
-                  hunt.&rdquo;
-                </p>
-                <p className={`${bodyText} text-white/45`}>
-                  Our fee is tied to your deal closing. In 25 years we have
-                  never invoiced and disappeared. That alignment is the whole
-                  model.
-                </p>
-              </div>
+            {/* Pull quote */}
+            <div className="mt-10 p-6 sm:p-8 rounded-lg border-l-4 bg-gold/6 border-l-amber">
+              <p className="font-display text-lg sm:text-xl font-bold text-white leading-snug mb-3">
+                When is a fee due?
+              </p>
+              <p className={`${bodyText} text-white/45`}>
+                For a closing fee, payment depends on the deal closing. Founder
+                advisory can include a retainer, equity or revenue commission.
+                Torque may require upfront funding for specialist work. We agree
+                the terms for your engagement in writing.
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* ── Fee Model Tab ── */}
-      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "model" ? "" : "hidden"}`}>
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-3xl mx-auto">
-              <p className={`${sectionLabel} mb-3`}>
-                Fee Structure
-              </p>
-              <h2 className={`${h2Class} mb-3`}>
-                Full Transparency. By Design.
-              </h2>
-              <p className={`${bodyText} mb-10 text-white/40`}>
-                Prepared for attorney review. Every party in every deal knows
-                exactly who pays us, how much, and how it flows.
-              </p>
+      <section
+        className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "model" ? "" : "hidden"}`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <p className={`${sectionLabel} mb-3`}>Fee Structure</p>
+            <h2 className={`${h2Class} mb-3`}>Full Transparency. By Design.</h2>
+            <p className={`${bodyText} mb-10 text-white/40`}>
+              Prepared for attorney review. Every party in every deal knows
+              exactly who pays us, how much, and how it flows.
+            </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                {feeItems.map((item, i) => (
-                  <div
-                    key={i}
-                    className={`rounded-lg p-6 sm:p-7 flex flex-col gap-4 border ${
-                      item.primary
-                        ? "bg-gold/6 border-gold/25"
-                        : "bg-white/3 border-white/7"
-                    }`}
-                  >
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-mono text-5xl sm:text-6xl font-bold leading-none text-amber">
-                        {item.pct}
-                      </span>
-                      <span className={`${monoLabel} text-white/30`}>
-                        of engagements
-                      </span>
-                    </div>
-                    <h3 className="font-display text-base sm:text-lg font-semibold text-white">
-                      {item.title}
-                    </h3>
-                    <p className="font-body text-sm leading-relaxed text-white/45">
-                      {item.body}
-                    </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+              {feeItems.map((item, i) => (
+                <div
+                  key={i}
+                  className={`rounded-lg p-6 sm:p-7 flex flex-col gap-4 border ${
+                    item.primary
+                      ? "bg-gold/6 border-gold/25"
+                      : "bg-white/3 border-white/7"
+                  }`}
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-5xl sm:text-6xl font-bold leading-none text-amber">
+                      {item.pct}
+                    </span>
+                    <span className={`${monoLabel} text-white/30`}>
+                      of engagements
+                    </span>
                   </div>
-                ))}
-              </div>
-
-              {/* Constant note */}
-              <div className="rounded-lg p-5 sm:p-6 border mb-5 bg-gold/5 border-gold/20">
-                <p className="font-display text-sm font-semibold text-white mb-2">
-                  The Constant in Both Models
-                </p>
-                <p className="font-body text-sm leading-relaxed text-white/45">
-                  Regardless of structure, every party in every deal - including
-                  brokers and channel partners - knows exactly who is paying
-                  RampRate, how much, and how it flows into the margin. Verified
-                  by our B Corp certification for 25 years.
-                </p>
-              </div>
-
-              {/* B Corp badge */}
-              <div className="flex items-center gap-4 p-5 rounded-lg border border-white/7">
-                <div className="w-11 h-11 rounded-full border-2 flex items-center justify-center shrink-0 border-amber">
-                  <span className="font-display text-base font-bold text-amber">
-                    B
-                  </span>
-                </div>
-                <div>
-                  <p className={`${monoLabel} text-white mb-0.5`}>
-                    B Lab certified
-                  </p>
-                  <p className="font-body text-xs leading-relaxed text-white/35">
-                    Top 4,000 globally out of 100,000+ applicants. Verified
-                    social and environmental standards.
+                  <h3 className="font-display text-base sm:text-lg font-semibold text-white">
+                    {item.title}
+                  </h3>
+                  <p className="font-body text-sm leading-relaxed text-white/45">
+                    {item.body}
                   </p>
                 </div>
+              ))}
+            </div>
+
+            {/* Constant note */}
+            <div className="rounded-lg p-5 sm:p-6 border mb-5 bg-gold/5 border-gold/20">
+              <p className="font-display text-sm font-semibold text-white mb-2">
+                The Constant in Both Models
+              </p>
+              <p className="font-body text-sm leading-relaxed text-white/45">
+                Regardless of structure, every party in every deal - including
+                brokers and channel partners - knows exactly who is paying
+                RampRate, how much, and how it flows into the margin.
+              </p>
+            </div>
+
+            {/* B Corp badge */}
+            <div className="flex items-center gap-4 p-5 rounded-lg border border-white/7">
+              <div className="w-11 h-11 rounded-full border-2 flex items-center justify-center shrink-0 border-amber">
+                <span className="font-display text-base font-bold text-amber">
+                  B
+                </span>
+              </div>
+              <div>
+                <p className={`${monoLabel} text-white mb-0.5`}>
+                  B Lab certified
+                </p>
+                <p className="font-body text-xs leading-relaxed text-white/35">
+                  B Lab lists RampRate as certified since December 2022, with an
+                  overall B Impact Score of 115.6.{" "}
+                  <a
+                    href="https://www.bcorporation.net/en-us/find-a-b-corp/company/ramp-rate-a-team-inc/"
+                    className="underline underline-offset-4"
+                  >
+                    View the B Lab record
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* ── Clients Tab ── */}
-      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "clients" ? "" : "hidden"}`}>
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-3xl mx-auto">
-              <p className={`${sectionLabel} mb-3`}>
-                Client Sectors
-              </p>
-              <h2 className={`${h2Class} mb-3`}>
-                250+ Enterprise Clients
-              </h2>
-              <p className={`${bodyText} mb-10 text-white/40`}>
-                $10B+ in enterprise decisions structured across 50+ countries
-                over 25 years.
-              </p>
+      <section
+        className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "clients" ? "" : "hidden"}`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <p className={`${sectionLabel} mb-3`}>Client Sectors</p>
+            <h2 className={`${h2Class} mb-3`}>250+ Enterprise Clients</h2>
+            <p className={`${bodyText} mb-10 text-white/40`}>
+              $10B+ in enterprise decisions structured across 50+ countries over
+              25 years.
+            </p>
 
-              <div className="flex flex-col gap-3">
-                {clients.map((c, i) => (
-                  <div
-                    key={i}
-                    className="rounded-lg p-5 border border-l-4 bg-white/3 border-white/7 border-l-amber"
-                  >
-                    <p className={`${monoLabel} mb-1.5`}>
-                      {c.sector}
-                    </p>
-                    <p className="font-body text-sm font-medium text-white leading-relaxed">
-                      {c.names}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="font-body mt-5 rounded-lg p-5 text-sm leading-relaxed border bg-gold/5 border-gold/15 text-white/45">
-                Health and wellness is not new territory for RampRate. Our
-                dedicated Health and Wellness practice covers health tech,
-                psychedelics, natural wellness, and healthcare infrastructure -
-                with an LP position in{" "}
-                <a
-                  href="https://wavemakerhealthandwellness.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-semibold hover:opacity-80 transition-opacity text-amber"
+            <div className="flex flex-col gap-3">
+              {clients.map((c, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg p-5 border border-l-4 bg-white/3 border-white/7 border-l-amber"
                 >
-                  Wavemaker Three-Sixty Health
-                </a>
-                .
-              </div>
-
-              <Link
-                href="/proof"
-                className="font-body mt-5 flex items-center justify-center gap-2 py-4 rounded-md text-sm font-semibold transition-opacity hover:opacity-90 bg-amber text-[oklch(0.18_0.03_50)]"
-              >
-                Full Client List + Case Studies
-                <ArrowRight />
-              </Link>
+                  <p className={`${monoLabel} mb-1.5`}>{c.sector}</p>
+                  <p className="font-body text-sm font-medium text-white leading-relaxed">
+                    {c.names}
+                  </p>
+                </div>
+              ))}
             </div>
+
+            <div className="font-body mt-5 rounded-lg p-5 text-sm leading-relaxed border bg-gold/5 border-gold/15 text-white/45">
+              Health and wellness is not new territory for RampRate. Our
+              dedicated Health and Wellness practice covers health tech,
+              psychedelics, natural wellness, and healthcare infrastructure -
+              with an LP position in{" "}
+              <a
+                href="https://wavemakerhealthandwellness.com"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold hover:opacity-80 transition-opacity text-amber"
+              >
+                Wavemaker Three-Sixty Health
+              </a>
+              .
+            </div>
+
+            <Link
+              href="/proof"
+              className="font-body mt-5 flex items-center justify-center gap-2 py-4 rounded-md text-sm font-semibold transition-opacity hover:opacity-90 bg-amber text-[oklch(0.18_0.03_50)]"
+            >
+              Full Client List + Case Studies
+              <ArrowRight />
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* ── Links Tab ── */}
-      <section className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "links" ? "" : "hidden"}`}>
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-3xl mx-auto">
-              <p className={`${sectionLabel} mb-3`}>
-                Reference Links
-              </p>
-              <h2 className={`${h2Class} mb-3`}>
-                Source Material
-              </h2>
-              <p className={`${bodyText} mb-10 text-white/40`}>
-                All source material for attorney review. Each link is a live
-                public URL.
-              </p>
+      <section
+        className={`py-16 sm:py-20 px-5 sm:px-8 bg-dark ${activeTab === "links" ? "" : "hidden"}`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <p className={`${sectionLabel} mb-3`}>Reference Links</p>
+            <h2 className={`${h2Class} mb-3`}>Source Material</h2>
+            <p className={`${bodyText} mb-10 text-white/40`}>
+              All source material for attorney review. Each link is a live
+              public URL.
+            </p>
 
-              <div className="flex flex-col gap-3">
-                {links.map((link, i) => {
-                  const inner = (
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="font-display text-sm font-semibold text-white mb-1 group-hover:text-amber transition-colors">
-                          {link.label}
-                        </p>
-                        <p className="font-body text-xs leading-relaxed text-white/35">
-                          {link.desc}
-                        </p>
-                      </div>
-                      <span className="shrink-0 mt-0.5 text-white/20">
-                        {link.external ? <ExternalIcon /> : <ArrowRight />}
-                      </span>
+            <div className="flex flex-col gap-3">
+              {links.map((link, i) => {
+                const inner = (
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="font-display text-sm font-semibold text-white mb-1 group-hover:text-amber transition-colors">
+                        {link.label}
+                      </p>
+                      <p className="font-body text-xs leading-relaxed text-white/35">
+                        {link.desc}
+                      </p>
                     </div>
-                  );
+                    <span className="shrink-0 mt-0.5 text-white/20">
+                      {link.external ? <ExternalIcon /> : <ArrowRight />}
+                    </span>
+                  </div>
+                );
 
-                  const cardClass =
-                    "rounded-lg p-5 border block group transition-colors hover:border-gold/30 bg-white/3 border-white/7";
+                const cardClass =
+                  "rounded-lg p-5 border block group transition-colors hover:border-gold/30 bg-white/3 border-white/7";
 
-                  return link.external ? (
-                    <a
-                      key={i}
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={cardClass}
-                    >
-                      {inner}
-                    </a>
-                  ) : (
-                    <Link key={i} href={link.href} className={cardClass}>
-                      {inner}
-                    </Link>
-                  );
-                })}
-              </div>
+                return link.external ? (
+                  <a
+                    key={i}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cardClass}
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <Link key={i} href={link.href} className={cardClass}>
+                    {inner}
+                  </Link>
+                );
+              })}
+            </div>
 
-              <div className="font-body mt-5 rounded-lg p-5 border text-xs leading-relaxed border-white/7 text-white/35">
-                This document was prepared by RampRate for the purpose of
-                explaining our engagement model, fee structure, and client track
-                record. For legal questions contact:{" "}
-                <a
-                  href="mailto:josh@ramprate.com"
-                  className="font-semibold hover:opacity-80 transition-opacity text-amber"
-                >
-                  josh@ramprate.com
-                </a>
-              </div>
+            <div className="font-body mt-5 rounded-lg p-5 border text-xs leading-relaxed border-white/7 text-white/35">
+              This document was prepared by RampRate for the purpose of
+              explaining our engagement model, fee structure, and client track
+              record. For legal questions contact:{" "}
+              <a
+                href="mailto:josh@ramprate.com"
+                className="font-semibold hover:opacity-80 transition-opacity text-amber"
+              >
+                josh@ramprate.com
+              </a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
     </div>
   );
 }

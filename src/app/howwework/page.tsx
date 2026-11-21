@@ -1,53 +1,60 @@
-import type {Metadata} from 'next'
-import Link from 'next/link'
-import CtaSection from '@/components/sections/CtaSection'
-import HowWeWorkTabs from '@/components/sections/HowWeWorkTabs'
-import JsonLd, {breadcrumbJsonLd} from '@/components/shared/JsonLd'
+import type { Metadata } from "next";
+import Link from "next/link";
+import CtaSection from "@/components/sections/CtaSection";
+import HowWeWorkTabs from "@/components/sections/HowWeWorkTabs";
+import JsonLd, { breadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: 'How We Work',
+  title: "How We Work",
   description:
     "RampRate's engagement model: exclusive mandates, one-party fees, and fully transparent deal structure. 25 years, $10B+ in decisions structured, 250+ enterprise clients.",
   keywords: [
-    'IT sourcing advisory',
-    'exclusive mandate',
-    'fee transparency',
-    'enterprise advisory',
-    'RampRate process',
-    'B Corp advisory',
-    'deal structure',
+    "IT sourcing advisory",
+    "exclusive mandate",
+    "fee transparency",
+    "enterprise advisory",
+    "RampRate process",
+    "B Corp advisory",
+    "deal structure",
   ],
-  alternates: {canonical: 'https://ramprate.com/howwework'},
+  alternates: { canonical: "https://ramprate.com/howwework" },
   openGraph: {
-    title: 'How We Work | RampRate',
-    description: '25 years. $10B+ in decisions structured. One model built on exclusivity, transparency, and win-win outcomes.',
-    url: 'https://ramprate.com/howwework',
-    images: ['/og.png'],
+    title: "How We Work | RampRate",
+    description:
+      "25 years. $10B+ in decisions structured. One model built on exclusivity, transparency, and win-win outcomes.",
+    url: "https://ramprate.com/howwework",
+    images: ["/og.png"],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'How We Work | RampRate',
-    description: '25 years. $10B+ in decisions structured. One model built on exclusivity, transparency, and win-win outcomes.',
-    images: ['/og.png'],
+    card: "summary_large_image",
+    title: "How We Work | RampRate",
+    description:
+      "25 years. $10B+ in decisions structured. One model built on exclusivity, transparency, and win-win outcomes.",
+    images: ["/og.png"],
   },
-}
+};
 
 const heroStats = [
-  {value: '25', label: 'Years in Business'},
-  {value: '$10B+', label: 'Decisions Structured'},
-  {value: '250+', label: 'Enterprise Clients'},
-  {value: '50+', label: 'Countries Served'},
-]
+  { value: "25", label: "Years in Business" },
+  { value: "$10B+", label: "Decisions Structured" },
+  { value: "250+", label: "Enterprise Clients" },
+  { value: "50+", label: "Countries Served" },
+];
 
-const badges = ['Buyer Exclusive', 'One-Party Fee', 'Apples-to-Apples', 'B Corp Verified']
+const badges = [
+  "Exclusive mandates",
+  "Disclosed fees",
+  "Comparable bids",
+  "B Lab certified",
+];
 
 export default function HowWeWorkPage() {
   return (
     <div className="bg-dark">
       <JsonLd
         data={breadcrumbJsonLd([
-          {name: 'Home', url: 'https://ramprate.com'},
-          {name: 'How We Work', url: 'https://ramprate.com/howwework'},
+          { name: "Home", url: "https://ramprate.com" },
+          { name: "How We Work", url: "https://ramprate.com/howwework" },
         ])}
       />
 
@@ -66,20 +73,19 @@ export default function HowWeWorkPage() {
 
           {/* Heading */}
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white max-w-3xl mb-6">
-            How We{' '}
-            <span className="text-amber">Work.</span>
+            How We <span className="text-amber">Work.</span>
           </h1>
 
           {/* Body */}
           <p className="font-body text-base sm:text-lg leading-relaxed max-w-2xl mb-8 text-white/50">
-            25 years. $10B+ in decisions structured. 250+ enterprise clients.
-            One model built on exclusivity, transparency, and win-win outcomes.
-            Prepared for attorney review.
+            For a sourcing or transaction mandate, we agree who we represent,
+            compare bids on the same terms, and disclose who pays. Founder
+            advisory and critical issue work have their own fee arrangements.
           </p>
 
           {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-12">
-            {badges.map(badge => (
+            {badges.map((badge) => (
               <span
                 key={badge}
                 className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/30 bg-gold/8 text-amber"
@@ -91,7 +97,7 @@ export default function HowWeWorkPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-2xl mb-10">
-            {heroStats.map(stat => (
+            {heroStats.map((stat) => (
               <div key={stat.label}>
                 <div className="font-mono text-2xl sm:text-3xl font-bold text-amber">
                   {stat.value}
@@ -110,8 +116,17 @@ export default function HowWeWorkPage() {
               className="font-body inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-sm font-semibold transition-all hover:opacity-90 bg-amber text-[oklch(0.18_0.03_50)]"
             >
               Start a Conversation
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
             <Link
@@ -130,11 +145,10 @@ export default function HowWeWorkPage() {
       {/* ── CTA ── */}
       <CtaSection
         heading="Ready to Work With Us?"
-        body="No upfront fees. We eat what we hunt. Let's structure a deal built on exclusivity, transparency, and real alignment."
+        body="Tell us about the decision and the timing. We will explain the scope, the fee and what triggers payment."
         buttonText="Start a Conversation"
         buttonLink="/contact"
       />
-
     </div>
-  )
+  );
 }

@@ -141,12 +141,12 @@ export default async function ContactPage() {
           >
             <div className="rounded-2xl bg-ed-sage p-6 sm:p-8 border-l-4 border-ed-coral">
               <h2 className="font-display text-xl sm:text-2xl font-bold">
-                The RampRate Guarantee
+                Enterprise sourcing guarantee
               </h2>
               <p className="font-body mt-3 text-base leading-relaxed text-ed-ink/85">
-                The audit is always free. If we don&apos;t deliver 300%+ ROI on
-                our sourcing engagements, you don&apos;t pay. We put skin in the
-                game because we believe in what we do.
+                The sourcing audit is free. If a sourcing engagement delivers
+                less than 300% ROI, you don’t pay our sourcing fee. Ask your
+                principal how the benchmark and fee apply to your contract.
               </p>
             </div>
 
@@ -228,7 +228,7 @@ export default async function ContactPage() {
             <p className="font-body text-base text-ed-muted px-1">
               Not ready to talk?{" "}
               <Link
-                href="/process"
+                href="/howwework"
                 className="font-semibold text-ed-violet underline underline-offset-4"
               >
                 See how we work
