@@ -11,6 +11,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import type { CSSProperties } from "react";
+import { advisoryPractices } from "@/lib/advisory-practices";
 import PracticeIcon from "./PracticeIcon";
 
 // Below-the-fold, interactive-only sections - split into their own JS chunks
@@ -23,25 +24,31 @@ const Timeline = dynamic(() => import("./Timeline"));
 /* ── SELECTED ENGAGEMENTS ── */
 const engagements = [
   {
-    label: "Paramount",
-    stats: "16 years of eliminating risk",
-    detail:
-      "From the Viacom/CBS split in 2005 to reuniting in 2020, we were there. From March Madness in 2006 to the Super Bowl in 2019, groundbreaking events ran through us. When failure isn't an option, we're on call.",
-    accent: "oklch(0.6 0.14 40)",
-  },
-  {
     label: "eBay",
-    stats: "$50M in savings while strengthening relationships",
+    stats: "27% savings and a stronger supplier relationship",
     detail:
-      "Global data center optimization. We designed the impact dashboard behind it. Millions in ongoing value - and supplier relationships stronger than before.",
+      "Paul Santana, eBay’s manager of data center operations, reported both outcomes after RampRate helped with the company’s infrastructure contracts.",
+    action: "Read the buyer’s account",
+    href: "/proof#voices",
     accent: "oklch(0.55 0.16 250)",
   },
   {
     label: "NOIA",
-    stats: "US market penetration in months",
+    stats: "Four years helping an infrastructure founder enter the US market",
     detail:
-      "Four-plus years of daily advisory. Growth accelerated by years. We recruited 80% of the advisory board and 80% of the strategic investors.",
+      "RampRate worked with NOIA on enterprise partnerships and recruited advisors and strategic investors as the company entered the US.",
+    action: "Explore founder advisory",
+    href: "/growth",
     accent: "oklch(0.55 0.13 160)",
+  },
+  {
+    label: "XPRIZE",
+    stats: "More than $3 million in grant funding managed",
+    detail:
+      "RampRate helped organize how grant applications were reviewed and funding reached builders. The figure reflects funds managed for XPRIZE.",
+    action: "Read about the grant work",
+    href: "/proof#recent",
+    accent: "var(--rust)",
   },
 ];
 
@@ -100,7 +107,7 @@ const timeline = [
     event:
       "Peak crypto advisory demand. Guided 12+ token launches through regulatory minefields.",
   },
-  { year: "2018", event: "B Lab Certified. Syzygy Impact division launched." },
+  { year: "2018", event: "Syzygy Impact division launched." },
   {
     year: "2019",
     event:
@@ -115,7 +122,11 @@ const timeline = [
     event:
       "Deep advisory across stablecoin, custody, and tokenized fund infrastructure.",
   },
-  { year: "2022", event: "$3M+ grant funding managed for XPRIZE." },
+  {
+    year: "2022",
+    event:
+      "Managed $3M+ in grant funding for XPRIZE. B Lab certified in December.",
+  },
   {
     year: "2023",
     event: "ImpactSoul incubated. Consciousness-aligned capital framework.",
@@ -139,7 +150,10 @@ const operateSteps = [
     title: "Deep Research",
     desc: "$10B+ transaction intelligence. Million+ data points. 350+ suppliers across 80 countries. We forecast within 5-10% of outcome.",
     Icon: Database,
-    link: { label: "Our Process", href: "/process" },
+    link: {
+      label: "Explore the SPY Index",
+      href: "/service-provider-intelligence-index",
+    },
   },
   {
     num: "02",
@@ -151,67 +165,9 @@ const operateSteps = [
   {
     num: "03",
     title: "Relationship Activation",
-    desc: "25 years of enterprise trust. When we call, doors open. Not a pitch - a history. 99% of intros convert to contracts.",
+    desc: "We find the buyer, partner or specialist who can move the decision forward. Our principals prepare the introduction and stay involved through negotiation.",
     Icon: Users,
     link: { label: "See Results", href: "/proof" },
-  },
-];
-
-/* ── BRANDS ── */
-const brands = [
-  {
-    name: "Syzygy",
-    tag: "Founders",
-    description:
-      "Advisory built for founders navigating growth, fundraising, and the decisions that define a company's trajectory.",
-    href: "/growth",
-    iconKind: "syzygy" as const,
-    accentColor: "oklch(0.55 0.13 160)",
-  },
-  {
-    name: "Stratum",
-    tag: "Web3",
-    description:
-      "Web3 and blockchain-adjacent strategy for organizations building on decentralized infrastructure and rails.",
-    href: "/web3",
-    iconKind: "stratum" as const,
-    accentColor: "oklch(0.55 0.16 265)",
-  },
-  {
-    name: "Sourcing",
-    tag: "Enterprise IT",
-    description:
-      "IT infrastructure and enterprise sourcing advisory - cutting cost and risk out of technology procurement decisions.",
-    href: "/sourcing",
-    iconKind: "sourcing" as const,
-    accentColor: "var(--gold)",
-  },
-  {
-    name: "BioChain",
-    tag: "Bio-Sourcing",
-    description:
-      "Peptide and biologics supply chain sourcing - vetted suppliers, verified COAs, and chain-of-custody tracking on every shipment.",
-    href: "/biochain",
-    iconKind: "biochain" as const,
-    accentColor: "oklch(0.55 0.1 195)",
-  },
-  {
-    name: "ImpactSoul",
-    tag: "NGOs",
-    description:
-      "Impact-focused advisory for NGOs and mission-driven organizations building sustainable, fundable operating models.",
-    href: "/impactsoul",
-    iconKind: "impact" as const,
-    accentColor: "var(--rust)",
-  },
-  {
-    name: "Torque",
-    tag: "Executive",
-    description:
-      "Helping founders and execs resolve disputes and push back on bad-faith tactics without calling in outside lawyers.",
-    href: "/torque",
-    iconKind: "advisory" as const,
-    accentColor: "oklch(0.5 0.1 60)",
   },
 ];
 
@@ -246,24 +202,23 @@ export default function HomeContent() {
                       rel="noreferrer"
                       className="hover:text-rust transition-colors"
                     >
-                      B Lab Certified
+                      B Lab certified
                     </a>{" "}
-                    · Since 2000
+                    · Founded in 2000
                   </span>
                 </span>
               </div>
 
               <h1 className="font-display font-medium text-ink leading-[1.12] tracking-[-0.025em] text-balance text-[clamp(3rem,7vw,5.1rem)]">
-                Where Relationships
-                <br />
-                Become{" "}
-                <span className="whitespace-nowrap text-rust">Revenue.</span>
+                What’s the decision you can’t afford to{" "}
+                <span className="text-rust">get wrong?</span>
               </h1>
 
               <p className="font-body mt-8 text-lg sm:text-xl leading-[1.75] max-w-xl text-ink text-pretty">
-                We help founders grow their businesses and enterprise teams make
-                better technology decisions. Our work spans product strategy,
-                supplier selection, and contract negotiation.
+                RampRate helps you negotiate a better contract, land an
+                enterprise customer, or get a stalled deal moving. Our
+                principals bring the market evidence, get the right people to
+                the table, and stay through the negotiation.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -271,13 +226,13 @@ export default function HomeContent() {
                   href="/contact"
                   className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-all hover:bg-ink bg-rust text-white"
                 >
-                  Talk to our team <ArrowRight size={16} />
+                  Talk through a decision <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/proof"
                   className="font-body inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-semibold border border-ink/35 text-ink hover:bg-white/75 transition-all"
                 >
-                  View client results
+                  See client results
                 </Link>
               </div>
             </div>
@@ -294,9 +249,6 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ═══ CLIENT WALL ═══ */}
-      <ClientWall />
-
       {/* ═══ SELECTED ENGAGEMENTS ═══ */}
       <section className="section-warm py-24 sm:py-32">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -305,7 +257,7 @@ export default function HomeContent() {
               Selected Engagements
             </span>
             <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium text-ink">
-              Results, not promises.
+              What changed for our clients
             </h2>
           </div>
 
@@ -325,6 +277,13 @@ export default function HomeContent() {
                 <p className="font-body text-base leading-relaxed text-ink-mid">
                   {eng.detail}
                 </p>
+                <Link
+                  href={eng.href}
+                  className="font-body mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-rust underline underline-offset-4"
+                >
+                  {eng.action}
+                  <ArrowRight size={14} />
+                </Link>
               </div>
             ))}
           </div>
@@ -339,29 +298,22 @@ export default function HomeContent() {
               Our Practices
             </span>
             <h2 className="font-display text-4xl sm:text-5xl font-medium text-ink leading-tight">
-              Six practices.
-              <br />
-              One coalition.
+              Where do you need a hand?
             </h2>
             <p className="font-body mt-6 text-base sm:text-lg text-ink-mid">
-              One discipline - trust turned into revenue - applied across six
-              audiences. Each practice is purpose-built, but every one draws on
-              the same senior team.
+              Start with the decision in front of you. The same principals
+              connect the research, the specialists and the people who can act.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brands.map((brand, i) => (
+            {advisoryPractices.map((brand) => (
               <Link
                 key={brand.name}
                 href={brand.href}
                 className="group relative block rounded-xl border p-8 transition-all duration-300 bg-white border-black/5 hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:-translate-y-1"
                 style={{ "--accent": brand.accentColor } as CSSProperties}
               >
-                <span className="font-mono absolute top-8 right-8 text-[11px] tracking-[0.2em] text-ink-mid/60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
                 <div
                   className="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
                   style={{
@@ -378,10 +330,10 @@ export default function HomeContent() {
                   className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
                   style={{ color: brand.accentColor }}
                 >
-                  {brand.tag}
+                  {brand.name}
                 </p>
                 <h3 className="font-display text-xl font-bold text-ink mb-3">
-                  {brand.name}
+                  {brand.decision}
                 </h3>
                 <p className="font-body text-sm leading-relaxed mb-6 text-ink-mid">
                   {brand.description}
@@ -398,6 +350,8 @@ export default function HomeContent() {
           </div>
         </div>
       </section>
+
+      <ClientWall />
 
       {/* ═══ WHY WE'RE DIFFERENT ═══ */}
       <section className="section-warm py-24 sm:py-32">
@@ -445,24 +399,23 @@ export default function HomeContent() {
           </div>
 
           <p className="font-display mt-12 text-lg sm:text-xl font-bold text-center leading-relaxed text-ink">
-            You work with principals. No junior layering. No staffing pyramid.
-            <br className="hidden sm:block" />
-            The people on the testimonials are the people who serve you.
+            A RampRate principal leads the engagement and brings in the
+            specialists your decision requires.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/process"
+              href="/sourcing"
               className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all hover:brightness-110 bg-rust text-white"
             >
-              Take the Flow Circuit Assessment
+              Benchmark a technology contract
               <ArrowRight size={14} />
             </Link>
             <Link
               href="/process"
               className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-sm font-semibold transition-all border border-black/15 text-ink hover:bg-black/3"
             >
-              Find Your Me / Way / Our
+              Explore the founder growth process
               <ArrowRight size={14} />
             </Link>
           </div>
@@ -536,12 +489,11 @@ export default function HomeContent() {
                 Compensation
               </span>
               <h2 className="font-display mt-4 text-4xl sm:text-5xl font-medium tracking-tight text-ink">
-                We align compensation with value created.
+                How does RampRate charge?
               </h2>
               <p className="font-body mt-6 leading-relaxed text-ink-mid text-base sm:text-lg">
-                No retainers held hostage. No billable hours divorced from
-                results. We eat what we hunt - and we have a 25-year track
-                record to prove it.
+                Fees depend on the work. Before you engage us, we explain who
+                pays, what triggers a fee, and how we measure the outcome.
               </p>
             </div>
 
@@ -550,10 +502,11 @@ export default function HomeContent() {
                 <DollarSign size={20} className="shrink-0 mt-0.5 text-rust" />
                 <div>
                   <div className="font-display text-lg font-bold mb-1 text-ink">
-                    $15K-$50K/month
+                    Enterprise sourcing
                   </div>
                   <p className="font-body text-sm text-ink-mid">
-                    Depending on scope. Equity-forward available.
+                    The sourcing audit is free. Under our sourcing guarantee,
+                    you pay no fee if we do not deliver at least 300% ROI.
                   </p>
                 </div>
               </div>
@@ -561,10 +514,12 @@ export default function HomeContent() {
                 <Shield size={20} className="shrink-0 mt-0.5 text-rust" />
                 <div>
                   <div className="font-display text-lg font-bold mb-1 text-ink">
-                    Performance accountability
+                    Founder growth
                   </div>
                   <p className="font-body text-sm text-ink-mid">
-                    Clawbacks where appropriate. Historical multiplier: 20x.
+                    Depending on scope, founder advisory can include a project
+                    fee or retainer, equity, or commission on revenue we help
+                    generate.
                   </p>
                 </div>
               </div>
@@ -572,16 +527,22 @@ export default function HomeContent() {
                 <Target size={20} className="shrink-0 mt-0.5 text-rust" />
                 <div>
                   <div className="font-display text-lg font-bold mb-1 text-ink">
-                    Every engagement is custom
+                    Dispute and recovery work
                   </div>
                   <p className="font-body text-sm text-ink-mid">
-                    The only way to know the number is to tell us what&apos;s
-                    broken.
+                    Torque offers success fees for qualifying claims. Matters
+                    requiring investigation or specialist work can require a
+                    retainer or upfront funding.
                   </p>
                 </div>
               </div>
               <p className="font-body pt-6 text-sm font-semibold italic text-ink border-t border-black/10">
-                We have never invoiced and disappeared. In 25 years.
+                <Link
+                  href="/howwework"
+                  className="underline underline-offset-4"
+                >
+                  See how transaction fees work
+                </Link>
               </p>
             </div>
           </div>
@@ -595,11 +556,11 @@ export default function HomeContent() {
       <section className="font-body py-24 sm:py-32 text-center bg-warm-bg border-t border-black/10">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-ink mb-6">
-            Tell us what&apos;s broken.
+            What decision is on your desk?
           </h2>
           <p className="text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto text-ink-mid">
-            A principal responds within 24 hours. No associates. No filters. No
-            intake maze.
+            Tell us what is at stake and when you need to act. A principal
+            replies within one business day.
           </p>
           <p className="text-base leading-relaxed mb-12 max-w-xl mx-auto text-ink-mid">
             If we can create leverage, we&apos;ll show you how. If we
@@ -609,7 +570,7 @@ export default function HomeContent() {
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-md text-sm font-bold transition-colors bg-rust hover:bg-ink text-white"
           >
-            Tell Us What&apos;s Broken <ArrowRight size={16} />
+            Talk through a decision <ArrowRight size={16} />
           </Link>
         </div>
       </section>
