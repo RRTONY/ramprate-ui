@@ -787,8 +787,9 @@ export default function SourcingPage() {
                 }}
               >
                 The first platform built for IT sourcing decisions and planning.
-                Forecasts within 5–10% of final outcome. 99%+ of our deals make
-                it to contract.
+                Forecasts within 5–10% of final outcome. RampRate reports that
+                more than 99% of the sourcing deals it facilitates reach a
+                signed contract.
               </p>
               <p
                 className="mt-4 text-base leading-relaxed"
@@ -1010,7 +1011,7 @@ export default function SourcingPage() {
             className="text-3xl sm:text-4xl font-bold text-white mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            300%+ ROI or Don&apos;t Pay
+            Our enterprise sourcing guarantee
           </h2>
           <p
             className="text-white/70 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
