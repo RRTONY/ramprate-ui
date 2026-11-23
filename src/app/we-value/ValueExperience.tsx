@@ -279,10 +279,10 @@ export default function ValueExperience() {
             <span className="text-[oklch(0.520 0.073 49.5)]">to We.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
-            Software can be built overnight. Trust cannot. Our relationships
-            took 25 years to earn. We do not charge for knowing people. We take
-            responsibility for what those relationships help make possible, and
-            we show the results.
+            Software can be built overnight. Trust takes longer. We have spent
+            25 years earning it, and we know it can be lost much faster. We do
+            not know what the next 25 years will bring. That is precisely why we
+            want to build them with you.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
@@ -299,6 +299,33 @@ export default function ValueExperience() {
             </a>
           </div>
         </header>
+        <section className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
+              A note from Tony
+            </p>
+            <h2 className="mt-4 max-w-2xl font-serif text-3xl leading-tight sm:text-5xl">
+              I have been wrong before. I will be wrong again.
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed">
+              What matters is whether we can tell each other the truth early
+              enough to change course. I can bring a lifetime of relationships
+              and a team that knows how to get difficult things done. I cannot
+              promise you the future. I can promise we will examine our
+              assumptions, put our work in writing, and let the evidence have a
+              vote.
+            </p>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed">
+              We are asking you to take a chance on us. We are taking one on
+              you, too. That is what makes this a partnership rather than a
+              transaction.
+            </p>
+          </div>
+          <blockquote className="self-center border-l-4 border-amber-700 pl-6 font-serif text-2xl leading-snug sm:text-3xl">
+            If the future turns out differently than we imagined, we should be
+            able to look each other in the eye and explain what happened.
+          </blockquote>
+        </section>
         <section
           id="principles"
           className="grid gap-4 border-y border-[oklch(0.865 0.030 96.4)] py-9 md:grid-cols-3"
@@ -621,14 +648,15 @@ export default function ValueExperience() {
             The living value ledger
           </p>
           <h2 className="mt-3 font-serif text-4xl">
-            The score is a promise to measure, not a trophy.
+            A score is where the conversation starts.
           </h2>
           <p className="mt-4 max-w-3xl text-base leading-relaxed">
-            At signing, we record the baseline and the hypothesis. At 30, 90,
-            and 180 days, we publish what was delivered, which assumptions
-            changed, what independent evidence exists, and how much of the value
-            actually endured. A private report can carry confidential proof
-            without exposing clients or communities.
+            We may get the first estimate wrong. That is why, at signing, we
+            record the baseline and the hypothesis. At 30, 90, and 180 days, we
+            publish what was delivered, which assumptions changed, what
+            independent evidence exists, and how much of the value actually
+            endured. A private report can carry confidential proof without
+            exposing clients or communities.
           </p>
           <div className="mt-7 grid gap-4 md:grid-cols-4">
             {[
