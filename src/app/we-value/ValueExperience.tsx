@@ -325,6 +325,8 @@ export default function ValueExperience() {
     })),
   );
   const [copied, setCopied] = useState(false);
+  const [illustrativeSurplus, setIllustrativeSurplus] = useState(2000000);
+  const [specialShare, setSpecialShare] = useState(10);
   const current = inputs[chosen];
   const update = (key: keyof typeof current, value: number) =>
     setInputs((previous) =>
@@ -413,7 +415,7 @@ export default function ValueExperience() {
             className="pointer-events-none absolute right-8 top-20 h-36 w-36 rounded-full border border-[oklch(0.663 0.070 74.3)] opacity-70 sm:h-56 sm:w-56"
           />
           <p className="mb-5 max-w-lg text-xs font-bold uppercase tracking-[0.25em] text-[oklch(0.517 0.061 74.8)]">
-            The Glasshouse · How we price possibility
+            The Glasshouse · Value creation & allocation
           </p>
           <h1 className="relative max-w-4xl font-serif text-6xl leading-[0.97] tracking-tight sm:text-8xl">
             From Me
@@ -428,16 +430,16 @@ export default function ValueExperience() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
-              href="#calculator"
+              href="#value-model"
               className="rounded-full bg-[oklch(0.289 0.017 75.0)] px-6 py-4 text-sm font-semibold text-white no-underline"
             >
-              Calculate what sticks
+              See the value model
             </a>
             <a
               href="#principles"
               className="rounded-full border border-[oklch(0.575 0.043 83.7)] px-6 py-4 text-sm font-semibold no-underline"
             >
-              How this house works
+              How allocation works
             </a>
           </div>
         </header>
@@ -468,12 +470,261 @@ export default function ValueExperience() {
             able to look each other in the eye and explain what happened.
           </blockquote>
         </section>
+        <section
+          id="value-model"
+          className="scroll-mt-8 rounded-[2rem] border border-stone-300 bg-white p-5 shadow-sm sm:p-10"
+        >
+          <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
+                01 / A transparent model
+              </p>
+              <h2 className="mt-3 max-w-2xl font-serif text-4xl leading-tight sm:text-6xl">
+                Make value. Prove it. Share it.
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-stone-700">
+                The price is not the story. The story is what changes because we
+                worked together, how long that change lasts, and how its
+                benefits are allocated.
+              </p>
+            </div>
+            <p className="max-w-md border-l-4 border-amber-700 pl-5 text-lg leading-relaxed">
+              We are a business. So are the ventures we build and invest in. A
+              healthy core asset comes first. When it creates distributable
+              surplus, the allocation to special projects is deliberate,
+              recorded and visible.
+            </p>
+          </div>
+          <div className="mt-9 grid gap-3 md:grid-cols-4">
+            {[
+              [
+                "1",
+                "Invest in the core",
+                "Put capital, relationships, judgment and real operating work into the asset.",
+              ],
+              [
+                "2",
+                "Make it work",
+                "Build contracts, capabilities, ownership and services that can survive without us.",
+              ],
+              [
+                "3",
+                "Prove the gain",
+                "Use an agreed baseline and evidence. Separate our contribution from market luck.",
+              ],
+              [
+                "4",
+                "Allocate fairly",
+                "Honor obligations, reward contributors, reinvest and fund agreed special interests from eligible surplus.",
+              ],
+            ].map(([n, title, body], i) => (
+              <article
+                key={n}
+                className="relative rounded-2xl bg-stone-100 p-5"
+              >
+                <span className="font-serif text-4xl text-amber-800">{n}</span>
+                <h3 className="mt-4 font-serif text-2xl">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                  {body}
+                </p>
+                {i < 3 && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -right-2 top-6 z-10 hidden rounded-full bg-white px-2 font-bold text-amber-800 md:block"
+                  >
+                    →
+                  </span>
+                )}
+              </article>
+            ))}
+          </div>
+          <div className="mt-9 grid gap-5 lg:grid-cols-2">
+            <article className="rounded-2xl border border-stone-300 p-5 sm:p-7">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
+                02 / A client value example
+              </p>
+              <h3 className="mt-3 font-serif text-3xl">
+                What would make $50,000 a month rational?
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                An illustrative year of enterprise buying. We do not take credit
+                for the entire opportunity. We adjust for our attributable work,
+                confidence and durability.
+              </p>
+              <dl className="mt-5 space-y-3">
+                {[
+                  ["Annual spending baseline", "$12,000,000"],
+                  ["Possible contract improvement (18%)", "$2,160,000"],
+                  ["Attributable to our work (65%)", "$1,404,000"],
+                  ["Confidence adjusted (78%)", "$1,095,120"],
+                  ["Expected durable annual value (90%)", "$985,608"],
+                  ["12 months of cash participation", "$600,000"],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="flex items-start justify-between gap-4 border-b border-stone-200 pb-3 text-sm"
+                  >
+                    <dt className="max-w-56 text-stone-700">{label}</dt>
+                    <dd className="shrink-0 font-bold tabular-nums">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-4 rounded-xl bg-amber-50 p-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
+                  Projected benefit above cash participation
+                </p>
+                <p className="mt-1 font-serif text-4xl tabular-nums">
+                  $385,608
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-stone-700">
+                  Illustrative, risk-adjusted one-year comparison. Not realized
+                  savings or a guaranteed return. Equity participation is
+                  evaluated separately.
+                </p>
+              </div>
+            </article>
+            <article className="rounded-2xl border border-stone-300 p-5 sm:p-7">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
+                03 / An investment and allocation example
+              </p>
+              <h3 className="mt-3 font-serif text-3xl">
+                The pie grows before it gets divided.
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                Not a donation model. A business invests in its core asset,
+                earns real surplus, and only then chooses an agreed allocation
+                for special interests.
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                <label className="block text-sm font-semibold text-stone-800">
+                  Available surplus ($)
+                  <input
+                    aria-label="Available surplus in dollars"
+                    className="mt-2 w-full rounded-xl border border-stone-300 bg-white px-3 py-3 text-base"
+                    type="number"
+                    min="0"
+                    step="100000"
+                    value={illustrativeSurplus}
+                    onChange={(e) =>
+                      setIllustrativeSurplus(
+                        Math.max(0, Number(e.target.value) || 0),
+                      )
+                    }
+                  />
+                </label>
+                <label className="block text-sm font-semibold text-stone-800">
+                  Special allocation (%)
+                  <input
+                    aria-label="Special allocation percentage"
+                    className="mt-2 w-full rounded-xl border border-stone-300 bg-white px-3 py-3 text-base"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={specialShare}
+                    onChange={(e) =>
+                      setSpecialShare(
+                        Math.min(100, Math.max(0, Number(e.target.value) || 0)),
+                      )
+                    }
+                  />
+                </label>
+              </div>
+              <div
+                aria-label="Illustrative allocation proportions"
+                className="mt-6 flex h-5 overflow-hidden rounded-full bg-stone-200"
+              >
+                <div
+                  className="bg-amber-700"
+                  style={{ width: `${100 - specialShare}%` }}
+                />
+                <div
+                  className="bg-stone-400"
+                  style={{ width: `${specialShare}%` }}
+                />
+              </div>
+              <dl className="mt-5 grid grid-cols-2 gap-4">
+                <div className="rounded-xl bg-stone-100 p-4">
+                  <dt className="text-xs leading-relaxed text-stone-700">
+                    Retained for business, investors and agreed stakeholders
+                  </dt>
+                  <dd className="mt-2 font-serif text-2xl tabular-nums sm:text-3xl">
+                    {money((illustrativeSurplus * (100 - specialShare)) / 100)}
+                  </dd>
+                </div>
+                <div className="rounded-xl bg-amber-50 p-4">
+                  <dt className="text-xs leading-relaxed text-stone-700">
+                    Allocated to approved special projects
+                  </dt>
+                  <dd className="mt-2 font-serif text-2xl tabular-nums sm:text-3xl">
+                    {money((illustrativeSurplus * specialShare) / 100)}
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-xs leading-relaxed text-stone-700">
+                Available surplus means cash remaining after operating costs,
+                reserves, contractual obligations and applicable approvals.
+                Unrealized paper appreciation is not distributable cash.
+                Percentages are illustrative, not a declared allocation policy.
+              </p>
+            </article>
+          </div>
+        </section>
+        <section
+          id="principles"
+          className="grid gap-4 border-y border-[oklch(0.865 0.030 96.4)] py-9 md:grid-cols-3"
+        >
+          {[
+            [
+              "01 / The roots",
+              "Pay the bills.",
+              "Our people, time, delivery and continuity have a real cost. Pretending otherwise is not generosity.",
+            ],
+            [
+              "02 / The canopy",
+              "Pay something forward.",
+              "We evaluate mission, community, stewardship and future impact alongside economics.",
+            ],
+            [
+              "03 / The harvest",
+              "Share what grows.",
+              "Cash pays for work. Equity can align us with durable upside, if its terms are fair and enforceable.",
+            ],
+          ].map((item) => (
+            <article
+              key={item[0]}
+              className="rounded-2xl bg-white/80 p-6 shadow-sm"
+            >
+              <span className="text-xs font-bold uppercase tracking-wider text-[oklch(0.552 0.072 63.9)]">
+                {item[0]}
+              </span>
+              <h2 className="mt-4 font-serif text-3xl">{item[1]}</h2>
+              <p className="mt-3 text-base leading-relaxed text-[oklch(0.450 0.011 113.4)]">
+                {item[2]}
+              </p>
+            </article>
+          ))}
+        </section>
+        <section className="py-16">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
+            The point
+          </p>
+          <h2 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">
+            A relationship is the beginning. The outcome is the proof.
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed">
+            We count what becomes operational: revenues that remain, savings
+            that survive renewals, ownership that protects creators, safeguards
+            that communities can enforce, and capabilities a team can use
+            without us. We show our assumptions so you can disagree with the
+            arithmetic, not guess at the magic.
+          </p>
+        </section>
         <section className="mb-14 border-t border-stone-300 pt-12">
           <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
             Current areas of work
           </p>
           <h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">
-            The work we are willing to be judged by.
+            Where these ideas meet real life.
           </h2>
           <p className="mt-5 max-w-3xl text-lg leading-relaxed">
             These are the problems we are working on, or exploring with
@@ -571,265 +822,231 @@ export default function ValueExperience() {
             project, the people involved, and signed agreements.
           </p>
         </section>
-        <section
-          id="principles"
-          className="grid gap-4 border-y border-[oklch(0.865 0.030 96.4)] py-9 md:grid-cols-3"
-        >
-          {[
-            [
-              "01 / The roots",
-              "Pay the bills.",
-              "Our people, time, delivery and continuity have a real cost. Pretending otherwise is not generosity.",
-            ],
-            [
-              "02 / The canopy",
-              "Pay something forward.",
-              "We evaluate mission, community, stewardship and future impact alongside economics.",
-            ],
-            [
-              "03 / The harvest",
-              "Share what grows.",
-              "Cash pays for work. Equity can align us with durable upside, if its terms are fair and enforceable.",
-            ],
-          ].map((item) => (
-            <article
-              key={item[0]}
-              className="rounded-2xl bg-white/80 p-6 shadow-sm"
-            >
-              <span className="text-xs font-bold uppercase tracking-wider text-[oklch(0.552 0.072 63.9)]">
-                {item[0]}
-              </span>
-              <h2 className="mt-4 font-serif text-3xl">{item[1]}</h2>
-              <p className="mt-3 text-base leading-relaxed text-[oklch(0.450 0.011 113.4)]">
-                {item[2]}
-              </p>
-            </article>
-          ))}
-        </section>
-        <section className="py-16">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
-            The valuation of belonging
-          </p>
-          <h2 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">
-            A door is not a destination. An introduction is not an outcome.
-          </h2>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed">
-            We count what becomes operational: revenues that remain, savings
-            that survive renewals, ownership that protects creators, safeguards
-            that communities can enforce, and capabilities a team can use
-            without us. We show our assumptions so you can disagree with the
-            arithmetic, not guess at the magic.
-          </p>
-        </section>
-        <section
+        <details
           id="calculator"
-          className="scroll-mt-8 rounded-[2rem] border border-[oklch(0.833 0.038 86.2)] bg-[oklch(0.949 0.021 91.6)] p-4 sm:p-8"
+          className="group scroll-mt-8 rounded-[2rem] border border-stone-300 bg-stone-50 p-4 sm:p-8"
         >
-          <div className="mb-7">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
-              The public value instrument
-            </p>
-            <h2 className="mt-2 font-serif text-4xl sm:text-5xl">
-              Put your future on the table.
-            </h2>
-            <p className="mt-4 max-w-3xl leading-relaxed">
-              Choose a lens, change every assumption, and see the calculation.
-              These are illustrative scenarios, not confidential project
-              forecasts or signed client results.
-            </p>
-          </div>
-          <div className="mb-7 grid grid-cols-2 gap-2 md:grid-cols-4">
-            {cases.map((c, i) => (
-              <button
-                type="button"
-                key={c.name}
-                onClick={() => setChosen(i)}
-                aria-pressed={chosen === i}
-                className={`min-h-20 rounded-xl border p-3 text-left text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[oklch(0.513 0.059 64.9)] ${chosen === i ? "border-[oklch(0.361 0.030 72.9)] bg-[oklch(0.361 0.030 72.9)] text-white" : "border-[oklch(0.819 0.037 87.8)] bg-white text-[oklch(0.359 0.019 80.5)] hover:bg-[oklch(0.911 0.027 87.9)]"}`}
-              >
-                <span className="mb-1 block text-xs opacity-70">
-                  {c.symbol}
-                </span>
-                {c.name}
-              </button>
-            ))}
-          </div>
-          <div className="grid gap-5 lg:grid-cols-[1fr_0.95fr]">
-            <div className="rounded-2xl bg-white p-5 sm:p-7">
-              <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.536 0.063 64.9)]">
-                Scenario / {current.name}
+          <summary className="cursor-pointer rounded-xl bg-white p-5 text-lg font-semibold outline-offset-4 focus-visible:outline-2 focus-visible:outline-amber-700">
+            Explore the full project scoring model{" "}
+            <span className="ml-2 text-sm text-stone-600">
+              (optional, 9 scenarios)
+            </span>
+          </summary>
+          <section className="scroll-mt-8 rounded-[2rem] border border-[oklch(0.833 0.038 86.2)] bg-[oklch(0.949 0.021 91.6)] p-4 sm:p-8">
+            <div className="mb-7">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
+                The detailed value instrument
               </p>
-              <h3 className="my-3 font-serif text-3xl leading-tight">
-                {current.thesis}
-              </h3>
-              <p className="mb-6 text-sm leading-relaxed text-[oklch(0.493 0.024 91.7)]">
-                Beneficiaries: {current.beneficiaries}. Evidence:{" "}
-                {current.evidence}.
+              <h2 className="mt-2 font-serif text-4xl sm:text-5xl">
+                Explore a specific project
+              </h2>
+              <p className="mt-4 max-w-3xl leading-relaxed">
+                Choose a lens, change every assumption, and see the calculation.
+                These are illustrative scenarios, not confidential project
+                forecasts or signed client results.
               </p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  ["Annual baseline ($)", "base", 1000, 100000000],
-                  ["Modeled improvement (%)", "improvement", 0, 100],
-                  ["Our attributable share (%)", "attribution", 0, 100],
-                  ["Probability of realization (%)", "probability", 0, 100],
-                  ["Durability of benefit (%)", "persistence", 0, 100],
-                  ["Mission alignment (%)", "mission", 0, 100],
-                  ["Implementation readiness (%)", "implementation", 0, 100],
-                  ["Monthly cash fee ($)", "cash", 0, 500000],
-                  ["Engagement months", "months", 1, 60],
-                  ["Indicative equity value ($)", "equity", 0, 100000000],
-                  ["Assumed company valuation ($)", "valuation", 0, 1000000000],
-                ].map(([label, key, min, max]) => (
-                  <label
-                    key={String(key)}
-                    className="block text-sm font-semibold text-[oklch(0.380 0.017 88.8)]"
-                  >
-                    {label}
-                    <input
-                      className="mt-2 w-full rounded-lg border border-[oklch(0.769 0.032 86.5)] bg-[oklch(0.997 0.004 91.4)] px-3 py-3 text-base focus-visible:outline-2 focus-visible:outline-[oklch(0.520 0.073 49.5)]"
-                      type="number"
-                      min={Number(min)}
-                      max={Number(max)}
-                      step={
-                        key === "months"
-                          ? 1
-                          : key === "base" ||
-                              key === "cash" ||
-                              key === "equity" ||
-                              key === "valuation"
-                            ? 1000
-                            : 1
-                      }
-                      value={current[key as keyof typeof current] as number}
-                      onChange={(event) =>
-                        update(
-                          key as keyof typeof current,
-                          Number(event.target.value),
-                        )
-                      }
-                    />
-                  </label>
-                ))}
-              </div>
             </div>
-            <div className="space-y-4">
-              <article className="rounded-2xl bg-[oklch(0.304 0.014 76.3)] p-6 text-white">
-                <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.881 0.049 84.5)]">
-                  Shared fit score · transparent weights
-                </p>
-                <p className="mt-3 font-serif text-7xl">
-                  {result.score.toFixed(0)}
-                  <span className="text-2xl text-[oklch(0.825 0.049 81.4)]">
-                    /100
-                  </span>
-                </p>
-                <p className="mt-3 text-lg">{result.level}</p>
-                <div className="mt-6 space-y-4">
-                  {weights.map((w, i) => (
-                    <div key={w.name}>
-                      <div className="mb-1 flex justify-between gap-3 text-xs">
-                        <span>
-                          {w.name} ({w.weight}%)
-                        </span>
-                        <span>{percent(result.values[i])}</span>
-                      </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-white/20">
-                        <div
-                          className="h-full rounded-full bg-[oklch(0.805 0.091 74.7)]"
-                          style={{
-                            width: `${Math.max(0, Math.min(100, result.values[i]))}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </article>
-              <article className="rounded-2xl bg-white p-6">
-                <p className="text-xs font-bold uppercase tracking-wider text-[oklch(0.536 0.063 64.9)]">
-                  What survives the introduction?
-                </p>
-                <dl className="mt-4 space-y-3 text-sm">
-                  {[
-                    ["Modeled gross annual improvement", money(result.gross)],
-                    [
-                      "Attributable annual improvement",
-                      money(result.attributable),
-                    ],
-                    [
-                      "Probability-adjusted annual value",
-                      money(result.expected),
-                    ],
-                    ["Durability-adjusted annual value", money(result.durable)],
-                    ["Cash engagement total", money(result.fees)],
-                    [
-                      "Illustrative equity reference value",
-                      money(current.equity),
-                    ],
-                    [
-                      "Combined nominal consideration",
-                      money(result.consideration),
-                    ],
-                    [
-                      "Implied equity percentage",
-                      current.valuation
-                        ? `${result.stake.toFixed(2)}%`
-                        : "Valuation required",
-                    ],
-                  ].map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="flex items-baseline justify-between gap-3 border-b border-[oklch(0.932 0.017 84.6)] pb-2"
-                    >
-                      <dt className="text-[oklch(0.490 0.023 87.6)]">
-                        {label}
-                      </dt>
-                      <dd className="text-right font-bold">{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="mt-5 rounded-xl bg-[oklch(0.951 0.017 84.6)] p-4">
-                  <p className="font-semibold">
-                    {result.durable >= 50000
-                      ? "Modeled value clears $50,000 per year, not necessarily per month."
-                      : "The modeled annual durable value is below $50,000."}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed">
-                    Compare the durability-adjusted annual value with the
-                    annualized cash fee of {money(current.cash * 12)}.{" "}
-                    {result.durable >= current.cash * 12
-                      ? "The modeled annual benefit meets that cash comparison."
-                      : "The modeled benefit does not yet support that cash comparison."}{" "}
-                    Equity must be justified separately, not counted as
-                    guaranteed proceeds.
-                  </p>
-                </div>
+            <div className="mb-7 grid grid-cols-2 gap-2 md:grid-cols-4">
+              {cases.map((c, i) => (
                 <button
                   type="button"
-                  onClick={copy}
-                  className="mt-5 w-full rounded-full bg-[oklch(0.361 0.030 72.9)] px-6 py-4 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2"
+                  key={c.name}
+                  onClick={() => setChosen(i)}
+                  aria-pressed={chosen === i}
+                  className={`min-h-20 rounded-xl border p-3 text-left text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[oklch(0.513 0.059 64.9)] ${chosen === i ? "border-[oklch(0.361 0.030 72.9)] bg-[oklch(0.361 0.030 72.9)] text-white" : "border-[oklch(0.819 0.037 87.8)] bg-white text-[oklch(0.359 0.019 80.5)] hover:bg-[oklch(0.911 0.027 87.9)]"}`}
                 >
-                  {copied ? "Copied summary" : "Copy the visible scorecard"}
+                  <span className="mb-1 block text-xs opacity-70">
+                    {c.symbol}
+                  </span>
+                  {c.name}
                 </button>
-              </article>
+              ))}
             </div>
-          </div>
-          <p className="mt-5 text-xs leading-relaxed text-[oklch(0.486 0.013 89.8)]">
-            Model note: gross improvement = baseline × improvement rate;
-            attributable improvement = gross × attribution; expected value =
-            attributable × probability; durable value = expected × persistence.
-            The fit score is a proposed decision aid, not an actuarial,
-            financial, clinical or third-party valuation. Dollar estimates may
-            overlap and must not be double-counted.
-          </p>
-        </section>
+            <div className="grid gap-5 lg:grid-cols-[1fr_0.95fr]">
+              <div className="rounded-2xl bg-white p-5 sm:p-7">
+                <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.536 0.063 64.9)]">
+                  Scenario / {current.name}
+                </p>
+                <h3 className="my-3 font-serif text-3xl leading-tight">
+                  {current.thesis}
+                </h3>
+                <p className="mb-6 text-sm leading-relaxed text-[oklch(0.493 0.024 91.7)]">
+                  Beneficiaries: {current.beneficiaries}. Evidence:{" "}
+                  {current.evidence}.
+                </p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    ["Annual baseline ($)", "base", 1000, 100000000],
+                    ["Modeled improvement (%)", "improvement", 0, 100],
+                    ["Our attributable share (%)", "attribution", 0, 100],
+                    ["Probability of realization (%)", "probability", 0, 100],
+                    ["Durability of benefit (%)", "persistence", 0, 100],
+                    ["Mission alignment (%)", "mission", 0, 100],
+                    ["Implementation readiness (%)", "implementation", 0, 100],
+                    ["Monthly cash fee ($)", "cash", 0, 500000],
+                    ["Engagement months", "months", 1, 60],
+                    ["Indicative equity value ($)", "equity", 0, 100000000],
+                    [
+                      "Assumed company valuation ($)",
+                      "valuation",
+                      0,
+                      1000000000,
+                    ],
+                  ].map(([label, key, min, max]) => (
+                    <label
+                      key={String(key)}
+                      className="block text-sm font-semibold text-[oklch(0.380 0.017 88.8)]"
+                    >
+                      {label}
+                      <input
+                        className="mt-2 w-full rounded-lg border border-[oklch(0.769 0.032 86.5)] bg-[oklch(0.997 0.004 91.4)] px-3 py-3 text-base focus-visible:outline-2 focus-visible:outline-[oklch(0.520 0.073 49.5)]"
+                        type="number"
+                        min={Number(min)}
+                        max={Number(max)}
+                        step={
+                          key === "months"
+                            ? 1
+                            : key === "base" ||
+                                key === "cash" ||
+                                key === "equity" ||
+                                key === "valuation"
+                              ? 1000
+                              : 1
+                        }
+                        value={current[key as keyof typeof current] as number}
+                        onChange={(event) =>
+                          update(
+                            key as keyof typeof current,
+                            Number(event.target.value),
+                          )
+                        }
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <article className="rounded-2xl bg-[oklch(0.304 0.014 76.3)] p-6 text-white">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.881 0.049 84.5)]">
+                    Proposed project-fit score
+                  </p>
+                  <p className="mt-3 font-serif text-7xl">
+                    {result.score.toFixed(0)}
+                    <span className="text-2xl text-[oklch(0.825 0.049 81.4)]">
+                      /100
+                    </span>
+                  </p>
+                  <p className="mt-3 text-lg">{result.level}</p>
+                  <div className="mt-6 space-y-4">
+                    {weights.map((w, i) => (
+                      <div key={w.name}>
+                        <div className="mb-1 flex justify-between gap-3 text-xs">
+                          <span>
+                            {w.name} ({w.weight}%)
+                          </span>
+                          <span>{percent(result.values[i])}</span>
+                        </div>
+                        <div className="h-2 overflow-hidden rounded-full bg-white/20">
+                          <div
+                            className="h-full rounded-full bg-[oklch(0.805 0.091 74.7)]"
+                            style={{
+                              width: `${Math.max(0, Math.min(100, result.values[i]))}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+                <article className="rounded-2xl bg-white p-6">
+                  <p className="text-xs font-bold uppercase tracking-wider text-[oklch(0.536 0.063 64.9)]">
+                    Projected, not yet proven
+                  </p>
+                  <dl className="mt-4 space-y-3 text-sm">
+                    {[
+                      ["Modeled gross annual improvement", money(result.gross)],
+                      [
+                        "Attributable annual improvement",
+                        money(result.attributable),
+                      ],
+                      [
+                        "Probability-adjusted annual value",
+                        money(result.expected),
+                      ],
+                      [
+                        "Durability-adjusted annual value",
+                        money(result.durable),
+                      ],
+                      ["Total cash participation", money(result.fees)],
+                      [
+                        "Illustrative equity participation",
+                        money(current.equity),
+                      ],
+                      [
+                        "Cash plus notional equity reference",
+                        money(result.consideration),
+                      ],
+                      [
+                        "Implied equity percentage",
+                        current.valuation
+                          ? `${result.stake.toFixed(2)}%`
+                          : "Valuation required",
+                      ],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label}
+                        className="flex items-baseline justify-between gap-3 border-b border-[oklch(0.932 0.017 84.6)] pb-2"
+                      >
+                        <dt className="text-[oklch(0.490 0.023 87.6)]">
+                          {label}
+                        </dt>
+                        <dd className="text-right font-bold">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="mt-5 rounded-xl bg-[oklch(0.951 0.017 84.6)] p-4">
+                    <p className="font-semibold">
+                      {result.durable >= 50000
+                        ? "Modeled value clears $50,000 per year, not necessarily per month."
+                        : "The modeled annual durable value is below $50,000."}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed">
+                      Compare the durability-adjusted annual value with the
+                      annualized cash fee of {money(current.cash * 12)}.{" "}
+                      {result.durable >= current.cash * 12
+                        ? "The modeled annual benefit meets that cash comparison."
+                        : "The modeled benefit does not yet support that cash comparison."}{" "}
+                      Equity must be justified separately, not counted as
+                      guaranteed proceeds.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={copy}
+                    className="mt-5 w-full rounded-full bg-[oklch(0.361 0.030 72.9)] px-6 py-4 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2"
+                  >
+                    {copied ? "Copied summary" : "Copy the visible scorecard"}
+                  </button>
+                </article>
+              </div>
+            </div>
+            <p className="mt-5 text-xs leading-relaxed text-[oklch(0.486 0.013 89.8)]">
+              Model note: gross improvement = baseline × improvement rate;
+              attributable improvement = gross × attribution; expected value =
+              attributable × probability; durable value = expected ×
+              persistence. The fit score is a proposed decision aid, not an
+              actuarial, financial, clinical or third-party valuation. Dollar
+              estimates may overlap and must not be double-counted.
+            </p>
+          </section>
+        </details>
         <section className="grid gap-7 py-16 md:grid-cols-2">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
-              The house rule
+              The commercial agreement
             </p>
             <h2 className="mt-3 font-serif text-4xl">
-              Our starting ask is visible.
+              Participation follows the value.
             </h2>
             <p className="mt-5 text-lg leading-relaxed">
               For full strategic engagements: $50,000 per month plus a proposed
@@ -839,7 +1056,7 @@ export default function ValueExperience() {
             </p>
           </div>
           <div className="rounded-2xl border border-[oklch(0.822 0.037 87.8)] bg-white p-7">
-            <p className="font-serif text-3xl">The wrong house?</p>
+            <p className="font-serif text-3xl">What makes the exchange fair?</p>
             <p className="mt-4 leading-relaxed">
               If you do not believe the work can create meaningful, measurable
               value beyond the fee, the right answer may be no. If the mission
