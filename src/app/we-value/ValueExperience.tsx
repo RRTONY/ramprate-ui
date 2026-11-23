@@ -314,7 +314,7 @@ const weights = [
 ];
 
 export default function ValueExperience() {
-  const [chosen, setChosen] = useState(0);
+  const [chosen, setChosen] = useState(6);
   const [inputs, setInputs] = useState(() =>
     cases.map((c) => ({
       ...c,
@@ -415,35 +415,32 @@ export default function ValueExperience() {
             className="pointer-events-none absolute right-8 top-20 h-36 w-36 rounded-full border border-[oklch(0.663 0.070 74.3)] opacity-70 sm:h-56 sm:w-56"
           />
           <p className="mb-5 max-w-lg text-xs font-bold uppercase tracking-[0.25em] text-[oklch(0.517 0.061 74.8)]">
-            The Glasshouse · Value creation & allocation
+            An invitation to collaborate · Value creation & allocation
           </p>
           <h1 className="relative max-w-4xl font-serif text-6xl leading-[0.97] tracking-tight sm:text-8xl">
-            From Me
+            Value, made
             <br />
-            <span className="text-[oklch(0.520 0.073 49.5)]">to We.</span>
+            <span className="text-[oklch(0.520 0.073 49.5)]">together.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
-            Software can be built overnight. Trust takes longer. We have spent
-            25 years earning it, and we know it can be lost much faster. We do
-            not know what the next 25 years will bring. That is precisely why we
-            want to build them with you.
+            Twenty-five years of relationships cannot be fabricated overnight. But relationships alone are not the product. We help turn hard problems into durable outcomes, measure the change, and decide together how to share what grows.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="#value-model"
               className="rounded-full bg-[oklch(0.289 0.017 75.0)] px-6 py-4 text-sm font-semibold text-white no-underline"
             >
-              See the value model
+              See the mechanism
             </a>
             <a
-              href="#principles"
+              href="#founder-note"
               className="rounded-full border border-[oklch(0.575 0.043 83.7)] px-6 py-4 text-sm font-semibold no-underline"
             >
-              How allocation works
+              Meet the thinking
             </a>
           </div>
         </header>
-        <section className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]">
+        <section id="founder-note" className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
               A note from the founder
@@ -812,7 +809,7 @@ export default function ValueExperience() {
                     <strong>Where we could go together:</strong>{" "}
                     {readingTrails[index].invitation}
                   </p>
-                </div>
+                </details>
               </article>
             ))}
           </div>
