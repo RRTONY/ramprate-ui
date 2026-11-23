@@ -188,7 +188,7 @@ export default function ValueExperience() {
               Engagement framework
             </p>
             <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-tight tracking-tight sm:text-6xl">
-              Assessing the value of
+              Assessing the value of{" "}
               <span className="text-stone-800">our contribution</span>
             </h1>
             <p className="mt-5 max-w-2xl text-xl leading-relaxed">
