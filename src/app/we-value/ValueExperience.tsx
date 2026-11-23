@@ -279,8 +279,10 @@ export default function ValueExperience() {
             <span className="text-[oklch(0.520 0.073 49.5)]">to We.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
-            We are not paid for a name in an address book. We earn our place in
-            the future by helping build something that sticks.
+            In a world where agents can build almost anything, they cannot
+            manufacture 25 years of trust. Relationships are immeasurable in
+            depth, but the value we create together must be measurable in
+            outcomes.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
