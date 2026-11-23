@@ -37,7 +37,7 @@ const cases: Case[] = [
       "Sovereign consent, negotiated benefits, independent governance, annual community reporting",
   },
   {
-    name: "Art & Clarisse",
+    name: "Art & cultural ownership",
     symbol: "02",
     thesis:
       "A painting can become a livelihood, a licensed story, and a lasting cultural asset.",
@@ -54,7 +54,7 @@ const cases: Case[] = [
       "Sales, artist-approved licensing, royalty statements, retained ownership and provenance",
   },
   {
-    name: "Torque",
+    name: "Complex dispute resolution",
     symbol: "03",
     thesis:
       "The intervention is valuable when the system keeps working after the crisis.",
@@ -71,7 +71,7 @@ const cases: Case[] = [
       "Client-approved milestones, verified recovery, time saved, documented controls; not legal outcomes",
   },
   {
-    name: "Conscious Compute / Cato",
+    name: "Compute & community benefit",
     symbol: "04",
     thesis:
       "Better compute should leave something good behind in the places that host it.",
@@ -89,7 +89,7 @@ const cases: Case[] = [
       "Signed orders, equipment qualification, power metrics, community agreements and funding closings",
   },
   {
-    name: "BioChain / ZERO",
+    name: "Personalized wellness & sourcing",
     symbol: "05",
     thesis:
       "The label is a claim. Verifiable quality and useful outcomes are the test.",
@@ -122,7 +122,7 @@ const cases: Case[] = [
       "Agreed baseline, executed contracts, verified savings and service continuity",
   },
   {
-    name: "Syzygy founders",
+    name: "Founder growth",
     symbol: "07",
     thesis: "An introduction expires. A repeatable growth engine compounds.",
     unit: "Annual incremental company value potential",
@@ -138,7 +138,7 @@ const cases: Case[] = [
       "Revenue quality, operating cadence, conversion and retained customer value",
   },
   {
-    name: "ImpactSoul assets",
+    name: "Community-owned assets",
     symbol: "08",
     thesis: "Ownership should travel with contribution, not just capital.",
     unit: "Annual asset and participant value potential",
@@ -255,7 +255,7 @@ export default function ValueExperience() {
             href="/"
             className="text-[oklch(0.423 0.039 74.0)] no-underline"
           >
-            RampRate / ImpactSoul
+            RampRate
           </Link>
           <span className="rounded-full border border-[oklch(0.788 0.062 90.4)] px-3 py-2 text-[10px] tracking-wider">
             Shared privately · Working model
@@ -302,7 +302,7 @@ export default function ValueExperience() {
         <section className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
-              A note from Tony
+              A note from the founder
             </p>
             <h2 className="mt-4 max-w-2xl font-serif text-3xl leading-tight sm:text-5xl">
               I have been wrong before. I will be wrong again.
@@ -358,12 +358,12 @@ export default function ValueExperience() {
               [
                 "04",
                 "When wellness gets personal",
-                "Through BioChain, ZERO and related initiatives, we are examining verified sourcing, DNA-informed wellness and outcomes that can be checked rather than merely advertised.",
+                "We are examining verified sourcing, personalized wellness, and outcomes that can be checked rather than merely advertised.",
               ],
               [
                 "05",
                 "When art becomes a future",
-                "Clarisse's creative world brings the question down to one human scale: can an artist retain authorship, earn fairly and leave a cultural legacy?",
+                "An artist's work brings the question down to one human scale: can creators retain authorship, earn fairly and leave a cultural legacy?",
               ],
               [
                 "06",
@@ -765,7 +765,7 @@ export default function ValueExperience() {
           </div>
         </section>
         <footer className="mt-14 flex flex-col justify-between gap-4 border-t border-[oklch(0.865 0.030 96.4)] pt-8 text-sm text-[oklch(0.480 0.022 86.2)] sm:flex-row">
-          <span>RampRate · ImpactSoul · From Me to We</span>
+          <span>RampRate · From Me to We</span>
           <span>
             Unlisted concept for partner discussion · Not a binding offer
           </span>
