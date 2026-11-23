@@ -102,32 +102,26 @@ export default function ValueExperience() {
   const [baseline, setBaseline] = useState(12000000);
   const [improvement, setImprovement] = useState(18);
   const [attribution, setAttribution] = useState(65);
-  const [period, setPeriod] = useState(12);
   const [openEquity, setOpenEquity] = useState(false);
   const [equity, setEquity] = useState(2000000);
   const [valuation, setValuation] = useState(20000000);
-  const [ready, setReady] = useState(false);
   const chosen = paths[choice];
   const result = useMemo(() => {
     const potential = (baseline * improvement) / 100;
     const attributable = (potential * attribution) / 100;
     const annualCash = 50000 * 12;
-    const fee = 50000 * period;
     return {
       potential,
       attributable,
       annualCash,
-      fee,
       remaining: attributable - annualCash,
-      ratio: annualCash ? attributable / annualCash : 0,
     };
-  }, [baseline, improvement, attribution, period]);
+  }, [baseline, improvement, attribution]);
   const pick = (index: number) => {
     setChoice(index);
     setBaseline(paths[index].baseline);
     setImprovement(paths[index].improvement);
     setAttribution(paths[index].attribution);
-    setReady(false);
   };
   return (
     <div className="min-h-screen bg-[oklch(0.979_0.008_88)] text-[oklch(0.26_0.015_75)]">
