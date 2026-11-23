@@ -611,6 +611,62 @@ export default function ValueExperience() {
             regulated activity needs specific review and a signed agreement.
           </p>
         </section>
+        <section
+          id="reporting"
+          className="mt-10 rounded-[2rem] border border-stone-300 bg-white p-6 sm:p-10"
+        >
+          <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
+            The living value ledger
+          </p>
+          <h2 className="mt-3 font-serif text-4xl">
+            The score is a promise to measure, not a trophy.
+          </h2>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed">
+            At signing, we record the baseline and the hypothesis. At 30, 90,
+            and 180 days, we publish what was delivered, which assumptions
+            changed, what independent evidence exists, and how much of the value
+            actually endured. A private report can carry confidential proof
+            without exposing clients or communities.
+          </p>
+          <div className="mt-7 grid gap-4 md:grid-cols-4">
+            {[
+              [
+                "Day 0 / Plant",
+                "Baseline, beneficiaries, agreed scope, evidence owner and attribution rules.",
+              ],
+              [
+                "Day 30 / Root",
+                "What shipped, who adopted it, delays, early risks and validated costs.",
+              ],
+              [
+                "Day 90 / Grow",
+                "Measured commercial outcomes, quality controls, stakeholder benefit and course corrections.",
+              ],
+              [
+                "Day 180 / Harvest",
+                "What persists without us, independently supported value, disputes and next commitments.",
+              ],
+            ].map(([time, description]) => (
+              <div key={time} className="rounded-2xl bg-stone-100 p-5">
+                <h3 className="font-serif text-xl">{time}</h3>
+                <p className="mt-3 text-sm leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-7 border-t border-stone-200 pt-6">
+            <h3 className="font-serif text-2xl">
+              What Josh and Alex should refine before sharing
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed">
+              Agree on the definitions of attributable benefit, the treatment of
+              equity grants and dilution, the separation of mission score from
+              financial value, conflicts and referral disclosures, and what a
+              signed guarantee can responsibly cover. Keep the public scoring
+              formula fixed and versioned. Document every exception to the
+              standard engagement threshold.
+            </p>
+          </div>
+        </section>
         <footer className="mt-14 flex flex-col justify-between gap-4 border-t border-[oklch(0.865 0.030 96.4)] pt-8 text-sm text-[oklch(0.480 0.022 86.2)] sm:flex-row">
           <span>RampRate · ImpactSoul · From Me to We</span>
           <span>
