@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import ValueExperience from "./ValueExperience";
 
 export const metadata: Metadata = {
-  title: "From Me to We | The Glasshouse",
+  title: "What Becomes Possible With Us | RampRate",
   description:
-    "A transparent working model for evaluating durable value, project fit, and shared upside.",
+    "Choose an outcome, see how RampRate builds durable value, explore an illustrative case, and start a private conversation.",
   robots: {
     index: false,
     follow: false,
