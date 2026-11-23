@@ -279,10 +279,10 @@ export default function ValueExperience() {
             <span className="text-[oklch(0.520 0.073 49.5)]">to We.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
-            In a world where agents can build almost anything, they cannot
-            manufacture 25 years of trust. Relationships are immeasurable in
-            depth, but the value we create together must be measurable in
-            outcomes.
+            Software can be built overnight. Trust cannot. Our relationships
+            took 25 years to earn. We do not charge for knowing people. We take
+            responsibility for what those relationships help make possible, and
+            we show the results.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
