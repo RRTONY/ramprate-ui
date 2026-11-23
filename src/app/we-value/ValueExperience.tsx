@@ -179,53 +179,61 @@ export default function ValueExperience() {
             RampRate
           </Link>
           <span className="text-xs text-stone-600">
-            An unlisted working conversation
+            Private advisory review
           </span>
         </nav>
         <header className="grid gap-8 border-b border-stone-300 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-800">
-              A different way to engage
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone-800">
+              Engagement framework
             </p>
-            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-tight tracking-tight sm:text-7xl">
-              What becomes possible{" "}
-              <span className="text-amber-800">with us?</span>
+            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-tight tracking-tight sm:text-6xl">
+              Assessing the value of
+              <span className="text-stone-800">our contribution</span>
             </h1>
             <p className="mt-5 max-w-2xl text-xl leading-relaxed">
-              You can hire expertise anywhere. You cannot buy 25 years of earned
-              trust. We put ours to work, build what the outcome needs, and let
-              the evidence show what our contribution was worth.
+              Our commercial arrangements begin with the value to be created,
+              the work required to deliver it, and the evidence by which both
+              parties will judge success. Twenty-five years of relationships and
+              experience inform that work. They do not replace the obligation to
+              deliver.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-stone-700">
-              We are willing to put our judgment, reputation and, where
-              appropriate, our own capital alongside the work. Not just make an
-              introduction.
+              Where appropriate, we commit capital as well as time and
+              expertise. Participation is structured around contribution, shared
+              risk and the durability of the result.
             </p>
             <a
               href="#engage"
-              className="mt-6 inline-flex min-h-12 items-center rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white no-underline"
+              className="mt-6 inline-flex min-h-12 items-center rounded-sm bg-stone-800 px-6 py-3 text-sm font-semibold text-white no-underline"
             >
-              Build a value case{" "}
+              Review an engagement{" "}
               <span className="ml-3" aria-hidden="true">
                 ↗
               </span>
             </a>
           </div>
-          <div className="rounded-3xl border border-stone-200 bg-stone-50 p-6 sm:p-8">
+          <div className="rounded-md border border-stone-200 bg-stone-50 p-6 sm:p-8">
             <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
-              The difference is how
+              Our method
             </p>
             {(
               [
-                ["Open the right door", "Relationships are the beginning."],
                 [
-                  "Change the system",
-                  "A team makes the difficult work operational.",
+                  "Establish access",
+                  "Bring relevant counterparties and decision-makers into a defined process.",
                 ],
-                ["Prove the outcome", "Evidence matters more than access."],
                 [
-                  "Share what grows",
-                  "Participation follows contribution and agreement.",
+                  "Execute the mandate",
+                  "Convert a commercial thesis into deliverables and accountable decisions.",
+                ],
+                [
+                  "Verify results",
+                  "Test outcomes against agreed baselines and independent records.",
+                ],
+                [
+                  "Allocate participation",
+                  "Document the allocation of economic benefit and future upside.",
                 ],
               ] as const
             ).map(([heading, body], i) => (
@@ -233,7 +241,7 @@ export default function ValueExperience() {
                 key={heading}
                 className="mt-5 grid grid-cols-[2rem_1fr] gap-3 border-t border-stone-200 pt-4"
               >
-                <span className="font-serif text-2xl text-amber-800">
+                <span className="font-serif text-2xl text-stone-800">
                   {i + 1}
                 </span>
                 <div>
@@ -247,20 +255,21 @@ export default function ValueExperience() {
         <main id="engage" className="scroll-mt-6 pt-10">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
-                One conversation, three decisions
+              <p className="text-xs font-bold uppercase tracking-widest text-stone-800">
+                Engagement assessment
               </p>
               <h2 className="mt-3 font-serif text-4xl sm:text-5xl">
-                Work backward from success.
+                An evidence-led approach to value.
               </h2>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-stone-700">
-              Explore privately. This page does not save your answers.
+              Illustrative and confidential. Inputs are not retained by this
+              page.
             </p>
           </div>
-          <section className="mt-8 rounded-3xl border border-stone-300 p-4 sm:p-7">
+          <section className="mt-8 rounded-md border border-stone-300 p-4 sm:p-7">
             <h3 className="text-sm font-bold uppercase tracking-wide">
-              01 / What do you need to change?
+              01 / Select the mandate
             </h3>
             <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {work.map((x, i) => (
@@ -269,7 +278,7 @@ export default function ValueExperience() {
                   key={x.title}
                   aria-pressed={i === selected}
                   onClick={() => choose(i)}
-                  className={`min-h-24 rounded-xl border p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 ${selected === i ? "border-stone-900 bg-stone-900 text-white" : "border-stone-300 bg-white text-stone-900 hover:bg-stone-50"}`}
+                  className={`min-h-24 rounded-sm border p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-700 ${selected === i ? "border-stone-900 bg-stone-800 text-white" : "border-stone-300 bg-white text-stone-900 hover:bg-stone-50"}`}
                 >
                   <span className="block text-xs opacity-70">0{i + 1}</span>
                   <span className="mt-2 block text-base font-semibold">
@@ -279,10 +288,10 @@ export default function ValueExperience() {
               ))}
             </div>
           </section>
-          <section className="mt-4 rounded-3xl border border-stone-300 p-4 sm:p-7">
+          <section className="mt-4 rounded-md border border-stone-300 p-4 sm:p-7">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h3 className="text-sm font-bold uppercase tracking-wide">
-                02 / What would we actually do?
+                02 / Proposed scope and deliverables
               </h3>
               <span className="text-xs text-stone-600">
                 {item.duration} · illustrative
@@ -294,16 +303,16 @@ export default function ValueExperience() {
             <div className="mt-6 grid gap-3 md:grid-cols-3">
               {(
                 [
-                  ["We bring", item.leverage],
-                  ["We build", item.build],
-                  ["You keep", item.lasting],
+                  ["Our contribution", item.leverage],
+                  ["Work product", item.build],
+                  ["Durable benefit", item.lasting],
                 ] as const
               ).map(([title, body], i) => (
                 <article
                   key={title}
-                  className="relative rounded-2xl bg-stone-50 p-5"
+                  className="relative rounded-md bg-stone-50 p-5"
                 >
-                  <span className="text-xs font-bold text-amber-800">
+                  <span className="text-xs font-bold text-stone-800">
                     0{i + 1}
                   </span>
                   <h4 className="mt-3 font-serif text-2xl">{title}</h4>
@@ -313,7 +322,7 @@ export default function ValueExperience() {
                   {i < 2 && (
                     <span
                       aria-hidden="true"
-                      className="absolute -right-2 top-1/2 z-10 hidden bg-white px-1 font-bold text-amber-800 md:block"
+                      className="absolute -right-2 top-1/2 z-10 hidden bg-white px-1 font-bold text-stone-800 md:block"
                     >
                       →
                     </span>
@@ -323,25 +332,25 @@ export default function ValueExperience() {
             </div>
             <div className="mt-6 border-t border-stone-200 pt-5">
               <h4 className="text-xs font-bold uppercase tracking-widest text-stone-600">
-                What would count as proof?
+                Evidence and acceptance criteria
               </h4>
               <p className="mt-2 text-base leading-relaxed">{item.proof}</p>
               <Link
                 href={item.href}
-                className="mt-3 inline-block text-sm font-semibold text-amber-900 underline underline-offset-4"
+                className="mt-3 inline-block text-sm font-semibold text-stone-800 underline underline-offset-4"
               >
                 {item.reading}
               </Link>
             </div>
           </section>
-          <section className="mt-4 rounded-3xl border border-stone-300 p-4 sm:p-7">
+          <section className="mt-4 rounded-md border border-stone-300 p-4 sm:p-7">
             <h3 className="text-sm font-bold uppercase tracking-wide">
-              03 / Does the value justify the partnership?
+              03 / Economic assessment
             </h3>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-stone-700">
-              Set an opportunity, the improvement it might support, our
-              attributable part and the confidence you have in delivery. The
-              assumptions are yours to challenge.
+              Set the relevant economic baseline and adjust assumptions about
+              improvement, attribution and realization. Each assumption should
+              be documented and mutually reviewed.
             </p>
             <div className="mt-6 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
               <div className="space-y-5">
@@ -356,7 +365,7 @@ export default function ValueExperience() {
                     onChange={(e) =>
                       setBasis(Math.max(0, Number(e.target.value) || 0))
                     }
-                    className="mt-2 block w-full rounded-xl border border-stone-300 p-4 text-base"
+                    className="mt-2 block w-full rounded-sm border border-stone-300 p-4 text-base"
                   />
                 </label>
                 {(
@@ -368,20 +377,20 @@ export default function ValueExperience() {
                 ).map(([title, value, setter, max]) => (
                   <label key={title} className="block text-sm font-semibold">
                     {title}{" "}
-                    <strong className="ml-2 text-amber-800">{value}%</strong>
+                    <strong className="ml-2 text-stone-800">{value}%</strong>
                     <input
                       type="range"
                       min="0"
                       max={max}
                       value={value}
                       onChange={(e) => setter(Number(e.target.value))}
-                      className="mt-3 block w-full accent-amber-800"
+                      className="mt-3 block w-full accent-stone-700"
                     />
                   </label>
                 ))}
-                <details className="rounded-xl bg-stone-50 p-4">
+                <details className="rounded-sm bg-stone-50 p-4">
                   <summary className="cursor-pointer text-sm font-semibold">
-                    Inspect participation assumptions
+                    Commercial assumptions
                   </summary>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <label className="text-sm font-semibold">
@@ -394,7 +403,7 @@ export default function ValueExperience() {
                         onChange={(e) =>
                           setMonthly(Math.max(0, Number(e.target.value) || 0))
                         }
-                        className="mt-2 block w-full rounded-lg border border-stone-300 p-3"
+                        className="mt-2 block w-full rounded-sm border border-stone-300 p-3"
                       />
                     </label>
                     <label className="text-sm font-semibold">
@@ -412,7 +421,7 @@ export default function ValueExperience() {
                             ),
                           )
                         }
-                        className="mt-2 block w-full rounded-lg border border-stone-300 p-3"
+                        className="mt-2 block w-full rounded-sm border border-stone-300 p-3"
                       />
                     </label>
                   </div>
@@ -422,25 +431,25 @@ export default function ValueExperience() {
                   </p>
                 </details>
               </div>
-              <div className="rounded-2xl bg-stone-900 p-5 text-white sm:p-7">
-                <p className="text-xs font-bold uppercase tracking-widest text-stone-300">
-                  Working value case
+              <div className="rounded-md bg-stone-100 p-5 text-stone-900 sm:p-7">
+                <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
+                  Illustrative valuation
                 </p>
-                <p className="mt-5 text-sm text-stone-300">
-                  Potential annual change
+                <p className="mt-5 text-sm text-stone-600">
+                  Gross annual opportunity
                 </p>
                 <p className="mt-1 font-serif text-3xl tabular-nums">
                   {money(calc.gross)}
                 </p>
-                <p className="mt-4 text-sm text-stone-300">
-                  Value attributable to our contribution
+                <p className="mt-4 text-sm text-stone-600">
+                  Attributable annual value
                 </p>
                 <p className="mt-1 font-serif text-3xl tabular-nums">
                   {money(calc.attributed)}
                 </p>
-                <div className="mt-5 border-t border-stone-600 pt-5">
-                  <p className="text-sm text-stone-300">
-                    Confidence-adjusted annual value
+                <div className="mt-5 border-t border-stone-300 pt-5">
+                  <p className="text-sm text-stone-600">
+                    Probability-adjusted annual value
                   </p>
                   <p
                     aria-live="polite"
@@ -450,16 +459,16 @@ export default function ValueExperience() {
                   </p>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-stone-800 p-4">
-                    <p className="text-xs text-stone-300">
+                  <div className="rounded-sm bg-white p-4">
+                    <p className="text-xs text-stone-600">
                       Benefit over {months} months
                     </p>
                     <p className="mt-2 text-xl font-semibold tabular-nums">
                       {money(calc.termBenefit)}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-stone-800 p-4">
-                    <p className="text-xs text-stone-300">
+                  <div className="rounded-sm bg-white p-4">
+                    <p className="text-xs text-stone-600">
                       Cash over {months} months
                     </p>
                     <p className="mt-2 text-xl font-semibold tabular-nums">
@@ -469,54 +478,53 @@ export default function ValueExperience() {
                 </div>
                 <p className="mt-5 text-sm font-semibold">
                   {calc.net >= 0
-                    ? "Worth discussing with real evidence."
-                    : "The modeled benefit does not yet support these terms."}
+                    ? "The estimate may warrant further review."
+                    : "The modeled benefit does not support the stated assumptions."}
                 </p>
-                <p className="mt-3 text-xs leading-relaxed text-stone-300">
+                <p className="mt-3 text-xs leading-relaxed text-stone-600">
                   Illustrative, not achieved savings or a guarantee. Excludes
                   delivery costs, tax, timing, dilution and noncash benefits.
                 </p>
               </div>
             </div>
           </section>
-          <section className="mt-4 grid gap-5 rounded-3xl bg-stone-100 p-5 sm:p-8 md:grid-cols-[1.2fr_0.8fr]">
+          <section className="mt-4 grid gap-5 rounded-md bg-stone-100 p-5 sm:p-8 md:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-amber-800">
-                From me to we
+              <p className="text-xs font-bold uppercase tracking-widest text-stone-800">
+                Next steps
               </p>
               <h3 className="mt-3 font-serif text-3xl sm:text-4xl">
-                Bring us the outcome, not the pitch deck.
+                Request a mandate review.
               </h3>
               <p className="mt-4 max-w-xl leading-relaxed text-stone-700">
-                We will look at the work, the proof and the sharing of value
-                together. We will tell you when we do not fit.
+                We will review the objective, scope, evidence requirements and
+                proposed participation structure. We will also identify any
+                material gaps before discussing terms.
               </p>
             </div>
             <div className="flex flex-col justify-end gap-3">
               <button
                 type="button"
                 onClick={copy}
-                className="min-h-12 rounded-full border border-stone-400 px-5 py-3 text-sm font-semibold"
+                className="min-h-12 rounded-sm border border-stone-400 px-5 py-3 text-sm font-semibold"
               >
-                {copied ? "Working brief copied" : "Copy my working brief"}
+                {copied ? "Assessment copied" : "Copy assessment summary"}
               </button>
               <Link
                 href="/talk-to-us"
-                className="flex min-h-12 items-center justify-center rounded-full bg-stone-900 px-5 py-3 text-sm font-semibold text-white no-underline"
+                className="flex min-h-12 items-center justify-center rounded-sm bg-stone-800 px-5 py-3 text-sm font-semibold text-white no-underline"
               >
-                Start a conversation ↗
+                Request a discussion
               </Link>
               <p className="text-center text-xs text-stone-600">
-                Paste the brief into your message.
+                Include the summary when contacting us.
               </p>
             </div>
           </section>
         </main>
         <section className="mt-12 grid gap-6 border-t border-stone-300 pt-9 md:grid-cols-2">
           <div>
-            <h2 className="font-serif text-3xl">
-              What happens after we agree?
-            </h2>
+            <h2 className="font-serif text-3xl">Measurement and reporting</h2>
             <p className="mt-3 text-base leading-relaxed text-stone-700">
               We establish the baseline and evidence owners, then report at 30,
               90 and 180 days. Some proof is public; some anonymized; some
@@ -524,9 +532,7 @@ export default function ValueExperience() {
             </p>
           </div>
           <div>
-            <h2 className="font-serif text-3xl">
-              What happens when value grows?
-            </h2>
+            <h2 className="font-serif text-3xl">Investment and allocation</h2>
             <p className="mt-3 text-base leading-relaxed text-stone-700">
               We can invest in the underlying asset, help it grow, and allocate
               eligible surplus to agreed interests after obligations and
@@ -535,7 +541,7 @@ export default function ValueExperience() {
           </div>
         </section>
         <footer className="mt-12 flex flex-wrap justify-between gap-3 border-t border-stone-300 pt-5 text-xs text-stone-600">
-          <span>RampRate · Private engagement model</span>
+          <span>RampRate · Engagement assessment</span>
           <span>Anonymous illustrations · Not a binding offer</span>
         </footer>
       </div>
