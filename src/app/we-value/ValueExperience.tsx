@@ -326,6 +326,73 @@ export default function ValueExperience() {
             able to look each other in the eye and explain what happened.
           </blockquote>
         </section>
+        <section className="mb-14 border-t border-stone-300 pt-12">
+          <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
+            Current areas of work
+          </p>
+          <h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">
+            The work we are willing to be judged by.
+          </h2>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed">
+            These are the problems we are working on, or exploring with
+            partners. Some are commercial. Some are intensely personal. None is
+            a claim that an outcome is already won.
+          </p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {[
+              [
+                "01",
+                "When lives and partnerships come apart",
+                "Complex divorces, business disputes and broken trust. We help people recover clarity, protect what matters and build a path forward. Not every victory happens in court.",
+              ],
+              [
+                "02",
+                "When power stops being fair",
+                "Founders, shareholders and business partners can lose the value they helped create. We work on accountability, fairer structures and durable commercial resolution.",
+              ],
+              [
+                "03",
+                "When a data center meets its neighbors",
+                "The compute economy needs power, land and trust. We are exploring reciprocal economics with communities and Tribal Nations, including meaningful authority and benefits that endure.",
+              ],
+              [
+                "04",
+                "When wellness gets personal",
+                "Through BioChain, ZERO and related initiatives, we are examining verified sourcing, DNA-informed wellness and outcomes that can be checked rather than merely advertised.",
+              ],
+              [
+                "05",
+                "When art becomes a future",
+                "Clarisse's creative world brings the question down to one human scale: can an artist retain authorship, earn fairly and leave a cultural legacy?",
+              ],
+              [
+                "06",
+                "When technology outruns responsibility",
+                "From enterprise sourcing to second-life servers and founder growth, the work is to build something viable without handing hidden costs to everyone else.",
+              ],
+            ].map(([number, title, body]) => (
+              <article
+                key={number}
+                className="rounded-2xl border border-stone-200 bg-white p-6"
+              >
+                <p className="text-xs font-bold tracking-widest text-amber-800">
+                  {number} / IN MOTION
+                </p>
+                <h3 className="mt-3 font-serif text-2xl leading-tight">
+                  {title}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-stone-700">
+                  {body}
+                </p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 text-sm leading-relaxed text-stone-600">
+            We share themes and methods, not private case details.
+            Participation, financing, ownership and outcomes depend on each
+            project, the people involved, and signed agreements.
+          </p>
+        </section>
         <section
           id="principles"
           className="grid gap-4 border-y border-[oklch(0.865 0.030 96.4)] py-9 md:grid-cols-3"
