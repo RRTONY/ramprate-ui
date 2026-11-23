@@ -106,6 +106,24 @@ const cases: Case[] = [
       "Certificates, independent tests, audited procurement results, appropriately reviewed outcomes",
   },
   {
+    name: "Biochemistry optimization",
+    symbol: "09",
+    thesis:
+      "A dose on the label is not the same as a useful response in the body.",
+    unit: "Annual value of verified health-service and product improvements",
+    base: 2000000,
+    improvement: 18,
+    persistence: 62,
+    attribution: 35,
+    probability: 48,
+    mission: 90,
+    implementation: 50,
+    beneficiaries:
+      "Individuals, clinicians, laboratories, researchers and responsible manufacturers",
+    evidence:
+      "Consent, baseline laboratory evidence, quality verification, clinician-reviewed hypotheses, agreed follow-up and documented uncertainty",
+  },
+  {
     name: "Enterprise sourcing",
     symbol: "06",
     thesis: "A lower invoice only matters if the better relationship lasts.",
@@ -152,6 +170,130 @@ const cases: Case[] = [
     beneficiaries: "Asset stewards, creators, supporters, impact partners",
     evidence:
       "Verified distribution rights, asset cash flow, participant consent and measurable impact",
+  },
+];
+
+const readingTrails = [
+  {
+    belief:
+      "No algorithm can turn a broken relationship into a fair ending by itself.",
+    invitation:
+      "Make the obligations, failures, repairs and measurable results visible without exposing private lives.",
+    articles: [
+      {
+        title: "The Arithmetic of Relationships",
+        href: "https://tonygreenberg.com/blog/the-arithmetic-of-relationships",
+        why: "What makes a relationship valuable to both sides?",
+      },
+      {
+        title: "The Alliance That Doesn't Require a Press Release",
+        href: "https://tonygreenberg.com/blog/conscious-capital-partnership-ecosystem",
+        why: "Why quiet, sustained collaboration matters.",
+      },
+    ],
+  },
+  {
+    belief: "Control and value are different things.",
+    invitation:
+      "Build transparent contribution records and ownership terms that survive the first disagreement.",
+    articles: [
+      {
+        title: "When Valuations Don't Mean Valuable",
+        href: "https://tonygreenberg.com/blog/when-valuations-dont-mean-valuable",
+        why: "Price is not proof of value.",
+      },
+      {
+        title: "The Tug of War",
+        href: "https://tonygreenberg.com/blog/the-tug-of-war-ethical-vs-economic-decisions",
+        why: "Where money and principles pull against each other.",
+      },
+    ],
+  },
+  {
+    belief: "Neighbors do not cease to matter after the groundbreaking.",
+    invitation:
+      "Set up auditable community benefit agreements and locally meaningful decision rights.",
+    articles: [
+      {
+        title: "The Cloud Gets Rich. What Do Its Neighbors Get?",
+        href: "https://ramprate.com/blog/the-cloud-gets-rich",
+        why: "A practical case for community voice and enforceable benefits.",
+      },
+      {
+        title: "Energy as Impact",
+        href: "https://tonygreenberg.com/articles",
+        why: "Explore the long view of energy and shared prosperity.",
+      },
+    ],
+  },
+  {
+    belief: "A good supplement label is only the beginning of the question.",
+    invitation:
+      "Connect trusted inputs to measurable changes, not unverified promises.",
+    articles: [
+      {
+        title: "Your Blood Lies Without Your DNA",
+        href: "https://tonygreenberg.com/blog/your-blood-lies-without-your-dna",
+        why: "Why biomarkers and genetic context need to be interpreted together.",
+      },
+      {
+        title: "What Quest Could Fix in 18 Months",
+        href: "https://tonygreenberg.com/blog/what-quest-could-fix",
+        why: "Why the experience surrounding a test is part of its value.",
+      },
+    ],
+  },
+  {
+    belief: "The body does not read a price tag or a marketing claim.",
+    invitation:
+      "Test quality and the path from evidence to intervention to follow-up, with clinical review when appropriate.",
+    articles: [
+      {
+        title: "Your Blood Lies Without Your DNA",
+        href: "https://tonygreenberg.com/blog/your-blood-lies-without-your-dna",
+        why: "Absorption, metabolism, biomarkers and the limits of genetic interpretation.",
+      },
+      {
+        title: "The Peptide Clarity Index",
+        href: "https://tonygreenberg.com/find-your-peptide",
+        why: "An educational question set, not a diagnosis or prescription.",
+      },
+    ],
+  },
+  {
+    belief:
+      "The person who makes the work should not disappear from its future.",
+    invitation:
+      "Explore artist-approved licensing, royalty transparency and continuing creative control.",
+    articles: [
+      {
+        title: "You Are the Moat",
+        href: "https://tonygreenberg.com/blog/you-are-the-moat",
+        why: "Originality and identity in an age of abundant output.",
+      },
+      {
+        title: "The Art of Being Seen",
+        href: "https://tonygreenberg.com/blog/is-that-a-lot-clarisse-abelarde",
+        why: "A personal essay about an artist and a work that asked to be seen.",
+      },
+    ],
+  },
+  {
+    belief: "Technology becomes valuable when its benefits last.",
+    invitation:
+      "Make the commercial improvements measurable after deployment and after we leave.",
+    articles: [
+      {
+        title: "Patience in the AI Infrastructure Gold Rush",
+        href: "https://ramprate.com/blog/ai-infrastructure-gold-rush",
+        why: "A long view of the infrastructure bargain.",
+      },
+      {
+        title: "The CIO's Guide to Smarter Vendor Negotiation",
+        href: "https://tonygreenberg.com/blog/the-cios-guide-to-smarter-vendor-negotiation",
+        why: "The terms that make value persist.",
+      },
+    ],
   },
 ];
 
@@ -362,15 +504,20 @@ export default function ValueExperience() {
               ],
               [
                 "05",
+                "When biochemistry becomes personal",
+                "A vitamin bottle is not a result. We want to understand what a person can absorb, convert and use, where evidence is strong, and where it is not. From quality testing and biological context to thoughtful follow-up, the experiment matters more than the label.",
+              ],
+              [
+                "06",
                 "When art becomes a future",
                 "An artist's work brings the question down to one human scale: can creators retain authorship, earn fairly and leave a cultural legacy?",
               ],
               [
-                "06",
+                "07",
                 "When technology outruns responsibility",
                 "From enterprise sourcing to second-life servers and founder growth, the work is to build something viable without handing hidden costs to everyone else.",
               ],
-            ].map(([number, title, body]) => (
+            ].map(([number, title, body], index) => (
               <article
                 key={number}
                 className="rounded-2xl border border-stone-200 bg-white p-6"
@@ -384,6 +531,37 @@ export default function ValueExperience() {
                 <p className="mt-3 text-base leading-relaxed text-stone-700">
                   {body}
                 </p>
+                <div className="mt-6 border-t border-stone-200 pt-5">
+                  <p className="text-xs font-bold uppercase tracking-wider text-amber-800">
+                    What we have written about this
+                  </p>
+                  <div className="mt-3 space-y-3">
+                    {readingTrails[index].articles.map((article) => (
+                      <a
+                        key={article.href}
+                        href={article.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-xl border border-stone-200 p-4 no-underline hover:border-amber-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+                      >
+                        <span className="block text-sm font-semibold text-stone-900 underline decoration-amber-800 underline-offset-4">
+                          {article.title}
+                        </span>
+                        <span className="mt-1 block text-xs leading-relaxed text-stone-600">
+                          {article.why}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-stone-700">
+                    <strong>What we believe:</strong>{" "}
+                    {readingTrails[index].belief}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-700">
+                    <strong>Where we could go together:</strong>{" "}
+                    {readingTrails[index].invitation}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
