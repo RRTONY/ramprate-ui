@@ -423,7 +423,10 @@ export default function ValueExperience() {
             <span className="text-[oklch(0.520 0.073 49.5)]">together.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
-            Twenty-five years of relationships cannot be fabricated overnight. But relationships alone are not the product. We help turn hard problems into durable outcomes, measure the change, and decide together how to share what grows.
+            Twenty-five years of relationships cannot be fabricated overnight.
+            But relationships alone are not the product. We help turn hard
+            problems into durable outcomes, measure the change, and decide
+            together how to share what grows.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
@@ -440,7 +443,10 @@ export default function ValueExperience() {
             </a>
           </div>
         </header>
-        <section id="founder-note" className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]">
+        <section
+          id="founder-note"
+          className="mb-12 grid gap-7 border-t border-stone-300 pt-10 md:grid-cols-[1.2fr_0.8fr]"
+        >
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-stone-600">
               A note from the founder
@@ -779,10 +785,10 @@ export default function ValueExperience() {
                 <p className="mt-3 text-base leading-relaxed text-stone-700">
                   {body}
                 </p>
-                <div className="mt-6 border-t border-stone-200 pt-5">
-                  <p className="text-xs font-bold uppercase tracking-wider text-amber-800">
-                    What we have written about this
-                  </p>
+                <details className="mt-6 border-t border-stone-200 pt-5">
+                  <summary className="cursor-pointer text-xs font-bold uppercase tracking-wider text-amber-800">
+                    Explore our published thinking and collaboration options
+                  </summary>
                   <div className="mt-3 space-y-3">
                     {readingTrails[index].articles.map((article) => (
                       <a
