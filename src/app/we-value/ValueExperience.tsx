@@ -248,32 +248,35 @@ export default function ValueExperience() {
     }
   };
   return (
-    <div className="min-h-screen bg-[#fbf9f2] text-[#24251d]">
+    <div className="min-h-screen bg-[oklch(0.982 0.009 93.6)] text-[oklch(0.261 0.015 113.2)]">
       <div className="mx-auto max-w-6xl px-5 pb-24 pt-8 sm:px-8">
-        <nav className="flex items-center justify-between gap-3 border-b border-[#d8d3bd] pb-5 text-xs font-bold uppercase tracking-[0.16em]">
-          <a href="/" className="text-[#5b4b36] no-underline">
+        <nav className="flex items-center justify-between gap-3 border-b border-[oklch(0.865 0.030 96.4)] pb-5 text-xs font-bold uppercase tracking-[0.16em]">
+          <Link
+            href="/"
+            className="text-[oklch(0.423 0.039 74.0)] no-underline"
+          >
             RampRate / ImpactSoul
-          </a>
-          <span className="rounded-full border border-[#c9b98d] px-3 py-2 text-[10px] tracking-wider">
+          </Link>
+          <span className="rounded-full border border-[oklch(0.788 0.062 90.4)] px-3 py-2 text-[10px] tracking-wider">
             Shared privately · Working model
           </span>
         </nav>
         <header className="relative overflow-hidden py-14 sm:py-24">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-12 top-8 h-52 w-52 rounded-full border-[22px] border-[#e1d5af] opacity-60 sm:h-80 sm:w-80"
+            className="pointer-events-none absolute -right-12 top-8 h-52 w-52 rounded-full border-[22px] border-[oklch(0.873 0.052 92.6)] opacity-60 sm:h-80 sm:w-80"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-8 top-20 h-36 w-36 rounded-full border border-[#ad8d62] opacity-70 sm:h-56 sm:w-56"
+            className="pointer-events-none absolute right-8 top-20 h-36 w-36 rounded-full border border-[oklch(0.663 0.070 74.3)] opacity-70 sm:h-56 sm:w-56"
           />
-          <p className="mb-5 max-w-lg text-xs font-bold uppercase tracking-[0.25em] text-[#7d633f]">
+          <p className="mb-5 max-w-lg text-xs font-bold uppercase tracking-[0.25em] text-[oklch(0.517 0.061 74.8)]">
             The Glasshouse · How we price possibility
           </p>
           <h1 className="relative max-w-4xl font-serif text-6xl leading-[0.97] tracking-tight sm:text-8xl">
             From Me
             <br />
-            <span className="text-[#8b5c42]">to We.</span>
+            <span className="text-[oklch(0.520 0.073 49.5)]">to We.</span>
           </h1>
           <p className="relative mt-8 max-w-2xl text-xl leading-relaxed sm:text-2xl">
             We are not paid for a name in an address book. We earn our place in
@@ -282,13 +285,13 @@ export default function ValueExperience() {
           <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="#calculator"
-              className="rounded-full bg-[#302a22] px-6 py-4 text-sm font-semibold text-white no-underline"
+              className="rounded-full bg-[oklch(0.289 0.017 75.0)] px-6 py-4 text-sm font-semibold text-white no-underline"
             >
               Calculate what sticks
             </a>
             <a
               href="#principles"
-              className="rounded-full border border-[#85775c] px-6 py-4 text-sm font-semibold no-underline"
+              className="rounded-full border border-[oklch(0.575 0.043 83.7)] px-6 py-4 text-sm font-semibold no-underline"
             >
               How this house works
             </a>
@@ -296,7 +299,7 @@ export default function ValueExperience() {
         </header>
         <section
           id="principles"
-          className="grid gap-4 border-y border-[#d8d3bd] py-9 md:grid-cols-3"
+          className="grid gap-4 border-y border-[oklch(0.865 0.030 96.4)] py-9 md:grid-cols-3"
         >
           {[
             [
@@ -319,18 +322,18 @@ export default function ValueExperience() {
               key={item[0]}
               className="rounded-2xl bg-white/80 p-6 shadow-sm"
             >
-              <span className="text-xs font-bold uppercase tracking-wider text-[#906944]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[oklch(0.552 0.072 63.9)]">
                 {item[0]}
               </span>
               <h2 className="mt-4 font-serif text-3xl">{item[1]}</h2>
-              <p className="mt-3 text-base leading-relaxed text-[#55564f]">
+              <p className="mt-3 text-base leading-relaxed text-[oklch(0.450 0.011 113.4)]">
                 {item[2]}
               </p>
             </article>
           ))}
         </section>
         <section className="py-16">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8b5c42]">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
             The valuation of belonging
           </p>
           <h2 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">
@@ -346,10 +349,10 @@ export default function ValueExperience() {
         </section>
         <section
           id="calculator"
-          className="scroll-mt-8 rounded-[2rem] border border-[#d3c7ad] bg-[#f3eedf] p-4 sm:p-8"
+          className="scroll-mt-8 rounded-[2rem] border border-[oklch(0.833 0.038 86.2)] bg-[oklch(0.949 0.021 91.6)] p-4 sm:p-8"
         >
           <div className="mb-7">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8b5c42]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
               The public value instrument
             </p>
             <h2 className="mt-2 font-serif text-4xl sm:text-5xl">
@@ -368,7 +371,7 @@ export default function ValueExperience() {
                 key={c.name}
                 onClick={() => setChosen(i)}
                 aria-pressed={chosen === i}
-                className={`min-h-20 rounded-xl border p-3 text-left text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7f6042] ${chosen === i ? "border-[#473b2c] bg-[#473b2c] text-white" : "border-[#cec3a9] bg-white text-[#423c32] hover:bg-[#e9e1ce]"}`}
+                className={`min-h-20 rounded-xl border p-3 text-left text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[oklch(0.513 0.059 64.9)] ${chosen === i ? "border-[oklch(0.361 0.030 72.9)] bg-[oklch(0.361 0.030 72.9)] text-white" : "border-[oklch(0.819 0.037 87.8)] bg-white text-[oklch(0.359 0.019 80.5)] hover:bg-[oklch(0.911 0.027 87.9)]"}`}
               >
                 <span className="mb-1 block text-xs opacity-70">
                   {c.symbol}
@@ -379,13 +382,13 @@ export default function ValueExperience() {
           </div>
           <div className="grid gap-5 lg:grid-cols-[1fr_0.95fr]">
             <div className="rounded-2xl bg-white p-5 sm:p-7">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#876646]">
+              <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.536 0.063 64.9)]">
                 Scenario / {current.name}
               </p>
               <h3 className="my-3 font-serif text-3xl leading-tight">
                 {current.thesis}
               </h3>
-              <p className="mb-6 text-sm leading-relaxed text-[#666152]">
+              <p className="mb-6 text-sm leading-relaxed text-[oklch(0.493 0.024 91.7)]">
                 Beneficiaries: {current.beneficiaries}. Evidence:{" "}
                 {current.evidence}.
               </p>
@@ -405,11 +408,11 @@ export default function ValueExperience() {
                 ].map(([label, key, min, max]) => (
                   <label
                     key={String(key)}
-                    className="block text-sm font-semibold text-[#464238]"
+                    className="block text-sm font-semibold text-[oklch(0.380 0.017 88.8)]"
                   >
                     {label}
                     <input
-                      className="mt-2 w-full rounded-lg border border-[#bdb39d] bg-[#fffefb] px-3 py-3 text-base focus-visible:outline-2 focus-visible:outline-[#8b5c42]"
+                      className="mt-2 w-full rounded-lg border border-[oklch(0.769 0.032 86.5)] bg-[oklch(0.997 0.004 91.4)] px-3 py-3 text-base focus-visible:outline-2 focus-visible:outline-[oklch(0.520 0.073 49.5)]"
                       type="number"
                       min={Number(min)}
                       max={Number(max)}
@@ -436,13 +439,15 @@ export default function ValueExperience() {
               </div>
             </div>
             <div className="space-y-4">
-              <article className="rounded-2xl bg-[#332e27] p-6 text-white">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#e7d6b4]">
+              <article className="rounded-2xl bg-[oklch(0.304 0.014 76.3)] p-6 text-white">
+                <p className="text-xs font-bold uppercase tracking-widest text-[oklch(0.881 0.049 84.5)]">
                   Shared fit score · transparent weights
                 </p>
                 <p className="mt-3 font-serif text-7xl">
                   {result.score.toFixed(0)}
-                  <span className="text-2xl text-[#d6c3a2]">/100</span>
+                  <span className="text-2xl text-[oklch(0.825 0.049 81.4)]">
+                    /100
+                  </span>
                 </p>
                 <p className="mt-3 text-lg">{result.level}</p>
                 <div className="mt-6 space-y-4">
@@ -456,7 +461,7 @@ export default function ValueExperience() {
                       </div>
                       <div className="h-2 overflow-hidden rounded-full bg-white/20">
                         <div
-                          className="h-full rounded-full bg-[#e2b77c]"
+                          className="h-full rounded-full bg-[oklch(0.805 0.091 74.7)]"
                           style={{
                             width: `${Math.max(0, Math.min(100, result.values[i]))}%`,
                           }}
@@ -467,7 +472,7 @@ export default function ValueExperience() {
                 </div>
               </article>
               <article className="rounded-2xl bg-white p-6">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#876646]">
+                <p className="text-xs font-bold uppercase tracking-wider text-[oklch(0.536 0.063 64.9)]">
                   What survives the introduction?
                 </p>
                 <dl className="mt-4 space-y-3 text-sm">
@@ -500,14 +505,16 @@ export default function ValueExperience() {
                   ].map(([label, value]) => (
                     <div
                       key={label}
-                      className="flex items-baseline justify-between gap-3 border-b border-[#eee8dc] pb-2"
+                      className="flex items-baseline justify-between gap-3 border-b border-[oklch(0.932 0.017 84.6)] pb-2"
                     >
-                      <dt className="text-[#666052]">{label}</dt>
+                      <dt className="text-[oklch(0.490 0.023 87.6)]">
+                        {label}
+                      </dt>
                       <dd className="text-right font-bold">{value}</dd>
                     </div>
                   ))}
                 </dl>
-                <div className="mt-5 rounded-xl bg-[#f4eee2] p-4">
+                <div className="mt-5 rounded-xl bg-[oklch(0.951 0.017 84.6)] p-4">
                   <p className="font-semibold">
                     {result.durable >= 50000
                       ? "Modeled value clears $50,000 per year, not necessarily per month."
@@ -526,14 +533,14 @@ export default function ValueExperience() {
                 <button
                   type="button"
                   onClick={copy}
-                  className="mt-5 w-full rounded-full bg-[#473b2c] px-6 py-4 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2"
+                  className="mt-5 w-full rounded-full bg-[oklch(0.361 0.030 72.9)] px-6 py-4 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   {copied ? "Copied summary" : "Copy the visible scorecard"}
                 </button>
               </article>
             </div>
           </div>
-          <p className="mt-5 text-xs leading-relaxed text-[#625f57]">
+          <p className="mt-5 text-xs leading-relaxed text-[oklch(0.486 0.013 89.8)]">
             Model note: gross improvement = baseline × improvement rate;
             attributable improvement = gross × attribution; expected value =
             attributable × probability; durable value = expected × persistence.
@@ -544,7 +551,7 @@ export default function ValueExperience() {
         </section>
         <section className="grid gap-7 py-16 md:grid-cols-2">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8b5c42]">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.520 0.073 49.5)]">
               The house rule
             </p>
             <h2 className="mt-3 font-serif text-4xl">
@@ -557,7 +564,7 @@ export default function ValueExperience() {
               commitment. It does not imply every engagement uses these terms.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#cfc4aa] bg-white p-7">
+          <div className="rounded-2xl border border-[oklch(0.822 0.037 87.8)] bg-white p-7">
             <p className="font-serif text-3xl">The wrong house?</p>
             <p className="mt-4 leading-relaxed">
               If you do not believe the work can create meaningful, measurable
@@ -571,8 +578,8 @@ export default function ValueExperience() {
             </p>
           </div>
         </section>
-        <section className="rounded-[2rem] bg-[#e8dfc9] p-7 sm:p-12">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#745637]">
+        <section className="rounded-[2rem] bg-[oklch(0.905 0.031 88.4)] p-7 sm:p-12">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[oklch(0.477 0.060 66.4)]">
             What we put in writing
           </p>
           <h2 className="mt-3 font-serif text-4xl">No oracle. A ledger.</h2>
@@ -604,7 +611,7 @@ export default function ValueExperience() {
             regulated activity needs specific review and a signed agreement.
           </p>
         </section>
-        <footer className="mt-14 flex flex-col justify-between gap-4 border-t border-[#d8d3bd] pt-8 text-sm text-[#635d50] sm:flex-row">
+        <footer className="mt-14 flex flex-col justify-between gap-4 border-t border-[oklch(0.865 0.030 96.4)] pt-8 text-sm text-[oklch(0.480 0.022 86.2)] sm:flex-row">
           <span>RampRate · ImpactSoul · From Me to We</span>
           <span>
             Unlisted concept for partner discussion · Not a binding offer
