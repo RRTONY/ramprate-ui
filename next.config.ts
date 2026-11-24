@@ -80,6 +80,14 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        // The strategic Cato brief used to be a standalone encrypted file in
+        // public/. It now lives at the proper Next.js page; links already
+        // shared with lenders keep working.
+        source: "/cato-digital-financing-strategic.html",
+        destination: "/cato-brief-strategic",
+        permanent: true,
+      },
+      {
         source: "/nda",
         destination: "https://ramprate.s.gy/nda-sign",
         permanent: true,

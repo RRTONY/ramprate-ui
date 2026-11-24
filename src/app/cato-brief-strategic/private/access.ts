@@ -1,8 +1,8 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
-// SHA-256 of the strategic brief's access password (the same password as the
-// encrypted page at /cato-digital-financing-strategic.html). Only the hash
-// lives in the repo, never the password itself.
+// SHA-256 of the strategic brief's access password (the same one the old
+// /cato-digital-financing-strategic.html page used, which now redirects
+// here). Only the hash lives in the repo, never the password itself.
 const HASH = "7f0d25d71c4a205b768e91d2a5ebceaa7bbd30867d892e1bd591be8bcdb8674b";
 
 export const AUTH_COOKIE = "cato_strategic_auth";

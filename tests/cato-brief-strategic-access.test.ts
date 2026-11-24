@@ -32,6 +32,19 @@ describe("Cato strategic financing brief access", () => {
     }
   });
 
+  it("sends the old .html link to the page, and the old file is gone", async () => {
+    const { default: config } = await import("../next.config");
+    const redirects = await config.redirects!();
+    expect(redirects).toContainEqual(
+      expect.objectContaining({
+        source: "/cato-digital-financing-strategic.html",
+        destination: "/cato-brief-strategic",
+        permanent: true,
+      }),
+    );
+    expect(() => readFileSync("public/cato-digital-financing-strategic.html")).toThrow();
+  });
+
   const now = 1793318400000;
   const secret = "test-only-session-signing-key";
 
