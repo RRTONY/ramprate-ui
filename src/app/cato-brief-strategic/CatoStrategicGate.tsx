@@ -1,51 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
-type View = "desktop" | "mobile";
-
-// Same rule as the original encrypted page: phones and narrow windows get
-// the author's mobile layout, everything else the desktop one.
-function pickView(): View {
-  const w = Math.min(window.innerWidth, window.screen.width || 9999);
-  const coarse = window.matchMedia?.("(pointer: coarse)").matches;
-  return window.innerWidth <= 760 || (coarse && w <= 900) ? "mobile" : "desktop";
-}
-
+// Password screen. On success the server sets the session cookie and the page
+// is refreshed, so it renders the brief on the server (see page.tsx).
 export default function CatoStrategicGate() {
-  const [view, setView] = useState<View | null>(null); // null = locked
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const frameRef = useRef<HTMLIFrameElement>(null);
-  // Set once the reader picks a layout with the brief's own "Mobile view" /
-  // "Desktop view" button; from then on resizing no longer switches it.
-  const manual = useRef(false);
-
-  useEffect(() => {
-    if (!view) return;
-    let timer: ReturnType<typeof setTimeout>;
-    const onResize = () => {
-      if (manual.current) return;
-      clearTimeout(timer);
-      timer = setTimeout(() => setView(pickView()), 250);
-    };
-    // The brief's toggle button posts { rrToggle: 1 } to this page.
-    const onMessage = (event: MessageEvent) => {
-      if (event.source !== frameRef.current?.contentWindow || !event.data?.rrToggle) return;
-      manual.current = true;
-      setView((v) => (v === "mobile" ? "desktop" : "mobile"));
-    };
-    window.addEventListener("resize", onResize);
-    window.addEventListener("message", onMessage);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("message", onMessage);
-    };
-  }, [view]);
 
   async function submit() {
     if (submitting) return;
@@ -64,29 +29,17 @@ export default function CatoStrategicGate() {
             : "That password did not work. Check it and try again.",
         );
         setPassword("");
+        setSubmitting(false);
         inputRef.current?.focus();
         return;
       }
       setPassword("");
-      setView(pickView());
+      router.refresh();
     } catch {
       setError("Could not check the password. Please try again.");
-      inputRef.current?.focus();
-    } finally {
       setSubmitting(false);
+      inputRef.current?.focus();
     }
-  }
-
-  if (view) {
-    return (
-      <iframe
-        ref={frameRef}
-        key={view}
-        src={`/cato-brief-strategic/content?view=${view}`}
-        title={`Cato Digital GPU Financing Brief, ${view} view`}
-        className="fixed inset-0 block h-dvh w-full border-0 bg-[oklch(0.95_0.01_85)]"
-      />
-    );
   }
 
   return (
@@ -132,10 +85,36 @@ export default function CatoStrategicGate() {
           disabled={submitting}
           className="mt-3.5 flex min-h-11 w-full items-center justify-center gap-2 bg-[oklch(0.2_0.015_50)] p-3.5 text-[15px] font-semibold text-[oklch(0.98_0.006_85)] disabled:cursor-wait disabled:opacity-60"
         >
-          {submitting && <Loader2 aria-hidden="true" className="size-4 animate-spin" />}
+          {submitting && (
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="size-4 animate-spin"
+              fill="none"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                stroke="currentColor"
+                strokeOpacity="0.3"
+                strokeWidth="3"
+              />
+              <path
+                d="M21 12a9 9 0 0 0-9-9"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+          )}
           View brief
         </button>
-        <p role="alert" aria-live="polite" className="mt-2.5 min-h-5 text-sm text-[oklch(0.45_0.17_25)]">
+        <p
+          role="alert"
+          aria-live="polite"
+          className="mt-2.5 min-h-5 text-sm text-[oklch(0.45_0.17_25)]"
+        >
           {error}
         </p>
       </form>

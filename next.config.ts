@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
   // loaded at runtime, but still traced and copied into the function.
   serverExternalPackages: ["eslint", "eslint-config-next"],
   outputFileTracingIncludes: {
+    // The Cato strategic brief's images are read at request time (only for a
+    // signed-in reader), so tracing can't see them on its own.
+    "/cato-brief-strategic/media/\\[file\\]": [
+      "./src/app/cato-brief-strategic/private/media/*",
+    ],
     "/api/mcp": [
       "./node_modules/eslint*/**/*",
       "./node_modules/@eslint/**/*",
