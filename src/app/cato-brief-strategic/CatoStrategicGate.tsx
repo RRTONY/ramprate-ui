@@ -19,19 +19,31 @@ export default function CatoStrategicGate() {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  // Set once the reader picks a layout with the brief's own "Mobile view" /
+  // "Desktop view" button; from then on resizing no longer switches it.
+  const manual = useRef(false);
 
-  // Once open, switch layout if the window is resized across the breakpoint.
   useEffect(() => {
     if (!view) return;
     let timer: ReturnType<typeof setTimeout>;
     const onResize = () => {
+      if (manual.current) return;
       clearTimeout(timer);
       timer = setTimeout(() => setView(pickView()), 250);
     };
+    // The brief's toggle button posts { rrToggle: 1 } to this page.
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== frameRef.current?.contentWindow || !event.data?.rrToggle) return;
+      manual.current = true;
+      setView((v) => (v === "mobile" ? "desktop" : "mobile"));
+    };
     window.addEventListener("resize", onResize);
+    window.addEventListener("message", onMessage);
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("message", onMessage);
     };
   }, [view]);
 
@@ -68,6 +80,7 @@ export default function CatoStrategicGate() {
   if (view) {
     return (
       <iframe
+        ref={frameRef}
         key={view}
         src={`/cato-brief-strategic/content?view=${view}`}
         title={`Cato Digital GPU Financing Brief, ${view} view`}
@@ -79,7 +92,7 @@ export default function CatoStrategicGate() {
   return (
     <main className="flex min-h-dvh items-center justify-center bg-[oklch(0.95_0.01_85)] px-4 py-8 text-[oklch(0.2_0.015_50)]">
       <form
-        className="w-full max-w-[400px] border border-t-[3px] border-[oklch(0.83_0.02_80)] border-t-[oklch(0.2_0.015_50)] bg-[oklch(0.98_0.006_85)] px-6 pt-7 pb-6"
+        className="w-full max-w-100 border border-t-[3px] border-[oklch(0.83_0.02_80)] border-t-[oklch(0.2_0.015_50)] bg-[oklch(0.98_0.006_85)] px-6 pt-7 pb-6"
         onSubmit={(event) => {
           event.preventDefault();
           void submit();
