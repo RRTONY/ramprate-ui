@@ -4,8 +4,8 @@ import {
   Playfair_Display,
   DM_Sans,
   JetBrains_Mono,
-  Space_Grotesk,
 } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -30,9 +30,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "700"],
+// Self-hosted (the latin file Google Fonts serves, SIL Open Font License):
+// on Nov 24, 2026 Netlify's builds started failing to load Space Grotesk
+// from Google ("next/font/google queries have exactly one entry"), while the
+// same code built fine elsewhere. One variable file covers both weights.
+const spaceGrotesk = localFont({
+  src: "./fonts/space-grotesk-latin.woff2",
+  weight: "500 700",
   variable: "--font-wordmark",
   display: "swap",
 });
