@@ -3915,3 +3915,8 @@
     display: none;
   }
 }
+
+/* Inline styles of the original financing brief */
+.cato-m .cs-0742f4c4 {
+  counter-reset: p 5 !important;
+}

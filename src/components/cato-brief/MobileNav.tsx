@@ -6,7 +6,8 @@ import { ViewToggle } from "./BriefViewer";
 // The phone layout's sticky menu: the three parts of the brief, chips for the
 // sections of the current part, a contents drawer, a reading-progress bar and
 // a back-to-top button. Ported from the script in Alex's HTML (Nov 24, 2026).
-// `id` is the id of each section heading anchor in MobileBrief.tsx.
+// `id` is the id of each section anchor in a brief's MobileBrief.tsx (the
+// same in every Cato brief).
 const PARTS = ["Opportunity", "Why Cato", "The deal"];
 const NAV = [
   { part: 0, label: "Market", id: "n0" },

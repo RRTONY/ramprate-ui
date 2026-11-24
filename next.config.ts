@@ -24,10 +24,11 @@ const nextConfig: NextConfig = {
   // loaded at runtime, but still traced and copied into the function.
   serverExternalPackages: ["eslint", "eslint-config-next"],
   outputFileTracingIncludes: {
-    // The Cato strategic brief's images are read at request time (only for a
-    // signed-in reader), so tracing can't see them on its own.
-    "/cato-brief-strategic/media/\\[file\\]": [
-      "./src/app/cato-brief-strategic/private/media/*",
+    // The Cato briefs' images are read at request time (only for a signed-in
+    // reader), so tracing can't see them on its own.
+    "/cato-brief-strategic/media/\\[file\\]": ["./src/lib/cato-brief/media/*"],
+    "/cato-digital-financing/media/\\[file\\]": [
+      "./src/lib/cato-brief/media/*",
     ],
     "/api/mcp": [
       "./node_modules/eslint*/**/*",
@@ -85,11 +86,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        // The strategic Cato brief used to be a standalone encrypted file in
-        // public/. It now lives at the proper Next.js page; links already
-        // shared with lenders keep working.
+        // The Cato briefs used to be standalone encrypted files in public/.
+        // They now live at proper Next.js pages; links already shared with
+        // lenders keep working.
         source: "/cato-digital-financing-strategic.html",
         destination: "/cato-brief-strategic",
+        permanent: true,
+      },
+      {
+        source: "/cato-digital-financing.html",
+        destination: "/cato-digital-financing",
         permanent: true,
       },
       {

@@ -3,9 +3,10 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// Password screen. On success the server sets the session cookie and the page
-// is refreshed, so it renders the brief on the server (see page.tsx).
-export default function CatoStrategicGate() {
+// Password screen for a Cato brief. On success the server sets the session
+// cookie and the page is refreshed, so it renders the brief on the server
+// (see CatoBriefPage).
+export default function BriefGate({ signInUrl }: { signInUrl: string }) {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +18,7 @@ export default function CatoStrategicGate() {
     setSubmitting(true);
     setError("");
     try {
-      const response = await fetch("/cato-brief-strategic/content", {
+      const response = await fetch(signInUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),

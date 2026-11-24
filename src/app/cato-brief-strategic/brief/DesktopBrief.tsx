@@ -1,10 +1,10 @@
 // Desktop layout of the Cato Digital strategic financing brief, converted from the
 // HTML Alex sent on Nov 24, 2026 (#webmaster). Server component: it is only
-// rendered after the password check in ../page.tsx, so the brief never ships
-// in public JavaScript. Edit the wording here directly. Styles: ./brief.css
-// (scoped to .cato-d); images: ../private/media via ../media/[file].
+// rendered after the password check (CatoBriefPage), so the brief never ships
+// in public JavaScript. Edit the wording here directly. Styles and behaviour:
+// src/components/cato-brief (scoped to .cato-d); images: src/lib/cato-brief/media.
 import Image from "next/image";
-import { ViewToggle } from "./BriefViewer";
+import { ViewToggle } from "@/components/cato-brief/BriefViewer";
 
 export default function DesktopBrief() {
   return (
