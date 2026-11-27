@@ -68,16 +68,12 @@ export const metadata: Metadata = {
     "B Lab certified advisory",
     "RampRate",
   ],
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     type: "website",
     siteName: "RampRate",
-    url: "https://ramprate.com",
     images: ["/og.png"],
   },
   twitter: {
