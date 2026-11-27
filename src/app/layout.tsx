@@ -150,24 +150,6 @@ export default async function RootLayout({
             </Script>
           </>
         )}
-
-        {/* Plausible Analytics */}
-        <Script
-          id="plausible-init"
-          strategy="afterInteractive"
-          src="https://plausible.io/js/pa-M6v6diZ7bHkyH4N7zI23W.js"
-        />
-        <Script id="plausible-setup" strategy="afterInteractive">
-          {`
-            window.plausible = window.plausible || function() {
-              (plausible.q = plausible.q || []).push(arguments)
-            };
-            plausible.init = plausible.init || function(i) {
-              plausible.o = i || {}
-            };
-            plausible.init();
-          `}
-        </Script>
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <JsonLd data={webSiteJsonLd({ name: settings?.companyName })} />

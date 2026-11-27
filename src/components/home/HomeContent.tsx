@@ -185,6 +185,7 @@ const brands = [
     href: "/sourcing",
     iconKind: "sourcing" as const,
     accentColor: "var(--gold)",
+    textColor: "oklch(0.52 0.12 70)",
   },
   {
     name: "BioChain",
@@ -356,9 +357,14 @@ export default function HomeContent() {
                 key={brand.name}
                 href={brand.href}
                 className="group relative block rounded-xl border p-8 transition-all duration-300 bg-white border-black/5 hover:border-[color-mix(in_oklch,var(--accent)_45%,transparent)] hover:-translate-y-1"
-                style={{ "--accent": brand.accentColor } as CSSProperties}
+                style={
+                  {
+                    "--accent": brand.accentColor,
+                    "--accent-text": brand.textColor ?? brand.accentColor,
+                  } as CSSProperties
+                }
               >
-                <span className="font-mono absolute top-8 right-8 text-[11px] tracking-[0.2em] text-ink-mid/60">
+                <span className="font-mono absolute top-8 right-8 text-[11px] tracking-[0.2em] text-ink-mid">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -374,10 +380,7 @@ export default function HomeContent() {
                   />
                 </div>
 
-                <p
-                  className="font-body text-xs font-semibold uppercase tracking-wider mb-2"
-                  style={{ color: brand.accentColor }}
-                >
+                <p className="font-body text-xs font-semibold uppercase tracking-wider mb-2 text-(--accent-text)">
                   {brand.tag}
                 </p>
                 <h3 className="font-display text-xl font-bold text-ink mb-3">
@@ -386,10 +389,7 @@ export default function HomeContent() {
                 <p className="font-body text-sm leading-relaxed mb-6 text-ink-mid">
                   {brand.description}
                 </p>
-                <span
-                  className="font-body inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5"
-                  style={{ color: brand.accentColor }}
-                >
+                <span className="font-body inline-flex items-center gap-1.5 text-sm font-medium transition-all group-hover:gap-2.5 text-(--accent-text)">
                   Explore {brand.name}
                   <ArrowRight size={14} />
                 </span>
@@ -504,7 +504,7 @@ export default function HomeContent() {
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gold/10">
                     <step.Icon size={22} className="text-rust" />
                   </div>
-                  <span className="font-mono text-3xl font-bold text-ink-mid/40">
+                  <span className="font-mono text-3xl font-bold text-ink-mid">
                     {step.num}
                   </span>
                 </div>
