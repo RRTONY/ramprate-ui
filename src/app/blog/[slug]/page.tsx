@@ -1,3 +1,4 @@
+import ShareLinks from "@/components/shared/ShareLinks";
 import { client } from "@/lib/sanity/client";
 import {
   postBySlugQuery,
@@ -252,6 +253,11 @@ export default async function BlogPostPage({
             />
           </div>
         )}
+
+        <ShareLinks
+          url={`https://ramprate.com/blog/${slug}`}
+          title={post.title}
+        />
 
         {relatedPosts.length > 0 && (
           <section className="mt-16 pt-12 border-t border-white/10">

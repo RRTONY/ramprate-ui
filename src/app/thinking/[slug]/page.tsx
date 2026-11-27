@@ -9,6 +9,7 @@ import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import type {Metadata} from 'next'
 import CtaSection from '@/components/sections/CtaSection'
+import ShareLinks from '@/components/shared/ShareLinks'
 
 type RelatedPost = {
   _id: string
@@ -179,6 +180,8 @@ export default async function ThinkingPostPage({params}: {params: Promise<{slug:
             <PortableText value={post.body} components={portableTextComponents} />
           </div>
         )}
+
+        <ShareLinks url={`https://ramprate.com/thinking/${slug}`} title={post.title} />
 
         {relatedPosts.length > 0 && (
           <section className="mt-16 pt-12 border-t border-white/10">
