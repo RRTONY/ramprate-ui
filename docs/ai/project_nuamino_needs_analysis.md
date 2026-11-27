@@ -1,110 +1,17 @@
 # NuAmino needs analysis form
 
-Private page: `/nuamino-needs-analysis`. Separate from Active Pharm. The questions and preliminary understandings are in `src/lib/nuamino-needs-fields.ts`.
+Private page: `/nuamino-needs-analysis` (noindex, not in `SITE_PAGES`). Separate from Active Pharm. The questions and RampRate's preliminary understandings are in `src/lib/nuamino-needs-fields.ts`. The form prefills each answer with that understanding; the respondent edits what is wrong.
 
-## Google Sheet setup required before publishing
+## Where submissions go: ClickUp (since 2026-10-30)
 
-The site endpoint `/api/nuamino-needs-analysis` posts validated submissions server-side to the URL in `NUAMINO_NEEDS_SCRIPT_URL`. This must be a **new NuAmino-only Google Apps Script web app**. Never reuse `ACTIVE_PHARM_INTAKE_SCRIPT_URL`, since that would mix customer submissions.
+`/api/nuamino-needs-analysis` validates the submission and creates one task per submission in the ClickUp list **NuAmino Needs Analysis** (id `901115645506`, Clients & Pipeline space). The task description lists every section, question and answer, and marks answers the respondent left unchanged with "_(Kept our existing understanding)_", so reviewers can see at a glance what they corrected.
 
-1. Create a new Google Sheet titled `NuAmino Needs Analysis - Responses`.
-2. From that Sheet, choose Extensions > Apps Script, paste the script below and save.
-3. Deploy > New deployment > Web app. Execute as the Sheet owner and allow incoming requests per approved company policy. Copy the generated `/exec` URL.
-4. An administrator must add the `NUAMINO_NEEDS_SCRIPT_URL` environment variable in Netlify, then redeploy the website. The RampRate AI connector cannot change Netlify secrets or deploy Apps Script.
-5. Submit a test response with a non-sensitive test account and confirm it appears in the Google Sheet before sharing the questionnaire.
+- Token: the existing `CLICKUP_API_TOKEN` (Sam's personal ClickUp token).
+- Optional settings: `NUAMINO_CLICKUP_LIST_ID` (default `901115645506`) and `NUAMINO_CLICKUP_REVIEWERS` (comma-separated ClickUp user ids, default `87464545,87423169`, Sam and Darryl).
+- If the task cannot be created, the visitor is told to retry (502). A failed reviewer comment is only logged, since the task is already saved.
 
-Do not publish or distribute the questionnaire as a working intake until the end-to-end test succeeds.
+**Why the task is not assigned:** Sam and Darryl each have a ClickUp automation that moves any task assigned to them into their own task list ("Sam's Tasks", "Darryl's Tasks") instantly, which would pull submissions out of the NuAmino list. Tested 2026-10-30. Instead, each reviewer gets an **assigned comment** on the task, which shows in their ClickUp inbox without moving it. The same automation is why the Connect form's tasks were landing in Darryl's Tasks (see the Connect notes in `README.md`).
 
-```javascript
-const FIELDS = [
-  "licensing",
-  "nevadaPeptides",
-  "facilities",
-  "lab",
-  "customers",
-  "revenue",
-  "ip",
-  "capacity",
-  "portfolio",
-  "funding",
-  "marketRole",
-  "catalog",
-  "pricing",
-  "moq",
-  "leadTime",
-  "terms",
-  "shipping",
-  "buyers",
-  "monthlyCapacity",
-  "stabilityTesting",
-  "buyerMix",
-  "partnershipModel",
-  "idealCustomer",
-  "avoidChannels",
-  "growthTarget",
-  "priorityProducts",
-  "branding",
-  "documentation",
-  "availableCapacity",
-  "scaleTrigger",
-  "newBuyerTerms",
-  "margins",
-  "criteria",
-  "exclusivity",
-];
+The earlier plan (a Google Sheet + Apps Script web app via `NUAMINO_NEEDS_SCRIPT_URL`) was never set up and is no longer used.
 
-function safeCell(value) {
-  const raw = String(value ?? "");
-  return /^[=+@\-]/.test(raw) ? "'" + raw : raw;
-}
-
-function doPost(event) {
-  try {
-    const data = JSON.parse(event.postData.contents);
-    if (
-      data.form !== "NuAmino needs analysis" ||
-      !data.respondent?.name ||
-      !data.respondent?.email ||
-      !data.answers?.stabilityTesting
-    ) {
-      throw new Error("Missing required fields");
-    }
-    const sheet =
-      SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Responses") ||
-      SpreadsheetApp.getActiveSpreadsheet().insertSheet("Responses");
-    const headers = [
-      "Received at",
-      "Respondent",
-      "Email",
-      "Title",
-      "Intake scope",
-    ]
-      .concat(
-        FIELDS.flatMap((name) => [name + " confirmation", name + " answer"]),
-      )
-      .concat(["Raw submission (JSON)"]);
-    if (sheet.getLastRow() === 0) sheet.appendRow(headers);
-    const row = [
-      new Date(),
-      safeCell(data.respondent.name),
-      safeCell(data.respondent.email),
-      safeCell(data.respondent.title),
-      safeCell(data.verification?.intakeScope),
-      ...FIELDS.flatMap((name) => [
-        safeCell(data.verification?.[name]),
-        safeCell(data.answers?.[name]),
-      ]),
-      safeCell(JSON.stringify(data)),
-    ];
-    sheet.appendRow(row);
-    return ContentService.createTextOutput(
-      JSON.stringify({ ok: true }),
-    ).setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService.createTextOutput(
-      JSON.stringify({ ok: false, error: String(error) }),
-    ).setMimeType(ContentService.MimeType.JSON);
-  }
-}
-```
-
-The web app should be made accessible only through the reviewed deployment policy. If publicly callable, Google Apps Script cannot enforce robust caller authentication by itself; prioritize access control and anti-abuse measures before sharing broadly. The endpoint does not send email and stores all text answers and confirmation choices in separate columns plus a raw JSON record.
+Tests: `tests/nuamino-clickup.test.ts`. Before sharing the questionnaire, submit one clearly labeled test on the preview or live page, confirm the task appears in the NuAmino list with both review comments, then delete it.
