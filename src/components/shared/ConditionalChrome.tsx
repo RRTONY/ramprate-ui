@@ -36,8 +36,13 @@ export function ConditionalChrome({
     segments[0] === "cato-digital-financing" ||
     segments[0] === "tsi-partnership" ||
     segments[0] === "tsi-phase-one";
+  const isTorqueCounselPortal =
+    segments[0] === "torque" && segments[1] === "counsel";
   const hideChrome =
-    pathname?.startsWith("/flow") || isStandaloneArtifact || isStandalonePage;
+    pathname?.startsWith("/flow") ||
+    isStandaloneArtifact ||
+    isStandalonePage ||
+    isTorqueCounselPortal;
 
   return (
     <>
