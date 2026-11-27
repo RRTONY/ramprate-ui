@@ -502,6 +502,86 @@ describe("attached files (2026-10-08: ChatGPT/Claude can't send base64)", () => 
     expect(JSON.stringify(res.content)).toContain("request_upload_link");
     await client.close();
   });
+
+  it("declares ChatGPT's file parameter on sanity_upload_image and needs a change", async () => {
+    const client = await connect(EDITOR);
+    const { tools } = await client.listTools();
+    const tool = tools.find((t) => t.name === "sanity_upload_image")!;
+    expect(
+      (tool._meta as Record<string, unknown>)["openai/fileParams"],
+    ).toEqual(["file"]);
+    expect(tool.inputSchema.required).toEqual(
+      expect.arrayContaining(["filename", "alt", "change_id", "rules_version"]),
+    );
+    const bad = await client.callTool({
+      name: "sanity_upload_image",
+      arguments: {
+        change_id: KEY,
+        filename: "a.png",
+        alt: "x",
+        base64Content: Buffer.from("<html>").toString("base64"),
+        rules_version: "feedbeef12",
+      },
+    });
+    expect(bad.isError).toBe(true);
+    await client.close();
+  });
+
+  it("request_upload_link can send a picture to Sanity, checked before a link is made", async () => {
+    vi.stubEnv("PORTAL_AUTH_SECRET", "test-secret");
+    const { verifyBlob } = await import("@/lib/admin/mcp-oauth");
+    const client = await connect(EDITOR);
+    const call = (sanity_image: unknown) =>
+      client.callTool({
+        name: "request_upload_link",
+        arguments: {
+          change_id: KEY,
+          sanity_image,
+          rules_version: "feedbeef12",
+        },
+      });
+    const text = (r: Awaited<ReturnType<typeof call>>) =>
+      JSON.stringify(r.content);
+    expect(text(await call({ filename: "a.pdf", alt: "x" }))).toMatch(
+      /must end in .png/,
+    );
+    expect(text(await call({ filename: "a.png", alt: " " }))).toMatch(
+      /alt is required/,
+    );
+    expect(
+      text(
+        await call({
+          filename: "a.png",
+          alt: "x",
+          attach_to: { documentId: "t1", field: "heroImage" },
+        }),
+      ),
+    ).toMatch(/field must be/);
+
+    const placed = await call({
+      filename: "jane.png",
+      alt: "Jane",
+      caption: "Hi",
+      attach_to: { documentId: "t1", field: "photo", afterBlockKey: "b1" },
+    });
+    const sc = placed.structuredContent as Record<string, string>;
+    expect(sc.path).toBe("sanity:jane.png");
+    expect(sc.next).toMatch(/onto the draft of t1 \(photo\)/);
+    const token = decodeURIComponent(sc.uploadUrl.split("?t=")[1]);
+    expect(verifyBlob<{ sanity: unknown }>("upload", token)?.sanity).toEqual({
+      filename: "jane.png",
+      alt: "Jane",
+      caption: "Hi",
+      attach_to: { documentId: "t1", field: "photo", afterBlockKey: "b1" },
+    });
+
+    const library = await call({ filename: "b.png", alt: "x" });
+    expect((library.structuredContent as Record<string, string>).next).toMatch(
+      /sanity_query/,
+    );
+    await client.close();
+    vi.unstubAllEnvs();
+  });
 });
 
 describe("Other Pending Changes (team feedback 2026-10-08)", () => {

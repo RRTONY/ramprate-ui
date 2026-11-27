@@ -7,9 +7,15 @@ import {
 } from "@/lib/admin/guardrails";
 import { client as sanityReadClient } from "@/lib/sanity/client";
 import {
+  attachImageToDraft,
   createDraft,
   getDocumentForEditing,
+  IMAGE_FIELDS,
+  isImageField,
+  isImageTarget,
   patchDraft,
+  uploadImageAsset,
+  type ImageField,
 } from "@/lib/admin/sanity-content";
 import { checkPageSeo } from "@/lib/admin/seo-check";
 import { checkLighthouse } from "@/lib/admin/lighthouse-check";
@@ -303,6 +309,66 @@ export const ADMIN_TOOLS = [
         },
       },
       required: ["docType", "fields"],
+    },
+  },
+  {
+    name: "sanity_upload_image",
+    description:
+      "Upload a picture into Sanity and, optionally, place it as a DRAFT on: a blog post (mainImage = its main picture, body = inside the post text), a team member (photo) or a board advisor (photo). Testimonials, case studies and client logos are shown from code, not Sanity, so pictures for them go through github_write_binary_file instead. Nothing goes live until the change is published. Send the picture ONE of these ways: `file` (ChatGPT: the file the person attached), `source_url` (a public https link straight to the image), or `base64Content` (only if you truly have the bytes; you cannot turn a picture you see in the chat into base64). PNG, JPG, WebP, GIF or AVIF, up to 8 MB; main images should be at least 1200x630. `alt` is required: describe what the picture shows. Without `attach_to` it only uploads and returns the asset id, which you can then use in sanity_patch_document.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        filename: {
+          type: "string",
+          description:
+            "A short file name with the real ending, e.g. gratitude-circus-2014.png",
+        },
+        file: OPENAI_FILE_SCHEMA,
+        source_url: {
+          type: "string",
+          description: "A public https link straight to the image.",
+        },
+        base64Content: {
+          type: "string",
+          description:
+            "The image's real bytes as base64. Not for attached files.",
+        },
+        alt: {
+          type: "string",
+          description:
+            "What the picture shows, in plain words (for screen readers and Google).",
+        },
+        caption: {
+          type: "string",
+          description:
+            "Optional caption under an inline picture. Without one, the alt text is shown.",
+        },
+        attach_to: {
+          type: "object",
+          description:
+            "Optional: where to put the picture on a post (written to its draft).",
+          properties: {
+            documentId: {
+              type: "string",
+              description:
+                "The post, teamMember or boardAdvisor id (from sanity_query).",
+            },
+            field: {
+              type: "string",
+              enum: ["mainImage", "body", "photo"],
+              description:
+                "post: mainImage replaces the main picture, body adds it inside the text. teamMember / boardAdvisor: photo.",
+            },
+            afterBlockKey: {
+              type: "string",
+              description:
+                "For body: the _key of the paragraph the picture goes after (read it with sanity_get_document). Leave out to add it at the end.",
+            },
+          },
+          required: ["documentId", "field"],
+        },
+      },
+      required: ["filename", "alt"],
     },
   },
   {
@@ -686,6 +752,8 @@ export function normalizeRepoPath(raw: unknown): string {
   return p;
 }
 
+export const IMAGE_NAME = /^[\w.-]{1,120}\.(png|jpe?g|webp|gif|avif)$/i;
+
 function pathRequired(): ToolCallResult {
   return {
     output: { error: "A repo-relative file path is required." },
@@ -983,6 +1051,117 @@ export async function runAdminTool(
       });
       ctx.log(`Created Sanity draft ${created._id} (${docType})`);
       return { output: { ok: true, id: created._id } };
+    }
+
+    case "sanity_upload_image": {
+      const filename = String(input.filename ?? "").trim();
+      const alt = String(input.alt ?? "").trim();
+      const caption = String(input.caption ?? "").trim() || undefined;
+      const fail = (error: string): ToolCallResult => ({
+        output: { error },
+        isError: true,
+      });
+      if (!IMAGE_NAME.test(filename)) {
+        return fail(
+          "filename must end in .png, .jpg, .jpeg, .webp, .gif or .avif (e.g. gratitude-circus.png).",
+        );
+      }
+      if (!alt) {
+        return fail(
+          "alt is required: describe what the picture shows in plain words.",
+        );
+      }
+
+      // Check the target (and claim it for this change) before uploading,
+      // so a refused request never leaves an orphan asset in Sanity.
+      const attach = input.attach_to as
+        | { documentId?: unknown; field?: unknown; afterBlockKey?: unknown }
+        | undefined;
+      let target: { id: string; field: ImageField; after?: string } | null =
+        null;
+      if (attach) {
+        const id = String(attach.documentId ?? "");
+        const field = String(attach.field ?? "");
+        if (!isImageField(field)) {
+          return fail(
+            'attach_to.field must be "mainImage", "body" or "photo".',
+          );
+        }
+        const current = (await getDocumentForEditing(id)) as {
+          _id: string;
+          _type?: string;
+          title?: string;
+          name?: string;
+        } | null;
+        if (!current) return fail(`No document found for ${id}`);
+        const type = current._type ?? "";
+        if (!isImageTarget(type, field)) {
+          return fail(
+            `"${field}" isn't a picture that shows on the site for a "${type}" document. Allowed: post (mainImage, body), teamMember (photo), boardAdvisor (photo).`,
+          );
+        }
+        const refused = await ctx.claimContent({
+          id: current._id.replace(/^drafts\./, ""),
+          type,
+          title: current.title || current.name || id,
+          isNew: false,
+        });
+        if (refused) return fail(refused);
+        const after =
+          attach.afterBlockKey === undefined || attach.afterBlockKey === ""
+            ? undefined
+            : String(attach.afterBlockKey);
+        if (IMAGE_FIELDS[field] === "single" && after) {
+          return fail("afterBlockKey only applies to body.");
+        }
+        target = { id, field, after };
+      }
+
+      const file = await resolveBinaryInput(input);
+      const problem = file.ok
+        ? checkFileMatchesPath(filename, file.bytes)
+        : file.error;
+      if (!file.ok || problem) return fail(problem!);
+
+      const uploaded = await uploadImageAsset(file.bytes, filename);
+      ctx.log(`Uploaded image ${uploaded.assetId} (${filename})`);
+      if (!target) {
+        return {
+          output: {
+            ok: true,
+            ...uploaded,
+            imageValue: {
+              _type: "image",
+              asset: { _type: "reference", _ref: uploaded.assetId },
+            },
+          },
+        };
+      }
+      try {
+        const { key } = await attachImageToDraft(
+          target.id,
+          target.field,
+          { assetId: uploaded.assetId, alt, caption },
+          target.after,
+        );
+        ctx.log(
+          `Placed ${uploaded.assetId} in ${target.field} of the draft of ${target.id}`,
+        );
+        return {
+          output: {
+            ok: true,
+            ...uploaded,
+            documentId: target.id,
+            field: target.field,
+            ...(key ? { blockKey: key } : {}),
+            note: "Saved to the draft only. It goes live when this change is published.",
+          },
+        };
+      } catch (err) {
+        return fail(
+          `The picture uploaded (${uploaded.assetId}) but couldn't be placed: ${err instanceof Error ? err.message : "unknown error"}`,
+        );
+      }
     }
 
     case "create_clickup_task": {

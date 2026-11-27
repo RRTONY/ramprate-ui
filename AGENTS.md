@@ -557,7 +557,7 @@ infrastructure to maintain.
   default branch, cached 5 min), the `docs/ai/` note list, and a `rulesVersion` (first 10 chars of
   this file's git blob sha). Every tool that changes something (`github_write_file`,
   `github_write_binary_file`, `github_delete_file`, `sanity_patch_document`,
-  `sanity_create_document`, `publish_changes`, `send_email`) requires that value as
+  `sanity_create_document`, `sanity_upload_image`, `publish_changes`, `send_email`) requires that value as
   `rules_version` and refuses to run without it, or with a stale one after this file changes. Hard
   gate rather than just instructions, because some clients (ChatGPT especially) ignore server
   instructions. Stateless: the proof travels with each call. Code: `src/lib/admin/project-rules.ts`,
@@ -662,6 +662,19 @@ infrastructure to maintain.
   redirects included. If a file tool errors, read its error message: it says what to do next.
   Code: `src/lib/admin/binary-upload.ts`, `src/app/api/mcp/upload/route.ts`. Tests:
   `tests/admin/binary-upload.test.ts`, `tests/admin/mcp-widget.test.ts`.
+- **Pictures into Sanity (`sanity_upload_image`, added 2026-11-28, ported from tonygreenberg.com):**
+  uploads a picture (same three ways and checks as `github_write_binary_file`; PNG/JPG/WebP/GIF/AVIF,
+  `alt` required) into Sanity's asset library and, with `attach_to`, places it on a **draft**:
+  `post` (`mainImage`, or inline in `body` after a paragraph `_key`), `teamMember` / `boardAdvisor`
+  (`photo`). Only types whose pictures reach the site: testimonials, case studies and client logos
+  are rendered from code, so their pictures go through the repo. The document is claimed for the
+  change before anything is uploaded, so a refused call leaves nothing in Sanity, and publish /
+  discard / undo work as for `sanity_patch_document`. **In Claude**, call `request_upload_link`
+  with `sanity_image` (same fields) instead of `path`: the placement is checked and signed into the
+  link, and the upload page runs `sanity_upload_image` with the dropped file. Code:
+  `IMAGE_TARGETS` / `attachImageToDraft` / `uploadImageAsset` in `src/lib/admin/sanity-content.ts`.
+  Tests: `tests/admin/sanity-image-content.test.ts`, `tests/admin/sanity-image-tool.test.ts`,
+  `tests/admin/upload-route-sanity.test.ts`, `tests/admin/mcp-widget.test.ts`.
 - **`check_deploy`** (`src/lib/admin/netlify-client.ts`): read-only Netlify build status for the
   live site or one change's preview, with the failure reason. The site id is a constant and only GET
   requests are made, because `NETLIFY_AUTH_TOKEN` (a personal token) can reach every site on the
