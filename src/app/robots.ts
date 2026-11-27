@@ -10,6 +10,7 @@ const disallow = [
   "/josh-bykowski",
   "/legal-master",
   "/supplier-intake-long",
+  "/torque/counsel",
   // Gated behind the buyer intake flow - never a standalone crawlable page.
   "/biochain/catalogue",
   "/biochain/catalogue-access",
@@ -33,7 +34,7 @@ const disallow = [
 ];
 
 // AI/answer-engine crawlers. Listing them explicitly (rather than relying on the
-// '*' default) signals that RampRate welcomes being indexed and cited by AI tools,
+// "*" default) signals that RampRate welcomes being indexed and cited by AI tools,
 // while still honoring the private-path disallows above.
 const aiBots = [
   "GPTBot",
