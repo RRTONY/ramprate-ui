@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import {
-  Playfair_Display,
-  DM_Sans,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -68,16 +64,12 @@ export const metadata: Metadata = {
     "B Lab certified advisory",
     "RampRate",
   ],
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     type: "website",
     siteName: "RampRate",
-    url: "https://ramprate.com",
     images: ["/og.png"],
   },
   twitter: {
