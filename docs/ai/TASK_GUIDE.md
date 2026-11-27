@@ -27,6 +27,7 @@ If the request is unclear, ask **one** short question with 2 to 4 options instea
 | Change a page's Google title / description | Sanity `pageSeo` for that route | `sanity_query` → `sanity_patch_document` (draft) | **Yes**, SEO copy is a business decision |
 | Write / edit a blog or Thinking post | Sanity `post` (+ `category`) | `sanity_query` / `sanity_create_document` / `sanity_patch_document` (drafts) | Only to publish |
 | Add / edit a team member or board advisor | Sanity `teamMember` / `boardAdvisor` | Sanity tools (drafts) | Only to publish |
+| Add a picture to a blog post (main image or inside the text), or a team member / board advisor photo | Sanity asset + that document's draft | `sanity_upload_image` (ChatGPT: attached `file`; Claude: `request_upload_link` with `sanity_image`) | Only to publish |
 | Change contact details (email, phone, address) | Sanity `siteSettings` | `sanity_patch_document` | Only to publish |
 | Testimonials, case studies, client logos | **Code**, in the page/component that shows them | Code tools | Only to publish. Editing the Sanity types of the same name does nothing on the site |
 | Add a new page | Code: new `src/app/<slug>/page.tsx` + `SITE_PAGES` + SEO + nav | Code tools, follow Page Patterns in AGENTS.md | **Yes**: confirm URL, content and whether it's in the nav |
