@@ -1,20 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono } from "next/font/google";
 import styles from "./page.module.css";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-counsel-display",
-  display: "swap",
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-counsel-mono",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: { absolute: "Torque Counsel Partner Portal | RampRate" },
@@ -223,9 +208,7 @@ const reading = [
 
 export default function TorqueCounselPage() {
   return (
-    <div
-      className={`${styles.page} ${fraunces.variable} ${ibmPlexMono.variable}`}
-    >
+    <div className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.topline}>
           <a className={styles.brand} href="https://ramprate.com/torque">
@@ -355,7 +338,9 @@ export default function TorqueCounselPage() {
             <div className={styles.values}>
               {values.map((item, i) => (
                 <article key={item.title}>
-                  <span className={styles.number}>0{i + 1}</span>
+                  <span className={styles.number}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <h3>{item.title}</h3>
                   <p>{item.copy}</p>
                 </article>
@@ -431,7 +416,9 @@ export default function TorqueCounselPage() {
             <div className={styles.steps}>
               {steps.map((step, i) => (
                 <article key={step.title}>
-                  <span className={styles.number}>0{i + 1}</span>
+                  <span className={styles.number}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <h3>{step.title}</h3>
                   <p>{step.copy}</p>
                 </article>
@@ -494,7 +481,9 @@ export default function TorqueCounselPage() {
             <ol className={styles.standards}>
               {standards.map((item, i) => (
                 <li key={item.title}>
-                  <span className={styles.number}>0{i + 1}</span>
+                  <span className={styles.number}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <div>
                     <h3>{item.title}</h3>
                     <p>{item.copy}</p>

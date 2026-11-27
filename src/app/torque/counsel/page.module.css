@@ -1,18 +1,9 @@
-@font-face {
-  font-family: "Cabinet Grotesk";
-  src: url("https://cdn.fontshare.com/wf/J2PZYZURCR7HNQKXCZ4VXYA3K5FFCCLT/PZSZLWHMBCE7FFGOUYDEU33FAESUMA3X/JFDL5FBAQ2WMYL3LGKSCZKAIFCS2UQ63.woff2")
-    format("woff2");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
 .page {
   min-height: 100vh;
   overflow-x: hidden;
-  background: oklch(0.97 0.012 92);
-  color: oklch(0.24 0.025 145);
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  background: oklch(0.98 0.008 85);
+  color: oklch(0.22 0.018 70);
+  font-family: var(--font-body), Arial, sans-serif;
   font-size: 18px;
   line-height: 1.68;
   font-style: normal;
@@ -33,7 +24,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid oklch(0.89 0.018 135);
+  border-bottom: 1px solid oklch(0.84 0.025 80);
 }
 
 .brand,
@@ -41,7 +32,7 @@
 .eyebrow,
 .caseLabel,
 .number {
-  font-family: var(--font-counsel-mono), monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -54,27 +45,27 @@
   min-height: 44px;
   align-items: center;
   gap: 8px;
-  color: oklch(0.24 0.025 145);
+  color: oklch(0.22 0.018 70);
   text-decoration: none;
 }
 
 .brand span {
-  color: oklch(0.43 0.045 135);
+  color: oklch(0.39 0.075 70);
 }
 
 .privateLabel {
-  color: oklch(0.39 0.04 140);
+  color: oklch(0.39 0.075 70);
   text-align: right;
 }
 
 .hero {
   padding: clamp(52px, 9vw, 104px) 0 72px;
-  border-bottom: 1px solid oklch(0.89 0.018 135);
+  border-bottom: 1px solid oklch(0.84 0.025 80);
 }
 
 .eyebrow {
   margin: 0 0 16px;
-  color: oklch(0.39 0.04 140);
+  color: oklch(0.39 0.075 70);
 }
 
 .hero h1,
@@ -82,7 +73,7 @@
 .footer h2 {
   max-width: 930px;
   margin: 0;
-  font-family: var(--font-counsel-display), Georgia, serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: clamp(38px, 7vw, 76px);
   font-weight: 500;
   letter-spacing: -0.035em;
@@ -90,13 +81,13 @@
 }
 
 .hero h1 span {
-  color: oklch(0.39 0.04 140);
+  color: oklch(0.39 0.075 70);
 }
 
 .lead,
 .intro {
   max-width: 780px;
-  color: oklch(0.32 0.025 140);
+  color: oklch(0.31 0.018 70);
   font-size: 20px;
   line-height: 1.65;
 }
@@ -109,9 +100,9 @@
   max-width: 780px;
   margin-top: 26px;
   padding: 20px 22px;
-  border-left: 3px solid oklch(0.48 0.045 135);
-  background: oklch(0.94 0.018 130);
-  color: oklch(0.24 0.025 145);
+  border-left: 3px solid oklch(0.48 0.09 75);
+  background: oklch(0.94 0.025 85);
+  color: oklch(0.22 0.018 70);
 }
 
 .promise strong,
@@ -127,9 +118,9 @@
   gap: 12px;
   margin-top: 26px;
   padding: 10px 20px;
-  border: 1px solid oklch(0.39 0.04 140);
+  border: 1px solid oklch(0.39 0.075 70);
   border-radius: 999px;
-  background: oklch(0.39 0.04 140);
+  background: oklch(0.39 0.075 70);
   color: oklch(0.995 0 0);
   font-size: 17px;
   font-weight: 700;
@@ -138,7 +129,7 @@
 
 .cta:hover,
 .cta:focus-visible {
-  background: oklch(0.32 0.035 140);
+  background: oklch(0.3 0.06 70);
   color: oklch(0.995 0 0);
 }
 
@@ -150,7 +141,7 @@
 
 .section {
   padding: clamp(52px, 8vw, 82px) 0;
-  border-bottom: 1px solid oklch(0.89 0.018 135);
+  border-bottom: 1px solid oklch(0.84 0.025 80);
 }
 
 .section h2 {
@@ -180,7 +171,7 @@
 .reading span,
 .footer p {
   margin: 0 0 16px;
-  color: oklch(0.32 0.025 140);
+  color: oklch(0.31 0.018 70);
   font-size: 18px;
   line-height: 1.68;
 }
@@ -210,8 +201,8 @@
 .cases article,
 .reading a {
   padding: 24px;
-  border: 1px solid oklch(0.89 0.018 135);
-  border-radius: 16px;
+  border: 1px solid oklch(0.84 0.025 80);
+  border-radius: 8px;
   background: oklch(0.995 0.004 90);
 }
 
@@ -224,8 +215,8 @@
 .cases h3,
 .standards h3 {
   margin: 0 0 10px;
-  color: oklch(0.24 0.025 145);
-  font-family: var(--font-counsel-display), Georgia, serif;
+  color: oklch(0.22 0.018 70);
+  font-family: var(--font-display), Georgia, serif;
   font-size: 24px;
   font-weight: 600;
   line-height: 1.2;
@@ -246,13 +237,13 @@
 }
 
 .values {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .number {
   display: inline-block;
   margin-bottom: 18px;
-  color: oklch(0.43 0.045 135);
+  color: oklch(0.39 0.075 70);
 }
 
 .twoColumn {
@@ -275,15 +266,15 @@
   margin-top: 24px;
   padding: 22px 24px;
   border: 1px solid oklch(0.86 0.02 90);
-  border-radius: 14px;
+  border-radius: 8px;
   background: oklch(0.95 0.018 90);
-  color: oklch(0.3 0.025 140);
+  color: oklch(0.3 0.018 70);
   font-size: 18px;
   line-height: 1.65;
 }
 
 .steps {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .steps article {
@@ -297,15 +288,15 @@
 .feeTable table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid oklch(0.89 0.018 135);
+  border: 1px solid oklch(0.84 0.025 80);
   background: oklch(0.995 0.004 90);
 }
 
 .feeTable th,
 .feeTable td {
   padding: 18px;
-  border-bottom: 1px solid oklch(0.89 0.018 135);
-  color: oklch(0.3 0.025 140);
+  border-bottom: 1px solid oklch(0.84 0.025 80);
+  color: oklch(0.3 0.018 70);
   font-size: 17px;
   line-height: 1.55;
   text-align: left;
@@ -318,8 +309,8 @@
 }
 
 .feeTable thead th {
-  background: oklch(0.94 0.018 130);
-  color: oklch(0.24 0.025 145);
+  background: oklch(0.94 0.025 85);
+  color: oklch(0.22 0.018 70);
 }
 
 .feeCards {
@@ -341,7 +332,7 @@
   grid-template-columns: 42px minmax(0, 1fr);
   gap: 12px;
   padding: 20px 0;
-  border-top: 1px solid oklch(0.89 0.018 135);
+  border-top: 1px solid oklch(0.84 0.025 80);
 }
 
 .standards li .number {
@@ -350,7 +341,7 @@
 }
 
 .standards h3 {
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-family: var(--font-body), Arial, sans-serif;
   font-size: 19px;
 }
 
@@ -365,23 +356,23 @@
 .caseLabel {
   display: block;
   margin-bottom: 14px;
-  color: oklch(0.39 0.04 140);
+  color: oklch(0.39 0.075 70);
 }
 
 .faq {
   margin-top: 26px;
-  border-top: 1px solid oklch(0.89 0.018 135);
+  border-top: 1px solid oklch(0.84 0.025 80);
 }
 
 .faq details {
-  border-bottom: 1px solid oklch(0.89 0.018 135);
+  border-bottom: 1px solid oklch(0.84 0.025 80);
 }
 
 .faq summary {
   position: relative;
   min-height: 52px;
   padding: 15px 44px 15px 0;
-  color: oklch(0.24 0.025 145);
+  color: oklch(0.22 0.018 70);
   cursor: pointer;
   font-size: 18px;
   font-weight: 700;
@@ -397,9 +388,9 @@
   position: absolute;
   top: 12px;
   right: 8px;
-  color: oklch(0.39 0.04 140);
+  color: oklch(0.39 0.075 70);
   content: "+";
-  font-family: var(--font-counsel-display), Georgia, serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: 26px;
   font-weight: 500;
 }
@@ -420,12 +411,12 @@
 .reading a {
   display: block;
   min-height: 132px;
-  color: oklch(0.24 0.025 145);
+  color: oklch(0.22 0.018 70);
   text-decoration: none;
 }
 
 .reading a:hover {
-  border-color: oklch(0.48 0.045 135);
+  border-color: oklch(0.48 0.09 75);
 }
 
 .reading strong {
@@ -459,7 +450,7 @@
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  color: oklch(0.32 0.025 140);
+  color: oklch(0.31 0.018 70);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -541,7 +532,7 @@
   }
 
   .feeCards h3 {
-    font-family: "Cabinet Grotesk", Arial, sans-serif;
+    font-family: var(--font-body), Arial, sans-serif;
     font-size: 18px;
   }
 
@@ -577,8 +568,7 @@
   }
 
   .hero h1 {
-    overflow-wrap: anywhere;
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .panel,
@@ -590,5 +580,120 @@
   .reading a,
   .feeCards article {
     padding: 18px;
+  }
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page summary,
+.reading strong {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  break-after: avoid;
+  hyphens: none;
+}
+
+.page p,
+.page li,
+.page td,
+.page th,
+.reading span,
+.promise,
+.callout {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  widows: 3;
+  orphans: 3;
+}
+
+.hero h1 span {
+  display: inline-block;
+  text-wrap: balance;
+}
+
+.hero .lead {
+  margin: 18px 0 0;
+  max-width: 68ch;
+}
+
+.prose,
+.section .intro {
+  max-width: 72ch;
+}
+
+.panel p + p {
+  margin-top: 16px;
+}
+
+.footer p {
+  margin-top: 22px;
+}
+
+.steps article {
+  border-top: 3px solid oklch(0.65 0.11 75);
+}
+
+.steps .number,
+.values .number {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: clamp(32px, 8.7vw, 48px);
+    line-height: 1.12;
+  }
+
+  .section h2 {
+    font-size: clamp(28px, 7.5vw, 36px);
+  }
+
+  .page .privateLabel {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .standards li {
+    gap: 8px;
+  }
+}
+
+@media print {
+  .page {
+    background: white;
+    color: black;
+    overflow: visible;
+    font-size: 11pt;
+  }
+
+  .frame {
+    width: 100%;
+  }
+
+  .hero,
+  .section,
+  .footer {
+    padding: 20pt 0;
+  }
+
+  .page article,
+  .standards li,
+  .faq details,
+  .feeTable tr {
+    break-inside: avoid;
+  }
+
+  .page h1,
+  .page h2,
+  .page h3 {
+    break-after: avoid;
+  }
+
+  .page p,
+  .page li {
+    widows: 3;
+    orphans: 3;
   }
 }
