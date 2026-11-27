@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono } from "next/font/google";
-import { isPortalUnlocked } from "@/lib/portal-auth";
-import PortalGate from "@/components/portal/PortalGate";
 import styles from "./page.module.css";
 
 const fraunces = Fraunces({
@@ -223,24 +221,7 @@ const reading = [
   },
 ];
 
-export default async function TorqueCounselPage() {
-  const unlocked = await isPortalUnlocked("josh-bykowski");
-
-  if (!unlocked) {
-    return (
-      <div
-        className={`${styles.page} ${fraunces.variable} ${ibmPlexMono.variable}`}
-      >
-        <PortalGate
-          portalId="josh-bykowski"
-          title="Torque Counsel Portal"
-          subtitle="Private working draft for review by Torque's General Counsel."
-          placeholder="Enter access code"
-        />
-      </div>
-    );
-  }
-
+export default function TorqueCounselPage() {
   return (
     <div
       className={`${styles.page} ${fraunces.variable} ${ibmPlexMono.variable}`}
