@@ -3,9 +3,9 @@
 :root {
   --gold: #d4a843;
   --gold-light: #e8c96a;
-  --dark: #0a0f1a;
-  --dark-mid: #0d1117;
-  --dark-card: #0f1419;
+  --dark: #303948;
+  --dark-mid: #343e4d;
+  --dark-card: #394352;
   --warm-bg: #f5f0e8;
   --warm-light: #faf7f2;
   --rust: #8b4513;
@@ -220,7 +220,7 @@
 
 /* ── SECTION BACKGROUNDS ── */
 .section-dark {
-  background-color: oklch(0.18 0.01 250);
+  background-color: oklch(0.34 0.025 250);
   color: oklch(0.92 0.01 80);
 }
 .section-warm {
@@ -235,30 +235,23 @@
   background-color: oklch(0.45 0.22 260);
   color: oklch(0.98 0 0);
 }
-/* Homepage-only deep-sunset section background. Kept as a very shallow
-   gradient rather than a flat fill so stacked sections don't band visibly
-   where they meet. Tuned to sit against the hero's warm oklch(0.13 0.05 25)
-   base. Front page only - other pages keep the standard .section-dark per
-   the site's fixed per-section theme. */
+/* Homepage-only muted warm section background. */
 .section-sunset {
   background: linear-gradient(
     150deg,
-    oklch(0.14 0.05 25) 0%,
-    oklch(0.19 0.07 40) 50%,
-    oklch(0.23 0.08 55) 100%
+    oklch(0.32 0.025 35) 0%,
+    oklch(0.35 0.03 40) 50%,
+    oklch(0.38 0.035 55) 100%
   );
   color: oklch(0.96 0.02 70);
 }
-/* Lighter/richer alternate for the homepage's dark-section rhythm - swaps in
-   for what used to be bg-dark-mid/bg-dark-card so consecutive sections read
-   as depth variation within one sunset gradient rather than three
-   near-identical blacks. Front page only, same as .section-sunset above. */
+/* Lighter warm alternate for the homepage's section rhythm. */
 .section-sunset-warm {
   background: linear-gradient(
     150deg,
-    oklch(0.19 0.06 30) 0%,
-    oklch(0.24 0.08 45) 50%,
-    oklch(0.29 0.09 58) 100%
+    oklch(0.35 0.025 35) 0%,
+    oklch(0.38 0.03 45) 50%,
+    oklch(0.4 0.035 58) 100%
   );
   color: oklch(0.97 0.02 70);
 }
@@ -331,7 +324,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 .glass-card-dark {
-  background: rgba(10, 15, 26, 0.6);
+  background: color-mix(in oklch, var(--dark-card) 75%, transparent);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   border: 1px solid rgba(255, 255, 255, 0.08);
